@@ -11,5 +11,5 @@ KiCad 10 runs through Docker:
 
 {TASK}
 
-Your result is `{WORK}/result.net`, exported from the edited schematic. Do not read anything outside the three
-folders named above.
+Your result is `{WORK}/result.net`, exported from the edited schematic. Do not read or write anything outside the three
+folders named above; keep scratch files inside your work folder.

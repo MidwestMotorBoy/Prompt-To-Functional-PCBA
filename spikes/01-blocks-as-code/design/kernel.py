@@ -116,6 +116,11 @@ def across(max_v, *refs):
     resistor). Without this the part is rated against the highest net it touches."""
     CONSTRAINTS.setdefault("across", {}).update({"".join(r) if not isinstance(r, str) else r: max_v for r in refs})
 
+def waive(finding_prefix, reason):
+    """Accept one gate finding in writing: waive("recmax: U101.DSG", "why this is acceptable"). The build prints every
+    waived finding with its reason on every run."""
+    CONSTRAINTS.setdefault("waive", {})[finding_prefix] = reason
+
 def expect(name, expr, target, tol, unit="", at=None, **bind):
     """What a set of part values is meant to produce, so a wrong value is a failed check and not a silent change.
         expect("PP5V", "VREF * (1 + Rtop / Rbot)", 5.15, 0.03, "V", VREF="TPS62933.VREF", Rtop="R433", Rbot="R434")

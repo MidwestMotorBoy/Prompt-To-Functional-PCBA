@@ -10,5 +10,5 @@ The build stops if the intent gate fails, and it ends by comparing KiCad's netli
 
 {TASK}
 
-Your result is `{WORK}/design/out/netlist.json` from a build that passes. Do not read anything outside the work
-folder and the datasheet folder.
+Your result is `{WORK}/design/out/netlist.json` from a build that passes. Do not read or write anything outside the work
+folder and the datasheet folder; keep scratch files inside your work folder.

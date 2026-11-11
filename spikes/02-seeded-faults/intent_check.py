@@ -21,6 +21,8 @@ Rules:
   clamp    a clamp's clamping voltage is above the absolute maximum of a pin on the net it protects
   bus      a net joins a data pin and a clock pin (names ending SDA, SCL), or such a pin meets no other of its kind
   exclusive  the node at an expectation's pin carries a part that is neither bound to it nor the pin's own part
+  A finding whose text starts with a prefix given to kernel.waive(prefix, reason) is printed as waived and does not
+  stop the build.
   nofacts  (check only) a part with three or more pins that has no limits file
 `score` adds an "intent" gate to <mutants dir>/results.json (written by score.py) and prints the table.
 """
@@ -127,7 +129,8 @@ def check(d, cons, limits, kbmap, symlib):
         except ZeroDivisionError: v = float("inf")
         if abs(v - e["target"]) > e["tol"] * e["target"]:
             out.add(f"expect: {name} is {v:.4g} {e['unit']}, meant to be {e['target']:g} {e['unit']} within {e['tol'] * 100:g} %")
-    return out
+    check.waived = {x: r for x in out for p, r in cons.get("waive", {}).items() if x.startswith(p)}   # kernel.waive()
+    return out - set(check.waived)
 
 def verify(limits, sheets):
     bad = n = 0
@@ -157,6 +160,7 @@ if __name__ == "__main__":
     if a[0] == "check":
         f = sorted(run(a[1], load_limits(a[2]), json.load(open(a[3])), a[4]))
         print("\n".join(f) or "no findings")
+        for x, r in sorted(check.waived.items()): print(f"waived: {x} | reason: {r}")
         import symlib
         nf = nofacts(json.load(open(f"{a[1]}/netlist.json")), load_limits(a[2]), json.load(open(a[3])), symlib)
         for l in nf: print(f"nofacts: {l} has no limits file")
