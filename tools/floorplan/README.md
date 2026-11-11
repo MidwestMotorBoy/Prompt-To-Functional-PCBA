@@ -90,6 +90,14 @@ statement that names a part, pad or net the netlist does not have. `check` measu
 - Still wirelength plus statements only: pad boxes for bodies, no enclosure keep-outs, no crossing count, no loop
   solver in the loop.
 
+Update: `near` is now measured from the target pad's centre to the nearest pad edge of the part, so a large
+capacitor is not penalised for its own size, with limits 1.5 mm (first hot-loop capacitor), 2 mm (served pin) and
+4 mm (bulk). On that measure: hand board 69 of 112, scripted 69, placer with statements 92 to 93, wirelength-only
+placer 48. The hand board's misses are of two kinds: near misses of a few tenths of a millimetre, and bulk
+capacitors that the circuit code declares as serving a FET pin but that sit 6 to 8 mm away by design. The code's
+`serves` does not yet say "bulk" or "at the pin", so the limit classes need the owner's judgement or a rule from
+capacitor value before the count can be a pass mark.
+
 ## Run it
 
 ```

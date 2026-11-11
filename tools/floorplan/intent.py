@@ -9,7 +9,8 @@
         An LLM adds statements to this file by hand; this is what stops a wrong reference.
   check <intent.json> <board dump.json> [placement.json]
         measures every statement on a placed board (or on the dump's pad shapes moved to a placement) and
-        prints what fails. Distances are between pad centres.
+        prints what fails. A `near` distance is from the target pad's centre to the nearest pad edge of the part,
+        so a large capacitor is not penalised for its own size; keep-apart is between pad centres.
 Statements (all lists, all optional):
   {"near":      [{"part": "C206", "to": ["U204.3"], "max_mm": 2.0, "why": "serves U204.VIN"}],
    "keepapart": [{"a_nets": ["USB Port 1/SW1"], "b_nets": ["USB Port 1/FB"], "min_mm": 2.0, "why": "..."}],
@@ -31,11 +32,11 @@ def derive(build, design, out):
     it = dict(near=[], keepapart=[], order=[], kelvin=[], fixed={}, lanes=[])
     hot = {cap for h in c.get("hot_loops", {}).values() for cap in h["caps"]}
     for cap, t in sorted(c.get("serves", {}).items()):
-        if cap not in hot and pads(t): it["near"].append(dict(part=cap, to=pads(t), max_mm=2.5, why=f"serves {t}"))
+        if cap not in hot and pads(t): it["near"].append(dict(part=cap, to=pads(t), max_mm=2.0, why=f"serves {t}"))
     for name, h in sorted(c.get("hot_loops", {}).items()):
         for i, cap in enumerate(h["caps"]):
             for sp in h["switch_pins"]:
-                it["near"].append(dict(part=cap, to=pads(sp), max_mm=2.0 if i == 0 else 5.0, why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
+                it["near"].append(dict(part=cap, to=pads(sp), max_mm=1.5 if i == 0 else 4.0, why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
     sw = sorted(n for n, v in c["nets"].items() if v.get("kind") == "switching"); se = sorted(n for n, v in c["nets"].items() if v.get("kind") == "sensitive")
     for a in sw:
         blk = a.split("/")[0] if "/" in a else ""
@@ -67,25 +68,27 @@ def validate(intentf, build):
     return bad
 
 def pad_table(dumpf, placef=None):
+    """pad centres by "REF.pad" and by "REF", pads by net, and each part's pad boxes (for edge distances)"""
     d = json.load(open(dumpf)); pos = {f["ref"]: (f["x"], f["y"]) for f in d["fps"]}; P = json.load(open(placef)) if placef else None
-    out = {}; bynet = defaultdict(list); centre = {}
+    out = {}; bynet = defaultdict(list); boxes = defaultdict(list)
     for p in d["pads"]:
-        x, y = p["x"], p["y"]
+        x, y = p["x"], p["y"]; b = p["box"]
         if P and p["ref"] in P:
-            lx, ly = x - pos[p["ref"]][0], y - pos[p["ref"]][1]; px, py, a = P[p["ref"]]
-            for _ in range(int(a) // 90 % 4): lx, ly = -ly, lx
-            x, y = px + lx, py + ly
-        out.setdefault(f"{p['ref']}.{p['num']}", []).append((x, y)); bynet[p["net"]].append((x, y, p["ref"])); out.setdefault(p["ref"], []).append((x, y))
-    return out, bynet
+            x0, y0 = pos[p["ref"]]; px, py, a = P[p["ref"]]; q = [(x - x0, y - y0), (b[0] - x0, b[1] - y0), (b[2] - x0, b[3] - y0)]
+            for _ in range(int(a) // 90 % 4): q = [(-v, u) for u, v in q]
+            x, y = px + q[0][0], py + q[0][1]; b = [px + min(q[1][0], q[2][0]), py + min(q[1][1], q[2][1]), px + max(q[1][0], q[2][0]), py + max(q[1][1], q[2][1])]
+        out.setdefault(f"{p['ref']}.{p['num']}", []).append((x, y)); bynet[p["net"]].append((x, y, p["ref"])); out.setdefault(p["ref"], []).append((x, y)); boxes[p["ref"]].append(b)
+    return out, bynet, boxes
 
 def check(intentf, dumpf, placef=None):
-    it = json.load(open(intentf)); pt, bynet = pad_table(dumpf, placef); fails = []; n = 0
+    it = json.load(open(intentf)); pt, bynet, boxes = pad_table(dumpf, placef); fails = []; n = 0
+    edge = lambda bs, B: min(math.hypot(max(b[0] - q[0], 0, q[0] - b[2]), max(b[1] - q[1], 0, q[1] - b[3])) for b in bs for q in B)
     dist = lambda A, B: min(math.hypot(a[0] - b[0], a[1] - b[1]) for a in A for b in B)
     worst = []
     for s in it.get("near", []):
         n += 1; A = pt.get(s["part"]); B = [q for t in s["to"] for q in pt.get(t, [])]
         if not A or not B: fails.append(f"near: {s['part']} or its target is not on the board"); continue
-        dd = dist(A, B); worst.append(dd / s["max_mm"])
+        dd = edge(boxes[s["part"]], B); worst.append(dd / s["max_mm"])
         if dd > s["max_mm"]: fails.append(f"near: {s['part']} is {dd:.1f} mm from {', '.join(s['to'])} (limit {s['max_mm']} mm; {s['why']})")
     for s in it.get("keepapart", []):
         n += 1; A = [q for a in s["a_nets"] for q in bynet.get(a, [])]; B = [q for b in s["b_nets"] for q in bynet.get(b, [])]
