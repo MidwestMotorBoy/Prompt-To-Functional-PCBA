@@ -1,0 +1,4 @@
+[{"del":[94.65,85.325],"net":"/USB Port 1/I2CC_SCL","what":"In2"},{"del":[94.7,85.325],"net":"/USB Port 1/I2CC_SCL","what":"In2"},{"del":[94.7,86.95],"net":"/USB Port 1/I2CC_SCL","what":"In2"},{"del":[94.275,87.375],"net":"/USB Port 1/I2CC_SCL","what":"In2"},{"del":[94.225,87.45],"net":"/USB Port 1/I2CC_SCL","what":"In2"},{"del":[94.375,85.0],"net":"/USB Port 1/I2CC_SCL","what":"In2"},
+{"net":"/USB Port 1/I2CC_SCL","layer":"In2","w":0.15,"pts":[[94.375,84.9245],[94.375,85.05],[94.65,85.325],[94.65,86.95],[94.275,87.325],[94.225,87.375],[94.225,88.1245]]},
+{"del":[117.41,108.75],"net":"PACK_P","what":"F"},
+{"net":"PACK_P","layer":"F","w":0.2,"pts":[[117.11,108.75],[118.6,108.75]]}]

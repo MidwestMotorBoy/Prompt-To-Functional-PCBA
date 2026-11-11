@@ -1,0 +1,482 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-10T10:36:25",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "Monolith.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.0984 mm) (In2.Cu (signal V + 3V3))",
+            "items": [
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.3536 mm",
+                    "pos": {
+                        "x": 105.775,
+                        "y": 127.1745
+                    },
+                    "uuid": "05772392-5b4f-4895-806f-4a5a38103aa1"
+                },
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.4243 mm",
+                    "pos": {
+                        "x": 105.475,
+                        "y": 127.4245
+                    },
+                    "uuid": "aa752341-553b-49a2-8bd7-8f0255e5aa04"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.0984 mm) (In2.Cu (signal V + 3V3))",
+            "items": [
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.0500 mm",
+                    "pos": {
+                        "x": 105.525,
+                        "y": 127.4245
+                    },
+                    "uuid": "bd819c9b-93d7-4219-a109-c678bc421182"
+                },
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.2121 mm",
+                    "pos": {
+                        "x": 105.225,
+                        "y": 127.7245
+                    },
+                    "uuid": "016121dc-e790-4fbd-b1b3-3d399a91b58d"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1069 mm) (In2.Cu (signal V + 3V3))",
+            "items": [
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.0500 mm",
+                    "pos": {
+                        "x": 105.525,
+                        "y": 127.4245
+                    },
+                    "uuid": "bd819c9b-93d7-4219-a109-c678bc421182"
+                },
+                {
+                    "description": "Track [/Cells and Gauge/CHG_G] on In2.Cu (signal V + 3V3), length 0.2121 mm",
+                    "pos": {
+                        "x": 105.225,
+                        "y": 127.7245
+                    },
+                    "uuid": "016121dc-e790-4fbd-b1b3-3d399a91b58d"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.0758 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Track [/USB Port 1/ACN_F] on F.Cu, length 0.2000 mm",
+                    "pos": {
+                        "x": 106.975,
+                        "y": 108.9745
+                    },
+                    "uuid": "6799e002-6bbd-4ab2-bcc7-2ed21940239e"
+                },
+                {
+                    "description": "Via [/USB Port 1/ACN_F] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 107.275,
+                        "y": 108.6745
+                    },
+                    "uuid": "93622f34-7f34-4748-9d35-67f573e69807"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.0927 mm) (In2.Cu (signal V + 3V3))",
+            "items": [
+                {
+                    "description": "Zone 'PACK_P_PLANE' [PACK_P] on In2.Cu (signal V + 3V3), priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "8dfa669f-d62e-4b37-9bcc-8c0cdc855cf8"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1148 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Pad 3 [GND] of U401 on F.Cu",
+                    "pos": {
+                        "x": 106.3,
+                        "y": 78.075
+                    },
+                    "uuid": "a982429d-9183-4ccd-bd64-98f8b8b7f04e"
+                },
+                {
+                    "description": "Zone 'GND_FILL' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "78667fbc-93cc-431f-a268-69345131bc2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1148 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Pad 13 [GND] of U505 on F.Cu",
+                    "pos": {
+                        "x": 95.75,
+                        "y": 74.7
+                    },
+                    "uuid": "cbce8341-4a6d-45e0-8f07-a969995cfcb3"
+                },
+                {
+                    "description": "Zone 'GND_FILL' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "78667fbc-93cc-431f-a268-69345131bc2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1148 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Pad 8 [GND] of U505 on F.Cu",
+                    "pos": {
+                        "x": 94.35,
+                        "y": 73.3
+                    },
+                    "uuid": "74f7116d-a65e-4b0a-b0ed-5b14e5f3096c"
+                },
+                {
+                    "description": "Zone 'GND_FILL' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "78667fbc-93cc-431f-a268-69345131bc2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1148 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Pad 13 [GND] of U405 on F.Cu",
+                    "pos": {
+                        "x": 104.3,
+                        "y": 74.7
+                    },
+                    "uuid": "aee00c68-f5e7-49a9-b496-7ea29d8ce023"
+                },
+                {
+                    "description": "Zone 'GND_FILL' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "78667fbc-93cc-431f-a268-69345131bc2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1148 mm) (F.Cu)",
+            "items": [
+                {
+                    "description": "Pad 8 [GND] of U405 on F.Cu",
+                    "pos": {
+                        "x": 102.9,
+                        "y": 73.3
+                    },
+                    "uuid": "cce757d7-3409-495c-a477-ea6953d24de1"
+                },
+                {
+                    "description": "Zone 'GND_FILL' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 61.5
+                    },
+                    "uuid": "78667fbc-93cc-431f-a268-69345131bc2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "connection_width"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6000 mm)",
+            "items": [
+                {
+                    "description": "PCB text 'T2R' on F.Silkscreen",
+                    "pos": {
+                        "x": 108.745,
+                        "y": 129.6
+                    },
+                    "uuid": "88438b7a-c045-43b4-a0b8-c7fe8d3796d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'T3' on F.Silkscreen",
+                    "pos": {
+                        "x": 105.982,
+                        "y": 134.444
+                    },
+                    "uuid": "46532774-61b0-4af6-9cdb-a43ae92ff829"
+                },
+                {
+                    "description": "PCB text 'T3R' on F.Silkscreen",
+                    "pos": {
+                        "x": 105.33,
+                        "y": 134.17
+                    },
+                    "uuid": "f5e803be-ee35-4c92-b4ff-f1a3c5187d58"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C315 on F.Silkscreen",
+                    "pos": {
+                        "x": 120.415764,
+                        "y": 118.3176
+                    },
+                    "uuid": "38b4427a-8105-47e6-bbd5-2800ad56e41a"
+                },
+                {
+                    "description": "Circle of U301 on F.Silkscreen",
+                    "pos": {
+                        "x": 120.7196,
+                        "y": 118.3316
+                    },
+                    "uuid": "a55dd1f1-dc3f-43a2-a0e8-df90505cda88"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'P+' on F.Silkscreen",
+                    "pos": {
+                        "x": 114.975,
+                        "y": 134.675
+                    },
+                    "uuid": "8a828cd8-9911-4372-8a45-cc8ffcd47ffc"
+                },
+                {
+                    "description": "Segment of R126 on F.Silkscreen",
+                    "pos": {
+                        "x": 115.27,
+                        "y": 135.353641
+                    },
+                    "uuid": "f6b59758-d756-413c-be9b-3e21f5864891"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of U404",
+                    "pos": {
+                        "x": 114.638095,
+                        "y": 81.75375
+                    },
+                    "uuid": "93418933-573d-4792-87a6-61cdba9a7070"
+                },
+                {
+                    "description": "Segment of L402 on F.Silkscreen",
+                    "pos": {
+                        "x": 115.6,
+                        "y": 82.05
+                    },
+                    "uuid": "d0fc6f9e-2b41-4c69-8a6f-47f486e1bc51"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'T3R' on F.Silkscreen",
+                    "pos": {
+                        "x": 105.33,
+                        "y": 134.17
+                    },
+                    "uuid": "f5e803be-ee35-4c92-b4ff-f1a3c5187d58"
+                },
+                {
+                    "description": "Pad 2 [/Cells and Gauge/CELL_1N] of C115 on F.Cu",
+                    "pos": {
+                        "x": 104.63,
+                        "y": 134.4
+                    },
+                    "uuid": "3e8b2d22-0870-4aae-bda2-5af0c5e434a2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Circle of U301 on F.Silkscreen",
+                    "pos": {
+                        "x": 120.7196,
+                        "y": 118.3316
+                    },
+                    "uuid": "a55dd1f1-dc3f-43a2-a0e8-df90505cda88"
+                },
+                {
+                    "description": "Pad 2 [GND] of C315 on F.Cu",
+                    "pos": {
+                        "x": 121.0036,
+                        "y": 117.9576
+                    },
+                    "uuid": "0ec58341-364a-4f94-a622-8cf8d371df45"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'P+' on F.Silkscreen",
+                    "pos": {
+                        "x": 114.975,
+                        "y": 134.675
+                    },
+                    "uuid": "8a828cd8-9911-4372-8a45-cc8ffcd47ffc"
+                },
+                {
+                    "description": "Pad 2 [/Cells and Gauge/GAUGE_FUSE] of R126 on F.Cu",
+                    "pos": {
+                        "x": 115.65,
+                        "y": 134.69
+                    },
+                    "uuid": "e3bd2a02-08bc-4c50-b1fc-21625e45754e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of TH101",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 110.50225
+                    },
+                    "uuid": "976c1201-53fc-4cc3-8247-5afb369470f6"
+                },
+                {
+                    "description": "Polygon on B.Silkscreen",
+                    "pos": {
+                        "x": 84.175,
+                        "y": 88.6505
+                    },
+                    "uuid": "a4c92e16-f0c8-41c7-8209-1bf07f39995d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Polygon on B.Silkscreen",
+                    "pos": {
+                        "x": 107.175,
+                        "y": 88.6505
+                    },
+                    "uuid": "779052e5-ae34-41cd-a33e-4aa1f0da46b9"
+                },
+                {
+                    "description": "Reference field of TH104",
+                    "pos": {
+                        "x": 115.5,
+                        "y": 110.50225
+                    },
+                    "uuid": "b2a8cee1-d2ff-4562-a611-302275696126"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

@@ -1,0 +1,111 @@
+{
+ "base": 2,
+ "base_detail": {
+  "total": 34.4,
+  "edge": 0.0,
+  "over_sense": 0.6,
+  "over_switching": 0.0,
+  "near": {
+   "sense": [
+    [
+     "REGN",
+     "BAT_SNS_P",
+     "B"
+    ]
+   ]
+  },
+  "crossing": [
+   "B BAT_SNS_P",
+   "In3 DRV_SUP"
+  ]
+ },
+ "fix": 27,
+ "fix_detail": {
+  "total": 257.7,
+  "edge": 8.9,
+  "over_sense": 0.0,
+  "over_switching": 0.0,
+  "near": {},
+  "crossing": [
+   "B 3V3",
+   "B CELL_1N",
+   "B EN_5V1",
+   "B I2CC_SCL",
+   "B ILIM",
+   "B Net-(U101-VCC)",
+   "B Net-(U403-ACOV)",
+   "B Net-(U403-ICHG)",
+   "B SBU_FLT",
+   "B SDA",
+   "B TS2",
+   "In3 CELL3",
+   "In3 DRV_SUP",
+   "In3 DRV_SUP",
+   "In3 FET_MID",
+   "In3 GAUGE_FUSE",
+   "In3 I2CC_SCL",
+   "In3 I2CC_SDA",
+   "In3 ILIM",
+   "In3 IRQ_N",
+   "In3 NRST",
+   "In3 Net-(U101-SMBD)",
+   "In3 Net-(U102-OUT)",
+   "In3 Net-(U403-ICHG)",
+   "In3 SCL",
+   "In3 TS1",
+   "In3 TS4"
+  ]
+ },
+ "fix2": 28,
+ "fix2_detail": {
+  "total": 257.7,
+  "edge": 8.9,
+  "over_sense": 3.3,
+  "over_switching": 0.0,
+  "near": {
+   "sense": [
+    [
+     "CHG_INT",
+     "ACN_F",
+     "In3"
+    ],
+    [
+     "PPHV",
+     "ACN_F",
+     "In3"
+    ]
+   ]
+  },
+  "crossing": [
+   "B 3V3",
+   "B CELL_1N",
+   "B EN_5V1",
+   "B I2CC_SCL",
+   "B ILIM",
+   "B Net-(U101-VCC)",
+   "B Net-(U403-ACOV)",
+   "B Net-(U403-ICHG)",
+   "B SBU_FLT",
+   "B SDA",
+   "B TS2",
+   "In3 ACN_F",
+   "In3 CELL3",
+   "In3 DRV_SUP",
+   "In3 DRV_SUP",
+   "In3 FET_MID",
+   "In3 GAUGE_FUSE",
+   "In3 I2CC_SCL",
+   "In3 I2CC_SDA",
+   "In3 ILIM",
+   "In3 IRQ_N",
+   "In3 NRST",
+   "In3 Net-(U101-SMBD)",
+   "In3 Net-(U102-OUT)",
+   "In3 Net-(U403-ICHG)",
+   "In3 SCL",
+   "In3 TS1",
+   "In3 TS4"
+  ]
+ },
+ "edge": 8.9
+}

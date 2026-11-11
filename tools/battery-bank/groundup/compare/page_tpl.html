@@ -1,0 +1,396 @@
+<title>Ground-up vs current board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column of sections; each section opens with a two-sentence finding, then a chart with
+   its table twin, then the copper pictures of both boards stacked for the same loop. */
+:root{
+  --bg:#f5f7f5; --surface:#fdfdfc; --ink:#101412; --ink2:#4d5651; --muted:#7c857f; --line:#dfe4df; --axis:#c2c9c3;
+  --accent:#0f6b4f; --wash:#eaf0ec; --plate:#fcfcfb;
+  --s1:#2a78d6; --s2:#eb6834;
+  --display:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1211; --surface:#161b19; --ink:#e9eeea; --ink2:#b9c2bc; --muted:#8a938d; --line:#29312d; --axis:#3a433e;
+  --accent:#4cc79b; --wash:#1b2320; --plate:#fcfcfb; --s1:#3987e5; --s2:#d95926; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0e1211; --surface:#161b19; --ink:#e9eeea; --ink2:#b9c2bc; --muted:#8a938d; --line:#29312d; --axis:#3a433e;
+  --accent:#4cc79b; --wash:#1b2320; --plate:#fcfcfb; --s1:#3987e5; --s2:#d95926; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.4vw,38px);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-0.01em}
+h2{font-family:var(--display);font-weight:600;font-size:23px;line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:500;font-size:16px;margin:0}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:17px;color:var(--ink2);max-width:66ch}
+header{display:flex;flex-direction:column;gap:14px}
+section{display:flex;flex-direction:column;gap:18px}
+.finding{display:flex;flex-direction:column;gap:8px}
+.finding p{color:var(--ink2)}
+.finding p strong{color:var(--ink);font-weight:600}
+code,.ref{font-family:var(--mono);font-size:.9em}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink2);align-items:center}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;flex:none}
+.sw.b{background:var(--s1)} .sw.n{background:var(--s2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card h3 .sw{margin-right:6px;vertical-align:-1px}
+.card h3 small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:13px;margin-left:6px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));gap:16px}
+.note{font-size:13px;color:var(--muted);max-width:80ch}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--body);fill:var(--ink2);font-size:12px}
+svg .v{fill:var(--ink);font-variant-numeric:tabular-nums}
+svg .m{fill:var(--muted);font-size:11px}
+details{font-size:13px}
+details summary{cursor:pointer;color:var(--accent);width:fit-content;padding:2px 0}
+details summary:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;font-size:13px;min-width:100%}
+th,td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:150px}
+th{font-weight:500;color:var(--muted);font-size:12px}
+td.t{text-align:left;white-space:normal}
+.score td,.score th{padding:9px 10px}
+.score td:nth-child(2),.score td:nth-child(3),.score th:nth-child(2),.score th:nth-child(3){text-align:right}
+#fix-table td:nth-child(4),#fix-table th:nth-child(4),#fix-table td:nth-child(5),#fix-table th:nth-child(5){text-align:right}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:2px 10px 2px 8px;font-size:12.5px;background:var(--wash);color:var(--ink);white-space:nowrap}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip.b i{background:var(--s1)} .chip.n i{background:var(--s2)} .chip.l i{background:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg .lab{font-size:12.5px;color:var(--muted);margin-right:2px}
+.seg button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);border-radius:7px;padding:5px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:10px 22px}
+.plate{background:var(--plate);border:1px solid var(--line);border-radius:8px;padding:6px;overflow-x:auto}
+.plate img{display:block;max-width:100%;height:auto;min-width:min(100%,640px)}
+.plate.wide img{min-width:860px}
+.pairimg{display:flex;flex-direction:column;gap:10px}
+.barcell{min-width:190px;text-align:left}
+.bar{display:flex;align-items:center;gap:8px}
+.bar i{display:block;height:12px;border-radius:0 4px 4px 0;background:var(--accent);min-width:2px;flex:none}
+#pass-table th,#tool-table th,#pass-table td{text-align:left}
+.bar span{color:var(--ink);font-variant-numeric:tabular-nums}
+#tool-table td:first-child,#pass-table td:first-child{white-space:nowrap;min-width:0}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:7px;padding:8px 10px;font-size:12.5px;line-height:1.4;max-width:280px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.tip b{font-weight:600;font-variant-numeric:tabular-nums}
+.tip .tl{opacity:.75}
+.tip .k{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.pairs figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.pairs figcaption{font-size:13px;color:var(--ink2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.two div{border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--surface);min-width:0}
+.two .cap{font-size:11.5px;color:var(--muted);display:flex;gap:6px;align-items:center;padding:0 2px 4px}
+ul.plain{margin:0;padding-left:18px;color:var(--ink2);max-width:72ch;display:flex;flex-direction:column;gap:6px}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:8px}
+@media (prefers-reduced-motion:no-preference){ .seg button{transition:background .12s,color .12s} }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Monolith P0 · layout experiment · 2026-11-10</div>
+  <h1>Ground-up board against the current board</h1>
+  <p class="lede" id="lede"></p>
+  <div class="key"><span><i class="sw b"></i>Current board (master, hand-routed)</span><span><i class="sw n"></i>Ground-up board (script-built, after the second fix pass, branch only)</span></div>
+  <div class="card"><div class="tw"><table class="score" id="score"></table></div>
+  <p class="note">Same schematic, parts, stack-up and outline on both boards. The ground-up column is the board after the second fix pass; the next section shows what the two passes changed. Every number on this page comes from the same solver run on each board file.</p></div>
+</header>
+
+<section id="s-fix">
+  <div class="finding"><div class="eyebrow">Second and third attempt · fix passes</div><h2>What the two fix passes changed</h2><div id="fix-find"></div></div>
+  <div class="card"><h3>Before and after each fix pass <small>against the current board</small></h3><div class="tw"><table class="score" id="fix-table"></table></div>
+  <p class="note" id="fix-note"></p></div>
+  <div class="card"><h3>What was changed on the board</h3><ul class="plain" id="fix-list"></ul></div>
+  <div class="card"><h3>Signal tracks cut into the ground plane <small>inner layer 4, both boards</small></h3><div class="plate wide"><img id="in4-img" alt="Inner layer 4 of both boards with the signal tracks cut into the ground plane"></div>
+  <div class="tw" id="in4-table"></div><p class="note" id="in4-note"></p></div>
+  <div class="seg" id="fix-sel"><span class="lab">Picture</span></div>
+  <div class="grid2">
+    <div class="card"><h3>Ground-up board <small>first version</small></h3><div class="plate"><img id="fix-img-o" alt="First version of the ground-up board"></div></div>
+    <div class="card"><h3><i class="sw n"></i> Ground-up board <small>after the second fix pass</small></h3><div class="plate"><img id="fix-img-n" alt="Ground-up board after the second fix pass"></div></div>
+  </div>
+</section>
+
+<section id="s-rend">
+  <div class="finding"><div class="eyebrow">The two boards</div><h2>Renders</h2><div id="rend-find"></div></div>
+  <div class="seg" id="rend-sel"><span class="lab">Side</span></div>
+  <div class="grid2">
+    <div class="card"><h3><i class="sw b"></i> Current board <small>master, hand-routed</small></h3><div class="plate"><img id="rend-b" alt="Render of the current board"></div></div>
+    <div class="card"><h3><i class="sw n"></i> Ground-up board <small>script-built, after the second fix pass</small></h3><div class="plate"><img id="rend-n" alt="Render of the ground-up board"></div></div>
+  </div>
+</section>
+
+<section id="s-hot">
+  <div class="finding"><div class="eyebrow">Switch nodes</div><h2>Hot-loop inductance</h2><div id="hot-find"></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Loop inductance seen by the switch <small>nH, all input capacitors with their own inductance</small></h3><div id="hot-chart"></div><details><summary>Table</summary><div class="tw" id="hot-table"></div></details></div>
+    <div class="card"><h3>Switch-node copper <small>capacitance to everything else, pF</small></h3><div id="sw-chart"></div><details><summary>Table</summary><div class="tw" id="sw-table"></div></details></div>
+  </div>
+  <div class="card"><h3>Where the fast current flows</h3>
+    <div class="seg" id="hot-sel"><span class="lab">Loop</span></div>
+    <div class="pairimg"><div class="plate"><img id="hot-img-b" alt="Hot-loop current map, current board"></div><div class="plate"><img id="hot-img-n" alt="Hot-loop current map, ground-up board"></div></div>
+    <p class="note">Heat colour is high-frequency current for 1 A through the loop, with the colour scale set per picture. Purple or green copper is the loop's supply net, grey is ground.</p></div>
+</section>
+
+<section id="s-gate">
+  <div class="finding"><div class="eyebrow">Gate drive</div><h2>Gate-loop inductance</h2><div id="gate-find"></div></div>
+  <div class="card"><h3>Gate-drive loop inductance <small>nH, driver pin to FET gate and back</small></h3><div id="gate-chart"></div><details><summary>Table</summary><div class="tw" id="gate-table"></div></details></div>
+  <div class="card"><h3>Gate-drive current paths</h3>
+    <div class="seg" id="gate-sel"><span class="lab">Loop</span></div>
+    <div class="pairimg"><div class="plate"><img id="gate-img-b" alt="Gate-loop current map, current board"></div><div class="plate"><img id="gate-img-n" alt="Gate-loop current map, ground-up board"></div></div></div>
+</section>
+
+<section id="s-loss">
+  <div class="finding"><div class="eyebrow">Losses</div><h2>Copper loss at different loads</h2><div id="loss-find"></div></div>
+  <div class="filters">
+    <div class="seg" id="loss-port"><span class="lab">Port</span></div>
+    <div class="seg" id="loss-soc"><span class="lab">Pack charge</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Loss in routed copper <small>mW</small></h3><div id="loss-chart"></div><details><summary>Table</summary><div class="tw" id="loss-table"></div></details></div>
+    <div class="card"><h3>Path resistance <small>mΩ, DC</small></h3><div id="path-chart"></div><details><summary>Table</summary><div class="tw" id="path-table"></div></details></div>
+  </div>
+  <div class="card"><h3>Where the copper loss sits</h3><div class="plate wide"><img id="img-lossmap" alt="Copper loss density maps of both boards at 100 W"></div></div>
+</section>
+
+<section id="s-via">
+  <div class="finding"><div class="eyebrow">Vias</div><h2>Highest current in one via</h2><div id="via-find"></div></div>
+  <div class="card"><h3>Hottest via on each power path <small>A, at 9 A battery side and 5 A USB side</small></h3><div id="via-chart"></div><details open><summary>Table</summary><div class="tw" id="via-table"></div></details></div>
+</section>
+
+<section id="s-th">
+  <div class="finding"><div class="eyebrow">Thermals</div><h2>Temperatures in the cup</h2><div id="th-find"></div></div>
+  <div class="filters"><div class="seg" id="th-case"><span class="lab">Case</span></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Hottest part on the board <small>°C</small></h3><div id="th-part"></div></div>
+    <div class="card"><h3>Power at the port <small>W, after the firmware derate</small></h3><div id="th-pow"></div></div>
+  </div>
+  <div class="card"><h3>Results per case</h3><div class="tw" id="th-table"></div>
+  <p class="note" id="th-note"></p></div>
+</section>
+
+<section id="s-kelvin">
+  <div class="finding"><div class="eyebrow">Current sensing</div><h2>Kelvin tap error</h2><div id="k-find"></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Reading error from where the taps land <small>% of the true shunt voltage</small></h3><div id="k-chart"></div><details><summary>Table</summary><div class="tw" id="k-table"></div></details></div>
+    <div class="card"><h3>Area enclosed by each sense pair <small>mm², resistor to IC pins</small></h3><div id="pa-chart"></div><details><summary>Table</summary><div class="tw" id="pa-table"></div></details></div>
+  </div>
+  <div class="card"><h3>How each sense pair is routed</h3>
+    <div class="key"><span><svg width="26" height="8" style="width:26px"><line x1="1" y1="4" x2="25" y2="4" stroke="var(--ink)" stroke-width="2"/></svg>positive line</span><span><svg width="26" height="8" style="width:26px"><line x1="1" y1="4" x2="25" y2="4" stroke="var(--muted)" stroke-width="2"/></svg>negative line</span><span>Shaded: area between the two lines. All panels share one scale.</span></div>
+    <div class="pairs" id="pairs"></div></div>
+</section>
+
+<section id="s-coup">
+  <div class="finding"><div class="eyebrow">Noise</div><h2>Coupling from switch nodes into analog and bus signals</h2><div id="c-find"></div></div>
+  <div class="card"><h3>Voltage step a switch-node edge puts on each signal <small>mV, worst switch node, log scale</small></h3><div id="c-chart"></div><details><summary>Table</summary><div class="tw" id="c-table"></div></details>
+  <p class="note">Step = switch-node swing × coupling capacitance ÷ (coupling + the signal's own capacitance). Coupling capacitance comes from a 3-D field solve of the real copper round each switch node. The signal's own capacitance is its capacitors plus 4 pF per IC pin and 0.1 pF per mm of track.</p></div>
+  <div class="card"><h3>Where switching copper runs next to signals</h3>
+    <div class="pairimg"><div class="plate wide"><img id="img-cmap-b" alt="Switching copper and signal nets, current board"></div><div class="plate wide"><img id="img-cmap-n" alt="Switching copper and signal nets, ground-up board"></div></div></div>
+</section>
+
+<section id="s-flow">
+  <div class="finding"><div class="eyebrow">How it was made</div><h2>Tools and workflow</h2><div id="flow-find"></div></div>
+  <div class="card"><h3>Open connections after each routing pass <small>of about 350 to 375 signal connections</small></h3><div class="tw" id="pass-table"></div>
+  <p class="note" id="pass-note"></p></div>
+  <div class="card"><h3>Tools</h3><div class="tw" id="tool-table"></div></div>
+</section>
+
+<section id="s-cost">
+  <div class="finding"><div class="eyebrow">Effort</div><h2>Time and tokens this took</h2><div id="cost-find"></div></div>
+  <div class="card"><div class="tw" id="cost-table"></div><p class="note" id="cost-note"></p></div>
+</section>
+
+<section id="s-method">
+  <div class="finding"><div class="eyebrow">Method</div><h2>How the numbers were made, and what they leave out</h2></div>
+  <ul class="plain" id="method"></ul>
+</section>
+<footer><div id="foot"></div></footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const DATA = __DATA__;
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function h(tag,attrs,parent,text){const svg=['svg','g','rect','line','text','path','circle','polyline','polygon','title'].includes(tag);
+  const e=svg?document.createElementNS(NS,tag):document.createElement(tag);
+  for(const k in (attrs||{})) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; if(parent) parent.appendChild(e); return e;}
+const fmt=(v,d=1)=>v==null||!isFinite(v)?'n/a':v.toFixed(d);
+const tip=$('tip');
+function showTip(ev,rows,title){tip.textContent=''; if(title){const t=h('div',{class:'tl'},tip,title);}
+  rows.forEach(r=>{const d=h('div',{},tip); if(r.c){const k=h('span',{class:'k'},d); k.style.background=r.c;} h('b',{},d,r.v); d.appendChild(document.createTextNode(' '+r.l));});
+  tip.hidden=false; const x=ev.clientX||ev.target.getBoundingClientRect().left, y=ev.clientY||ev.target.getBoundingClientRect().top;
+  const w=tip.offsetWidth,hh=tip.offsetHeight; tip.style.left=Math.max(8,Math.min(window.innerWidth-w-8,x+14))+'px'; tip.style.top=Math.max(8,y-hh-12)+'px';}
+function hideTip(){tip.hidden=true;}
+function table(el,head,rows){el.textContent=''; const t=h('table',{},el); const tr=h('tr',{},h('thead',{},t)); head.forEach(c=>h('th',{},tr,c)); const tb=h('tbody',{},t);
+  rows.forEach(r=>{const x=h('tr',{},tb); r.forEach(c=>h('td',{},x,c));});}
+function niceMax(v){const p=Math.pow(10,Math.floor(Math.log10(v))); const m=v/p; return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p;}
+/* horizontal paired bars: rows [{label, sub, b, n}] ; supports negative values (zero line inside) */
+function hbars(el,rows,o){o=Object.assign({unit:'',d:1,labelW:190},o||{}); el.textContent='';
+  const W=520, lw=Math.min(o.labelW,W*0.42), rh=44, top=6, bot=26, padR=58;
+  const vals=rows.flatMap(r=>[r.b,r.n]).filter(v=>v!=null&&isFinite(v));
+  let lo=Math.min(0,...vals), hi=Math.max(0,...vals); hi=hi>0?niceMax(hi):0; lo=lo<0?-niceMax(-lo):0; if(hi===0&&lo===0) hi=1;
+  const H=top+rows.length*rh+bot; const svg=h('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.aria||'bar chart'},el);
+  const x0=lw+(lo<0?46:0), x1=W-padR; const sx=v=>x0+(v-lo)/(hi-lo)*(x1-x0);
+  const nt=4; const st=(hi-lo)/nt; const td=Math.abs(st-Math.round(st))<1e-9?0:Math.abs(st*10-Math.round(st*10))<1e-9?1:2; for(let i=0;i<=nt;i++){const v=lo+(hi-lo)*i/nt; const x=sx(v); h('line',{x1:x,x2:x,y1:top,y2:H-bot,stroke:Math.abs(v)<1e-12?'var(--axis)':'var(--line)','stroke-width':1},svg);
+    h('text',{x:x,y:H-bot+15,'text-anchor':'middle',class:'m'},svg,(Math.abs(v)<1e-12?'0':fmt(v,td)));}
+  if(lo<0) h('line',{x1:sx(0),x2:sx(0),y1:top,y2:H-bot,stroke:'var(--axis)','stroke-width':1},svg);
+  rows.forEach((r,i)=>{const y=top+i*rh; const g=h('g',{tabindex:0},svg);
+    h('rect',{x:0,y:y,width:W,height:rh,fill:'transparent'},g);
+    h('text',{x:0,y:y+(r.sub?17:24),class:'v'},g,r.label); if(r.sub) h('text',{x:0,y:y+32,class:'m'},g,r.sub);
+    [['b','var(--s1)',y+8],['n','var(--s2)',y+23]].forEach(([k,c,yy])=>{const v=r[k]; if(v==null||!isFinite(v)) {h('text',{x:x0+4,y:yy+10,class:'m'},g,'n/a'); return;}
+      const a=sx(Math.min(0,v)), b=sx(Math.max(0,v)); const w=Math.max(1.5,b-a); const rr=Math.min(4,w/2);
+      const d=v>=0?`M${a},${yy}h${w-rr}a${rr},${rr} 0 0 1 ${rr},${rr}v${12-2*rr}a${rr},${rr} 0 0 1 ${-rr},${rr}h${-(w-rr)}z`:`M${b},${yy}h${-(w-rr)}a${rr},${rr} 0 0 0 ${-rr},${rr}v${12-2*rr}a${rr},${rr} 0 0 0 ${rr},${rr}h${w-rr}z`;
+      h('path',{d:d,fill:c},g);
+      h('text',{x:v>=0?b+6:a-6,y:yy+10.5,class:'v','text-anchor':v>=0?'start':'end'},g,(o.sign&&v>0?'+':'')+fmt(v,o.d));});
+    const ev=e=>{const rows2=[{c:'var(--s1)',v:(r.b==null?'n/a':(o.sign&&r.b>0?'+':'')+fmt(r.b,o.d)+' '+o.unit),l:'current board'},{c:'var(--s2)',v:(r.n==null?'n/a':(o.sign&&r.n>0?'+':'')+fmt(r.n,o.d)+' '+o.unit),l:'ground-up board'}];
+      if(!o.sign&&r.b>0&&r.n!=null){const p=(r.n/r.b-1)*100; rows2.push({v:(p>0?'+':'')+fmt(p,0)+' %',l:'ground-up against current'});}
+      showTip(e,rows2,r.label+(r.sub?' · '+r.sub:''));};
+    g.addEventListener('pointermove',ev); g.addEventListener('focus',ev); g.addEventListener('pointerleave',hideTip); g.addEventListener('blur',hideTip);});
+}
+/* dumbbell on a log axis */
+function dumbbell(el,rows,o){el.textContent=''; const W=760, lw=210, rh=26, top=8, bot=40, padR=24; const H=top+rows.length*rh+bot;
+  const svg=h('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.aria},el); const lo=Math.log10(o.min), hi=Math.log10(o.max); const sx=v=>lw+(Math.log10(Math.max(v,o.min))-lo)/(hi-lo)*(W-padR-lw);
+  for(let e=Math.ceil(lo);e<=hi;e++){const x=sx(Math.pow(10,e)); h('line',{x1:x,x2:x,y1:top,y2:H-bot,stroke:'var(--line)','stroke-width':1},svg);
+    const v=Math.pow(10,e); h('text',{x:x,y:H-bot+15,'text-anchor':'middle',class:'m'},svg,v>=1?String(v):v.toFixed(-e));}
+  h('text',{x:(lw+W-padR)/2,y:H-6,'text-anchor':'middle',class:'m'},svg,o.axis);
+  let lastCat=null;
+  rows.forEach((r,i)=>{const y=top+i*rh+rh/2; const g=h('g',{tabindex:0},svg); h('rect',{x:0,y:y-rh/2,width:W,height:rh,fill:'transparent'},g);
+    h('text',{x:0,y:y+4,class:'v'},g,r.label); h('text',{x:lw-10,y:y+4,class:'m','text-anchor':'end'},g,r.cat);
+    const xb=r.b==null?null:sx(r.b), xn=r.n==null?null:sx(r.n);
+    if(xb!=null&&xn!=null) h('line',{x1:xb,x2:xn,y1:y,y2:y,stroke:'var(--axis)','stroke-width':2},g);
+    if(xb!=null) h('circle',{cx:xb,cy:y,r:5,fill:'var(--s1)',stroke:'var(--surface)','stroke-width':2},g);
+    if(xn!=null) h('circle',{cx:xn,cy:y,r:5,fill:'var(--s2)',stroke:'var(--surface)','stroke-width':2},g);
+    const ev=e=>showTip(e,[{c:'var(--s1)',v:r.b==null?'below 0.2 fF':o.f(r.b),l:'current board'+(r.bw?' ('+r.bw+')':'')},{c:'var(--s2)',v:r.n==null?'below 0.2 fF':o.f(r.n),l:'ground-up board'+(r.nw?' ('+r.nw+')':'')}],r.label+' · '+r.cat);
+    g.addEventListener('pointermove',ev); g.addEventListener('focus',ev); g.addEventListener('pointerleave',hideTip); g.addEventListener('blur',hideTip);});
+}
+/* two-series line chart with crosshair */
+function lines(el,ser,o){el.textContent=''; const W=520,H=250,L=40,R=64,T=10,B=34; const svg=h('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':o.aria},el);
+  const xs=ser.flatMap(s=>s.x), ys=ser.flatMap(s=>s.y); const xmax=o.xmax||Math.max(...xs); const ymin=o.ymin, ymax=o.ymax||niceMax(Math.max(...ys));
+  const sx=v=>L+v/xmax*(W-L-R), sy=v=>H-B-(v-ymin)/(ymax-ymin)*(H-T-B);
+  for(let i=0;i<=4;i++){const v=ymin+(ymax-ymin)*i/4; h('line',{x1:L,x2:W-R,y1:sy(v),y2:sy(v),stroke:i==0?'var(--axis)':'var(--line)','stroke-width':1},svg); h('text',{x:L-6,y:sy(v)+4,'text-anchor':'end',class:'m'},svg,fmt(v,0));}
+  const xt=o.xt||[0,10,20,30,40,50,60]; xt.filter(v=>v<=xmax).forEach(v=>h('text',{x:sx(v),y:H-B+15,'text-anchor':'middle',class:'m'},svg,String(v)));
+  h('text',{x:(L+W-R)/2,y:H-3,'text-anchor':'middle',class:'m'},svg,'minutes');
+  const ends=[];
+  ser.forEach(s=>{const pts=s.x.map((x,i)=>[x,s.y[i]]).filter(p=>p[0]<=xmax); let d=''; pts.forEach((p,i)=>{d+=(i?'L':'M')+sx(p[0]).toFixed(1)+','+sy(p[1]).toFixed(1);});
+    h('path',{d:d,fill:'none',stroke:s.c,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg); const e=pts[pts.length-1];
+    h('circle',{cx:sx(e[0]),cy:sy(e[1]),r:4,fill:s.c,stroke:'var(--surface)','stroke-width':2},svg); ends.push({y:sy(e[1]),t:fmt(e[1],o.d)+' '+o.unit,s});});
+  if(ends.length==2&&Math.abs(ends[0].y-ends[1].y)<13){const m=(ends[0].y+ends[1].y)/2; const up=ends[0].y<=ends[1].y?0:1; ends[up].y=m-7; ends[1-up].y=m+7;}
+  ends.forEach(e=>h('text',{x:W-R+9,y:e.y+4,class:'v'},svg,e.t));
+  const cross=h('line',{y1:T,y2:H-B,stroke:'var(--axis)','stroke-width':1,visibility:'hidden'},svg);
+  const hit=h('rect',{x:L,y:T,width:W-L-R,height:H-T-B,fill:'transparent',tabindex:0},svg);
+  const mv=e=>{const bb=svg.getBoundingClientRect(); const px=(e.clientX-bb.left)/bb.width*W; const xv=Math.max(0,Math.min(xmax,(px-L)/(W-L-R)*xmax));
+    const ref=ser[0].x; let k=0; for(let i=0;i<ref.length;i++) if(Math.abs(ref[i]-xv)<Math.abs(ref[k]-xv)) k=i; const xx=ref[k];
+    cross.setAttribute('x1',sx(xx)); cross.setAttribute('x2',sx(xx)); cross.setAttribute('visibility','visible');
+    showTip(e,ser.map(s=>{let j=0; for(let i=0;i<s.x.length;i++) if(Math.abs(s.x[i]-xx)<Math.abs(s.x[j]-xx)) j=i; return {c:s.c,v:fmt(s.y[j],o.d)+' '+o.unit,l:s.name};}),'at '+fmt(xx,xx<20?1:0)+' min');};
+  hit.addEventListener('pointermove',mv); hit.addEventListener('pointerleave',()=>{cross.setAttribute('visibility','hidden');hideTip();});
+}
+function seg(el,opts,cur,cb){const bs=[]; opts.forEach(([v,l])=>{const b=h('button',{type:'button','aria-pressed':String(v===cur)},el,l); bs.push(b);
+  b.addEventListener('click',()=>{bs.forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); cb(v);});});}
+function para(el,arr){el.textContent=''; arr.forEach(t=>{const p=h('p',{},el); t.split('**').forEach((s,i)=>{if(i%2) h('strong',{},p,s); else p.appendChild(document.createTextNode(s));});}); el.style.display='flex'; el.style.flexDirection='column'; el.style.gap='8px';}
+const T=DATA.text;
+$('lede').textContent=T.lede;
+/* scoreboard */
+(function(){const t=$('score'); const tr=h('tr',{},h('thead',{},t)); ['','Current board','Ground-up board','Ahead'].forEach(c=>h('th',{},tr,c)); const tb=h('tbody',{},t);
+  DATA.score.forEach(r=>{const x=h('tr',{},tb); h('td',{},x,r[0]); h('td',{},x,r[1]); h('td',{},x,r[2]); const c=h('td',{},x); const ch=h('span',{class:'chip '+r[3]},c); h('i',{},ch); ch.appendChild(document.createTextNode({b:'Current board',n:'Ground-up',l:'Level'}[r[3]]));});})();
+/* fix pass */
+para($('fix-find'),T.fix);
+(function(){const t=$('fix-table'); const tr=h('tr',{},h('thead',{},t)); ['','Current board','Ground-up, first version','After fix pass 1','After fix pass 2','Against the current board now'].forEach(c=>h('th',{},tr,c)); const tb=h('tbody',{},t);
+  DATA.fix.rows.forEach(r=>{const x=h('tr',{},tb); r.slice(0,5).forEach(c=>h('td',{},x,c)); const c=h('td',{},x); const ch=h('span',{class:'chip '+r[5]},c); h('i',{},ch); ch.appendChild(document.createTextNode({b:'Current board',n:'Ground-up',l:'Level'}[r[5]]));});})();
+$('fix-note').textContent=DATA.fix.note;
+DATA.fix.list.forEach(s=>h('li',{},$('fix-list'),s));
+function setFix(i){$('fix-img-o').src=DATA.img['fx_'+i+'_old']; $('fix-img-n').src=DATA.img['fx_'+i+'_new'];}
+seg($('fix-sel'),DATA.fix.pics.map((p,i)=>[i,p]),0,setFix); setFix(0);
+$('in4-img').src=DATA.img.in4; (function(){const el=$('in4-table'); table(el,['Net','Length','Width','Where it runs','Why it is there'],DATA.fix.in4rows); el.querySelectorAll('td').forEach(td=>td.classList.add('t'));})(); $('in4-note').textContent=DATA.fix.in4note;
+/* hot loops */
+para($('hot-find'),T.hot);
+hbars($('hot-chart'),DATA.hot.map(r=>({label:r.name,sub:r.sub,b:r.b.eff,n:r.n.eff})),{unit:'nH',d:2,aria:'Hot-loop inductance per loop, both boards'});
+table($('hot-table'),['Loop','Current nH','Ground-up nH','Best capacitor, current','Best capacitor, ground-up','Loop area current mm²','Loop area ground-up mm²','Ring current MHz','Ring ground-up MHz'],
+  DATA.hot.map(r=>[r.name,fmt(r.b.eff,2),fmt(r.n.eff,2),r.b.best,r.n.best,fmt(r.b.area,1),fmt(r.n.area,1),fmt(r.b.ring,0),fmt(r.n.ring,0)]));
+hbars($('sw-chart'),DATA.sw.map(r=>({label:r.name,sub:r.sub,b:r.b.cself,n:r.n.cself})),{unit:'pF',d:1,aria:'Switch-node capacitance, both boards'});
+table($('sw-table'),['Switch node','Current pF','Ground-up pF','To planes, current pF','To planes, ground-up pF','To listed signals, current fF','To listed signals, ground-up fF'],
+  DATA.sw.map(r=>[r.name,fmt(r.b.cself,1),fmt(r.n.cself,1),fmt(r.b.planes,1),fmt(r.n.planes,1),fmt(r.b.sig,0),fmt(r.n.sig,0)]));
+function setImg(pre,i){$(pre+'-img-b').src=DATA.img[pre+'_'+i+'_base']; $(pre+'-img-n').src=DATA.img[pre+'_'+i+'_new'];}
+seg($('hot-sel'),DATA.hot.map((r,i)=>[i,r.short]),0,i=>setImg('hot',i)); setImg('hot',0);
+/* gate loops */
+para($('gate-find'),T.gate);
+hbars($('gate-chart'),DATA.gate.map(r=>({label:r.name,sub:r.sub,b:r.b.L,n:r.n.L})),{unit:'nH',d:1,labelW:210,aria:'Gate-loop inductance per loop, both boards'});
+table($('gate-table'),['Loop','Current nH','Ground-up nH','Loop area current mm²','Loop area ground-up mm²','Drive track, current','Drive track, ground-up'],
+  DATA.gate.map(r=>[r.name,fmt(r.b.L,1),fmt(r.n.L,1),fmt(r.b.area,1),fmt(r.n.area,1),r.b.route,r.n.route]));
+seg($('gate-sel'),DATA.gate.map((r,i)=>[i,r.short]),0,i=>setImg('gate',i)); setImg('gate',0);
+/* losses */
+para($('loss-find'),T.loss);
+let lp=1, ls=0.5;
+function drawLoss(){const rows=DATA.loss.filter(r=>r.port===lp&&Math.abs(r.soc-ls)<1e-6);
+  hbars($('loss-chart'),rows.map(r=>({label:r.load,sub:fmt(r.ib,1)+' A battery side, '+fmt(r.iu,1)+' A USB side',b:r.b.cu*1e3,n:r.n.cu*1e3})),{unit:'mW',d:0,aria:'Copper loss per load, both boards'});
+  table($('loss-table'),['Load','Battery A','USB A','Copper current mW','Copper ground-up mW','Battery-side copper mW (cur / new)','USB-side copper mW (cur / new)','All losses current W','All losses ground-up W'],
+   rows.map(r=>[r.load,fmt(r.ib,2),fmt(r.iu,2),fmt(r.b.cu*1e3,0),fmt(r.n.cu*1e3,0),fmt(r.b.cub*1e3,0)+' / '+fmt(r.n.cub*1e3,0),fmt(r.b.cuu*1e3,0)+' / '+fmt(r.n.cuu*1e3,0),fmt(r.b.tot,2),fmt(r.n.tot,2)]));
+  const pr=DATA.paths.filter(r=>r.port===lp||r.port===0);
+  hbars($('path-chart'),pr.map(r=>({label:r.name,sub:r.sub,b:r.b,n:r.n})),{unit:'mΩ',d:2,labelW:200,aria:'Path resistance, both boards'});
+  table($('path-table'),['Path','Current mΩ','Ground-up mΩ','Layers carrying it, current','Layers carrying it, ground-up'],pr.map(r=>[r.name+' ('+r.sub+')',fmt(r.b,2),fmt(r.n,2),r.bl,r.nl]));}
+seg($('loss-port'),[[1,'Port 1'],[2,'Port 2']],1,v=>{lp=v;drawLoss();});
+seg($('loss-soc'),[[1.0,'100 %'],[0.5,'50 %'],[0.1,'10 %']],0.5,v=>{ls=v;drawLoss();}); drawLoss();
+$('img-lossmap').src=DATA.img.lossmap;
+/* thermals */
+para($('th-find'),T.th);
+if(DATA.thermal){ let tc=DATA.thermal.cases[0].key;
+  function drawTh(){const c=DATA.thermal.cases.find(x=>x.key===tc); const S=[{name:'current board',c:'var(--s1)',r:c.base},{name:'ground-up board',c:'var(--s2)',r:c.new}];
+    lines($('th-part'),S.map(s=>({name:s.name,c:s.c,x:s.r.s_t,y:s.r.s_part})),{unit:'°C',d:1,ymin:25,ymax:c.tmax,xmax:c.xmax,xt:c.xt,aria:'Hottest part temperature over time, both boards'});
+    lines($('th-pow'),S.map(s=>({name:s.name,c:s.c,x:s.r.s_t,y:s.r.s_p})),{unit:'W',d:0,ymin:0,ymax:c.pmax,xmax:c.xmax,xt:c.xt,aria:'Port power over time, both boards'});}
+  seg($('th-case'),DATA.thermal.cases.map(c=>[c.key,c.label]),tc,v=>{tc=v;drawTh();}); drawTh();
+  table($('th-table'),DATA.thermal.head,DATA.thermal.rows); $('th-note').textContent=DATA.thermal.note;
+} else { $('th-part').textContent='Runs still going.'; }
+/* kelvin */
+para($('k-find'),T.kelvin);
+hbars($('k-chart'),DATA.kelvin.map(r=>({label:r.name,sub:r.sub,b:r.b,n:r.n})),{unit:'%',d:2,sign:true,labelW:200,aria:'Kelvin tap error, both boards'});
+table($('k-table'),['Sense element','Current %','Ground-up %','Tap offsets current µV (+ / −)','Tap offsets ground-up µV (+ / −)','At'],DATA.kelvin.map(r=>[r.name,(r.b>0?'+':'')+fmt(r.b,2),(r.n>0?'+':'')+fmt(r.n,2),r.bt,r.nt,r.at]));
+hbars($('pa-chart'),DATA.pairs.map(r=>({label:r.name,sub:r.sub,b:r.b.area,n:r.n.area})),{unit:'mm²',d:1,labelW:200,aria:'Area enclosed by each sense pair, both boards'});
+table($('pa-table'),['Pair','Area current mm²','Area ground-up mm²','Length current mm (+ / −)','Length ground-up mm (+ / −)','Layers after the filter, current','Layers after the filter, ground-up'],
+  DATA.pairs.map(r=>[r.name,fmt(r.b.area,1),fmt(r.n.area,1),fmt(r.b.lp,1)+' / '+fmt(r.b.lm,1),fmt(r.n.lp,1)+' / '+fmt(r.n.lm,1),r.b.lay,r.n.lay]));
+(function(){const box=$('pairs'); let span=0; DATA.pairs.forEach(r=>['b','n'].forEach(k=>{const p=r[k].plus.concat(r[k].minus); const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]); span=Math.max(span,Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys));}));
+  span+=2; DATA.pairs.forEach(r=>{const f=h('figure',{},box); const two=h('div',{class:'two'},f);
+    ['b','n'].forEach(k=>{const d=h('div',{},two); const cap=h('div',{class:'cap'},d); h('i',{class:'sw '+k},cap); cap.appendChild(document.createTextNode((k=='b'?'Current':'Ground-up')+' · '+fmt(r[k].area,1)+' mm²'));
+      const p=r[k].plus.concat(r[k].minus); const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]); const cx=(Math.max(...xs)+Math.min(...xs))/2, cy=(Math.max(...ys)+Math.min(...ys))/2;
+      const S=140/span; const X=q=>(70+(q[0]-cx)*S).toFixed(1)+','+(70+(q[1]-cy)*S).toFixed(1);
+      const svg=h('svg',{viewBox:'0 0 140 140',role:'img','aria-label':r.name+' routing, '+(k=='b'?'current board':'ground-up board')},d);
+      h('polygon',{points:r[k].plus.concat(r[k].minus.slice().reverse()).map(X).join(' '),fill:'var(--ink)','fill-opacity':0.09,stroke:'none'},svg);
+      h('polyline',{points:r[k].minus.map(X).join(' '),fill:'none',stroke:'var(--muted)','stroke-width':2,'stroke-linejoin':'round'},svg);
+      h('polyline',{points:r[k].plus.map(X).join(' '),fill:'none',stroke:'var(--ink)','stroke-width':2,'stroke-linejoin':'round'},svg);
+      const a=r[k].plus[0], z=r[k].plus[r[k].plus.length-1]; h('text',{x:X(a).split(',')[0],y:+X(a).split(',')[1]-6,class:'m','text-anchor':'middle'},svg,'R'); h('text',{x:X(z).split(',')[0],y:+X(z).split(',')[1]-6,class:'m','text-anchor':'middle'},svg,'IC');});
+    h('figcaption',{},f,r.name);});})();
+/* coupling */
+para($('c-find'),T.coup);
+dumbbell($('c-chart'),DATA.coup.map(r=>({label:r.label,cat:r.cat,b:r.b?r.b.mv:null,n:r.n?r.n.mv:null,bw:r.b?r.b.w:null,nw:r.n?r.n.w:null})),{min:0.001,max:1000,axis:'mV step on the signal for one full switch-node edge',aria:'Coupled voltage step per signal, both boards',f:v=>(v>=1?fmt(v,1):v>=0.01?fmt(v,3):fmt(v*1000,2)+' µ').replace(/ µ$/,' µV')+(v>=0.01?' mV':'')});
+table($('c-table'),['Signal','Group','Own capacitance pF','Coupling current fF','Coupling ground-up fF','Step current mV','Step ground-up mV','Worst switch node (cur / new)'],
+  DATA.coup.map(r=>[r.label,r.cat,r.cn>=1000?fmt(r.cn/1000,0)+' nF':fmt(r.cn,0),r.b?fmt(r.b.c,1):'<0.2',r.n?fmt(r.n.c,1):'<0.2',r.b?(r.b.mv>=0.1?fmt(r.b.mv,1):fmt(r.b.mv,4)):'n/a',r.n?(r.n.mv>=0.1?fmt(r.n.mv,1):fmt(r.n.mv,4)):'n/a',(r.b?r.b.w:'n/a')+' / '+(r.n?r.n.w:'n/a')]));
+$('img-cmap-b').src=DATA.img.cmap_base; $('img-cmap-n').src=DATA.img.cmap_new;
+/* renders */
+para($('rend-find'),T.rend);
+function setRend(s){$('rend-b').src=DATA.img['render_base_'+s]; $('rend-n').src=DATA.img['render_new_'+s];}
+seg($('rend-sel'),[['top','Top'],['bottom','Bottom']],'top',setRend); setRend('top');
+/* vias */
+para($('via-find'),T.via);
+hbars($('via-chart'),DATA.via.map(r=>({label:r.name,sub:r.sub,b:r.b.i,n:r.n.i})),{unit:'A',d:2,labelW:215,aria:'Highest via current per power path, both boards'});
+table($('via-table'),['Path','Hottest via, current A','Hottest via, ground-up A','Where, current','Where, ground-up','Vias over 1 A (cur / new)','Vias over 2 A (cur / new)','Vias sharing the current (cur / new)'],
+  DATA.via.map(r=>[r.name+' ('+r.sub+')',fmt(r.b.i,2),fmt(r.n.i,2),r.b.at,r.n.at,r.b.o1+' / '+r.n.o1,r.b.o2+' / '+r.n.o2,r.b.car+' / '+r.n.car]));
+/* workflow */
+para($('flow-find'),T.flow);
+(function(){const el=$('pass-table'); const tb=h('table',{},el); const tr=h('tr',{},h('thead',{},tb)); ['Pass','Time, UTC','Still open','What changed'].forEach(c=>h('th',{},tr,c)); const body=h('tbody',{},tb);
+  const mx=Math.max(...DATA.passes.map(p=>p.open));
+  DATA.passes.forEach(p=>{const r=h('tr',{},body); h('td',{},r,p.name); h('td',{},r,p.t); const c=h('td',{class:'barcell'},r); const w=h('div',{class:'bar'},c); const f=h('i',{},w); f.style.width=(p.open/mx*78)+'%'; h('span',{},w,String(p.open)); h('td',{class:'t'},r,p.note);});
+  $('pass-note').textContent=T.pass_note;
+  const tt=$('tool-table'); table(tt,['Tool','What it did','Where it came from'],DATA.tools); tt.querySelectorAll('td').forEach(td=>td.classList.add('t'));})();
+/* cost */
+para($('cost-find'),T.cost);
+(function(){const M=v=>v>=1e6?fmt(v/1e6,2)+' M':fmt(v/1e3,0)+' k'; const H=v=>v>=1?fmt(v,1)+' h':v*60<1?'under 1 min':fmt(v*60,0)+' min';
+  const row=p=>[p.name,H(p.hours),String(p.turns),M(p.output_tokens),M(p.cache_read_input_tokens+p.cache_creation_input_tokens+p.input_tokens),'$'+fmt(p.usd,0)];
+  table($('cost-table'),['Part of the work','Working time','Model calls','Output tokens','Input tokens (mostly cached re-reads)','Cost at API rates'],DATA.cost.phases.map(row).concat([row(DATA.cost.total)]));
+  $('cost-note').textContent=T.cost_note;})();
+/* method */
+(function(){const u=$('method'); T.method.forEach(t=>{const li=h('li',{},u); t.split('**').forEach((s,i)=>{if(i%2) h('strong',{},li,s); else li.appendChild(document.createTextNode(s));});}); $('foot').textContent=T.foot;})();
+</script>

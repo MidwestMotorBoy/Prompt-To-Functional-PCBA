@@ -1,0 +1,68 @@
+[
+{
+"name": "Pass 1",
+"t": "00:57",
+"open": 76,
+"note": "First router run, after the power pours and Kelvin taps were drawn from coordinates."
+},
+{
+"name": "Pass 2",
+"t": "01:18",
+"open": 70,
+"note": "Same placement, failed nets routed first."
+},
+{
+"name": "Pass 3",
+"t": "01:18",
+"open": 80,
+"note": "Another net order. Conclusion: order is not the problem, the parts sit too tight for pins to reach a via."
+},
+{
+"name": "Pass 4",
+"t": "01:31",
+"open": 58,
+"note": "Parts placed again with a clear ring round each fine-pitch IC. Inner layers allowed to jog off their preferred direction."
+},
+{
+"name": "Pass 5",
+"t": "02:39",
+"open": 28,
+"note": "Rip-up and re-route added to the router."
+},
+{
+"name": "Pass 6",
+"t": "03:27",
+"open": 12,
+"note": "Placement fixed at the PD EEPROM, the second protector and a few charger pins, where fixed parts boxed nets in."
+},
+{
+"name": "Pass 7",
+"t": "05:26",
+"open": 5,
+"note": "Long top-to-bottom nets routed first. The full rule check then found 71 spacing errors: the router applied the high-current rule one way round only."
+},
+{
+"name": "Pass 8",
+"t": "06:42",
+"open": 10,
+"note": "Router fixed and those tracks laid again (71 errors down to 3), which opened ten connections again. A pour was covering the only via site for one pad."
+},
+{
+"name": "Pass 9",
+"t": "10:17",
+"open": 0,
+"note": "Last nets with hand-specified routes, the cut-up planes joined again. Then widening, silkscreen, final rule check and cup fit by 10:39."
+},
+{
+"name": "Fix pass, first board",
+"t": "18:00",
+"open": 0,
+"note": "Gate drives and the signals near switching copper lifted and laid again, four capacitors moved, vias added, six nets onto inner layer 4. It passed every check, and the comparison then found the PACK_P bus cut and the battery sense taps touched."
+},
+{
+"name": "Fix pass, final",
+"t": "18:45",
+"open": 0,
+"note": "Both faults corrected. Port 2 feedback track, the TS4 line and both charger TS vias moved away from the switch nodes."
+}
+]

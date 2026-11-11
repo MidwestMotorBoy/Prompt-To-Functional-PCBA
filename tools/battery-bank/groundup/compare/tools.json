@@ -1,0 +1,77 @@
+[
+[
+"KiCad 10 in a Docker container",
+"Loads and saves the board through its Python interface, refills zones, runs the rule check with the project's own rules and the schematic parity check, renders the pictures.",
+"Stock KiCad. No autorouter product was used."
+],
+[
+"Placement scripts",
+"Part positions kept as one JSON file and applied to the board, so a placement can be changed and replayed.",
+"Written for this job"
+],
+[
+"Cup-fit check",
+"Moves each part's 3D mesh to its new position and runs the 26 checks of the mechanical model after every placement change.",
+"The checks were in the repo; the runner is new"
+],
+[
+"Copper scripts",
+"Draw the power pours, via fields and Kelvin taps from coordinates I worked out per net.",
+"Written for this job"
+],
+[
+"Router",
+"A* maze router on a 0.05 mm grid over the front, back and two inner layers. Knows the clearance classes, escapes fine-pitch pins, rips up and re-routes, adds ground stitching. 1,641 lines.",
+"Written for this job"
+],
+[
+"Plane island finder",
+"Finds pieces of the GND, 3V3 and PACK_P planes that a new track cut off. KiCad only shows those as one airwire.",
+"Written for this job"
+],
+[
+"Hand-fix specs",
+"Small JSON files with exact tracks and vias for the spots the router could not solve, plus helpers that list free via sites and draw a zoomed picture of a pocket.",
+"Written for this job"
+],
+[
+"Link search",
+"Exact-clearance shortest-path search for one connection at a time over the signal layers, and a second one for single-layer tracks inside a ground plane.",
+"Written for the fix pass"
+],
+[
+"DC copper solver",
+"Path resistance, loss maps, via currents and Kelvin tap error from the real copper.",
+"From the board review of 2026-10-30"
+],
+[
+"Partial-inductance solver",
+"Hot-loop and gate-loop inductance in 3-D.",
+"From the loop study of 2026-11-06"
+],
+[
+"Field solver",
+"Coupling capacitance from each switch node to every other net.",
+"Written for this comparison"
+],
+[
+"Coupling locator",
+"Shows where on a net the charge from a switch node sits, in 0.5 mm bins per layer, so the track or via to move is known.",
+"Added to the field solver in the fix pass"
+],
+[
+"Loss and pack thermal model",
+"Loss at each load and the temperature runs. The 12 thermal runs ran on your PC.",
+"Already in the project"
+],
+[
+"Layout skill in the repo",
+"The layout rules I started from and the routing-discipline checker.",
+"Already in the repo"
+],
+[
+"Python with numpy, scipy, pyamg, Pillow, matplotlib; a headless browser",
+"All the solvers and pictures; the browser to look at this page before publishing it.",
+"Stock"
+]
+]

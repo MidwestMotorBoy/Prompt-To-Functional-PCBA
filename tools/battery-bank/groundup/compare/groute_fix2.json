@@ -1,0 +1,70 @@
+{
+ "P1 HS gate leg A (Q401)": {
+  "layers": {
+   "F": 2.9,
+   "In2": 5.8
+  },
+  "wmin": 0.15,
+  "vias": 2,
+  "total": 8.7
+ },
+ "P1 LS gate leg A (Q401)": {
+  "layers": {
+   "F": 3.0,
+   "In3": 4.8
+  },
+  "wmin": 0.15,
+  "vias": 2,
+  "total": 7.8
+ },
+ "P1 HS gate leg B (Q402)": {
+  "layers": {
+   "F": 9.0
+  },
+  "wmin": 0.15,
+  "vias": 0,
+  "total": 9.0
+ },
+ "P1 LS gate leg B (Q402)": {
+  "layers": {
+   "F": 7.2
+  },
+  "wmin": 0.15,
+  "vias": 0,
+  "total": 7.2
+ },
+ "P2 HS gate leg A (Q501)": {
+  "layers": {
+   "F": 2.9,
+   "In2": 5.8
+  },
+  "wmin": 0.15,
+  "vias": 2,
+  "total": 8.7
+ },
+ "P2 LS gate leg A (Q501)": {
+  "layers": {
+   "F": 3.0,
+   "B": 4.8
+  },
+  "wmin": 0.15,
+  "vias": 2,
+  "total": 7.8
+ },
+ "P2 HS gate leg B (Q502)": {
+  "layers": {
+   "F": 9.0
+  },
+  "wmin": 0.15,
+  "vias": 0,
+  "total": 9.0
+ },
+ "P2 LS gate leg B (Q502)": {
+  "layers": {
+   "F": 7.2
+  },
+  "wmin": 0.15,
+  "vias": 0,
+  "total": 7.2
+ }
+}

@@ -1,0 +1,188 @@
+94 candidate nets of 167
+s0 skip                        /Cells and Gauge/PACK_CMID        1.4 ->    1.4 mm  segs   4 ->   4  vias 0 -> 0  0.1 s
+s0 skip                        /USB Port 1/LDO_1V5               2.1 ->    2.1 mm  segs   4 ->   4  vias 0 -> 0  0.2 s
+s0 skip                        /USB Port 2/LDO_1V5               2.1 ->    2.1 mm  segs   4 ->   4  vias 0 -> 0  0.2 s
+s0 KEEP                        /USB Port 1/SS_5V                 3.1 ->    2.9 mm  segs   5 ->   4  vias 0 -> 0  0.4 s
+s0 KEEP                        /Cells and Gauge/WAKE             2.6 ->    2.1 mm  segs   4 ->   3  vias 0 -> 0  0.2 s
+s0 KEEP                        Net-(U102-CD)                     3.1 ->    3.1 mm  segs  16 ->   5  vias 2 -> 0  0.2 s
+s0 skip                        Net-(D101-K)                      4.6 ->    4.6 mm  segs   6 ->   6  vias 2 -> 2  0.4 s
+s0 KEEP                        Net-(F102-HTR)                    2.7 ->    1.1 mm  segs   3 ->   1  vias 0 -> 0  0.3 s
+s0 KEEP                        Net-(C313-Pad2)                   5.2 ->    3.1 mm  segs  16 ->   5  vias 0 -> 0  0.3 s
+s0 KEEP                        Net-(U101-PBI)                    3.2 ->    2.2 mm  segs   4 ->   2  vias 0 -> 0  0.1 s
+s0 KEEP                        /USB Port 2/SS_5V                 3.2 ->    3.2 mm  segs   7 ->   6  vias 0 -> 0  0.5 s
+s0 KEEP                        /Cells and Gauge/DSG              3.5 ->    3.4 mm  segs   7 ->   6  vias 2 -> 0  0.2 s
+s0 KEEP                        /Cells and Gauge/CHG              4.0 ->    3.7 mm  segs   4 ->   3  vias 2 -> 2  0.3 s
+s0 KEEP                        Net-(U403-FBG)                    4.1 ->    3.4 mm  segs  15 ->   6  vias 2 -> 2  0.3 s
+s0 KEEP                        Net-(U503-FBG)                    8.7 ->    4.1 mm  segs  13 ->   5  vias 2 -> 2  0.8 s
+s0 KEEP                        /USB Port 1/C_CC2                 8.3 ->    8.1 mm  segs  21 ->  13  vias 2 -> 2  0.8 s
+s0 KEEP                        /USB Port 1/VBIAS                 9.8 ->    8.6 mm  segs  12 ->  11  vias 2 -> 2  1.3 s
+s0 KEEP                        Net-(C110-Pad2)                   4.5 ->    4.3 mm  segs  11 ->   8  vias 2 -> 2  0.5 s
+s0 FAIL splits pour F GND (a G Net-(U404-FB)                     4.5 ->    4.3 mm  segs   7 ->   6  vias 2 -> 0  1.0 s
+s0 KEEP                        /USB Port 2/C_CC1                 7.4 ->    6.6 mm  segs  14 ->  10  vias 0 -> 0  0.6 s
+s0 KEEP                        Net-(U102-V4)                     5.3 ->    4.4 mm  segs   8 ->   6  vias 0 -> 0  0.2 s
+s0 skip                        Net-(U102-VDD)                    4.5 ->    4.6 mm  segs   5 ->   6  vias 0 -> 0  0.2 s
+s0 skip                        Net-(U504-FB)                     5.7 ->    5.5 mm  segs   8 ->   8  vias 2 -> 2  1.0 s
+s0 FAIL U401.40                /USB Port 1/PD_DRAIN              1.5 ->    0.0 mm  segs   2 ->   0  vias 0 -> 0  2.4 s
+s0 FAIL U501.40                /USB Port 2/PD_DRAIN              1.5 ->    0.0 mm  segs   2 ->   0  vias 0 -> 0  3.0 s
+s0 skip                        Net-(U406-FB)                     4.8 ->    4.8 mm  segs   8 ->   6  vias 0 -> 0  0.2 s
+s0 KEEP                        Net-(U506-FB)                    17.0 ->   16.3 mm  segs  29 ->  20  vias 2 -> 2  1.3 s
+s0 KEEP                        /USB Port 2/C_CC2                 5.9 ->    5.9 mm  segs   9 ->   9  vias 2 -> 2  0.8 s
+s0 KEEP                        /USB Port 2/VBIAS                 7.6 ->    7.9 mm  segs   7 ->   8  vias 2 -> 0  0.5 s
+s0 skip                        Net-(D411-A)                      5.3 ->    5.3 mm  segs   3 ->   3  vias 0 -> 0  0.2 s
+s0 skip                        Net-(D511-A)                      8.8 ->    8.8 mm  segs  10 ->   9  vias 2 -> 2  0.4 s
+s0 FAIL U403.36                /USB Port 1/FSW                   6.2 ->    0.0 mm  segs   9 ->   0  vias 0 -> 0  0.6 s
+s0 skip                        /USB Port 2/FSW                   6.1 ->    5.9 mm  segs   7 ->   7  vias 2 -> 2  0.3 s
+s0 KEEP                        Net-(Q409-D)                      5.9 ->    5.4 mm  segs   9 ->   7  vias 2 -> 0  0.3 s
+s0 skip                        Net-(U102-V1)                     5.5 ->    5.8 mm  segs  11 ->  11  vias 3 -> 2  0.4 s
+s0 KEEP                        /USB Port 1/C_CC1                12.2 ->   11.5 mm  segs  22 ->  15  vias 4 -> 3  1.2 s
+s0 skip                        Net-(U503-FB)                     8.1 ->    8.3 mm  segs   9 ->   7  vias 0 -> 0  0.2 s
+s0 KEEP                        Net-(U403-ACUV)                  25.6 ->   14.4 mm  segs  66 ->  19  vias 5 -> 3  2.2 s
+s0 skip                        Net-(U503-ACUV)                  10.7 ->   10.7 mm  segs   9 ->  10  vias 0 -> 0  0.3 s
+s0 KEEP                        Net-(U102-V2)                     9.2 ->    7.0 mm  segs  19 ->   7  vias 0 -> 0  0.5 s
+s0 KEEP                        Net-(U403-ACOV)                  11.2 ->    9.7 mm  segs  14 ->  11  vias 4 -> 3  0.8 s
+s0 skip                        Net-(U503-ACOV)                  11.5 ->   13.1 mm  segs  12 ->  13  vias 2 -> 2  0.7 s
+s0 KEEP                        Net-(U101-SMBD)                  11.3 ->   10.5 mm  segs  23 ->  12  vias 2 -> 2  0.6 s
+s0 KEEP                        Net-(U101-SMBC)                   9.9 ->    9.6 mm  segs  19 ->  12  vias 3 -> 2  0.6 s
+s0 FAIL U403.12                Net-(U403-FB)                    14.2 ->    0.0 mm  segs  25 ->   0  vias 4 -> 0  10.0 s
+s0 KEEP                        Net-(U503-ICHG)                  22.6 ->   21.8 mm  segs  12 ->   9  vias 2 -> 2  1.9 s
+s0 KEEP                        Net-(U403-ICHG)                  20.2 ->   17.3 mm  segs  53 ->  15  vias 4 -> 3  2.7 s
+s0 KEEP                        Net-(Q509-D)                     10.2 ->    8.4 mm  segs  12 ->   9  vias 0 -> 0  0.6 s
+s0 skip                        /USB Port 2/ILIM                 11.3 ->   11.3 mm  segs  12 ->  11  vias 2 -> 2  1.3 s
+s0 KEEP                        /USB Port 1/ILIM                 12.0 ->   11.7 mm  segs  32 ->  16  vias 4 -> 4  1.3 s
+s0 KEEP                        /MCU/SWDIO                       15.1 ->   12.7 mm  segs  41 ->   9  vias 2 -> 2  1.9 s
+s0 KEEP                        /MCU/SWCLK                       15.2 ->   13.3 mm  segs  42 ->  10  vias 2 -> 2  2.0 s
+s0 KEEP                        Net-(U102-V3)                    13.6 ->   12.7 mm  segs  33 ->  13  vias 3 -> 2  0.9 s
+s0 skip                        /USB Port 1/CC1                  25.2 ->   24.7 mm  segs  18 ->  15  vias 3 -> 3  2.7 s
+s0 KEEP                        /USB Port 2/CE_N                 15.8 ->   14.0 mm  segs  30 ->  14  vias 4 -> 3  0.8 s
+s0 KEEP                        /USB Port 1/CE_N                 15.9 ->   14.6 mm  segs  42 ->  18  vias 4 -> 3  1.5 s
+s0 KEEP                        /USB Port 1/CC2                  27.7 ->   27.2 mm  segs  21 ->  15  vias 2 -> 2  3.8 s
+s0 skip                        /USB Port 2/CC2                  15.9 ->   15.6 mm  segs  11 ->  10  vias 2 -> 2  1.6 s
+s0 KEEP                        /MCU/UART_TX                     21.2 ->   17.1 mm  segs  43 ->  12  vias 4 -> 3  4.3 s
+s0 KEEP                        /Cells and Gauge/DSG_G           14.8 ->   12.2 mm  segs  37 ->  12  vias 4 -> 3  0.9 s
+s0 KEEP                        /Cells and Gauge/BTP_INT         20.7 ->   16.7 mm  segs  68 ->  19  vias 3 -> 3  1.3 s
+s0 skip                        /USB Port 2/CC1                  15.7 ->   15.5 mm  segs  10 ->  11  vias 2 -> 2  2.6 s
+s0 KEEP                        /Cells and Gauge/TS3             27.1 ->   24.9 mm  segs  44 ->  19  vias 3 -> 2  3.8 s
+s0 skip                        /Cells and Gauge/TS1             24.6 ->   24.0 mm  segs  24 ->  24  vias 2 -> 2  2.5 s
+s0 KEEP                        /USB Port 1/SBU_FLT              27.1 ->   24.3 mm  segs  38 ->  19  vias 4 -> 3  3.3 s
+s0 KEEP                        Net-(Q104-G)                     28.0 ->   23.8 mm  segs  74 ->  38  vias 5 -> 2  2.9 s
+s0 KEEP                        /Cells and Gauge/CHG_G           36.9 ->   26.0 mm  segs 103 ->  25  vias 5 -> 4  4.1 s
+s0 FAIL splits pour In3 3V3    /USB Port 2/SBU_FLT              25.7 ->   27.3 mm  segs  12 ->  25  vias 3 -> 2  18.9 s
+s0 KEEP                        Net-(U102-OUT)                   34.6 ->   32.4 mm  segs  79 ->  23  vias 7 -> 5  8.9 s
+s0 KEEP                        /Cells and Gauge/TS2             24.7 ->   22.0 mm  segs  63 ->  18  vias 2 -> 2  2.4 s
+s0 FAIL D404.2                 /USB Port 1/DRV_SUP              26.4 ->    0.0 mm  segs  32 ->   0  vias 4 -> 0  4.6 s
+s0 FAIL splits pour B PACK_P   /Cells and Gauge/TS4             67.8 ->   61.0 mm  segs  52 ->  43  vias 6 -> 2  40.6 s
+s0 KEEP                        /MCU/NRST                        42.3 ->   29.3 mm  segs  34 ->  19  vias 4 -> 4  5.7 s
+s0 skip (track in a ground plane)  /USB Port 1/TS
+s0 skip (track in a ground plane)  /USB Port 2/TS
+s0 FAIL C511.1                 /USB Port 2/DRV_SUP              34.8 ->    0.0 mm  segs  33 ->   0  vias 5 -> 0  23.3 s
+s0 KEEP                        /Cells and Gauge/GAUGE_FUSE      39.9 ->   31.4 mm  segs 100 ->  19  vias 8 -> 5  10.8 s
+s0 skip                        /USB Port 1/DRV9_OFF             42.0 ->   40.2 mm  segs  25 ->  28  vias 2 -> 2  9.3 s
+s0 KEEP                        /USB Port 2/DRV9_OFF             43.0 ->   40.6 mm  segs  24 ->  20  vias 3 -> 2  17.9 s
+s0 KEEP                        3V3_SLEEP                        37.8 ->   35.4 mm  segs  64 ->  27  vias 6 -> 4  8.8 s
+s0 FAIL U503.3                 /USB Port 2/CHG_INT              37.5 ->    2.4 mm  segs  14 ->   3  vias 2 -> 0  11.2 s
+s0 KEEP                        CHG_INH                          59.5 ->   52.7 mm  segs 110 ->  30  vias 6 -> 5  10.2 s
+s0 skip (track in a ground plane)  /USB Port 1/CHG_INT
+s0 KEEP                        /USB Port 1/I2CC_SDA             75.9 ->   67.8 mm  segs  72 ->  45  vias 7 -> 5  36.8 s
+s0 FAIL U403.1                 /USB Port 1/I2CC_SCL             76.4 ->    8.7 mm  segs  72 ->  15  vias 7 -> 3  18.2 s
+s0 KEEP                        EN_5V1                           50.8 ->   49.5 mm  segs  51 ->  42  vias 4 -> 3  9.2 s
+s0 KEEP                        /USB Port 2/I2CC_SDA             54.1 ->   51.9 mm  segs  30 ->  24  vias 3 -> 3  11.1 s
+s0 FAIL U503.1                 /USB Port 2/I2CC_SCL             54.8 ->   13.7 mm  segs  47 ->  14  vias 6 -> 3  14.3 s
+s0 skip (track in a ground plane)  EN_5V2
+s0 skip (track in a ground plane)  SDA
+s0 KEEP                        SCL                             120.9 ->  102.5 mm  segs 142 ->  57  vias 10 -> 7  43.4 s
+s0 KEEP                        IRQ_N                           132.4 ->  124.6 mm  segs 102 ->  67  vias 10 -> 9  58.5 s
+sweep 0: kept 55, 451 s
+s1 skip                        /Cells and Gauge/PACK_CMID        1.4 ->    1.4 mm  segs   4 ->   4  vias 0 -> 0  0.1 s
+s1 skip                        /USB Port 1/LDO_1V5               2.1 ->    2.1 mm  segs   4 ->   4  vias 0 -> 0  0.2 s
+s1 skip                        /USB Port 2/LDO_1V5               2.1 ->    2.1 mm  segs   4 ->   4  vias 0 -> 0  0.2 s
+s1 skip                        /USB Port 1/SS_5V                 2.9 ->    2.9 mm  segs   4 ->   4  vias 0 -> 0  0.3 s
+s1 skip                        /Cells and Gauge/WAKE             2.1 ->    2.1 mm  segs   3 ->   3  vias 0 -> 0  0.2 s
+s1 KEEP                        Net-(U102-CD)                     3.1 ->    3.0 mm  segs   6 ->   5  vias 0 -> 0  0.2 s
+s1 skip                        Net-(D101-K)                      4.6 ->    4.6 mm  segs   6 ->   6  vias 2 -> 2  0.4 s
+s1 skip                        Net-(F102-HTR)                    1.1 ->    1.1 mm  segs   1 ->   1  vias 0 -> 0  0.3 s
+s1 KEEP                        Net-(C313-Pad2)                   3.1 ->    2.9 mm  segs   6 ->   4  vias 0 -> 0  0.3 s
+s1 skip                        Net-(U101-PBI)                    2.2 ->    2.2 mm  segs   2 ->   2  vias 0 -> 0  0.1 s
+s1 skip                        /USB Port 2/SS_5V                 3.2 ->    3.2 mm  segs   6 ->   6  vias 0 -> 0  0.5 s
+s1 skip                        /Cells and Gauge/DSG              3.4 ->    3.4 mm  segs   6 ->   6  vias 0 -> 0  0.2 s
+s1 skip                        /Cells and Gauge/CHG              3.7 ->    4.0 mm  segs   3 ->   4  vias 2 -> 2  0.2 s
+s1 skip                        Net-(U403-FBG)                    3.4 ->    3.6 mm  segs   6 ->   6  vias 2 -> 2  0.4 s
+s1 skip                        Net-(U503-FBG)                    4.1 ->    4.4 mm  segs   5 ->   6  vias 2 -> 2  0.3 s
+s1 KEEP                        /USB Port 1/C_CC2                 8.1 ->    7.8 mm  segs  13 ->  10  vias 2 -> 2  0.8 s
+s1 skip                        /USB Port 1/VBIAS                 8.6 ->    8.6 mm  segs  11 ->  11  vias 2 -> 2  1.2 s
+s1 skip                        Net-(C110-Pad2)                   4.3 ->    4.7 mm  segs   8 ->   9  vias 2 -> 2  0.5 s
+s1 FAIL splits pour F GND (a G Net-(U404-FB)                     4.5 ->    4.3 mm  segs   7 ->   6  vias 2 -> 0  0.9 s
+s1 skip                        /USB Port 2/C_CC1                 6.6 ->    6.6 mm  segs  10 ->  10  vias 0 -> 0  0.5 s
+s1 KEEP                        Net-(U102-V4)                     4.4 ->    4.2 mm  segs   7 ->   5  vias 0 -> 0  0.2 s
+s1 skip                        Net-(U102-VDD)                    4.5 ->    4.6 mm  segs   5 ->   6  vias 0 -> 0  0.2 s
+s1 skip                        Net-(U504-FB)                     5.7 ->    5.5 mm  segs   8 ->   8  vias 2 -> 2  1.0 s
+s1 FAIL U401.40                /USB Port 1/PD_DRAIN              1.5 ->    0.0 mm  segs   2 ->   0  vias 0 -> 0  3.3 s
+s1 FAIL U501.40                /USB Port 2/PD_DRAIN              1.5 ->    0.0 mm  segs   2 ->   0  vias 0 -> 0  3.1 s
+s1 skip                        Net-(U406-FB)                     4.8 ->    4.8 mm  segs   8 ->   6  vias 0 -> 0  0.2 s
+s1 skip                        Net-(U506-FB)                    16.3 ->   16.3 mm  segs  20 ->  20  vias 2 -> 2  1.1 s
+s1 skip                        /USB Port 2/C_CC2                 5.9 ->    5.9 mm  segs   9 ->   9  vias 2 -> 2  0.8 s
+s1 skip                        /USB Port 2/VBIAS                 7.9 ->    7.9 mm  segs   8 ->   7  vias 0 -> 0  0.4 s
+s1 skip                        Net-(D411-A)                      5.3 ->    5.3 mm  segs   3 ->   3  vias 0 -> 0  0.1 s
+s1 skip                        Net-(D511-A)                      8.8 ->    8.8 mm  segs  10 ->   9  vias 2 -> 2  0.4 s
+s1 FAIL U403.36                /USB Port 1/FSW                   6.2 ->    0.0 mm  segs   9 ->   0  vias 0 -> 0  0.5 s
+s1 skip                        /USB Port 2/FSW                   6.1 ->    5.9 mm  segs   7 ->   7  vias 2 -> 2  0.3 s
+s1 skip                        Net-(Q409-D)                      5.4 ->    5.4 mm  segs   7 ->   7  vias 0 -> 0  0.4 s
+s1 KEEP                        Net-(U102-V1)                     5.5 ->    5.7 mm  segs  11 ->   8  vias 3 -> 2  0.5 s
+s1 skip                        /USB Port 1/C_CC1                11.5 ->   11.5 mm  segs  15 ->  15  vias 3 -> 3  1.2 s
+s1 skip                        Net-(U503-FB)                     8.1 ->    8.3 mm  segs   9 ->   7  vias 0 -> 0  0.2 s
+s1 skip                        Net-(U403-ACUV)                  14.4 ->   14.4 mm  segs  19 ->  19  vias 3 -> 3  1.3 s
+s1 skip                        Net-(U503-ACUV)                  10.7 ->   10.7 mm  segs   9 ->  10  vias 0 -> 0  0.3 s
+s1 KEEP                        Net-(U102-V2)                     7.0 ->    6.9 mm  segs   8 ->   7  vias 0 -> 0  0.4 s
+s1 skip                        Net-(U403-ACOV)                   9.7 ->    9.0 mm  segs  11 ->  12  vias 3 -> 3  0.7 s
+s1 skip                        Net-(U503-ACOV)                  11.5 ->   13.1 mm  segs  12 ->  13  vias 2 -> 2  0.8 s
+s1 skip                        Net-(U101-SMBD)                  10.5 ->   10.5 mm  segs  12 ->  12  vias 2 -> 2  0.6 s
+s1 skip                        Net-(U101-SMBC)                   9.6 ->    9.6 mm  segs  12 ->  12  vias 2 -> 2  0.8 s
+s1 FAIL U403.12                Net-(U403-FB)                    14.2 ->    0.0 mm  segs  25 ->   0  vias 4 -> 0  10.2 s
+s1 skip                        Net-(U503-ICHG)                  21.8 ->   21.8 mm  segs   9 ->   9  vias 2 -> 2  1.8 s
+s1 skip                        Net-(U403-ICHG)                  17.3 ->   17.3 mm  segs  15 ->  15  vias 3 -> 3  1.9 s
+s1 skip                        Net-(Q509-D)                      8.4 ->    8.4 mm  segs   9 ->   9  vias 0 -> 0  0.5 s
+s1 skip                        /USB Port 2/ILIM                 11.3 ->   11.0 mm  segs  12 ->  13  vias 2 -> 2  1.3 s
+s1 skip                        /USB Port 1/ILIM                 11.7 ->   12.6 mm  segs  17 ->  13  vias 4 -> 3  1.1 s
+s1 KEEP                        /MCU/SWDIO                       12.7 ->   12.7 mm  segs  10 ->   8  vias 2 -> 2  1.8 s
+s1 skip                        /MCU/SWCLK                       13.3 ->   13.3 mm  segs  10 ->  10  vias 2 -> 2  2.0 s
+s1 skip                        Net-(U102-V3)                    12.7 ->   12.7 mm  segs  13 ->  13  vias 2 -> 2  1.0 s
+s1 skip                        /USB Port 1/CC1                  25.2 ->   24.7 mm  segs  18 ->  15  vias 3 -> 3  2.7 s
+s1 skip                        /USB Port 2/CE_N                 14.0 ->   14.0 mm  segs  14 ->  14  vias 3 -> 3  0.8 s
+s1 skip                        /USB Port 1/CE_N                 14.6 ->   14.6 mm  segs  18 ->  18  vias 3 -> 3  1.3 s
+s1 skip                        /USB Port 1/CC2                  27.2 ->   27.2 mm  segs  15 ->  15  vias 2 -> 2  3.2 s
+s1 skip                        /USB Port 2/CC2                  15.9 ->   15.6 mm  segs  11 ->  10  vias 2 -> 2  1.7 s
+s1 skip                        /MCU/UART_TX                     17.1 ->   17.1 mm  segs  12 ->  12  vias 3 -> 3  3.8 s
+s1 skip                        /Cells and Gauge/DSG_G           12.2 ->   12.9 mm  segs  12 ->  13  vias 3 -> 3  0.8 s
+s1 skip                        /Cells and Gauge/BTP_INT         16.7 ->   17.2 mm  segs  19 ->  21  vias 3 -> 3  1.2 s
+s1 skip                        /USB Port 2/CC1                  15.7 ->   15.5 mm  segs  10 ->  11  vias 2 -> 2  2.2 s
+s1 KEEP                        /Cells and Gauge/TS3             24.9 ->   24.5 mm  segs  20 ->  18  vias 2 -> 2  3.0 s
+s1 skip                        /Cells and Gauge/TS1             24.6 ->   24.0 mm  segs  24 ->  22  vias 2 -> 2  2.7 s
+s1 skip                        /USB Port 1/SBU_FLT              24.3 ->   26.0 mm  segs  19 ->  28  vias 3 -> 3  3.8 s
+s1 KEEP                        Net-(Q104-G)                     23.8 ->   23.7 mm  segs  39 ->  36  vias 2 -> 2  2.8 s
+s1 KEEP                        /Cells and Gauge/CHG_G           26.0 ->   25.8 mm  segs  27 ->  24  vias 4 -> 4  5.7 s
+s1 FAIL splits pour In3 3V3    /USB Port 2/SBU_FLT              25.7 ->   27.1 mm  segs  12 ->  26  vias 3 -> 3  19.2 s
+s1 skip                        Net-(U102-OUT)                   32.4 ->   32.7 mm  segs  24 ->  23  vias 5 -> 5  10.0 s
+s1 skip                        /Cells and Gauge/TS2             22.0 ->   21.8 mm  segs  18 ->  14  vias 2 -> 2  2.4 s
+s1 FAIL D404.2                 /USB Port 1/DRV_SUP              26.4 ->    0.0 mm  segs  32 ->   0  vias 4 -> 0  4.5 s
+s1 FAIL splits pour In3 3V3    /Cells and Gauge/TS4             67.8 ->   34.6 mm  segs  52 ->  25  vias 6 -> 4  38.9 s
+s1 skip                        /MCU/NRST                        29.3 ->   29.7 mm  segs  19 ->  21  vias 4 -> 4  5.6 s
+s1 skip (track in a ground plane)  /USB Port 1/TS
+s1 skip (track in a ground plane)  /USB Port 2/TS
+s1 FAIL C511.1                 /USB Port 2/DRV_SUP              34.8 ->    0.0 mm  segs  33 ->   0  vias 5 -> 0  23.2 s
+s1 skip                        /Cells and Gauge/GAUGE_FUSE      31.4 ->   31.7 mm  segs  19 ->  21  vias 5 -> 5  9.2 s
+s1 skip                        /USB Port 1/DRV9_OFF             42.0 ->   40.2 mm  segs  25 ->  28  vias 2 -> 2  9.5 s
+s1 skip                        /USB Port 2/DRV9_OFF             40.6 ->   40.6 mm  segs  20 ->  20  vias 2 -> 2  17.7 s
+s1 KEEP                        3V3_SLEEP                        35.4 ->   35.4 mm  segs  28 ->  24  vias 4 -> 4  9.2 s
+s1 FAIL U503.3                 /USB Port 2/CHG_INT              37.5 ->    2.4 mm  segs  14 ->   3  vias 2 -> 0  11.6 s
+s1 skip                        CHG_INH                          52.7 ->   52.7 mm  segs  31 ->  30  vias 5 -> 5  8.5 s
+s1 skip (track in a ground plane)  /USB Port 1/CHG_INT
+s1 skip                        /USB Port 1/I2CC_SDA             67.8 ->   67.8 mm  segs  46 ->  45  vias 5 -> 5  35.1 s
+s1 FAIL U403.1                 /USB Port 1/I2CC_SCL             76.4 ->    8.7 mm  segs  72 ->  15  vias 7 -> 3  18.3 s
+s1 skip                        EN_5V1                           49.5 ->   49.4 mm  segs  44 ->  42  vias 3 -> 3  9.2 s
+s1 skip                        /USB Port 2/I2CC_SDA             51.9 ->   51.9 mm  segs  25 ->  24  vias 3 -> 3  9.9 s
+s1 FAIL U503.1                 /USB Port 2/I2CC_SCL             54.8 ->   13.7 mm  segs  47 ->  14  vias 6 -> 3  13.6 s
+s1 skip (track in a ground plane)  EN_5V2
+s1 skip (track in a ground plane)  SDA
+s1 skip                        SCL                             102.5 ->  102.7 mm  segs  57 ->  58  vias 7 -> 7  42.9 s
+s1 skip                        IRQ_N                           124.6 ->  124.4 mm  segs  68 ->  66  vias 9 -> 9  55.2 s
+sweep 1: kept 11, 889 s
+changed nets 56 spec items 3163
