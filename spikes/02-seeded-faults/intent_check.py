@@ -17,6 +17,8 @@ Rules:
            pin it is meant for (at="U404.FB") no longer touches any of the parts that set it
   ground   a pin the symbol names GND, PGND, AGND or VSS is not on a 0 V net; a supply pin is on a 0 V net
   stage    a declared hot loop's high-side pins are not all on its supply, or its low-side pins not all on its return
+  recmax   a pin's net runs (normal_v, else max_v) above the part's recommended operating maximum
+  clamp    a clamp's clamping voltage is above the absolute maximum of a pin on the net it protects
   bus      a net joins a data pin and a clock pin (names ending SDA, SCL), or such a pin meets no other of its kind
   exclusive  the node at an expectation's pin carries a part that is neither bound to it nor the pin's own part
   nofacts  (check only) a part with three or more pins that has no limits file
@@ -43,17 +45,32 @@ def check(d, cons, limits, kbmap, symlib):
     nets_of = {}
     for n, nodes in d["nets"].items():
         for r, p in nodes: nets_of.setdefault(r, {})[p] = n
+    vnorm = {n: v.get("normal_v", v["max_v"]) for n, v in cons["nets"].items() if "max_v" in v}; across = cons.get("across", {})
+    absmax_on = {}                            # net -> [(limit, "U401.VBUS", page)] for the clamp rule
+    for r, c in d["comps"].items():
+        L = limits.get(kbmap.get(c["lib"]))
+        if not (L and L.get("abs_max")): continue
+        lim = {p: a for a in L["abs_max"] for p in a["pins"]}
+        for pin in symlib.pins(*c["lib"].split(":")):
+            a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = nets_of.get(r, {}).get(pin["num"])
+            if a and n: absmax_on.setdefault(n, []).append((a["max_v"], f"{r}.{pin['name']}", a["page"]))
     standoff = {k: v for L in limits.values() for k, v in L.get("standoff", {}).items()}
     for r, c in d["comps"].items():
         on = nets_of.get(r, {})
         worst = max(((vmax[n], n) for n in on.values() if n in vmax), default=None)
         if c["lib"].startswith("Device:C"):
             m = re.search(r"(\d+(?:\.\d+)?)\s*V\b", c["value"])
-            if m and worst and float(m.group(1)) < worst[0]:
+            if m and r in across:
+                if float(m.group(1)) < across[r]: out.add(f"cap: {r} is rated {m.group(1)} V, declared to see {across[r]:g} V across it")
+            elif m and worst and float(m.group(1)) < worst[0]:
                 out.add(f"cap: {r} is rated {m.group(1)} V, {worst[1]} reaches {worst[0]:g} V")
         for k, s in standoff.items():
             if c["value"].startswith(k) and worst and s["max_v"] < worst[0]:
                 out.add(f"standoff: {r} ({k}) works to {s['max_v']} V (p.{s['page']}), {worst[1]} reaches {worst[0]:g} V")
+            if c["value"].startswith(k) and "clamp_v" in s:
+                for n in on.values():
+                    for lim_v, who, pg in absmax_on.get(n, []):
+                        if vmax.get(n) and s["clamp_v"] > lim_v: out.add(f"clamp: {r} ({k}) clamps at {s['clamp_v']} V, {who} on {n} is limited to {lim_v} V (p.{pg})")
         L = limits.get(kbmap.get(c["lib"]))
         if L and L.get("abs_max"):
             lim = {p: a for a in L["abs_max"] for p in a["pins"]}
@@ -61,6 +78,12 @@ def check(d, cons, limits, kbmap, symlib):
                 a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = on.get(pin["num"])
                 if a and n in vmax and vmax[n] > a["max_v"]:
                     out.add(f"absmax: {r}.{pin['name']} is limited to {a['max_v']} V (p.{a['page']}), {n} reaches {vmax[n]:g} V")
+        if L and L.get("rec_max"):
+            lim = {p: a for a in L["rec_max"] for p in a["pins"]}
+            for pin in symlib.pins(*c["lib"].split(":")):
+                a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = on.get(pin["num"])
+                if a and n in vnorm and vnorm[n] > a["max_v"]:
+                    out.add(f"recmax: {r}.{pin['name']} is specified to work up to {a['max_v']} V (p.{a['page']}), {n} runs at {vnorm[n]:g} V")
         for pin in symlib.pins(*c["lib"].split(":")):
             n = on.get(pin["num"])
             if n is None: continue
@@ -109,10 +132,12 @@ def check(d, cons, limits, kbmap, symlib):
 def verify(limits, sheets):
     bad = n = 0
     for part, L in sorted(limits.items()):
-        if "waiver" in L: print(f"WAIVER  {part}: {L['waiver']}"); continue
+        if "waiver" in L:
+            print(f"WAIVER  {part}: {L['waiver']}")
+            if "pdf" not in L: continue
         text = subprocess.run(["pdftotext", "-layout", f"{sheets}/{L['pdf']}", "-"], capture_output=True, text=True).stdout.split("\f")
         pages = [" ".join(p.split()) for p in text]
-        items = [(", ".join(a["pins"][:3]), a, a["max_v"]) for a in L.get("abs_max", [])]
+        items = [(", ".join(a["pins"][:3]), a, a["max_v"]) for a in L.get("abs_max", []) + L.get("rec_max", [])]
         items += [(k, f, f["value"]) for k, f in L.get("facts", {}).items()] + [(k, s, s["max_v"]) for k, s in L.get("standoff", {}).items()]
         for label, f, value in items:
             n += 1

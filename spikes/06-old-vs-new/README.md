@@ -63,3 +63,17 @@ What each way did that the other did not:
 5. The capacitor rule compares rating with the net's voltage to ground. It should use the voltage across the part.
 6. The review skill made the old way's answer richer. The new pipeline needs the same review step after the gate,
    and block code needs a place for design notes so they are not lost.
+
+## Fixed since (same day)
+
+Points 2 to 5 are now in the gate (`spikes/02-seeded-faults/intent_check.py`) and kernel:
+- `recmax`: limits files may carry `rec_max` (recommended operating maximum, page and quote); a net's normal
+  voltage (`volts(..., normal=)`, else its maximum) must stay under it.
+- `clamp`: a clamp's `clamp_v` must not exceed the absolute maximum of any pin on the net it protects.
+- A waiver file may still carry ratings; the USB-C receptacle now has its 20 V rating.
+- `across(max_v, ref)` declares the voltage across a part that has no end on ground; the capacitor rule uses it.
+
+Replayed on task 2's conditions (25.2 V running, 26.5 V maximum, TVS2700): the gate now reports the PD controller
+(22 V operating), the connector (20 V) and the clamp above the PD controller's 28 V limit. The third unseen fault
+set from spike 2 still scores 49 of 60, and the original design still passes with no findings.
+Still open: the review step after the gate, and design notes in block code.

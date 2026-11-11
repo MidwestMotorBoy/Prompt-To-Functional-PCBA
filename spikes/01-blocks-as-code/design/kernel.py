@@ -106,9 +106,15 @@ def declare(net, **kw):
     CONSTRAINTS["nets"].setdefault(net.name, {}).update(kw)
     return net
 
-def volts(max_v, *nets):
-    """Shorthand: the same max_v for several nets."""
-    for n in nets: declare(n, max_v=max_v)
+def volts(max_v, *nets, normal=None):
+    """Shorthand: the same max_v for several nets. max_v is the highest the net can reach, faults included;
+    normal= is the highest it runs at in normal use (checked against recommended operating limits; default max_v)."""
+    for n in nets: declare(n, max_v=max_v, **({"normal_v": normal} if normal is not None else {}))
+
+def across(max_v, *refs):
+    """The highest voltage across a two-terminal part when neither end is ground (a filter capacitor across a sense
+    resistor). Without this the part is rated against the highest net it touches."""
+    CONSTRAINTS.setdefault("across", {}).update({"".join(r) if not isinstance(r, str) else r: max_v for r in refs})
 
 def expect(name, expr, target, tol, unit="", at=None, **bind):
     """What a set of part values is meant to produce, so a wrong value is a failed check and not a silent change.
