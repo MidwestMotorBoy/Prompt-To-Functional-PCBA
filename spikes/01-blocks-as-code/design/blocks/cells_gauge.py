@@ -293,6 +293,6 @@ def cells_gauge(gnd, irq_n, pack_p, scl, sda):
         volts(16.8, gauge_fuse); volts(8, net_u102_out, net_q104_g)   # OUT about 7 V; gate sees 8 V at most via 5.1k/51k
         across(16.8, "C101", "C102", "C103", "C104", "C112", "C113", "C114", "C110", "C111", "C107", "C108")
         waive("recmax: U101.CHG", "the gauge's own charge pump sets this level (pack + 10.5 to 12 V); the 26 V row in "
-              "the recommended table is lower than what the part itself produces on a 16.8 V pack. Logan to confirm")
+              "the recommended table is lower than what the part itself produces on a 16.8 V pack. Logan confirmed 2026-11-11: these are the external FET drive pins, 32 V absolute maximum, so 28.8 V is expected")
         waive("recmax: U101.DSG", "same as U101.CHG")
 
