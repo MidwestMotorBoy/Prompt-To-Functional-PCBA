@@ -16,6 +16,8 @@ Rules:
            pin it is meant for (at="U404.FB") no longer touches any of the parts that set it
   ground   a pin the symbol names GND, PGND, AGND or VSS is not on a 0 V net; a supply pin is on a 0 V net
   stage    a declared hot loop's high-side pins are not all on its supply, or its low-side pins not all on its return
+  bus      a net joins a data pin and a clock pin (names ending SDA, SCL), or such a pin meets no other of its kind
+  exclusive  the node at an expectation's pin carries a part that is neither bound to it nor the pin's own part
   nofacts  (check only) a part with three or more pins that has no limits file
 `score` adds an "intent" gate to <mutants dir>/results.json (written by score.py) and prints the table.
 """
@@ -74,10 +76,22 @@ def check(d, cons, limits, kbmap, symlib):
         for target, want in zip(h["switch_pins"], (h["supply"], h["ret"])):
             got = pin_nets(target)
             if got != {want}: out.add(f"stage: {name}: {target} should be on {want} only, is on {', '.join(sorted(str(g) for g in got))}")
+    bus = {}                                  # net -> {"SDA": [pins], "SCL": [pins]}, from symbol pin names
+    for r, c in d["comps"].items():
+        for pin in symlib.pins(*c["lib"].split(":")):
+            m = re.search(r"(?:^|_)(SDA|SCL)$", pin["name"]); n = nets_of.get(r, {}).get(pin["num"])
+            if m and n: bus.setdefault(n, {}).setdefault(m.group(1), []).append(f"{r}.{pin['name']}")
+    for n, b in bus.items():
+        if len(b) == 2: out.add(f"bus: {n} joins data and clock pins: {', '.join(b['SDA'] + b['SCL'])}")
+        for kind, pins in b.items():
+            if len(pins) == 1: out.add(f"bus: {pins[0]} on {n} meets no other {kind} pin")
     for name, e in cons.get("expect", {}).items():
         if e.get("at"):
+            at_ref = e["at"].split(".")[0]
             touching = {r for n in pin_nets(e["at"]) for r, p in d["nets"].get(n, [])}
             if not (touching & set(e["bind"].values())): out.add(f"expect: {name}: {e['at']} no longer touches the parts that set it")
+            extra = touching - set(e["bind"].values()) - {at_ref}
+            if extra: out.add(f"exclusive: {name}: the node at {e['at']} also carries {', '.join(sorted(extra))}")
         env, missing = {}, None
         for k, b in e["bind"].items():
             if b in d["comps"]: env[k] = ohms(d["comps"][b]["value"])

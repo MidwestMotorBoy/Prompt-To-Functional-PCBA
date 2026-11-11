@@ -167,12 +167,44 @@ What still passes, fresh set:
 Of the five historical bugs only the exposed-pad footprint is left, and that is a footprint check, not a
 netlist one.
 
+## Part 5: bus and exclusive-node rules, and a third unseen set
+
+Two more rules, both free of datasheet facts:
+
+- `bus`: a net must not join a data pin and a clock pin (symbol names ending SDA, SCL), and each such pin must
+  meet another of its kind. Limit: a bus with a single device on the sheet needs its partner declared.
+- `exclusive`: the node at an expectation's pin (a feedback or programming node) may carry only the parts bound
+  to that expectation.
+
+Scored on a third set (seed 3) generated after the rules were written:
+
+| | old checks | all checks | of real faults |
+|---|---|---|---|
+| first set, 65 (rules tuned on it) | 21 | 52 | 52 of 63 |
+| second set, 60 (rules of parts 4 and 5 tuned on it) | 28 | 51 | 51 of 57 |
+| **third set, 60 (unseen)** | 26 | **49** | **49 of 57** |
+
+Third set by class: opened pins 10 of 10, moved pins 9, swapped pins 9, wrong values 7, wrong ratings 7 (the
+other 3 are 6.3 V parts on nets of 5.5 V or less), deleted parts 7.
+
+What passes on the unseen set, and what each would take:
+
+1. Pull-up values off by ten (3) and a deleted sense-filter resistor (2), a deleted 220 pF CC capacitor (1):
+   legal circuits with wrong behaviour. Needs a behaviour expectation per kind (bus rise time, filter corner),
+   or stays a human review item.
+2. A PD-controller CC pin swapped with a grounded GPIO, and a dead-battery pin moved to a 10 V gate net (2):
+   needs the pin's function from the datasheet, not just its limit.
+3. No derating yet: a 6.3 V capacitor on a 5.5 V rail passes. A derating factor per dielectric is one line.
+
+All rules together run in under a second per design and use no LLM tokens. The declarations they need are
+about 25 lines per block.
+
 ## Next
 
-- Pin function per pin (bus, enable, feedback, gate) from two independent reads, and rules on it.
-- A fact source for connectors (the USB Type-C pin assignment).
-- Expectations for bulk capacitance and for the thermistor network.
-- Then a third fresh seed.
+- Pin function per pin from two independent reads (the regex read and an LLM read must agree), stored with the
+  limits; a fact source for connectors.
+- Capacitor derating; expectations for bulk capacitance, the thermistor network and I2C pull-ups.
+- Fold `intent_check.py check` into the kernel's `build()` so a failing design never produces sheets.
 
 ## Run it
 
