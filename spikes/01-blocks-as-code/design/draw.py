@@ -68,7 +68,7 @@ class Sheet:
         self._ext(x + 10, y + 10)
         # KiCad turns field text with the symbol: undo that so text always reads left to right
         fa = 90 if angle in (90, 270) else 0
-        fj = "right" if (angle == 180) != mirror else "left"
+        fj = "right" if (angle in (90, 180)) != mirror else "left"
         rx, ry = ref_at or (x + 2.54, y - 1.27)
         vx, vy = val_at or (x + 2.54, y + 1.27)
         hid = lambda h: " (hide yes)" if h else ""
@@ -292,19 +292,19 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             if sgn > 0: x = snap(x + width_of(r))
         return last, x
 
-    def inline_extent(r, net):
+    def inline_extent(r, net, extra=0):
         other = [n for n in ends(r) if n != net]
         users = [x for x in nets[net] if x[0] != r]
-        stub = 2.54 if len(users) <= 1 else len(short(net)) * CH + 3.81
-        tail = 7.62 if (not other or other[0] == "GND") else 2.54 + len(short(other[0])) * CH + (5.08 if other[0] in glob else 2.54)
+        stub = (2.54 if len(users) <= 1 else len(short(net)) * CH + 3.81) + extra
+        tail = 10.16 if (not other or other[0] == "GND") else 2.54 + len(short(other[0])) * CH + (5.08 if other[0] in glob else 2.54)
         return stub, stub + 7.62 + tail, stub + 7.62 + tail + (len(r) + 1 + len(comps[r]["value"])) * TW + 2.54
 
-    def inline(r, px, py, side, net):
+    def inline(r, px, py, side, net, extra=0):
         """One two-pad part straight out of a pin on the pin's own row, ending in ground or a label, its text after it."""
         sg = 1 if side == "R" else -1
-        stub, far, total = inline_extent(r, net)
+        stub, far, total = inline_extent(r, net, extra)
         other = [n for n in ends(r) if n != net]
-        if stub > 2.54: sheet.label(short(net), px, py, 0 if side == "R" else 180, False)
+        if stub - extra > 2.54: sheet.label(short(net), px, py, 0 if side == "R" else 180, False)
         xc = snap(px + sg * (stub + 3.81))
         tl = (len(r) + 1 + len(comps[r]["value"])) * TW
         xt = px + far if side == "R" else px - far - tl
@@ -550,46 +550,193 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             wused = max(wused, x - x0)
         return wused, y + rowh - y0
 
+    P_LANE = 15.24                                                # spacing of the lanes beside an IC
+
+    def chain_nodes(seq):
+        ns = [[n for n in ends(seq[0]) if n not in ends(seq[1])][0]]
+        for i in range(len(seq) - 1): ns.append([n for n in ends(seq[i]) if n in ends(seq[i + 1])][0])
+        ns.append([n for n in ends(seq[-1]) if n not in ends(seq[-2])][0])
+        return ns
+
     def attach_plan(a, cs):
-        """Which cells can be wired straight to a side pin of IC a. Returns ({pin number: (pin, [(cell, net)])}, other cells)."""
+        """Which cells can be wired to side pins of IC a.
+        Returns ({pin number: [(bank cell, net)]}, [chains with the pins their nodes tap], other cells)."""
         side_pin = {}
         for p in pins_of[a]:
             n = pinnet.get((a, p["num"]))
             if n and n != "GND" and p["angle"] in (0, 180) and (a, p["num"]) not in ncset: side_pin.setdefault(n, p)
-        plan, rest = {}, []
+        pinby = {}
+        for p in pins_of[a]:
+            if p["angle"] in (0, 180): pinby.setdefault(p["num"], p)
+        banks, chains, rest = {}, [], []
         for c in cs:
-            cn = set()
-            for r in c[1]: cn.update(x for x in ends(r) if x)
+            if npads[c[1][0]] == 1: rest.append(c); continue
+            if c[0] == "chain":
+                nodes = chain_nodes(c[1]); m = len(nodes) - 1
+                taps = {i: side_pin[n]["num"] for i, n in enumerate(nodes) if n in side_pin and n not in glob and rank(n) == 1}
+                if (not taps or any(i not in taps for i in range(1, m)) or len(set(taps.values())) < len(taps)
+                        or len({pinby[v]["angle"] for v in taps.values()}) > 1):
+                    rest.append(c); continue
+                chains.append(dict(cell=c, seq=list(c[1]), nodes=nodes, taps=taps)); continue
+            cn = set(x for r in c[1] for x in ends(r) if x)
             loc = sorted(n for n in cn if n in side_pin and n not in glob and rank(n) == 1)
-            oth = sorted(n for n in cn if n in side_pin and n not in loc) if c[0] == "bank" else []
-            if npads[c[1][0]] == 1 or not (loc or oth): rest.append(c); continue
+            oth = sorted(n for n in cn if n in side_pin and n not in loc)
+            if not (loc or oth): rest.append(c); continue
             n = (loc or oth)[0]
-            plan.setdefault(side_pin[n]["num"], (side_pin[n], []))[1].append((c, n))
-        return plan, rest
+            banks.setdefault(side_pin[n]["num"], []).append((c, n))
+        while True:                                                   # a chain's taps must land on neighbouring lanes, in order
+            att = set(banks) | {num for ch in chains for num in ch["taps"].values()}
+            bad = None
+            for ch in chains:
+                side = pinby[next(iter(ch["taps"].values()))]["angle"]
+                order = sorted((n for n in att if pinby[n]["angle"] == side), key=lambda n: -pinby[n]["y"])
+                idx = [order.index(ch["taps"][i]) for i in sorted(ch["taps"])]
+                if idx == list(range(idx[0], idx[0] + len(idx))): continue
+                if idx == list(range(idx[0], idx[0] - len(idx), -1)):
+                    m = len(ch["nodes"]) - 1
+                    ch["seq"].reverse(); ch["nodes"].reverse(); ch["taps"] = {m - i: num for i, num in ch["taps"].items()}
+                    continue
+                bad = ch; break
+            if not bad: break
+            chains.remove(bad); rest.append(bad["cell"])
+        return banks, chains, rest
+
+    def lanes(a, side, nums, ox, oy, labx, banks, chains):
+        """The passives on one side of IC a, each pin fanned out to its own horizontal lane: parts to ground hang from the lane,
+        one series part sits in line and ends in a label, divider chains stand across the lanes they tap.
+        nums: pin numbers, top to bottom. Returns (width beyond the pins, top y, bottom y)."""
+        if not nums: return 0, None, None
+        sg = 1 if side == "R" else -1
+        pb = {}
+        for p in pins_of[a]:
+            if p["angle"] == (180 if side == "R" else 0): pb.setdefault(p["num"], p)
+        px = snap(ox + pb[nums[0]]["x"])
+        pys = [snap(oy - pb[n]["y"]) for n in nums]
+        n = len(nums); yc = snap(sum(pys) / n)
+        yl = [snap(yc + (k - (n - 1) / 2) * P_LANE) for k in range(n)]
+        up = [k for k in range(n) if yl[k] < pys[k] - 0.01]; dn = [k for k in range(n) if yl[k] > pys[k] + 0.01]
+        col = {}
+        for i, k in enumerate(up): col[k] = i + 1                     # going up: top pin turns first; going down: bottom pin first
+        for i, k in enumerate(reversed(dn)): col[k] = i + 1
+        xs = snap(px + sg * (labx + 2.54 * (max([0] + list(col.values())) + 1)))
+        ends_x = []
+        for k, num in enumerate(nums):
+            net = pinnet[(a, num)]; y = yl[k]
+            if k in col:
+                xc = snap(px + sg * (labx + 2.54 * col[k]))
+                sheet.wire(px, pys[k], xc, pys[k]); sheet.wire(xc, pys[k], xc, y); sheet.wire(xc, y, xs, y)
+            else: sheet.wire(px, pys[k], xs, y)
+            lroom = 0
+            if net not in glob:                                       # name the net on its lane, clear of the pin rows
+                sheet.label(short(net), xs, y, 0 if sg > 0 else 180, False); lroom = len(short(net)) * CH + 1.27
+            tapped = any(num in ch["taps"].values() for ch in chains)
+            hangs, series = [], None
+            for c, cn in banks.get(num, []):
+                other = [m_ for m_ in ends(c[1][0]) if m_ != cn]
+                if len(c[1]) == 1 and other and other[0] != "GND" and not tapped and series is None and net not in glob: series = c[1][0]
+                else: hangs += c[1]
+            x, end = snap(xs + sg * (2.54 + lroom)), xs
+            pts = []
+            for r in hangs:
+                other = [m_ for m_ in ends(r) if m_ != net]
+                lbl = other[0] if other and other[0] != "GND" else None
+                w = width_of(r)
+                room = (len(short(lbl)) * CH + (6.35 if lbl in glob else 2.54)) if lbl else 0      # its label sits bottom left
+                if sg < 0: x = snap(x - w)
+                else: x = snap(x + room)
+                t_, b_ = small(r, x, snap(y + 2.54 + 3.81), net)
+                sheet.wire(x, y, x, t_)
+                if not lbl: sheet.gnd(x, b_)
+                else: sheet.wire(x, b_, x - 2.54, b_); sheet.label(short(lbl), x - 2.54, b_, 180, lbl in glob)
+                pts.append(x); end = x
+                if sg > 0: x = snap(x + w)
+                else: x = snap(x - 2.54 - room)
+            cont = bool(series) or tapped or net in glob
+            for q_ in pts[:-1] + (pts[-1:] if cont else []): sheet.junction(q_, y)
+            if pts: sheet.wire(xs, y, end, y)
+            if series:
+                other = [m_ for m_ in ends(series) if m_ != net][0]
+                if sg > 0:
+                    xl, xr = horiz(series, x + 2.54 + 3.81, y, net, ref_at=(x + 2.54, y + 3.0), val_at=(x + 2.54, y + 5.0))
+                    sheet.wire(end, y, xl, y); sheet.wire(xr, y, xr + 2.54, y); sheet.label(short(other), xr + 2.54, y, 0, other in glob)
+                    x = xr + 2.54 + len(short(other)) * CH + 6.35; end = xr + 2.54
+                else:
+                    xl, xr = horiz(series, x - 2.54 - 3.81, y, other, ref_at=(x - 10.16, y + 3.0), val_at=(x - 10.16, y + 5.0))
+                    sheet.wire(end, y, xr, y); sheet.wire(xl, y, xl - 2.54, y); sheet.label(short(other), xl - 2.54, y, 180, other in glob)
+                    x = xl - 2.54 - len(short(other)) * CH - 6.35; end = xl - 2.54
+            elif net in glob and not tapped:
+                xe = snap(x + sg * 2.54)
+                sheet.wire(end, y, xe, y); sheet.label(short(net), xe, y, 0 if sg > 0 else 180, True)
+                x = xe + sg * (len(short(net)) * CH + 6.35); end = xe
+            ends_x.append([x, end])
+        xfar = max(e[0] for e in ends_x) if sg > 0 else min(e[0] for e in ends_x)
+        top = yl[0] - 6.35
+        def cap(net_, x, y, at_top):
+            if net_ == "GND": return sheet.gnd(x, y, 180 if at_top else 0)
+            sheet.wire(x, y, x + sg * 2.54, y); sheet.label(short(net_), x + sg * 2.54, y, 0 if sg > 0 else 180, net_ in glob)
+        for ch in chains:
+            seq, nodes, taps = ch["seq"], ch["nodes"], ch["taps"]
+            if taps[min(taps)] not in nums: continue
+            m = len(nodes) - 1
+            w = max(width_of(r) for r in seq)
+            lw = max([len(short(nodes[i])) * CH + 7.62 for i in (0, m) if i not in taps and nodes[i] != "GND"] + [0])
+            if sg > 0: x = snap(xfar + 5.08); xfar = x + max(w, lw)
+            else: x = snap(xfar - 5.08 - w); xfar = x - lw
+            ys = {i: yl[nums.index(taps[i])] for i in taps}
+            for i in taps:
+                k = nums.index(taps[i]); sheet.wire(ends_x[k][1], ys[i], x, ys[i]); ends_x[k][1] = x
+                if 0 < i < m: sheet.junction(x, ys[i])
+            for j, r in enumerate(seq):
+                yc_ = ys[j] + 7.62 if j in taps else ys[j + 1] - 7.62
+                t_, b_ = small(r, x, snap(yc_), nodes[j])
+                if j in taps: sheet.wire(x, ys[j], x, t_)
+                else: cap(nodes[j], x, t_, True)
+                if j + 1 in taps: sheet.wire(x, b_, x, ys[j + 1])
+                else: cap(nodes[j + 1], x, b_, False)
+            if min(taps) == 1 and taps[1] == nums[0]: top = yl[0] - 15.24
+        return abs(xfar - px) + 2.54, top, yl[-1] + P_LANE
+
+    def measure(fn):
+        """Run a drawing function on a scratch sheet and return its result."""
+        nonlocal sheet
+        real = sheet
+        sheet = Sheet(real.name, real.project, real.root_uuid, real.title)
+        try: return fn()
+        finally: sheet = real
 
     def draw_anchor(a, x0, y0, cs=()):
-        """One IC with a label on every pin, and the cells that hang on its side pins wired to them on a shelf below.
-        Returns (width, height, cells not drawn)."""
+        """One IC with a label on every pin, and the passives on its side pins wired to them: single parts on the pin's own row,
+        the rest on lanes beside the IC, or by a template when the block names one. Returns (width, height, cells not drawn)."""
         lib, name = comps[a]["lib"].split(":")
         pp = pins_of[a]
-        plan, rest = attach_plan(a, list(cs))
         t = tdraw.get(a)
         if t and t["kind"] == "bridge4":
             w, h = bridge4(a, t, x0, y0)
             return w, h, list(cs)
+        banks, chains, rest = attach_plan(a, list(cs))
+        tapped = {num for ch in chains for num in ch["taps"].values()}
         inl = {}                                                      # pin number -> (pin, part, net): drawn on the pin's own row
-        for num, (p, lst) in list(plan.items()):
+        side_of = {}
+        for p in pp:
+            if p["angle"] in (0, 180): side_of.setdefault(p["num"], p)
+        for num, lst in list(banks.items()):
             c, n = lst[0]
-            if len(lst) == 1 and c[0] == "bank" and len(c[1]) == 1 and n not in glob:
-                inl[num] = (p, c[1][0], n); del plan[num]
-        if t:                                                         # a template owns the space beside the IC: no shelf
+            if len(lst) == 1 and len(c[1]) == 1 and n not in glob and num not in tapped:
+                inl[num] = (side_of[num], c[1][0], n); del banks[num]
+        if t:                                                         # a template owns the space beside the IC: no lanes
             twired = buck(a, t, 0, 0, 0, 0, draw=False)[0]
-            for num in list(plan):
-                rest += [c for c, _ in plan[num][1]]; del plan[num]
+            for num in list(banks): rest += [c for c, _ in banks.pop(num)]
+            rest += [ch["cell"] for ch in chains]; chains = []
             for num in list(inl):
                 if num in twired: rest.append(("bank", [inl[num][1]])); del inl[num]
-        inl_l = max([inline_extent(r, n)[2] for p, r, n in inl.values() if p["angle"] == 0] + [0])
-        inl_r = max([inline_extent(r, n)[2] for p, r, n in inl.values() if p["angle"] == 180] + [0])
+        stag = {}                                                     # parts on neighbouring pin rows step outward so bodies do not touch
+        for ang in (0, 180):
+            prev_y, k = None, 0
+            for num, (p, r, n) in sorted(((nm, v) for nm, v in inl.items() if v[0]["angle"] == ang), key=lambda e: -e[1][0]["y"]):
+                k = (k + 1) % 3 if prev_y is not None and abs(prev_y - p["y"]) < 2.6 else 0
+                stag[num] = k * 12.7; prev_y = p["y"]
+        inl_l = max([inline_extent(r, n, stag[nm])[2] for nm, (p, r, n) in inl.items() if p["angle"] == 0] + [0])
+        inl_r = max([inline_extent(r, n, stag[nm])[2] for nm, (p, r, n) in inl.items() if p["angle"] == 180] + [0])
         units = sorted({p["unit"] for p in pp if p["unit"]}) or [1]
         lab = max([len(short(pinnet[(a, p["num"])])) for p in pp if pinnet.get((a, p["num"]))] + [4]) * CH + 5.08
         uy, width = y0, 0
@@ -599,24 +746,31 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             maxy = max(p["y"] for p in ps); miny = min(p["y"] for p in ps)
             has_left = any(p["angle"] == 0 for p in ps)
             has_top = any(p["angle"] == 270 for p in ps); has_bot = any(p["angle"] == 90 for p in ps)
-            mine = sorted((plan[p["num"]] for p in ps if p["num"] in plan and p["unit"] in (0, u)), key=lambda e: e[0]["y"])
-            if u != units[0]: mine = [e for e in mine if e[0]["unit"] == u]
-            Lc = [e for e in mine if e[0]["angle"] == 0]; Rc = [e for e in mine if e[0]["angle"] == 180]
-            WL = sum(cell_width(c, (n, "R"))[1] + 5.08 for _, lst in Lc for c, n in lst)
             labl, labr = max(lab, inl_l + 2.54), max(lab, inl_r + 2.54)
-            ox = snap(x0 + WL + (labl if has_left else 12.7) - minx)
+            att = set(banks) | {num for ch in chains for num in ch["taps"].values()}
+            mine = [num for num in att if side_of[num]["unit"] in ((0, u) if u == units[0] else (u,))]
+            Ln = sorted((n for n in mine if side_of[n]["angle"] == 0), key=lambda n: -side_of[n]["y"])
+            Rn = sorted((n for n in mine if side_of[n]["angle"] == 180), key=lambda n: -side_of[n]["y"])
+            mL = measure(lambda: lanes(a, "L", Ln, 0, 0, labl, banks, chains))
+            mR = measure(lambda: lanes(a, "R", Rn, 0, 0, labr, banks, chains))
+            WL = mL[0] if Ln else (labl if has_left else 12.7)
+            WR = mR[0] if Rn else labr
+            ox = snap(x0 + WL - minx)
             if t: ox = snap(x0 + buck(a, t, 0, 0, labl, labr, draw=False)[1] - minx)
-            oy = snap(uy + (lab if has_top else 10.16) + maxy)
+            oy = uy + (lab if has_top else 10.16) + maxy
+            tops = [m_[1] for m_ in (mL, mR) if m_[1] is not None]
+            if tops: oy = max(oy, uy + 5.08 - min(tops))
+            oy = snap(oy)
             sheet.symbol(lib, name, a, comps[a]["value"], ox, oy, 0, unit=u, footprint=comps[a]["footprint"], fields=comps[a]["fields"],
                          ref_at=(ox + minx + 1.27, oy - maxy - (7.0 if not has_top else lab + 1.27)),
                          val_at=(ox + minx + 1.27, oy - maxy - (5.0 if not has_top else lab - 0.73)))
-            wired = {e[0]["num"] for e in mine} | set(inl)
+            wired = set(mine) | set(inl)
             tw = None
             if t:
                 tw = buck(a, t, ox, oy, labl, labr)
                 wired |= tw[0]
             for num, (p, r, n) in inl.items():
-                if p["unit"] in (0, u): inline(r, snap(ox + p["x"]), snap(oy - p["y"]), "L" if p["angle"] == 0 else "R", n)
+                if p["unit"] in (0, u): inline(r, snap(ox + p["x"]), snap(oy - p["y"]), "L" if p["angle"] == 0 else "R", n, stag[num])
             seen = set()
             for p in ps:
                 px, py = snap(ox + p["x"]), snap(oy - p["y"])
@@ -624,25 +778,12 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
                 seen.add((px, py))
                 n = None if (a, p["num"]) in ncset else pinnet.get((a, p["num"]))
                 pin_label(px, py, {0: "L", 180: "R", 90: "D", 270: "U"}[p["angle"]], n, (a, p["num"]))
-            shelf = snap(oy - miny + 5.08)
-            hmax, WR = 0, 0
-            for side, group in (("R", Rc), ("L", Lc)):
-                cur = ox + maxx + labr if side == "R" else ox + minx - labl
-                for p, lst in group:                                  # lowest pin first, nearest the IC: wires never cross
-                    px, py = snap(ox + p["x"]), snap(oy - p["y"])
-                    net = lst[0][1]
-                    if net not in glob: sheet.label(short(net), px, py, 0 if side == "R" else 180, False)
-                    prev = px
-                    for i, (c, n) in enumerate(lst):
-                        w = cell_width(c, (n, "L" if side == "R" else "R"))[1]
-                        h, e = draw_cell(c, cur if side == "R" else cur - w, shelf, (n, "L" if side == "R" else "R"))
-                        sheet.wire(prev, py, e[0], py); sheet.wire(e[0], py, e[0], e[1])
-                        if i: sheet.junction(prev, py)
-                        prev = e[0]; hmax = max(hmax, h)
-                        cur += (w + 5.08) if side == "R" else -(w + 5.08)
-                if side == "R": WR = cur - (ox + maxx + labr)
-            uy = max(oy - miny + (lab if has_bot else 3.81), shelf + hmax) + 3.81
-            width = max(width, WL + (labl if has_left else 12.7) + (maxx - minx) + labr + WR)
+            bottom = oy - miny + (lab if has_bot else 3.81)
+            for side, nums_, labx in (("L", Ln, labl), ("R", Rn, labr)):
+                r_ = lanes(a, side, nums_, ox, oy, labx, banks, chains)
+                if r_[2] is not None: bottom = max(bottom, r_[2])
+            uy = bottom + 3.81
+            width = max(width, WL + (maxx - minx) + WR)
             if tw:
                 uy = max(uy, oy - maxy + tw[3] + 12.7)
                 width = max(width, tw[1] + (maxx - minx) + tw[2])
@@ -652,20 +793,19 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
         """A titled group: its ICs down the left, each with its cells to the right. Returns (width, height)."""
         mem = set(members)
         sec_anchors = [a for a in anchors if a in mem]
-        zoned = {id(c) for a in sec_anchors for c in zones[a] if c[1][0] in mem}
-        if not sec_anchors and not [c for c in cells if c[1][0] in mem and id(c) not in zoned]: return 0, 0
+        claimed = {id(c) for a in anchors for c in zones[a]}        # drawn with their IC, whatever section they were written in
+        if not sec_anchors and not [c for c in cells if c[1][0] in mem and id(c) not in claimed]: return 0, 0
         sheet.text(title, x0, y0 + 3.5, 2.0)
         y, wmax = y0 + 6.35, len(title) * 1.75
         placed = set()
         for a in sec_anchors:
-            cs = [c for c in zones[a] if c[1][0] in mem]
-            placed.update(id(c) for c in cs)
+            cs = zones[a]
             aw, ah, left_over = draw_anchor(a, x0, y, cs)
             y += ah + 2.54
             cw, ch = flow(left_over, x0, y, max(wcells, aw)) if left_over else (0, 0)
             wmax = max(wmax, aw, cw)
             y += ch + 5.08
-        rest = [c for c in cells if c[1][0] in mem and id(c) not in placed]
+        rest = [c for c in cells if c[1][0] in mem and id(c) not in claimed]
         if rest:
             cw, ch = flow(rest, x0, y, max(wcells + 60, wmax))
             wmax, y = max(wmax, cw), y + ch + 2.54
