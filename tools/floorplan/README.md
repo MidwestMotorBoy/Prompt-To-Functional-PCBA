@@ -164,5 +164,9 @@ python3 intent.py derive <build dir> <design dir> intent.json ; python3 intent.p
 python3 intent.py check intent.json <board dump.json> [placement.json]
 python3 place_sections.py <board dump.json> <netlist.json> <constraints.json> clusters.json [J,H,TP,SW] [intent.json]
 python3 overlaps.py <board dump.json> [placement.json]
-python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves] [intent.json]
+python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves] [intent.json] [crossing weight] [escape room mm]
+python3 crossings.py <board dump.json> [placement.json]
+python3 run_seeds.py example/monolith/clusters.json example/monolith/board_dump.json example/monolith/intent.json <out dir> <first seed> <count>
+python3 apply_placement.py <in.kicad_pcb> <out.kicad_pcb> [placement.json] [--strip]      (KiCad's python)
+python3 open_connections.py <board.kicad_pcb> <drc.json>                                  (KiCad's python)
 ```

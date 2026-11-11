@@ -1,11 +1,11 @@
-"""place_pack.py <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json]
+"""place_pack.py <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json] [crossing weight, mm per crossing, default 3] [escape room round parts with 12 or more pads, mm, default 0.5]
 Step 2 of the section placer: put the clusters from place_sections.py on the board.
 Each cluster moves and turns as one rigid piece (annealing over about 30 pieces); fixed parts stay where the
 dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board
 + with an intent file, how far each `near` statement is over its limit and each `keepapart` under it.
 Step 3 (refine): every part then moves on its own with small steps at low temperature to close the gaps;
 in its last quarter overlap costs far more than wiring, which removes what overlap is left.
-Bodies are courtyards when the dump has them; no-footprint keep-outs on a part's side count as overlap.
+Bodies are courtyards when the dump has them; through-hole pads also block the other side; no-footprint keep-outs on a part's side count as overlap.
 Step 4 (repair): a small part that still overlaps is moved to the best free spot within 8 mm. A large part
 is treated as an anchor: it may take any spot clear of fixed and other large parts, and the small parts round
 it are re-annealed.
@@ -14,7 +14,8 @@ import json, sys, math, random
 import numpy as np
 import floorplan as F
 
-def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
+def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=3.0, esc=0.5):
+    global WX, ESC; WX = float(wx); ESC = float(esc)
     moves, seed, refine = int(moves), int(seed), int(refine); rnd = random.Random(seed)
     cl = json.load(open(clf)); d, pos0, side, blk, pads0 = F.load(dumpf); power = F.power_nets(pads0); box = d["box"]
     refs = sorted({p["ref"] for p in d["pads"]}); ri = {r: i for i, r in enumerate(refs)}; N = len(refs)
@@ -24,10 +25,13 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         for r, (x, y, a) in parts.items(): i = ri[r]; cid[i] = c; loc[i] = (x - cx, y - cy); lrot[i] = a // 90
     C = len(names); fixed = cid < 0
     # pads and bodies in each part's own frame
+    tbx = np.tile(np.array([1e9, 1e9, -1e9, -1e9]), (N, 1))      # box of a part's pads that reach the other side (through-hole pads, thermal pads on the back)
     pr = []; pl = []; pn = []; bbx = np.tile(np.array([1e9, 1e9, -1e9, -1e9]), (N, 1)); netid = {}
     for p in d["pads"]:
         i = ri[p["ref"]]; x0, y0 = pos0[p["ref"]]; b = p["box"]
         bbx[i] = (min(bbx[i][0], b[0] - x0), min(bbx[i][1], b[1] - y0), max(bbx[i][2], b[2] - x0), max(bbx[i][3], b[3] - y0))
+        if "*.Cu" in p["layers"] or ("B.Cu" if side[p["ref"]] == "F.Cu" else "F.Cu") in p["layers"]:
+            tbx[i] = (min(tbx[i][0], b[0] - x0), min(tbx[i][1], b[1] - y0), max(tbx[i][2], b[2] - x0), max(tbx[i][3], b[3] - y0))
         if p["net"] and p["net"] not in power and len(pads0[p["net"]]) >= 2:
             pr.append(i); pl.append((p["x"] - x0, p["y"] - y0)); pn.append(netid.setdefault(p["net"], len(netid)))
     # intent statements as cost terms: near (excess distance) and keepapart (shortfall)
@@ -53,6 +57,15 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     for f in d["fps"]:
         if "court" in f and f["ref"] in ri:
             i = ri[f["ref"]]; c = f["court"]; bbx[i] = (min(bbx[i][0], c[0] - f["x"]), min(bbx[i][1], c[1] - f["y"]), max(bbx[i][2], c[2] - f["x"]), max(bbx[i][3], c[3] - f["y"]))
+    # escape room: a part with many pads needs space round it for its pins to get out. The first trial route failed on
+    # this, not on congestion: 40 of 45 failed connections had no path even on an empty board, nearly all at the ICs,
+    # which had 9 to 18 parts within 0.3 mm against 2 to 5 on the scripted board that routes best.
+    npads = np.bincount([ri[p["ref"]] for p in d["pads"]], minlength=N); many = (npads >= 12) & ~fixed
+    bbx[many] += np.array([-ESC, -ESC, ESC, ESC])
+    # a large part on a fixed part (connector, mounting hole, test point) is the failure repair cannot undo on a full board,
+    # so it costs ten times an ordinary overlap from the first move
+    bigfix = (((bbx[:, 2] - bbx[:, 0]) * (bbx[:, 3] - bbx[:, 1]) > 9.0) & ~fixed)[:, None] & fixed[None, :]; bigfix = bigfix | bigfix.T
+    thru = tbx[:, 0] < 1e8; tbx[~thru] = 0.0; TM = 0.15
     KO = [(np.array(k["box"]), "F.Cu" in k["layers"], "B.Cu" in k["layers"]) for k in d.get("keepouts", []) if k.get("no_footprints")]
     pr = np.array(pr); pl = np.array(pl); pn = np.array(pn); order = np.argsort(pn, kind="stable"); pr, pl, pn = pr[order], pl[order], pn[order]
     starts = np.r_[0, np.nonzero(np.diff(pn))[0] + 1]
@@ -68,24 +81,59 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         xy = p0.copy(); k = np.zeros(N, int); m = ~fixed; ck = T[cid[m], 2].astype(int)
         xy[m] = T[cid[m], :2] + rotv(loc[m], ck); k[m] = (lrot[m] + ck) % 4
         return xy, k
+    # crossings: per signal net a spanning tree over its pads (topology refreshed now and then, coordinates always current);
+    # two tree edges of different nets that cross cost WX mm. Half-perimeter alone does not see tangles: on Monolith the
+    # hand board has 391 crossings, the scripted board 612, and placements that matched the scripted board on length had 800.
+    ends_ = np.r_[starts[1:], len(pr)]; TOPO = {}
+    def topo(pads):
+        ea, eb = [], []
+        for n in range(len(starts)):
+            a, b = starts[n], ends_[n]; Q = pads[a:b]; m = b - a
+            if m < 2: continue
+            dist = np.hypot(Q[:, 0] - Q[0, 0], Q[:, 1] - Q[0, 1]); par = np.zeros(m, int); left = np.ones(m, bool); left[0] = False
+            for _ in range(m - 1):
+                j = int(np.where(left, dist, 1e18).argmin()); left[j] = False; ea.append(a + par[j]); eb.append(a + j)
+                dj = np.hypot(Q[:, 0] - Q[j, 0], Q[:, 1] - Q[j, 1]); upd = left & (dj < dist); dist[upd] = dj[upd]; par[upd] = j
+        TOPO["a"] = np.array(ea); TOPO["b"] = np.array(eb); TOPO["n"] = pn[TOPO["a"]]
+        eop = [[] for _ in range(N)]
+        for e, (u, v) in enumerate(zip(ea, eb)):
+            eop[pr[u]].append(e)
+            if pr[v] != pr[u]: eop[pr[v]].append(e)
+        TOPO["of"] = [np.array(x, int) for x in eop]
+    def xcount(pads, sel=None):
+        A, B, n = TOPO["a"], TOPO["b"], TOPO["n"]; ax, ay, bx, by = pads[A, 0], pads[A, 1], pads[B, 0], pads[B, 1]
+        if sel is None: sx, sy, tx, ty, sn = ax, ay, bx, by, n
+        else: sx, sy, tx, ty, sn = ax[sel], ay[sel], bx[sel], by[sel], n[sel]
+        o = lambda px, py, qx, qy, rx, ry: (qx - px) * (ry - py) - (qy - py) * (rx - px)
+        r = lambda v: v[:, None]; c = lambda v: v[None, :]
+        X = (o(r(sx), r(sy), r(tx), r(ty), c(ax), c(ay)) * o(r(sx), r(sy), r(tx), r(ty), c(bx), c(by)) < 0) & \
+            (o(c(ax), c(ay), c(bx), c(by), r(sx), r(sy)) * o(c(ax), c(ay), c(bx), c(by), r(tx), r(ty)) < 0) & (r(sn) != c(n))
+        return int(X.sum()) // (2 if sel is None else 1)
     def cost(xy, k, detail=False):
         pads = xy[pr] + rotv(pl, k[pr])
+        if not TOPO: topo(pads)
+        xc = xcount(pads) if WX else 0
         hp = (np.maximum.reduceat(pads[:, 0], starts) - np.minimum.reduceat(pads[:, 0], starts) + np.maximum.reduceat(pads[:, 1], starts) - np.minimum.reduceat(pads[:, 1], starts)).sum()
         c1 = rotv(bbx[:, :2], k); c2 = rotv(bbx[:, 2:], k); lo = xy + np.minimum(c1, c2) - 0.02; hi = xy + np.maximum(c1, c2) + 0.02
         ox = np.minimum(hi[:, None, 0], hi[None, :, 0]) - np.maximum(lo[:, None, 0], lo[None, :, 0])
         oy = np.minimum(hi[:, None, 1], hi[None, :, 1]) - np.maximum(lo[:, None, 1], lo[None, :, 1])
         same = (sideF[:, None] == sideF[None, :]) & ~(fixed[:, None] & fixed[None, :]); np.fill_diagonal(same, False)
-        ov = (np.clip(ox, 0, None) * np.clip(oy, 0, None) * same).sum() / 2
+        ov = (np.clip(ox, 0, None) * np.clip(oy, 0, None) * same * (1 + 9 * bigfix)).sum() / 2
+        t1 = rotv(tbx[:, :2], k); t2 = rotv(tbx[:, 2:], k); tlo = xy + np.minimum(t1, t2) - TM; thi = xy + np.maximum(t1, t2) + TM; tlo[~thru] = 1e9; thi[~thru] = -1e9
+        tox = np.minimum(thi[:, None, 0], hi[None, :, 0]) - np.maximum(tlo[:, None, 0], lo[None, :, 0]); toy = np.minimum(thi[:, None, 1], hi[None, :, 1]) - np.maximum(tlo[:, None, 1], lo[None, :, 1])
+        ov += (np.clip(tox, 0, None) * np.clip(toy, 0, None) * ((sideF[:, None] != sideF[None, :]) & ~(fixed[:, None] & fixed[None, :]))).sum()
         off = (np.clip(box[0] + 0.5 - lo[:, 0], 0, None) + np.clip(lo[:, 0] * 0 + hi[:, 0] - box[2] + 0.5, 0, None) + np.clip(box[1] + 0.5 - lo[:, 1], 0, None) + np.clip(hi[:, 1] - box[3] + 0.5, 0, None))[~fixed].sum()
         for kb, onF, onB in KO:              # courtyard area inside a no-footprint keep-out on the part's side
             m = (~fixed) & ((sideF & onF) | (~sideF & onB))
             ov += (np.clip(np.minimum(hi[m, 0], kb[2]) - np.maximum(lo[m, 0], kb[0]), 0, None) * np.clip(np.minimum(hi[m, 1], kb[3]) - np.maximum(lo[m, 1], kb[1]), 0, None)).sum()
         ic = intent_cost(xy, k)
-        return (hp, ov, off, ic) if detail else hp + WOV[0] * ov + 60 * off + 25 * ic
+        return (hp, ov, off, ic, xc) if detail else hp + WOV[0] * ov + 60 * off + 25 * ic + WX * xc
     WOV = [30.0]
+    def xy_pads(T): xy_, k_ = parts_xy(T); return xy_[pr] + rotv(pl, k_[pr])
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
     cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
     for s in range(moves):
+        if WX and s % 200 == 0 and s: topo(xy_pads(T)); cur = cost(*parts_xy(T))
         t = T0 * (T1 / T0) ** (s / moves); c = rnd.randrange(C); old = T[c].copy(); u = rnd.random()
         if u < 0.2: T[c, 2] = rnd.randrange(4)
         elif u < 0.3 and C > 1:
@@ -97,14 +145,14 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
             if 0.2 <= u < 0.3 and C > 1: T[[c, olde], :2] = T[[olde, c], :2]
             else: T[c] = old
     xy, k = parts_xy(T); a = cost(xy, k, True)
-    print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))), flush=True)
+    print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
     # refine: single parts, small steps. Only what the moved part touches is recomputed, so a move costs
     # tens of microseconds and millions of moves are affordable.
     R4 = [((1, 0), (0, 1)), ((0, -1), (1, 0)), ((-1, 0), (0, -1)), ((0, 1), (-1, 0))]
     def r1(v, q): m = R4[q]; return (m[0][0] * v[0] + m[0][1] * v[1], m[1][0] * v[0] + m[1][1] * v[1])
     pads_of = [np.nonzero(pr == i)[0] for i in range(N)]; net_of_pad = np.searchsorted(starts, np.arange(len(pr)), side="right") - 1
     ends = np.r_[starts[1:], len(pr)]; nets_of_part = [np.unique(net_of_pad[p]) for p in pads_of]
-    pads = xy[pr] + rotv(pl, k[pr]); apads_of = [np.nonzero(apr == i)[0] for i in range(N)]; q_all = xy[apr] + rotv(apl, k[apr])
+    pads = xy[pr] + rotv(pl, k[pr]); topo(pads); apads_of = [np.nonzero(apr == i)[0] for i in range(N)]; q_all = xy[apr] + rotv(apl, k[apr])
     st_of = [[] for _ in range(N)]
     for j, (A, B, lim) in enumerate(nearS):
         for i in set(apr[A]) | set(apr[B]): st_of[i].append(("n", j))
@@ -113,16 +161,29 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     def box_of(i, p, kk):
         c1 = r1(bbx[i, :2], kk); c2 = r1(bbx[i, 2:], kk)
         return (p[0] + min(c1[0], c2[0]) - 0.02, p[1] + min(c1[1], c2[1]) - 0.02, p[0] + max(c1[0], c2[0]) + 0.02, p[1] + max(c1[1], c2[1]) + 0.02)
-    LO = np.zeros((N, 2)); HI = np.zeros((N, 2))
-    for i in range(N): bx = box_of(i, xy[i], int(k[i])); LO[i] = bx[:2]; HI[i] = bx[2:]
+    def tbox_of(i, p, kk):
+        if not thru[i]: return (1e9, 1e9, -1e9, -1e9)
+        c1 = r1(tbx[i, :2], kk); c2 = r1(tbx[i, 2:], kk)
+        return (p[0] + min(c1[0], c2[0]) - TM, p[1] + min(c1[1], c2[1]) - TM, p[0] + max(c1[0], c2[0]) + TM, p[1] + max(c1[1], c2[1]) + TM)
+    LO = np.zeros((N, 2)); HI = np.zeros((N, 2)); TLO = np.zeros((N, 2)); THI = np.zeros((N, 2))
+    for i in range(N):
+        bx = box_of(i, xy[i], int(k[i])); LO[i] = bx[:2]; HI[i] = bx[2:]; bx = tbox_of(i, xy[i], int(k[i])); TLO[i] = bx[:2]; THI[i] = bx[2:]
+    opp_side = [np.nonzero((sideF != sideF[i]) & ~(fixed & fixed[i]))[0] for i in range(N)]
+    def thru_ov(i, o, tol=0.0):      # through-hole pads of i under parts o on the other side, and theirs under i
+        a = 0.0
+        for (l1, h1, l2, h2) in ((TLO[i], THI[i], LO[o], HI[o]), (LO[i], HI[i], TLO[o], THI[o])):
+            ox = np.minimum(h2[:, 0], h1[0]) - np.maximum(l2[:, 0], l1[0]); oy = np.minimum(h2[:, 1], h1[1]) - np.maximum(l2[:, 1], l1[1])
+            m = (ox > tol) & (oy > tol); a += float((ox[m] * oy[m]).sum())
+        return a
     same_side = [np.nonzero((sideF == sideF[i]) & (np.arange(N) != i))[0] for i in range(N)]
     def local(i):
         c = 0.0
         for n in nets_of_part[i]:
             seg = pads[starts[n]:ends[n]]; c += seg[:, 0].max() - seg[:, 0].min() + seg[:, 1].max() - seg[:, 1].min()
+        if WX and len(TOPO["of"][i]): c += WX * xcount(pads, TOPO["of"][i])
         o = same_side[i]
         ox = np.minimum(HI[o, 0], HI[i, 0]) - np.maximum(LO[o, 0], LO[i, 0]); oy = np.minimum(HI[o, 1], HI[i, 1]) - np.maximum(LO[o, 1], LO[i, 1])
-        ov = float((np.clip(ox, 0, None) * np.clip(oy, 0, None)).sum())
+        ov = float((np.clip(ox, 0, None) * np.clip(oy, 0, None) * (1 + 9 * bigfix[i, o])).sum()) + thru_ov(i, opp_side[i])
         for kb, onF, onB in KO:
             if (sideF[i] and onF) or (not sideF[i] and onB):
                 ov += max(0.0, min(HI[i, 0], kb[2]) - max(LO[i, 0], kb[0])) * max(0.0, min(HI[i, 1], kb[3]) - max(LO[i, 1], kb[1]))
@@ -136,6 +197,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         return c + WOV[0] * ov + 60 * off + 25 * ic
     def put(i, p, kk):
         xy[i] = p; k[i] = kk; bx = box_of(i, p, kk); LO[i] = bx[:2]; HI[i] = bx[2:]
+        if thru[i]: bx = tbox_of(i, p, kk); TLO[i] = bx[:2]; THI[i] = bx[2:]
         if len(pads_of[i]): pads[pads_of[i]] = xy[i] + rotv(pl[pads_of[i]], np.full(len(pads_of[i]), kk))
         if len(apads_of[i]): q_all[apads_of[i]] = xy[i] + rotv(apl[apads_of[i]], np.full(len(apads_of[i]), kk))
     mv = np.nonzero(~fixed)[0]
@@ -143,6 +205,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         pool = mv if only is None else only
         for s in range(n):
             if s == int(n * legal_from): WOV[0] = 400.0
+            if WX and s % 50000 == 0 and s: topo(pads)
             t = T0 * (T1 / T0) ** (s / n); i = int(pool[rnd.randrange(len(pool))]); op, ok = xy[i].copy(), int(k[i])
             before = local(i)
             if rnd.random() < 0.1: put(i, op, rnd.randrange(4))
@@ -157,7 +220,8 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     def ovl(i, against=None):
         o = same_side[i] if against is None else same_side[i][against[same_side[i]]]
         ox = np.minimum(HI[o, 0], HI[i, 0]) - np.maximum(LO[o, 0], LO[i, 0]); oy = np.minimum(HI[o, 1], HI[i, 1]) - np.maximum(LO[o, 1], LO[i, 1])
-        m = (ox > 0.03) & (oy > 0.03); return float((ox[m] * oy[m]).sum())
+        m = (ox > 0.03) & (oy > 0.03); o2 = opp_side[i] if against is None else opp_side[i][against[opp_side[i]]]
+        return float((ox[m] * oy[m]).sum()) + thru_ov(i, o2, 0.03)
     def search(i, reach, step, hard=None):
         op, ok = xy[i].copy(), int(k[i]); best = None
         for kk in range(4):
@@ -172,11 +236,12 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         else: put(i, op, ok)
         return best is not None
     repaired = []; hard = fixed | big
-    for rnd_ in range(3):
-        stuck = sorted([int(j) for j in mv if ovl(int(j)) > 0], key=lambda j: -area[j])
+    offb = lambda j: LO[j, 0] < box[0] + 0.5 or LO[j, 1] < box[1] + 0.5 or HI[j, 0] > box[2] - 0.5 or HI[j, 1] > box[3] - 0.5
+    for rnd_ in range(6):
+        stuck = sorted([int(j) for j in mv if ovl(int(j)) > 0 or offb(int(j))], key=lambda j: -area[j])
         if not stuck: break
         for i in stuck:
-            if ovl(i) <= 0: continue
+            if ovl(i) <= 0 and not offb(i): continue
             if big[i] and ovl(i, hard) > 0:
                 WOV[0] = 30.0; search(i, 30.0, 0.5, hard); repaired.append(refs[i])
                 near_i = np.array([int(j) for j in mv if not big[j] and abs(xy[j][0] - xy[i][0]) < 12 and abs(xy[j][1] - xy[i][1]) < 12])
@@ -185,8 +250,8 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
                 WOV[0] = 5000.0; search(i, 8.0, 0.25); repaired.append(refs[i])
     WOV[0] = 400.0
     if repaired: print(json.dumps(dict(step="repaired", parts=repaired)), flush=True)
-    a = cost(xy, k, True)
-    print(json.dumps(dict(step="refined", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))))
+    topo(pads); a = cost(xy, k, True)
+    print(json.dumps(dict(step="refined", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))))
     json.dump({r: [round(float(xy[i][0]), 3), round(float(xy[i][1]), 3), int(k[i]) * 90] for r, i in ri.items()}, open(outf, "w"))
 
 if __name__ == "__main__":
