@@ -1,7 +1,7 @@
-# Spike 2: seeded faults (baseline so far)
+# Spike 2: seeded faults and a first knowledge-base pass
 
 Run 2026-11-11 in the cloud container. Part 1 of the spike only: the fault injector and the score of the
-checks that exist today. The part knowledge base is not built yet (see "Blocked").
+checks that exist today. Part 2 is a first, pin-table-only pass at the knowledge base.
 
 ## What is here
 
@@ -40,11 +40,44 @@ checks that exist today. The part knowledge base is not built yet (see "Blocked"
 
 Cost: 65 mutants drawn and checked in under four minutes, no LLM tokens.
 
-## Blocked
+## Part 2: first knowledge-base pass (pin tables only)
 
-The cloud container cannot fetch datasheets: ti.com, st.com, lcsc.com, digikey.com, mouser.com and others are
-refused by the network policy. The knowledge base needs either those hosts allowed for the cloud environment
-or the PDFs fetched on Logan's PC.
+Datasheets came from the Battery-Bank repo's `datasheets/` folder (60 PDFs), so no network was needed.
+
+- `kb_extract.py` reads the pin table with no LLM and keeps the page and source line for every pin.
+- `kb_check.py` compares each symbol pin with the datasheet name for that number, and checks ground pins.
+
+| Datasheet | Pins read | Note |
+|---|---|---|
+| TPD6S300 | 20 of 21 | thermal pad has no number in the table |
+| TPS62177 | 10 of 11 | same |
+| TPS25751D | 38 of 39 | same |
+| BQ25756 | 34 of 37 | a two-number row and the pad missed |
+| TPS62933 | 8 of 8 | |
+| TVS2200 | wrong | read the device-comparison table as pins; the count happened to match |
+| M24512, SiZ240DT | 0 | not TI table layout |
+| TPS7A4101 | | no datasheet in the folder |
+
+Findings:
+
+1. **Every symbol pin name agrees with the datasheet on the five parts read correctly** (about 110 pins), with
+   no LLM tokens. This is the check aimed at the top historical bug source.
+2. **The TVS2200 misread is why one source is not enough.** A wrong table passed the pin-count test. A second,
+   independent read has to agree before a fact is accepted.
+3. **It flagged the TPS25751D symbol: no pins 21, 22, 24, 25, 33, 35.** On the board the custom footprint has
+   single pads 20, 23, 32, 34, so this looks like deliberately merged lands. For Logan to confirm.
+4. **Pin names alone add almost nothing against the seeded faults: 2 of 65, both already caught.** Only 12 of
+   the 65 faults sit on a part with facts, and a signal pin moved to the wrong net still has the right name.
+5. **What is missing is intent, not more datasheet text.** To catch a wrong divider or an enable pin on a
+   17 V rail the checker needs three things together: the pin's limit from the datasheet, the highest voltage
+   each net can reach, and the value the block is meant to produce (for example "this divider sets 5.0 V").
+   The last two belong in the block's code as declarations, next to the constraints spike 1 added.
+
+## Next
+
+- Declarations for net voltage range and expected values in the kernel; rules for ratings and absolute maxima.
+- A second, independent read of each pin table, and absolute-maximum tables.
+- Re-run this same fault set and report detection again.
 
 ## Run it
 
