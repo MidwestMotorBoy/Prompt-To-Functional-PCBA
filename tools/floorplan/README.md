@@ -36,10 +36,42 @@ solver, place each power stage from a template scored by the loop solver, place 
 pin targets, and accept on a trial route. Next step: place section by section (the part with most pins first,
 then its served parts at their pins), then pack the sections, and measure against the same two boards.
 
+## Section placer: clusters at pin targets, then packing (same day)
+
+`place_sections.py` builds each of the 29 sections as a tight cluster on its own: main part first, then always
+the part most connected to what is placed, at the spot and rotation with the least wiring to placed pads, with
+a strong pull from a decoupling capacitor to the pin it serves. 7 seconds for the board. `place_pack.py` then
+moves the clusters as rigid pieces (annealing over about 30 pieces) and finishes with small single-part moves.
+Connectors, holes and test points stay where the hand board has them. Nothing else is taken from the hand board.
+
+| | Signal half-perimeter | Overlap |
+|---|---|---|
+| Hand board | 2064 mm | |
+| Scripted board (the Battery-Bank flow) | 2508 mm | |
+| Flat annealing, two runs | 2677, 3104 mm | 1 to 7 mm2 |
+| Section placer, clusters packed, three runs | 1949 to 2185 mm | under 1 mm2 |
+| Section placer after refinement, three runs | 1714, 1817, 1907 mm | 0 |
+
+Inside sections: 170 mm of wiring against 242 mm on the hand board; served capacitors 228 mm from their pins in
+total against 440 mm. About 15 minutes per run on one core.
+
+Read this with care:
+
+- It is wirelength only. The placer does not know hot loops, gate loops, Kelvin pairs, heat, which nets are
+  noisy, or the enclosure keep-outs (pegs, lips), and bodies are pad boxes plus 0.1 mm, not courtyards. A real
+  board needs more room than this, so the true gap to the hand board is smaller than the table shows.
+- What it does show: placing section by section at pin targets and then packing gets a generic placer, with no
+  board-specific coordinates, to the hand board's wiring demand. The flat approach could not.
+- Next: the intent statements from the floorplanning research (near, order, keep-apart, lanes) with a compiler
+  that checks them against the netlist; courtyards and keep-outs; crossing and hot-loop terms in the score;
+  power-stage templates scored by the loop solver; then the trial route as the acceptance gate.
+
 ## Run it
 
 ```
 python3 floorplan.py extract <board dump.json> intent.json [<netlist.json>]
 python3 floorplan.py score intent.json <board dump.json> [<netlist.json>]
 python3 place_sa.py intent.json <board dump.json> <netlist.json> <constraints.json> out.json [moves] [seed]
+python3 place_sections.py <board dump.json> <netlist.json> <constraints.json> clusters.json
+python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves]
 ```
