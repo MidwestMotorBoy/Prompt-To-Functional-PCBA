@@ -8,6 +8,7 @@ Inputs: netlist.json; constraints.json with nets[*].max_v (highest voltage the n
 (kernel.expect); one limits file per part, read by hand from the datasheet, each number with page and quote:
   {"part", "pdf", "abs_max": [{"pins": [...], "max_v", "page", "quote"}], "facts": {name: {"value", "page", "quote"}},
    "standoff": {part number prefix: {"max_v", "page", "quote"}}}
+  or {"part", "waiver": "why this part needs no datasheet facts"}, which is printed on every run.
 Rules:
   cap      a capacitor's voltage rating (the "25V" in its value) is below the max_v of a net it sits on
   absmax   an IC pin sits on a net whose max_v is above the pin's absolute maximum
@@ -108,6 +109,7 @@ def check(d, cons, limits, kbmap, symlib):
 def verify(limits, sheets):
     bad = n = 0
     for part, L in sorted(limits.items()):
+        if "waiver" in L: print(f"WAIVER  {part}: {L['waiver']}"); continue
         text = subprocess.run(["pdftotext", "-layout", f"{sheets}/{L['pdf']}", "-"], capture_output=True, text=True).stdout.split("\f")
         pages = [" ".join(p.split()) for p in text]
         items = [(", ".join(a["pins"][:3]), a, a["max_v"]) for a in L.get("abs_max", [])]
@@ -132,7 +134,10 @@ if __name__ == "__main__":
         print("\n".join(f) or "no findings")
         import symlib
         nf = nofacts(json.load(open(f"{a[1]}/netlist.json")), load_limits(a[2]), json.load(open(a[3])), symlib)
-        print("\n".join(f"nofacts: {l} has no limits file" for l in nf)); sys.exit(1 if f or nf else 0)
+        for l in nf: print(f"nofacts: {l} has no limits file")
+        for p, L in sorted(load_limits(a[2]).items()):
+            if "waiver" in L: print(f"waiver: {p}: {L['waiver']}")
+        sys.exit(1 if f or nf else 0)
     good, muts, limits, kbmap, design = a[1], a[2], load_limits(a[3]), json.load(open(a[4])), a[5]
     cons = json.load(open(f"{good}/constraints.json")); base = run(good, limits, kbmap, design, cons)
     print("good build:", len(base), "findings"); res = json.load(open(f"{muts}/results.json"))

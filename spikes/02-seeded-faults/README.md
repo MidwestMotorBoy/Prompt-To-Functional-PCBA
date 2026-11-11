@@ -199,12 +199,19 @@ What passes on the unseen set, and what each would take:
 All rules together run in under a second per design and use no LLM tokens. The declarations they need are
 about 25 lines per block.
 
+## Build gate
+
+`design/build.sh` (spike 1) now runs `intent_check.py check` between the netlist and the drawer when `LIMITS_DIR`
+and `LIMITS_MAP` are set. Tested both ways: the good design builds with no findings; one divider resistor
+changed from 120k to 12k stops the build with "PP5V is 1.236 V, meant to be 5.15 V" and no sheets are drawn. A
+part with no datasheet facts also stops the build unless its limits file is an explicit waiver with a reason
+(used once, for the USB-C connector), and waivers are printed on every run.
+
 ## Next
 
 - Pin function per pin from two independent reads (the regex read and an LLM read must agree), stored with the
   limits; a fact source for connectors.
 - Capacitor derating; expectations for bulk capacitance, the thermistor network and I2C pull-ups.
-- Fold `intent_check.py check` into the kernel's `build()` so a failing design never produces sheets.
 
 ## Run it
 
