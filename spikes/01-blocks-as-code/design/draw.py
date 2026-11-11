@@ -62,13 +62,13 @@ class Sheet:
         return key
 
     def symbol(self, lib, name, ref, value, x, y, angle=0, unit=1, footprint="", fields=None, ref_at=None, val_at=None,
-               hide_ref=False, hide_val=False, key=None):
+               hide_ref=False, hide_val=False, key=None, mirror=False):
         lid = self.lib(lib, name)
         x, y = snap(x), snap(y)
         self._ext(x + 10, y + 10)
         # KiCad turns field text with the symbol: undo that so text always reads left to right
         fa = 90 if angle in (90, 270) else 0
-        fj = "right" if angle == 180 else "left"
+        fj = "right" if (angle == 180) != mirror else "left"
         rx, ry = ref_at or (x + 2.54, y - 1.27)
         vx, vy = val_at or (x + 2.54, y + 1.27)
         hid = lambda h: " (hide yes)" if h else ""
@@ -81,7 +81,7 @@ class Sheet:
                         for p in sorted({p["drawn"] for p in symlib.pins(lib, name) if p["unit"] in (0, unit)}))
         su = uid(self.name, "sym", key or ref, unit)
         self.items.append(
-            f'(symbol (lib_id {q(lid)}) (at {x} {y} {angle}) (unit {unit}) (exclude_from_sim no) (in_bom yes) (on_board yes) '
+            f'(symbol (lib_id {q(lid)}) (at {x} {y} {angle}){" (mirror y)" if mirror else ""} (unit {unit}) (exclude_from_sim no) (in_bom yes) (on_board yes) '
             f'(dnp no) (uuid {q(su)}) {" ".join(props)} {pins} '
             f'(instances (project {q(self.project)} (path {q("/" + self.root_uuid + "/" + self.uuid)} (reference {q(ref)}) (unit {unit})))))')
 
@@ -151,8 +151,13 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
 
     pins_of = {r: symlib.pins(*comps[r]["lib"].split(":")) for r in refs}
     npads = {r: len({p["num"] for p in pins_of[r]}) for r in refs}
-    two = [r for r in refs if npads[r] <= 2]
-    anchors = [r for r in refs if npads[r] > 2]
+    tdraw = {a: t for a, t in cons.get("draw", {}).items() if a in refset}
+    templ = set()
+    for t in tdraw.values():
+        templ.update([t["inductor"]] + t.get("cin", []) + t.get("cout", []) + t.get("div", []) + [t[k] for k in ("boot", "rin", "rout") if t.get(k)])
+    tskip = {t["q_out"] for t in tdraw.values() if t.get("q_out")}
+    two = [r for r in refs if npads[r] <= 2 and r not in templ]
+    anchors = [r for r in refs if npads[r] > 2 and r not in tskip]
 
     def ends(r):
         """nets on the one or two pads of a small part, in pad order"""
@@ -254,6 +259,192 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             if abs(ux) < 0.01 and abs(dx) < 0.01 and uy < dy: break
         sheet.symbol(lib, name, r, comps[r]["value"], x, yc, a, footprint=comps[r]["footprint"], fields=comps[r]["fields"])
         return yc + uy, yc + dy
+
+    TW = 1.15                                                     # mm per character of field text, with margin
+    def width_of(r): return max(len(comps[r]["value"]), len(r)) * CH + 6.35
+
+    def horiz(r, xc, y, left_net, ref_at=None, val_at=None):
+        """Draw a two-pad part lying flat, centred at (xc, y), with left_net on its left pad. Returns (left x, right x)."""
+        lib, name = comps[r]["lib"].split(":")
+        pp = {}
+        for p in pins_of[r]: pp.setdefault(p["num"], p)
+        nums = sorted(pp); e = ends(r)
+        lf = nums[0] if e[0] == left_net else nums[1]; rt = nums[1] if lf == nums[0] else nums[0]
+        for a in (0, 90, 180, 270):
+            lx, ly = rot(pp[lf]["x"], pp[lf]["y"], a); rx, ry = rot(pp[rt]["x"], pp[rt]["y"], a)
+            if abs(ly) < 0.01 and abs(ry) < 0.01 and lx < rx: break
+        xc, y = snap(xc), snap(y)
+        sheet.symbol(lib, name, r, comps[r]["value"], xc, y, a, footprint=comps[r]["footprint"], fields=comps[r]["fields"],
+                     ref_at=ref_at or (xc - 3.81, y - 5.0), val_at=val_at or (xc - 3.81, y - 3.0))
+        return snap(xc + lx), snap(xc + rx)
+
+    def hang(rs, x, y, net, sgn=1):
+        """Parts hanging from a horizontal wire at y, each to ground or a label below. Returns (x of the last part, next free x)."""
+        last = x
+        for r in rs:
+            if sgn < 0: x = snap(x - width_of(r))
+            x = snap(x); last = x
+            t, b = small(r, x, snap(y + 2.54 + 3.81), net)
+            sheet.wire(x, y, x, t)
+            other = [n for n in ends(r) if n != net]
+            if not other or other[0] == "GND": sheet.gnd(x, b)
+            else: sheet.wire(x, b, x, b + 2.54); sheet.label(short(other[0]), x, b + 2.54, 270, other[0] in glob)
+            if sgn > 0: x = snap(x + width_of(r))
+        return last, x
+
+    def inline_extent(r, net):
+        other = [n for n in ends(r) if n != net]
+        users = [x for x in nets[net] if x[0] != r]
+        stub = 2.54 if len(users) <= 1 else len(short(net)) * CH + 3.81
+        tail = 7.62 if (not other or other[0] == "GND") else 2.54 + len(short(other[0])) * CH + (5.08 if other[0] in glob else 2.54)
+        return stub, stub + 7.62 + tail, stub + 7.62 + tail + (len(r) + 1 + len(comps[r]["value"])) * TW + 2.54
+
+    def inline(r, px, py, side, net):
+        """One two-pad part straight out of a pin on the pin's own row, ending in ground or a label, its text after it."""
+        sg = 1 if side == "R" else -1
+        stub, far, total = inline_extent(r, net)
+        other = [n for n in ends(r) if n != net]
+        if stub > 2.54: sheet.label(short(net), px, py, 0 if side == "R" else 180, False)
+        xc = snap(px + sg * (stub + 3.81))
+        tl = (len(r) + 1 + len(comps[r]["value"])) * TW
+        xt = px + far if side == "R" else px - far - tl
+        xl, xr = horiz(r, xc, py, net if side == "R" else (other[0] if other else net),
+                       ref_at=(xt, py), val_at=(xt + (len(r) + 1) * TW, py))
+        near, end = (xl, xr) if side == "R" else (xr, xl)
+        sheet.wire(px, py, near, py)
+        if not other or other[0] == "GND":
+            sheet.wire(end, py, end + sg * 2.54, py); sheet.gnd(end + sg * 2.54, py, 90 if side == "R" else 270)
+        else:
+            sheet.wire(end, py, end + sg * 2.54, py); sheet.label(short(other[0]), end + sg * 2.54, py, 0 if side == "R" else 180, other[0] in glob)
+        return total
+
+    def buck(a, t, ox, oy, lab_l, lab_r, draw=True):
+        """Buck converter around IC a: input caps to the left of VIN, inductor in line with SW, feedback and output caps to the right.
+        Returns (set of IC pin numbers it wired, width used left of the left pins, width used right of the right pins, depth below the top pin)."""
+        P = lambda nm: next(p for p in pins_of[a] if p["name"] == nm)
+        pos = lambda p: (snap(ox + p["x"]), snap(oy - p["y"]))
+        vin, sw = P(t["vin"]), P(t["sw"])
+        nvin, nsw = pinnet[(a, vin["num"])], pinnet[(a, sw["num"])]
+        L = t["inductor"]; nout = [n for n in ends(L) if n != nsw][0]
+        wl = lab_l + 2.54 + sum(width_of(r) for r in t.get("cin", [])) + 5.08 + len(short(nvin)) * CH + 5.08
+        wired = {vin["num"], sw["num"]}
+        for k in ("sense", "fb", "bst"):
+            if t.get(k): wired.add(P(t[k])["num"])
+        if not draw: return wired, wl, 0, 0
+        (vx, vy), (sx, sy) = pos(vin), pos(sw)
+        # input side
+        last, _ = hang(t.get("cin", []), vx - lab_l - 2.54, vy, nvin, -1)
+        for r in t.get("cin", [])[:-1]: pass
+        xe = snap(last - 5.08)
+        sheet.wire(vx, vy, xe, vy); sheet.label(short(nvin), xe, vy, 180, nvin in glob)
+        x = vx - lab_l - 2.54
+        for r in t.get("cin", []):
+            x = snap(x - width_of(r)); sheet.junction(x, vy)
+        # switch node, bootstrap, inductor
+        xa = snap(sx + lab_r + 2.54)
+        xi = xa + 5.08
+        if t.get("boot"):
+            (bx, by) = pos(P(t["bst"])); nb = pinnet[(a, P(t["bst"])["num"])]
+            top, bot = (by, sy) if by < sy else (sy, by)
+            t_, b_ = small(t["boot"], xa, snap((by + sy) / 2), nb if by < sy else nsw)
+            sheet.wire(bx, by, xa, by); sheet.wire(xa, top, xa, t_); sheet.wire(xa, b_, xa, bot); sheet.junction(xa, sy)
+            xi = xa + width_of(t["boot"]) + 5.08
+        sheet.label(short(nsw), sx, sy, 0, False)
+        xl, xr = horiz(L, snap(xi + 3.81), sy, nsw)
+        sheet.wire(sx, sy, xl, sy)
+        xo = snap(xr + 5.08)
+        depth = 16
+        nxt = xo + 7.62
+        if t.get("sense"):
+            (qx, qy) = pos(P(t["sense"]))
+            sheet.wire(qx, qy, xo, qy); sheet.wire(xo, qy, xo, sy); sheet.junction(xo, sy)
+        if t.get("fb"):
+            (qx, qy) = pos(P(t["fb"])); nfb = pinnet[(a, P(t["fb"])["num"])]
+            top_r, bot_r = t["div"]
+            t1, b1 = small(top_r, xo, snap(sy + 2.54 + 3.81), nout)
+            ym = snap(b1 + 2.54)
+            t2, b2 = small(bot_r, xo, snap(ym + 2.54 + 3.81), nfb)
+            sheet.wire(xo, sy, xo, t1); sheet.wire(xo, b1, xo, t2); sheet.junction(xo, ym); sheet.junction(xo, sy)
+            nb2 = [n for n in ends(bot_r) if n != nfb]
+            if not nb2 or nb2[0] == "GND": sheet.gnd(xo, b2)
+            else: sheet.wire(xo, b2, xo, b2 + 2.54); sheet.label(short(nb2[0]), xo, b2 + 2.54, 270, nb2[0] in glob)
+            xf = snap(xa + 2.54)
+            sheet.wire(qx, qy, xf, qy); sheet.wire(xf, qy, xf, ym); sheet.wire(xf, ym, xo, ym)
+            sheet.label(short(nfb), qx, qy, 0, False)
+            nxt = xo + max(width_of(top_r), width_of(bot_r)) + 2.54
+            depth = b2 + 8 - sy
+        last, x2 = hang(t.get("cout", []), nxt, sy, nout, 1)
+        x = nxt
+        for r in t.get("cout", []):
+            sheet.junction(snap(x), sy); x = snap(x) + width_of(r)
+        xe = snap(x2 + 2.54)
+        sheet.wire(xr, sy, xe, sy); sheet.label(short(nout), xe, sy, 0, nout in glob)
+        return wired, wl, xe + len(short(nout)) * CH + 6.35 - sx, max(depth, 16) + (sy - vy if sy > vy else 0)
+
+    def bridge4(a, t, x0, y0):
+        """Four-switch buck-boost drawn as a power path, left to right: input shunt, input caps, input half bridge, inductor,
+        output half bridge, output caps, output shunt. Returns (width, height)."""
+        qa, qb = a, t["q_out"]
+        net = lambda q, nm, u: next(pinnet[(q, p["num"])] for p in pins_of[q] if p["name"] == nm and p["unit"] == u)
+        def box(q, u, x, y, mir):
+            lib, name = comps[q]["lib"].split(":")
+            sheet.symbol(lib, name, q, comps[q]["value"], x, y, 0, unit=u, footprint=comps[q]["footprint"], fields=comps[q]["fields"],
+                         ref_at=(x - 6.35 + (11.43 if mir else 0), y - 7.0), val_at=(x - 6.35 + (11.43 if mir else 0), y - 5.0), mirror=mir)
+            out = {}
+            for p in pins_of[q]:
+                if p["unit"] == u: out[p["name"]] = (snap(x + (-p["x"] if mir else p["x"])), snap(y - p["y"]))
+            return out
+        n_in, n_out = net(qa, "D1", 1), net(qb, "D1", 1)
+        n_sw1, n_sw2 = net(qa, "SW", 1), net(qb, "SW", 1)
+        lab = max(len(short(net(q, g, u))) for q in (qa, qb) for g, u in (("G1", 1), ("G2", 2))) * CH + 5.08
+        yr = snap(y0 + 10.16); ya = snap(yr + 15.24); yb = snap(ya + 15.24)
+        # input: label, shunt, caps
+        n_src = [n for n in ends(t["rin"]) if n != n_in][0]
+        x = snap(x0 + len(short(n_src)) * CH + 7.62)
+        sheet.label(short(n_src), x, yr, 180, n_src in glob)
+        xl, xr = horiz(t["rin"], x + 2.54 + 3.81, yr, n_src)
+        sheet.wire(x, yr, xl, yr)
+        sheet.label(short(n_in), xr + 1.27, yr, 0, False)
+        xc = snap(xr + len(short(n_in)) * CH + 5.08)
+        last, xn = hang(t["cin"], xc, yr, n_in, 1)
+        xx = xc
+        for r in t["cin"]: sheet.junction(snap(xx), yr); xx = snap(xx) + width_of(r)
+        # input half bridge
+        qx = snap(xn + lab + 6.35)
+        A = box(qa, 1, qx, ya, False); B = box(qa, 2, qx, yb, False)
+        xd, xs = snap(qx + 8.89), snap(qx + 11.43)
+        sheet.wire(xr, yr, xd, yr); sheet.wire(xd, yr, xd, A["D1"][1]); sheet.wire(A["D1"][0], A["D1"][1], xd, A["D1"][1])
+        ysw = A["SW"][1]
+        sheet.wire(A["SW"][0], ysw, xs, ysw); sheet.wire(B["SW"][0], B["SW"][1], xs, B["SW"][1]); sheet.wire(xs, ysw, xs, B["SW"][1]); sheet.junction(xs, ysw)
+        sheet.wire(B["S2"][0], B["S2"][1], xd, B["S2"][1]); sheet.gnd(xd, B["S2"][1], 90)
+        sheet.label(short(net(qa, "G1", 1)), A["G1"][0], A["G1"][1], 180, False); sheet.label(short(net(qa, "G2", 2)), B["G2"][0], B["G2"][1], 180, False)
+        # inductor
+        sheet.label(short(n_sw1), xs + 1.27, ysw, 0, False)
+        xi = snap(xs + len(short(n_sw1)) * CH + 5.08)
+        il, ir = horiz(t["inductor"], xi + 3.81, ysw, n_sw1)
+        sheet.wire(xs, ysw, il, ysw)
+        sheet.label(short(n_sw2), ir + 1.27, ysw, 0, False)
+        xs2 = snap(ir + len(short(n_sw2)) * CH + 5.08)
+        # output half bridge, mirrored
+        qx2 = snap(xs2 + 11.43)
+        A2 = box(qb, 1, qx2, ya, True); B2 = box(qb, 2, qx2, yb, True)
+        xd2 = snap(qx2 - 8.89)
+        sheet.wire(ir, ysw, xs2, ysw); sheet.wire(xs2, ysw, A2["SW"][0], ysw); sheet.wire(xs2, ysw, xs2, B2["SW"][1]); sheet.wire(xs2, B2["SW"][1], B2["SW"][0], B2["SW"][1]); sheet.junction(xs2, ysw)
+        sheet.wire(A2["D1"][0], A2["D1"][1], xd2, A2["D1"][1]); sheet.wire(xd2, A2["D1"][1], xd2, yr)
+        sheet.wire(B2["S2"][0], B2["S2"][1], xd2, B2["S2"][1]); sheet.gnd(xd2, B2["S2"][1], 270)
+        sheet.label(short(net(qb, "G1", 1)), A2["G1"][0], A2["G1"][1], 0, False); sheet.label(short(net(qb, "G2", 2)), B2["G2"][0], B2["G2"][1], 0, False)
+        # output: caps, shunt, label
+        xo = snap(qx2 + 6.35 + max(lab, 17.78))
+        sheet.label(short(n_out), xo - len(short(n_out)) * CH - 1.27, yr, 0, False)
+        last, xn = hang(t["cout"], xo + 2.54, yr, n_out, 1)
+        xx = xo + 2.54
+        for r in t["cout"]: sheet.junction(snap(xx), yr); xx = snap(xx) + width_of(r)
+        n_dst = [n for n in ends(t["rout"]) if n != n_out][0]
+        ol, orr = horiz(t["rout"], xn + 2.54 + 3.81, yr, n_out)
+        sheet.wire(xd2, yr, ol, yr)
+        xe = snap(orr + 2.54)
+        sheet.wire(orr, yr, xe, yr); sheet.label(short(n_dst), xe, yr, 0, n_dst in glob)
+        return xe + len(short(n_dst)) * CH + 7.62 - x0, yb + 10.16 - y0
 
     def cell_width(cell, att=None):
         labs = set()
@@ -382,6 +573,23 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
         lib, name = comps[a]["lib"].split(":")
         pp = pins_of[a]
         plan, rest = attach_plan(a, list(cs))
+        t = tdraw.get(a)
+        if t and t["kind"] == "bridge4":
+            w, h = bridge4(a, t, x0, y0)
+            return w, h, list(cs)
+        inl = {}                                                      # pin number -> (pin, part, net): drawn on the pin's own row
+        for num, (p, lst) in list(plan.items()):
+            c, n = lst[0]
+            if len(lst) == 1 and c[0] == "bank" and len(c[1]) == 1 and n not in glob:
+                inl[num] = (p, c[1][0], n); del plan[num]
+        if t:                                                         # a template owns the space beside the IC: no shelf
+            twired = buck(a, t, 0, 0, 0, 0, draw=False)[0]
+            for num in list(plan):
+                rest += [c for c, _ in plan[num][1]]; del plan[num]
+            for num in list(inl):
+                if num in twired: rest.append(("bank", [inl[num][1]])); del inl[num]
+        inl_l = max([inline_extent(r, n)[2] for p, r, n in inl.values() if p["angle"] == 0] + [0])
+        inl_r = max([inline_extent(r, n)[2] for p, r, n in inl.values() if p["angle"] == 180] + [0])
         units = sorted({p["unit"] for p in pp if p["unit"]}) or [1]
         lab = max([len(short(pinnet[(a, p["num"])])) for p in pp if pinnet.get((a, p["num"]))] + [4]) * CH + 5.08
         uy, width = y0, 0
@@ -395,12 +603,20 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             if u != units[0]: mine = [e for e in mine if e[0]["unit"] == u]
             Lc = [e for e in mine if e[0]["angle"] == 0]; Rc = [e for e in mine if e[0]["angle"] == 180]
             WL = sum(cell_width(c, (n, "R"))[1] + 5.08 for _, lst in Lc for c, n in lst)
-            ox = snap(x0 + WL + (lab if has_left else 12.7) - minx)
+            labl, labr = max(lab, inl_l + 2.54), max(lab, inl_r + 2.54)
+            ox = snap(x0 + WL + (labl if has_left else 12.7) - minx)
+            if t: ox = snap(x0 + buck(a, t, 0, 0, labl, labr, draw=False)[1] - minx)
             oy = snap(uy + (lab if has_top else 10.16) + maxy)
             sheet.symbol(lib, name, a, comps[a]["value"], ox, oy, 0, unit=u, footprint=comps[a]["footprint"], fields=comps[a]["fields"],
                          ref_at=(ox + minx + 1.27, oy - maxy - (7.0 if not has_top else lab + 1.27)),
                          val_at=(ox + minx + 1.27, oy - maxy - (5.0 if not has_top else lab - 0.73)))
-            wired = {e[0]["num"] for e in mine}
+            wired = {e[0]["num"] for e in mine} | set(inl)
+            tw = None
+            if t:
+                tw = buck(a, t, ox, oy, labl, labr)
+                wired |= tw[0]
+            for num, (p, r, n) in inl.items():
+                if p["unit"] in (0, u): inline(r, snap(ox + p["x"]), snap(oy - p["y"]), "L" if p["angle"] == 0 else "R", n)
             seen = set()
             for p in ps:
                 px, py = snap(ox + p["x"]), snap(oy - p["y"])
@@ -411,7 +627,7 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             shelf = snap(oy - miny + 5.08)
             hmax, WR = 0, 0
             for side, group in (("R", Rc), ("L", Lc)):
-                cur = ox + maxx + lab if side == "R" else ox + minx - lab
+                cur = ox + maxx + labr if side == "R" else ox + minx - labl
                 for p, lst in group:                                  # lowest pin first, nearest the IC: wires never cross
                     px, py = snap(ox + p["x"]), snap(oy - p["y"])
                     net = lst[0][1]
@@ -424,9 +640,12 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
                         if i: sheet.junction(prev, py)
                         prev = e[0]; hmax = max(hmax, h)
                         cur += (w + 5.08) if side == "R" else -(w + 5.08)
-                if side == "R": WR = cur - (ox + maxx + lab)
+                if side == "R": WR = cur - (ox + maxx + labr)
             uy = max(oy - miny + (lab if has_bot else 3.81), shelf + hmax) + 3.81
-            width = max(width, WL + (lab if has_left else 12.7) + (maxx - minx) + lab + WR)
+            width = max(width, WL + (labl if has_left else 12.7) + (maxx - minx) + labr + WR)
+            if tw:
+                uy = max(uy, oy - maxy + tw[3] + 12.7)
+                width = max(width, tw[1] + (maxx - minx) + tw[2])
         return width, uy - y0, rest
 
     def draw_section(title, members, x0, y0, wcells):

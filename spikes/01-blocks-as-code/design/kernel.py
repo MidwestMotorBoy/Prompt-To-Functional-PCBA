@@ -111,6 +111,12 @@ def hot_loop(name, supply, ret, switch_pins, caps):
 def kelvin(name, resistor, pos, neg):
     CONSTRAINTS["kelvin"][name] = dict(resistor=resistor, pos=pos.name, neg=neg.name)
 
+def draw_as(kind, ic, **roles):
+    """How to draw the parts around one IC, as a human would. kind "buck": vin, sw (pin names), inductor (ref),
+    cin, cout (lists of refs), and either sense (pin on the output) or fb (pin) with div=[top, bottom];
+    optional bst (pin) with boot (cap ref)."""
+    CONSTRAINTS["draw"][ic] = dict(kind=kind, **roles)
+
 _section = [""]
 def section(title):
     """Start a titled section of the current block. Parts made after this call are drawn under this title."""
