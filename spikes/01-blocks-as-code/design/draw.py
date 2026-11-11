@@ -255,22 +255,40 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
         sheet.symbol(lib, name, r, comps[r]["value"], x, yc, a, footprint=comps[r]["footprint"], fields=comps[r]["fields"])
         return yc + uy, yc + dy
 
-    def cell_width(cell):
+    def cell_width(cell, att=None):
         labs = set()
-        for r in cell[1]: labs.update(n for n in ends(r) if n and n != "GND")
-        left = max([len(short(n)) for n in labs] + [3]) * CH + 6.35
+        for r in cell[1]: labs.update(n for n in ends(r) if n and n != "GND" and not (att and n == att[0]))
+        left = (max(len(short(n)) for n in labs) * CH + 6.35) if labs else (5.08 if att else 3 * CH + 6.35)
+        extra = 0 if not att else (len(short(att[0])) * CH + 7.62 if att[0] in glob else 2.54)
         if cell[0] == "chain":
-            return left, left + max(len(comps[r]["value"]) for r in cell[1]) * CH + 7.62
-        return left, left + sum(max(len(comps[r]["value"]), len(r)) * CH + 6.35 for r in cell[1]) + 2.54
+            return left, left + max(max(len(comps[r]["value"]), len(r)) for r in cell[1]) * CH + 7.62 + extra
+        return left, left + sum(max(len(comps[r]["value"]), len(r)) * CH + 6.35 for r in cell[1]) + 2.54 + extra
 
     def end_label(x, y, n):
         """A net at a point of a cell, drawn as a stub to the left with a label, or a ground symbol."""
         sheet.wire(x, y, x - 2.54, y)
         sheet.label(short(n), x - 2.54, y, 180, n in glob)
 
-    def draw_cell(cell, x0, y0):
-        """Returns the height used."""
-        left, _ = cell_width(cell)
+    def draw_cell(cell, x0, y0, att=None):
+        """Returns (height used, entry point). att = (net, side): that net gets a bare stub on the given side of the
+        cell ("L" or "R") for a wire from an IC pin, instead of a label; the entry point is the stub's end."""
+        left, _ = cell_width(cell, att)
+        entry = [None]
+        def end_label(x, y, n, xr=None):
+            xr = x if xr is None else xr
+            if not att or n != att[0]:
+                if att and cell[0] == "chain" and att[1] == "L":      # keep other labels clear of the wire coming in on the left
+                    sheet.wire(x, y, x + 2.54, y)
+                    return sheet.label(short(n), x + 2.54, y, 0, n in glob)
+                sheet.wire(x, y, x - 2.54, y)
+                return sheet.label(short(n), x - 2.54, y, 180, n in glob)
+            if xr != x: sheet.junction(x if att[1] == "L" else xr, y)
+            if att[1] == "L":
+                sheet.wire(x, y, x - 2.54, y); entry[0] = (snap(x - 2.54), snap(y))
+                if n in glob: sheet.wire(xr, y, xr + 2.54, y); sheet.label(short(n), xr + 2.54, y, 0, True); sheet.junction(xr, y) if xr != x else None
+            else:
+                sheet.wire(xr, y, xr + 2.54, y); entry[0] = (snap(xr + 2.54), snap(y))
+                if n in glob: sheet.wire(x, y, x - 2.54, y); sheet.label(short(n), x - 2.54, y, 180, True); sheet.junction(x, y) if xr != x else None
         cap = sorted({serves[r] for r in cell[1] if r in serves})
         if cap: sheet.text("for " + ", ".join(cap), x0, y0 + 2.2, 1.0)
         x = snap(x0 + left)
@@ -294,7 +312,7 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             if last_dn == "GND": sheet.gnd(x, prev_bot)
             else:
                 sheet.wire(x, prev_bot, x, prev_bot + 2.54); end_label(x, prev_bot + 2.54, last_dn)
-            return prev_bot + 8 - y0
+            return prev_bot + 8 - y0, entry[0]
         rs = cell[1]
         e = [n for n in ends(rs[0]) if n]
         yc = snap(y0 + 11.43)
@@ -304,9 +322,10 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
                 if e[0] == "GND": sheet.gnd(x, b)
                 else: end_label(x, b, e[0])
                 x = snap(x + len(comps[r]["value"]) * CH + 7.62)
-            return 22
+            return 22, None
         up_net, dn_net = (e[0], e[1]) if len(e) > 1 else (e[0], e[0])
         if rank(dn_net) > rank(up_net): up_net, dn_net = dn_net, up_net
+        if att and att[0] == dn_net and dn_net != "GND": up_net, dn_net = dn_net, up_net
         xs, tb = [], None
         for r in rs:
             tb = small(r, x, yc, up_net)
@@ -323,9 +342,9 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
                 sheet.wire(xi, b, xi, yb)
                 if i: sheet.wire(xs[i - 1], yb, xi, yb)
                 if 0 < i < len(xs) - 1: sheet.junction(xi, yb)
-        end_label(xs[0], yt, up_net)
-        if dn_net != "GND": end_label(xs[0], yb, dn_net)
-        return 26
+        end_label(xs[0], yt, up_net, xs[-1])
+        if dn_net != "GND": end_label(xs[0], yb, dn_net, xs[-1])
+        return 26, entry[0]
 
     def flow(cells_, x0, y0, wmax):
         """Lay cells left to right, wrapping. Returns (width, height) used."""
@@ -334,16 +353,35 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             _, w = cell_width(c)
             if x + w > x0 + wmax and x > x0:
                 x, y, rowh = x0, y + rowh + 2.54, 0
-            h = draw_cell(c, x, y)
+            h, _ = draw_cell(c, x, y)
             rowh = max(rowh, h)
             x += w + 5.08
             wused = max(wused, x - x0)
         return wused, y + rowh - y0
 
-    def draw_anchor(a, x0, y0):
-        """One IC with a label on every pin. Returns (width, height)."""
+    def attach_plan(a, cs):
+        """Which cells can be wired straight to a side pin of IC a. Returns ({pin number: (pin, [(cell, net)])}, other cells)."""
+        side_pin = {}
+        for p in pins_of[a]:
+            n = pinnet.get((a, p["num"]))
+            if n and n != "GND" and p["angle"] in (0, 180) and (a, p["num"]) not in ncset: side_pin.setdefault(n, p)
+        plan, rest = {}, []
+        for c in cs:
+            cn = set()
+            for r in c[1]: cn.update(x for x in ends(r) if x)
+            loc = sorted(n for n in cn if n in side_pin and n not in glob and rank(n) == 1)
+            oth = sorted(n for n in cn if n in side_pin and n not in loc) if c[0] == "bank" else []
+            if npads[c[1][0]] == 1 or not (loc or oth): rest.append(c); continue
+            n = (loc or oth)[0]
+            plan.setdefault(side_pin[n]["num"], (side_pin[n], []))[1].append((c, n))
+        return plan, rest
+
+    def draw_anchor(a, x0, y0, cs=()):
+        """One IC with a label on every pin, and the cells that hang on its side pins wired to them on a shelf below.
+        Returns (width, height, cells not drawn)."""
         lib, name = comps[a]["lib"].split(":")
         pp = pins_of[a]
+        plan, rest = attach_plan(a, list(cs))
         units = sorted({p["unit"] for p in pp if p["unit"]}) or [1]
         lab = max([len(short(pinnet[(a, p["num"])])) for p in pp if pinnet.get((a, p["num"]))] + [4]) * CH + 5.08
         uy, width = y0, 0
@@ -353,36 +391,61 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
             maxy = max(p["y"] for p in ps); miny = min(p["y"] for p in ps)
             has_left = any(p["angle"] == 0 for p in ps)
             has_top = any(p["angle"] == 270 for p in ps); has_bot = any(p["angle"] == 90 for p in ps)
-            ox = snap(x0 + (lab if has_left else 12.7) - minx)
+            mine = sorted((plan[p["num"]] for p in ps if p["num"] in plan and p["unit"] in (0, u)), key=lambda e: e[0]["y"])
+            if u != units[0]: mine = [e for e in mine if e[0]["unit"] == u]
+            Lc = [e for e in mine if e[0]["angle"] == 0]; Rc = [e for e in mine if e[0]["angle"] == 180]
+            WL = sum(cell_width(c, (n, "R"))[1] + 5.08 for _, lst in Lc for c, n in lst)
+            ox = snap(x0 + WL + (lab if has_left else 12.7) - minx)
             oy = snap(uy + (lab if has_top else 10.16) + maxy)
             sheet.symbol(lib, name, a, comps[a]["value"], ox, oy, 0, unit=u, footprint=comps[a]["footprint"], fields=comps[a]["fields"],
                          ref_at=(ox + minx + 1.27, oy - maxy - (7.0 if not has_top else lab + 1.27)),
                          val_at=(ox + minx + 1.27, oy - maxy - (5.0 if not has_top else lab - 0.73)))
+            wired = {e[0]["num"] for e in mine}
             seen = set()
             for p in ps:
                 px, py = snap(ox + p["x"]), snap(oy - p["y"])
-                if (px, py) in seen: continue
+                if (px, py) in seen or p["num"] in wired: continue
                 seen.add((px, py))
                 n = None if (a, p["num"]) in ncset else pinnet.get((a, p["num"]))
                 pin_label(px, py, {0: "L", 180: "R", 90: "D", 270: "U"}[p["angle"]], n, (a, p["num"]))
-            uy = oy - miny + (lab if has_bot else 3.81) + 3.81
-            width = max(width, (lab if has_left else 12.7) + (maxx - minx) + lab)
-        return width, uy - y0
+            shelf = snap(oy - miny + 5.08)
+            hmax, WR = 0, 0
+            for side, group in (("R", Rc), ("L", Lc)):
+                cur = ox + maxx + lab if side == "R" else ox + minx - lab
+                for p, lst in group:                                  # lowest pin first, nearest the IC: wires never cross
+                    px, py = snap(ox + p["x"]), snap(oy - p["y"])
+                    net = lst[0][1]
+                    if net not in glob: sheet.label(short(net), px, py, 0 if side == "R" else 180, False)
+                    prev = px
+                    for i, (c, n) in enumerate(lst):
+                        w = cell_width(c, (n, "L" if side == "R" else "R"))[1]
+                        h, e = draw_cell(c, cur if side == "R" else cur - w, shelf, (n, "L" if side == "R" else "R"))
+                        sheet.wire(prev, py, e[0], py); sheet.wire(e[0], py, e[0], e[1])
+                        if i: sheet.junction(prev, py)
+                        prev = e[0]; hmax = max(hmax, h)
+                        cur += (w + 5.08) if side == "R" else -(w + 5.08)
+                if side == "R": WR = cur - (ox + maxx + lab)
+            uy = max(oy - miny + (lab if has_bot else 3.81), shelf + hmax) + 3.81
+            width = max(width, WL + (lab if has_left else 12.7) + (maxx - minx) + lab + WR)
+        return width, uy - y0, rest
 
     def draw_section(title, members, x0, y0, wcells):
         """A titled group: its ICs down the left, each with its cells to the right. Returns (width, height)."""
-        sheet.text(title, x0, y0 + 3.5, 2.0)
-        y, wmax = y0 + 6.35, len(title) * 1.75
         mem = set(members)
         sec_anchors = [a for a in anchors if a in mem]
+        zoned = {id(c) for a in sec_anchors for c in zones[a] if c[1][0] in mem}
+        if not sec_anchors and not [c for c in cells if c[1][0] in mem and id(c) not in zoned]: return 0, 0
+        sheet.text(title, x0, y0 + 3.5, 2.0)
+        y, wmax = y0 + 6.35, len(title) * 1.75
         placed = set()
         for a in sec_anchors:
-            aw, ah = draw_anchor(a, x0, y)
             cs = [c for c in zones[a] if c[1][0] in mem]
             placed.update(id(c) for c in cs)
-            cw, ch = flow(cs, x0 + aw + 7.62, y, wcells) if cs else (0, 0)
-            wmax = max(wmax, aw + 7.62 + cw)
-            y += max(ah, ch) + 5.08
+            aw, ah, left_over = draw_anchor(a, x0, y, cs)
+            y += ah + 2.54
+            cw, ch = flow(left_over, x0, y, max(wcells, aw)) if left_over else (0, 0)
+            wmax = max(wmax, aw, cw)
+            y += ch + 5.08
         rest = [c for c in cells if c[1][0] in mem and id(c) not in placed]
         if rest:
             cw, ch = flow(rest, x0, y, max(wcells + 60, wmax))
@@ -394,7 +457,7 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
         t = comps[r].get("section") or block
         if t not in [s_[0] for s_ in sections]: sections.append((t, []))
         [s_ for s_ in sections if s_[0] == t][0][1].append(r)
-    PAGE_W, X0, Y0, GAP = 594.0, 15.24, 22.86, 7.62      # A2 landscape
+    PAGE_W, X0, Y0, GAP = 594.0, 20.32, 27.94, 7.62      # A2 landscape
     WC = 120
     # measure each section on a scratch sheet, then pack them in rows across the page
     real = sheet
@@ -403,15 +466,16 @@ def draw_block(sheet, block, comps, nets, nc, cons, order):
         sheet = Sheet(real.name, real.project, real.root_uuid, real.title)
         sizes.append(draw_section(t, mem, 0, 0, WC))
     sheet = real
-    sheet.text(sheet.title, X0, 14, 3.0)
+    sheet.text(sheet.title, X0, 21, 3.0)
     x, y, rowh = X0, Y0, 0
     for (t, mem), (w, h) in zip(sections, sizes):
+        if not w: continue
         if x + w > PAGE_W - 15 and x > X0:
             x, y, rowh = X0, y + rowh + GAP, 0
         draw_section(t, mem, snap(x), snap(y), WC)
         x += w + GAP * 2
         rowh = max(rowh, h)
-    sheet.maxx, sheet.maxy = max(sheet.maxx, PAGE_W - 30), max(sheet.maxy, y + rowh + 30)
+    sheet.maxy = max(sheet.maxy, y + rowh + 30)
 
 
 def main(build, out, project):
