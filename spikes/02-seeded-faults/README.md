@@ -222,3 +222,10 @@ python3 intent_check.py verify <limits dir> <datasheet dir>
 SYMBOL_DIRS=... python3 intent_check.py score <good build dir> muts <limits dir> <kbmap.json> <spike 1 design dir>
 SYMBOL_DIRS=... python3 intent_check.py check <good build dir> <limits dir> <kbmap.json> <spike 1 design dir>
 ```
+
+## Tested-tolerance limits (added 2026-11-11)
+
+Found by an Opus 5.5 benchmark run (spike 5): the TPD4S201's CC pins have a 28 V absolute maximum, but the
+tested hot-plug short-to-VBUS tolerance is 21.5 V. A limits file can now carry `tested_max` rows (pins, max_v,
+page, quote, what). The gate compares them with the highest voltage the net can reach and reports `tested:`
+findings. `limits/TPD4S201.json` is the first file with one.

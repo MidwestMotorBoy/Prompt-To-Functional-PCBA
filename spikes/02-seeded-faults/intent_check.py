@@ -17,6 +17,7 @@ Rules:
            pin it is meant for (at="U404.FB") no longer touches any of the parts that set it
   ground   a pin the symbol names GND, PGND, AGND or VSS is not on a 0 V net; a supply pin is on a 0 V net
   stage    a declared hot loop's high-side pins are not all on its supply, or its low-side pins not all on its return
+  tested   a pin's net can reach (max_v) more than a tested tolerance row, such as a hot-plug short rating, even if the absolute maximum is higher
   recmax   a pin's net runs (normal_v, else max_v) above the part's recommended operating maximum
   clamp    a clamp's clamping voltage is above the absolute maximum of a pin on the net it protects
   bus      a net joins a data pin and a clock pin (names ending SDA, SCL), or such a pin meets no other of its kind
@@ -86,6 +87,12 @@ def check(d, cons, limits, kbmap, symlib):
                 a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = on.get(pin["num"])
                 if a and n in vnorm and vnorm[n] > a["max_v"]:
                     out.add(f"recmax: {r}.{pin['name']} is specified to work up to {a['max_v']} V (p.{a['page']}), {n} runs at {vnorm[n]:g} V")
+        if L and L.get("tested_max"):
+            lim = {p: a for a in L["tested_max"] for p in a["pins"]}
+            for pin in symlib.pins(*c["lib"].split(":")):
+                a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = on.get(pin["num"])
+                if a and n in vmax and vmax[n] > a["max_v"]:
+                    out.add(f"tested: {r}.{pin['name']} is only tested to survive {a['max_v']} V ({a.get('what', 'tested tolerance')}, p.{a['page']}), {n} reaches {vmax[n]:g} V")
         for pin in symlib.pins(*c["lib"].split(":")):
             n = on.get(pin["num"])
             if n is None: continue
@@ -140,7 +147,7 @@ def verify(limits, sheets):
             if "pdf" not in L: continue
         text = subprocess.run(["pdftotext", "-layout", f"{sheets}/{L['pdf']}", "-"], capture_output=True, text=True).stdout.split("\f")
         pages = [" ".join(p.split()) for p in text]
-        items = [(", ".join(a["pins"][:3]), a, a["max_v"]) for a in L.get("abs_max", []) + L.get("rec_max", [])]
+        items = [(", ".join(a["pins"][:3]), a, a["max_v"]) for a in L.get("abs_max", []) + L.get("rec_max", []) + L.get("tested_max", [])]
         items += [(k, f, f["value"]) for k, f in L.get("facts", {}).items()] + [(k, s, s["max_v"]) for k, s in L.get("standoff", {}).items()]
         for label, f, value in items:
             n += 1
