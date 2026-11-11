@@ -110,11 +110,12 @@ def volts(max_v, *nets):
     """Shorthand: the same max_v for several nets."""
     for n in nets: declare(n, max_v=max_v)
 
-def expect(name, expr, target, tol, unit="", **bind):
+def expect(name, expr, target, tol, unit="", at=None, **bind):
     """What a set of part values is meant to produce, so a wrong value is a failed check and not a silent change.
         expect("PP5V", "VREF * (1 + Rtop / Rbot)", 5.15, 0.03, "V", VREF="TPS62933.VREF", Rtop="R433", Rbot="R434")
-    A binding is a part reference (its value in ohms) or PART.FACT from the part knowledge base."""
-    CONSTRAINTS["expect"]["/".join(_block + [name])] = dict(expr=expr, target=target, tol=tol, unit=unit, bind=bind)
+    A binding is a part reference (its value in ohms) or PART.FACT from the part knowledge base.
+    at="U404.FB" names the pin the value is for; that pin must touch at least one of the bound parts."""
+    CONSTRAINTS["expect"]["/".join(_block + [name])] = dict(expr=expr, target=target, tol=tol, unit=unit, at=at, bind=bind)
 
 def hot_loop(name, supply, ret, switch_pins, caps):
     CONSTRAINTS["hot_loops"][name] = dict(supply=supply.name, ret=ret.name, switch_pins=switch_pins, caps=caps)

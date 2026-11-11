@@ -12,7 +12,11 @@ Rules:
   cap      a capacitor's voltage rating (the "25V" in its value) is below the max_v of a net it sits on
   absmax   an IC pin sits on a net whose max_v is above the pin's absolute maximum
   standoff a clamp's working voltage is below the max_v of a net it sits on
-  expect   an expected value, computed from part values and datasheet facts, is outside its tolerance
+  expect   an expected value, computed from part values and datasheet facts, is outside its tolerance, or the
+           pin it is meant for (at="U404.FB") no longer touches any of the parts that set it
+  ground   a pin the symbol names GND, PGND, AGND or VSS is not on a 0 V net; a supply pin is on a 0 V net
+  stage    a declared hot loop's high-side pins are not all on its supply, or its low-side pins not all on its return
+  nofacts  (check only) a part with three or more pins that has no limits file
 `score` adds an "intent" gate to <mutants dir>/results.json (written by score.py) and prints the table.
 """
 import glob, json, os, re, subprocess, sys
@@ -20,6 +24,12 @@ import glob, json, os, re, subprocess, sys
 def ohms(v):
     m = re.match(r"^(\d+(?:\.\d+)?)\s*([mRkM]?)", v)
     return float(m.group(1)) * {"": 1, "R": 1, "m": 1e-3, "k": 1e3, "M": 1e6}[m.group(2)] if m else None
+
+GNDS = {"GND", "PGND", "AGND", "VSS"}
+
+def nofacts(d, limits, kbmap, symlib):
+    libs = {c["lib"] for c in d["comps"].values() if not c["lib"].startswith("Device:")}
+    return sorted(l for l in libs if len(symlib.pins(*l.split(":"))) >= 3 and kbmap.get(l) not in limits)
 
 def load_limits(folder):
     return {os.path.basename(f)[:-5]: json.load(open(f)) for f in glob.glob(f"{folder}/*.json")}
@@ -48,7 +58,26 @@ def check(d, cons, limits, kbmap, symlib):
                 a = lim.get(re.sub(r"[~{}]", "", pin["name"])); n = on.get(pin["num"])
                 if a and n in vmax and vmax[n] > a["max_v"]:
                     out.add(f"absmax: {r}.{pin['name']} is limited to {a['max_v']} V (p.{a['page']}), {n} reaches {vmax[n]:g} V")
+        for pin in symlib.pins(*c["lib"].split(":")):
+            n = on.get(pin["num"])
+            if n is None: continue
+            if re.sub(r"[~{}]", "", pin["name"]) in GNDS:
+                if vmax.get(n) != 0: out.add(f"ground: {r}.{pin['num']} ({pin['name']}) is on {n}")
+            elif pin["type"] == "power_in" and pin["name"] not in ("PAD", "EP") and vmax.get(n) == 0:
+                out.add(f"ground: supply pin {r}.{pin['num']} ({pin['name']}) is on {n}")
+    def pin_nets(target):
+        r, name = target.split(".", 1)
+        if r not in d["comps"]: return set()
+        return {nets_of.get(r, {}).get(p["num"]) for p in symlib.pins(*d["comps"][r]["lib"].split(":"))
+                if name in (p["name"], re.sub(r"[~{}]", "", p["name"]), p["num"])}
+    for name, h in cons.get("hot_loops", {}).items():
+        for target, want in zip(h["switch_pins"], (h["supply"], h["ret"])):
+            got = pin_nets(target)
+            if got != {want}: out.add(f"stage: {name}: {target} should be on {want} only, is on {', '.join(sorted(str(g) for g in got))}")
     for name, e in cons.get("expect", {}).items():
+        if e.get("at"):
+            touching = {r for n in pin_nets(e["at"]) for r, p in d["nets"].get(n, [])}
+            if not (touching & set(e["bind"].values())): out.add(f"expect: {name}: {e['at']} no longer touches the parts that set it")
         env, missing = {}, None
         for k, b in e["bind"].items():
             if b in d["comps"]: env[k] = ohms(d["comps"][b]["value"])
@@ -86,13 +115,16 @@ if __name__ == "__main__":
     if a[0] == "verify": sys.exit(1 if verify(load_limits(a[1]), a[2]) else 0)
     if a[0] == "check":
         f = sorted(run(a[1], load_limits(a[2]), json.load(open(a[3])), a[4]))
-        print("\n".join(f) or "no findings"); sys.exit(1 if f else 0)
+        print("\n".join(f) or "no findings")
+        import symlib
+        nf = nofacts(json.load(open(f"{a[1]}/netlist.json")), load_limits(a[2]), json.load(open(a[3])), symlib)
+        print("\n".join(f"nofacts: {l} has no limits file" for l in nf)); sys.exit(1 if f or nf else 0)
     good, muts, limits, kbmap, design = a[1], a[2], load_limits(a[3]), json.load(open(a[4])), a[5]
     cons = json.load(open(f"{good}/constraints.json")); base = run(good, limits, kbmap, design, cons)
     print("good build:", len(base), "findings"); res = json.load(open(f"{muts}/results.json"))
     for m in res:
         f = sorted(run(f"{muts}/{m['id']}", limits, kbmap, design, cons) - base)
-        m["found"]["intent"] = f[:3]; m["caught_by"] = [g for g in m["caught_by"] if g != "intent"] + (["intent"] if f else [])
+        m.setdefault("found", {}); m.setdefault("caught_by", []); m["found"]["intent"] = f[:3]; m["caught_by"] = [g for g in m["caught_by"] if g != "intent"] + (["intent"] if f else [])
         print(m["id"], "|", m["note"], "|", f[0] if f else "-")
     json.dump(res, open(f"{muts}/results.json", "w"), indent=1)
     gates = sorted({g for m in res for g in m["found"]} - {"twin"})

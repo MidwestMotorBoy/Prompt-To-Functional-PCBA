@@ -123,12 +123,48 @@ A design observation that fell out: with the charger's default feedback setting 
 divider regulates the pack to 16.90 V, 0.6 % above 16.8 V. Within the 1 % tolerance used here, and trimmable
 by register, but it is the value the board has before firmware runs.
 
+## Part 4: ground pins, power-stage pins, expectations bound to a pin, more parts
+
+Four additions, written after looking at what part 3 missed, so a **fresh fault set (seed 2) is the fair
+score**:
+
+- `ground`: a pin the symbol names GND, PGND, AGND or VSS must be on a 0 V net; a supply pin must not be.
+- `stage`: in a declared hot loop the high-side pins must all be on the supply and the low-side pins all on
+  the return (the old constraint check accepted either net for either pin, so a swapped drain and source passed).
+- `expect(..., at="U404.FB")`: the pin an expectation is for must touch one of the parts that set it.
+- Limits for the EEPROM, the dual FET and the small FET (42 quotes, all found on their page).
+- `nofacts`: `intent_check.py check` fails for a part with three or more pins and no limits file. On this
+  design it names the 9 V regulator (no datasheet) and the USB-C connector.
+
+| class | first set (65): before | now | fresh set (60): before | now |
+|---|---|---|---|---|
+| historical | 2 of 5 | 3 | | |
+| miswire | 1 of 10 | 6 | 5 of 10 | 5 |
+| open | 10 of 10 | 10 | 10 of 10 | 10 |
+| pin_swap | 3 of 10 | 10 | 6 of 10 | 8 |
+| rating | 0 of 10 | 8 | 0 of 10 | 7 |
+| remove | 5 of 10 | 7 | 7 of 10 | 8 |
+| value | 0 of 10 | 2 | 0 of 10 | 7 |
+| all | 21 of 65 | 46 | 28 of 60 | 45 |
+
+"Before" is one-pin nets, the old constraint check and KiCad ERC. Five of the rating misses across the two
+sets are not faults (6.3 V parts on nets of 5.5 V or less), so the fresh set is 45 of 57 real faults.
+
+What still passes, fresh set:
+
+1. **Signal pins moved between low-voltage nets** (EEPROM clock and data swapped, an address pin on a feedback
+   node). Needs pin function beyond ground and supply: a bus pin must meet its bus.
+2. **Everything on the 9 V regulator** (4 faults across both sets, and the historical enable bug). No datasheet,
+   no facts. `nofacts` now makes that a failure of the build instead of a silent pass.
+3. **Pull-up, series and filter resistor values** (3). Ten times the value is still a legal circuit.
+4. **One of six parallel bulk capacitors deleted** (2). An expectation on total capacitance would catch it.
+
 ## Next
 
-- Pin functions for every part, read twice and independently, including the non-TI table layouts; rules on
-  pin function; a build error for a part with no facts.
-- Bind each expectation to the pin it feeds.
-- Behaviour rules for pull-ups and filters, or accept them as review items.
+- Pin function per pin (bus, enable, feedback, gate) from two independent reads, and rules on it.
+- Datasheet for the 9 V regulator; a fact source for connectors (the USB Type-C pin assignment).
+- Expectations for bulk capacitance and for the thermistor network.
+- Then a third fresh seed.
 
 ## Run it
 
@@ -137,4 +173,5 @@ python3 mutate.py <good build dir> muts --n 10 --seed 1 [--extra historical.json
 SYMBOL_DIRS=... python3 score.py <good build dir> muts <spike 1 design dir> --twin "USB Port 1=USB Port 2:100"
 python3 intent_check.py verify <limits dir> <datasheet dir>
 SYMBOL_DIRS=... python3 intent_check.py score <good build dir> muts <limits dir> <kbmap.json> <spike 1 design dir>
+SYMBOL_DIRS=... python3 intent_check.py check <good build dir> <limits dir> <kbmap.json> <spike 1 design dir>
 ```
