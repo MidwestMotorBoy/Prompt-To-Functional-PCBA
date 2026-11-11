@@ -6,6 +6,7 @@ dump board has them. Cost = half-perimeter of all signal nets at pad level + bod
 Step 3 (refine): every part then moves on its own with small steps at low temperature to close the gaps;
 in its last quarter overlap costs far more than wiring, which removes what overlap is left.
 Bodies are courtyards when the dump has them; no-footprint keep-outs on a part's side count as overlap.
+Step 4 (repair): a part that still overlaps is moved to the best free spot within 8 mm.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
 import numpy as np
@@ -95,16 +96,71 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
             else: T[c] = old
     xy, k = parts_xy(T); a = cost(xy, k, True)
     print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))), flush=True)
-    # refine: single parts, small steps
-    cur = cost(xy, k); mv = np.nonzero(~fixed)[0]; T0, T1 = 1.5, 0.02
+    # refine: single parts, small steps. Only what the moved part touches is recomputed, so a move costs
+    # tens of microseconds and millions of moves are affordable.
+    R4 = [((1, 0), (0, 1)), ((0, -1), (1, 0)), ((-1, 0), (0, -1)), ((0, 1), (-1, 0))]
+    def r1(v, q): m = R4[q]; return (m[0][0] * v[0] + m[0][1] * v[1], m[1][0] * v[0] + m[1][1] * v[1])
+    pads_of = [np.nonzero(pr == i)[0] for i in range(N)]; net_of_pad = np.searchsorted(starts, np.arange(len(pr)), side="right") - 1
+    ends = np.r_[starts[1:], len(pr)]; nets_of_part = [np.unique(net_of_pad[p]) for p in pads_of]
+    pads = xy[pr] + rotv(pl, k[pr]); apads_of = [np.nonzero(apr == i)[0] for i in range(N)]; q_all = xy[apr] + rotv(apl, k[apr])
+    st_of = [[] for _ in range(N)]
+    for j, (A, B, lim) in enumerate(nearS):
+        for i in set(apr[A]) | set(apr[B]): st_of[i].append(("n", j))
+    for j, (A, B, lim) in enumerate(apartS):
+        for i in set(apr[A]) | set(apr[B]): st_of[i].append(("a", j))
+    def box_of(i, p, kk):
+        c1 = r1(bbx[i, :2], kk); c2 = r1(bbx[i, 2:], kk)
+        return (p[0] + min(c1[0], c2[0]) - 0.02, p[1] + min(c1[1], c2[1]) - 0.02, p[0] + max(c1[0], c2[0]) + 0.02, p[1] + max(c1[1], c2[1]) + 0.02)
+    LO = np.zeros((N, 2)); HI = np.zeros((N, 2))
+    for i in range(N): bx = box_of(i, xy[i], int(k[i])); LO[i] = bx[:2]; HI[i] = bx[2:]
+    same_side = [np.nonzero((sideF == sideF[i]) & (np.arange(N) != i))[0] for i in range(N)]
+    def local(i):
+        c = 0.0
+        for n in nets_of_part[i]:
+            seg = pads[starts[n]:ends[n]]; c += seg[:, 0].max() - seg[:, 0].min() + seg[:, 1].max() - seg[:, 1].min()
+        o = same_side[i]
+        ox = np.minimum(HI[o, 0], HI[i, 0]) - np.maximum(LO[o, 0], LO[i, 0]); oy = np.minimum(HI[o, 1], HI[i, 1]) - np.maximum(LO[o, 1], LO[i, 1])
+        ov = float((np.clip(ox, 0, None) * np.clip(oy, 0, None)).sum())
+        for kb, onF, onB in KO:
+            if (sideF[i] and onF) or (not sideF[i] and onB):
+                ov += max(0.0, min(HI[i, 0], kb[2]) - max(LO[i, 0], kb[0])) * max(0.0, min(HI[i, 1], kb[3]) - max(LO[i, 1], kb[1]))
+        off = max(0.0, box[0] + 0.5 - LO[i, 0]) + max(0.0, HI[i, 0] - box[2] + 0.5) + max(0.0, box[1] + 0.5 - LO[i, 1]) + max(0.0, HI[i, 1] - box[3] + 0.5)
+        ic = 0.0
+        for kind, j in st_of[i]:
+            A, B, lim = nearS[j] if kind == "n" else apartS[j]
+            dd = np.sqrt(((q_all[A][:, None, :] - q_all[B][None, :, :]) ** 2).sum(-1))
+            if kind == "n": ic += max(0.0, dd.min() - lim)
+            else: dd[apr[A][:, None] == apr[B][None, :]] = 1e9; ic += 3 * max(0.0, lim - dd.min())
+        return c + WOV[0] * ov + 60 * off + 25 * ic
+    def put(i, p, kk):
+        xy[i] = p; k[i] = kk; bx = box_of(i, p, kk); LO[i] = bx[:2]; HI[i] = bx[2:]
+        if len(pads_of[i]): pads[pads_of[i]] = xy[i] + rotv(pl[pads_of[i]], np.full(len(pads_of[i]), kk))
+        if len(apads_of[i]): q_all[apads_of[i]] = xy[i] + rotv(apl[apads_of[i]], np.full(len(apads_of[i]), kk))
+    mv = np.nonzero(~fixed)[0]; T0, T1 = 1.5, 0.02
     for s in range(refine):
-        if s == int(refine * 0.75): WOV[0] = 400.0; cur = cost(xy, k)        # legalise: overlaps now cost far more than wiring
-        t = T0 * (T1 / T0) ** (s / refine); i = int(mv[rnd.randrange(len(mv))]); ox, ok = xy[i].copy(), k[i]
-        if rnd.random() < 0.1: k[i] = rnd.randrange(4)
-        else: rad = 0.2 + 2.0 * (t / T0); xy[i] += (rnd.uniform(-rad, rad), rnd.uniform(-rad, rad))
-        new = cost(xy, k)
-        if new < cur or rnd.random() < math.exp(-(new - cur) / t): cur = new
-        else: xy[i] = ox; k[i] = ok
+        if s == int(refine * 0.75): WOV[0] = 400.0
+        t = T0 * (T1 / T0) ** (s / refine); i = int(mv[rnd.randrange(len(mv))]); op, ok = xy[i].copy(), int(k[i])
+        before = local(i)
+        if rnd.random() < 0.1: put(i, op, rnd.randrange(4))
+        else: rad = 0.2 + 2.0 * (t / T0); put(i, (op[0] + rnd.uniform(-rad, rad), op[1] + rnd.uniform(-rad, rad)), ok)
+        dc = local(i) - before
+        if not (dc < 0 or rnd.random() < math.exp(-dc / t)): put(i, op, ok)
+    # repair: a part still overlapping something (usually a large part stuck against a fixed one) is moved to the
+    # best free spot within 8 mm, searched on a 0.25 mm grid in all four rotations.
+    def ovl(i):
+        o = same_side[i]; ox = np.minimum(HI[o, 0], HI[i, 0]) - np.maximum(LO[o, 0], LO[i, 0]); oy = np.minimum(HI[o, 1], HI[i, 1]) - np.maximum(LO[o, 1], LO[i, 1])
+        m = (ox > 0.03) & (oy > 0.03); return float((ox[m] * oy[m]).sum())
+    WOV[0] = 5000.0; repaired = []
+    for i in [int(j) for j in mv if ovl(int(j)) > 0]:
+        if ovl(i) <= 0: continue
+        op, ok = xy[i].copy(), int(k[i]); best = (local(i), op, ok)
+        for kk in range(4):
+            for dx in np.arange(-8, 8.01, 0.25):
+                for dy in np.arange(-8, 8.01, 0.25):
+                    put(i, (op[0] + dx, op[1] + dy), kk); c = local(i)
+                    if c < best[0]: best = (c, xy[i].copy(), kk)
+        put(i, best[1], best[2]); repaired.append(refs[i])
+    if repaired: print(json.dumps(dict(step="repaired", parts=repaired)), flush=True)
     a = cost(xy, k, True)
     print(json.dumps(dict(step="refined", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))))
     json.dump({r: [round(float(xy[i][0]), 3), round(float(xy[i][1]), 3), int(k[i]) * 90] for r, i in ri.items()}, open(outf, "w"))

@@ -125,6 +125,35 @@ Rigid rectangular clusters waste the room a person saves by interleaving section
 Options, cheapest first: let clusters deform during packing (parts keep their pulls but are free), a proper
 legaliser (shift along the least-crowded direction), and many more runs with selection, since runs are cheap.
 
+## Faster refinement and a repair step: first legal placements (same day)
+
+Refinement now recomputes only what the moved part touches (about 0.2 ms a move, 12 times faster), so a run
+does 2.5 million single-part moves. A repair step then moves any part that still overlaps to the best free spot
+within 8 mm. `overlaps.py` lists courtyard overlaps, keep-out hits and parts off the board for any placement.
+About 15 minutes a run on one core.
+
+| Placement | Legal | Statements that hold (of 112) | Signal half-perimeter |
+|---|---|---|---|
+| Hand board | yes | 92 | 2064 mm |
+| Scripted board | yes | 84 | 2508 mm |
+| Run 1 | no: inductor L401 on a mounting hole | 107 | 2522 mm |
+| Run 2 | no: radio module U301 on a test point | 106 | 2461 mm |
+| Run 3 | yes | 105 | 2292 mm |
+| Run 4 | yes | 102 | 2522 mm |
+
+"Legal" means no courtyard overlap between a movable part and anything else, nothing in a no-footprint keep-out,
+nothing off the board. (The hand board's own fixed connectors touch by a few hundredths of a millimetre in this
+box measure; those are ignored for every row.)
+
+- Two of four runs are legal. The two failures are each one large part boxed in against a fixed part, with no
+  free spot of its size within reach. Large parts should be placed first and treated as anchors, which is also
+  what the layout guides say for the power path.
+- The best legal run sits between the scripted board and the hand board on wiring demand (11 % above the hand
+  board) and holds more intent statements than either.
+- Selection between runs is by legality first, then statements, then wiring: a small tournament already.
+- Not yet in the score: crossings, hot-loop inductance, lanes. Not yet done: applying a placement to a board file
+  and the trial route, which is the real acceptance gate.
+
 ## Run it
 
 ```
@@ -134,5 +163,6 @@ python3 place_sa.py intent.json <board dump.json> <netlist.json> <constraints.js
 python3 intent.py derive <build dir> <design dir> intent.json ; python3 intent.py validate intent.json <build dir>
 python3 intent.py check intent.json <board dump.json> [placement.json]
 python3 place_sections.py <board dump.json> <netlist.json> <constraints.json> clusters.json [J,H,TP,SW] [intent.json]
+python3 overlaps.py <board dump.json> [placement.json]
 python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves] [intent.json]
 ```
