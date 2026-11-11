@@ -1,0 +1,70 @@
+{
+ "part": "TPD6S300",
+ "pdf": "tpd6s300.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VPWR"
+   ],
+   "max_v": 5,
+   "page": 5,
+   "quote": "VPWR –0.3 5 V"
+  },
+  {
+   "pins": [
+    "RPD_G1",
+    "RPD_G2"
+   ],
+   "max_v": 24,
+   "page": 5,
+   "quote": "RPD_G1, RPD_G2 –0.3 24 V"
+  },
+  {
+   "pins": [
+    "FLT"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "FLT –0.3 6 V"
+  },
+  {
+   "pins": [
+    "VBIAS"
+   ],
+   "max_v": 24,
+   "page": 5,
+   "quote": "VBIAS –0.3 24 V"
+  },
+  {
+   "pins": [
+    "D1",
+    "D2"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "D1, D2 –0.3 6 V"
+  },
+  {
+   "pins": [
+    "CC1",
+    "CC2",
+    "SBU1",
+    "SBU2"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "CC1, CC2, SBU1, SBU2 –0.3 6 V"
+  },
+  {
+   "pins": [
+    "C_CC1",
+    "C_CC2",
+    "C_SBU1",
+    "C_SBU2"
+   ],
+   "max_v": 24,
+   "page": 5,
+   "quote": "C_CC1, C_CC2, C_SBU1, C_SBU2 –0.3 24 V"
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "part": "TPS62933",
+ "pdf": "tps62933.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VIN"
+   ],
+   "max_v": 32,
+   "page": 5,
+   "quote": "VIN –0.3 32"
+  },
+  {
+   "pins": [
+    "EN"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "EN –0.3 6"
+  },
+  {
+   "pins": [
+    "FB"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "FB –0.3 6"
+  },
+  {
+   "pins": [
+    "SW"
+   ],
+   "max_v": 32,
+   "page": 5,
+   "quote": "SW, DC –0.3 32"
+  },
+  {
+   "pins": [
+    "SS"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "SS/PG –0.3 6"
+  },
+  {
+   "pins": [
+    "RT"
+   ],
+   "max_v": 6,
+   "page": 5,
+   "quote": "RT –0.3 6"
+  }
+ ],
+ "facts": {
+  "VREF": {
+   "value": 0.8,
+   "unit": "V",
+   "page": 19,
+   "quote": "The internal reference voltage, VREF, is designed at 0.8 V (typical)"
+  }
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "part": "TPS25751D",
+ "pdf": "tps25751.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "PP5V"
+   ],
+   "max_v": 6,
+   "page": 7,
+   "quote": "PP5V –0.3 6"
+  },
+  {
+   "pins": [
+    "VIN_3V3"
+   ],
+   "max_v": 4,
+   "page": 7,
+   "quote": "VIN_3V3 –0.3 4 V"
+  },
+  {
+   "pins": [
+    "ADCIN1",
+    "ADCIN2"
+   ],
+   "max_v": 4,
+   "page": 7,
+   "quote": "ADCIN1, ADCIN2 –0.3 4"
+  },
+  {
+   "pins": [
+    "VBUS_IN",
+    "VBUS"
+   ],
+   "max_v": 28,
+   "page": 7,
+   "quote": "VBUS_IN, VBUS –0.3 28"
+  },
+  {
+   "pins": [
+    "CC1",
+    "CC2"
+   ],
+   "max_v": 26,
+   "page": 7,
+   "quote": "CC1, CC2 –0.5 26"
+  },
+  {
+   "pins": [
+    "GPIO0",
+    "GPIO1",
+    "GPIO2",
+    "GPIO3",
+    "GPIO4",
+    "GPIO5",
+    "GPIO6",
+    "GPIO7",
+    "GPIO8",
+    "GPIO9",
+    "GPIO10",
+    "GPIO11"
+   ],
+   "max_v": 6,
+   "page": 7,
+   "quote": "GPIOx –0.3 6.0 V"
+  },
+  {
+   "pins": [
+    "I2Cc_SDA",
+    "I2Cc_SCL",
+    "I2Cc_IRQ",
+    "I2Ct_IRQ",
+    "I2Ct_SCL",
+    "I2Ct_SDA"
+   ],
+   "max_v": 4,
+   "page": 7,
+   "quote": "I2Cc_SDA, I2Cc_SCL, I2Cc_IRQ, –0.3 4 I2Ct_IRQ,I2Ct_SCL, I2Ct_SDA"
+  },
+  {
+   "pins": [
+    "LDO_1V5"
+   ],
+   "max_v": 2,
+   "page": 7,
+   "quote": "LDO_1V5 –0.3 2"
+  },
+  {
+   "pins": [
+    "LDO_3V3"
+   ],
+   "max_v": 4,
+   "page": 7,
+   "quote": "LDO_3V3 –0.3 4"
+  }
+ ],
+ "rec_max": [
+  {
+   "pins": [
+    "VBUS"
+   ],
+   "max_v": 22,
+   "page": 8,
+   "quote": "VBUS 4 22"
+  }
+ ]
+}

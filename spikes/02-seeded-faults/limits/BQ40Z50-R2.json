@@ -1,0 +1,80 @@
+{
+ "part": "BQ40Z50-R2",
+ "pdf": "bq40z50-r2.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "BAT",
+    "VCC",
+    "PBI"
+   ],
+   "max_v": 30,
+   "page": 8,
+   "quote": "BAT, VCC, PBI –0.3 30 V"
+  },
+  {
+   "pins": [
+    "PACK",
+    "SMBC",
+    "SMBD",
+    "PRES/SHUTDN",
+    "BTP_INT",
+    "DISP"
+   ],
+   "max_v": 30,
+   "page": 8,
+   "quote": "PACK, SMBC, SMBD, PRES or SHUTDN, BTP_INT, DISP –0.3 30 V"
+  },
+  {
+   "pins": [
+    "SRP",
+    "SRN"
+   ],
+   "max_v": 0.3,
+   "page": 8,
+   "quote": "SRP, SRN –0.3 0.3 V"
+  },
+  {
+   "pins": [
+    "VC1",
+    "VC2",
+    "VC3",
+    "VC4"
+   ],
+   "max_v": 30,
+   "page": 8,
+   "quote": "VSS + 30"
+  },
+  {
+   "pins": [
+    "CHG",
+    "DSG"
+   ],
+   "max_v": 32,
+   "page": 8,
+   "quote": "Output voltage range, CHG, DSG –0.3 32"
+  },
+  {
+   "pins": [
+    "PCHG",
+    "FUSE"
+   ],
+   "max_v": 30,
+   "page": 8,
+   "quote": "VO PCHG, FUSE –0.3 30 V"
+  }
+ ],
+ "rec_max": [
+  {
+   "pins": [
+    "CHG",
+    "DSG",
+    "PCHG",
+    "FUSE"
+   ],
+   "max_v": 26,
+   "page": 9,
+   "quote": "VO CHG, DSG, PCHG, FUSE 26 V"
+  }
+ ]
+}

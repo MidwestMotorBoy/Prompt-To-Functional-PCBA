@@ -1,0 +1,4 @@
+{
+ "part": "BSC007N04LS6 on the AGM404AP1 symbol",
+ "waiver": "OPEN: datasheet for the fitted BSC007N04LS6 is not in the datasheet folder (only the dev part AGM404AP1); no limits checked for Q101/Q102 until it is added"
+}

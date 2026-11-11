@@ -1,0 +1,26 @@
+{
+ "part": "TPS62177",
+ "pdf": "tps62177.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VIN"
+   ],
+   "max_v": 30,
+   "page": 4,
+   "quote": "VIN –0.3 30"
+  },
+  {
+   "pins": [
+    "FB",
+    "PG",
+    "VOS",
+    "SLEEP",
+    "NC"
+   ],
+   "max_v": 7,
+   "page": 4,
+   "quote": "FB, PG, VOS, SLEEP, NC –0.3 7"
+  }
+ ]
+}

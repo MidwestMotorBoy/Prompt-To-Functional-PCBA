@@ -1,0 +1,22 @@
+{
+ "part": "AO3400A",
+ "pdf": "ao3400a.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "D"
+   ],
+   "max_v": 30,
+   "page": 1,
+   "quote": "Drain-Source Voltage VDS 30 V"
+  },
+  {
+   "pins": [
+    "G"
+   ],
+   "max_v": 12,
+   "page": 1,
+   "quote": "Gate-Source Voltage VGS ±12 V"
+  }
+ ]
+}

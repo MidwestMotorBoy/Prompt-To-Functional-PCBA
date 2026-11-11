@@ -1,0 +1,46 @@
+{
+ "part": "TPS7A4101",
+ "pdf": "tps7a4101.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "IN"
+   ],
+   "max_v": 60,
+   "page": 3,
+   "quote": "IN pin to GND pin –0.3 60"
+  },
+  {
+   "pins": [
+    "OUT"
+   ],
+   "max_v": 60,
+   "page": 3,
+   "quote": "OUT pin to GND pin –0.3 60"
+  },
+  {
+   "pins": [
+    "FB"
+   ],
+   "max_v": 2,
+   "page": 3,
+   "quote": "FB pin to GND pin –0.3 2 V"
+  },
+  {
+   "pins": [
+    "EN"
+   ],
+   "max_v": 60,
+   "page": 3,
+   "quote": "EN pin to GND pin –0.3 60"
+  }
+ ],
+ "facts": {
+  "VREF": {
+   "value": 1.173,
+   "unit": "V",
+   "page": 5,
+   "quote": "VREF Internal reference TJ = 25°C, VFB = VREF, VIN = 9 V, IOUT = 25 mA 1.161 1.173 1.185 V"
+  }
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "part": "BQ25756",
+ "pdf": "bq25756.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VAC",
+    "ACUV",
+    "ACOV",
+    "ACP",
+    "ACN",
+    "SRP",
+    "SRN",
+    "FB",
+    "FBG"
+   ],
+   "max_v": 85,
+   "page": 6,
+   "quote": "VAC, ACUV, ACOV, ACP, ACN, SRP, SRN, FB, FBG –0.3 85 V"
+  },
+  {
+   "pins": [
+    "SW1",
+    "SW2"
+   ],
+   "max_v": 85,
+   "page": 6,
+   "quote": "SW1, SW2 –2 85 V"
+  },
+  {
+   "pins": [
+    "PG"
+   ],
+   "max_v": 40,
+   "page": 6,
+   "quote": "PG –0.3 40 V"
+  },
+  {
+   "pins": [
+    "CE",
+    "FSW_SYNC",
+    "ICHG",
+    "ILIM_HIZ",
+    "INT",
+    "REGN",
+    "SCL",
+    "SDA",
+    "MODE",
+    "STAT1",
+    "STAT2",
+    "TS"
+   ],
+   "max_v": 6,
+   "page": 6,
+   "quote": "CE, FSW_SYNC, ICHG, ILIM_HIZ, INT, REGN, SCL, SDA, MODE, Voltage –0.3 6 V STAT1, STAT2, TS"
+  }
+ ],
+ "facts": {
+  "VREF_ACUV": {
+   "value": 1.1,
+   "unit": "V",
+   "page": 8,
+   "quote": "VREF_ACUV VACUV falling 1.095 1.1 1.106 V"
+  },
+  "VREF_ACOV": {
+   "value": 1.2,
+   "unit": "V",
+   "page": 8,
+   "quote": "VREF_ACOV VACOV rising 1.184 1.2 1.206 V"
+  },
+  "RFBG": {
+   "value": 33,
+   "unit": "ohm",
+   "page": 8,
+   "quote": "RFBG FBG resistance to PGND IFBG = 1mA 33 55 Ω"
+  },
+  "VFB_NOM": {
+   "value": 1.536,
+   "unit": "V",
+   "page": 8,
+   "quote": "VVFB_NOM Nominal feedback voltage VFB_REG = 0x10 1.536 V"
+  },
+  "KICHG": {
+   "value": 50,
+   "unit": "A*kOhm at 5 mOhm",
+   "page": 8,
+   "quote": "KICHG factor (Amperes of charge current 48 50 52"
+  },
+  "KILIM": {
+   "value": 50,
+   "unit": "A*kOhm at 2 mOhm",
+   "page": 29,
+   "quote": "KILIM is defined as 50A×kΩ referenced to a 2mΩ sense resistor"
+  }
+ }
+}

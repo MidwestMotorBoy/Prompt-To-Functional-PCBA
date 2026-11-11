@@ -1,0 +1,27 @@
+{
+ "part": "M24512",
+ "pdf": "m24512.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "A0",
+    "A1",
+    "A2",
+    "SDA",
+    "SCL",
+    "WP"
+   ],
+   "max_v": 6.5,
+   "page": 19,
+   "quote": "VIO Input or output range –0.50 6.5 V"
+  },
+  {
+   "pins": [
+    "VCC"
+   ],
+   "max_v": 6.5,
+   "page": 19,
+   "quote": "VCC Supply voltage -0.50 6.5 V"
+  }
+ ]
+}

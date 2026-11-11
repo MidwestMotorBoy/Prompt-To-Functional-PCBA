@@ -1,0 +1,20 @@
+{
+ "MonolithDev:TPD6S300": "TPD6S300",
+ "Regulator_Switching:TPS62177DQC": "TPS62177",
+ "MonolithDev:TPS25751D": "TPS25751D",
+ "MonolithDev:BQ25756": "BQ25756",
+ "Regulator_Switching:TPS62933": "TPS62933",
+ "Power_Protection:TVS2200DRV": "TVS2200",
+ "Memory_EEPROM:24LC512": "M24512",
+ "MonolithDev:SiZ240DT": "SiZ240DT",
+ "Transistor_FET:Q_NMOS_GSD": "AO3400A",
+ "MonolithDev:TPS7A4101": "TPS7A4101",
+ "Connector:USB_C_Receptacle_USB2.0_16P": "USB_C_Receptacle",
+ "MonolithDev:CC2340R5MODA": "CC2340R5MODA",
+ "Connector:Conn_ARM_SWD_TagConnect_TC2030": "TC2030",
+ "MonolithDev:TC2030_GAUGE": "TC2030",
+ "MonolithDev:BQ40Z50-R2": "BQ40Z50-R2",
+ "MonolithDev:BQ294700": "BQ2947",
+ "MonolithDev:WSFB1514": "WSFB1514",
+ "MonolithDev:AGM404AP1": "BSC007N04LS6"
+}

@@ -80,3 +80,13 @@ expand. None were visible by reading the code.
 export SYMBOL_DIRS=<KiCad symbols folder>:<project library folder>
 cd design && ./build.sh out     # needs top.py and blocks/ beside it, and Docker with kicad/kicad:10.0
 ```
+
+## Monolith as code (added 2026-11-11, with Logan's OK to publish)
+
+`design/top.py` and `design/blocks/` hold the whole Monolith circuit: 285 parts, 168 nets,
+0 differences from the original KiCad netlist (the four mounting holes are left out). The
+limits files it is checked against are in `../02-seeded-faults/limits/` with
+`../02-seeded-faults/limitsmap.json`. Build from `design/`:
+
+    SYMBOL_DIRS=<kicad symbols>:<Battery-Bank hardware/Production> \
+    LIMITS_DIR=../../02-seeded-faults/limits LIMITS_MAP=../../02-seeded-faults/limitsmap.json ./build.sh out

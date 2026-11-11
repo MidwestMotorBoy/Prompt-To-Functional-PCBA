@@ -1,0 +1,4 @@
+{
+ "part": "Tag-Connect TC2030 footprint",
+ "waiver": "bare pads for a pogo-pin cable, no part fitted; pin names are the KiCad symbol's, no electrical limits"
+}

@@ -1,0 +1,23 @@
+{
+ "part": "SiZ240DT",
+ "pdf": "siz240dt.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "D1",
+    "SW"
+   ],
+   "max_v": 40,
+   "page": 1,
+   "quote": "Drain-source voltage VDS 40 40"
+  },
+  {
+   "pins": [
+    "G2"
+   ],
+   "max_v": 20,
+   "page": 1,
+   "quote": "Gate-source voltage VGS +20, -16 +20, -16"
+  }
+ ]
+}

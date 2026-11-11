@@ -1,0 +1,44 @@
+{
+ "part": "CC2340R5MODA",
+ "pdf": "cc2340r5moda.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VDDS"
+   ],
+   "max_v": 4.1,
+   "page": 12,
+   "quote": "VDDS Supply voltage –0.3 4.1 V"
+  },
+  {
+   "pins": [
+    "RSTN",
+    "DIO17/SWDCK",
+    "DIO16/SWDIO",
+    "DIO18",
+    "DIO6_A1",
+    "DIO8",
+    "DIO11",
+    "DIO24_A7",
+    "DIO21_A10",
+    "DIO3_X32P",
+    "DIO4_X32N",
+    "DIO12",
+    "DIO20_A11"
+   ],
+   "max_v": 4.1,
+   "page": 12,
+   "quote": "Voltage on any digital pin(3) –0.3 VDDS + 0.3, max 4.1 V"
+  }
+ ],
+ "rec_max": [
+  {
+   "pins": [
+    "VDDS"
+   ],
+   "max_v": 3.8,
+   "page": 12,
+   "quote": "Operating supply voltage (VDDS) 1.71 3.8 V"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "part": "TVS2200",
+ "pdf": "tvs2200.pdf",
+ "abs_max": [],
+ "standoff": {
+  "TVS1800": {
+   "max_v": 18,
+   "page": 3,
+   "quote": "TVS1800 18 22.8"
+  },
+  "TVS2200": {
+   "max_v": 22,
+   "page": 3,
+   "quote": "TVS2200 22 27.7",
+   "clamp_v": 27.7
+  }
+ }
+}

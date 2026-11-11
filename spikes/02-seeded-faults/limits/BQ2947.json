@@ -1,0 +1,34 @@
+{
+ "part": "BQ2947",
+ "pdf": "bq2947.pdf",
+ "abs_max": [
+  {
+   "pins": [
+    "VDD"
+   ],
+   "max_v": 30,
+   "page": 5,
+   "quote": "Supply voltage VDD–VSS –0.3 30 V"
+  },
+  {
+   "pins": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "CD"
+   ],
+   "max_v": 30,
+   "page": 5,
+   "quote": "Input voltage V4V3, V3V2, V2V1, V1–VSS, or CD–VSS –0.3 30 V"
+  },
+  {
+   "pins": [
+    "OUT"
+   ],
+   "max_v": 30,
+   "page": 5,
+   "quote": "Output voltage OUT–VSS –0.3 30 V"
+  }
+ ]
+}

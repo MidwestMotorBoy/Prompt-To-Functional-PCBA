@@ -1,0 +1,15 @@
+{
+ "part": "USB-C receptacle",
+ "waiver": "standard connector; pin functions are the USB Type-C names in the KiCad symbol; only the voltage rating is used",
+ "pdf": "usb-c-16pcb1.6-ip68.pdf",
+ "rec_max": [
+  {
+   "pins": [
+    "VBUS"
+   ],
+   "max_v": 20,
+   "page": 1,
+   "quote": "VOLTAGE RATING: 20V MAX"
+  }
+ ]
+}
