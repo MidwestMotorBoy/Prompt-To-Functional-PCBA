@@ -1,0 +1,84 @@
+{
+  "skill_name": "pcb-layout",
+  "evals": [
+    {
+      "id": 1,
+      "name": "six-layer-pour-plan",
+      "prompt": "I'm about to route a 6-layer, 1.6 mm board at JLCPCB (2 oz outer, 0.5 oz inner). It's a 100 W USB-C power bank dev board: a 4S 21700 pack in four SMD holders on the left half (cells link in series with long diagonal straps because the holders only fit one way), a BQ40Z50 gauge with a 1 mOhm shunt between cell minus and system GND, two back-to-back protection FETs, two USB-C ports each with a TPS25751 PD controller and a BQ25756 four-switch buck-boost charger (discrete FETs, 600 kHz, up to 10 A on the battery side in reverse mode), a TPS62933 5 V buck per port, a TPS62177 3.3 V rail, and a CC2340 BLE module with its antenna at the top edge. Suggest what each of the six layers should carry (a pour plan), how wide/how many vias for the pack path, and how to deal with the gauge's ground. Write it to pour_plan.md.",
+      "expected_output": "A per-layer plan with at least one solid unbroken GND plane adjacent to each outer layer, high current as mirrored/stitched pours on the 2 oz outer layers, sized pack path with via counts, sensitive signals on inner layers next to GND, gauge VSS kept separate and joined only at the shunt, switch nodes minimal, antenna keep-out with ground either side.",
+      "files": [],
+      "assertions": [
+        "Every outer layer (F and B) has a solid, unbroken GND plane on the adjacent inner layer (In1 and In4, or equivalent)",
+        "Pack/battery high current is carried as pours on the 2 oz outer layers, mirrored F/B and stitched with via arrays",
+        "Pack path gives a concrete copper width (mm) for ~10 A at 2 oz, with a temperature-rise basis (IPC-2152 or equivalent)",
+        "Gives a concrete via count/size per layer change for ~10 A (e.g. about 1 A per 0.3 mm via, so 10+ vias)",
+        "Gauge ground (BQ40Z50 VSS / cell-minus side) kept separate from system GND and joined at a single point at the shunt",
+        "Shunt sense lines are Kelvin connections from the resistor pads, routed as a tight pair on a layer next to GND",
+        "Switch nodes of the BQ25756 kept minimal, with the hot-loop return in the plane directly under the power stage",
+        "Antenna keep-out at the top edge: no copper on any layer under the antenna, with ground and stitching either side",
+        "Sensitive signals (I2C, sense, gate drive, CC lines) placed on inner layers adjacent to a GND plane, not between two power pours",
+        "Gives a concrete layer-by-layer table or list covering all six layers",
+        "Inner signal layers L3/L4 are a Manhattan pair (one vertical-only, one horizontal-only), direction changes by via",
+        "L2 and L5 stay solid GND with no islands or splits; the gauge's second ground is not cut into a plane",
+        "Says to fan out dense ICs (>20 pins or <0.8 mm pitch) first with ~3 mm clear around them",
+        "Requires a GND via within ~1 mm of every signal layer change"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "buck-layout-review",
+      "prompt": "can you review this layout before I send it to fab? 4-layer board (top / GND / 3V3 power plane / bottom), 12 V in, 5 V 3 A synchronous buck with an external controller and two SO-8 FETs at 500 kHz. What I did: the 22uF input ceramics are on the bottom layer about 8 mm from the high-side FET, connected through 2 vias each. The switch node is a 15x10 mm copper pour on top so it runs cool. The FB divider is next to the output connector and its trace runs under the inductor on the bottom layer back to the controller. I routed the high-side gate trace on top and the switch-node return to the controller on the bottom on a different path because it was easier. Current sense is a 10 mOhm shunt; the sense traces come off the wide output copper about 3 mm before the resistor. Under the sense pair there's a row of 0.6 mm vias for the output current across the GND plane. The USB TVS for the output connector is in a free corner 10 mm away with a 0.2 mm trace to the line. The 3V3 plane is split in two under some bottom-layer signals. Write the review to review.md with severity for each item.",
+      "expected_output": "A prioritised review that flags: input caps far/on other layer (hot-loop area), oversized switch node, FB trace under inductor and taken from the wrong point, gate drive not paired with its return, Kelvin sense not from the resistor pads, via row slotting the GND plane under the sense pair, TVS stub and placement, bottom signals referencing a split power plane; each with a concrete fix.",
+      "files": [],
+      "assertions": [
+        "Flags the input caps (bottom layer, 8 mm, 2 vias) as must-fix: hot-loop area/inductance; fix = HF ceramic on the FET layer straddling HS drain to LS source",
+        "Flags the 15x10 mm switch-node pour as a problem (EMI/capacitive coupling); fix = minimal SW copper, cooling via other nets",
+        "Flags the FB trace under the inductor (magnetic/SW coupling) and that FB should sense at the load/output cap with divider near the controller",
+        "Flags the gate trace and its SW/source return taking different paths/layers; fix = route the pair together (stacked or side by side)",
+        "Flags the current-sense taps 3 mm before the shunt; fix = Kelvin from the resistor pads",
+        "Flags the via row slotting the GND plane under the sense pair (return-path break / antipad slot)",
+        "Flags the TVS 10 mm away on a 0.2 mm stub; fix = TVS at the connector in-line with short wide ground",
+        "Flags bottom-layer signals referencing a split 3V3 plane (crossing the split); fix = re-route, or stitching caps",
+        "Each item has a severity rating",
+        "Each item has a concrete fix"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "kicad-stitching-script",
+      "prompt": "Write me a KiCad 10 python (pcbnew) script add_stitching.py that drops a grid of GND stitching vias (0.3 mm drill / 0.5 mm pad, 4 mm pitch) wherever the In1 GND plane and the top and bottom GND fills all exist, keeping clear of other-net copper and the board edge. I'll run it with KiCad's bundled python on a board I also keep open in KiCad, and I want to be able to re-run it after I move parts without getting duplicate vias. Keep it practical.",
+      "expected_output": "A runnable pcbnew script that refills zones before testing, checks GND fill presence on the relevant layers and clearance to other-net copper and the edge, is re-runnable via a uuid sidecar (or equivalent) without pcbnew mass-removal problems, backs up and restores the .kicad_pro around the save, avoids via GetWidth() without a layer, and warns to reload the board in KiCad.",
+      "files": [],
+      "assertions": [
+        "Script refills zones (ZONE_FILLER) before testing for GND fill presence",
+        "Checks GND fill exists at each grid point on F.Cu, In1.Cu and B.Cu",
+        "Keeps clear of other-net copper (pads, tracks, vias, other-net fills) with a clearance margin",
+        "Keeps clear of the board edge with a margin",
+        "Re-runnable without duplicates: tracks the vias it added (uuid sidecar, group, or marker) and removes them before re-adding",
+        "Protects the .kicad_pro from being rewritten by save (backup and restore, or equivalent caution)",
+        "Uses via width with a layer argument or avoids via.GetWidth() without a layer",
+        "Tells the user to reload/revert the board in KiCad (or close it) because it is open there",
+        "Script was actually executed against a test board copy and the result reported",
+        "Sets the via net to GND and uses the given 0.3/0.5 mm size and 4 mm pitch"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "routing-plan-review",
+      "prompt": "Sanity-check my routing plan before I start on this 6-layer motor controller (KiCad, JLC, 1 oz all layers). Stack: L1 signal/parts, L2 GND, L3 signal, L4 signal, L5 split plane: left half 12V for the three half-bridges, right half GND, L6 signal. Parts: STM32G431 in LQFP-48 (0.5 mm pitch) with its pull-ups and the SWD header packed within about 1 mm of the package, a DRV8323 gate driver (QFN-40) with three half-bridges, a 2.4 GHz nRF module on the edge. My plan: route the SPI to the driver and the encoder bus (about 60 mm) on L1 since it's easiest to probe; let the autorouter use any angle on L3 and L4; put the 3 sense-amp outputs on L3 and the PWM lines on L4 right underneath them; route a few leftover signals on L2 where it's empty; vias wherever needed. I'll fan out the MCU last once everything else is in. Write your critique and a corrected layer plan to routing_plan.md.",
+      "expected_output": "Flags: traces on L2 and the split L5 (planes must be solid GND); L3/L4 free-angle with sense over PWM broadside; long SPI/encoder on L1; MCU crowded and fanned out last (3 mm clear, fan-out first, decoupling excepted); missing GND vias at layer changes; 12V should be pours on outer layers not a plane split; corrected plan with Manhattan inner pair.",
+      "files": [],
+      "assertions": [
+        "Flags the traces on L2 as wrong: the GND plane must carry no traces",
+        "Flags the L5 split (12V/GND) as wrong and moves 12V off the plane so L5 is solid GND",
+        "Prescribes L3/L4 as an orthogonal Manhattan pair (one vertical, one horizontal), not free-angle",
+        "Flags sense-amp outputs directly over/under PWM on adjacent layers (broadside crosstalk)",
+        "Flags the 60 mm SPI/encoder run on L1 and moves long runs to inner layers, using L1 for escapes/short links",
+        "Flags the MCU fan-out being done last; says fan out first",
+        "Asks for ~3 mm clearance around the LQFP/QFN for fan-out, with decoupling caps excepted",
+        "Requires a GND via near (within ~1 mm) every signal via that changes reference plane",
+        "Gives a corrected per-layer plan for all six layers"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+.env
+*.env.local
+__pycache__/
+*.pyc
+# KiCad backups and locks
+*-backups/
+*.lck
+*.kicad_prl
+fp-info-cache
