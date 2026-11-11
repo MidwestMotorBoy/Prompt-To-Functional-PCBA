@@ -71,7 +71,7 @@ class Part:
         pass
 
 CIRCUIT = {"parts": {}, "nets": {}, "pinnet": {}}
-CONSTRAINTS = {"nets": {}, "serves": {}, "hot_loops": {}, "kelvin": {}, "draw": {}}
+CONSTRAINTS = {"nets": {}, "serves": {}, "hot_loops": {}, "kelvin": {}, "draw": {}, "expect": {}}
 _block = []
 
 def part(lib, name, ref, value=None, fp=None, **fields):
@@ -101,9 +101,20 @@ def R(ref, value, fp, a, b, serves=None, **f):
     return p
 
 def declare(net, **kw):
-    """Layout facts about a net: kind='switching'|'sensitive'|'power', current_a, swing_v, edge_ns."""
+    """Facts about a net: kind='switching'|'sensitive'|'power', current_a, swing_v, edge_ns, and max_v, the
+    highest voltage to ground the net can reach in any state. max_v is what part ratings are checked against."""
     CONSTRAINTS["nets"].setdefault(net.name, {}).update(kw)
     return net
+
+def volts(max_v, *nets):
+    """Shorthand: the same max_v for several nets."""
+    for n in nets: declare(n, max_v=max_v)
+
+def expect(name, expr, target, tol, unit="", **bind):
+    """What a set of part values is meant to produce, so a wrong value is a failed check and not a silent change.
+        expect("PP5V", "VREF * (1 + Rtop / Rbot)", 5.15, 0.03, "V", VREF="TPS62933.VREF", Rtop="R433", Rbot="R434")
+    A binding is a part reference (its value in ohms) or PART.FACT from the part knowledge base."""
+    CONSTRAINTS["expect"]["/".join(_block + [name])] = dict(expr=expr, target=target, tol=tol, unit=unit, bind=bind)
 
 def hot_loop(name, supply, ret, switch_pins, caps):
     CONSTRAINTS["hot_loops"][name] = dict(supply=supply.name, ret=ret.name, switch_pins=switch_pins, caps=caps)

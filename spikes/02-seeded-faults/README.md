@@ -73,15 +73,68 @@ Findings:
    each net can reach, and the value the block is meant to produce (for example "this divider sets 5.0 V").
    The last two belong in the block's code as declarations, next to the constraints spike 1 added.
 
+## Part 3: intent declarations and datasheet limits
+
+Added to the kernel (spike 1): `declare(net, max_v=...)` / `volts(max_v, *nets)` for the highest voltage a net
+can reach, and `expect(name, expr, target, tol, unit, **bind)` for what a set of part values is meant to
+produce, bound to part references and to datasheet facts:
+
+```
+expect("PP5V", "VREF * (1 + Rtop / Rbot)", 5.15, 0.03, "V", VREF="TPS62933.VREF", Rtop="R433", Rbot="R434")
+```
+
+`intent_check.py` holds four rules: capacitor rating against net voltage, IC pin absolute maximum against net
+voltage, clamp working voltage against net voltage, and expected values. Limits and reference values were
+read by hand from six datasheets into one file per part, each number with its page and a quote;
+`intent_check.py verify` finds all 36 quotes on the page they name. The two blocks declare a voltage for 115
+of 117 nets and seven expectations per port (5 V output, battery regulation voltage, input under- and
+overvoltage, charge and input current limits, switching frequency). The netlist is unchanged, the good build
+gives no findings, and the same 65 faults were scored again (twin compare left out):
+
+| class | n | before | intent rules alone | now |
+|---|---|---|---|---|
+| historical | 5 | 2 | 1 | 3 |
+| miswire | 10 | 1 | 2 | 3 |
+| open | 10 | 10 | 0 | 10 |
+| pin_swap | 10 | 3 | 1 | 3 |
+| rating | 10 | 0 | 8 | 8 |
+| remove | 10 | 5 | 4 | 7 |
+| value | 10 | 0 | 2 | 2 |
+| all | 65 | 21 | 18 | 36 |
+
+Reading it:
+
+1. **Ratings are solved by a net voltage declaration.** 8 of 10, and the two misses are not faults: a 6.3 V
+   capacitor on a 5.5 V and on a 3.6 V net. The historical 18 V clamp on VBUS is caught the same way.
+2. **Values are caught exactly where an expectation exists, and nowhere else.** 2 of 10. The other eight: two on
+   the 9 V regulator divider (no TPS7A4101 datasheet in the folder, so no reference voltage), two on the
+   thermistor divider (no expectation written), and four on pull-ups, a pull-down and sense-filter resistors,
+   where ten times the value still "works" and only a behaviour rule (rise time, filter corner) would object.
+3. **Wiring faults are still the gap: 14 of 20 moved or swapped pins pass.** 12 of the 14 sit on parts with no
+   facts at all (the dual FET, the connector, the EEPROM, the 9 V regulator, the clamp). The voltage rule only
+   sees a wrong wire when it lands on a higher-voltage net. What is missing is a function for every pin of
+   every part (ground, supply, gate, feedback) and rules on it, plus binding an expectation to the pin it
+   feeds, so a feedback pin moved off its divider fails.
+4. **The LDO-enable historical bug is still missed, for one reason:** no datasheet for that part. A part with
+   no facts must block the design, not pass quietly.
+5. Cost: seconds, no LLM tokens. The declarations are 20 lines per block.
+
+A design observation that fell out: with the charger's default feedback setting (1.536 V) the 100k / 10k
+divider regulates the pack to 16.90 V, 0.6 % above 16.8 V. Within the 1 % tolerance used here, and trimmable
+by register, but it is the value the board has before firmware runs.
+
 ## Next
 
-- Declarations for net voltage range and expected values in the kernel; rules for ratings and absolute maxima.
-- A second, independent read of each pin table, and absolute-maximum tables.
-- Re-run this same fault set and report detection again.
+- Pin functions for every part, read twice and independently, including the non-TI table layouts; rules on
+  pin function; a build error for a part with no facts.
+- Bind each expectation to the pin it feeds.
+- Behaviour rules for pull-ups and filters, or accept them as review items.
 
 ## Run it
 
 ```
 python3 mutate.py <good build dir> muts --n 10 --seed 1 [--extra historical.json]
 SYMBOL_DIRS=... python3 score.py <good build dir> muts <spike 1 design dir> --twin "USB Port 1=USB Port 2:100"
+python3 intent_check.py verify <limits dir> <datasheet dir>
+SYMBOL_DIRS=... python3 intent_check.py score <good build dir> muts <limits dir> <kbmap.json> <spike 1 design dir>
 ```
