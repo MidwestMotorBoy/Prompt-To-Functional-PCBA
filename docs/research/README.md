@@ -8,6 +8,7 @@ Start with `00-synthesis.md`.
 | File | What it is | Status |
 |---|---|---|
 | `00-synthesis.md` | Reads across the five deep dives: where they agree, where they disagree, recommendation per stage, how the tool improves by machine alone, five proposed spikes | Proposal for Logan, 2026-11-11 |
+| `00-figure-check.md` | Second check of the paper figures the synthesis leans on | Most hold; two not found |
 | `01-design-representation.md` | How the LLM authors the circuit and what the source of truth is. Ran atopile, SKiDL, circuit-synth, tscircuit on one buck block | Research lead. Paper figures need re-reading from the PDFs |
 | `02-placement.md` | Placement architecture. Three experiments on the Monolith dump | Research lead |
 | `03-routing-and-power-copper.md` | Routing by net type, power copper generation. Ran Freerouting headless on three boards | Research lead |

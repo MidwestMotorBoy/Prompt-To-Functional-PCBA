@@ -18,7 +18,8 @@ and quality. Every change to the tool is judged by an automated benchmark before
 
 1. **No coordinates from the LLM.** Reports 02, 03 and 05 each reached this from separate evidence. On the
    PCBWorld benchmark (arXiv 2607.05915) an LLM driving a router segment by segment cleared 0 % of larger real
-   boards, where Freerouting cleared 78 %. The LLM's job is semantics: which cap serves which pin, which nets
+   boards, where Freerouting cleared 78 %. That split is only 10 boards; on the 99 smaller boards the LLM cleared
+   65 % against 80 %. The LLM's job is semantics: which cap serves which pin, which nets
    switch, which loop is hot, why a route failed.
 2. **The block is the unit of work, not the board.** Published whole-board schematic generation is about 8 %
    fully correct (HWE-Bench); block-level generation with a verifier is 80 % and up (PCBSchemaGen, SchGen).
@@ -30,7 +31,8 @@ and quality. Every change to the tool is judged by an automated benchmark before
    the solvers all read one file.
 5. **Keep the Battery-Bank check loop.** Real DRC, the DC, loop and coupling solvers, the tidiness measure and
    accept-or-revert are the most valuable thing carried over. They become the contract every engine is judged by.
-6. **Build little, and only where nothing exists.** No new router. No reinforcement learning. The Gemini
+6. **Build little, and only where nothing exists.** No new router. No reinforcement learning for v1 (a policy trained on synthetic
+   boards did match Freerouting on small boards in PCBWorld, so it stays a later option). The Gemini
    chat's case for a new Rust engine and its "memory wall" do not hold at our board sizes.
 
 ## Recommendation by stage
@@ -108,6 +110,8 @@ Before spike 4, calibrate the two solvers (gap 6).
 
 ## What to treat with care
 
+- See `00-figure-check.md` for a second check of the paper figures: most hold, two from report 01 were not
+  found and should not be quoted.
 - Paper figures were read through a fetch tool that summarises pages. The four benchmarks leaned on most are
   PCBWorld (arXiv 2607.05915), PCBSchemaGen (2602.00510), HWE-Bench (2603.18102) and SchGen (2605.30345). Re-read
   the PDFs before any figure goes into the spec as fact.
