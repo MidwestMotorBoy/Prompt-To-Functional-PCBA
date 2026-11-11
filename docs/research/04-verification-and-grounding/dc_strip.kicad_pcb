@@ -1,0 +1,8 @@
+(kicad_pcb (version 20250101) (generator "test")
+ (footprint "T:P" (layer "F.Cu") (at 10 20) (property "Reference" "R1") (property "Value" "x")
+  (pad "1" smd rect (at 0 0) (size 1 2) (layers "F.Cu") (net "N")))
+ (footprint "T:P" (layer "F.Cu") (at 60 20) (property "Reference" "R2") (property "Value" "x")
+  (pad "1" smd rect (at 0 0) (size 1 2) (layers "F.Cu") (net "N")))
+ (zone (net "N") (layers "F.Cu") (polygon (pts (xy 9.5 19) (xy 60.5 19) (xy 60.5 21) (xy 9.5 21)))
+  (filled_polygon (layer "F.Cu") (pts (xy 9.5 19) (xy 60.5 19) (xy 60.5 21) (xy 9.5 21))))
+)

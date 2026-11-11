@@ -1,0 +1,16 @@
+* Inrush check: 16.8 V pack through FET turn-on into 100 uF bulk, loop R = 25 mOhm, L = 50 nH
+V1 bat 0 16.8
+Vm bat b2 0
+R1 b2 n1 25m
+L1 n1 n2 50n
+S1 n2 out ctl 0 SW
+.model SW SW(Ron=5m Roff=1Meg Vt=0.5 Vh=0.1)
+Vctl ctl 0 PULSE(0 1 10u 1u 1u 1 2)
+C1 out c1 100u IC=0
+Resr c1 0 5m
+Rload out 0 1k
+.tran 50n 200u UIC
+.meas tran ipk MAX I(Vm)
+.meas tran i2t INTEG par('I(Vm)*I(Vm)') from=10u to=200u
+.meas tran vfinal FIND V(out) AT=200u
+.end

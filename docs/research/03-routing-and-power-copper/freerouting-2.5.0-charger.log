@@ -1,0 +1,76 @@
+2026-11-11 01:42:03.200 INFO   Freerouting v2.5.0 (build-date: 2026-10-05)
+2026-11-11 01:42:03.513 INFO   Hardware: 4 CPU cores, 375 CPU score, 3420 MB RAM
+2026-11-11 01:42:03.515 WARN   Unknown settings property: analytics.enabled
+2026-11-11 01:42:03.516 WARN   GUI is disabled and you don't have a console available, so the only feedback from Freerouting is in the log.
+2026-11-11 01:42:03.520 INFO   Configured network proxy: 127.0.0.1:46389
+2026-11-11 01:42:03.892 WARN   Analytics tracking: first delivery failure in this window - /v1/analytics/identify - IOException: Unable to tunnel through proxy. Proxy returns "HTTP/1.1 403 Forbidden". Further failures will be aggregated and reported every 60 minutes.
+2026-11-11 01:42:04.863 INFO   [F90CEB\2C5737] Loading board file 'charger.dsn'...
+2026-11-11 01:42:04.999 INFO   Layer 'F.Cu' contains a power plane / large copper pour covering >=30% of the board; associated net(s) configured for plane routing.
+2026-11-11 01:42:04.999 INFO   Layer 'B.Cu' contains a power plane / large copper pour covering >=30% of the board; associated net(s) configured for plane routing.
+2026-11-11 01:42:05.016 WARN   Design Error: Component 'C3' pin '2' (ID 310) is outside board outline at (914380,-233190).
+2026-11-11 01:42:05.017 WARN   Design Error: Component 'C3' pin '1' (ID 309) is outside board outline at (882130,-233190).
+2026-11-11 01:42:05.017 WARN   Design Error: Component 'Vol' pin '2' (ID 293) is outside board outline at (926250,-305760).
+2026-11-11 01:42:05.017 WARN   Design Error: Component 'Vol' pin '1' (ID 292) is outside board outline at (894000,-305760).
+2026-11-11 01:42:05.049 INFO   [F90CEB\2C5737] Job 'F90CEB\2C5737' started at 2026-11-11T01:42:05.049583726Z.
+2026-11-11 01:42:05.250 WARN   Design Warning: Board has 2 pre-existing clearance violation(s) in the loaded design (before routing):
+  - 2 unfixable violation(s) (cannot be resolved by Freerouting):
+      * 1 pin-to-pin clearance violations:
+          - JP.2 [net GND] <-> JP.1 [net BAT-]
+      * 1 fixed trace/via clearance violations:
+          - FixedTrace#688 [net BAT-] <-> C1.1 [net Net-(U3-VDD)]
+  - 0 potentially fixable violations
+Notice: Freerouting does not modify component placement, board outlines, or fixed items.
+Resolving these 2 unfixable violation(s) is the responsibility of the board author in their EDA tool (e.g. KiCad).
+2026-11-11 01:42:05.293 INFO   [F90CEB\2C5737] Pipeline thread limits: autorouter pass is single-threaded, optimizer.max_threads=3.
+2026-11-11 01:42:05.438 INFO   [F90CEB\2C5737] Fanout stage started on board 'b8247c371323185f85664761edf09efd' with 28 of 76 SMD pins needing fanout (48 already connected, 0 netless).
+2026-11-11 01:42:05.946 INFO   [F90CEB\2C5737] Fanout pass #1 on board 'b192da27b857b0236b4ca5f852934872' completed in 0.44 seconds with 15 SMD pins fanouted, 0 not routed, 0 insert errors, +3 extra vias (0 SMD pins still to check in pass, ripup costs=100).
+2026-11-11 01:42:06.269 INFO   [F90CEB\2C5737] Fanout pass #2 on board 'd20a57eadac3e6c1a3ed4e71cd6dfdaf' completed in 0.30 seconds with 11 SMD pins fanouted, 1 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=200).
+2026-11-11 01:42:07.588 INFO   [F90CEB\2C5737] Fanout pass #3 on board '6b74d4b6a630195b7a29a61f5a6c745c' completed in 1.30 seconds with 11 SMD pins fanouted, 1 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=300).
+2026-11-11 01:42:08.834 INFO   [F90CEB\2C5737] Fanout pass #4 on board 'da89d4a9e9523de06162385a2d8c8624' completed in 1.24 seconds with 11 SMD pins fanouted, 1 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=400).
+2026-11-11 01:42:10.055 INFO   [F90CEB\2C5737] Fanout pass #5 on board 'c9121991fe4ab37f631583e8f41e8fe6' completed in 1.21 seconds with 11 SMD pins fanouted, 1 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=500).
+2026-11-11 01:42:10.056 INFO   Fanout stopped after 5 passes: no progress for 3 consecutive passes.
+2026-11-11 01:42:10.087 INFO   [F90CEB\2C5737] Fanout stage completed: started with 76 total SMD pins, completed in 4.61 seconds, escaped pins: 61/76 (80.3%), using 4.16 total CPU seconds, 2.73 GB total allocated, and 143.0 MB peak heap usage.
+2026-11-11 01:42:10.341 INFO   [F90CEB\2C5737] Auto-routing stage started on board 'c9121991fe4ab37f631583e8f41e8fe6' with baseline score 790.71 for 13 unrouted items.
+2026-11-11 01:42:10.724 INFO   [F90CEB\2C5737] Auto-routing pass #1 on board 'c9121991fe4ab37f631583e8f41e8fe6' was completed in 0.30 seconds with score 806.77 (12 unrouted and 2 violations), using 4.28 CPU seconds and the job allocated 2.76 GB of memory so far.
+2026-11-11 01:42:11.010 INFO   [F90CEB\2C5737] Auto-routing pass #2 on board 'a12dc3048dbcdb0b50d22bbf05b7967f' was completed in 0.22 seconds with score 822.84 (11 unrouted and 2 violations), using 4.28 CPU seconds and the job allocated 2.76 GB of memory so far.
+2026-11-11 01:42:11.268 INFO   [F90CEB\2C5737] Auto-routing pass #3 on board '527526f032229a8524eb640b3113d535' was completed in 0.20 seconds with score 822.84 (11 unrouted and 2 violations), using 5.27 CPU seconds and the job allocated 3.31 GB of memory so far.
+2026-11-11 01:42:11.484 INFO   [F90CEB\2C5737] Auto-routing pass #4 on board '527526f032229a8524eb640b3113d535' was completed in 0.21 seconds with score 822.84 (11 unrouted and 2 violations), using 5.27 CPU seconds and the job allocated 3.31 GB of memory so far.
+2026-11-11 01:42:11.717 INFO   [F90CEB\2C5737] Auto-routing pass #5 on board '527526f032229a8524eb640b3113d535' was completed in 0.22 seconds with score 822.84 (11 unrouted and 2 violations), using 5.27 CPU seconds and the job allocated 3.31 GB of memory so far.
+2026-11-11 01:42:11.946 INFO   [F90CEB\2C5737] Auto-routing pass #6 on board '527526f032229a8524eb640b3113d535' was completed in 0.22 seconds with score 822.84 (11 unrouted and 2 violations), using 5.27 CPU seconds and the job allocated 3.31 GB of memory so far.
+2026-11-11 01:42:12.246 INFO   [F90CEB\2C5737] Auto-routing pass #7 on board '527526f032229a8524eb640b3113d535' was completed in 0.28 seconds with score 822.84 (11 unrouted and 2 violations), using 6.23 CPU seconds and the job allocated 3.89 GB of memory so far.
+2026-11-11 01:42:12.519 INFO   [F90CEB\2C5737] Auto-routing pass #8 on board '527526f032229a8524eb640b3113d535' was completed in 0.26 seconds with score 822.84 (11 unrouted and 2 violations), using 6.23 CPU seconds and the job allocated 3.89 GB of memory so far.
+2026-11-11 01:42:12.761 INFO   [F90CEB\2C5737] Auto-routing pass #9 on board '527526f032229a8524eb640b3113d535' was completed in 0.23 seconds with score 822.84 (11 unrouted and 2 violations), using 6.23 CPU seconds and the job allocated 3.89 GB of memory so far.
+2026-11-11 01:42:12.970 INFO   [F90CEB\2C5737] Auto-routing pass #10 on board '527526f032229a8524eb640b3113d535' was completed in 0.20 seconds with score 822.84 (11 unrouted and 2 violations), using 6.23 CPU seconds and the job allocated 3.89 GB of memory so far.
+2026-11-11 01:42:13.174 INFO   [F90CEB\2C5737] Auto-routing pass #11 on board '527526f032229a8524eb640b3113d535' was completed in 0.19 seconds with score 822.84 (11 unrouted and 2 violations), using 7.21 CPU seconds and the job allocated 4.45 GB of memory so far.
+2026-11-11 01:42:13.469 INFO   [F90CEB\2C5737] Auto-routing pass #12 on board '527526f032229a8524eb640b3113d535' was completed in 0.24 seconds with score 822.84 (11 unrouted and 2 violations), using 7.21 CPU seconds and the job allocated 4.45 GB of memory so far.
+2026-11-11 01:42:13.708 INFO   [F90CEB\2C5737] Auto-routing pass #13 on board '527526f032229a8524eb640b3113d535' was completed in 0.23 seconds with score 822.84 (11 unrouted and 2 violations), using 7.21 CPU seconds and the job allocated 4.45 GB of memory so far.
+2026-11-11 01:42:13.919 INFO   [F90CEB\2C5737] Auto-routing pass #14 on board '527526f032229a8524eb640b3113d535' was completed in 0.20 seconds with score 822.84 (11 unrouted and 2 violations), using 7.21 CPU seconds and the job allocated 4.45 GB of memory so far.
+2026-11-11 01:42:14.122 INFO   [F90CEB\2C5737] Auto-routing pass #15 on board '527526f032229a8524eb640b3113d535' was completed in 0.19 seconds with score 822.84 (11 unrouted and 2 violations), using 8.21 CPU seconds and the job allocated 5.04 GB of memory so far.
+2026-11-11 01:42:14.337 INFO   [F90CEB\2C5737] Auto-routing pass #16 on board '527526f032229a8524eb640b3113d535' was completed in 0.20 seconds with score 822.84 (11 unrouted and 2 violations), using 8.21 CPU seconds and the job allocated 5.04 GB of memory so far.
+2026-11-11 01:42:14.545 INFO   [F90CEB\2C5737] Auto-routing pass #17 on board '527526f032229a8524eb640b3113d535' was completed in 0.20 seconds with score 822.84 (11 unrouted and 2 violations), using 8.21 CPU seconds and the job allocated 5.04 GB of memory so far.
+2026-11-11 01:42:14.744 INFO   [F90CEB\2C5737] Auto-routing pass #18 on board '527526f032229a8524eb640b3113d535' was completed in 0.19 seconds with score 822.84 (11 unrouted and 2 violations), using 8.21 CPU seconds and the job allocated 5.04 GB of memory so far.
+2026-11-11 01:42:14.761 INFO   [F90CEB\2C5737] The router's best score (822.84) has not improved by more than 0.5 points since pass #8. Stopping the auto-router after 18 passes (11 items still unconnected).
+The following connections could not be routed -- please review your design (e.g. check pad clearances, trace width rules, and available routing space):
+  Net 'BAT-' (4 unrouted connections):
+    - conductionarea  ->  conductionarea
+    - conductionarea  ->  conductionarea
+    - JP-1  ->  conductionarea
+    - U3-3  ->  C1-2
+  Net 'VIN' (3 unrouted connections):
+    - conductionarea  ->  conductionarea
+    - conductionarea  ->  conductionarea
+    - C2-1  ->  via
+  Net 'TMR' (1 unrouted connection):
+    - conductionarea  ->  conductionarea
+  Net 'PGOOD' (1 unrouted connection):
+    - conductionarea  ->  conductionarea
+  Net 'BAT+' (1 unrouted connection):
+    - U2-3  ->  via
+  Net 'OUT+' (1 unrouted connection):
+    - J4-1  ->  U2-11
+2026-11-11 01:42:14.907 INFO   [F90CEB\2C5737] Auto-routing stage completed: started with 16 unrouted nets, completed in 9.57 seconds, final score: 822.84 (11 unrouted and 2 violations), using 8.21 total CPU seconds, 5.04 GB total allocated, and 257.5 MB peak heap usage.
+2026-11-11 01:42:14.963 INFO   [F90CEB\2C5737] Skipping optimization stage: the board has 11 unrouted connection(s) (optimizer only runs on completely routed boards).
+2026-11-11 01:42:14.976 INFO   [F90CEB\2C5737] Job 'F90CEB\2C5737' finished with state: COMPLETED (elapsed: 9.93 seconds, finished at UTC: 2026-11-11T01:42:14.975088842Z).
+2026-11-11 01:42:15.024 INFO   Saving output file '/tmp/claude-0/-home-claude/60994870-d588-503b-a019-91de7790f878/scratchpad/fr/run/charger.ses' (SES)...
+2026-11-11 01:42:15.026 INFO   Successfully saved output file '/tmp/claude-0/-home-claude/60994870-d588-503b-a019-91de7790f878/scratchpad/fr/run/charger.ses' (22224 bytes).
+wall 13

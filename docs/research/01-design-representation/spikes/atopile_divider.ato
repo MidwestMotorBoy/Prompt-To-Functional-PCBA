@@ -1,0 +1,31 @@
+"""Tiny test: output divider and bulk caps for a buck stage."""
+import Resistor
+import Capacitor
+import ElectricPower
+import ResistorVoltageDivider
+
+module FbDivider:
+    power = new ElectricPower
+    r_top = new Resistor
+    r_bot = new Resistor
+    signal fb
+    power.hv ~ r_top.unnamed[0]
+    r_top.unnamed[1] ~ fb
+    fb ~ r_bot.unnamed[0]
+    r_bot.unnamed[1] ~ power.lv
+    r_top.resistance = 100kohm +/- 1%
+    r_bot.resistance = 19.1kohm +/- 1%
+    r_top.package = "R0402"
+    r_bot.package = "R0402"
+
+module App:
+    vout = new ElectricPower
+    assert vout.voltage within 4.9V to 5.2V
+    div = new FbDivider
+    vout ~ div.power
+    cout = new Capacitor[2]
+    for c in cout:
+        c.capacitance = 22uF +/- 20%
+        c.package = "C0805"
+        assert c.max_voltage within 25V to 100V
+        c.power ~ vout
