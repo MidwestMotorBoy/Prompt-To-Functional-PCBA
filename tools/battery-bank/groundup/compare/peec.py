@@ -56,7 +56,11 @@ def mpar(a1, a2, b1, b2, d):
 
 
 class Model:
-    def __init__(self, box, nets, h=0.25, layers=LAYERS, top=()):
+    def __init__(self, box, nets, h=0.25, layers=LAYERS, top=(), centre=None):
+        # centre=True: a cell is copper when its centre is inside the copper. False is the old behaviour (every
+        # cell the outline touches), which makes every plate and pad one cell wider and reads a few percent low.
+        import os as _os
+        self.centre = (_os.environ.get('PEEC_CENTRE', '1') == '1') if centre is None else centre
         self.top = set(top)
         self.box, self.h, self.layers = box, h, layers
         x0, x1, y0, y1 = box
@@ -100,6 +104,26 @@ class Model:
                 if p['net'] in self.top and L in padlayers(p) and p['shape'] != 'circle':
                     d.polygon([P(*q) for q in padpoly(p)], fill=self.nid[p['net']])
         a = np.array(im, dtype=np.int32)
+        if self.centre:
+            # zone and pad copper counts only where it covers at least half the cell; tracks and vias keep every cell they touch
+            keep = Image.new('I', (self.W, self.H), 0); dk = ImageDraw.Draw(keep)
+            for s in SEG:
+                if (s['net'] in self.nid or s['net'] in self.top) and s['layer'] == L:
+                    w = s['w']/h; p1 = P(s['x1'], s['y1']); p2 = P(s['x2'], s['y2'])
+                    dk.line([p1, p2], fill=1, width=max(1, int(round(w))))
+            for v in VIA:
+                if v['net'] in self.nid:
+                    c = P(v['x'], v['y']); r = max(v['size']/2/h, 0.5); dk.ellipse([c[0]-r, c[1]-r, c[0]+r, c[1]+r], fill=1)
+            for fp in FP:
+                for p in fp['pads']:
+                    if p['net'] in self.nid and L in padlayers(p) and p['shape'] == 'circle':
+                        c = P(p['x'], p['y']); r = p['w']/2/h; dk.ellipse([c[0]-r, c[1]-r, c[0]+r, c[1]+r], fill=1)
+            keep = np.array(keep, dtype=bool)
+            for net, k in self.nid.items():
+                polys = [pts for z in ZON if not z['keepout'] and z['net'] == net for LL, pts in z['fills'] if LL == L]
+                polys += [padpoly(p) for fp in FP for p in fp['pads'] if p['net'] == net and L in padlayers(p) and p['shape'] != 'circle']
+                cov = self._cover(polys) if polys else np.zeros(a.shape)
+                a[(a == k) & ~keep & (cov < 0.5)] = 0
         # make thin diagonal traces 4-connected
         for _ in range(2):
             A = a[:-1, :-1]; B = a[1:, 1:]; C = a[:-1, 1:]; D = a[1:, :-1]
@@ -109,6 +133,17 @@ class Model:
             B[m2] = C[m2]
         return a
 
+    def _cover(self, polys, aa=4):
+        """Share of each cell covered by the polygons (cell k spans k*h to (k+1)*h from the box corner)."""
+        im = Image.new('L', (self.W*aa, self.H*aa), 0); d = ImageDraw.Draw(im)
+        for pts in polys:
+            d.polygon([(q[0]*aa-0.5, q[1]*aa-0.5) for q in (self.P(*pt) for pt in pts)], fill=1)
+        f = np.array(im, dtype=float)
+        er = np.ones_like(f, dtype=bool)
+        er[1:, :] &= f[:-1, :] > 0; er[:-1, :] &= f[1:, :] > 0; er[:, 1:] &= f[:, :-1] > 0; er[:, :-1] &= f[:, 1:] > 0
+        f[(f > 0) & ~er] = 0.5                      # PIL fills every pixel the outline touches
+        return f.reshape(self.H, aa, self.W, aa).mean(axis=(1, 3))
+
     def cells_in_pad(self, p, L):
         im = Image.new('L', (self.W, self.H), 0); d = ImageDraw.Draw(im)
         if p['shape'] == 'circle':
@@ -116,7 +151,9 @@ class Model:
             d.ellipse([c[0]-r, c[1]-r, c[0]+r, c[1]+r], fill=1)
         else:
             d.polygon([self.P(*q) for q in padpoly(p)], fill=1)
-        m = np.array(im, bool) & (self.lab[L] == self.nid.get(p['net'], -9))
+        m = np.array(im, bool)
+        if self.centre and p['shape'] != 'circle': m = self._cover([padpoly(p)]) >= 0.5
+        m = m & (self.lab[L] == self.nid.get(p['net'], -9))
         if not m.any():  # tiny pad: take nearest cell
             c = self.P(p['x'], p['y']); r, cc = int(c[1]), int(c[0])
             m = np.zeros_like(m); m[r, cc] = True

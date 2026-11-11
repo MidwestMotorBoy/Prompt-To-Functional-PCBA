@@ -11,10 +11,19 @@ def padpoly(p):
 def padlayers(p):
     if '*.Cu' in p['layers']: return LAYERS
     return [l for l in p['layers'] if l in LAYERS]
-def build(net,box,res=0.1):
+def build(net,box,res=0.1,aa=8):
+    """aa: copper is drawn aa times finer than the grid and each cell keeps its covered share, which scales the
+    conductance of its edges. aa=1 is the old behaviour: every cell the copper touches counts as full, so every
+    strip is one cell too wide and resistance reads low (-17 % on a 0.5 mm neck at 0.1 mm)."""
     x0,x1,y0,y1=box; W=int((x1-x0)/res)+1; H=int((y1-y0)/res)+1
     def P(x,y): return ((x-x0)/res,(y-y0)/res)
-    masks={}
+    res_node=res; res=res/aa                       # draw on the fine grid; node (i,j) is the cell centred on x0+i*res_node
+    _P=P
+    def P(x,y):
+        if aa==1: return _P(x,y)
+        return (((x-x0)/res_node+0.5)*aa-0.5,((y-y0)/res_node+0.5)*aa-0.5)
+    W0,H0=W,H; W,H=W*aa,H*aa
+    masks={}; cover={}
     for L in LAYERS:
         im=Image.new('L',(W,H),0); d=ImageDraw.Draw(im)
         for z in ZON:
@@ -36,15 +45,22 @@ def build(net,box,res=0.1):
         for v in VIA:
             if v['net']==net:
                 c=P(v['x'],v['y']); r=v['size']/2/res; d.ellipse([c[0]-r,c[1]-r,c[0]+r,c[1]+r],fill=1)
-        masks[L]=np.array(im,dtype=bool)
+        fine=np.array(im,dtype=float)
+        if aa>1 and fine.any():                    # PIL fills every pixel the outline touches: take half a fine pixel back off each edge
+            f2=fine.copy()
+            er=np.ones_like(fine,dtype=bool)
+            er[1:,:]&=fine[:-1,:]>0; er[:-1,:]&=fine[1:,:]>0; er[:,1:]&=fine[:,:-1]>0; er[:,:-1]&=fine[:,1:]>0
+            f2[(fine>0)&~er]=0.5; fine=f2
+        cover[L]=fine.reshape(H0,aa,W0,aa).mean(axis=(1,3)); masks[L]=cover[L]>(0.0 if aa>1 else 0.5)
+    res=res_node; W,H=W0,H0; P=_P
     idx={}; n=0
     for L in LAYERS:
         m=masks[L]; ids=-np.ones(m.shape,dtype=np.int64); k=m.sum(); ids[m]=np.arange(n,n+k); n+=k; idx[L]=ids
     rows=[];cols=[];vals=[]
     for L in LAYERS:
-        ids=idx[L]; g=1.0/RS[L]
-        for a,b in ((ids[:,:-1],ids[:,1:]),(ids[:-1,:],ids[1:,:])):
-            ok=(a>=0)&(b>=0); rows.append(a[ok]); cols.append(b[ok]); vals.append(np.full(ok.sum(),g))
+        ids=idx[L]; g=1.0/RS[L]; cv=cover[L]
+        for a,b,ca,cb in ((ids[:,:-1],ids[:,1:],cv[:,:-1],cv[:,1:]),(ids[:-1,:],ids[1:,:],cv[:-1,:],cv[1:,:])):
+            ok=(a>=0)&(b>=0); rows.append(a[ok]); cols.append(b[ok]); vals.append(g*np.sqrt(ca*cb)[ok])
     vias=[]
     def addvert(x,y,drill,size):
         c=P(x,y); ci,ri=int(round(c[0])),int(round(c[1]))
@@ -64,7 +80,7 @@ def build(net,box,res=0.1):
                 addvert(p['x'],p['y'],dr,p['w'])
     r=np.concatenate(rows);c=np.concatenate(cols);v=np.concatenate(vals)
     G=sp.coo_matrix((np.concatenate([-v,-v,v,v]),(np.concatenate([r,c,r,c]),np.concatenate([c,r,r,c]))),shape=(n,n)).tocsr()
-    return dict(G=G,idx=idx,masks=masks,n=n,P=P,res=res,box=box,vias=vias)
+    return dict(G=G,idx=idx,masks=masks,cover=cover,n=n,P=P,res=res,box=box,vias=vias)
 def padnodes(B,ref,nums,layer='F.Cu'):
     out=[]
     for p in REF[ref]['pads']:
