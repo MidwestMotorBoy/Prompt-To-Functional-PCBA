@@ -88,3 +88,32 @@ PCB=<board> python3 real_paths.py
 python3 plates_reference.py
 PCB=<board> PEEC_CENTRE=0|1 python3 hot_convergence.py 4 0.2
 ```
+
+## Outside check against FastHenry2 (2026-11-11)
+
+`fh_loops.py` writes three test loops made of rectangles, ideal shorts and one port, as FastHenry inputs and as
+tiny boards for the loop solver, so both see the same copper. FastHenry2 3.6.1 ran them on Logan's PC at
+100 MHz with default settings. The two via inputs needed the change FastHenry asks for (a via segment may not
+end on a plane node, so a normal node is added and tied to it); `fh_loops.py` does not write that yet.
+
+| Loop | FastHenry2, coarse / fine cells, nH | Loop solver, old rasteriser, nH | Loop solver, new rasteriser, nH |
+|---|---|---|---|
+| plates, 18 x 10 mm, two layers | 0.476 / 0.470 | 0.461 to 0.473 | 0.491 (0.25 mm); 0.606 (0.5 mm) |
+| small, 1 x 3 mm strip over a plane | 0.468 / 0.454 | 0.443 to 0.469 | 0.518 to 0.572 |
+| via, 2 x 6 mm strips and two vias | 0.650 / 0.671 | 0.592 to 0.659 | 0.696 to 0.722 |
+
+Loop solver ranges are over cell sizes 0.3, 0.2, 0.15 and 0.1 mm (0.5 and 0.25 for the plates).
+
+What it says:
+
+- FastHenry lands at the low end of the bracket. The old rasteriser is within about 5 % of it at 0.2 mm cells
+  and finer on all three loops. The new (centre) rasteriser reads 4 to 8 % high on the plates and the via loop,
+  and 14 to 26 % high on the small loop.
+- So the earlier "plus or minus 20 %, truth unknown" becomes: the truth is near the old value, and the new
+  value is a safe upper bound. A hot-loop limit should still be checked against the new value. Comparisons
+  between layouts should use the old one.
+- The new rasteriser's jump at coarse cells (0.606 nH on the plates at 0.5 mm) is a grid-alignment error: the
+  18.6 mm plate does not sit on a 0.5 mm grid. Loop work should use cells of 0.25 mm or less.
+- FastHenry itself moved 1 to 3 % when its cells were halved, so these are good to a few percent, not exact.
+- The vias in the loop solver agree with FastHenry's to within the same few percent.
+- Still open: these loops have no capacitors or pads smaller than a cell, and the coupling solver is untested.
