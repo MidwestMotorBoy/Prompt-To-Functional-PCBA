@@ -1,0 +1,8 @@
+(kicad_pcb (version 20240108) (generator "fh_loops")
+(zone (net "A") (layer "F.Cu") (name "r0") (polygon (pts (xy 1 3) (xy 4.6 3) (xy 4.6 4) (xy 1 4))) (filled_polygon (layer "F.Cu") (pts (xy 1 3) (xy 4.6 3) (xy 4.6 4) (xy 1 4))))
+(zone (net "B") (layer "In1.Cu") (name "r1") (polygon (pts (xy 0 0) (xy 5.6 0) (xy 5.6 7) (xy 0 7))) (filled_polygon (layer "In1.Cu") (pts (xy 0 0) (xy 5.6 0) (xy 5.6 7) (xy 0 7))))
+(footprint "T:pad" (layer "F.Cu") (at 1.15 3.5) (property "Reference" "P+") (property "Value" "pad") (pad "1" smd rect (at 0 0) (size 0.30000000000000004 1) (layers "F.Cu") (net "A")))
+(footprint "T:pad" (layer "F.Cu") (at 1.15 3.5) (property "Reference" "P-") (property "Value" "pad") (pad "1" smd rect (at 0 0) (size 0.30000000000000004 1) (layers "In1.Cu") (net "B")))
+(footprint "T:pad" (layer "F.Cu") (at 4.449999999999999 3.5) (property "Reference" "S+") (property "Value" "pad") (pad "1" smd rect (at 0 0) (size 0.2999999999999998 1) (layers "F.Cu") (net "A")))
+(footprint "T:pad" (layer "F.Cu") (at 4.449999999999999 3.5) (property "Reference" "S-") (property "Value" "pad") (pad "1" smd rect (at 0 0) (size 0.2999999999999998 1) (layers "In1.Cu") (net "B")))
+)
