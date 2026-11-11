@@ -31,6 +31,8 @@ PTH_MIN_SAME, PTH_MIN_OTHER = 0.9, 1.1    # mm from a via centre to a through-ho
 TOLX = 0.012                              # margin on exactly rasterised shapes (pads, tracks, vias)
 BEND = 0.4
 SOFT = ("GND_PLANE", "PACK_P_PLANE", "3V3_PLANE", "GND_FILL")       # zones that refill around new tracks
+SOFTNETS = tuple(n for n in OPT.get("softnets", "").split(",") if n)     # --softnets=GND,PACK_P: zones of these nets are soft too (boards without zone names)
+def soft(z): return z.GetZoneName() in SOFT or z.GetNetname() in SOFTNETS
 PLANE_NETS = ("PACK_P", "3V3")                                       # reached by a via / track to their plane or pours
 SEALED = [("R425", "1"), ("R426", "1"), ("R428", "1"), ("R429", "1"), ("R525", "1"), ("R526", "1"), ("R528", "1"),
           ("R529", "1"), ("R107", "1"), ("R108", "1")]                # Kelvin tap pads: nothing else may attach
@@ -292,7 +294,7 @@ for z in board.Zones():
                 mark_poly(li, z.GetNetCode(), z.GetFilledPolysList(lay), 0.0)
 DEST[0] = hz
 for z in board.Zones():
-    if not z.GetIsRuleArea() and z.GetZoneName() not in SOFT:
+    if not z.GetIsRuleArea() and not soft(z):
         for li, lay in enumerate(LAYERS):
             if z.IsOnLayer(lay):
                 mark_poly(li, z.GetNetCode(), z.GetFilledPolysList(lay), 0.0)
@@ -356,7 +358,7 @@ for z in board.Zones():
     for li, lay in enumerate(LAYERS):
         if not z.IsOnLayer(lay):
             continue
-        if z.GetZoneName() in SOFT:
+        if soft(z):
             continue                       # plane / ground fills: signals may cut them (refill carves around them)
         mark_poly2(li, n, z.GetFilledPolysList(lay), growp(n))
 # room for the In2 GND fill's thermal spokes round GND through-hole pads (a signal hugging the pad starves them)
