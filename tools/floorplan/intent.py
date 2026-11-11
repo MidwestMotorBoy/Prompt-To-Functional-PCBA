@@ -40,6 +40,7 @@ def derive(build, design, out):
     for cap, t in sorted(c.get("serves", {}).items()):
         if cap not in hot and pads(t):
             uf = farads(d["comps"][cap]["value"]); lim = 2.0 if uf is None or uf <= 1 else 4.0 if uf <= 10 else 10.0
+            if cap in c.get("near_mm", {}): lim = c["near_mm"][cap]              # the circuit code's own override (within_mm=)
             it["near"].append(dict(part=cap, to=pads(t), max_mm=lim, why=f"serves {t}" + ("" if lim == 2.0 else f" ({uf:g} uF, so a wider limit)")))
     for name, h in sorted(c.get("hot_loops", {}).items()):
         for i, cap in enumerate(h["caps"]):

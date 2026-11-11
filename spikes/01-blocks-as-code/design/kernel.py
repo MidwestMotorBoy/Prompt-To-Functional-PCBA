@@ -71,7 +71,7 @@ class Part:
         pass
 
 CIRCUIT = {"parts": {}, "nets": {}, "pinnet": {}}
-CONSTRAINTS = {"nets": {}, "serves": {}, "hot_loops": {}, "kelvin": {}, "draw": {}, "expect": {}}
+CONSTRAINTS = {"nets": {}, "serves": {}, "near_mm": {}, "hot_loops": {}, "kelvin": {}, "draw": {}, "expect": {}}
 _block = []
 
 def part(lib, name, ref, value=None, fp=None, **fields):
@@ -86,11 +86,13 @@ def part(lib, name, ref, value=None, fp=None, **fields):
     CIRCUIT["parts"][ref] = p
     return p
 
-def C(ref, value, fp, a, b, serves=None, lib=("Device", "C"), **f):
-    """Capacitor from net a (pin 1) to net b (pin 2). serves='U204.VIN' binds it to the pin it decouples."""
+def C(ref, value, fp, a, b, serves=None, lib=("Device", "C"), within_mm=None, **f):
+    """Capacitor from net a (pin 1) to net b (pin 2). serves='U204.VIN' binds it to the pin it decouples.
+    within_mm overrides how close the placer must put it to that pin (default goes by capacitor value)."""
     p = part(lib[0], lib[1], ref, value, fp, **f)
     p[1] += a; p[2] += b
     if serves: CONSTRAINTS["serves"][ref] = serves
+    if serves and within_mm: CONSTRAINTS["near_mm"][ref] = within_mm
     return p
 
 def R(ref, value, fp, a, b, serves=None, **f):
