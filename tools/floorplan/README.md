@@ -103,6 +103,28 @@ Update 2: limits by capacitor value (up to 1 uF 2 mm, up to 10 uF 4 mm, larger 1
 of 112, scripted board 84, placer with statements 97 to 99 (it was run against the earlier limits). This is the
 first version of the check that ranks the hand board above the scripted one.
 
+## With real courtyards and enclosure keep-outs (same day)
+
+`dump_board.py` now writes each footprint's courtyard and the board's keep-out areas; the placers use courtyards
+as bodies and count a no-footprint keep-out on a part's side as overlap. The last quarter of refinement weighs
+overlap far above wiring.
+
+| Placement | Statements that hold (of 112) | Signal half-perimeter | Overlap left | Off board |
+|---|---|---|---|---|
+| Hand board | 92 | 2064 mm | 0 | 0 |
+| Scripted board | 84 | 2508 mm | 0 | 0 |
+| Section placer, three runs | 104, 102, 99 | 2629, 2602, 2485 mm | 14.6, 0.8, 1.0 mm2 | 1.6, 0.5, 0 mm |
+
+The earlier lead over the hand board was the pad-box bodies, as warned. With real courtyards the board is
+nearly full (cluster boxes add up to 3313 mm2 on a 3212 mm2 board face), the placer lands at the scripted
+board's wiring demand, 20 % above the hand board, and it is not yet legal: a little overlap is left in every run.
+It does hold more of the intent statements than either board.
+
+What this says about the next step: on a board this dense the packing is the hard part, not the sections.
+Rigid rectangular clusters waste the room a person saves by interleaving sections and using the back side.
+Options, cheapest first: let clusters deform during packing (parts keep their pulls but are free), a proper
+legaliser (shift along the least-crowded direction), and many more runs with selection, since runs are cheap.
+
 ## Run it
 
 ```

@@ -12,7 +12,7 @@ import json, sys, math
 from collections import defaultdict
 import floorplan as F
 
-GAP = 0.2      # body clearance, mm (bodies are pad boxes, so this is on top of the pad-to-pad distance)
+GAP = 0.05     # clearance between bodies, mm (bodies are courtyards when the dump has them, else pad boxes)
 
 def rot(v, k):
     x, y = v
@@ -29,6 +29,9 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
         x0, y0 = pos0[p["ref"]]; lp[p["ref"]].append((p["x"] - x0, p["y"] - y0, p["net"], p["num"]))
         b = bb.setdefault(p["ref"], [1e9, 1e9, -1e9, -1e9]); bx = p["box"]
         b[0] = min(b[0], bx[0] - x0); b[1] = min(b[1], bx[1] - y0); b[2] = max(b[2], bx[2] - x0); b[3] = max(b[3], bx[3] - y0)
+    for f in d["fps"]:                    # courtyards, where the dump has them, are the bodies
+        if "court" in f and f["ref"] in bb:
+            c = f["court"]; b = bb[f["ref"]]; bb[f["ref"]] = [min(b[0], c[0] - f["x"]), min(b[1], c[1] - f["y"]), max(b[2], c[2] - f["x"]), max(b[3], c[3] - f["y"])]
     def body(r, k):
         b = bb[r]; cs = [rot((b[0], b[1]), k), rot((b[2], b[3]), k)]
         return min(c[0] for c in cs), min(c[1] for c in cs), max(c[0] for c in cs), max(c[1] for c in cs)

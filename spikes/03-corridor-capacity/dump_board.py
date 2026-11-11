@@ -1,5 +1,5 @@
 """dump_board.py <board.kicad_pcb> <out.json>   (run with KiCad's python: needs pcbnew)
-Footprints with their schematic sheet, pads, tracks, vias, and per copper layer a 0.5 mm raster of zone fill by net."""
+Footprints with their schematic sheet, rotation and courtyard box, keep-out areas, pads, tracks, vias, and per copper layer a 0.5 mm raster of zone fill by net."""
 import json, sys, pcbnew
 b = pcbnew.LoadBoard(sys.argv[1]); mm = pcbnew.ToMM
 layers = [l for l in b.GetEnabledLayers().CuStack()]; lname = {l: b.GetLayerName(l) for l in layers}
@@ -7,7 +7,12 @@ bb = b.GetBoardEdgesBoundingBox(); x0, y0, x1, y1 = mm(bb.GetLeft()), mm(bb.GetT
 out = dict(box=[x0, y0, x1, y1], layers=[lname[l] for l in layers], fps=[], pads=[], tracks=[], vias=[], zones={})
 for f in b.GetFootprints():
     out["fps"].append(dict(ref=f.GetReference(), x=mm(f.GetPosition().x), y=mm(f.GetPosition().y), side=lname.get(f.GetLayer(), "?"),
-                           sheet=f.GetSheetname(), value=f.GetValue()))
+                           sheet=f.GetSheetname(), value=f.GetValue(), rot=f.GetOrientationDegrees()))
+    try:
+        cy = f.GetCourtyard(pcbnew.F_CrtYd if f.GetLayer() == pcbnew.F_Cu else pcbnew.B_CrtYd)
+        if cy.OutlineCount():
+            r = cy.BBox(); out["fps"][-1]["court"] = [mm(r.GetLeft()), mm(r.GetTop()), mm(r.GetRight()), mm(r.GetBottom())]
+    except Exception: pass
     for p in f.Pads():
         r = p.GetBoundingBox()
         out["pads"].append(dict(ref=f.GetReference(), num=p.GetNumber(), net=p.GetNetname(), x=mm(p.GetPosition().x), y=mm(p.GetPosition().y),
@@ -21,8 +26,14 @@ for t in b.GetTracks():
         s, e = t.GetStart(), t.GetEnd()
         out["tracks"].append(dict(net=t.GetNetname(), l=lname[t.GetLayer()], w=mm(t.GetWidth()), x1=mm(s.x), y1=mm(s.y), x2=mm(e.x), y2=mm(e.y)))
 STEP = 0.5; nx, ny = int((x1 - x0) / STEP) + 1, int((y1 - y0) / STEP) + 1; out["raster"] = dict(step=STEP, nx=nx, ny=ny)
+out["keepouts"] = []
 for z in b.Zones():
-    if z.GetIsRuleArea(): continue
+    if z.GetIsRuleArea():
+        r = z.GetBoundingBox()
+        out["keepouts"].append(dict(name=z.GetZoneName(), box=[mm(r.GetLeft()), mm(r.GetTop()), mm(r.GetRight()), mm(r.GetBottom())],
+                                    layers=[lname[l] for l in layers if z.IsOnLayer(l)], no_footprints=bool(z.GetDoNotAllowFootprints()),
+                                    no_tracks=bool(z.GetDoNotAllowTracks()), no_vias=bool(z.GetDoNotAllowVias()), no_pours=bool(z.GetDoNotAllowZoneFills() if hasattr(z, "GetDoNotAllowZoneFills") else z.GetDoNotAllowCopperPour())))
+        continue
     for l in layers:
         if not z.IsOnLayer(l): continue
         poly = z.GetFilledPolysList(l)

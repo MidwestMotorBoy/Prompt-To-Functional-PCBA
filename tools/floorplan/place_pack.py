@@ -3,7 +3,9 @@ Step 2 of the section placer: put the clusters from place_sections.py on the boa
 Each cluster moves and turns as one rigid piece (annealing over about 30 pieces); fixed parts stay where the
 dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board
 + with an intent file, how far each `near` statement is over its limit and each `keepapart` under it.
-Step 3 (refine): every part then moves on its own with small steps at low temperature to close the gaps.
+Step 3 (refine): every part then moves on its own with small steps at low temperature to close the gaps;
+in its last quarter overlap costs far more than wiring, which removes what overlap is left.
+Bodies are courtyards when the dump has them; no-footprint keep-outs on a part's side count as overlap.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
 import numpy as np
@@ -45,6 +47,10 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
         for A, B, lim in apartS:
             dd = np.sqrt(((q[A][:, None, :] - q[B][None, :, :]) ** 2).sum(-1)); dd[apr[A][:, None] == apr[B][None, :]] = 1e9; c += 3 * max(0.0, lim - dd.min())
         return c
+    for f in d["fps"]:
+        if "court" in f and f["ref"] in ri:
+            i = ri[f["ref"]]; c = f["court"]; bbx[i] = (min(bbx[i][0], c[0] - f["x"]), min(bbx[i][1], c[1] - f["y"]), max(bbx[i][2], c[2] - f["x"]), max(bbx[i][3], c[3] - f["y"]))
+    KO = [(np.array(k["box"]), "F.Cu" in k["layers"], "B.Cu" in k["layers"]) for k in d.get("keepouts", []) if k.get("no_footprints")]
     pr = np.array(pr); pl = np.array(pl); pn = np.array(pn); order = np.argsort(pn, kind="stable"); pr, pl, pn = pr[order], pl[order], pn[order]
     starts = np.r_[0, np.nonzero(np.diff(pn))[0] + 1]
     sideF = np.array([side[r] == "F.Cu" for r in refs]); p0 = np.array([pos0[r] for r in refs])
@@ -62,14 +68,18 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     def cost(xy, k, detail=False):
         pads = xy[pr] + rotv(pl, k[pr])
         hp = (np.maximum.reduceat(pads[:, 0], starts) - np.minimum.reduceat(pads[:, 0], starts) + np.maximum.reduceat(pads[:, 1], starts) - np.minimum.reduceat(pads[:, 1], starts)).sum()
-        c1 = rotv(bbx[:, :2], k); c2 = rotv(bbx[:, 2:], k); lo = xy + np.minimum(c1, c2) - 0.1; hi = xy + np.maximum(c1, c2) + 0.1
+        c1 = rotv(bbx[:, :2], k); c2 = rotv(bbx[:, 2:], k); lo = xy + np.minimum(c1, c2) - 0.02; hi = xy + np.maximum(c1, c2) + 0.02
         ox = np.minimum(hi[:, None, 0], hi[None, :, 0]) - np.maximum(lo[:, None, 0], lo[None, :, 0])
         oy = np.minimum(hi[:, None, 1], hi[None, :, 1]) - np.maximum(lo[:, None, 1], lo[None, :, 1])
         same = (sideF[:, None] == sideF[None, :]) & ~(fixed[:, None] & fixed[None, :]); np.fill_diagonal(same, False)
         ov = (np.clip(ox, 0, None) * np.clip(oy, 0, None) * same).sum() / 2
         off = (np.clip(box[0] + 0.5 - lo[:, 0], 0, None) + np.clip(lo[:, 0] * 0 + hi[:, 0] - box[2] + 0.5, 0, None) + np.clip(box[1] + 0.5 - lo[:, 1], 0, None) + np.clip(hi[:, 1] - box[3] + 0.5, 0, None))[~fixed].sum()
+        for kb, onF, onB in KO:              # courtyard area inside a no-footprint keep-out on the part's side
+            m = (~fixed) & ((sideF & onF) | (~sideF & onB))
+            ov += (np.clip(np.minimum(hi[m, 0], kb[2]) - np.maximum(lo[m, 0], kb[0]), 0, None) * np.clip(np.minimum(hi[m, 1], kb[3]) - np.maximum(lo[m, 1], kb[1]), 0, None)).sum()
         ic = intent_cost(xy, k)
-        return (hp, ov, off, ic) if detail else hp + 30 * ov + 60 * off + 25 * ic
+        return (hp, ov, off, ic) if detail else hp + WOV[0] * ov + 60 * off + 25 * ic
+    WOV = [30.0]
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
     cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
     for s in range(moves):
@@ -88,6 +98,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     # refine: single parts, small steps
     cur = cost(xy, k); mv = np.nonzero(~fixed)[0]; T0, T1 = 1.5, 0.02
     for s in range(refine):
+        if s == int(refine * 0.75): WOV[0] = 400.0; cur = cost(xy, k)        # legalise: overlaps now cost far more than wiring
         t = T0 * (T1 / T0) ** (s / refine); i = int(mv[rnd.randrange(len(mv))]); ox, ok = xy[i].copy(), k[i]
         if rnd.random() < 0.1: k[i] = rnd.randrange(4)
         else: rad = 0.2 + 2.0 * (t / T0); xy[i] += (rnd.uniform(-rad, rad), rnd.uniform(-rad, rad))
