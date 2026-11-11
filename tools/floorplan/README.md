@@ -98,6 +98,11 @@ capacitors that the circuit code declares as serving a FET pin but that sit 6 to
 `serves` does not yet say "bulk" or "at the pin", so the limit classes need the owner's judgement or a rule from
 capacitor value before the count can be a pass mark.
 
+Update 2: limits by capacitor value (up to 1 uF 2 mm, up to 10 uF 4 mm, larger 10 mm; first hot-loop capacitor
+1.5 mm), offered to the owner as the default with an override in the circuit code. On that rule: hand board 92
+of 112, scripted board 84, placer with statements 97 to 99 (it was run against the earlier limits). This is the
+first version of the check that ranks the hand board above the scripted one.
+
 ## Run it
 
 ```

@@ -1,7 +1,8 @@
 """intent.py: placement intent statements, their compiler, and the check of a placement against them.
   derive <build dir> <design dir> <out intent.json>
         writes every statement that follows by rule from what the circuit code declares (needs SYMBOL_DIRS):
-        near       a decoupling capacitor at the pin it serves; hot-loop capacitors at both switch pins
+        near       a decoupling capacitor at the pin it serves; hot-loop capacitors at both switch pins.
+                   Limits by value: up to 1 uF 2 mm, up to 10 uF 4 mm, larger 10 mm; first hot-loop capacitor 1.5 mm
         keepapart  pads of sensitive nets away from pads of switching nets
         kelvin     the sense pair of each shunt (kept for the router; not a placement check)
   validate <intent.json> <build dir>
@@ -22,6 +23,11 @@ The LLM never writes coordinates except for `fixed`, which comes from the mechan
 import json, sys, re, math
 from collections import defaultdict
 
+def farads(value):
+    """capacitance in uF from a value field like '22u 35V' or '100n'; None if it is not a capacitor value"""
+    m = re.match(r"\s*(\d+(?:\.\d+)?)\s*([pnuµm])F?\b", value)
+    return float(m.group(1)) * {"p": 1e-6, "n": 1e-3, "u": 1, "µ": 1, "m": 1e3}[m.group(2)] if m else None
+
 def derive(build, design, out):
     sys.path.insert(0, design); import symlib
     d = json.load(open(f"{build}/netlist.json")); c = json.load(open(f"{build}/constraints.json"))
@@ -32,11 +38,13 @@ def derive(build, design, out):
     it = dict(near=[], keepapart=[], order=[], kelvin=[], fixed={}, lanes=[])
     hot = {cap for h in c.get("hot_loops", {}).values() for cap in h["caps"]}
     for cap, t in sorted(c.get("serves", {}).items()):
-        if cap not in hot and pads(t): it["near"].append(dict(part=cap, to=pads(t), max_mm=2.0, why=f"serves {t}"))
+        if cap not in hot and pads(t):
+            uf = farads(d["comps"][cap]["value"]); lim = 2.0 if uf is None or uf <= 1 else 4.0 if uf <= 10 else 10.0
+            it["near"].append(dict(part=cap, to=pads(t), max_mm=lim, why=f"serves {t}" + ("" if lim == 2.0 else f" ({uf:g} uF, so a wider limit)")))
     for name, h in sorted(c.get("hot_loops", {}).items()):
         for i, cap in enumerate(h["caps"]):
             for sp in h["switch_pins"]:
-                it["near"].append(dict(part=cap, to=pads(sp), max_mm=1.5 if i == 0 else 4.0, why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
+                it["near"].append(dict(part=cap, to=pads(sp), max_mm=1.5 if i == 0 else (4.0 if (farads(d["comps"][cap]["value"]) or 0) <= 10 else 10.0), why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
     sw = sorted(n for n, v in c["nets"].items() if v.get("kind") == "switching"); se = sorted(n for n, v in c["nets"].items() if v.get("kind") == "sensitive")
     for a in sw:
         blk = a.split("/")[0] if "/" in a else ""
