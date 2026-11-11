@@ -16,7 +16,7 @@ Design: the 24 V adapter change from spike 5 as the new-pipeline Opus agent left
 the tested-tolerance rule. The reviewer was told the three problems the gate had flagged and asked for everything else.
 Files are in `example/`.
 
-Result: 7 findings, every quote verified on its page. 28 model calls, 22 k output tokens, 5.5 minutes.
+Result: 7 findings, every quote verified on its page. 18 model calls, 19.3 k output tokens, 3.5 minutes.
 
 | Finding | Severity | Gate could check it? |
 |---|---|---|
