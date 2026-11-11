@@ -52,15 +52,27 @@ expand. None were visible by reading the code.
 4. **Sheets re-flow on a change.** Adding one capacitor moved 14 other symbols per port on the sheet (not on
    the board). A reviewer comparing two versions by eye would see movement that means nothing. The review of a
    change should be the netlist difference, with the sheet as context.
-5. **The generated sheets are checkable, not yet readable as topology.** Every pin connection can be read off,
-   and decoupling is grouped by the pin it serves. The four-switch power stage is drawn as FET boxes with labels,
-   not as a bridge. Whether that is good enough to review from is Logan's call.
+5. **A general auto-drawer was not good enough; templates and lanes were.** Logan's verdicts in order: label-on-pin
+   cells "ok not great, too much floating off in space"; parts wired to a shelf under the IC "placements are super
+   odd" and "way too much down wire"; then accepted as good enough to review from (2026-11-10) once the drawer had:
+   - **templates** named by the block (`draw_as("buck", ...)`, `draw_as("bridge4", ...)`): input caps on VIN,
+     bootstrap cap, inductor in line, feedback divider, output caps; the four-switch stage as a left-to-right
+     power path with a mirrored output half bridge;
+   - **lanes**: every IC pin with passives fans out, without crossings, to its own horizontal lane; parts to
+     ground hang from it, one series part sits in line and ends in a net name, a divider stands across the
+     lanes it taps;
+   - **inline parts**: a single part on a pin is drawn on the pin's own row;
+   - every passive drawn with the IC it belongs to, whatever section the code put it in.
+   All of it costs no model tokens, and the netlist check stayed at 0 differences through every rework (it
+   caught one short the rework introduced).
+6. **Reference for quality: the Battery-Bank sheets.** They read well because each block was laid out once with
+   real coordinates and kept. A library block should carry its reviewed drawing; templates cover new blocks.
 
 ## Not done
 
 - "Update PCB" click test (finding 3).
 - Zener on Logan's PC as the runner-up kernel.
-- Topology templates for power stages in the drawer.
+- Differential caps drawn across a sense pair; connector and protection area still sparse.
 
 ## Run it
 
