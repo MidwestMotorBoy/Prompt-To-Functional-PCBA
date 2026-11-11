@@ -132,37 +132,45 @@ score**:
 - `stage`: in a declared hot loop the high-side pins must all be on the supply and the low-side pins all on
   the return (the old constraint check accepted either net for either pin, so a swapped drain and source passed).
 - `expect(..., at="U404.FB")`: the pin an expectation is for must touch one of the parts that set it.
-- Limits for the EEPROM, the dual FET and the small FET (42 quotes, all found on their page).
+- Limits for the EEPROM, the dual FET, the small FET and the 9 V regulator (47 quotes, all found on their page).
 - `nofacts`: `intent_check.py check` fails for a part with three or more pins and no limits file. On this
-  design it names the 9 V regulator (no datasheet) and the USB-C connector.
+  design it named the 9 V regulator (no datasheet at the time) and the USB-C connector.
 
 | class | first set (65): before | now | fresh set (60): before | now |
 |---|---|---|---|---|
-| historical | 2 of 5 | 3 | | |
-| miswire | 1 of 10 | 6 | 5 of 10 | 5 |
+| historical | 2 of 5 | 4 | | |
+| miswire | 1 of 10 | 7 | 5 of 10 | 7 |
 | open | 10 of 10 | 10 | 10 of 10 | 10 |
 | pin_swap | 3 of 10 | 10 | 6 of 10 | 8 |
 | rating | 0 of 10 | 8 | 0 of 10 | 7 |
 | remove | 5 of 10 | 7 | 7 of 10 | 8 |
-| value | 0 of 10 | 2 | 0 of 10 | 7 |
-| all | 21 of 65 | 46 | 28 of 60 | 45 |
+| value | 0 of 10 | 4 | 0 of 10 | 7 |
+| all | 21 of 65 | 50 | 28 of 60 | 47 |
 
 "Before" is one-pin nets, the old constraint check and KiCad ERC. Five of the rating misses across the two
-sets are not faults (6.3 V parts on nets of 5.5 V or less), so the fresh set is 45 of 57 real faults.
+sets are not faults (6.3 V parts on nets of 5.5 V or less), so the fresh set is 47 of 57 real faults.
+
+The "now" columns include the TPS7A4101 datasheet, which Logan added after the first run of this part
+(45 of 60 and 46 of 65 without it). It gave four limits, the reference voltage for a 9 V output expectation,
+and one lesson: **the historical enable bug is not a limit violation.** The enable pin is rated 60 V, so tying
+it to the pack breaks nothing electrically; it only removes the off switch. What catches it is the pull-up
+declaring the pin it serves (`R(..., serves="U406.EN")`), the same binding capacitors already use.
 
 What still passes, fresh set:
 
 1. **Signal pins moved between low-voltage nets** (EEPROM clock and data swapped, an address pin on a feedback
-   node). Needs pin function beyond ground and supply: a bus pin must meet its bus.
-2. **Everything on the 9 V regulator** (4 faults across both sets, and the historical enable bug). No datasheet,
-   no facts. `nofacts` now makes that a failure of the build instead of a silent pass.
-3. **Pull-up, series and filter resistor values** (3). Ten times the value is still a legal circuit.
-4. **One of six parallel bulk capacitors deleted** (2). An expectation on total capacitance would catch it.
+   node, an enable pin moved to another 5 V net). Needs pin function beyond ground and supply: a bus pin must
+   meet its bus, an enable must meet what drives it.
+2. **Pull-up, series and filter resistor values** (3). Ten times the value is still a legal circuit.
+3. **One of six parallel bulk capacitors deleted** (2). An expectation on total capacitance would catch it.
+
+Of the five historical bugs only the exposed-pad footprint is left, and that is a footprint check, not a
+netlist one.
 
 ## Next
 
 - Pin function per pin (bus, enable, feedback, gate) from two independent reads, and rules on it.
-- Datasheet for the 9 V regulator; a fact source for connectors (the USB Type-C pin assignment).
+- A fact source for connectors (the USB Type-C pin assignment).
 - Expectations for bulk capacitance and for the thermistor network.
 - Then a third fresh seed.
 
