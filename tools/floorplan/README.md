@@ -66,12 +66,38 @@ Read this with care:
   that checks them against the netlist; courtyards and keep-outs; crossing and hot-loop terms in the score;
   power-stage templates scored by the loop solver; then the trial route as the acceptance gate.
 
+## Intent statements, and a placer that obeys them (same day)
+
+`intent.py` holds the statements from the floorplanning research: `near`, `keepapart`, `order`, `kelvin`, `fixed`,
+`lanes`. `derive` writes the ones that follow by rule from the circuit code (for Monolith: 106 near from the
+served pins and hot loops, 6 keep-apart from switching and sensitive nets, 4 Kelvin pairs). `validate` rejects any
+statement that names a part, pad or net the netlist does not have. `check` measures them on a placed board.
+`place_sections.py` and `place_pack.py` take the file and use the statements as pulls and cost terms.
+
+| Placement | Statements that hold (of 112) | Signal half-perimeter | Overlap left |
+|---|---|---|---|
+| Hand board | 72 | 2064 mm | 0 |
+| Scripted board | 74 | 2508 mm | 0 |
+| Section placer, wirelength only (run 2) | 48 | 1714 mm | 0 |
+| Section placer with the statements, three runs | 103, 103, 101 | 1983, 2292, 1863 mm | 1 to 2 mm2 |
+
+- Wirelength alone made a placement that looked best and broke more than half the statements. With the
+  statements in the cost it keeps about 92 % of them at roughly the hand board's wiring demand.
+- The limits are first guesses (2 mm for the first hot-loop capacitor, 2.5 mm for a served pin, 5 mm for bulk,
+  centre to centre). The hand board fails 40 of them, mostly large capacitors that cannot physically sit 2.5 mm
+  from a pin, so the limits need to scale with part size before the count means much as a pass mark.
+- 1 to 2 mm2 of overlap remains after 300 000 refinement moves; a legalising pass is still needed.
+- Still wirelength plus statements only: pad boxes for bodies, no enclosure keep-outs, no crossing count, no loop
+  solver in the loop.
+
 ## Run it
 
 ```
 python3 floorplan.py extract <board dump.json> intent.json [<netlist.json>]
 python3 floorplan.py score intent.json <board dump.json> [<netlist.json>]
 python3 place_sa.py intent.json <board dump.json> <netlist.json> <constraints.json> out.json [moves] [seed]
-python3 place_sections.py <board dump.json> <netlist.json> <constraints.json> clusters.json
-python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves]
+python3 intent.py derive <build dir> <design dir> intent.json ; python3 intent.py validate intent.json <build dir>
+python3 intent.py check intent.json <board dump.json> [placement.json]
+python3 place_sections.py <board dump.json> <netlist.json> <constraints.json> clusters.json [J,H,TP,SW] [intent.json]
+python3 place_pack.py clusters.json <board dump.json> placement.json [cluster moves] [seed] [refine moves] [intent.json]
 ```

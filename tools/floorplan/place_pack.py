@@ -1,14 +1,15 @@
-"""place_pack.py <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves]
+"""place_pack.py <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json]
 Step 2 of the section placer: put the clusters from place_sections.py on the board.
 Each cluster moves and turns as one rigid piece (annealing over about 30 pieces); fixed parts stay where the
-dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board.
+dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board
++ with an intent file, how far each `near` statement is over its limit and each `keepapart` under it.
 Step 3 (refine): every part then moves on its own with small steps at low temperature to close the gaps.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
 import numpy as np
 import floorplan as F
 
-def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000):
+def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None):
     moves, seed, refine = int(moves), int(seed), int(refine); rnd = random.Random(seed)
     cl = json.load(open(clf)); d, pos0, side, blk, pads0 = F.load(dumpf); power = F.power_nets(pads0); box = d["box"]
     refs = sorted({p["ref"] for p in d["pads"]}); ri = {r: i for i, r in enumerate(refs)}; N = len(refs)
@@ -24,6 +25,26 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000):
         bbx[i] = (min(bbx[i][0], b[0] - x0), min(bbx[i][1], b[1] - y0), max(bbx[i][2], b[2] - x0), max(bbx[i][3], b[3] - y0))
         if p["net"] and p["net"] not in power and len(pads0[p["net"]]) >= 2:
             pr.append(i); pl.append((p["x"] - x0, p["y"] - y0)); pn.append(netid.setdefault(p["net"], len(netid)))
+    # intent statements as cost terms: near (excess distance) and keepapart (shortfall)
+    ap = [(ri[p["ref"]], p["x"] - pos0[p["ref"]][0], p["y"] - pos0[p["ref"]][1], p["num"], p["net"]) for p in d["pads"]]
+    apr = np.array([a[0] for a in ap]); apl = np.array([[a[1], a[2]] for a in ap]); nearS = []; apartS = []
+    if intentf:
+        it = json.load(open(intentf))
+        for st in it.get("near", []):
+            A = [j for j, a in enumerate(ap) if refs[a[0]] == st["part"]]
+            B = [j for j, a in enumerate(ap) for t in st["to"] if (f"{refs[a[0]]}.{a[3]}" == t or refs[a[0]] == t)]
+            if A and B: nearS.append((np.array(A), np.array(B), st["max_mm"]))
+        for st in it.get("keepapart", []):
+            A = [j for j, a in enumerate(ap) if a[4] in st["a_nets"]]; B = [j for j, a in enumerate(ap) if a[4] in st["b_nets"]]
+            if A and B: apartS.append((np.array(A), np.array(B), st["min_mm"]))
+    def intent_cost(xy, k):
+        if not nearS and not apartS: return 0.0
+        q = xy[apr] + rotv(apl, k[apr]); c = 0.0
+        for A, B, lim in nearS:
+            dd = np.sqrt(((q[A][:, None, :] - q[B][None, :, :]) ** 2).sum(-1)).min(); c += max(0.0, dd - lim)
+        for A, B, lim in apartS:
+            dd = np.sqrt(((q[A][:, None, :] - q[B][None, :, :]) ** 2).sum(-1)); dd[apr[A][:, None] == apr[B][None, :]] = 1e9; c += 3 * max(0.0, lim - dd.min())
+        return c
     pr = np.array(pr); pl = np.array(pl); pn = np.array(pn); order = np.argsort(pn, kind="stable"); pr, pl, pn = pr[order], pl[order], pn[order]
     starts = np.r_[0, np.nonzero(np.diff(pn))[0] + 1]
     sideF = np.array([side[r] == "F.Cu" for r in refs]); p0 = np.array([pos0[r] for r in refs])
@@ -47,7 +68,8 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000):
         same = (sideF[:, None] == sideF[None, :]) & ~(fixed[:, None] & fixed[None, :]); np.fill_diagonal(same, False)
         ov = (np.clip(ox, 0, None) * np.clip(oy, 0, None) * same).sum() / 2
         off = (np.clip(box[0] + 0.5 - lo[:, 0], 0, None) + np.clip(lo[:, 0] * 0 + hi[:, 0] - box[2] + 0.5, 0, None) + np.clip(box[1] + 0.5 - lo[:, 1], 0, None) + np.clip(hi[:, 1] - box[3] + 0.5, 0, None))[~fixed].sum()
-        return (hp, ov, off) if detail else hp + 30 * ov + 60 * off
+        ic = intent_cost(xy, k)
+        return (hp, ov, off, ic) if detail else hp + 30 * ov + 60 * off + 25 * ic
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
     cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
     for s in range(moves):
@@ -62,7 +84,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000):
             if 0.2 <= u < 0.3 and C > 1: T[[c, olde], :2] = T[[olde, c], :2]
             else: T[c] = old
     xy, k = parts_xy(T); a = cost(xy, k, True)
-    print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1))), flush=True)
+    print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))), flush=True)
     # refine: single parts, small steps
     cur = cost(xy, k); mv = np.nonzero(~fixed)[0]; T0, T1 = 1.5, 0.02
     for s in range(refine):
@@ -73,7 +95,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000):
         if new < cur or rnd.random() < math.exp(-(new - cur) / t): cur = new
         else: xy[i] = ox; k[i] = ok
     a = cost(xy, k, True)
-    print(json.dumps(dict(step="refined", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1))))
+    print(json.dumps(dict(step="refined", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1))))
     json.dump({r: [round(float(xy[i][0]), 3), round(float(xy[i][1]), 3), int(k[i]) * 90] for r, i in ri.items()}, open(outf, "w"))
 
 if __name__ == "__main__":

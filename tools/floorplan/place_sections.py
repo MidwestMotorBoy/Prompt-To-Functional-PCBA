@@ -1,4 +1,4 @@
-"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes, default J,H,TP,SW]
+"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes, default J,H,TP,SW] [intent.json]
 Step 1 of the section placer: build each (section, side) group as a tight cluster on its own, in local
 coordinates, with no knowledge of where the parts sit on the dump board (the dump supplies pad geometry only).
 Order: the part with the most pads first, then always the unplaced part most connected to what is placed.
@@ -6,6 +6,7 @@ Each part goes to the spot and rotation (0.25 mm search grid, four rotations) wi
 already placed, with a strong pull from a decoupling capacitor to the pin it serves, and no body overlap.
 Prints, per group and in total, the wiring inside the group and the box area, next to the same numbers taken
 from the dump board, so a hand placement and this placer can be compared group by group.
+With an intent file (intent.py), its `near` statements are the pulls, in place of the plain serves list.
 Fixed parts (connectors, holes, test points) are left out: they stay where the board has them."""
 import json, sys, math
 from collections import defaultdict
@@ -18,7 +19,7 @@ def rot(v, k):
     for _ in range(k): x, y = -y, x
     return x, y
 
-def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW"):
+def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
     pre = tuple(fixed_prefixes.split(","))
     comps = json.load(open(netf))["comps"]; cons = json.load(open(consf))
     F.SECTIONS = {r: f"{v['block']} / {v.get('section') or 'main'}" for r, v in comps.items()}
@@ -34,6 +35,13 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW"):
     serves = {}
     for c, t in cons.get("serves", {}).items():
         tr, tp = t.split(".", 1); serves[c] = (tr, tp)
+    near = defaultdict(list)             # part -> [(target part, pad number or None, weight)]
+    if intentf:
+        for st in json.load(open(intentf)).get("near", []):
+            for t in st["to"]:
+                tr, _, tp = t.partition("."); near[st["part"]].append((tr, tp or None, 8.0 if st["max_mm"] <= 2.0 else 4.0))
+    else:
+        for c, (tr, tp) in serves.items(): near[c].append((tr, tp, 4.0))
     groups = defaultdict(list)
     for r in pos0:
         if r in bb and r.rstrip("0123456789").upper() not in pre: groups[(blk[r], side[r])].append(r)
@@ -68,8 +76,9 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW"):
             for a in rr:
                 for b in rr:
                     if a != b: conn[a][b] += 1
-        for c, (tr, _) in serves.items():
-            if c in rs and tr in rs: conn[c][tr] += 5; conn[tr][c] += 5
+        for c, ts in near.items():
+            for tr, _, _ in ts:
+                if c in rs and tr in rs: conn[c][tr] += 5; conn[tr][c] += 5
         order = [max(rs, key=lambda r: (len(lp[r]), r))]; left = set(rs) - set(order)
         while left:
             nxt = max(left, key=lambda r: (sum(conn[r][q] for q in order), len(lp[r]), r)); order.append(nxt); left.remove(nxt)
@@ -85,8 +94,8 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW"):
                 if n in nets:
                     for q, j in nets[n]:
                         if q in P and q != r: dx, dy = rot(lp[q][j][:2], P[q][2]); tg.append((i, P[q][0] + dx, P[q][1] + dy, 1.0))
-            if r in serves and serves[r][0] in P:
-                sx, sy = pinxy(*serves[r]); tg.append((None, sx, sy, 4.0))
+            for tr, tp, w in near.get(r, []):
+                if tr in P: sx, sy = pinxy(tr, tp); tg.append((None, sx, sy, w))
             placed = [(P[q][0] + body(q, P[q][2])[0] - GAP, P[q][1] + body(q, P[q][2])[1] - GAP, P[q][0] + body(q, P[q][2])[2] + GAP, P[q][1] + body(q, P[q][2])[3] + GAP) for q in P]
             X0 = min(b[0] for b in placed) - 6; X1 = max(b[2] for b in placed) + 6; Y0 = min(b[1] for b in placed) - 6; Y1 = max(b[3] for b in placed) + 6
             cx = sum(b[0] + b[2] for b in placed) / 2 / len(placed); cy = sum(b[1] + b[3] for b in placed) / 2 / len(placed)
