@@ -1,0 +1,139 @@
+[
+ {
+  "seed": 1,
+  "half_perimeter_mm": 2768,
+  "crossings": 522,
+  "statements": "93 of 112",
+  "problems": [
+   "overlap TP412 / U504: 0.82 x 0.36 mm"
+  ]
+ },
+ {
+  "seed": 2,
+  "half_perimeter_mm": 2627,
+  "crossings": 541,
+  "statements": "67 of 112",
+  "problems": []
+ },
+ {
+  "seed": 3,
+  "half_perimeter_mm": 2645,
+  "crossings": 475,
+  "statements": "81 of 112",
+  "problems": []
+ },
+ {
+  "seed": 4,
+  "half_perimeter_mm": 2436,
+  "crossings": 381,
+  "statements": "91 of 112",
+  "problems": [
+   "overlap C509 / R527: 0.27 x 0.02 mm",
+   "overlap C511 / L502: 0.03 x 0.91 mm"
+  ]
+ },
+ {
+  "seed": 5,
+  "half_perimeter_mm": 3295,
+  "crossings": 699,
+  "statements": "87 of 112",
+  "problems": [
+   "overlap C531 / U504: 0.44 x 0.72 mm"
+  ]
+ },
+ {
+  "seed": 6,
+  "half_perimeter_mm": 3083,
+  "crossings": 548,
+  "statements": "94 of 112",
+  "problems": [
+   "overlap C543 / D401: 1.20 x 0.06 mm",
+   "overlap Q101 / Q102: 2.57 x 0.54 mm",
+   "off board: Q101"
+  ]
+ },
+ {
+  "seed": 7,
+  "half_perimeter_mm": 2351,
+  "crossings": 482,
+  "statements": "93 of 112",
+  "problems": []
+ },
+ {
+  "seed": 8,
+  "half_perimeter_mm": 2546,
+  "crossings": 506,
+  "statements": "82 of 112",
+  "problems": [
+   "overlap C301 / C415: 0.28 x 0.20 mm",
+   "overlap C414 / C415: 0.28 x 0.08 mm",
+   "overlap C452 / C457: 0.52 x 0.32 mm",
+   "overlap C539 / TP106: 1.27 x 0.12 mm",
+   "overlap C542 / U504: 0.94 x 2.12 mm"
+  ]
+ },
+ {
+  "seed": 9,
+  "half_perimeter_mm": 2440,
+  "crossings": 415,
+  "statements": "95 of 112",
+  "problems": []
+ },
+ {
+  "seed": 10,
+  "half_perimeter_mm": 2838,
+  "crossings": 576,
+  "statements": "76 of 112",
+  "problems": [
+   "overlap C304 / C410: 0.18 x 0.79 mm",
+   "overlap C410 / R413: 0.20 x 0.56 mm",
+   "overlap C410 / TH401: 0.19 x 0.44 mm",
+   "overlap TP109 / U301: 2.09 x 2.09 mm"
+  ]
+ },
+ {
+  "seed": 11,
+  "half_perimeter_mm": 2565,
+  "crossings": 444,
+  "statements": "88 of 112",
+  "problems": [
+   "overlap C558 / L402: 2.19 x 0.09 mm",
+   "overlap C558 / U404: 0.77 x 0.20 mm"
+  ]
+ },
+ {
+  "seed": 12,
+  "half_perimeter_mm": 2503,
+  "crossings": 456,
+  "statements": "89 of 112",
+  "problems": []
+ },
+ {
+  "seed": 13,
+  "half_perimeter_mm": 2810,
+  "crossings": 550,
+  "statements": "91 of 112",
+  "problems": [
+   "overlap C431 / R404: 0.28 x 1.20 mm"
+  ]
+ },
+ {
+  "seed": 14,
+  "half_perimeter_mm": 2838,
+  "crossings": 523,
+  "statements": "80 of 112",
+  "problems": [
+   "overlap D404 / L401: 0.21 x 1.26 mm"
+  ]
+ },
+ {
+  "seed": 15,
+  "half_perimeter_mm": 2842,
+  "crossings": 604,
+  "statements": "81 of 112",
+  "problems": [
+   "overlap C443 / R525: 0.08 x 0.52 mm",
+   "overlap F102 / U102: 0.10 x 0.97 mm"
+  ]
+ }
+]

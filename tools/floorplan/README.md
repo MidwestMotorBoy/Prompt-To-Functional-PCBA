@@ -154,6 +154,55 @@ box measure; those are ignored for every row.)
 - Not yet in the score: crossings, hot-loop inductance, lanes. Not yet done: applying a placement to a board file
   and the trial route, which is the real acceptance gate.
 
+## First trial routes: what the scores missed (2026-11-11 and 12)
+
+`apply_placement.py` writes a placement into a KiCad board and strips all copper; `open_connections.py` writes the
+router's work list; the Battery-Bank A* router then routes every signal net on the bare board (seven power nets
+skipped, 380 connections). Same router and rules for every placement.
+
+| Placement | Statements (of 112) | Half-perimeter | Crossings | Routed (of 380) | Failed with no path even on an empty board |
+|---|---|---|---|---|---|
+| Scripted board | 84 | 2508 mm | 612 | 373 | 7 of 7 |
+| Hand board | 92 | 2064 mm | 391 | 361 | 19 of 19 |
+| Placer, courtyards only (run 6/4) | 104 | 2498 mm | 795 | 335 | 40 of 45 |
+| Placer + crossing cost (run 7/4, one capacitor off the board) | 103 | 2340 mm | 402 | 327 | 51 of 53 |
+| Placer + crossing cost + escape room (run 9/1) | 89 | 2841 mm | 653 | 360 | 18 of 20 |
+| Compiled placer, seed 7 | 93 | 2351 mm | 482 | 365 | 13 of 15 |
+| Compiled placer, seed 12 | 89 | 2503 mm | 456 | 357 | 20 of 23 |
+| Compiled placer, seed 9 | 95 | 2440 mm | 415 | 357 | 21 of 23 |
+
+What this says:
+
+- **Neither wire length, nor intent statements, nor crossings predicted the route.** The first placer run beat both
+  boards on statements and matched the scripted board on length, and routed far worse. Halving its crossings
+  (`crossings.py`: spanning tree per net, count edge pairs of different nets that cross) changed nothing.
+- **The cause was escape room.** Nearly every failure was a connection with no path even with every other route
+  removed, at the fine-pitch ICs: the placer had 9 to 18 parts within 0.3 mm of each, the scripted board 2 to 5.
+  `place_pack.py` now gives every part with 12 or more pads 0.5 mm of extra body. That took the placer from 327-335
+  to 357-365 over four buildable placements, level with the hand board.
+- **The scripted board has a home advantage**: it was tuned against this router. And a bare board has no power copper,
+  so this measures signal routability only.
+- The trial route is therefore the gate, as the research report said; the cheap scores are for steering the anneal.
+
+Faults the real KiCad checks found in these tools, all fixed:
+
+- Thermal pads on the back of an IC, and through-hole pads, sat under parts on the other side (shorts in DRC, while
+  the courtyard check said legal). Pads that reach the far side now block parts there, in the placer and `overlaps.py`.
+- `kicad-cli pcb drc` lists at most 499 unconnected items. A bare Monolith has 710, so the first routes covered 182 of
+  380 signal connections without saying so. `open_connections.py` writes the full list.
+- `pcbnew`'s `Save` rewrites the project file with default rules; removing tracks through `pcbnew` crashes. The tool
+  now strips by text and puts the project file back.
+- A loose `grep` filter over `overlaps.py` output hid a radio module sitting on two connectors. `run_seeds.py` now
+  compares against the reference placement's own lines exactly.
+
+Still open: the placer uses the board's bounding box, so 3 to 8 pads end up inside the edge clearance of the real
+outline; about a third of seeds are buildable (15 seeds: 5; the rest are mostly slivers or one large part boxed in);
+the placer's wiring is 15 to 40 % longer than the hand board's.
+
+Speed: `fastcore.py` compiles the cluster and refine stages with numba. One full Monolith run (2 million cluster
+moves, 2.5 million part moves, repair) takes 3 min 20 s on one core; the numpy path took 20 to 40 min for a
+twentieth of the cluster moves. Without numba the numpy path is used.
+
 ## Run it
 
 ```
