@@ -27,6 +27,24 @@ for t in b.GetTracks():
         out["tracks"].append(dict(net=t.GetNetname(), l=lname[t.GetLayer()], w=mm(t.GetWidth()), x1=mm(s.x), y1=mm(s.y), x2=mm(e.x), y2=mm(e.y)))
 STEP = 0.5; nx, ny = int((x1 - x0) / STEP) + 1, int((y1 - y0) / STEP) + 1; out["raster"] = dict(step=STEP, nx=nx, ny=ny)
 out["keepouts"] = []
+# the part of the bounding box that is outside the real outline, as rectangles: placers treat them as keep-outs
+edge = pcbnew.SHAPE_POLY_SET(); R = 0.25
+if b.GetBoardPolygonOutlines(edge, True):
+    rows = []
+    for j in range(int((y1 - y0) / R) + 1):
+        yy = y0 + (j + 0.5) * R; run = []; start = None
+        for i in range(int((x1 - x0) / R) + 2):
+            xx = x0 + (i + 0.5) * R; outside = xx < x1 and not edge.Contains(pcbnew.VECTOR2I(pcbnew.FromMM(xx), pcbnew.FromMM(yy)))
+            if outside and start is None: start = i
+            if not outside and start is not None: run.append((start, i)); start = None
+        rows.append(run)
+    open_ = {}
+    for j, run in enumerate(rows + [[]]):
+        for r in list(open_):
+            if r not in run:
+                j0 = open_.pop(r); w = (r[1] - r[0]) * R; h = (j - j0) * R
+                if w > 0.3 and h > 0.3: out["keepouts"].append(dict(name="outside_board", box=[round(x0 + r[0] * R, 3), round(y0 + j0 * R, 3), round(x0 + r[1] * R, 3), round(y0 + j * R, 3)], layers=["F.Cu", "B.Cu"], no_footprints=True, no_tracks=True, no_vias=True, no_pours=True))
+        for r in run: open_.setdefault(r, j)
 for z in b.Zones():
     if z.GetIsRuleArea():
         r = z.GetBoundingBox()
@@ -47,4 +65,4 @@ for z in b.Zones():
                 x = x0 + i * STEP
                 if mm(pb.GetLeft()) <= x <= mm(pb.GetRight()) and poly.Contains(pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y))): g.append(j * nx + i)
 json.dump(out, open(sys.argv[2], "w"))
-print(sys.argv[1], len(out["fps"]), "footprints", len(out["tracks"]), "tracks", len(out["vias"]), "vias", {k: len(v) for k, v in out["zones"].items()})
+print(sys.argv[1], len(out["fps"]), "footprints", len(out["tracks"]), "tracks", len(out["vias"]), "vias", len(out["zones"]), "zone fills", len(out["keepouts"]), "keep-outs")

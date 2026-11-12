@@ -71,7 +71,8 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     # so it costs ten times an ordinary overlap from the first move
     bigfix = (((bbx[:, 2] - bbx[:, 0]) * (bbx[:, 3] - bbx[:, 1]) > 9.0) & ~fixed)[:, None] & fixed[None, :]; bigfix = bigfix | bigfix.T
     thru = tbx[:, 0] < 1e8; tbx[~thru] = 0.0; TM = 0.15
-    KO = [(np.array(k["box"]), "F.Cu" in k["layers"], "B.Cu" in k["layers"]) for k in d.get("keepouts", []) if k.get("no_footprints")]
+    # keep-outs; areas outside the real board outline (dump_board.py writes them) get the same 0.5 mm margin as the board box
+    KO = [(np.array(k["box"]) + (np.array([-0.5, -0.5, 0.5, 0.5]) if k.get("name") == "outside_board" else 0), "F.Cu" in k["layers"], "B.Cu" in k["layers"]) for k in d.get("keepouts", []) if k.get("no_footprints")]
     pr = np.array(pr); pl = np.array(pl); pn = np.array(pn); order = np.argsort(pn, kind="stable"); pr, pl, pn = pr[order], pl[order], pn[order]
     starts = np.r_[0, np.nonzero(np.diff(pn))[0] + 1]
     sideF = np.array([side[r] == "F.Cu" for r in refs]); p0 = np.array([pos0[r] for r in refs])
