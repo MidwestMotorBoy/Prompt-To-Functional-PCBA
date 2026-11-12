@@ -133,6 +133,11 @@ def expect(name, expr, target, tol, unit="", at=None, **bind):
 def hot_loop(name, supply, ret, switch_pins, caps):
     CONSTRAINTS["hot_loops"][name] = dict(supply=supply.name, ret=ret.name, switch_pins=switch_pins, caps=caps)
 
+def heat(ref, watts, why):
+    """Worst-case heat a part puts into the board, in watts, with where the number comes from. The power copper stage
+    spreads it over the part's pads and scores how the copper carries it away; parts with none declared count as 0."""
+    CONSTRAINTS.setdefault("heat", {})[ref] = dict(w=watts, why=why)
+
 def kelvin(name, resistor, pos, neg):
     CONSTRAINTS["kelvin"][name] = dict(resistor=resistor, pos=pos.name, neg=neg.name)
 
