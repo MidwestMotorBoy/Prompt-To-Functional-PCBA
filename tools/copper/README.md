@@ -109,6 +109,30 @@ Per net, worst drop in mV / loss in W:
 - Tracks are not on the planning raster, so vias are checked against them exactly.
 - The DC solver and the loop solver both report a pin whose copper is an island; read their opens, not only DRC.
 
+## Logan's review and the anchored workflow (2026-11-12, later)
+
+Logan rejected the seed 9 copper on sight. The power paths sprawled: the Port 2 PD switch U501 sat 69 mm from its
+USB-C connector, switch nodes ran 20 mm strips on the bottom, and 5 A paths were thin tracks. The scores above
+missed all of it. So:
+
+- The copper now refuses to snake. A path longer than 1.5 x straight + 3 mm is not drawn and is reported as a
+  placement failure. Bottom-layer detours are capped at 10 mm (switch nodes may detour, as the hand board does
+  from the half-bridge's enclosed SW pad). Nets under 1 A get no outer tree, only a router track.
+  `report.outer_layer_use` gives the share of each outer layer the power copper takes.
+- `tools/floorplan/power_chains.py` adds placer statements that keep each power path's current-carrying parts
+  together (18 on Monolith; the hand board meets 14, seeds 9 and 11 failed 9 to 12).
+- Logan's workflow: he places the parts that set the power flow, and the placer and generator do the rest.
+  `tools/floorplan/anchors.py --power` lists them: the cell path, PD switches, power FETs, inductors, shunts and
+  bucks (21 on Monolith), plus each hot loop's first capacitor. That last one matters: with only the FET anchored,
+  the placer drifted C430 9 to 12 mm from Q401 and 3 of 6 loops read open. `anchors.py <dump>` reads which parts
+  a person placed inside the outline; pass them to `place_sections.py` as fixed refs.
+- Trial on the hand board, with its 28 parts anchored and the placer filling in the rest: all paths of 5 A or more
+  joined; 6 of 6 solved loops pass tier 1, at 6.4 nH (one loop ran out of memory in the solver); 1.39 W loss.
+  Left to the router: U501's 1.5 A PP5V pin, 3V3 (0.5 A), J302 ground. The placer pushed U301 off the board in
+  that seed.
+- Tried and parked: no-footprint corridors between anchored parts. Signal wiring got 18 to 55 % longer and the
+  copper got no better.
+
 ## Not done yet
 
 - Trial route with the power copper in place (Battery-Bank router, `--softnets=GND,PACK_P,3V3`), to check that

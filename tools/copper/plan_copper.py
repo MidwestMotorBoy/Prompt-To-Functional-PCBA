@@ -64,6 +64,9 @@ HOLE_GAP = 0.25      # drill edge to drill edge (KiCad's default hole-to-hole)
 PAD_HOLE_GAP = 0.45  # to a plated pad hole of 0.5 mm or more (Monolith's 'Pad hole spacing' rule)
 RAST_MM = 0.1        # margin for the planning raster on via and track clearances
 WIDE_COST = 3.0      # extra path cost, per cell, for running narrower than the target width
+ROUTER_A = 1.0       # a power net under this current gets no outer-layer copper tree unless it is a bus: a router track
+                     # carries it, and a tree would take a strip of the outer layer the length of the net (3V3, 0.5 A,
+                     # ran 60 mm along Monolith's edge)
 DETOUR_MAX_MM = 10.0 # a detour on the other outer layer longer than this is not drawn (it would take the layer). The
                      # hand board takes Port 2's switch node from the half-bridge's enclosed SW pad to the inductor this
                      # way, about 7 mm on B.Cu and In2; seed 9's 20 mm switch-node strips were what Logan rejected
@@ -448,6 +451,8 @@ class Planner:
     def net_step(self, net):
         T = self.d.terminals(net); I = self.d.current(net)
         if not T: return
+        if I < ROUTER_A and net not in self.bus_nets:
+            self.report.setdefault("nets", {})[net] = dict(current_a=I, terminals=len(T), span_mm=0, joined=[], left_to_router=[f"all ({I} A, under {ROUTER_A} A)"], vias=0); return
         pts = [Point(p["x"], p["y"]) for g in T for p in g["pads"]]; span = math.hypot(*(np.ptp([[q.x, q.y] for q in pts], axis=0))) if len(pts) > 1 else 0
         rep = dict(current_a=I, terminals=len(T), span_mm=round(span, 1), joined=[], left_to_router=[], vias=0)
         layer_I = {L: 0.0 for L in self.outer}
