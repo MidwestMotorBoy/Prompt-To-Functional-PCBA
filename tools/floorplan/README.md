@@ -324,6 +324,23 @@ no longer separates seeds; it guards against a broken stage. Open: the antenna c
 the circuit code with its datasheet source, not inherited from a board, and the placer does not yet keep other
 parts off it.
 
+**Heat: no tier-1 limit at placement on this board (my call, numbers below).** The hard limit is junction
+temperature under the part's maximum. On Monolith the firmware cuts power on the board sensor (ramp 55 to 70 °C,
+Battery-Bank `docs/spec.md`), so the worst case is bounded by the product, not by where a part sits:
+
+| Part | Worst loss, W | Junction over case, K | Junction limit, °C | Case may run over the board sensor by, K |
+|---|---|---|---|---|
+| SiZ240DT port leg (100 W out, 12 V pack: conduction 1.33, switching and dead time 1.11) | 2.44 | 9.3 (3.8 K/W max) | 150 | 70 |
+| SiZ240DT battery leg (high side on all the time, 10.1 A) | 1.33 | 5.1 | 150 | 75 |
+
+Losses are from Battery-Bank's `heat_sources.py` (13 mΩ warm channel, 600 kHz, 10 ns edges, 45 ns dead time;
+estimates, not measured). Its 3-D pack model has the hottest board part at 62 °C in the worst case run. A
+placement cannot use up 70 K between the sensor and a FET case unless the FET's pads get no copper, and the
+loop gate already requires that copper. So heat is scored with losses in tier 3, on the power copper, and two
+things are carried forward as requirements for that stage: the board sensor must sit where it does not read
+under the hottest stage, and the losses must be declared in the circuit code (they are not there today; the
+numbers above come from the Battery-Bank model).
+
 Kept in `example/monolith`: `seeds9-12_tournament.json`, the build's `constraints.json` and `netlist.json`, the new `clusters.json` and
 `intent.json`, `placements/seed3_stages_routed365.json` with its loop result, the hand placement's loop result,
 and the seed summary.
