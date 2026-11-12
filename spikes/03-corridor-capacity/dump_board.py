@@ -48,6 +48,15 @@ if b.GetBoardPolygonOutlines(edge, True):
 for z in b.Zones():
     if z.GetIsRuleArea():
         r = z.GetBoundingBox()
+        # a no-pour area on every copper layer inside one part's body is that part's clearance (an antenna): it is
+        # written as a pad of the part with no net that reaches both sides, so placers keep the far side clear too
+        nop = bool(z.GetDoNotAllowZoneFills() if hasattr(z, "GetDoNotAllowZoneFills") else z.GetDoNotAllowCopperPour())
+        if nop and not z.GetDoNotAllowFootprints() and all(z.IsOnLayer(l) for l in layers):
+            own = [(fp.GetBoundingBox(False).GetArea(), fp) for fp in b.GetFootprints() if fp.GetBoundingBox(False).Contains(r.Centre())]
+            if own:
+                fp = min(own, key=lambda t: t[0])[1]
+                out["pads"].append(dict(ref=fp.GetReference(), num="", net="", x=mm(r.Centre().x), y=mm(r.Centre().y), box=[mm(r.GetLeft()), mm(r.GetTop()), mm(r.GetRight()), mm(r.GetBottom())], layers=["*.Cu"], clearance=True))
+                continue
         out["keepouts"].append(dict(name=z.GetZoneName(), box=[mm(r.GetLeft()), mm(r.GetTop()), mm(r.GetRight()), mm(r.GetBottom())],
                                     layers=[lname[l] for l in layers if z.IsOnLayer(l)], no_footprints=bool(z.GetDoNotAllowFootprints()),
                                     no_tracks=bool(z.GetDoNotAllowTracks()), no_vias=bool(z.GetDoNotAllowVias()), no_pours=bool(z.GetDoNotAllowZoneFills() if hasattr(z, "GetDoNotAllowZoneFills") else z.GetDoNotAllowCopperPour())))

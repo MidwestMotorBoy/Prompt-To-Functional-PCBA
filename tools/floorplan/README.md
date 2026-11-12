@@ -320,9 +320,13 @@ every copper layer with the part whose body contains it, and `--strip` removes p
 Over seeds 1 to 12: 10 of 12 buildable, and every buildable seed passes 7 of 7 once the keep-out moves (seed 5
 was the same fault). Tier-2 sums are 5.14 to 5.26 nH, a spread the solver does not resolve, so the ranking treats
 sums within 5 % of the best as equal and lets crossings decide (my call). With stages kept whole the loop score
-no longer separates seeds; it guards against a broken stage. Open: the antenna clearance should be declared in
-the circuit code with its datasheet source, not inherited from a board, and the placer does not yet keep other
-parts off it.
+no longer separates seeds; it guards against a broken stage. The placer now knows the clearance too: `dump_board.py`
+writes it as a pad of the module with no net that reaches both sides, so no part may sit under it on the far
+side (the module's own courtyard covers the near side). Three of the twelve earlier seeds had a part there
+(2, 3 and 12; seed 3 is the one trial-routed to 365, with C456 under the antenna). Placed again with the
+clearance, seeds 3 and 12 are buildable and clear, seed 2 is not buildable. The tables above are from before
+this change. Open: the clearance should be declared in the circuit code with its datasheet source, not
+inherited from a board.
 
 **Heat: no tier-1 limit at placement on this board (my call, numbers below).** The hard limit is junction
 temperature under the part's maximum. On Monolith the firmware cuts power on the board sensor (ramp 55 to 70 °C,
