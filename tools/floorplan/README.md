@@ -292,9 +292,8 @@ checking where they land.
 | Placer with stages | 6 of 8 | 7 of 7 on five seeds, 6 of 7 on one | 1.07 to 1.11 / 0.69 to 0.85 / 0.66 to 0.70 / 0.62 to 0.66 | 365 (seed 3) |
 
 Loop totals include 0.2 nH for the switch package and the capacitors' own inductance. The stage shapes are the
-same in every seed (that is the point of keeping them whole), so the loops barely move from seed to seed; what a
-seed can still spoil is a neighbour's pad inside a stage's copper (seed 5: the 3.3 V buck's capacitor lost its
-path, and the gate caught it). Signal wiring got longer (half-perimeter 2900 to 3840 mm against 2520 to 3150
+same in every seed (that is the point of keeping them whole), so the loops barely move from seed to seed; the one
+failure (seed 5, the 3.3 V buck's capacitor with no path) was not the placement: see the tournament below. Signal wiring got longer (half-perimeter 2900 to 3840 mm against 2520 to 3150
 before) and the trial route did not get worse.
 
 Limits of this result: the rule copper is not the final copper (on the hand placement the first capacitor of the
@@ -303,7 +302,29 @@ under and one 5 V buck 70 % over); nothing is checked against a measurement; the
 bulk capacitor of one 5 V buck is reached only through vias (1.7 nH on its own); two seeds in eight are still
 not buildable; gate drive, coupling, losses and heat are not scored yet.
 
-Kept in `example/monolith`: the build's `constraints.json` and `netlist.json`, the new `clusters.json` and
+**Tournament in one command, and a keep-out that stayed behind.** `tournament.py` runs the seeds, the rule
+copper, the loop solve, the gate and the ranking. Its first run (seeds 9 to 12, all four buildable) failed the
+3.3 V buck on two seeds whose stage had the same shape as on the passing seeds. Cause: the hand board has a
+no-pour area on all layers under the Bluetooth module's antenna, and it stayed at its old coordinates while the
+module moved; a stage placed there got no copper. `apply_placement.py` now moves a keep-out that forbids pours on
+every copper layer with the part whose body contains it, and `--strip` removes pour voids drawn on single layers
+(they belong to the copper that is stripped). Rerun:
+
+| Rank | Seed | Hot loops passing tier 1 | Tier-2 sum, nH | Crossings | Signal half-perimeter, mm |
+|---|---|---|---|---|---|
+| 1 | 9 | 7 of 7 | 5.26 | 537 | 2688 |
+| 2 | 11 | 7 of 7 | 5.14 | 774 | 2934 |
+| 3 | 12 | 7 of 7 | 5.15 | 929 | 3390 |
+| 4 | 10 | 7 of 7 | 5.17 | 996 | 3459 |
+
+Over seeds 1 to 12: 10 of 12 buildable, and every buildable seed passes 7 of 7 once the keep-out moves (seed 5
+was the same fault). Tier-2 sums are 5.14 to 5.26 nH, a spread the solver does not resolve, so the ranking treats
+sums within 5 % of the best as equal and lets crossings decide (my call). With stages kept whole the loop score
+no longer separates seeds; it guards against a broken stage. Open: the antenna clearance should be declared in
+the circuit code with its datasheet source, not inherited from a board, and the placer does not yet keep other
+parts off it.
+
+Kept in `example/monolith`: `seeds9-12_tournament.json`, the build's `constraints.json` and `netlist.json`, the new `clusters.json` and
 `intent.json`, `placements/seed3_stages_routed365.json` with its loop result, the hand placement's loop result,
 and the seed summary.
 
@@ -326,4 +347,5 @@ python3 stage_copper.py <placed bare board.kicad_pcb> <constraints.json> <out.ki
 PCB=<board with copper> python3 hot_score.py <constraints.json> [out.json] [loop name ...]
 python3 power_gate.py <constraints.json> <netlist.json> <limits dir> <limitsmap.json> <hot_score out.json> [reference.json]
 python3 stage_bench.py clusters.json <board dump.json> <constraints.json> placement.json
+KICAD_PYTHON="<command that runs KiCad's python in the work dir>" python3 tournament.py <build dir> <limits dir> <limitsmap.json> clusters.json <board dump.json> intent.json <board.kicad_pcb> <work dir> <first seed> <count>
 ```

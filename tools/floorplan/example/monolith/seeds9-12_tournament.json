@@ -1,0 +1,52 @@
+[
+ {
+  "seed": 9,
+  "half_perimeter_mm": 2688,
+  "crossings": 537,
+  "statements": "89 of 119",
+  "problems": [],
+  "tier1_pass": 7,
+  "tier1_of": 7,
+  "tier1_fail": [],
+  "tier2_sum_nH": 5.26,
+  "notes": [
+   "USB Port 1/HL_5V: pass (bulk not reached by the rule copper: C444)"
+  ]
+ },
+ {
+  "seed": 11,
+  "half_perimeter_mm": 2934,
+  "crossings": 774,
+  "statements": "79 of 119",
+  "problems": [],
+  "tier1_pass": 7,
+  "tier1_of": 7,
+  "tier1_fail": [],
+  "tier2_sum_nH": 5.14,
+  "notes": []
+ },
+ {
+  "seed": 12,
+  "half_perimeter_mm": 3390,
+  "crossings": 929,
+  "statements": "83 of 119",
+  "problems": [],
+  "tier1_pass": 7,
+  "tier1_of": 7,
+  "tier1_fail": [],
+  "tier2_sum_nH": 5.15,
+  "notes": []
+ },
+ {
+  "seed": 10,
+  "half_perimeter_mm": 3459,
+  "crossings": 996,
+  "statements": "68 of 119",
+  "problems": [],
+  "tier1_pass": 7,
+  "tier1_of": 7,
+  "tier1_fail": [],
+  "tier2_sum_nH": 5.17,
+  "notes": []
+ }
+]

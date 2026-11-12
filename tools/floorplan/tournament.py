@@ -3,7 +3,8 @@ Placement tournament, power first:
   1. run_seeds.py places every seed and keeps the buildable ones (no overlap, on the board, off the keep-outs);
   2. each buildable seed gets the rule-made power copper (stage_copper.py) and its hot loops are solved
      (hot_score.py) and gated (power_gate.py): tier 1 pass or fail, tier 2 the sum of loop inductances;
-  3. seeds are ranked: tier 1 pass first, then lowest tier-2 sum, then fewest signal crossings.
+  3. seeds are ranked: tier 1 pass first, then lowest tier-2 sum, then fewest signal crossings. Sums within
+     5 % of the best passing seed count as equal (the loop solver does not resolve less), so crossings decide there.
 <build dir> holds the circuit build's constraints.json and netlist.json; <board.kicad_pcb> is any board with the
 design's footprints (its copper is stripped). Results: <work dir>/tournament.json and a table.
 
@@ -43,11 +44,13 @@ while todo or run:      # loop solves side by side; each uses a core or two and 
         r["tier1_pass"] = sum(1 for q in gate if q["tier1"].startswith("pass")); r["tier1_of"] = len(gate); r["tier1_fail"] = [f"{q['loop']}: {q['tier1']}" for q in gate if not q["tier1"].startswith("pass")]
         r["tier2_sum_nH"] = round(sum(q.get("loop_total_nH", 0) for q in gate), 2); r["notes"] = [f"{q['loop']}: {q['tier1']}" for q in gate if q["tier1"].startswith("pass (")]
         print(f"seed {s}: {r['tier1_pass']} of {r['tier1_of']} hot loops pass, tier-2 sum {r['tier2_sum_nH']} nH", flush=True)
-key = lambda r: (bool(r["problems"]) or r.get("failed", False), -(r.get("tier1_pass", -1) == r.get("tier1_of")), r.get("tier2_sum_nH", 1e9), r.get("crossings", 1e9))
+full = lambda r: not r.get("problems") and not r.get("failed") and "tier1_of" in r and r["tier1_pass"] == r["tier1_of"]
+tie = 1.05 * min([r["tier2_sum_nH"] for r in rows if full(r)] or [0])
+key = lambda r: (bool(r["problems"]) or r.get("failed", False), not full(r), 0 if full(r) and r["tier2_sum_nH"] <= tie else r.get("tier2_sum_nH", 1e9), r.get("crossings", 1e9))
 rows.sort(key=key); json.dump(rows, open(os.path.join(work, "tournament.json"), "w"), indent=1)
 print("\n| Rank | Seed | Buildable | Hot loops passing tier 1 | Tier-2 sum, nH | Crossings | Signal half-perimeter, mm | Why not |\n|---|---|---|---|---|---|---|---|")
 for i, r in enumerate(rows):
     why = "; ".join((r.get("problems") or [])[:2] + r.get("tier1_fail", [])[:2] + r.get("copper_error", []) + ([r["loop_error"]] if "loop_error" in r else []))
     print(f"| {i + 1} | {r['seed']} | {'yes' if not r.get('problems') and not r.get('failed') else 'no'} | {r.get('tier1_pass', '')}{' of ' + str(r['tier1_of']) if 'tier1_of' in r else ''} | {r.get('tier2_sum_nH', '')} | {r.get('crossings', '')} | {r.get('half_perimeter_mm', '')} | {why} |")
-best = rows[0] if rows and not rows[0].get("problems") and rows[0].get("tier1_pass") == rows[0].get("tier1_of") else None
+best = rows[0] if rows and full(rows[0]) else None
 print(f"\nwinner: seed {best['seed']} ({os.path.join(work, 'seeds', 'seed' + str(best['seed']) + '.json')})" if best else "\nno seed is buildable and passes tier 1")
