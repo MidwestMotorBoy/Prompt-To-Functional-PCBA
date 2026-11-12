@@ -44,6 +44,30 @@
    "unit": "ohm at VGS 10 V, the larger channel",
    "page": 2,
    "quote": "0.00701 0.00841"
+  },
+  "CISS_PF": {
+   "value": 1180,
+   "unit": "pF, the larger channel, at VDS 20 V",
+   "page": 2,
+   "quote": "Ch-1 - 1180 - Input capacitance Ciss"
+  },
+  "RG_MIN": {
+   "value": 0.46,
+   "unit": "ohm",
+   "page": 2,
+   "quote": "Ch-1 0.46 2.3 4.6 Gate resistance Rg"
+  },
+  "CRSS_CISS_MAX": {
+   "value": 0.038,
+   "unit": "ratio, the larger channel",
+   "page": 2,
+   "quote": "Crss/Ciss ratio Ch-2 - 0.0190 0.0380"
+  },
+  "VGS_TH_MIN": {
+   "value": 1.1,
+   "unit": "V",
+   "page": 2,
+   "quote": "Ch-1 1.1 - 2.4 Gate threshold voltage VGS(th)"
   }
  }
 }

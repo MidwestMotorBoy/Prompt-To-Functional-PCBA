@@ -91,6 +91,24 @@
    "unit": "A*kOhm at 2 mOhm",
    "page": 29,
    "quote": "KILIM is defined as 50A×kΩ referenced to a 2mΩ sense resistor"
+  },
+  "RDRV_ON": {
+   "value": 3.4,
+   "unit": "ohm, gate driver turn-on, typical",
+   "page": 12,
+   "quote": "RHIDRV1_ON VBTST1 - VSW1 = 5V 3.4 Ω"
+  },
+  "RDRV_OFF": {
+   "value": 1.0,
+   "unit": "ohm, gate driver turn-off, typical",
+   "page": 12,
+   "quote": "RHIDRV1_OFF VBTST1 - VSW1 = 5V 1.0 Ω"
+  },
+  "VBTST_REFRESH_MAX": {
+   "value": 3.9,
+   "unit": "V, bootstrap refresh comparator, falling",
+   "page": 12,
+   "quote": "VBTST1_REFRESH 2.7 3.1 3.9 V"
   }
  }
 }

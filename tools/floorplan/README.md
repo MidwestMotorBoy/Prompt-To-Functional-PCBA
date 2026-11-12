@@ -242,10 +242,19 @@ the factor 1.3 on current, half the declared edge time. These are best calls, op
 is one constant at the top of `power_gate.py`. The facts are in the limits files with page and quote and pass
 `intent_check.py verify`.
 
-Gate drive has no layout-dependent hard limit on this board, by the datasheet: the Crss/Ciss ratio is 0.038 at
-most (p.2), so a 22 V edge couples at most 0.84 V onto a gate, under the 1.1 V minimum threshold. Gate-loop
-inductance is therefore tier 2. Still to be written as gates: decoupling distance per supply pin, and junction
-temperature at worst-case loss (needs the power copper stage).
+Gate drive, derived from the datasheets and to be checked once the gate tracks exist (the gate-loop solver needs
+routed copper, so nothing here is computed yet):
+
+| Question | Result | From |
+|---|---|---|
+| False turn-on through the Miller capacitance | no layout limit: a 22 V edge puts at most 0.84 V on a floating gate, under the 1.1 V minimum threshold | Crss/Ciss 0.038 max, VGS(th) 1.1 V min (SiZ240DT p.2) |
+| Gate overshoot past the +20 V rating | no layout limit: an undamped step from the 9.6 V drive supply peaks at 19.2 V at most | VGS +20 V (p.1), drive supply from the circuit code |
+| Gate ringing (tier 2 target) | each gate loop 17.6 nH or less keeps damping at 0.5 or better (overshoot about 16 %) | driver turn-on 3.4 ohm typical (BQ25756 p.12), gate resistance 0.46 ohm min and Ciss 1180 pF (SiZ240DT p.2), 0 ohm gate resistors |
+| Bootstrap capacitor (tier 1) | its loop to the BTST and SW pins at most 1.46 times the gate loop, so the pin voltage stays above the 3.9 V refresh threshold at the turn-on step | VBTST_REFRESH 3.9 V max (BQ25756 p.12), 9.6 V drive; inductive divider at the step |
+
+Decoupling distance stays a weighted statement, not a gate: the circuit code declares no distance, the
+datasheets say "as close as possible", and the hand board itself misses 15 decoupling distance statements and
+works. Still to be written as a gate: junction temperature at worst-case loss (needs the power copper stage).
 
 **Tier 2.** Loop inductance itself, lower is better: total and first capacitor per loop, against a reference.
 
