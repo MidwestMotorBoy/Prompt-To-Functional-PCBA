@@ -11,8 +11,13 @@ is treated as an anchor: it may take any spot clear of fixed and other large par
 it are re-annealed.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
+FAST_CLUSTER_X = 20        # with the compiled core the cluster stage runs this many times the requested moves
 import numpy as np
 import floorplan as F
+try:
+    import fastcore as FC          # compiled refine loop; needs numba
+except ImportError:
+    FC = None
 
 def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=3.0, esc=0.5):
     global WX, ESC; WX = float(wx); ESC = float(esc)
@@ -131,21 +136,22 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     WOV = [30.0]
     def xy_pads(T): xy_, k_ = parts_xy(T); return xy_[pr] + rotv(pl, k_[pr])
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
-    cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
-    for s in range(moves):
-        if WX and s % 200 == 0 and s: topo(xy_pads(T)); cur = cost(*parts_xy(T))
-        t = T0 * (T1 / T0) ** (s / moves); c = rnd.randrange(C); old = T[c].copy(); u = rnd.random()
-        if u < 0.2: T[c, 2] = rnd.randrange(4)
-        elif u < 0.3 and C > 1:
-            e = rnd.randrange(C); T[[c, e], :2] = T[[e, c], :2]; olde = e
-        else: rad = 0.5 + 25 * (t / T0); T[c, 0] += rnd.uniform(-rad, rad); T[c, 1] += rnd.uniform(-rad, rad)
-        new = cost(*parts_xy(T))
-        if new < cur or rnd.random() < math.exp(-(new - cur) / t): cur = new
-        else:
-            if 0.2 <= u < 0.3 and C > 1: T[[c, olde], :2] = T[[olde, c], :2]
-            else: T[c] = old
+    if FC is None:
+        cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
+        for s in range(moves):
+            if WX and s % 200 == 0 and s: topo(xy_pads(T)); cur = cost(*parts_xy(T))
+            t = T0 * (T1 / T0) ** (s / moves); c = rnd.randrange(C); old = T[c].copy(); u = rnd.random()
+            if u < 0.2: T[c, 2] = rnd.randrange(4)
+            elif u < 0.3 and C > 1:
+                e = rnd.randrange(C); T[[c, e], :2] = T[[e, c], :2]; olde = e
+            else: rad = 0.5 + 25 * (t / T0); T[c, 0] += rnd.uniform(-rad, rad); T[c, 1] += rnd.uniform(-rad, rad)
+            new = cost(*parts_xy(T))
+            if new < cur or rnd.random() < math.exp(-(new - cur) / t): cur = new
+            else:
+                if 0.2 <= u < 0.3 and C > 1: T[[c, olde], :2] = T[[olde, c], :2]
+                else: T[c] = old
     xy, k = parts_xy(T); a = cost(xy, k, True)
-    print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
+    if FC is None: print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
     # refine: single parts, small steps. Only what the moved part touches is recomputed, so a move costs
     # tens of microseconds and millions of moves are affordable.
     R4 = [((1, 0), (0, 1)), ((0, -1), (1, 0)), ((-1, 0), (0, -1)), ((0, 1), (-1, 0))]
@@ -212,7 +218,6 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
             else: rad = 0.2 + 2.0 * (t / 1.5); put(i, (op[0] + rnd.uniform(-rad, rad), op[1] + rnd.uniform(-rad, rad)), ok)
             dc = local(i) - before
             if not (dc < 0 or rnd.random() < math.exp(-dc / t)): put(i, op, ok)
-    anneal(refine, 1.5, 0.02)
     # repair. Small parts: best free spot within 8 mm. Large parts (over 9 mm2) are anchors: they may take any spot
     # on the board that is clear of fixed parts and other large parts, pushing small parts aside; the small parts
     # around them are then re-annealed and repaired. This is what a person does: big parts first.
@@ -235,6 +240,43 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
         if best: put(i, best[1], best[2])
         else: put(i, op, ok)
         return best is not None
+    if FC is not None:
+        i64 = np.int64; csr = lambda L: (np.cumsum([0] + [len(x) for x in L]).astype(i64), np.array([v for x in L for v in x], dtype=i64))
+        pp_ptr, pp_idx = csr(pads_of); pn_ptr, pn_idx = csr(nets_of_part); ap_ptr, ap_idx = csr(apads_of)
+        S_ = [(0, A, B, lim) for A, B, lim in nearS] + [(1, A, B, lim) for A, B, lim in apartS]
+        sk = np.array([q[0] for q in S_], dtype=i64); slim = np.array([q[3] for q in S_], dtype=float)
+        sa_ptr, sa_idx = csr([q[1] for q in S_]); sb_ptr, sb_idx = csr([q[2] for q in S_])
+        ps_ptr, ps_idx = csr([[j if kind == "n" else len(nearS) + j for kind, j in st_of[i]] for i in range(N)])
+        ko = np.array([kb for kb, _, _ in KO], dtype=float).reshape(-1, 4); koF = np.array([f for _, f, _ in KO], dtype=bool); koB = np.array([b for _, _, b in KO], dtype=bool)
+        boxa = np.array(box, dtype=float); bigmov = big & ~fixed; k = k.astype(i64); st64, en64, apr64 = starts.astype(i64), ends.astype(i64), apr.astype(i64); E = {}
+        def settopo():
+            topo(pads); E["a"], E["b"], E["n"] = TOPO["a"].astype(i64), TOPO["b"].astype(i64), TOPO["n"].astype(i64); E["p"], E["i"] = csr(TOPO["of"])
+        geom = lambda: (xy, k, fixed, sideF, bigmov, bbx, tbx, thru, LO, HI, TLO, THI)
+        tail = lambda: (pads, pl, st64, en64, pp_ptr, pp_idx, pn_ptr, pn_idx, q_all, apr64, apl, ap_ptr, ap_idx, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"])
+        def anneal(n, T0, T1, legal_from=0.75, only=None):
+            pool = (mv if only is None else only).astype(i64); early = WOV[0]
+            for s0 in range(0, n, 50000):
+                settopo(); FC.anneal(rnd.randrange(2 ** 31), n, s0, min(n, s0 + 50000), T0, T1, legal_from, early, 400.0, pool, float(WX), TM, boxa, *geom(), *tail())
+            WOV[0] = 400.0
+        def local(i): return FC.local(i, WOV[0], float(WX), boxa, fixed, sideF, bigmov, thru, LO, HI, TLO, THI, pads, st64, en64, pn_ptr, pn_idx, q_all, apr64, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"])
+        def put(i, p, kk): FC.put(i, float(p[0]), float(p[1]), int(kk), TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
+        def ovl(i, against=None): return FC.overlap_area(i, 0.03, against is not None, fixed if against is None else against, fixed, sideF, bigmov, thru, LO, HI, TLO, THI)
+        def search(i, reach, step, hard=None): return bool(FC.search(i, float(reach), float(step), hard is not None, fixed if hard is None else hard, WOV[0], float(WX), TM, boxa, *geom(), *tail()))
+        settopo()
+        # cluster stage, compiled: about 100 times the moves of the numpy loop in the same time, overlap weight rising 30 -> 150
+        cid64 = cid.astype(i64); cm_ptr, cm_idx = csr([np.nonzero(cid == c)[0] for c in range(C)]); loc64 = loc.astype(float); lrot64 = lrot.astype(i64)
+        uniq = lambda L: sorted({int(v) for x in L for v in x})
+        cn_ptr, cn_idx = csr([uniq([nets_of_part[i] for i in np.nonzero(cid == c)[0]]) for c in range(C)])
+        cs_ptr, cs_idx = csr([uniq([ps_idx[ps_ptr[i]:ps_ptr[i + 1]] for i in np.nonzero(cid == c)[0]]) for c in range(C)])
+        nc = moves * (1 if FAST_CLUSTER_X is None else FAST_CLUSTER_X)
+        for s0 in range(0, nc, 20000):
+            settopo(); ce_ptr, ce_idx = csr([uniq([TOPO["of"][i] for i in np.nonzero(cid == c)[0]]) for c in range(C)])
+            FC.anneal_clusters(rnd.randrange(2 ** 31), nc, s0, min(nc, s0 + 20000), 60.0, 0.5, 30.0, 150.0, float(WX), TM, T, loc64, lrot64, cid64, cm_ptr, cm_idx, cn_ptr, cn_idx, cs_ptr, cs_idx, ce_ptr, ce_idx,
+                               boxa, *geom(), pads, pl, st64, en64, pp_ptr, pp_idx, q_all, apr64, apl, ap_ptr, ap_idx, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ko, koF, koB, E["a"], E["b"], E["n"])
+        settopo(); a = cost(xy, k, True)
+        print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
+        WOV[0] = 30.0
+    anneal(refine, 1.5, 0.02)
     repaired = []; hard = fixed | big
     offb = lambda j: LO[j, 0] < box[0] + 0.5 or LO[j, 1] < box[1] + 0.5 or HI[j, 0] > box[2] - 0.5 or HI[j, 1] > box[3] - 0.5
     for rnd_ in range(6):
