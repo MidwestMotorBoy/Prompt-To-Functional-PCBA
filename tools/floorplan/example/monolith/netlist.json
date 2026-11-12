@@ -1,0 +1,7418 @@
+{
+ "comps": {
+  "C101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 33,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "0.1u 50V"
+  },
+  "C102": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 34,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "0.1u 50V"
+  },
+  "C103": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 35,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "0.1u 50V"
+  },
+  "C104": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 36,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "0.1u 50V"
+  },
+  "C105": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C377773",
+    "MPN": "CL21A225KBQNNNE",
+    "Notes": "PBI sits near VBAT (16.8 V): 50 V X7R 1206 keeps more of its 2.2 uF than the old 0805 (review m2; JLC basic since the 2026-10-14 cost-down)"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 26,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "2.2u 50V"
+  },
+  "C106": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 42,
+   "section": "Current sense",
+   "value": "0.1u 50V"
+  },
+  "C107": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 52,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "0.1u 50V"
+  },
+  "C108": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 53,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "0.1u 50V"
+  },
+  "C110": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC",
+    "Notes": "ESD protection across the back-to-back protection FETs, CELL_P to PACK_P (TI BQ40Z50-R2 sec. 9.2.2.1.1 / fig. 9-2 C1, C2). Two in series so one shorted cap does not bypass the FETs; each is rated for the full pack voltage. Short, wide traces"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 50,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "0.1u 50V"
+  },
+  "C111": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC",
+    "Notes": "ESD protection across the back-to-back protection FETs, CELL_P to PACK_P (TI BQ40Z50-R2 sec. 9.2.2.1.1 / fig. 9-2 C1, C2). Two in series so one shorted cap does not bypass the FETs; each is rated for the full pack voltage. Short, wide traces"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 51,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "0.1u 50V"
+  },
+  "C112": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 64,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C113": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 65,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C114": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 66,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C115": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 67,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C116": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 68,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C117": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC",
+    "Notes": "CD delay: tCD = 10-20 s/uF x 0.1 uF = 1-2 s. An open or shorted CD also trips OUT during an OV."
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 69,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C118": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 75,
+   "section": "Second-level protector and fuse",
+   "value": "0.1u 50V"
+  },
+  "C206": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C377773",
+    "MPN": "CL21A225KBQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 2,
+   "section": "TPS62177 3.3 V always-on buck",
+   "value": "2.2u 50V"
+  },
+  "C207": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C45783",
+    "MPN": "CL21A226MAQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 3,
+   "section": "TPS62177 3.3 V always-on buck",
+   "value": "22u 25V"
+  },
+  "C208": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 4,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C209": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 5,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C210": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 6,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C211": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 7,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C212": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 8,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C213": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 9,
+   "section": "Pack-rail bulk capacitance",
+   "value": "22u 35V"
+  },
+  "C301": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C23733",
+    "MPN": "CL05A475MP5NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 81,
+   "section": "CC2340R5MODA module",
+   "value": "4.7u 10V"
+  },
+  "C302": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C307380",
+    "MPN": "CL03A104KO3NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0201_0603Metric",
+   "lib": "Device:C",
+   "order": 82,
+   "section": "CC2340R5MODA module",
+   "value": "0.1u 16V"
+  },
+  "C303": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C307380",
+    "MPN": "CL03A104KO3NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0201_0603Metric",
+   "lib": "Device:C",
+   "order": 83,
+   "section": "CC2340R5MODA module",
+   "value": "0.1u 16V"
+  },
+  "C304": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C307380",
+    "MPN": "CL03A104KO3NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0201_0603Metric",
+   "lib": "Device:C",
+   "order": 85,
+   "section": "CC2340R5MODA module",
+   "value": "0.1u 16V"
+  },
+  "C313": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C1548",
+    "MPN": "0402CG150J500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 87,
+   "section": "Antenna match (pi network between RFIO and ANT_IN)",
+   "value": "15p C0G"
+  },
+  "C314": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C1550",
+    "MPN": "0402CG1R0C500NT",
+    "Notes": "Z60 shunt, DNP as on TI's LaunchPad. Placeholder value: TI characterised the match on 0201 parts, so retune Z60/Z61/Z62 on this board (review 4 A-10)"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 88,
+   "section": "Antenna match (pi network between RFIO and ANT_IN)",
+   "value": "1p C0G"
+  },
+  "C315": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C1550",
+    "MPN": "0402CG1R0C500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 90,
+   "section": "Antenna match (pi network between RFIO and ANT_IN)",
+   "value": "1p C0G"
+  },
+  "C401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C1530",
+    "MPN": "0402B221K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 104,
+   "section": "USB-C connector and port protection",
+   "value": "220p 50V"
+  },
+  "C402": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C1530",
+    "MPN": "0402B221K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 105,
+   "section": "USB-C connector and port protection",
+   "value": "220p 50V"
+  },
+  "C403": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 107,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C404": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 108,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C405": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C15525",
+    "MPN": "CL05A106MQ5NUNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 110,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 6.3V"
+  },
+  "C406": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C29823",
+    "MPN": "1206B475K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 99,
+   "section": "USB-C connector and port protection",
+   "value": "4.7u 50V"
+  },
+  "C407": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 111,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C408": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307380",
+    "MPN": "CL03A104KO3NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0201_0603Metric",
+   "lib": "Device:C",
+   "order": 109,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "0.1u 16V"
+  },
+  "C409": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C15849",
+    "MPN": "CL10A105KB8NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 112,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "1u 50V (VAC)"
+  },
+  "C410": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C23733",
+    "MPN": "CL05A475MP5NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 168,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "4.7u 10V"
+  },
+  "C411": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C1779",
+    "MPN": "CL21A475KAQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 169,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "4.7u 25V"
+  },
+  "C412": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 139,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C413": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 140,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C414": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C92361",
+    "MPN": "CL05A474KA5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 123,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.47u 25V"
+  },
+  "C415": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 124,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C416": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 125,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C417": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C92361",
+    "MPN": "CL05A474KA5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 129,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.47u 25V"
+  },
+  "C418": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 130,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C419": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 131,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C420": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 143,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C421": {
+   "block": "USB Port 1",
+   "fields": {
+    "MPN": "KEMET T593V686M035APE070 (polymer tantalum)"
+   },
+   "footprint": "Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D",
+   "lib": "Device:C_Polarized",
+   "order": 148,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "68u 35V"
+  },
+  "C423": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 144,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C424": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 145,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C427": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 146,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C430": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 147,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C431": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 150,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C434": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 151,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C438": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 152,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C439": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C7419416",
+    "MPN": "FCC0402B333K500AT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 183,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "33n 50V"
+  },
+  "C440": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 182,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "0.1u 50V"
+  },
+  "C441": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 184,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C442": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 185,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C443": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 186,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C444": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 153,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C446": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 154,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C449": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 113,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "0.1u 50V"
+  },
+  "C450": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C15195",
+    "MPN": "CL05B103KB5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 100,
+   "section": "USB-C connector and port protection",
+   "value": "10n 50V"
+  },
+  "C451": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 102,
+   "section": "USB-C connector and port protection",
+   "value": "0.1u 50V"
+  },
+  "C452": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C52923",
+    "MPN": "CL05A105KA5NQNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 103,
+   "section": "USB-C connector and port protection",
+   "value": "1u 25V"
+  },
+  "C456": {
+   "block": "USB Port 1",
+   "fields": {
+    "MPN": "KEMET T593V686M035APE070 (polymer tantalum)"
+   },
+   "footprint": "Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D",
+   "lib": "Device:C_Polarized",
+   "order": 149,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "68u 35V"
+  },
+  "C457": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C15849",
+    "MPN": "CL10A105KB8NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 171,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "1u 50V"
+  },
+  "C458": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C45783",
+    "MPN": "CL21A226MAQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 172,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "22u 25V"
+  },
+  "C501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C1530",
+    "MPN": "0402B221K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 198,
+   "section": "USB-C connector and port protection",
+   "value": "220p 50V"
+  },
+  "C502": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C1530",
+    "MPN": "0402B221K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 199,
+   "section": "USB-C connector and port protection",
+   "value": "220p 50V"
+  },
+  "C503": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 201,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C504": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 202,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C505": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C15525",
+    "MPN": "CL05A106MQ5NUNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 204,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 6.3V"
+  },
+  "C506": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C29823",
+    "MPN": "1206B475K500NT"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 193,
+   "section": "USB-C connector and port protection",
+   "value": "4.7u 50V"
+  },
+  "C507": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C96446",
+    "MPN": "CL10A106MA8NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 205,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10u 25V"
+  },
+  "C508": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307380",
+    "MPN": "CL03A104KO3NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0201_0603Metric",
+   "lib": "Device:C",
+   "order": 203,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "0.1u 16V"
+  },
+  "C509": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C15849",
+    "MPN": "CL10A105KB8NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 206,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "1u 50V (VAC)"
+  },
+  "C510": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C23733",
+    "MPN": "CL05A475MP5NRNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 262,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "4.7u 10V"
+  },
+  "C511": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C1779",
+    "MPN": "CL21A475KAQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 263,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "4.7u 25V"
+  },
+  "C512": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 233,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C513": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 234,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C514": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C92361",
+    "MPN": "CL05A474KA5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 217,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.47u 25V"
+  },
+  "C515": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 218,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C516": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 219,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C517": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C92361",
+    "MPN": "CL05A474KA5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 223,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.47u 25V"
+  },
+  "C518": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 224,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C519": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 225,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "0.1u 50V"
+  },
+  "C520": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 237,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C521": {
+   "block": "USB Port 2",
+   "fields": {
+    "MPN": "KEMET T593V686M035APE070 (polymer tantalum)"
+   },
+   "footprint": "Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D",
+   "lib": "Device:C_Polarized",
+   "order": 242,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "68u 35V"
+  },
+  "C523": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 238,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C524": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 239,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C527": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 240,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C530": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 241,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C531": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 244,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C534": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 245,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C538": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 246,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C539": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C7419416",
+    "MPN": "FCC0402B333K500AT"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 277,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "33n 50V"
+  },
+  "C540": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 276,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "0.1u 50V"
+  },
+  "C541": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 278,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C542": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 279,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C543": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C12891",
+    "MPN": "CL31A226KAHNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_1206_3216Metric",
+   "lib": "Device:C",
+   "order": 280,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22u 25V"
+  },
+  "C544": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C778721",
+    "MPN": "GMK325BJ226MM-P"
+   },
+   "footprint": "Capacitor_SMD:C_1210_3225Metric",
+   "lib": "Device:C",
+   "order": 247,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "22u 35V"
+  },
+  "C546": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 248,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0.1u 50V"
+  },
+  "C549": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 207,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "0.1u 50V"
+  },
+  "C550": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C15195",
+    "MPN": "CL05B103KB5NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 194,
+   "section": "USB-C connector and port protection",
+   "value": "10n 50V"
+  },
+  "C551": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C307331",
+    "MPN": "CL05B104KB54PNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 196,
+   "section": "USB-C connector and port protection",
+   "value": "0.1u 50V"
+  },
+  "C552": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C52923",
+    "MPN": "CL05A105KA5NQNC"
+   },
+   "footprint": "Capacitor_SMD:C_0402_1005Metric",
+   "lib": "Device:C",
+   "order": 197,
+   "section": "USB-C connector and port protection",
+   "value": "1u 25V"
+  },
+  "C556": {
+   "block": "USB Port 2",
+   "fields": {
+    "MPN": "KEMET T593V686M035APE070 (polymer tantalum)"
+   },
+   "footprint": "Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D",
+   "lib": "Device:C_Polarized",
+   "order": 243,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "68u 35V"
+  },
+  "C557": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C15849",
+    "MPN": "CL10A105KB8NNNC"
+   },
+   "footprint": "Capacitor_SMD:C_0603_1608Metric",
+   "lib": "Device:C",
+   "order": 265,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "1u 50V"
+  },
+  "C558": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C45783",
+    "MPN": "CL21A226MAQNNNE"
+   },
+   "footprint": "Capacitor_SMD:C_0805_2012Metric",
+   "lib": "Device:C",
+   "order": 266,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "22u 25V"
+  },
+  "D101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C549279",
+    "MPN": "BAT54L,315 (Nexperia)",
+    "Notes": "BAT feed from the cell top before F102, as TI fig. 9-12 (D1 on 4P): isolates BAT from a short-circuit dip, and keeps the gauge powered and logging if F102 opens"
+   },
+   "footprint": "Diode_SMD:D_SOD-882",
+   "lib": "Device:D_Schottky",
+   "order": 24,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "BAT54WS"
+  },
+  "D103": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C19077412",
+    "MPN": "BZT52C15 (JLC preferred C19077412)",
+    "Notes": "Fitted (2026-10-13, dev board and production): clamps Q102 VGS (AGM404AP1 +/-20 V) in a hard PACK_P short until SCD opens the FETs (DSG = VBAT + 10.5-12 V, source near 0 V). Vz 13.8-15.6 V sits above the 10.5-12 V on-state gate drive; leakage at 12 V is tens of nA, which the DSG pump supplies. Required whenever C109 is fitted. Not in TI fig. 9-2"
+   },
+   "footprint": "Diode_SMD:D_SOD-123",
+   "lib": "Device:D_Zener",
+   "order": 49,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "BZT52C15"
+  },
+  "D401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C55616459",
+    "MPN": "TVS2200DRVR"
+   },
+   "footprint": "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+   "lib": "Power_Protection:TVS2200DRV",
+   "order": 98,
+   "section": "USB-C connector and port protection",
+   "value": "TVS2200DRVR"
+  },
+  "D404": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 141,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "LRB520S-40T1G"
+  },
+  "D405": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 142,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "LRB520S-40T1G"
+  },
+  "D410": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 175,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "LRB520S-40T1G"
+  },
+  "D411": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 176,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "LRB520S-40T1G"
+  },
+  "D501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C55616459",
+    "MPN": "TVS2200DRVR"
+   },
+   "footprint": "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+   "lib": "Power_Protection:TVS2200DRV",
+   "order": 192,
+   "section": "USB-C connector and port protection",
+   "value": "TVS2200DRVR"
+  },
+  "D504": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 235,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "LRB520S-40T1G"
+  },
+  "D505": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 236,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "LRB520S-40T1G"
+  },
+  "D510": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 269,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "LRB520S-40T1G"
+  },
+  "D511": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C132124",
+    "MPN": "LRB520S-40T1G"
+   },
+   "footprint": "Diode_SMD:D_SOD-523",
+   "lib": "Device:D_Schottky",
+   "order": 270,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "LRB520S-40T1G"
+  },
+  "F102": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C42463217",
+    "MPN": "TLC Electronic WSFB1514",
+    "Notes": "4-cell SCP (UL E467707): 15 A rated at 40 C, cut < 1 min at 2x rated, 50 A break, 36 V max, heater operating range 10.5-19.6 V (heater resistance not given; same range as Littelfuse ITV4030L1415, 11.2-20 ohm). Fuse path 1-3 mOhm: about 0.2 W at 10 A. Pin 1 to the cells. Only fuse in the pack path (F101 deleted): 50 A break, below a cell-top dead short (~200 A); faults after Q101/Q102 are cleared by the gauge SCD first Same land pattern as the Littelfuse ITV4030 (pins numbered differently: there fuse 1-3, heater 2)"
+   },
+   "footprint": "MonolithDev:TLC_WSFB_4x3mm",
+   "lib": "MonolithDev:WSFB1514",
+   "order": 70,
+   "section": "Second-level protector and fuse",
+   "value": "WSFB1514"
+  },
+  "J108": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-18AWG_PTFE_1x01_D1.5mm_OD2.3mm",
+   "lib": "Connector:TestPoint",
+   "order": 10,
+   "section": "Cell and load wires",
+   "value": "PACK- power wire"
+  },
+  "J109": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector:TestPoint",
+   "order": 11,
+   "section": "Cell and load wires",
+   "value": "CELL1 sense wire"
+  },
+  "J110": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector:TestPoint",
+   "order": 12,
+   "section": "Cell and load wires",
+   "value": "CELL2 sense wire"
+  },
+  "J111": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector:TestPoint",
+   "order": 13,
+   "section": "Cell and load wires",
+   "value": "CELL3 sense wire"
+  },
+  "J112": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-18AWG_PTFE_1x01_D1.5mm_OD2.3mm",
+   "lib": "Connector:TestPoint",
+   "order": 14,
+   "section": "Cell and load wires",
+   "value": "PACK+ power wire"
+  },
+  "J113": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "Connector_Wire:SolderWire-0.5sqmm_1x01_D0.9mm_OD2.1mm",
+   "lib": "Connector:TestPoint",
+   "order": 15,
+   "section": "Cell and load wires",
+   "value": "LOAD PACK_P"
+  },
+  "J114": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "Connector_Wire:SolderWire-0.5sqmm_1x01_D0.9mm_OD2.1mm",
+   "lib": "Connector:TestPoint",
+   "order": 16,
+   "section": "Cell and load wires",
+   "value": "LOAD GND"
+  },
+  "J115": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector:TestPoint",
+   "order": 17,
+   "section": "Cell and load wires",
+   "value": "1N Kelvin wire"
+  },
+  "J116": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector:TestPoint",
+   "order": 18,
+   "section": "Cell and load wires",
+   "value": "4P Kelvin wire"
+  },
+  "J117": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector_Generic:Conn_01x01",
+   "order": 19,
+   "section": "Cell and load wires",
+   "value": "TS2 NTC wire"
+  },
+  "J118": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector_Generic:Conn_01x01",
+   "order": 20,
+   "section": "Cell and load wires",
+   "value": "TS2 NTC return wire"
+  },
+  "J119": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector_Generic:Conn_01x01",
+   "order": 21,
+   "section": "Cell and load wires",
+   "value": "TS3 NTC wire"
+  },
+  "J120": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "MonolithDev:SolderWire-28AWG_PTFE_1x01_D0.8mm_Pad1.5x1.4mm",
+   "lib": "Connector_Generic:Conn_01x01",
+   "order": 22,
+   "section": "Cell and load wires",
+   "value": "TS3 NTC return wire"
+  },
+  "J301": {
+   "block": "MCU",
+   "fields": {},
+   "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+   "lib": "Connector:Conn_ARM_SWD_TagConnect_TC2030",
+   "order": 95,
+   "section": "Debug and gauge-training connectors (Tag-Connect, no part fitted)",
+   "value": "TC2030-NL"
+  },
+  "J302": {
+   "block": "MCU",
+   "fields": {},
+   "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+   "lib": "MonolithDev:TC2030_GAUGE",
+   "order": 96,
+   "section": "Debug and gauge-training connectors (Tag-Connect, no part fitted)",
+   "value": "TC2030-NL GAUGE"
+  },
+  "J401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C55629729",
+    "MPN": "TYPE-C 16PCB1.6 IP68 (Shou Han)"
+   },
+   "footprint": "MonolithDev:USB_C_Receptacle_ShouHan_TYPE-C_16PCB1.6_IP68",
+   "lib": "Connector:USB_C_Receptacle_USB2.0_16P",
+   "order": 97,
+   "section": "USB-C connector and port protection",
+   "value": "TYPE-C 16PCB1.6 IP68"
+  },
+  "J501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C55629729",
+    "MPN": "TYPE-C 16PCB1.6 IP68 (Shou Han)"
+   },
+   "footprint": "MonolithDev:USB_C_Receptacle_ShouHan_TYPE-C_16PCB1.6_IP68",
+   "lib": "Connector:USB_C_Receptacle_USB2.0_16P",
+   "order": 191,
+   "section": "USB-C connector and port protection",
+   "value": "TYPE-C 16PCB1.6 IP68"
+  },
+  "L201": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C167879",
+    "MPN": "FNR4030S100MT (Changjiang)"
+   },
+   "footprint": "Inductor_SMD:L_Changjiang_FNR4030S",
+   "lib": "Device:L",
+   "order": 1,
+   "section": "TPS62177 3.3 V always-on buck",
+   "value": "10u"
+  },
+  "L401": {
+   "block": "USB Port 1",
+   "fields": {
+    "MPN": "XGL7030-332MEC (Coilcraft)"
+   },
+   "footprint": "MonolithDev:L_Coilank_APS0730",
+   "lib": "Device:L",
+   "order": 138,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "3.3u"
+  },
+  "L402": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C49248023",
+    "MPN": "EHE05023R3MFB (ABC)"
+   },
+   "footprint": "MonolithDev:L_COILMX_MS0520",
+   "lib": "Device:L",
+   "order": 181,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "3.3u"
+  },
+  "L501": {
+   "block": "USB Port 2",
+   "fields": {
+    "MPN": "XGL7030-332MEC (Coilcraft)"
+   },
+   "footprint": "MonolithDev:L_Coilank_APS0730",
+   "lib": "Device:L",
+   "order": 232,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "3.3u"
+  },
+  "L502": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C49248023",
+    "MPN": "EHE05023R3MFB (ABC)"
+   },
+   "footprint": "MonolithDev:L_COILMX_MS0520",
+   "lib": "Device:L",
+   "order": 275,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "3.3u"
+  },
+  "Q101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C534274",
+    "MPN": "BSC007N04LS6ATMA1 (Infineon)",
+    "Notes": "CHG"
+   },
+   "footprint": "MonolithDev:Infineon_PG-TDSON-8_6.15x5.15mm_D5-8",
+   "lib": "MonolithDev:AGM404AP1",
+   "order": 43,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "BSC007N04LS6"
+  },
+  "Q102": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C534274",
+    "MPN": "BSC007N04LS6ATMA1 (Infineon)",
+    "Notes": "DSG"
+   },
+   "footprint": "MonolithDev:Infineon_PG-TDSON-8_6.15x5.15mm_D5-8",
+   "lib": "MonolithDev:AGM404AP1",
+   "order": 44,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "BSC007N04LS6"
+  },
+  "Q103": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C20917",
+    "MPN": "AO3400A (AOS)",
+    "Notes": "BTP_INT level shift onto the shared open-drain IRQ_N (inverts: IRQ_N low while BTP_INT is high). AO3400A Vgs(th) 0.65-1.45 V against BTP_INT VOH >= 1.8 V at 10 uA (DS 7.12); JLC basic, same part as Q104. Firmware: BTP_POL = 1 whenever BTP_EN = 1 (review 4 D-2)"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-23",
+   "lib": "Transistor_FET:Q_NMOS_GSD",
+   "order": 76,
+   "section": "Gauge interrupt onto the shared IRQ line",
+   "value": "AO3400A"
+  },
+  "Q104": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C20917",
+    "MPN": "AO3400A (AOS)",
+    "Notes": "Fuse ignition FET (TI Q5): 30 V, Vgs max +-12 V (gate sees <= 8 V through the 5.1k/51k divider), heater 11.2-20 ohm at 10.5-16.8 V = 0.5-1.5 A for < 1 min"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-23",
+   "lib": "Transistor_FET:Q_NMOS_GSD",
+   "order": 71,
+   "section": "Second-level protector and fuse",
+   "value": "AO3400A"
+  },
+  "Q401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C3289403",
+    "MPN": "SiZ240DT-T1-GE3 (Vishay)"
+   },
+   "footprint": "MonolithDev:Vishay_PowerPAIR_3x3S",
+   "lib": "MonolithDev:SiZ240DT",
+   "order": 132,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "SiZ240DT"
+  },
+  "Q402": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C3289403",
+    "MPN": "SiZ240DT-T1-GE3 (Vishay)"
+   },
+   "footprint": "MonolithDev:Vishay_PowerPAIR_3x3S",
+   "lib": "MonolithDev:SiZ240DT",
+   "order": 133,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "SiZ240DT"
+  },
+  "Q409": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C20917",
+    "MPN": "AO3400A (AOS)"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-23",
+   "lib": "Transistor_FET:Q_NMOS_GSD",
+   "order": 177,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "AO3400A"
+  },
+  "Q501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C3289403",
+    "MPN": "SiZ240DT-T1-GE3 (Vishay)"
+   },
+   "footprint": "MonolithDev:Vishay_PowerPAIR_3x3S",
+   "lib": "MonolithDev:SiZ240DT",
+   "order": 226,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "SiZ240DT"
+  },
+  "Q502": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C3289403",
+    "MPN": "SiZ240DT-T1-GE3 (Vishay)"
+   },
+   "footprint": "MonolithDev:Vishay_PowerPAIR_3x3S",
+   "lib": "MonolithDev:SiZ240DT",
+   "order": 227,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "SiZ240DT"
+  },
+  "Q509": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C20917",
+    "MPN": "AO3400A (AOS)"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-23",
+   "lib": "Transistor_FET:Q_NMOS_GSD",
+   "order": 271,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "AO3400A"
+  },
+  "R101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE",
+    "Notes": "1206 (0.25 W): survives the open-cell fault current until CUV opens DSG (review #7)"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 29,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R102": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE",
+    "Notes": "1206 (0.25 W): survives the open-cell fault current until CUV opens DSG (review #7)"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 30,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R103": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE",
+    "Notes": "1206 (0.25 W): survives the open-cell fault current until CUV opens DSG (review #7)"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 31,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R104": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE",
+    "Notes": "1206 (0.25 W): survives the open-cell fault current until CUV opens DSG (review #7)"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 32,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R105": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 25,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R106": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 27,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R107": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 40,
+   "section": "Current sense",
+   "value": "100"
+  },
+  "R108": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 41,
+   "section": "Current sense",
+   "value": "100"
+  },
+  "R109": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25905",
+    "MPN": "0402WGF5101TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 45,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "5.1k"
+  },
+  "R110": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C26086",
+    "MPN": "0402WGJ0106TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 46,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "10M 5%"
+  },
+  "R111": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25905",
+    "MPN": "0402WGF5101TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 47,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "5.1k"
+  },
+  "R112": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C26086",
+    "MPN": "0402WGJ0106TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 48,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "10M 5%"
+  },
+  "R113": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25744",
+    "MPN": "0402WGF1002TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 28,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "10k"
+  },
+  "R115": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C270366",
+    "MPN": "0201WMF1000TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 37,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R116": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C270366",
+    "MPN": "0201WMF1000TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 38,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "100"
+  },
+  "R117": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25790",
+    "MPN": "0402WGF4703TCE",
+    "Notes": "Holds Q103 off when BTP_INT floats (BTP_INT VOH is at most about 3.5 V)"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 77,
+   "section": "Gauge interrupt onto the shared IRQ line",
+   "value": "470k"
+  },
+  "R118": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25900",
+    "MPN": "0402WGF4701TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 54,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "4.7k"
+  },
+  "R119": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C11702",
+    "MPN": "0402WGF1001TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 59,
+   "section": "Second-level protector and fuse",
+   "value": "1k"
+  },
+  "R120": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C11702",
+    "MPN": "0402WGF1001TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 60,
+   "section": "Second-level protector and fuse",
+   "value": "1k"
+  },
+  "R121": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C11702",
+    "MPN": "0402WGF1001TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 61,
+   "section": "Second-level protector and fuse",
+   "value": "1k"
+  },
+  "R122": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C11702",
+    "MPN": "0402WGF1001TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 62,
+   "section": "Second-level protector and fuse",
+   "value": "1k"
+  },
+  "R123": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25076",
+    "MPN": "0402WGF1000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 63,
+   "section": "Second-level protector and fuse",
+   "value": "100"
+  },
+  "R124": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25905",
+    "MPN": "0402WGF5101TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 72,
+   "section": "Second-level protector and fuse",
+   "value": "5.1k"
+  },
+  "R125": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25794",
+    "MPN": "0402WGF5102TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 73,
+   "section": "Second-level protector and fuse",
+   "value": "51k"
+  },
+  "R126": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C25905",
+    "MPN": "0402WGF5101TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 74,
+   "section": "Second-level protector and fuse",
+   "value": "5.1k"
+  },
+  "R302": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE",
+    "Notes": "RSTN pull-up: SWRS349A fig. 9-1 R1 (100k), with C304 = C92 as the power-on reset"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 84,
+   "section": "CC2340R5MODA module",
+   "value": "100k"
+  },
+  "R304": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 91,
+   "section": "Pull-ups owned by this block",
+   "value": "3.3k"
+  },
+  "R305": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 92,
+   "section": "Pull-ups owned by this block",
+   "value": "3.3k"
+  },
+  "R313": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C473458",
+    "MPN": "0201WMF2203TEE",
+    "Notes": "3V3_SLEEP pull-up: holds the TPS62177 in normal mode while U301 is in reset or unprogrammed (pins float; SLEEP pull-down 1.4 uA typ, no max). 220k gives about 0.92 x VDDS typ against VIH 0.8 x VDDS (review 4 A-1b); 15 uA while firmware drives SLEEP low in S2"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 93,
+   "section": "Pull-ups owned by this block",
+   "value": "220k"
+  },
+  "R314": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C270345",
+    "MPN": "0201WMF4702TEE",
+    "Notes": "The one IRQ_N pull-up (TPS25751 I2Ct_IRQ x2, gauge BTP via Q103; all open drain). 47k for leakage and noise margin on a long net (review 4 A-5); 70 uA only while asserted"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 94,
+   "section": "Pull-ups owned by this block",
+   "value": "47k"
+  },
+  "R321": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE",
+    "Notes": "Z61 series element of the antenna pi match (TI LaunchPad: 0R). Retune on this board"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 89,
+   "section": "Antenna match (pi network between RFIO and ANT_IN)",
+   "value": "0R"
+  },
+  "R402": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 114,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "3.3k"
+  },
+  "R403": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 115,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "3.3k"
+  },
+  "R404": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C473048",
+    "MPN": "0201WMF1002TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 116,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10k"
+  },
+  "R409": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C32298",
+    "MPN": "0402WGF1373TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 155,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "137k 1%"
+  },
+  "R410": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25893",
+    "MPN": "0402WGF4022TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 156,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "40.2k 1%"
+  },
+  "R411": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25744",
+    "MPN": "0402WGF1002TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 157,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10k 1%"
+  },
+  "R412": {
+   "block": "USB Port 1",
+   "fields": {
+    "MPN": "0201WMF4992TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 158,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "49.9k 1%"
+  },
+  "R413": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C93752",
+    "MPN": "0402WGF1182TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 159,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "11.8k 1%"
+  },
+  "R414": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25891",
+    "MPN": "0402WGF3601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 160,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "3.6k 1%"
+  },
+  "R415": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25871",
+    "MPN": "0402WGF1801TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 163,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "1.8k 1%"
+  },
+  "R416": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25908",
+    "MPN": "0402WGF5601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 164,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "5.6k 1%"
+  },
+  "R417": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270345",
+    "MPN": "0201WMF4702TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 166,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "47k"
+  },
+  "R418": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C445619",
+    "MPN": "ERA2AEB104X"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 161,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "100k 0.1%"
+  },
+  "R419": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C191915",
+    "MPN": "ERA2AEB103X"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 162,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10.0k 0.1%"
+  },
+  "R424": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C728267",
+    "MPN": "PA0805FRE470R005L"
+   },
+   "footprint": "Resistor_SMD:R_0805_2012Metric",
+   "lib": "Device:R",
+   "order": 120,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "5m 0.5W"
+  },
+  "R425": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 121,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R426": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 122,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R427": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C252653",
+    "MPN": "MA120610FR005MZ (50 ppm)"
+   },
+   "footprint": "Resistor_SMD:R_1206_3216Metric",
+   "lib": "Device:R",
+   "order": 126,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "5m 1W (RBAT)"
+  },
+  "R428": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 127,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R429": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 128,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R432": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 189,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "100k"
+  },
+  "R433": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25750",
+    "MPN": "0402WGF1203TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 187,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "120k"
+  },
+  "R434": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25768",
+    "MPN": "0402WGF2202TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 188,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22k"
+  },
+  "R435": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270365",
+    "MPN": "0201WMF1001TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 167,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "1k"
+  },
+  "R441": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 117,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "100k"
+  },
+  "R444": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 134,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R445": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 135,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R446": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 136,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R447": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 137,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R452": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25893",
+    "MPN": "0402WGF4022TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 173,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "40.2k 1%"
+  },
+  "R453": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C25908",
+    "MPN": "0402WGF5601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 174,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "5.6k 1%"
+  },
+  "R454": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 178,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "100k"
+  },
+  "R455": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 179,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "100k"
+  },
+  "R502": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 208,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "3.3k"
+  },
+  "R503": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270350",
+    "MPN": "0201WMF3301TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 209,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "3.3k"
+  },
+  "R504": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C473048",
+    "MPN": "0201WMF1002TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 210,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "10k"
+  },
+  "R509": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C32298",
+    "MPN": "0402WGF1373TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 249,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "137k 1%"
+  },
+  "R510": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25893",
+    "MPN": "0402WGF4022TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 250,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "40.2k 1%"
+  },
+  "R511": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25744",
+    "MPN": "0402WGF1002TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 251,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10k 1%"
+  },
+  "R512": {
+   "block": "USB Port 2",
+   "fields": {
+    "MPN": "0201WMF4992TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 252,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "49.9k 1%"
+  },
+  "R513": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C93752",
+    "MPN": "0402WGF1182TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 253,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "11.8k 1%"
+  },
+  "R514": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25891",
+    "MPN": "0402WGF3601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 254,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "3.6k 1%"
+  },
+  "R515": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25871",
+    "MPN": "0402WGF1801TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 257,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "1.8k 1%"
+  },
+  "R516": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25908",
+    "MPN": "0402WGF5601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 258,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "5.6k 1%"
+  },
+  "R517": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270345",
+    "MPN": "0201WMF4702TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 260,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "47k"
+  },
+  "R518": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C445619",
+    "MPN": "ERA2AEB104X"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 255,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "100k 0.1%"
+  },
+  "R519": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C191915",
+    "MPN": "ERA2AEB103X"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 256,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10.0k 0.1%"
+  },
+  "R524": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C728267",
+    "MPN": "PA0805FRE470R005L"
+   },
+   "footprint": "Resistor_SMD:R_0805_2012Metric",
+   "lib": "Device:R",
+   "order": 214,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "5m 0.5W"
+  },
+  "R525": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 215,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R526": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 216,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R527": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C252653",
+    "MPN": "MA120610FR005MZ (50 ppm)"
+   },
+   "footprint": "Resistor_SMD:R_1206_3216Metric",
+   "lib": "Device:R",
+   "order": 220,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "5m 1W (RBAT)"
+  },
+  "R528": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 221,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R529": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25077",
+    "MPN": "0402WGF100JTCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 222,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "10R"
+  },
+  "R532": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 283,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "100k"
+  },
+  "R533": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25750",
+    "MPN": "0402WGF1203TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 281,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "120k"
+  },
+  "R534": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25768",
+    "MPN": "0402WGF2202TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 282,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "22k"
+  },
+  "R535": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270365",
+    "MPN": "0201WMF1001TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 261,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "1k"
+  },
+  "R541": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 211,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "100k"
+  },
+  "R544": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 228,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R545": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 229,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R546": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 230,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R547": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C17168",
+    "MPN": "0402WGF0000TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 231,
+   "section": "Four-switch power stage. 0R gate resistors are tuning positions",
+   "value": "0R"
+  },
+  "R552": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25893",
+    "MPN": "0402WGF4022TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 267,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "40.2k 1%"
+  },
+  "R553": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C25908",
+    "MPN": "0402WGF5601TCE"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:R",
+   "order": 268,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "5.6k 1%"
+  },
+  "R554": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 272,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "100k"
+  },
+  "R555": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C270364",
+    "MPN": "0201WMF1003TEE"
+   },
+   "footprint": "Resistor_SMD:R_0201_0603Metric",
+   "lib": "Device:R",
+   "order": 273,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "100k"
+  },
+  "RS101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C154629",
+    "MPN": "LR1206-21R001F4 (Ralec, 75 ppm)",
+    "Notes": "1 mOhm 1 % 2 W sense resistor (YAGEO)"
+   },
+   "footprint": "Resistor_SMD:R_1206_3216Metric",
+   "lib": "Device:R",
+   "order": 39,
+   "section": "Current sense",
+   "value": "1m 1% 1W"
+  },
+  "TH101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C77131",
+    "MPN": "NCP15XH103F03RC",
+    "Notes": "Front-cell NTC, SMD on B.Cu in the outer bottom corner of the gap-filler zone over C1 (BT101), outboard of the BQ25756 (under the gel; research_notes/Pack thermal BAK 65E/smd-ntc.md). Reads the board there, 0.6-3.8 K above the hottest point of the C1 (BT101) can in the model. Keep the inner planes under it; low side to CELL_1N by its own trace. Gauge internal 18k pull-up; enable TS1 in data flash. Murata NCP15XH103F03RB/RC: B25/50 = 3380 K, B25/85 = 3435 K"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:Thermistor_NTC",
+   "order": 56,
+   "section": "Cell thermistors on the board",
+   "value": "10k B3435"
+  },
+  "TH104": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C77131",
+    "MPN": "NCP15XH103F03RC",
+    "Notes": "Front-cell NTC, SMD on B.Cu in the outer bottom corner of the gap-filler zone over C4 (BT104), outboard of the BQ25756 (under the gel; research_notes/Pack thermal BAK 65E/smd-ntc.md). Reads the board there, 0.6-3.8 K above the hottest point of the C4 (BT104) can in the model. Keep the inner planes under it; low side to CELL_1N by its own trace. Gauge internal 18k pull-up; enable TS4 in data flash. Murata NCP15XH103F03RB/RC: B25/50 = 3380 K, B25/85 = 3435 K"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:Thermistor_NTC",
+   "order": 57,
+   "section": "Cell thermistors on the board",
+   "value": "10k B3435"
+  },
+  "TH401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C77131",
+    "MPN": "NCP15XH103F03RC"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:Thermistor_NTC",
+   "order": 165,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10k B3435"
+  },
+  "TH501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C77131",
+    "MPN": "NCP15XH103F03RC"
+   },
+   "footprint": "Resistor_SMD:R_0402_1005Metric",
+   "lib": "Device:Thermistor_NTC",
+   "order": 259,
+   "section": "Charger programming: input window, frequency, current limits, battery feedback, thermistor",
+   "value": "10k B3435"
+  },
+  "TP106": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 78,
+   "section": "Test points",
+   "value": "PACK_P"
+  },
+  "TP109": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "",
+    "MPN": "RH-S2761-46R (ronghe; Harwin S2761-46R equivalent)",
+    "Sourcing": "Hand-solder, not JLC assembled (test loop, dev only; saves a JLC extended-part fee; LCSC C55121754 RH-S2761-46R (ronghe; Harwin S2761-46R equivalent))"
+   },
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 79,
+   "section": "Test points",
+   "value": "GND"
+  },
+  "TP113": {
+   "block": "Cells and Gauge",
+   "fields": {},
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 55,
+   "section": "Protection FETs (charge and discharge, back to back)",
+   "value": "WAKE"
+  },
+  "TP301": {
+   "block": "MCU",
+   "fields": {},
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 86,
+   "section": "CC2340R5MODA module",
+   "value": "3V3"
+  },
+  "TP412": {
+   "block": "USB Port 1",
+   "fields": {
+    "MPN": "RH-S2761-46R (ronghe; Harwin S2761-46R equivalent)"
+   },
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 190,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "GND"
+  },
+  "TP512": {
+   "block": "USB Port 2",
+   "fields": {
+    "MPN": "RH-S2761-46R (ronghe; Harwin S2761-46R equivalent)"
+   },
+   "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+   "lib": "Connector:TestPoint",
+   "order": 284,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "GND"
+  },
+  "U101": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C2845123",
+    "MPN": "BQ40Z50RSMR-R2"
+   },
+   "footprint": "MonolithDev:TI_RSM0032A_VQFN-32_4x4mm_P0.4mm_EP1.4x1.4mm",
+   "lib": "MonolithDev:BQ40Z50-R2",
+   "order": 23,
+   "section": "BQ40Z50 gauge: supply, cell inputs, SMBus",
+   "value": "BQ40Z50RSMR-R2"
+  },
+  "U102": {
+   "block": "Cells and Gauge",
+   "fields": {
+    "LCSC": "C414622",
+    "MPN": "BQ294700DSGR",
+    "Notes": "Independent of the gauge: 4.35 V/cell OVP (hysteresis 0.30 V), active-high OUT (~7 V) after the CD delay. RIN must be 1k (device calibrated with it). Exposed pad to VSS (CELL_1N, the Kelvin ground at the 1N tab)."
+   },
+   "footprint": "Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm",
+   "lib": "MonolithDev:BQ294700",
+   "order": 58,
+   "section": "Second-level protector and fuse",
+   "value": "BQ294700DSGR"
+  },
+  "U204": {
+   "block": "3V3 Rail",
+   "fields": {
+    "LCSC": "C91241",
+    "MPN": "TPS62177DQCR"
+   },
+   "footprint": "Package_SON:WSON-10-1EP_2x3mm_P0.5mm_EP0.84x2.4mm",
+   "lib": "Regulator_Switching:TPS62177DQC",
+   "order": 0,
+   "section": "TPS62177 3.3 V always-on buck",
+   "value": "TPS62177DQCR"
+  },
+  "U301": {
+   "block": "MCU",
+   "fields": {
+    "LCSC": "",
+    "MPN": "CC2340R5MODAN0MHAR"
+   },
+   "footprint": "MonolithDev:TI_MHA0024A_CC2340R5MODA_7x10mm",
+   "lib": "MonolithDev:CC2340R5MODA",
+   "order": 80,
+   "section": "CC2340R5MODA module",
+   "value": "CC2340R5MODA"
+  },
+  "U401": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C30169739",
+    "MPN": "TPS25751DREFR"
+   },
+   "footprint": "MonolithDev:TI_WQFN-38-2EP_REF0038A_6x4mm_P0.4mm_2oz",
+   "lib": "MonolithDev:TPS25751D",
+   "order": 106,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "TPS25751DREFR"
+  },
+  "U402": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C222237",
+    "MPN": "M24512-DFMC6TG"
+   },
+   "footprint": "MonolithDev:ST_UFDFPN-8-1EP_2x3mm_P0.5mm_EP1.2x1.4mm",
+   "lib": "Memory_EEPROM:24LC512",
+   "order": 118,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "M24512-DFMC6TG"
+  },
+  "U403": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C19272232",
+    "MPN": "BQ25756RRVR"
+   },
+   "footprint": "MonolithDev:TI_VQFN-36-1EP_RRV0036A_5x6mm_P0.5mm",
+   "lib": "MonolithDev:BQ25756",
+   "order": 119,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "BQ25756RRVR"
+  },
+  "U404": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C3200405",
+    "MPN": "TPS62933DRLR"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-583-8",
+   "lib": "Regulator_Switching:TPS62933",
+   "order": 180,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "TPS62933DRLR"
+  },
+  "U405": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C2649810",
+    "MPN": "TPD6S300RUKR (TI)"
+   },
+   "footprint": "MonolithDev:TI_RUK0020B_WQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm_Via0.3",
+   "lib": "MonolithDev:TPD6S300",
+   "order": 101,
+   "section": "USB-C connector and port protection",
+   "value": "TPD6S300RUKR"
+  },
+  "U406": {
+   "block": "USB Port 1",
+   "fields": {
+    "LCSC": "C111739",
+    "MPN": "TPS7A4101DGNR (TI)"
+   },
+   "footprint": "Package_SO:HVSSOP-8-1EP_3x3mm_P0.65mm_EP1.57x1.89mm",
+   "lib": "MonolithDev:TPS7A4101",
+   "order": 170,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "TPS7A4101DGNR"
+  },
+  "U501": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C30169739",
+    "MPN": "TPS25751DREFR"
+   },
+   "footprint": "MonolithDev:TI_WQFN-38-2EP_REF0038A_6x4mm_P0.4mm_2oz",
+   "lib": "MonolithDev:TPS25751D",
+   "order": 200,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "TPS25751DREFR"
+  },
+  "U502": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C222237",
+    "MPN": "M24512-DFMC6TG"
+   },
+   "footprint": "MonolithDev:ST_UFDFPN-8-1EP_2x3mm_P0.5mm_EP1.2x1.4mm",
+   "lib": "Memory_EEPROM:24LC512",
+   "order": 212,
+   "section": "USB PD controller TPS25751D, EEPROM and I2C pull-ups",
+   "value": "M24512-DFMC6TG"
+  },
+  "U503": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C19272232",
+    "MPN": "BQ25756RRVR"
+   },
+   "footprint": "MonolithDev:TI_VQFN-36-1EP_RRV0036A_5x6mm_P0.5mm",
+   "lib": "MonolithDev:BQ25756",
+   "order": 213,
+   "section": "BQ25756 buck-boost charger: controller and current sense",
+   "value": "BQ25756RRVR"
+  },
+  "U504": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C3200405",
+    "MPN": "TPS62933DRLR"
+   },
+   "footprint": "Package_TO_SOT_SMD:SOT-583-8",
+   "lib": "Regulator_Switching:TPS62933",
+   "order": 274,
+   "section": "5 V buck for PP5V (TPS62933)",
+   "value": "TPS62933DRLR"
+  },
+  "U505": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C2649810",
+    "MPN": "TPD6S300RUKR (TI)"
+   },
+   "footprint": "MonolithDev:TI_RUK0020B_WQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm_Via0.3",
+   "lib": "MonolithDev:TPD6S300",
+   "order": 195,
+   "section": "USB-C connector and port protection",
+   "value": "TPD6S300RUKR"
+  },
+  "U506": {
+   "block": "USB Port 2",
+   "fields": {
+    "LCSC": "C111739",
+    "MPN": "TPS7A4101DGNR (TI)"
+   },
+   "footprint": "Package_SO:HVSSOP-8-1EP_3x3mm_P0.65mm_EP1.57x1.89mm",
+   "lib": "MonolithDev:TPS7A4101",
+   "order": 264,
+   "section": "9 V gate-drive supply, diode-ORed with REGN",
+   "value": "TPS7A4101DGNR"
+  }
+ },
+ "nc": [
+  [
+   "J302",
+   "4"
+  ],
+  [
+   "J401",
+   "A8"
+  ],
+  [
+   "J401",
+   "B8"
+  ],
+  [
+   "J501",
+   "A8"
+  ],
+  [
+   "J501",
+   "B8"
+  ],
+  [
+   "U101",
+   "14"
+  ],
+  [
+   "U101",
+   "20"
+  ],
+  [
+   "U101",
+   "21"
+  ],
+  [
+   "U101",
+   "22"
+  ],
+  [
+   "U101",
+   "29"
+  ],
+  [
+   "U101",
+   "30"
+  ],
+  [
+   "U101",
+   "7"
+  ],
+  [
+   "U204",
+   "7"
+  ],
+  [
+   "U301",
+   "17"
+  ],
+  [
+   "U301",
+   "18"
+  ],
+  [
+   "U403",
+   "15"
+  ],
+  [
+   "U403",
+   "16"
+  ],
+  [
+   "U403",
+   "31"
+  ],
+  [
+   "U403",
+   "4"
+  ],
+  [
+   "U403",
+   "5"
+  ],
+  [
+   "U403",
+   "6"
+  ],
+  [
+   "U405",
+   "1"
+  ],
+  [
+   "U405",
+   "14"
+  ],
+  [
+   "U405",
+   "15"
+  ],
+  [
+   "U405",
+   "19"
+  ],
+  [
+   "U405",
+   "2"
+  ],
+  [
+   "U405",
+   "20"
+  ],
+  [
+   "U406",
+   "3"
+  ],
+  [
+   "U406",
+   "6"
+  ],
+  [
+   "U406",
+   "7"
+  ],
+  [
+   "U503",
+   "15"
+  ],
+  [
+   "U503",
+   "16"
+  ],
+  [
+   "U503",
+   "31"
+  ],
+  [
+   "U503",
+   "4"
+  ],
+  [
+   "U503",
+   "5"
+  ],
+  [
+   "U503",
+   "6"
+  ],
+  [
+   "U505",
+   "1"
+  ],
+  [
+   "U505",
+   "14"
+  ],
+  [
+   "U505",
+   "15"
+  ],
+  [
+   "U505",
+   "19"
+  ],
+  [
+   "U505",
+   "2"
+  ],
+  [
+   "U505",
+   "20"
+  ],
+  [
+   "U506",
+   "3"
+  ],
+  [
+   "U506",
+   "6"
+  ],
+  [
+   "U506",
+   "7"
+  ]
+ ],
+ "nets": {
+  "/P1_LDO_3V3": [
+   [
+    "C404",
+    "1"
+   ],
+   [
+    "C408",
+    "1"
+   ],
+   [
+    "C452",
+    "1"
+   ],
+   [
+    "R402",
+    "1"
+   ],
+   [
+    "R403",
+    "1"
+   ],
+   [
+    "R404",
+    "1"
+   ],
+   [
+    "R441",
+    "1"
+   ],
+   [
+    "R455",
+    "1"
+   ],
+   [
+    "U401",
+    "1"
+   ],
+   [
+    "U401",
+    "2"
+   ],
+   [
+    "U402",
+    "8"
+   ],
+   [
+    "U405",
+    "10"
+   ]
+  ],
+  "/P2_LDO_3V3": [
+   [
+    "C504",
+    "1"
+   ],
+   [
+    "C508",
+    "1"
+   ],
+   [
+    "C552",
+    "1"
+   ],
+   [
+    "R502",
+    "1"
+   ],
+   [
+    "R503",
+    "1"
+   ],
+   [
+    "R504",
+    "1"
+   ],
+   [
+    "R541",
+    "1"
+   ],
+   [
+    "R555",
+    "1"
+   ],
+   [
+    "U501",
+    "1"
+   ],
+   [
+    "U502",
+    "8"
+   ],
+   [
+    "U505",
+    "10"
+   ]
+  ],
+  "3V3": [
+   [
+    "C207",
+    "1"
+   ],
+   [
+    "C301",
+    "1"
+   ],
+   [
+    "C302",
+    "1"
+   ],
+   [
+    "C303",
+    "1"
+   ],
+   [
+    "C403",
+    "1"
+   ],
+   [
+    "C503",
+    "1"
+   ],
+   [
+    "J301",
+    "1"
+   ],
+   [
+    "L201",
+    "2"
+   ],
+   [
+    "R302",
+    "1"
+   ],
+   [
+    "R304",
+    "1"
+   ],
+   [
+    "R305",
+    "1"
+   ],
+   [
+    "R313",
+    "1"
+   ],
+   [
+    "R314",
+    "1"
+   ],
+   [
+    "R417",
+    "2"
+   ],
+   [
+    "R517",
+    "2"
+   ],
+   [
+    "TP301",
+    "1"
+   ],
+   [
+    "U204",
+    "10"
+   ],
+   [
+    "U301",
+    "6"
+   ],
+   [
+    "U301",
+    "7"
+   ],
+   [
+    "U401",
+    "38"
+   ],
+   [
+    "U501",
+    "38"
+   ]
+  ],
+  "3V3_SLEEP": [
+   [
+    "R313",
+    "2"
+   ],
+   [
+    "U204",
+    "8"
+   ],
+   [
+    "U301",
+    "15"
+   ]
+  ],
+  "ANT_IN": [
+   [
+    "C315",
+    "1"
+   ],
+   [
+    "R321",
+    "2"
+   ],
+   [
+    "U301",
+    "3"
+   ]
+  ],
+  "BTP_INT": [
+   [
+    "Q103",
+    "1"
+   ],
+   [
+    "R117",
+    "1"
+   ],
+   [
+    "U101",
+    "15"
+   ]
+  ],
+  "CELL1": [
+   [
+    "J109",
+    "1"
+   ],
+   [
+    "R101",
+    "1"
+   ],
+   [
+    "R122",
+    "1"
+   ]
+  ],
+  "CELL2": [
+   [
+    "J110",
+    "1"
+   ],
+   [
+    "R102",
+    "1"
+   ],
+   [
+    "R121",
+    "1"
+   ]
+  ],
+  "CELL3": [
+   [
+    "J111",
+    "1"
+   ],
+   [
+    "R103",
+    "1"
+   ],
+   [
+    "R120",
+    "1"
+   ]
+  ],
+  "CELL_1N": [
+   [
+    "C104",
+    "2"
+   ],
+   [
+    "C105",
+    "2"
+   ],
+   [
+    "C115",
+    "2"
+   ],
+   [
+    "C116",
+    "2"
+   ],
+   [
+    "C117",
+    "1"
+   ],
+   [
+    "C118",
+    "2"
+   ],
+   [
+    "J115",
+    "1"
+   ],
+   [
+    "J118",
+    "1"
+   ],
+   [
+    "J120",
+    "1"
+   ],
+   [
+    "R117",
+    "2"
+   ],
+   [
+    "TH101",
+    "2"
+   ],
+   [
+    "TH104",
+    "2"
+   ],
+   [
+    "U101",
+    "16"
+   ],
+   [
+    "U101",
+    "17"
+   ],
+   [
+    "U101",
+    "23"
+   ],
+   [
+    "U101",
+    "24"
+   ],
+   [
+    "U101",
+    "33"
+   ],
+   [
+    "U101",
+    "9"
+   ],
+   [
+    "U102",
+    "6"
+   ],
+   [
+    "U102",
+    "9"
+   ]
+  ],
+  "CELL_4P": [
+   [
+    "D101",
+    "2"
+   ],
+   [
+    "J116",
+    "1"
+   ],
+   [
+    "R104",
+    "1"
+   ],
+   [
+    "R119",
+    "1"
+   ],
+   [
+    "R123",
+    "2"
+   ]
+  ],
+  "CELL_N": [
+   [
+    "J108",
+    "1"
+   ],
+   [
+    "R107",
+    "1"
+   ],
+   [
+    "RS101",
+    "1"
+   ]
+  ],
+  "CELL_P": [
+   [
+    "C110",
+    "1"
+   ],
+   [
+    "F102",
+    "2"
+   ],
+   [
+    "Q101",
+    "1"
+   ],
+   [
+    "Q101",
+    "2"
+   ],
+   [
+    "Q101",
+    "3"
+   ],
+   [
+    "R110",
+    "2"
+   ],
+   [
+    "R118",
+    "1"
+   ]
+  ],
+  "CELL_P_RAW": [
+   [
+    "F102",
+    "1"
+   ],
+   [
+    "J112",
+    "1"
+   ]
+  ],
+  "CHG": [
+   [
+    "R109",
+    "1"
+   ],
+   [
+    "U101",
+    "31"
+   ]
+  ],
+  "CHG_G": [
+   [
+    "Q101",
+    "4"
+   ],
+   [
+    "R109",
+    "2"
+   ],
+   [
+    "R110",
+    "1"
+   ]
+  ],
+  "CHG_INH": [
+   [
+    "J302",
+    "2"
+   ],
+   [
+    "R435",
+    "1"
+   ],
+   [
+    "R535",
+    "1"
+   ],
+   [
+    "U301",
+    "11"
+   ]
+  ],
+  "DSG": [
+   [
+    "R111",
+    "1"
+   ],
+   [
+    "U101",
+    "28"
+   ]
+  ],
+  "DSG_G": [
+   [
+    "D103",
+    "1"
+   ],
+   [
+    "Q102",
+    "4"
+   ],
+   [
+    "R111",
+    "2"
+   ],
+   [
+    "R112",
+    "1"
+   ]
+  ],
+  "EN_5V1": [
+   [
+    "R432",
+    "1"
+   ],
+   [
+    "U301",
+    "12"
+   ],
+   [
+    "U404",
+    "2"
+   ]
+  ],
+  "EN_5V2": [
+   [
+    "R532",
+    "1"
+   ],
+   [
+    "U301",
+    "13"
+   ],
+   [
+    "U504",
+    "2"
+   ]
+  ],
+  "FET_MID": [
+   [
+    "Q101",
+    "5"
+   ],
+   [
+    "Q101",
+    "6"
+   ],
+   [
+    "Q101",
+    "7"
+   ],
+   [
+    "Q101",
+    "8"
+   ],
+   [
+    "Q102",
+    "5"
+   ],
+   [
+    "Q102",
+    "6"
+   ],
+   [
+    "Q102",
+    "7"
+   ],
+   [
+    "Q102",
+    "8"
+   ],
+   [
+    "R106",
+    "1"
+   ]
+  ],
+  "GAUGE_FUSE": [
+   [
+    "R126",
+    "2"
+   ],
+   [
+    "U101",
+    "25"
+   ]
+  ],
+  "GND": [
+   [
+    "C108",
+    "2"
+   ],
+   [
+    "C206",
+    "2"
+   ],
+   [
+    "C207",
+    "2"
+   ],
+   [
+    "C208",
+    "2"
+   ],
+   [
+    "C209",
+    "2"
+   ],
+   [
+    "C210",
+    "2"
+   ],
+   [
+    "C211",
+    "2"
+   ],
+   [
+    "C212",
+    "2"
+   ],
+   [
+    "C213",
+    "2"
+   ],
+   [
+    "C301",
+    "2"
+   ],
+   [
+    "C302",
+    "2"
+   ],
+   [
+    "C303",
+    "2"
+   ],
+   [
+    "C304",
+    "2"
+   ],
+   [
+    "C314",
+    "2"
+   ],
+   [
+    "C315",
+    "2"
+   ],
+   [
+    "C401",
+    "2"
+   ],
+   [
+    "C402",
+    "2"
+   ],
+   [
+    "C403",
+    "2"
+   ],
+   [
+    "C404",
+    "2"
+   ],
+   [
+    "C405",
+    "2"
+   ],
+   [
+    "C406",
+    "2"
+   ],
+   [
+    "C407",
+    "2"
+   ],
+   [
+    "C408",
+    "2"
+   ],
+   [
+    "C409",
+    "2"
+   ],
+   [
+    "C410",
+    "2"
+   ],
+   [
+    "C411",
+    "2"
+   ],
+   [
+    "C415",
+    "2"
+   ],
+   [
+    "C416",
+    "2"
+   ],
+   [
+    "C418",
+    "2"
+   ],
+   [
+    "C419",
+    "2"
+   ],
+   [
+    "C420",
+    "2"
+   ],
+   [
+    "C421",
+    "2"
+   ],
+   [
+    "C423",
+    "2"
+   ],
+   [
+    "C424",
+    "2"
+   ],
+   [
+    "C427",
+    "2"
+   ],
+   [
+    "C430",
+    "2"
+   ],
+   [
+    "C431",
+    "2"
+   ],
+   [
+    "C434",
+    "2"
+   ],
+   [
+    "C438",
+    "2"
+   ],
+   [
+    "C439",
+    "2"
+   ],
+   [
+    "C441",
+    "2"
+   ],
+   [
+    "C442",
+    "2"
+   ],
+   [
+    "C443",
+    "2"
+   ],
+   [
+    "C444",
+    "2"
+   ],
+   [
+    "C446",
+    "2"
+   ],
+   [
+    "C449",
+    "2"
+   ],
+   [
+    "C450",
+    "2"
+   ],
+   [
+    "C451",
+    "2"
+   ],
+   [
+    "C452",
+    "2"
+   ],
+   [
+    "C456",
+    "2"
+   ],
+   [
+    "C457",
+    "2"
+   ],
+   [
+    "C458",
+    "2"
+   ],
+   [
+    "C501",
+    "2"
+   ],
+   [
+    "C502",
+    "2"
+   ],
+   [
+    "C503",
+    "2"
+   ],
+   [
+    "C504",
+    "2"
+   ],
+   [
+    "C505",
+    "2"
+   ],
+   [
+    "C506",
+    "2"
+   ],
+   [
+    "C507",
+    "2"
+   ],
+   [
+    "C508",
+    "2"
+   ],
+   [
+    "C509",
+    "2"
+   ],
+   [
+    "C510",
+    "2"
+   ],
+   [
+    "C511",
+    "2"
+   ],
+   [
+    "C515",
+    "2"
+   ],
+   [
+    "C516",
+    "2"
+   ],
+   [
+    "C518",
+    "2"
+   ],
+   [
+    "C519",
+    "2"
+   ],
+   [
+    "C520",
+    "2"
+   ],
+   [
+    "C521",
+    "2"
+   ],
+   [
+    "C523",
+    "2"
+   ],
+   [
+    "C524",
+    "2"
+   ],
+   [
+    "C527",
+    "2"
+   ],
+   [
+    "C530",
+    "2"
+   ],
+   [
+    "C531",
+    "2"
+   ],
+   [
+    "C534",
+    "2"
+   ],
+   [
+    "C538",
+    "2"
+   ],
+   [
+    "C539",
+    "2"
+   ],
+   [
+    "C541",
+    "2"
+   ],
+   [
+    "C542",
+    "2"
+   ],
+   [
+    "C543",
+    "2"
+   ],
+   [
+    "C544",
+    "2"
+   ],
+   [
+    "C546",
+    "2"
+   ],
+   [
+    "C549",
+    "2"
+   ],
+   [
+    "C550",
+    "2"
+   ],
+   [
+    "C551",
+    "2"
+   ],
+   [
+    "C552",
+    "2"
+   ],
+   [
+    "C556",
+    "2"
+   ],
+   [
+    "C557",
+    "2"
+   ],
+   [
+    "C558",
+    "2"
+   ],
+   [
+    "D401",
+    "1"
+   ],
+   [
+    "D401",
+    "2"
+   ],
+   [
+    "D401",
+    "3"
+   ],
+   [
+    "D401",
+    "7"
+   ],
+   [
+    "D501",
+    "1"
+   ],
+   [
+    "D501",
+    "2"
+   ],
+   [
+    "D501",
+    "3"
+   ],
+   [
+    "D501",
+    "7"
+   ],
+   [
+    "J114",
+    "1"
+   ],
+   [
+    "J301",
+    "5"
+   ],
+   [
+    "J302",
+    "5"
+   ],
+   [
+    "J401",
+    "A1"
+   ],
+   [
+    "J401",
+    "A12"
+   ],
+   [
+    "J401",
+    "B1"
+   ],
+   [
+    "J401",
+    "B12"
+   ],
+   [
+    "J401",
+    "SH"
+   ],
+   [
+    "J501",
+    "A1"
+   ],
+   [
+    "J501",
+    "A12"
+   ],
+   [
+    "J501",
+    "B1"
+   ],
+   [
+    "J501",
+    "B12"
+   ],
+   [
+    "J501",
+    "SH"
+   ],
+   [
+    "Q103",
+    "2"
+   ],
+   [
+    "Q104",
+    "2"
+   ],
+   [
+    "Q401",
+    "5"
+   ],
+   [
+    "Q401",
+    "6"
+   ],
+   [
+    "Q401",
+    "7"
+   ],
+   [
+    "Q402",
+    "5"
+   ],
+   [
+    "Q402",
+    "6"
+   ],
+   [
+    "Q402",
+    "7"
+   ],
+   [
+    "Q409",
+    "2"
+   ],
+   [
+    "Q501",
+    "5"
+   ],
+   [
+    "Q501",
+    "6"
+   ],
+   [
+    "Q501",
+    "7"
+   ],
+   [
+    "Q502",
+    "5"
+   ],
+   [
+    "Q502",
+    "6"
+   ],
+   [
+    "Q502",
+    "7"
+   ],
+   [
+    "Q509",
+    "2"
+   ],
+   [
+    "R108",
+    "1"
+   ],
+   [
+    "R125",
+    "2"
+   ],
+   [
+    "R411",
+    "2"
+   ],
+   [
+    "R412",
+    "2"
+   ],
+   [
+    "R413",
+    "2"
+   ],
+   [
+    "R414",
+    "2"
+   ],
+   [
+    "R416",
+    "2"
+   ],
+   [
+    "R432",
+    "2"
+   ],
+   [
+    "R434",
+    "2"
+   ],
+   [
+    "R453",
+    "2"
+   ],
+   [
+    "R511",
+    "2"
+   ],
+   [
+    "R512",
+    "2"
+   ],
+   [
+    "R513",
+    "2"
+   ],
+   [
+    "R514",
+    "2"
+   ],
+   [
+    "R516",
+    "2"
+   ],
+   [
+    "R532",
+    "2"
+   ],
+   [
+    "R534",
+    "2"
+   ],
+   [
+    "R553",
+    "2"
+   ],
+   [
+    "RS101",
+    "2"
+   ],
+   [
+    "TH401",
+    "2"
+   ],
+   [
+    "TH501",
+    "2"
+   ],
+   [
+    "TP109",
+    "1"
+   ],
+   [
+    "TP412",
+    "1"
+   ],
+   [
+    "TP512",
+    "1"
+   ],
+   [
+    "U204",
+    "1"
+   ],
+   [
+    "U204",
+    "11"
+   ],
+   [
+    "U204",
+    "4"
+   ],
+   [
+    "U204",
+    "5"
+   ],
+   [
+    "U204",
+    "6"
+   ],
+   [
+    "U301",
+    "1"
+   ],
+   [
+    "U301",
+    "2"
+   ],
+   [
+    "U301",
+    "22"
+   ],
+   [
+    "U301",
+    "23"
+   ],
+   [
+    "U301",
+    "24"
+   ],
+   [
+    "U301",
+    "5"
+   ],
+   [
+    "U301",
+    "8"
+   ],
+   [
+    "U401",
+    "11"
+   ],
+   [
+    "U401",
+    "12"
+   ],
+   [
+    "U401",
+    "13"
+   ],
+   [
+    "U401",
+    "14"
+   ],
+   [
+    "U401",
+    "26"
+   ],
+   [
+    "U401",
+    "27"
+   ],
+   [
+    "U401",
+    "3"
+   ],
+   [
+    "U401",
+    "31"
+   ],
+   [
+    "U401",
+    "36"
+   ],
+   [
+    "U401",
+    "39"
+   ],
+   [
+    "U401",
+    "5"
+   ],
+   [
+    "U401",
+    "6"
+   ],
+   [
+    "U401",
+    "7"
+   ],
+   [
+    "U402",
+    "1"
+   ],
+   [
+    "U402",
+    "2"
+   ],
+   [
+    "U402",
+    "3"
+   ],
+   [
+    "U402",
+    "4"
+   ],
+   [
+    "U402",
+    "7"
+   ],
+   [
+    "U403",
+    "17"
+   ],
+   [
+    "U403",
+    "22"
+   ],
+   [
+    "U403",
+    "37"
+   ],
+   [
+    "U404",
+    "1"
+   ],
+   [
+    "U404",
+    "4"
+   ],
+   [
+    "U405",
+    "13"
+   ],
+   [
+    "U405",
+    "16"
+   ],
+   [
+    "U405",
+    "17"
+   ],
+   [
+    "U405",
+    "18"
+   ],
+   [
+    "U405",
+    "21"
+   ],
+   [
+    "U405",
+    "8"
+   ],
+   [
+    "U406",
+    "4"
+   ],
+   [
+    "U406",
+    "9"
+   ],
+   [
+    "U501",
+    "11"
+   ],
+   [
+    "U501",
+    "12"
+   ],
+   [
+    "U501",
+    "13"
+   ],
+   [
+    "U501",
+    "14"
+   ],
+   [
+    "U501",
+    "2"
+   ],
+   [
+    "U501",
+    "26"
+   ],
+   [
+    "U501",
+    "27"
+   ],
+   [
+    "U501",
+    "3"
+   ],
+   [
+    "U501",
+    "31"
+   ],
+   [
+    "U501",
+    "36"
+   ],
+   [
+    "U501",
+    "39"
+   ],
+   [
+    "U501",
+    "5"
+   ],
+   [
+    "U501",
+    "6"
+   ],
+   [
+    "U501",
+    "7"
+   ],
+   [
+    "U502",
+    "1"
+   ],
+   [
+    "U502",
+    "2"
+   ],
+   [
+    "U502",
+    "3"
+   ],
+   [
+    "U502",
+    "4"
+   ],
+   [
+    "U502",
+    "7"
+   ],
+   [
+    "U503",
+    "17"
+   ],
+   [
+    "U503",
+    "22"
+   ],
+   [
+    "U503",
+    "37"
+   ],
+   [
+    "U504",
+    "1"
+   ],
+   [
+    "U504",
+    "4"
+   ],
+   [
+    "U505",
+    "13"
+   ],
+   [
+    "U505",
+    "16"
+   ],
+   [
+    "U505",
+    "17"
+   ],
+   [
+    "U505",
+    "18"
+   ],
+   [
+    "U505",
+    "21"
+   ],
+   [
+    "U505",
+    "8"
+   ],
+   [
+    "U506",
+    "4"
+   ],
+   [
+    "U506",
+    "9"
+   ]
+  ],
+  "IRQ_N": [
+   [
+    "Q103",
+    "3"
+   ],
+   [
+    "R314",
+    "2"
+   ],
+   [
+    "U301",
+    "21"
+   ],
+   [
+    "U401",
+    "10"
+   ],
+   [
+    "U501",
+    "10"
+   ]
+  ],
+  "NRST": [
+   [
+    "C304",
+    "1"
+   ],
+   [
+    "J301",
+    "3"
+   ],
+   [
+    "J302",
+    "3"
+   ],
+   [
+    "R302",
+    "2"
+   ],
+   [
+    "U301",
+    "14"
+   ]
+  ],
+  "Net-(C110-Pad2)": [
+   [
+    "C110",
+    "2"
+   ],
+   [
+    "C111",
+    "1"
+   ]
+  ],
+  "Net-(C313-Pad2)": [
+   [
+    "C313",
+    "2"
+   ],
+   [
+    "C314",
+    "1"
+   ],
+   [
+    "R321",
+    "1"
+   ]
+  ],
+  "Net-(D101-K)": [
+   [
+    "D101",
+    "1"
+   ],
+   [
+    "R105",
+    "1"
+   ]
+  ],
+  "Net-(F102-HTR)": [
+   [
+    "F102",
+    "3"
+   ],
+   [
+    "Q104",
+    "3"
+   ]
+  ],
+  "Net-(Q104-G)": [
+   [
+    "C118",
+    "1"
+   ],
+   [
+    "Q104",
+    "1"
+   ],
+   [
+    "R124",
+    "2"
+   ],
+   [
+    "R125",
+    "1"
+   ],
+   [
+    "R126",
+    "1"
+   ]
+  ],
+  "Net-(U101-BAT)": [
+   [
+    "R105",
+    "2"
+   ],
+   [
+    "U101",
+    "32"
+   ]
+  ],
+  "Net-(U101-PACK)": [
+   [
+    "R113",
+    "2"
+   ],
+   [
+    "U101",
+    "27"
+   ]
+  ],
+  "Net-(U101-PBI)": [
+   [
+    "C105",
+    "1"
+   ],
+   [
+    "U101",
+    "1"
+   ]
+  ],
+  "Net-(U101-SMBC)": [
+   [
+    "R115",
+    "1"
+   ],
+   [
+    "U101",
+    "19"
+   ]
+  ],
+  "Net-(U101-SMBD)": [
+   [
+    "R116",
+    "1"
+   ],
+   [
+    "U101",
+    "18"
+   ]
+  ],
+  "Net-(U101-VC1)": [
+   [
+    "C103",
+    "2"
+   ],
+   [
+    "C104",
+    "1"
+   ],
+   [
+    "R101",
+    "2"
+   ],
+   [
+    "U101",
+    "5"
+   ]
+  ],
+  "Net-(U101-VC2)": [
+   [
+    "C102",
+    "2"
+   ],
+   [
+    "C103",
+    "1"
+   ],
+   [
+    "R102",
+    "2"
+   ],
+   [
+    "U101",
+    "4"
+   ]
+  ],
+  "Net-(U101-VC3)": [
+   [
+    "C101",
+    "2"
+   ],
+   [
+    "C102",
+    "1"
+   ],
+   [
+    "R103",
+    "2"
+   ],
+   [
+    "U101",
+    "3"
+   ]
+  ],
+  "Net-(U101-VC4)": [
+   [
+    "C101",
+    "1"
+   ],
+   [
+    "R104",
+    "2"
+   ],
+   [
+    "U101",
+    "2"
+   ]
+  ],
+  "Net-(U101-VCC)": [
+   [
+    "R106",
+    "2"
+   ],
+   [
+    "U101",
+    "26"
+   ]
+  ],
+  "Net-(U102-CD)": [
+   [
+    "C117",
+    "2"
+   ],
+   [
+    "U102",
+    "7"
+   ]
+  ],
+  "Net-(U102-OUT)": [
+   [
+    "R124",
+    "1"
+   ],
+   [
+    "U102",
+    "8"
+   ]
+  ],
+  "Net-(U102-V1)": [
+   [
+    "C114",
+    "2"
+   ],
+   [
+    "C115",
+    "1"
+   ],
+   [
+    "R122",
+    "2"
+   ],
+   [
+    "U102",
+    "5"
+   ]
+  ],
+  "Net-(U102-V2)": [
+   [
+    "C113",
+    "2"
+   ],
+   [
+    "C114",
+    "1"
+   ],
+   [
+    "R121",
+    "2"
+   ],
+   [
+    "U102",
+    "4"
+   ]
+  ],
+  "Net-(U102-V3)": [
+   [
+    "C112",
+    "2"
+   ],
+   [
+    "C113",
+    "1"
+   ],
+   [
+    "R120",
+    "2"
+   ],
+   [
+    "U102",
+    "3"
+   ]
+  ],
+  "Net-(U102-V4)": [
+   [
+    "C112",
+    "1"
+   ],
+   [
+    "R119",
+    "2"
+   ],
+   [
+    "U102",
+    "2"
+   ]
+  ],
+  "Net-(U102-VDD)": [
+   [
+    "C116",
+    "1"
+   ],
+   [
+    "R123",
+    "1"
+   ],
+   [
+    "U102",
+    "1"
+   ]
+  ],
+  "PACK_CMID": [
+   [
+    "C107",
+    "2"
+   ],
+   [
+    "C108",
+    "1"
+   ]
+  ],
+  "PACK_P": [
+   [
+    "C107",
+    "1"
+   ],
+   [
+    "C111",
+    "2"
+   ],
+   [
+    "C206",
+    "1"
+   ],
+   [
+    "C208",
+    "1"
+   ],
+   [
+    "C209",
+    "1"
+   ],
+   [
+    "C210",
+    "1"
+   ],
+   [
+    "C211",
+    "1"
+   ],
+   [
+    "C212",
+    "1"
+   ],
+   [
+    "C213",
+    "1"
+   ],
+   [
+    "C444",
+    "1"
+   ],
+   [
+    "C446",
+    "1"
+   ],
+   [
+    "C457",
+    "1"
+   ],
+   [
+    "C544",
+    "1"
+   ],
+   [
+    "C546",
+    "1"
+   ],
+   [
+    "C557",
+    "1"
+   ],
+   [
+    "D103",
+    "2"
+   ],
+   [
+    "J113",
+    "1"
+   ],
+   [
+    "Q102",
+    "1"
+   ],
+   [
+    "Q102",
+    "2"
+   ],
+   [
+    "Q102",
+    "3"
+   ],
+   [
+    "R112",
+    "2"
+   ],
+   [
+    "R113",
+    "1"
+   ],
+   [
+    "R418",
+    "1"
+   ],
+   [
+    "R427",
+    "2"
+   ],
+   [
+    "R429",
+    "1"
+   ],
+   [
+    "R518",
+    "1"
+   ],
+   [
+    "R527",
+    "2"
+   ],
+   [
+    "R529",
+    "1"
+   ],
+   [
+    "TP106",
+    "1"
+   ],
+   [
+    "U204",
+    "2"
+   ],
+   [
+    "U204",
+    "3"
+   ],
+   [
+    "U404",
+    "3"
+   ],
+   [
+    "U406",
+    "8"
+   ],
+   [
+    "U504",
+    "3"
+   ],
+   [
+    "U506",
+    "8"
+   ]
+  ],
+  "RFIO": [
+   [
+    "C313",
+    "1"
+   ],
+   [
+    "U301",
+    "4"
+   ]
+  ],
+  "SCL": [
+   [
+    "J302",
+    "6"
+   ],
+   [
+    "R115",
+    "2"
+   ],
+   [
+    "R304",
+    "2"
+   ],
+   [
+    "U301",
+    "9"
+   ],
+   [
+    "U401",
+    "9"
+   ],
+   [
+    "U501",
+    "9"
+   ]
+  ],
+  "SDA": [
+   [
+    "J302",
+    "1"
+   ],
+   [
+    "R116",
+    "2"
+   ],
+   [
+    "R305",
+    "2"
+   ],
+   [
+    "U301",
+    "10"
+   ],
+   [
+    "U401",
+    "8"
+   ],
+   [
+    "U501",
+    "8"
+   ]
+  ],
+  "SRN": [
+   [
+    "C106",
+    "2"
+   ],
+   [
+    "R108",
+    "2"
+   ],
+   [
+    "U101",
+    "6"
+   ]
+  ],
+  "SRP": [
+   [
+    "C106",
+    "1"
+   ],
+   [
+    "R107",
+    "2"
+   ],
+   [
+    "U101",
+    "8"
+   ]
+  ],
+  "SWCLK": [
+   [
+    "J301",
+    "4"
+   ],
+   [
+    "U301",
+    "19"
+   ]
+  ],
+  "SWDIO": [
+   [
+    "J301",
+    "2"
+   ],
+   [
+    "U301",
+    "20"
+   ]
+  ],
+  "SW_3V3": [
+   [
+    "L201",
+    "1"
+   ],
+   [
+    "U204",
+    "9"
+   ]
+  ],
+  "TS1": [
+   [
+    "TH101",
+    "1"
+   ],
+   [
+    "U101",
+    "10"
+   ]
+  ],
+  "TS2": [
+   [
+    "J117",
+    "1"
+   ],
+   [
+    "U101",
+    "11"
+   ]
+  ],
+  "TS3": [
+   [
+    "J119",
+    "1"
+   ],
+   [
+    "U101",
+    "12"
+   ]
+  ],
+  "TS4": [
+   [
+    "TH104",
+    "1"
+   ],
+   [
+    "U101",
+    "13"
+   ]
+  ],
+  "UART_TX": [
+   [
+    "J301",
+    "6"
+   ],
+   [
+    "U301",
+    "16"
+   ]
+  ],
+  "USB Port 1/ACN_F": [
+   [
+    "C414",
+    "2"
+   ],
+   [
+    "C416",
+    "1"
+   ],
+   [
+    "R426",
+    "2"
+   ],
+   [
+    "U403",
+    "29"
+   ]
+  ],
+  "USB Port 1/ACOV": [
+   [
+    "R410",
+    "2"
+   ],
+   [
+    "R411",
+    "1"
+   ],
+   [
+    "U403",
+    "35"
+   ]
+  ],
+  "USB Port 1/ACP_F": [
+   [
+    "C414",
+    "1"
+   ],
+   [
+    "C415",
+    "1"
+   ],
+   [
+    "R425",
+    "2"
+   ],
+   [
+    "U403",
+    "30"
+   ]
+  ],
+  "USB Port 1/ACUV": [
+   [
+    "R409",
+    "2"
+   ],
+   [
+    "R410",
+    "1"
+   ],
+   [
+    "U403",
+    "34"
+   ]
+  ],
+  "USB Port 1/AC_SNS_N": [
+   [
+    "C420",
+    "1"
+   ],
+   [
+    "C421",
+    "1"
+   ],
+   [
+    "C423",
+    "1"
+   ],
+   [
+    "C424",
+    "1"
+   ],
+   [
+    "C427",
+    "1"
+   ],
+   [
+    "C430",
+    "1"
+   ],
+   [
+    "C456",
+    "1"
+   ],
+   [
+    "Q401",
+    "2"
+   ],
+   [
+    "Q401",
+    "3"
+   ],
+   [
+    "Q401",
+    "4"
+   ],
+   [
+    "R424",
+    "2"
+   ],
+   [
+    "R426",
+    "1"
+   ]
+  ],
+  "USB Port 1/BAT_SNS_P": [
+   [
+    "C431",
+    "1"
+   ],
+   [
+    "C434",
+    "1"
+   ],
+   [
+    "C438",
+    "1"
+   ],
+   [
+    "Q402",
+    "2"
+   ],
+   [
+    "Q402",
+    "3"
+   ],
+   [
+    "Q402",
+    "4"
+   ],
+   [
+    "R427",
+    "1"
+   ],
+   [
+    "R428",
+    "1"
+   ]
+  ],
+  "USB Port 1/BST_5V": [
+   [
+    "C440",
+    "1"
+   ],
+   [
+    "U404",
+    "6"
+   ]
+  ],
+  "USB Port 1/BTST1": [
+   [
+    "C412",
+    "1"
+   ],
+   [
+    "D404",
+    "1"
+   ],
+   [
+    "U403",
+    "26"
+   ]
+  ],
+  "USB Port 1/BTST2": [
+   [
+    "C413",
+    "1"
+   ],
+   [
+    "D405",
+    "1"
+   ],
+   [
+    "U403",
+    "20"
+   ]
+  ],
+  "USB Port 1/CC1": [
+   [
+    "C401",
+    "1"
+   ],
+   [
+    "U401",
+    "28"
+   ],
+   [
+    "U405",
+    "12"
+   ]
+  ],
+  "USB Port 1/CC2": [
+   [
+    "C402",
+    "1"
+   ],
+   [
+    "U401",
+    "29"
+   ],
+   [
+    "U405",
+    "11"
+   ]
+  ],
+  "USB Port 1/CE_N": [
+   [
+    "R417",
+    "1"
+   ],
+   [
+    "R435",
+    "2"
+   ],
+   [
+    "U403",
+    "7"
+   ]
+  ],
+  "USB Port 1/CHG_INT": [
+   [
+    "R404",
+    "2"
+   ],
+   [
+    "U401",
+    "18"
+   ],
+   [
+    "U403",
+    "3"
+   ]
+  ],
+  "USB Port 1/C_CC1": [
+   [
+    "J401",
+    "A5"
+   ],
+   [
+    "U405",
+    "4"
+   ],
+   [
+    "U405",
+    "7"
+   ]
+  ],
+  "USB Port 1/C_CC2": [
+   [
+    "J401",
+    "B5"
+   ],
+   [
+    "U405",
+    "5"
+   ],
+   [
+    "U405",
+    "6"
+   ]
+  ],
+  "USB Port 1/DPDN_DCP": [
+   [
+    "J401",
+    "A6"
+   ],
+   [
+    "J401",
+    "A7"
+   ],
+   [
+    "J401",
+    "B6"
+   ],
+   [
+    "J401",
+    "B7"
+   ]
+  ],
+  "USB Port 1/DRV9_OFF": [
+   [
+    "Q409",
+    "1"
+   ],
+   [
+    "R455",
+    "2"
+   ],
+   [
+    "U401",
+    "37"
+   ]
+  ],
+  "USB Port 1/DRV_SUP": [
+   [
+    "C411",
+    "1"
+   ],
+   [
+    "D404",
+    "2"
+   ],
+   [
+    "D405",
+    "2"
+   ],
+   [
+    "D410",
+    "1"
+   ],
+   [
+    "D411",
+    "1"
+   ],
+   [
+    "U403",
+    "23"
+   ]
+  ],
+  "USB Port 1/FB": [
+   [
+    "R418",
+    "2"
+   ],
+   [
+    "R419",
+    "1"
+   ],
+   [
+    "U403",
+    "12"
+   ]
+  ],
+  "USB Port 1/FBG": [
+   [
+    "R419",
+    "2"
+   ],
+   [
+    "U403",
+    "11"
+   ]
+  ],
+  "USB Port 1/FB_5V": [
+   [
+    "R433",
+    "2"
+   ],
+   [
+    "R434",
+    "1"
+   ],
+   [
+    "U404",
+    "8"
+   ]
+  ],
+  "USB Port 1/FSW": [
+   [
+    "R412",
+    "1"
+   ],
+   [
+    "U403",
+    "36"
+   ]
+  ],
+  "USB Port 1/HG1": [
+   [
+    "Q401",
+    "1"
+   ],
+   [
+    "R444",
+    "2"
+   ]
+  ],
+  "USB Port 1/HG2": [
+   [
+    "Q402",
+    "1"
+   ],
+   [
+    "R446",
+    "2"
+   ]
+  ],
+  "USB Port 1/HIDRV1": [
+   [
+    "R444",
+    "1"
+   ],
+   [
+    "U403",
+    "27"
+   ]
+  ],
+  "USB Port 1/HIDRV2": [
+   [
+    "R446",
+    "1"
+   ],
+   [
+    "U403",
+    "19"
+   ]
+  ],
+  "USB Port 1/I2CC_SCL": [
+   [
+    "R403",
+    "2"
+   ],
+   [
+    "U401",
+    "17"
+   ],
+   [
+    "U402",
+    "6"
+   ],
+   [
+    "U403",
+    "1"
+   ]
+  ],
+  "USB Port 1/I2CC_SDA": [
+   [
+    "R402",
+    "2"
+   ],
+   [
+    "U401",
+    "16"
+   ],
+   [
+    "U402",
+    "5"
+   ],
+   [
+    "U403",
+    "2"
+   ]
+  ],
+  "USB Port 1/ICHG": [
+   [
+    "R413",
+    "1"
+   ],
+   [
+    "U403",
+    "9"
+   ]
+  ],
+  "USB Port 1/ILIM": [
+   [
+    "R414",
+    "1"
+   ],
+   [
+    "U403",
+    "10"
+   ]
+  ],
+  "USB Port 1/LDO_1V5": [
+   [
+    "C405",
+    "1"
+   ],
+   [
+    "U401",
+    "4"
+   ]
+  ],
+  "USB Port 1/LG1": [
+   [
+    "Q401",
+    "8"
+   ],
+   [
+    "R445",
+    "2"
+   ]
+  ],
+  "USB Port 1/LG2": [
+   [
+    "Q402",
+    "8"
+   ],
+   [
+    "R447",
+    "2"
+   ]
+  ],
+  "USB Port 1/LODRV1": [
+   [
+    "R445",
+    "1"
+   ],
+   [
+    "U403",
+    "25"
+   ]
+  ],
+  "USB Port 1/LODRV2": [
+   [
+    "R447",
+    "1"
+   ],
+   [
+    "U403",
+    "21"
+   ]
+  ],
+  "USB Port 1/PD_DRAIN": [
+   [
+    "U401",
+    "15"
+   ],
+   [
+    "U401",
+    "30"
+   ],
+   [
+    "U401",
+    "40"
+   ]
+  ],
+  "USB Port 1/PP5V": [
+   [
+    "C407",
+    "1"
+   ],
+   [
+    "C441",
+    "1"
+   ],
+   [
+    "C442",
+    "1"
+   ],
+   [
+    "C443",
+    "1"
+   ],
+   [
+    "L402",
+    "2"
+   ],
+   [
+    "R433",
+    "1"
+   ],
+   [
+    "U401",
+    "34"
+   ]
+  ],
+  "USB Port 1/PPHV": [
+   [
+    "C409",
+    "1"
+   ],
+   [
+    "C449",
+    "1"
+   ],
+   [
+    "R409",
+    "1"
+   ],
+   [
+    "R424",
+    "1"
+   ],
+   [
+    "R425",
+    "1"
+   ],
+   [
+    "U401",
+    "20"
+   ],
+   [
+    "U403",
+    "32"
+   ],
+   [
+    "U403",
+    "33"
+   ]
+  ],
+  "USB Port 1/REGN": [
+   [
+    "C410",
+    "1"
+   ],
+   [
+    "D410",
+    "2"
+   ],
+   [
+    "R415",
+    "1"
+   ],
+   [
+    "R454",
+    "2"
+   ],
+   [
+    "U403",
+    "24"
+   ]
+  ],
+  "USB Port 1/SBU_FLT": [
+   [
+    "R441",
+    "2"
+   ],
+   [
+    "U401",
+    "19"
+   ],
+   [
+    "U405",
+    "9"
+   ]
+  ],
+  "USB Port 1/SRN_F": [
+   [
+    "C417",
+    "2"
+   ],
+   [
+    "C419",
+    "1"
+   ],
+   [
+    "R429",
+    "2"
+   ],
+   [
+    "U403",
+    "13"
+   ]
+  ],
+  "USB Port 1/SRP_F": [
+   [
+    "C417",
+    "1"
+   ],
+   [
+    "C418",
+    "1"
+   ],
+   [
+    "R428",
+    "2"
+   ],
+   [
+    "U403",
+    "14"
+   ]
+  ],
+  "USB Port 1/SS_5V": [
+   [
+    "C439",
+    "1"
+   ],
+   [
+    "U404",
+    "7"
+   ]
+  ],
+  "USB Port 1/SW1": [
+   [
+    "C412",
+    "2"
+   ],
+   [
+    "L401",
+    "1"
+   ],
+   [
+    "Q401",
+    "9"
+   ],
+   [
+    "U403",
+    "28"
+   ]
+  ],
+  "USB Port 1/SW2": [
+   [
+    "C413",
+    "2"
+   ],
+   [
+    "L401",
+    "2"
+   ],
+   [
+    "Q402",
+    "9"
+   ],
+   [
+    "U403",
+    "18"
+   ]
+  ],
+  "USB Port 1/SW_5V": [
+   [
+    "C440",
+    "2"
+   ],
+   [
+    "L402",
+    "1"
+   ],
+   [
+    "U404",
+    "5"
+   ]
+  ],
+  "USB Port 1/TS": [
+   [
+    "R415",
+    "2"
+   ],
+   [
+    "R416",
+    "1"
+   ],
+   [
+    "TH401",
+    "1"
+   ],
+   [
+    "U403",
+    "8"
+   ]
+  ],
+  "USB Port 1/V9_DRV": [
+   [
+    "C458",
+    "1"
+   ],
+   [
+    "D411",
+    "2"
+   ],
+   [
+    "R452",
+    "1"
+   ],
+   [
+    "U406",
+    "1"
+   ]
+  ],
+  "USB Port 1/V9_EN": [
+   [
+    "Q409",
+    "3"
+   ],
+   [
+    "R454",
+    "1"
+   ],
+   [
+    "U406",
+    "5"
+   ]
+  ],
+  "USB Port 1/V9_FB": [
+   [
+    "R452",
+    "2"
+   ],
+   [
+    "R453",
+    "1"
+   ],
+   [
+    "U406",
+    "2"
+   ]
+  ],
+  "USB Port 1/VBIAS": [
+   [
+    "C451",
+    "1"
+   ],
+   [
+    "U405",
+    "3"
+   ]
+  ],
+  "USB Port 1/VBUS": [
+   [
+    "C406",
+    "1"
+   ],
+   [
+    "C450",
+    "1"
+   ],
+   [
+    "D401",
+    "4"
+   ],
+   [
+    "D401",
+    "5"
+   ],
+   [
+    "D401",
+    "6"
+   ],
+   [
+    "J401",
+    "A4"
+   ],
+   [
+    "J401",
+    "A9"
+   ],
+   [
+    "J401",
+    "B4"
+   ],
+   [
+    "J401",
+    "B9"
+   ],
+   [
+    "U401",
+    "23"
+   ],
+   [
+    "U401",
+    "32"
+   ]
+  ],
+  "USB Port 2/ACN_F": [
+   [
+    "C514",
+    "2"
+   ],
+   [
+    "C516",
+    "1"
+   ],
+   [
+    "R526",
+    "2"
+   ],
+   [
+    "U503",
+    "29"
+   ]
+  ],
+  "USB Port 2/ACOV": [
+   [
+    "R510",
+    "2"
+   ],
+   [
+    "R511",
+    "1"
+   ],
+   [
+    "U503",
+    "35"
+   ]
+  ],
+  "USB Port 2/ACP_F": [
+   [
+    "C514",
+    "1"
+   ],
+   [
+    "C515",
+    "1"
+   ],
+   [
+    "R525",
+    "2"
+   ],
+   [
+    "U503",
+    "30"
+   ]
+  ],
+  "USB Port 2/ACUV": [
+   [
+    "R509",
+    "2"
+   ],
+   [
+    "R510",
+    "1"
+   ],
+   [
+    "U503",
+    "34"
+   ]
+  ],
+  "USB Port 2/AC_SNS_N": [
+   [
+    "C520",
+    "1"
+   ],
+   [
+    "C521",
+    "1"
+   ],
+   [
+    "C523",
+    "1"
+   ],
+   [
+    "C524",
+    "1"
+   ],
+   [
+    "C527",
+    "1"
+   ],
+   [
+    "C530",
+    "1"
+   ],
+   [
+    "C556",
+    "1"
+   ],
+   [
+    "Q501",
+    "2"
+   ],
+   [
+    "Q501",
+    "3"
+   ],
+   [
+    "Q501",
+    "4"
+   ],
+   [
+    "R524",
+    "2"
+   ],
+   [
+    "R526",
+    "1"
+   ]
+  ],
+  "USB Port 2/BAT_SNS_P": [
+   [
+    "C531",
+    "1"
+   ],
+   [
+    "C534",
+    "1"
+   ],
+   [
+    "C538",
+    "1"
+   ],
+   [
+    "Q502",
+    "2"
+   ],
+   [
+    "Q502",
+    "3"
+   ],
+   [
+    "Q502",
+    "4"
+   ],
+   [
+    "R527",
+    "1"
+   ],
+   [
+    "R528",
+    "1"
+   ]
+  ],
+  "USB Port 2/BST_5V": [
+   [
+    "C540",
+    "1"
+   ],
+   [
+    "U504",
+    "6"
+   ]
+  ],
+  "USB Port 2/BTST1": [
+   [
+    "C512",
+    "1"
+   ],
+   [
+    "D504",
+    "1"
+   ],
+   [
+    "U503",
+    "26"
+   ]
+  ],
+  "USB Port 2/BTST2": [
+   [
+    "C513",
+    "1"
+   ],
+   [
+    "D505",
+    "1"
+   ],
+   [
+    "U503",
+    "20"
+   ]
+  ],
+  "USB Port 2/CC1": [
+   [
+    "C501",
+    "1"
+   ],
+   [
+    "U501",
+    "28"
+   ],
+   [
+    "U505",
+    "12"
+   ]
+  ],
+  "USB Port 2/CC2": [
+   [
+    "C502",
+    "1"
+   ],
+   [
+    "U501",
+    "29"
+   ],
+   [
+    "U505",
+    "11"
+   ]
+  ],
+  "USB Port 2/CE_N": [
+   [
+    "R517",
+    "1"
+   ],
+   [
+    "R535",
+    "2"
+   ],
+   [
+    "U503",
+    "7"
+   ]
+  ],
+  "USB Port 2/CHG_INT": [
+   [
+    "R504",
+    "2"
+   ],
+   [
+    "U501",
+    "18"
+   ],
+   [
+    "U503",
+    "3"
+   ]
+  ],
+  "USB Port 2/C_CC1": [
+   [
+    "J501",
+    "A5"
+   ],
+   [
+    "U505",
+    "4"
+   ],
+   [
+    "U505",
+    "7"
+   ]
+  ],
+  "USB Port 2/C_CC2": [
+   [
+    "J501",
+    "B5"
+   ],
+   [
+    "U505",
+    "5"
+   ],
+   [
+    "U505",
+    "6"
+   ]
+  ],
+  "USB Port 2/DPDN_DCP": [
+   [
+    "J501",
+    "A6"
+   ],
+   [
+    "J501",
+    "A7"
+   ],
+   [
+    "J501",
+    "B6"
+   ],
+   [
+    "J501",
+    "B7"
+   ]
+  ],
+  "USB Port 2/DRV9_OFF": [
+   [
+    "Q509",
+    "1"
+   ],
+   [
+    "R555",
+    "2"
+   ],
+   [
+    "U501",
+    "37"
+   ]
+  ],
+  "USB Port 2/DRV_SUP": [
+   [
+    "C511",
+    "1"
+   ],
+   [
+    "D504",
+    "2"
+   ],
+   [
+    "D505",
+    "2"
+   ],
+   [
+    "D510",
+    "1"
+   ],
+   [
+    "D511",
+    "1"
+   ],
+   [
+    "U503",
+    "23"
+   ]
+  ],
+  "USB Port 2/FB": [
+   [
+    "R518",
+    "2"
+   ],
+   [
+    "R519",
+    "1"
+   ],
+   [
+    "U503",
+    "12"
+   ]
+  ],
+  "USB Port 2/FBG": [
+   [
+    "R519",
+    "2"
+   ],
+   [
+    "U503",
+    "11"
+   ]
+  ],
+  "USB Port 2/FB_5V": [
+   [
+    "R533",
+    "2"
+   ],
+   [
+    "R534",
+    "1"
+   ],
+   [
+    "U504",
+    "8"
+   ]
+  ],
+  "USB Port 2/FSW": [
+   [
+    "R512",
+    "1"
+   ],
+   [
+    "U503",
+    "36"
+   ]
+  ],
+  "USB Port 2/HG1": [
+   [
+    "Q501",
+    "1"
+   ],
+   [
+    "R544",
+    "2"
+   ]
+  ],
+  "USB Port 2/HG2": [
+   [
+    "Q502",
+    "1"
+   ],
+   [
+    "R546",
+    "2"
+   ]
+  ],
+  "USB Port 2/HIDRV1": [
+   [
+    "R544",
+    "1"
+   ],
+   [
+    "U503",
+    "27"
+   ]
+  ],
+  "USB Port 2/HIDRV2": [
+   [
+    "R546",
+    "1"
+   ],
+   [
+    "U503",
+    "19"
+   ]
+  ],
+  "USB Port 2/I2CC_SCL": [
+   [
+    "R503",
+    "2"
+   ],
+   [
+    "U501",
+    "17"
+   ],
+   [
+    "U502",
+    "6"
+   ],
+   [
+    "U503",
+    "1"
+   ]
+  ],
+  "USB Port 2/I2CC_SDA": [
+   [
+    "R502",
+    "2"
+   ],
+   [
+    "U501",
+    "16"
+   ],
+   [
+    "U502",
+    "5"
+   ],
+   [
+    "U503",
+    "2"
+   ]
+  ],
+  "USB Port 2/ICHG": [
+   [
+    "R513",
+    "1"
+   ],
+   [
+    "U503",
+    "9"
+   ]
+  ],
+  "USB Port 2/ILIM": [
+   [
+    "R514",
+    "1"
+   ],
+   [
+    "U503",
+    "10"
+   ]
+  ],
+  "USB Port 2/LDO_1V5": [
+   [
+    "C505",
+    "1"
+   ],
+   [
+    "U501",
+    "4"
+   ]
+  ],
+  "USB Port 2/LG1": [
+   [
+    "Q501",
+    "8"
+   ],
+   [
+    "R545",
+    "2"
+   ]
+  ],
+  "USB Port 2/LG2": [
+   [
+    "Q502",
+    "8"
+   ],
+   [
+    "R547",
+    "2"
+   ]
+  ],
+  "USB Port 2/LODRV1": [
+   [
+    "R545",
+    "1"
+   ],
+   [
+    "U503",
+    "25"
+   ]
+  ],
+  "USB Port 2/LODRV2": [
+   [
+    "R547",
+    "1"
+   ],
+   [
+    "U503",
+    "21"
+   ]
+  ],
+  "USB Port 2/PD_DRAIN": [
+   [
+    "U501",
+    "15"
+   ],
+   [
+    "U501",
+    "30"
+   ],
+   [
+    "U501",
+    "40"
+   ]
+  ],
+  "USB Port 2/PP5V": [
+   [
+    "C507",
+    "1"
+   ],
+   [
+    "C541",
+    "1"
+   ],
+   [
+    "C542",
+    "1"
+   ],
+   [
+    "C543",
+    "1"
+   ],
+   [
+    "L502",
+    "2"
+   ],
+   [
+    "R533",
+    "1"
+   ],
+   [
+    "U501",
+    "34"
+   ]
+  ],
+  "USB Port 2/PPHV": [
+   [
+    "C509",
+    "1"
+   ],
+   [
+    "C549",
+    "1"
+   ],
+   [
+    "R509",
+    "1"
+   ],
+   [
+    "R524",
+    "1"
+   ],
+   [
+    "R525",
+    "1"
+   ],
+   [
+    "U501",
+    "20"
+   ],
+   [
+    "U503",
+    "32"
+   ],
+   [
+    "U503",
+    "33"
+   ]
+  ],
+  "USB Port 2/REGN": [
+   [
+    "C510",
+    "1"
+   ],
+   [
+    "D510",
+    "2"
+   ],
+   [
+    "R515",
+    "1"
+   ],
+   [
+    "R554",
+    "2"
+   ],
+   [
+    "U503",
+    "24"
+   ]
+  ],
+  "USB Port 2/SBU_FLT": [
+   [
+    "R541",
+    "2"
+   ],
+   [
+    "U501",
+    "19"
+   ],
+   [
+    "U505",
+    "9"
+   ]
+  ],
+  "USB Port 2/SRN_F": [
+   [
+    "C517",
+    "2"
+   ],
+   [
+    "C519",
+    "1"
+   ],
+   [
+    "R529",
+    "2"
+   ],
+   [
+    "U503",
+    "13"
+   ]
+  ],
+  "USB Port 2/SRP_F": [
+   [
+    "C517",
+    "1"
+   ],
+   [
+    "C518",
+    "1"
+   ],
+   [
+    "R528",
+    "2"
+   ],
+   [
+    "U503",
+    "14"
+   ]
+  ],
+  "USB Port 2/SS_5V": [
+   [
+    "C539",
+    "1"
+   ],
+   [
+    "U504",
+    "7"
+   ]
+  ],
+  "USB Port 2/SW1": [
+   [
+    "C512",
+    "2"
+   ],
+   [
+    "L501",
+    "1"
+   ],
+   [
+    "Q501",
+    "9"
+   ],
+   [
+    "U503",
+    "28"
+   ]
+  ],
+  "USB Port 2/SW2": [
+   [
+    "C513",
+    "2"
+   ],
+   [
+    "L501",
+    "2"
+   ],
+   [
+    "Q502",
+    "9"
+   ],
+   [
+    "U503",
+    "18"
+   ]
+  ],
+  "USB Port 2/SW_5V": [
+   [
+    "C540",
+    "2"
+   ],
+   [
+    "L502",
+    "1"
+   ],
+   [
+    "U504",
+    "5"
+   ]
+  ],
+  "USB Port 2/TS": [
+   [
+    "R515",
+    "2"
+   ],
+   [
+    "R516",
+    "1"
+   ],
+   [
+    "TH501",
+    "1"
+   ],
+   [
+    "U503",
+    "8"
+   ]
+  ],
+  "USB Port 2/V9_DRV": [
+   [
+    "C558",
+    "1"
+   ],
+   [
+    "D511",
+    "2"
+   ],
+   [
+    "R552",
+    "1"
+   ],
+   [
+    "U506",
+    "1"
+   ]
+  ],
+  "USB Port 2/V9_EN": [
+   [
+    "Q509",
+    "3"
+   ],
+   [
+    "R554",
+    "1"
+   ],
+   [
+    "U506",
+    "5"
+   ]
+  ],
+  "USB Port 2/V9_FB": [
+   [
+    "R552",
+    "2"
+   ],
+   [
+    "R553",
+    "1"
+   ],
+   [
+    "U506",
+    "2"
+   ]
+  ],
+  "USB Port 2/VBIAS": [
+   [
+    "C551",
+    "1"
+   ],
+   [
+    "U505",
+    "3"
+   ]
+  ],
+  "USB Port 2/VBUS": [
+   [
+    "C506",
+    "1"
+   ],
+   [
+    "C550",
+    "1"
+   ],
+   [
+    "D501",
+    "4"
+   ],
+   [
+    "D501",
+    "5"
+   ],
+   [
+    "D501",
+    "6"
+   ],
+   [
+    "J501",
+    "A4"
+   ],
+   [
+    "J501",
+    "A9"
+   ],
+   [
+    "J501",
+    "B4"
+   ],
+   [
+    "J501",
+    "B9"
+   ],
+   [
+    "U501",
+    "23"
+   ],
+   [
+    "U501",
+    "32"
+   ]
+  ],
+  "WAKE": [
+   [
+    "R118",
+    "2"
+   ],
+   [
+    "TP113",
+    "1"
+   ]
+  ]
+ }
+}

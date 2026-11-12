@@ -22,5 +22,19 @@
    "page": 4,
    "quote": "FB, PG, VOS, SLEEP, NC –0.3 7"
   }
- ]
+ ],
+ "facts": {
+  "TJ_MAX": {
+   "value": 125,
+   "unit": "C",
+   "page": 4,
+   "quote": "Operating junction temperature, TJ –40 125"
+  },
+  "IHS_LIMIT_MAX": {
+   "value": 1200,
+   "unit": "mA",
+   "page": 5,
+   "quote": "High-side MOSFET Normal operation 800 1000 1200 ILIMF mA"
+  }
+ }
 }

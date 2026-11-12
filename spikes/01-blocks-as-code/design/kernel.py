@@ -173,6 +173,23 @@ def build(outdir, partial=False):
         nets_c = {CIRCUIT["pinnet"].get((ref, p["num"])) for p in CIRCUIT["parts"][ref].pins}
         if not (nets_t & nets_c):
             errs.append(f"{ref} is declared to serve {tgt} but shares no net with it")
+    pin_pads = {}    # "ref.pin" as written in serves and hot loops -> pad numbers, so layout tools need no symbol library
+    for hl_name, hl in CONSTRAINTS["hot_loops"].items():
+        want = {}
+        for t in hl["switch_pins"]:
+            r, pn = t.split(".", 1)
+            if r not in CIRCUIT["parts"]: errs.append(f"hot loop {hl_name}: there is no part {r}"); continue
+            for p in CIRCUIT["parts"][r][pn].pins: want.setdefault(getattr(CIRCUIT["pinnet"].get((r, p["num"])), "name", None), []).append(t)
+        for role in ("supply", "ret"):
+            if hl[role] not in want: errs.append(f"hot loop {hl_name}: none of the switch pins {hl['switch_pins']} is on its {role} net {hl[role]}")
+        for c in hl["caps"]:
+            if c not in CIRCUIT["parts"]: errs.append(f"hot loop {hl_name}: there is no capacitor {c}"); continue
+            cn = {getattr(CIRCUIT["pinnet"].get((c, p["num"])), "name", None) for p in CIRCUIT["parts"][c].pins}
+            if not {hl["supply"], hl["ret"]} <= cn: errs.append(f"hot loop {hl_name}: {c} is not across {hl['supply']} and {hl['ret']}")
+    for t in list(CONSTRAINTS["serves"].values()) + [t for hl in CONSTRAINTS["hot_loops"].values() for t in hl["switch_pins"]]:
+        r, pn = t.split(".", 1)
+        if r in CIRCUIT["parts"]: pin_pads[t] = sorted({p["num"] for p in CIRCUIT["parts"][r][pn].pins})
+    CONSTRAINTS["pin_pads"] = pin_pads
     if errs:
         raise DesignError("design check failed:\n  " + "\n  ".join(errs))
     os.makedirs(outdir, exist_ok=True)

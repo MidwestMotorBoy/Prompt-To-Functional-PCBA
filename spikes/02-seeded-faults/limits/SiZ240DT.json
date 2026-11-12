@@ -19,5 +19,31 @@
    "page": 1,
    "quote": "Gate-source voltage VGS +20, -16 +20, -16"
   }
- ]
+ ],
+ "facts": {
+  "COSS_PF": {
+   "value": 170,
+   "unit": "pF, the smaller channel, at VDS 20 V",
+   "page": 2,
+   "quote": "Ch-2 - 170 -"
+  },
+  "TJ_MAX": {
+   "value": 150,
+   "unit": "C",
+   "page": 1,
+   "quote": "Continuous drain current (TJ = 150 °C)"
+  },
+  "RTHJC_MAX": {
+   "value": 3.8,
+   "unit": "C/W junction to case (drain), steady state",
+   "page": 1,
+   "quote": "RthJC 3 3.8 3 3.8"
+  },
+  "RDSON_MAX_10V": {
+   "value": 0.00841,
+   "unit": "ohm at VGS 10 V, the larger channel",
+   "page": 2,
+   "quote": "0.00701 0.00841"
+  }
+ }
 }

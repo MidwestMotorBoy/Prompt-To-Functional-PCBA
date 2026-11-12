@@ -1,0 +1,1322 @@
+{
+ "across": {
+  "C101": 16.8,
+  "C102": 16.8,
+  "C103": 16.8,
+  "C104": 16.8,
+  "C107": 16.8,
+  "C108": 16.8,
+  "C110": 16.8,
+  "C111": 16.8,
+  "C112": 16.8,
+  "C113": 16.8,
+  "C114": 16.8,
+  "C414": 0.1,
+  "C514": 0.1
+ },
+ "draw": {
+  "Q401": {
+   "cin": [
+    "C430",
+    "C420",
+    "C423",
+    "C424",
+    "C427",
+    "C421",
+    "C456"
+   ],
+   "cout": [
+    "C438",
+    "C431",
+    "C434"
+   ],
+   "inductor": "L401",
+   "kind": "bridge4",
+   "q_out": "Q402",
+   "rin": "R424",
+   "rout": "R427"
+  },
+  "Q501": {
+   "cin": [
+    "C530",
+    "C520",
+    "C523",
+    "C524",
+    "C527",
+    "C521",
+    "C556"
+   ],
+   "cout": [
+    "C538",
+    "C531",
+    "C534"
+   ],
+   "inductor": "L501",
+   "kind": "bridge4",
+   "q_out": "Q502",
+   "rin": "R524",
+   "rout": "R527"
+  },
+  "U204": {
+   "cin": [
+    "C206",
+    "C208",
+    "C209",
+    "C210",
+    "C211",
+    "C212",
+    "C213"
+   ],
+   "cout": [
+    "C207"
+   ],
+   "inductor": "L201",
+   "kind": "buck",
+   "sense": "VOS",
+   "sw": "SW",
+   "vin": "VIN"
+  },
+  "U404": {
+   "boot": "C440",
+   "bst": "BST",
+   "cin": [
+    "C446",
+    "C444",
+    "C457"
+   ],
+   "cout": [
+    "C441",
+    "C442",
+    "C443",
+    "C407"
+   ],
+   "div": [
+    "R433",
+    "R434"
+   ],
+   "fb": "FB",
+   "inductor": "L402",
+   "kind": "buck",
+   "sw": "SW",
+   "vin": "VIN"
+  },
+  "U504": {
+   "boot": "C540",
+   "bst": "BST",
+   "cin": [
+    "C546",
+    "C544",
+    "C557"
+   ],
+   "cout": [
+    "C541",
+    "C542",
+    "C543",
+    "C507"
+   ],
+   "div": [
+    "R533",
+    "R534"
+   ],
+   "fb": "FB",
+   "inductor": "L502",
+   "kind": "buck",
+   "sw": "SW",
+   "vin": "VIN"
+  }
+ },
+ "expect": {
+  "USB Port 1/PP5V": {
+   "at": "U404.FB",
+   "bind": {
+    "Rbot": "R434",
+    "Rtop": "R433",
+    "VREF": "TPS62933.VREF"
+   },
+   "expr": "VREF * (1 + Rtop / Rbot)",
+   "target": 5.15,
+   "tol": 0.03,
+   "unit": "V"
+  },
+  "USB Port 1/battery regulation": {
+   "at": "U403.FB",
+   "bind": {
+    "RFBG": "BQ25756.RFBG",
+    "Rbot": "R419",
+    "Rtop": "R418",
+    "VFB": "BQ25756.VFB_NOM"
+   },
+   "expr": "VFB * (1 + Rtop / (Rbot + RFBG))",
+   "target": 16.8,
+   "tol": 0.01,
+   "unit": "V"
+  },
+  "USB Port 1/charge current limit": {
+   "at": "U403.ICHG",
+   "bind": {
+    "K": "BQ25756.KICHG",
+    "Rset": "R413",
+    "Rsns": "R427"
+   },
+   "expr": "K * 0.005 / Rsns / (Rset / 1e3)",
+   "target": 4.2,
+   "tol": 0.05,
+   "unit": "A"
+  },
+  "USB Port 1/gate-drive supply": {
+   "at": "U406.FB",
+   "bind": {
+    "Rbot": "R453",
+    "Rtop": "R452",
+    "VREF": "TPS7A4101.VREF"
+   },
+   "expr": "VREF * (1 + Rtop / Rbot)",
+   "target": 9.6,
+   "tol": 0.03,
+   "unit": "V"
+  },
+  "USB Port 1/input current limit": {
+   "at": "U403.ILIM_HIZ",
+   "bind": {
+    "K": "BQ25756.KILIM",
+    "Rset": "R414",
+    "Rsns": "R424"
+   },
+   "expr": "K * 0.002 / Rsns / (Rset / 1e3)",
+   "target": 5.5,
+   "tol": 0.05,
+   "unit": "A"
+  },
+  "USB Port 1/input overvoltage": {
+   "at": "U403.ACOV",
+   "bind": {
+    "R1": "R409",
+    "R2": "R410",
+    "R3": "R411",
+    "VREF": "BQ25756.VREF_ACOV"
+   },
+   "expr": "VREF * (R1 + R2 + R3) / R3",
+   "target": 22.5,
+   "tol": 0.05,
+   "unit": "V"
+  },
+  "USB Port 1/input undervoltage": {
+   "at": "U403.ACUV",
+   "bind": {
+    "R1": "R409",
+    "R2": "R410",
+    "R3": "R411",
+    "VREF": "BQ25756.VREF_ACUV"
+   },
+   "expr": "VREF * (R1 + R2 + R3) / (R2 + R3)",
+   "target": 4.1,
+   "tol": 0.05,
+   "unit": "V"
+  },
+  "USB Port 1/switching frequency": {
+   "at": "U403.FSW_SYNC",
+   "bind": {
+    "Rset": "R412"
+   },
+   "expr": "(1 / Rset + 5e-6) / 5e-11 / 1e3",
+   "target": 500,
+   "tol": 0.05,
+   "unit": "kHz"
+  },
+  "USB Port 2/PP5V": {
+   "at": "U504.FB",
+   "bind": {
+    "Rbot": "R534",
+    "Rtop": "R533",
+    "VREF": "TPS62933.VREF"
+   },
+   "expr": "VREF * (1 + Rtop / Rbot)",
+   "target": 5.15,
+   "tol": 0.03,
+   "unit": "V"
+  },
+  "USB Port 2/battery regulation": {
+   "at": "U503.FB",
+   "bind": {
+    "RFBG": "BQ25756.RFBG",
+    "Rbot": "R519",
+    "Rtop": "R518",
+    "VFB": "BQ25756.VFB_NOM"
+   },
+   "expr": "VFB * (1 + Rtop / (Rbot + RFBG))",
+   "target": 16.8,
+   "tol": 0.01,
+   "unit": "V"
+  },
+  "USB Port 2/charge current limit": {
+   "at": "U503.ICHG",
+   "bind": {
+    "K": "BQ25756.KICHG",
+    "Rset": "R513",
+    "Rsns": "R527"
+   },
+   "expr": "K * 0.005 / Rsns / (Rset / 1e3)",
+   "target": 4.2,
+   "tol": 0.05,
+   "unit": "A"
+  },
+  "USB Port 2/gate-drive supply": {
+   "at": "U506.FB",
+   "bind": {
+    "Rbot": "R553",
+    "Rtop": "R552",
+    "VREF": "TPS7A4101.VREF"
+   },
+   "expr": "VREF * (1 + Rtop / Rbot)",
+   "target": 9.6,
+   "tol": 0.03,
+   "unit": "V"
+  },
+  "USB Port 2/input current limit": {
+   "at": "U503.ILIM_HIZ",
+   "bind": {
+    "K": "BQ25756.KILIM",
+    "Rset": "R514",
+    "Rsns": "R524"
+   },
+   "expr": "K * 0.002 / Rsns / (Rset / 1e3)",
+   "target": 5.5,
+   "tol": 0.05,
+   "unit": "A"
+  },
+  "USB Port 2/input overvoltage": {
+   "at": "U503.ACOV",
+   "bind": {
+    "R1": "R509",
+    "R2": "R510",
+    "R3": "R511",
+    "VREF": "BQ25756.VREF_ACOV"
+   },
+   "expr": "VREF * (R1 + R2 + R3) / R3",
+   "target": 22.5,
+   "tol": 0.05,
+   "unit": "V"
+  },
+  "USB Port 2/input undervoltage": {
+   "at": "U503.ACUV",
+   "bind": {
+    "R1": "R509",
+    "R2": "R510",
+    "R3": "R511",
+    "VREF": "BQ25756.VREF_ACUV"
+   },
+   "expr": "VREF * (R1 + R2 + R3) / (R2 + R3)",
+   "target": 4.1,
+   "tol": 0.05,
+   "unit": "V"
+  },
+  "USB Port 2/switching frequency": {
+   "at": "U503.FSW_SYNC",
+   "bind": {
+    "Rset": "R512"
+   },
+   "expr": "(1 / Rset + 5e-6) / 5e-11 / 1e3",
+   "target": 500,
+   "tol": 0.05,
+   "unit": "kHz"
+  }
+ },
+ "hot_loops": {
+  "HL_3V3": {
+   "caps": [
+    "C206"
+   ],
+   "ret": "GND",
+   "supply": "PACK_P",
+   "switch_pins": [
+    "U204.VIN",
+    "U204.PGND"
+   ]
+  },
+  "USB Port 1/HL_5V": {
+   "caps": [
+    "C446",
+    "C444"
+   ],
+   "ret": "GND",
+   "supply": "PACK_P",
+   "switch_pins": [
+    "U404.VIN",
+    "U404.GND"
+   ]
+  },
+  "USB Port 1/HL_IN": {
+   "caps": [
+    "C430",
+    "C420",
+    "C423"
+   ],
+   "ret": "GND",
+   "supply": "USB Port 1/AC_SNS_N",
+   "switch_pins": [
+    "Q401.D1",
+    "Q401.S2"
+   ]
+  },
+  "USB Port 1/HL_OUT": {
+   "caps": [
+    "C438",
+    "C431",
+    "C434"
+   ],
+   "ret": "GND",
+   "supply": "USB Port 1/BAT_SNS_P",
+   "switch_pins": [
+    "Q402.D1",
+    "Q402.S2"
+   ]
+  },
+  "USB Port 2/HL_5V": {
+   "caps": [
+    "C546",
+    "C544"
+   ],
+   "ret": "GND",
+   "supply": "PACK_P",
+   "switch_pins": [
+    "U504.VIN",
+    "U504.GND"
+   ]
+  },
+  "USB Port 2/HL_IN": {
+   "caps": [
+    "C530",
+    "C520",
+    "C523"
+   ],
+   "ret": "GND",
+   "supply": "USB Port 2/AC_SNS_N",
+   "switch_pins": [
+    "Q501.D1",
+    "Q501.S2"
+   ]
+  },
+  "USB Port 2/HL_OUT": {
+   "caps": [
+    "C538",
+    "C531",
+    "C534"
+   ],
+   "ret": "GND",
+   "supply": "USB Port 2/BAT_SNS_P",
+   "switch_pins": [
+    "Q502.D1",
+    "Q502.S2"
+   ]
+  }
+ },
+ "kelvin": {
+  "USB Port 1/RAC": {
+   "neg": "USB Port 1/ACN_F",
+   "pos": "USB Port 1/ACP_F",
+   "resistor": "R424"
+  },
+  "USB Port 1/RBAT": {
+   "neg": "USB Port 1/SRN_F",
+   "pos": "USB Port 1/SRP_F",
+   "resistor": "R427"
+  },
+  "USB Port 2/RAC": {
+   "neg": "USB Port 2/ACN_F",
+   "pos": "USB Port 2/ACP_F",
+   "resistor": "R524"
+  },
+  "USB Port 2/RBAT": {
+   "neg": "USB Port 2/SRN_F",
+   "pos": "USB Port 2/SRP_F",
+   "resistor": "R527"
+  }
+ },
+ "near_mm": {},
+ "nets": {
+  "/P1_LDO_3V3": {
+   "max_v": 3.6
+  },
+  "/P2_LDO_3V3": {
+   "max_v": 3.6
+  },
+  "3V3": {
+   "current_a": 0.5,
+   "kind": "power",
+   "max_v": 3.6
+  },
+  "3V3_SLEEP": {
+   "max_v": 3.6
+  },
+  "ANT_IN": {
+   "max_v": 3.6
+  },
+  "BTP_INT": {
+   "max_v": 3.6
+  },
+  "CELL1": {
+   "max_v": 4.2
+  },
+  "CELL2": {
+   "max_v": 8.4
+  },
+  "CELL3": {
+   "max_v": 12.6
+  },
+  "CELL_1N": {
+   "max_v": 0
+  },
+  "CELL_4P": {
+   "max_v": 16.8
+  },
+  "CELL_N": {
+   "max_v": 0
+  },
+  "CELL_P": {
+   "max_v": 16.8
+  },
+  "CELL_P_RAW": {
+   "max_v": 16.8
+  },
+  "CHG": {
+   "max_v": 28.8
+  },
+  "CHG_G": {
+   "max_v": 28.8
+  },
+  "CHG_INH": {
+   "max_v": 3.6
+  },
+  "DSG": {
+   "max_v": 28.8
+  },
+  "DSG_G": {
+   "max_v": 28.8
+  },
+  "EN_5V1": {
+   "max_v": 3.6
+  },
+  "EN_5V2": {
+   "max_v": 3.6
+  },
+  "FET_MID": {
+   "max_v": 16.8
+  },
+  "GAUGE_FUSE": {
+   "max_v": 16.8
+  },
+  "GND": {
+   "max_v": 0
+  },
+  "IRQ_N": {
+   "max_v": 3.6
+  },
+  "NRST": {
+   "max_v": 3.6
+  },
+  "Net-(C110-Pad2)": {
+   "max_v": 16.8
+  },
+  "Net-(C313-Pad2)": {
+   "max_v": 3.6
+  },
+  "Net-(D101-K)": {
+   "max_v": 16.8
+  },
+  "Net-(F102-HTR)": {
+   "max_v": 16.8
+  },
+  "Net-(Q104-G)": {
+   "max_v": 8
+  },
+  "Net-(U101-BAT)": {
+   "max_v": 16.8
+  },
+  "Net-(U101-PACK)": {
+   "max_v": 16.8
+  },
+  "Net-(U101-PBI)": {
+   "max_v": 16.8
+  },
+  "Net-(U101-SMBC)": {
+   "max_v": 3.6
+  },
+  "Net-(U101-SMBD)": {
+   "max_v": 3.6
+  },
+  "Net-(U101-VC1)": {
+   "max_v": 4.2
+  },
+  "Net-(U101-VC2)": {
+   "max_v": 8.4
+  },
+  "Net-(U101-VC3)": {
+   "max_v": 12.6
+  },
+  "Net-(U101-VC4)": {
+   "max_v": 16.8
+  },
+  "Net-(U101-VCC)": {
+   "max_v": 16.8
+  },
+  "Net-(U102-CD)": {
+   "max_v": 3.6
+  },
+  "Net-(U102-OUT)": {
+   "max_v": 8
+  },
+  "Net-(U102-V1)": {
+   "max_v": 4.2
+  },
+  "Net-(U102-V2)": {
+   "max_v": 8.4
+  },
+  "Net-(U102-V3)": {
+   "max_v": 12.6
+  },
+  "Net-(U102-V4)": {
+   "max_v": 16.8
+  },
+  "Net-(U102-VDD)": {
+   "max_v": 16.8
+  },
+  "PACK_CMID": {
+   "max_v": 16.8
+  },
+  "PACK_P": {
+   "current_a": 10,
+   "kind": "power",
+   "max_v": 16.8
+  },
+  "RFIO": {
+   "max_v": 3.6
+  },
+  "SCL": {
+   "max_v": 3.6
+  },
+  "SDA": {
+   "max_v": 3.6
+  },
+  "SRN": {
+   "max_v": 0.1
+  },
+  "SRP": {
+   "max_v": 0.1
+  },
+  "SWCLK": {
+   "max_v": 3.6
+  },
+  "SWDIO": {
+   "max_v": 3.6
+  },
+  "SW_3V3": {
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 16.8,
+   "swing_v": 16.8
+  },
+  "TS1": {
+   "max_v": 3.6
+  },
+  "TS2": {
+   "max_v": 3.6
+  },
+  "TS3": {
+   "max_v": 3.6
+  },
+  "TS4": {
+   "max_v": 3.6
+  },
+  "UART_TX": {
+   "max_v": 3.6
+  },
+  "USB Port 1/ACN_F": {
+   "max_v": 22
+  },
+  "USB Port 1/ACOV": {
+   "max_v": 1.3
+  },
+  "USB Port 1/ACP_F": {
+   "max_v": 22
+  },
+  "USB Port 1/ACUV": {
+   "max_v": 6
+  },
+  "USB Port 1/AC_SNS_N": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22
+  },
+  "USB Port 1/BAT_SNS_P": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 16.8
+  },
+  "USB Port 1/BST_5V": {
+   "max_v": 22.3
+  },
+  "USB Port 1/BTST1": {
+   "max_v": 32
+  },
+  "USB Port 1/BTST2": {
+   "max_v": 26.8
+  },
+  "USB Port 1/CC1": {
+   "max_v": 5.5
+  },
+  "USB Port 1/CC2": {
+   "max_v": 5.5
+  },
+  "USB Port 1/CE_N": {
+   "max_v": 3.6
+  },
+  "USB Port 1/CHG_INT": {
+   "max_v": 3.6
+  },
+  "USB Port 1/C_CC1": {
+   "max_v": 22
+  },
+  "USB Port 1/C_CC2": {
+   "max_v": 22
+  },
+  "USB Port 1/DPDN_DCP": {
+   "max_v": 5.5
+  },
+  "USB Port 1/DRV9_OFF": {
+   "max_v": 3.6
+  },
+  "USB Port 1/DRV_SUP": {
+   "max_v": 10
+  },
+  "USB Port 1/FB": {
+   "kind": "sensitive",
+   "max_v": 1.65
+  },
+  "USB Port 1/FBG": {
+   "max_v": 0.1
+  },
+  "USB Port 1/FB_5V": {
+   "max_v": 0.9
+  },
+  "USB Port 1/FSW": {
+   "max_v": 2.5
+  },
+  "USB Port 1/HG1": {
+   "max_v": 32
+  },
+  "USB Port 1/HG2": {
+   "max_v": 26.8
+  },
+  "USB Port 1/HIDRV1": {
+   "max_v": 32
+  },
+  "USB Port 1/HIDRV2": {
+   "max_v": 26.8
+  },
+  "USB Port 1/I2CC_SCL": {
+   "max_v": 3.6
+  },
+  "USB Port 1/I2CC_SDA": {
+   "max_v": 3.6
+  },
+  "USB Port 1/ICHG": {
+   "max_v": 2.5
+  },
+  "USB Port 1/ILIM": {
+   "max_v": 2.5
+  },
+  "USB Port 1/LDO_1V5": {
+   "max_v": 1.65
+  },
+  "USB Port 1/LG1": {
+   "max_v": 10
+  },
+  "USB Port 1/LG2": {
+   "max_v": 10
+  },
+  "USB Port 1/LODRV1": {
+   "max_v": 10
+  },
+  "USB Port 1/LODRV2": {
+   "max_v": 10
+  },
+  "USB Port 1/PP5V": {
+   "current_a": 1.5,
+   "kind": "power",
+   "max_v": 5.5
+  },
+  "USB Port 1/PPHV": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22
+  },
+  "USB Port 1/REGN": {
+   "max_v": 5.5
+  },
+  "USB Port 1/SBU_FLT": {
+   "max_v": 3.6
+  },
+  "USB Port 1/SRN_F": {
+   "max_v": 16.8
+  },
+  "USB Port 1/SRP_F": {
+   "max_v": 16.8
+  },
+  "USB Port 1/SS_5V": {
+   "max_v": 5.5
+  },
+  "USB Port 1/SW1": {
+   "current_a": 6,
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 22,
+   "swing_v": 22
+  },
+  "USB Port 1/SW2": {
+   "current_a": 6,
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 16.8,
+   "swing_v": 17
+  },
+  "USB Port 1/SW_5V": {
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 16.8,
+   "swing_v": 17
+  },
+  "USB Port 1/TS": {
+   "kind": "sensitive",
+   "max_v": 5.5
+  },
+  "USB Port 1/V9_DRV": {
+   "max_v": 10
+  },
+  "USB Port 1/V9_EN": {
+   "max_v": 5.5
+  },
+  "USB Port 1/V9_FB": {
+   "max_v": 1.3
+  },
+  "USB Port 1/VBIAS": {
+   "max_v": 22
+  },
+  "USB Port 1/VBUS": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22,
+   "normal_v": 20
+  },
+  "USB Port 2/ACN_F": {
+   "max_v": 22
+  },
+  "USB Port 2/ACOV": {
+   "max_v": 1.3
+  },
+  "USB Port 2/ACP_F": {
+   "max_v": 22
+  },
+  "USB Port 2/ACUV": {
+   "max_v": 6
+  },
+  "USB Port 2/AC_SNS_N": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22
+  },
+  "USB Port 2/BAT_SNS_P": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 16.8
+  },
+  "USB Port 2/BST_5V": {
+   "max_v": 22.3
+  },
+  "USB Port 2/BTST1": {
+   "max_v": 32
+  },
+  "USB Port 2/BTST2": {
+   "max_v": 26.8
+  },
+  "USB Port 2/CC1": {
+   "max_v": 5.5
+  },
+  "USB Port 2/CC2": {
+   "max_v": 5.5
+  },
+  "USB Port 2/CE_N": {
+   "max_v": 3.6
+  },
+  "USB Port 2/CHG_INT": {
+   "max_v": 3.6
+  },
+  "USB Port 2/C_CC1": {
+   "max_v": 22
+  },
+  "USB Port 2/C_CC2": {
+   "max_v": 22
+  },
+  "USB Port 2/DPDN_DCP": {
+   "max_v": 5.5
+  },
+  "USB Port 2/DRV9_OFF": {
+   "max_v": 3.6
+  },
+  "USB Port 2/DRV_SUP": {
+   "max_v": 10
+  },
+  "USB Port 2/FB": {
+   "kind": "sensitive",
+   "max_v": 1.65
+  },
+  "USB Port 2/FBG": {
+   "max_v": 0.1
+  },
+  "USB Port 2/FB_5V": {
+   "max_v": 0.9
+  },
+  "USB Port 2/FSW": {
+   "max_v": 2.5
+  },
+  "USB Port 2/HG1": {
+   "max_v": 32
+  },
+  "USB Port 2/HG2": {
+   "max_v": 26.8
+  },
+  "USB Port 2/HIDRV1": {
+   "max_v": 32
+  },
+  "USB Port 2/HIDRV2": {
+   "max_v": 26.8
+  },
+  "USB Port 2/I2CC_SCL": {
+   "max_v": 3.6
+  },
+  "USB Port 2/I2CC_SDA": {
+   "max_v": 3.6
+  },
+  "USB Port 2/ICHG": {
+   "max_v": 2.5
+  },
+  "USB Port 2/ILIM": {
+   "max_v": 2.5
+  },
+  "USB Port 2/LDO_1V5": {
+   "max_v": 1.65
+  },
+  "USB Port 2/LG1": {
+   "max_v": 10
+  },
+  "USB Port 2/LG2": {
+   "max_v": 10
+  },
+  "USB Port 2/LODRV1": {
+   "max_v": 10
+  },
+  "USB Port 2/LODRV2": {
+   "max_v": 10
+  },
+  "USB Port 2/PP5V": {
+   "current_a": 1.5,
+   "kind": "power",
+   "max_v": 5.5
+  },
+  "USB Port 2/PPHV": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22
+  },
+  "USB Port 2/REGN": {
+   "max_v": 5.5
+  },
+  "USB Port 2/SBU_FLT": {
+   "max_v": 3.6
+  },
+  "USB Port 2/SRN_F": {
+   "max_v": 16.8
+  },
+  "USB Port 2/SRP_F": {
+   "max_v": 16.8
+  },
+  "USB Port 2/SS_5V": {
+   "max_v": 5.5
+  },
+  "USB Port 2/SW1": {
+   "current_a": 6,
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 22,
+   "swing_v": 22
+  },
+  "USB Port 2/SW2": {
+   "current_a": 6,
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 16.8,
+   "swing_v": 17
+  },
+  "USB Port 2/SW_5V": {
+   "edge_ns": 5,
+   "kind": "switching",
+   "max_v": 16.8,
+   "swing_v": 17
+  },
+  "USB Port 2/TS": {
+   "kind": "sensitive",
+   "max_v": 5.5
+  },
+  "USB Port 2/V9_DRV": {
+   "max_v": 10
+  },
+  "USB Port 2/V9_EN": {
+   "max_v": 5.5
+  },
+  "USB Port 2/V9_FB": {
+   "max_v": 1.3
+  },
+  "USB Port 2/VBIAS": {
+   "max_v": 22
+  },
+  "USB Port 2/VBUS": {
+   "current_a": 5,
+   "kind": "power",
+   "max_v": 22,
+   "normal_v": 20
+  },
+  "WAKE": {
+   "max_v": 16.8
+  }
+ },
+ "pin_pads": {
+  "J401.VBUS": [
+   "A4",
+   "A9",
+   "B4",
+   "B9"
+  ],
+  "J501.VBUS": [
+   "A4",
+   "A9",
+   "B4",
+   "B9"
+  ],
+  "L201.2": [
+   "2"
+  ],
+  "L402.2": [
+   "2"
+  ],
+  "L502.2": [
+   "2"
+  ],
+  "Q401.D1": [
+   "2",
+   "3",
+   "4"
+  ],
+  "Q401.S2": [
+   "5",
+   "6",
+   "7"
+  ],
+  "Q402.D1": [
+   "2",
+   "3",
+   "4"
+  ],
+  "Q402.S2": [
+   "5",
+   "6",
+   "7"
+  ],
+  "Q501.D1": [
+   "2",
+   "3",
+   "4"
+  ],
+  "Q501.S2": [
+   "5",
+   "6",
+   "7"
+  ],
+  "Q502.D1": [
+   "2",
+   "3",
+   "4"
+  ],
+  "Q502.S2": [
+   "5",
+   "6",
+   "7"
+  ],
+  "U204.PGND": [
+   "1"
+  ],
+  "U204.VIN": [
+   "2"
+  ],
+  "U301.DIO11": [
+   "21"
+  ],
+  "U301.DIO21_A10": [
+   "15"
+  ],
+  "U301.DIO6_A1": [
+   "9"
+  ],
+  "U301.DIO8": [
+   "10"
+  ],
+  "U301.RSTN": [
+   "14"
+  ],
+  "U301.VDDS": [
+   "6",
+   "7"
+  ],
+  "U401.LDO_1V5": [
+   "4"
+  ],
+  "U401.LDO_3V3": [
+   "1"
+  ],
+  "U401.PP5V": [
+   "34"
+  ],
+  "U401.PPHV": [
+   "20"
+  ],
+  "U401.VBUS": [
+   "32"
+  ],
+  "U401.VIN_3V3": [
+   "38"
+  ],
+  "U402.VCC": [
+   "8"
+  ],
+  "U403.ACN": [
+   "29"
+  ],
+  "U403.ACP": [
+   "30"
+  ],
+  "U403.BTST1": [
+   "26"
+  ],
+  "U403.BTST2": [
+   "20"
+  ],
+  "U403.DRV_SUP": [
+   "23"
+  ],
+  "U403.REGN": [
+   "24"
+  ],
+  "U403.SRN": [
+   "13"
+  ],
+  "U403.SRP": [
+   "14"
+  ],
+  "U403.VAC": [
+   "32",
+   "33"
+  ],
+  "U404.BST": [
+   "6"
+  ],
+  "U404.GND": [
+   "4"
+  ],
+  "U404.SS": [
+   "7"
+  ],
+  "U404.VIN": [
+   "3"
+  ],
+  "U405.VBIAS": [
+   "3"
+  ],
+  "U405.VPWR": [
+   "10"
+  ],
+  "U406.EN": [
+   "5"
+  ],
+  "U406.IN": [
+   "8"
+  ],
+  "U406.OUT": [
+   "1"
+  ],
+  "U501.LDO_1V5": [
+   "4"
+  ],
+  "U501.LDO_3V3": [
+   "1"
+  ],
+  "U501.PP5V": [
+   "34"
+  ],
+  "U501.PPHV": [
+   "20"
+  ],
+  "U501.VBUS": [
+   "32"
+  ],
+  "U501.VIN_3V3": [
+   "38"
+  ],
+  "U502.VCC": [
+   "8"
+  ],
+  "U503.ACN": [
+   "29"
+  ],
+  "U503.ACP": [
+   "30"
+  ],
+  "U503.BTST1": [
+   "26"
+  ],
+  "U503.BTST2": [
+   "20"
+  ],
+  "U503.DRV_SUP": [
+   "23"
+  ],
+  "U503.REGN": [
+   "24"
+  ],
+  "U503.SRN": [
+   "13"
+  ],
+  "U503.SRP": [
+   "14"
+  ],
+  "U503.VAC": [
+   "32",
+   "33"
+  ],
+  "U504.BST": [
+   "6"
+  ],
+  "U504.GND": [
+   "4"
+  ],
+  "U504.SS": [
+   "7"
+  ],
+  "U504.VIN": [
+   "3"
+  ],
+  "U505.VBIAS": [
+   "3"
+  ],
+  "U505.VPWR": [
+   "10"
+  ],
+  "U506.EN": [
+   "5"
+  ],
+  "U506.IN": [
+   "8"
+  ],
+  "U506.OUT": [
+   "1"
+  ]
+ },
+ "serves": {
+  "C206": "U204.VIN",
+  "C207": "L201.2",
+  "C301": "U301.VDDS",
+  "C302": "U301.VDDS",
+  "C303": "U301.VDDS",
+  "C304": "U301.RSTN",
+  "C403": "U401.VIN_3V3",
+  "C404": "U401.LDO_3V3",
+  "C405": "U401.LDO_1V5",
+  "C406": "J401.VBUS",
+  "C407": "U401.PP5V",
+  "C408": "U402.VCC",
+  "C409": "U403.VAC",
+  "C410": "U403.REGN",
+  "C411": "U403.DRV_SUP",
+  "C412": "U403.BTST1",
+  "C413": "U403.BTST2",
+  "C414": "U403.ACP",
+  "C415": "U403.ACP",
+  "C416": "U403.ACN",
+  "C417": "U403.SRP",
+  "C418": "U403.SRP",
+  "C419": "U403.SRN",
+  "C420": "Q401.D1",
+  "C423": "Q401.D1",
+  "C424": "Q401.D1",
+  "C427": "Q401.D1",
+  "C430": "Q401.D1",
+  "C431": "Q402.D1",
+  "C434": "Q402.D1",
+  "C438": "Q402.D1",
+  "C439": "U404.SS",
+  "C440": "U404.BST",
+  "C441": "L402.2",
+  "C442": "L402.2",
+  "C443": "L402.2",
+  "C449": "U401.PPHV",
+  "C450": "U401.VBUS",
+  "C451": "U405.VBIAS",
+  "C452": "U405.VPWR",
+  "C457": "U406.IN",
+  "C458": "U406.OUT",
+  "C503": "U501.VIN_3V3",
+  "C504": "U501.LDO_3V3",
+  "C505": "U501.LDO_1V5",
+  "C506": "J501.VBUS",
+  "C507": "U501.PP5V",
+  "C508": "U502.VCC",
+  "C509": "U503.VAC",
+  "C510": "U503.REGN",
+  "C511": "U503.DRV_SUP",
+  "C512": "U503.BTST1",
+  "C513": "U503.BTST2",
+  "C514": "U503.ACP",
+  "C515": "U503.ACP",
+  "C516": "U503.ACN",
+  "C517": "U503.SRP",
+  "C518": "U503.SRP",
+  "C519": "U503.SRN",
+  "C520": "Q501.D1",
+  "C523": "Q501.D1",
+  "C524": "Q501.D1",
+  "C527": "Q501.D1",
+  "C530": "Q501.D1",
+  "C531": "Q502.D1",
+  "C534": "Q502.D1",
+  "C538": "Q502.D1",
+  "C539": "U504.SS",
+  "C540": "U504.BST",
+  "C541": "L502.2",
+  "C542": "L502.2",
+  "C543": "L502.2",
+  "C549": "U501.PPHV",
+  "C550": "U501.VBUS",
+  "C551": "U505.VBIAS",
+  "C552": "U505.VPWR",
+  "C557": "U506.IN",
+  "C558": "U506.OUT",
+  "R302": "U301.RSTN",
+  "R304": "U301.DIO6_A1",
+  "R305": "U301.DIO8",
+  "R313": "U301.DIO21_A10",
+  "R314": "U301.DIO11",
+  "R454": "U406.EN",
+  "R554": "U506.EN"
+ },
+ "waive": {
+  "recmax: U101.CHG": "the gauge's own charge pump sets this level (pack + 10.5 to 12 V); the 26 V row in the recommended table is lower than what the part itself produces on a 16.8 V pack. Logan confirmed 2026-11-11: these are the external FET drive pins, 32 V absolute maximum, so 28.8 V is expected",
+  "recmax: U101.DSG": "same as U101.CHG"
+ }
+}

@@ -12,6 +12,7 @@ it are re-annealed.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
 FAST_CLUSTER_X = 20        # with the compiled core the cluster stage runs this many times the requested moves
+TIGHT = 0.3                # mm of slack a hot-loop capacitor gets over the pad distances its cluster was built with
 import numpy as np
 import floorplan as F
 try:
@@ -41,20 +42,21 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
             pr.append(i); pl.append((p["x"] - x0, p["y"] - y0)); pn.append(netid.setdefault(p["net"], len(netid)))
     # intent statements as cost terms: near (excess distance) and keepapart (shortfall)
     ap = [(ri[p["ref"]], p["x"] - pos0[p["ref"]][0], p["y"] - pos0[p["ref"]][1], p["num"], p["net"]) for p in d["pads"]]
-    apr = np.array([a[0] for a in ap]); apl = np.array([[a[1], a[2]] for a in ap]); nearS = []; apartS = []
+    apr = np.array([a[0] for a in ap]); apl = np.array([[a[1], a[2]] for a in ap]); nearS = []; apartS = []; follow = {}     # follow: part -> parts tied to it by a weighted statement (hot-loop capacitors of a switch)
     if intentf:
         it = json.load(open(intentf))
         for st in it.get("near", []):
-            A = [j for j, a in enumerate(ap) if refs[a[0]] == st["part"]]
+            A = [j for j, a in enumerate(ap) if refs[a[0]] == st["part"] and ("pad" not in st or f"{refs[a[0]]}.{a[3]}" == st["pad"])]
             B = [j for j, a in enumerate(ap) for t in st["to"] if (f"{refs[a[0]]}.{a[3]}" == t or refs[a[0]] == t)]
-            if A and B: nearS.append((np.array(A), np.array(B), st["max_mm"]))
+            if A and B and st.get("weight", 1) > 1 and st["to"]: follow.setdefault(st["to"][0].split(".")[0], set()).add(st["part"])
+            if A and B: nearS += [(np.array(A), np.array(B), st["max_mm"], "pad" in st and st.get("weight", 1) > 1)] * int(st.get("weight", 1))    # a weighted statement counts that many times
         for st in it.get("keepapart", []):
             A = [j for j, a in enumerate(ap) if a[4] in st["a_nets"]]; B = [j for j, a in enumerate(ap) if a[4] in st["b_nets"]]
             if A and B: apartS.append((np.array(A), np.array(B), st["min_mm"]))
     def intent_cost(xy, k):
         if not nearS and not apartS: return 0.0
         q = xy[apr] + rotv(apl, k[apr]); c = 0.0
-        for A, B, lim in nearS:
+        for A, B, lim, *_ in nearS:
             dd = np.sqrt(((q[A][:, None, :] - q[B][None, :, :]) ** 2).sum(-1)).min(); c += max(0.0, dd - lim)
         for A, B, lim in apartS:
             dd = np.sqrt(((q[A][:, None, :] - q[B][None, :, :]) ** 2).sum(-1)); dd[apr[A][:, None] == apr[B][None, :]] = 1e9; c += 3 * max(0.0, lim - dd.min())
@@ -160,6 +162,12 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     pads_of = [np.nonzero(pr == i)[0] for i in range(N)]; net_of_pad = np.searchsorted(starts, np.arange(len(pr)), side="right") - 1
     ends = np.r_[starts[1:], len(pr)]; nets_of_part = [np.unique(net_of_pad[p]) for p in pads_of]
     pads = xy[pr] + rotv(pl, k[pr]); topo(pads); apads_of = [np.nonzero(apr == i)[0] for i in range(N)]; q_all = xy[apr] + rotv(apl, k[apr])
+    # a weighted pad-to-pad statement (hot-loop capacitor) is tightened to what its cluster already achieves plus TIGHT mm,
+    # so the capacitor keeps the pose the section placer chose (facing the switch pads) through refinement
+    def tight(A, B, lim, t):
+        if not t or cid[apr[A[0]]] != cid[apr[B[0]]]: return lim
+        return min(lim, float(np.sqrt(((q_all[A][:, None, :] - q_all[B][None, :, :]) ** 2).sum(-1)).min()) + TIGHT)
+    nearS = [(A, B, tight(A, B, lim, t)) for A, B, lim, t in nearS]
     st_of = [[] for _ in range(N)]
     for j, (A, B, lim) in enumerate(nearS):
         for i in set(apr[A]) | set(apr[B]): st_of[i].append(("n", j))
@@ -278,19 +286,88 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
         print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
         WOV[0] = 30.0
     anneal(refine, 1.5, 0.02)
-    repaired = []; hard = fixed | big
+    repaired = []
     offb = lambda j: LO[j, 0] < box[0] + 0.5 or LO[j, 1] < box[1] + 0.5 or HI[j, 0] > box[2] - 0.5 or HI[j, 1] > box[3] - 0.5
+    allp = np.ones(N, dtype=bool)
+    # stages: parts tied together by weighted pad statements (a switch part, its hot-loop capacitors, the inductor at its
+    # switch node), as connected groups inside one cluster. Each has an anchor (its largest part); the rest are held to it.
+    prot = np.zeros(N, dtype=bool); sw_of = {}; par = {}
+    def find(a):
+        while par.setdefault(a, a) != a: a = par[a]
+        return a
+    for r, cs in follow.items():
+        for c in cs:
+            if r in ri and c in ri and not fixed[ri[c]] and not fixed[ri[r]] and cid[ri[c]] == cid[ri[r]]: par[find(ri[c])] = find(ri[r])
+    groups_ = {}
+    for a in list(par): groups_.setdefault(find(a), []).append(a)
+    for mem_ in groups_.values():
+        anchor = max(mem_, key=lambda j: area[j])
+        for j in mem_:
+            if j != anchor: prot[j] = True; sw_of[j] = anchor
+    def reform(sw):           # capacitors back to exactly the pose their cluster gave them, relative to the switch part as it now sits
+        dk = (int(k[sw]) - int(lrot[sw])) % 4
+        for j, q in sw_of.items():
+            if q != sw or cid[j] != cid[sw]: continue
+            v = loc[j] - loc[sw]
+            for _ in range(dk): v = np.array([-v[1], v[0]])
+            put(j, xy[sw] + v, (int(lrot[j]) + dk) % 4)
+    for sw in set(sw_of.values()): reform(sw)
+    sw_set = set(sw_of.values()); stagep = prot.copy(); stagep[list(sw_set)] = True; hard = fixed | big | stagep
+    KOa = np.array([kb for kb, _, _ in KO], dtype=float).reshape(-1, 4); KOf = np.array([f for _, f, _ in KO], dtype=bool); KOb = np.array([b for _, _, b in KO], dtype=bool)
+    def kov(j):               # on a keep-out (outside the board outline, enclosure parts)
+        if not len(KOa): return False
+        m = KOf if sideF[j] else KOb
+        return bool((m & (np.minimum(HI[j, 0], KOa[:, 2]) - np.maximum(LO[j, 0], KOa[:, 0]) > 0.03) & (np.minimum(HI[j, 1], KOa[:, 3]) - np.maximum(LO[j, 1], KOa[:, 1]) > 0.03)).any())
+    stuckp = lambda j: ovl(j) > 0 or offb(j) or kov(j)
+    members = lambda sw: [sw] + [j for j, q in sw_of.items() if q == sw]
+    def stage_move(sw, masks=None, mem=None):   # switch part and its capacitors, as one piece, to the nearest spot where all of them are clear
+        mem = mem or members(sw); own = np.zeros(N, dtype=bool); own[mem] = True; base = [(xy[j].copy(), int(k[j])) for j in mem]
+        for mask in masks or (allp & ~own, hard & ~own, (fixed | stagep) & ~own):     # clear of everything, else of fixed, large and stage parts, else of fixed and stage parts
+            for reach, step in ((2.0, 0.1), (6.0, 0.25), (15.0, 0.5), (40.0, 1.0)):
+                n = int(reach / step)
+                for dx, dy in sorted(((a * step, b * step) for a in range(-n, n + 1) for b in range(-n, n + 1)), key=lambda q: q[0] * q[0] + q[1] * q[1]):
+                    for j, (p, kk) in zip(mem, base): put(j, (p[0] + dx, p[1] + dy), kk)
+                    if not any(ovl(j, mask) > 0 or offb(j) or kov(j) for j in mem): return True
+        for j, (p, kk) in zip(mem, base): put(j, p, kk)
+        return False
+    # stages first, largest first: each must be clear of fixed parts, the outline and the other stages; large parts then
+    # move off the stages, small parts off both. This is the order a person works in.
+    for sw in sorted(sw_set, key=lambda q: -sum(area[j] for j in members(q))):
+        own = np.zeros(N, dtype=bool); own[members(sw)] = True
+        if any(offb(j) or kov(j) or ovl(j, (fixed | stagep) & ~own) > 0 for j in members(sw)) and stage_move(sw): repaired.append("stage " + refs[sw])
     for rnd_ in range(6):
-        stuck = sorted([int(j) for j in mv if ovl(int(j)) > 0 or offb(int(j))], key=lambda j: -area[j])
+        stuck = sorted([int(j) for j in mv if stuckp(int(j))], key=lambda j: -area[j])
         if not stuck: break
         for i in stuck:
-            if ovl(i) <= 0 and not offb(i): continue
-            if big[i] and ovl(i, hard) > 0:
+            if not stuckp(i): continue
+            if stagep[i]:
+                sw = sw_of.get(i, i); own = np.zeros(N, dtype=bool); own[members(sw)] = True
+                if (offb(i) or kov(i) or ovl(i, hard & ~own) > 0) and stage_move(sw): repaired.append("stage " + refs[sw])
+                continue                                                         # only free small parts overlap it: they move, the stage stays
+            if big[i] and (ovl(i, hard) > 0 or kov(i)):
                 WOV[0] = 30.0; search(i, 30.0, 0.5, hard); repaired.append(refs[i])
-                near_i = np.array([int(j) for j in mv if not big[j] and abs(xy[j][0] - xy[i][0]) < 12 and abs(xy[j][1] - xy[i][1]) < 12])
+                if ovl(i, hard) > 0:      # no room clear of every large part: clear of stages, fixed parts and the parts at least its own size; smaller ones then move off it
+                    search(i, 30.0, 0.5, fixed | stagep | (big & (area >= area[i])))
+                near_i = np.array([int(j) for j in mv if not big[j] and not stagep[j] and abs(xy[j][0] - xy[i][0]) < 12 and abs(xy[j][1] - xy[i][1]) < 12])
                 if len(near_i): WOV[0] = 400.0; anneal(60000, 0.6, 0.02, 0.0, near_i)
             else:
                 WOV[0] = 5000.0; search(i, 8.0, 0.25); repaired.append(refs[i])
+    # last pass: any part still overlapping goes to the best spot that is clear of every other part (not just the
+    # cheapest spot), nearest first. Most runs that failed were left with slivers of a few hundredths of a millimetre.
+    WOV[0] = 400.0
+    for rnd_ in range(8):
+        stuck = sorted([int(j) for j in mv if stuckp(int(j))], key=lambda j: area[j])
+        if not stuck: break
+        for i in stuck:
+            if not stuckp(i): continue
+            if stagep[i]:
+                sw = sw_of.get(i, i); own = np.zeros(N, dtype=bool); own[members(sw)] = True
+                if (offb(i) or kov(i) or ovl(i, hard & ~own) > 0) and stage_move(sw, (allp & ~own,)): repaired.append("stage " + refs[sw])
+                continue
+            for reach, step in ((1.0, 0.05), (3.0, 0.1), (8.0, 0.25), (20.0, 0.5)):
+                if search(i, reach, step, allp): repaired.append(refs[i]); break
+            if kov(i) or offb(i):         # the search weighs keep-outs but does not forbid them: nearest spot clear of parts and keep-outs
+                own = np.zeros(N, dtype=bool); own[i] = True; stage_move(i, (allp & ~own, hard & ~own), [i])
     WOV[0] = 400.0
     if repaired: print(json.dumps(dict(step="repaired", parts=repaired)), flush=True)
     topo(pads); a = cost(xy, k, True)

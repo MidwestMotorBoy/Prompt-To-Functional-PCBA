@@ -12,6 +12,7 @@ import json, sys, math
 from collections import defaultdict
 import floorplan as F
 
+HOT_ROOM = 1.6 # clear space kept round a hot-loop switch part when it is placed, mm
 GAP = 0.05     # clearance between bodies, mm (bodies are courtyards when the dump has them, else pad boxes)
 
 def rot(v, k):
@@ -24,9 +25,10 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
     comps = json.load(open(netf))["comps"]; cons = json.load(open(consf))
     F.SECTIONS = {r: f"{v['block']} / {v.get('section') or 'main'}" for r, v in comps.items()}
     d, pos0, side, blk, pads0 = F.load(dumpf); power = F.power_nets(pads0)
-    lp = defaultdict(list); bb = {}
+    lp = defaultdict(list); lpb = defaultdict(list); bb = {}
     for p in d["pads"]:
         x0, y0 = pos0[p["ref"]]; lp[p["ref"]].append((p["x"] - x0, p["y"] - y0, p["net"], p["num"]))
+        lpb[p["ref"]].append((p["box"][0] - x0, p["box"][1] - y0, p["box"][2] - x0, p["box"][3] - y0))
         b = bb.setdefault(p["ref"], [1e9, 1e9, -1e9, -1e9]); bx = p["box"]
         b[0] = min(b[0], bx[0] - x0); b[1] = min(b[1], bx[1] - y0); b[2] = max(b[2], bx[2] - x0); b[3] = max(b[3], bx[3] - y0)
     for f in d["fps"]:                    # courtyards, where the dump has them, are the bodies
@@ -37,17 +39,46 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
         return min(c[0] for c in cs), min(c[1] for c in cs), max(c[0] for c in cs), max(c[1] for c in cs)
     serves = {}
     for c, t in cons.get("serves", {}).items():
-        tr, tp = t.split(".", 1); serves[c] = (tr, tp)
+        tr, tp = t.split(".", 1); serves[c] = (tr, (cons.get("pin_pads", {}).get(t) or [tp])[0])   # pin name -> pad number
     near = defaultdict(list)             # part -> [(target part, pad number or None, weight)]
     if intentf:
         for st in json.load(open(intentf)).get("near", []):
             for t in st["to"]:
-                tr, _, tp = t.partition("."); near[st["part"]].append((tr, tp or None, 8.0 if st["max_mm"] <= 2.0 else 4.0))
+                tr, _, tp = t.partition("."); tp = (cons.get("pin_pads", {}).get(t) or [tp])[0]; near[st["part"]].append((tr, tp or None, 8.0 if st["max_mm"] <= 2.0 else 4.0))
     else:
         for c, (tr, tp) in serves.items(): near[c].append((tr, tp, 4.0))
     groups = defaultdict(list)
     for r in pos0:
         if r in bb and r.rstrip("0123456789").upper() not in pre: groups[(blk[r], side[r])].append(r)
+    # Hot loops (circuit code): each capacitor goes into its switch part's group, is placed straight after the switch
+    # part, and is pulled pad by pad: supply pad to the switch's supply pads, return pad to its return pads.
+    bare = lambda n: (n or "").lstrip("/"); hot = {}; hotdev = {}; pp = cons.get("pin_pads", {})
+    for hname, hl in cons.get("hot_loops", {}).items():
+        dev = hl["switch_pins"][0].split(".")[0]
+        if dev not in bb: continue
+        nums = {t: set(pp.get(t, [])) for t in hl["switch_pins"]}
+        sp = [i for i, v in enumerate(lp[dev]) if bare(v[2]) == hl["supply"] and any(v[3] in nums[t] for t in nums)]
+        rp = [i for i, v in enumerate(lp[dev]) if bare(v[2]) == hl["ret"] and any(v[3] in nums[t] for t in nums)]
+        if not sp or not rp: raise SystemExit(f"hot loop {hname}: switch pads not found on {dev} (constraints need pin_pads)")
+        hotdev[dev] = 1
+        for k, c in enumerate(hl["caps"]):
+            if c not in bb or c in hot: continue
+            hot[c] = (dev, sp, rp, hl["supply"], hl["ret"], k)
+            gd = (blk[dev], side[dev]); gc = (blk[c], side[c])
+            if gc != gd: groups[gc].remove(c); groups[gd].append(c); side[c] = side[dev]
+    def padbox(r, i, P_):     # pad box of a placed part, board-local
+        x, y, k = P_; b = lpb[r][i]; cs = [rot((b[0], b[1]), k), rot((b[2], b[3]), k)]
+        return x + min(c[0] for c in cs), y + min(c[1] for c in cs), x + max(c[0] for c in cs), y + max(c[1] for c in cs)
+    def seg_hits(ax, ay, bx_, by_, B):   # segment against a box (Liang-Barsky)
+        t0, t1 = 0.0, 1.0; dx, dy = bx_ - ax, by_ - ay
+        for p_, q_ in ((-dx, ax - B[0]), (dx, B[2] - ax), (-dy, ay - B[1]), (dy, B[3] - ay)):
+            if p_ == 0:
+                if q_ < 0: return False
+            else:
+                t = q_ / p_
+                if p_ < 0: t0 = max(t0, t)
+                else: t1 = min(t1, t)
+        return t0 < t1
     def inner_nets(rs):
         s = set(rs); nets = defaultdict(list)
         for r in rs:
@@ -82,9 +113,12 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
         for c, ts in near.items():
             for tr, _, _ in ts:
                 if c in rs and tr in rs: conn[c][tr] += 5; conn[tr][c] += 5
-        order = [max(rs, key=lambda r: (len(lp[r]), r))]; left = set(rs) - set(order)
+        for c, h in hot.items():
+            if c in rs: conn[c][h[0]] += 200 - 10 * h[5]; conn[h[0]][c] += 1
+        order = [max(rs, key=lambda r: (r in hotdev, len(lp[r]), r))]; left = set(rs) - set(order)
         while left:
-            nxt = max(left, key=lambda r: (sum(conn[r][q] for q in order), len(lp[r]), r)); order.append(nxt); left.remove(nxt)
+            # a switch part's own hot-loop capacitors come straight after it, before the next switch part takes the room
+            nxt = max(left, key=lambda r: (sum(conn[r][q] for q in order) + (1000 if r in hotdev else 0) + (5000 if r in hot and hot[r][0] in order else 0), len(lp[r]), r)); order.append(nxt); left.remove(nxt)
         P = {order[0]: (0.0, 0.0, 0)}
         def pinxy(tr, tp):
             for lx, ly, _, num in lp[tr]:
@@ -99,22 +133,37 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
                         if q in P and q != r: dx, dy = rot(lp[q][j][:2], P[q][2]); tg.append((i, P[q][0] + dx, P[q][1] + dy, 1.0))
             for tr, tp, w in near.get(r, []):
                 if tr in P: sx, sy = pinxy(tr, tp); tg.append((None, sx, sy, w))
+            hp = []
+            if r in hot and hot[r][0] in P:
+                dev, sp, rp, Pn, Gn, kk = hot[r]; dp = P[dev]
+                ctr = lambda i: (dp[0] + rot(lp[dev][i][:2], dp[2])[0], dp[1] + rot(lp[dev][i][:2], dp[2])[1])
+                foreign = lambda net: [padbox(q, j, P[q]) for q in P for j in range(len(lp[q])) if bare(lp[q][j][2]) != net and lp[q][j][3]]
+                for i, v in enumerate(lp[r]):
+                    if bare(v[2]) == Pn: hp.append((i, [padbox(dev, j, dp) for j in sp], foreign(Pn), 12.0))
+                    elif bare(v[2]) == Gn: hp.append((i, [padbox(dev, j, dp) for j in rp], foreign(Gn), 12.0))
             placed = [(P[q][0] + body(q, P[q][2])[0] - GAP, P[q][1] + body(q, P[q][2])[1] - GAP, P[q][0] + body(q, P[q][2])[2] + GAP, P[q][1] + body(q, P[q][2])[3] + GAP) for q in P]
             X0 = min(b[0] for b in placed) - 6; X1 = max(b[2] for b in placed) + 6; Y0 = min(b[1] for b in placed) - 6; Y1 = max(b[3] for b in placed) + 6
             cx = sum(b[0] + b[2] for b in placed) / 2 / len(placed); cy = sum(b[1] + b[3] for b in placed) / 2 / len(placed)
-            best = None; st = 0.25
+            best = None; st = 0.25; room = HOT_ROOM if r in hotdev else 0.0     # a switch part keeps room round it for its own capacitors
             for k in range(4):
                 b = body(r, k); lpk = [rot(v[:2], k) for v in lp[r]]
                 y = Y0
                 while y <= Y1:
                     x = X0
                     while x <= X1:
-                        A = (x + b[0], y + b[1], x + b[2], y + b[3])
+                        A = (x + b[0] - room, y + b[1] - room, x + b[2] + room, y + b[3] + room)
                         if not any(A[0] < q[2] and A[2] > q[0] and A[1] < q[3] and A[3] > q[1] for q in placed):
                             c = 0.0
                             for i, tx, ty, w in tg:
                                 px, py = (x + lpk[i][0], y + lpk[i][1]) if i is not None else (x, y)
                                 c += w * (abs(px - tx) + abs(py - ty))
+                            if hp:
+                                for i, mine, other, w in hp:
+                                    px, py = x + lpk[i][0], y + lpk[i][1]
+                                    tx, ty = min(((min(max(px, B[0]), B[2]), min(max(py, B[1]), B[3])) for B in mine), key=lambda q: abs(q[0] - px) + abs(q[1] - py))   # nearest point of the switch pads
+                                    c += w * (abs(px - tx) + abs(py - ty))
+                                    ob = [(x + min(u[0], v[0]), y + min(u[1], v[1]), x + max(u[0], v[0]), y + max(u[1], v[1])) for j in range(len(lpk)) if lp[r][j][2] != lp[r][i][2] for u, v in [(rot(lpb[r][j][:2], k), rot(lpb[r][j][2:], k))]]
+                                    if any(seg_hits(px, py, tx, ty, B) for B in other + ob): c += 3 * w      # copper of the other net in the way: the loop has to go round
                             c += 0.05 * (abs(x - cx) + abs(y - cy))            # weak pull to the cluster, breaks ties and handles parts with no target
                             if best is None or c < best[0]: best = (c, x, y, k)
                         x += st

@@ -203,6 +203,101 @@ Speed: `fastcore.py` compiles the cluster and refine stages with numba. One full
 moves, 2.5 million part moves, repair) takes 3 min 20 s on one core; the numpy path took 20 to 40 min for a
 twentieth of the cluster moves. Without numba the numpy path is used.
 
+## Power first: stages, a loop score and a hard-limit gate (2026-11-12)
+
+Logan's point: the placer above optimises signal wiring, and what matters most on this board is loop area and
+power paths. His order of priorities: first the hard thresholds (violate one and the part does not work), then
+ringing, then losses and heat together; routability is what is left. Until now nothing in this stage measured a
+hot loop, and the trial route skips the power nets.
+
+**What was measured first.** `stage_copper.py` lays down power copper for each hot loop of a placement by fixed
+rules (below), `hot_score.py` runs the PEEC loop solver on it, `power_gate.py` turns the result into pass or
+fail. On the hand placement with rule copper all seven loops close, first capacitor 0.41 to 0.64 nH (the real
+hand copper reads 0.38 to 0.90). On three buildable results of the placer above, two or three of the seven loops were open (a
+capacitor turned the wrong way round, or left behind) and the rest read up to three times the hand board. The signal-only placer was failing
+the thing that matters.
+
+**Copper rules (`stage_copper.py`).** Ground planes on In1 and In4. Per hot loop: a supply pour and a return
+pour on the switch part's layer over the hull of the loop's pads (supply wins where they overlap), return vias at
+every capacitor and at the switch's return pads, a strip of return copper where a fine-pitch return pin has no
+room for a via, and for the bulk capacitors supply vias to a supply pour on In2. No routing, no judgement: the
+same rules on every placement, so two placements can be compared.
+
+**Hard limit (tier 1, `power_gate.py`).** The first capacitor of each loop must close its loop on the rule copper
+(a bulk capacitor the rule copper does not reach is a note: routing will connect it), and
+supply voltage plus turn-off spike must stay under the switch's absolute maximum. The layout guides give no
+numbers (BQ25756 table 9-1: "Minimize loop area", "close to the switching FETs"), so the limit is derived:
+
+| Loop | Switch | Estimate | Inputs (source) | Limit on total loop inductance |
+|---|---|---|---|---|
+| Port input leg | SiZ240DT | ring: I sqrt(L / Coss), no damping | 22 V (circuit code), 40 V VDS and Coss 170 pF (datasheet p.1, p.2), 6.5 A = 1.3 x 5 A | 1.30 nH |
+| Port battery leg | SiZ240DT | ring | 16.8 V, 40 V, 170 pF, 6.5 A | 2.17 nH |
+| 5 V buck | TPS62933 | edge: L I / t | 16.8 V, 33 V SW transient (p.5), 5.8 A current limit (p.6), half of the 5 ns edge the circuit code declares | 7.0 nH |
+| 3.3 V buck | TPS62177 | edge | 16.8 V, 30 V VIN (p.4), 1.2 A current limit (p.5), half of 5 ns | 27.5 nH |
+
+Total = board loop with all capacitors and their package inductance in parallel, plus 0.2 nH assumed for the
+switch package. The ring estimate is an upper bound (the FET is also avalanche rated, which is not relied on);
+the edge estimate is used where a datasheet has no Coss. Assumptions that are not from a datasheet: the 0.2 nH,
+the factor 1.3 on current, half the declared edge time. These are best calls, open to Logan's correction; each
+is one constant at the top of `power_gate.py`. The facts are in the limits files with page and quote and pass
+`intent_check.py verify`.
+
+Gate drive has no layout-dependent hard limit on this board, by the datasheet: the Crss/Ciss ratio is 0.038 at
+most (p.2), so a 22 V edge couples at most 0.84 V onto a gate, under the 1.1 V minimum threshold. Gate-loop
+inductance is therefore tier 2. Still to be written as gates: decoupling distance per supply pin, and junction
+temperature at worst-case loss (needs the power copper stage).
+
+**Tier 2.** Loop inductance itself, lower is better: total and first capacitor per loop, against a reference.
+
+**Placer changes.**
+- The circuit build now writes `pin_pads` (pin name to pad numbers) and checks each hot loop (switch pins on
+  the supply and return nets, capacitors across them). Before, a `serves="U204.VIN"` pull went to the part
+  centre, because the placer compared a pin name with pad numbers.
+- `place_sections.py` builds each stage first: a switch part, then straight away its own hot-loop capacitors,
+  each capacitor pad pulled to the nearest point of the switch pads on its net, with a penalty when another
+  net's pad lies in between; a switch part keeps 1.6 mm of room for its capacitors. Capacitors declared in
+  another section of the circuit join their switch part's group.
+- `intent.py`: hot-loop statements are pad to pad and weighted; the inductor at a switch node belongs to its
+  stage.
+- `place_pack.py`: a stage (parts joined by weighted pad statements inside one cluster: switch parts,
+  capacitors, inductor) keeps its shape. In refinement each weighted statement is tightened to the distance the
+  cluster was built with plus 0.3 mm; before repair the stage is put back into exactly that shape; repair moves
+  neighbours off a stage or moves the stage as one piece, and works stages first, then large parts, then small
+  parts. Parts on a keep-out are now repaired too.
+- `stage_bench.py`: a placement holding only the stages, so the stage shapes are scored in about three minutes.
+- `hot_score.py`: small loops on a 0.2 mm cell (0.3 mm read 20 % low on a fine-pitch part); a loop that reads
+  open on 0.3 mm is solved again on 0.2 mm (one "open" was a neck of copper thinner than the cell); a capacitor
+  over 15 mm from its switch counts as open and stays out of the solve (memory).
+
+**What did not work.** Locking stage parts in place without moving them as a piece (0 and 1 of 8 seeds
+buildable). A heavier weight on centre-to-pad distance statements (the capacitor sat near its pins but turned so
+that the other net's pin was in the way). Repairing a switch part and letting its capacitors follow without
+checking where they land.
+
+**Results on Monolith (8 seeds, 4 cores, about 5 minutes a seed; loop score about 10 minutes a board).**
+
+| | Buildable | Hot loops passing tier 1 | Loop total, nH: 3.3 V buck / 5 V bucks / port input legs / battery legs | Trial route, of 380 |
+|---|---|---|---|---|
+| Hand placement, rule copper | yes | 7 of 7 | 1.27 / 0.82, 0.94 / 0.77, 0.78 / 0.75, 0.74 | 361 |
+| Placer before this work (3 buildable seeds scored) | 18 of 24 | 4 or 5 of 7 (2 or 3 loops open) | closed loops up to 3 times the hand board | 357 to 365 |
+| Placer with stages | 6 of 8 | 7 of 7 on five seeds, 6 of 7 on one | 1.07 to 1.11 / 0.69 to 0.85 / 0.66 to 0.70 / 0.62 to 0.66 | 365 (seed 3) |
+
+Loop totals include 0.2 nH for the switch package and the capacitors' own inductance. The stage shapes are the
+same in every seed (that is the point of keeping them whole), so the loops barely move from seed to seed; what a
+seed can still spoil is a neighbour's pad inside a stage's copper (seed 5: the 3.3 V buck's capacitor lost its
+path, and the gate caught it). Signal wiring got longer (half-perimeter 2900 to 3840 mm against 2520 to 3150
+before) and the trial route did not get worse.
+
+Limits of this result: the rule copper is not the final copper (on the hand placement the first capacitor of the
+four FET legs reads 13 to 19 % under the real hand copper; the converter ICs differ more, the 3.3 V buck 37 %
+under and one 5 V buck 70 % over); nothing is checked against a measurement; the
+bulk capacitor of one 5 V buck is reached only through vias (1.7 nH on its own); two seeds in eight are still
+not buildable; gate drive, coupling, losses and heat are not scored yet.
+
+Kept in `example/monolith`: the build's `constraints.json` and `netlist.json`, the new `clusters.json` and
+`intent.json`, `placements/seed3_stages_routed365.json` with its loop result, the hand placement's loop result,
+and the seed summary.
+
 ## Run it
 
 ```
@@ -218,4 +313,8 @@ python3 crossings.py <board dump.json> [placement.json]
 python3 run_seeds.py example/monolith/clusters.json example/monolith/board_dump.json example/monolith/intent.json <out dir> <first seed> <count>
 python3 apply_placement.py <in.kicad_pcb> <out.kicad_pcb> [placement.json] [--strip]      (KiCad's python)
 python3 open_connections.py <board.kicad_pcb> <drc.json>                                  (KiCad's python)
+python3 stage_copper.py <placed bare board.kicad_pcb> <constraints.json> <out.kicad_pcb>   (KiCad's python)
+PCB=<board with copper> python3 hot_score.py <constraints.json> [out.json] [loop name ...]
+python3 power_gate.py <constraints.json> <netlist.json> <limits dir> <limitsmap.json> <hot_score out.json> [reference.json]
+python3 stage_bench.py clusters.json <board dump.json> <constraints.json> placement.json
 ```

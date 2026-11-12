@@ -57,6 +57,24 @@
    "unit": "V",
    "page": 19,
    "quote": "The internal reference voltage, VREF, is designed at 0.8 V (typical)"
+  },
+  "IHS_LIMIT_MAX": {
+   "value": 5.8,
+   "unit": "A",
+   "page": 6,
+   "quote": "TPS62933 and TPS62933x 4.2 5 5.8"
+  },
+  "SW_TRANSIENT_MAX": {
+   "value": 33,
+   "unit": "V for under 10 ns",
+   "page": 5,
+   "quote": "SW, transient < 10 ns –3 33"
+  },
+  "TJ_MAX": {
+   "value": 150,
+   "unit": "C",
+   "page": 5,
+   "quote": "Operating junction temperature(2) –40 150"
   }
  }
 }

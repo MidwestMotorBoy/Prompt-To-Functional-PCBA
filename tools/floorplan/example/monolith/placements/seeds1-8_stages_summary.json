@@ -1,0 +1,63 @@
+[
+ {
+  "seed": 1,
+  "half_perimeter_mm": 3135,
+  "crossings": 849,
+  "statements": "86 of 119",
+  "problems": []
+ },
+ {
+  "seed": 2,
+  "half_perimeter_mm": 3366,
+  "crossings": 919,
+  "statements": "69 of 119",
+  "problems": []
+ },
+ {
+  "seed": 3,
+  "half_perimeter_mm": 2904,
+  "crossings": 802,
+  "statements": "79 of 119",
+  "problems": []
+ },
+ {
+  "seed": 4,
+  "half_perimeter_mm": 3236,
+  "crossings": 763,
+  "statements": "82 of 119",
+  "problems": []
+ },
+ {
+  "seed": 5,
+  "half_perimeter_mm": 3005,
+  "crossings": 795,
+  "statements": "74 of 119",
+  "problems": []
+ },
+ {
+  "seed": 6,
+  "half_perimeter_mm": 3209,
+  "crossings": 861,
+  "statements": "79 of 119",
+  "problems": [
+   "overlap C446 / C558: 1.72 x 1.01 mm"
+  ]
+ },
+ {
+  "seed": 7,
+  "half_perimeter_mm": 3839,
+  "crossings": 1161,
+  "statements": "75 of 119",
+  "problems": []
+ },
+ {
+  "seed": 8,
+  "half_perimeter_mm": 3392,
+  "crossings": 1110,
+  "statements": "76 of 119",
+  "problems": [
+   "overlap C558 / U504: 0.48 x 1.07 mm",
+   "keep-out outside_board: U401 3.85 x 3.14 mm"
+  ]
+ }
+]

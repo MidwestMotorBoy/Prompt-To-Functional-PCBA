@@ -597,323 +597,461 @@
   },
   {
    "part": "C206",
+   "pad": "C206.1",
    "to": [
     "U204.2"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop HL_3V3: first capacitor to U204.VIN"
   },
   {
    "part": "C206",
+   "pad": "C206.2",
    "to": [
     "U204.1"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop HL_3V3: first capacitor to U204.PGND"
   },
   {
    "part": "C446",
+   "pad": "C446.1",
    "to": [
     "U404.3"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_5V: first capacitor to U404.VIN"
   },
   {
    "part": "C446",
+   "pad": "C446.2",
    "to": [
     "U404.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_5V: first capacitor to U404.GND"
   },
   {
    "part": "C444",
+   "pad": "C444.1",
    "to": [
     "U404.3"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_5V: bulk capacitor to U404.VIN"
   },
   {
    "part": "C444",
+   "pad": "C444.2",
    "to": [
     "U404.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_5V: bulk capacitor to U404.GND"
   },
   {
    "part": "C430",
+   "pad": "C430.1",
    "to": [
     "Q401.2",
     "Q401.3",
     "Q401.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_IN: first capacitor to Q401.D1"
   },
   {
    "part": "C430",
+   "pad": "C430.2",
    "to": [
     "Q401.5",
     "Q401.6",
     "Q401.7"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_IN: first capacitor to Q401.S2"
   },
   {
    "part": "C420",
+   "pad": "C420.1",
    "to": [
     "Q401.2",
     "Q401.3",
     "Q401.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_IN: bulk capacitor to Q401.D1"
   },
   {
    "part": "C420",
+   "pad": "C420.2",
    "to": [
     "Q401.5",
     "Q401.6",
     "Q401.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_IN: bulk capacitor to Q401.S2"
   },
   {
    "part": "C423",
+   "pad": "C423.1",
    "to": [
     "Q401.2",
     "Q401.3",
     "Q401.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_IN: bulk capacitor to Q401.D1"
   },
   {
    "part": "C423",
+   "pad": "C423.2",
    "to": [
     "Q401.5",
     "Q401.6",
     "Q401.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_IN: bulk capacitor to Q401.S2"
   },
   {
    "part": "C438",
+   "pad": "C438.1",
    "to": [
     "Q402.2",
     "Q402.3",
     "Q402.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_OUT: first capacitor to Q402.D1"
   },
   {
    "part": "C438",
+   "pad": "C438.2",
    "to": [
     "Q402.5",
     "Q402.6",
     "Q402.7"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 1/HL_OUT: first capacitor to Q402.S2"
   },
   {
    "part": "C431",
+   "pad": "C431.1",
    "to": [
     "Q402.2",
     "Q402.3",
     "Q402.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_OUT: bulk capacitor to Q402.D1"
   },
   {
    "part": "C431",
+   "pad": "C431.2",
    "to": [
     "Q402.5",
     "Q402.6",
     "Q402.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_OUT: bulk capacitor to Q402.S2"
   },
   {
    "part": "C434",
+   "pad": "C434.1",
    "to": [
     "Q402.2",
     "Q402.3",
     "Q402.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_OUT: bulk capacitor to Q402.D1"
   },
   {
    "part": "C434",
+   "pad": "C434.2",
    "to": [
     "Q402.5",
     "Q402.6",
     "Q402.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 1/HL_OUT: bulk capacitor to Q402.S2"
   },
   {
    "part": "C546",
+   "pad": "C546.1",
    "to": [
     "U504.3"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_5V: first capacitor to U504.VIN"
   },
   {
    "part": "C546",
+   "pad": "C546.2",
    "to": [
     "U504.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_5V: first capacitor to U504.GND"
   },
   {
    "part": "C544",
+   "pad": "C544.1",
    "to": [
     "U504.3"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_5V: bulk capacitor to U504.VIN"
   },
   {
    "part": "C544",
+   "pad": "C544.2",
    "to": [
     "U504.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_5V: bulk capacitor to U504.GND"
   },
   {
    "part": "C530",
+   "pad": "C530.1",
    "to": [
     "Q501.2",
     "Q501.3",
     "Q501.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_IN: first capacitor to Q501.D1"
   },
   {
    "part": "C530",
+   "pad": "C530.2",
    "to": [
     "Q501.5",
     "Q501.6",
     "Q501.7"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_IN: first capacitor to Q501.S2"
   },
   {
    "part": "C520",
+   "pad": "C520.1",
    "to": [
     "Q501.2",
     "Q501.3",
     "Q501.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_IN: bulk capacitor to Q501.D1"
   },
   {
    "part": "C520",
+   "pad": "C520.2",
    "to": [
     "Q501.5",
     "Q501.6",
     "Q501.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_IN: bulk capacitor to Q501.S2"
   },
   {
    "part": "C523",
+   "pad": "C523.1",
    "to": [
     "Q501.2",
     "Q501.3",
     "Q501.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_IN: bulk capacitor to Q501.D1"
   },
   {
    "part": "C523",
+   "pad": "C523.2",
    "to": [
     "Q501.5",
     "Q501.6",
     "Q501.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_IN: bulk capacitor to Q501.S2"
   },
   {
    "part": "C538",
+   "pad": "C538.1",
    "to": [
     "Q502.2",
     "Q502.3",
     "Q502.4"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_OUT: first capacitor to Q502.D1"
   },
   {
    "part": "C538",
+   "pad": "C538.2",
    "to": [
     "Q502.5",
     "Q502.6",
     "Q502.7"
    ],
-   "max_mm": 1.5,
+   "weight": 8,
+   "max_mm": 2.5,
    "why": "hot loop USB Port 2/HL_OUT: first capacitor to Q502.S2"
   },
   {
    "part": "C531",
+   "pad": "C531.1",
    "to": [
     "Q502.2",
     "Q502.3",
     "Q502.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_OUT: bulk capacitor to Q502.D1"
   },
   {
    "part": "C531",
+   "pad": "C531.2",
    "to": [
     "Q502.5",
     "Q502.6",
     "Q502.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_OUT: bulk capacitor to Q502.S2"
   },
   {
    "part": "C534",
+   "pad": "C534.1",
    "to": [
     "Q502.2",
     "Q502.3",
     "Q502.4"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_OUT: bulk capacitor to Q502.D1"
   },
   {
    "part": "C534",
+   "pad": "C534.2",
    "to": [
     "Q502.5",
     "Q502.6",
     "Q502.7"
    ],
+   "weight": 2,
    "max_mm": 10.0,
    "why": "hot loop USB Port 2/HL_OUT: bulk capacitor to Q502.S2"
+  },
+  {
+   "part": "L201",
+   "pad": "L201.1",
+   "to": [
+    "U204.9"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node SW_3V3 of hot loop HL_3V3"
+  },
+  {
+   "part": "L402",
+   "pad": "L402.1",
+   "to": [
+    "U404.5"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 1/SW_5V of hot loop USB Port 1/HL_5V"
+  },
+  {
+   "part": "L401",
+   "pad": "L401.1",
+   "to": [
+    "Q401.9"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 1/SW1 of hot loop USB Port 1/HL_IN"
+  },
+  {
+   "part": "L401",
+   "pad": "L401.2",
+   "to": [
+    "Q402.9"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 1/SW2 of hot loop USB Port 1/HL_OUT"
+  },
+  {
+   "part": "L502",
+   "pad": "L502.1",
+   "to": [
+    "U504.5"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 2/SW_5V of hot loop USB Port 2/HL_5V"
+  },
+  {
+   "part": "L501",
+   "pad": "L501.1",
+   "to": [
+    "Q501.9"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 2/SW1 of hot loop USB Port 2/HL_IN"
+  },
+  {
+   "part": "L501",
+   "pad": "L501.2",
+   "to": [
+    "Q502.9"
+   ],
+   "weight": 4,
+   "max_mm": 8.0,
+   "why": "inductor at the switch node USB Port 2/SW2 of hot loop USB Port 2/HL_OUT"
   }
  ],
  "keepapart": [

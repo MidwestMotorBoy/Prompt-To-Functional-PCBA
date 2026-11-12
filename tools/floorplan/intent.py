@@ -28,6 +28,8 @@ def farads(value):
     m = re.match(r"\s*(\d+(?:\.\d+)?)\s*([pnuµm])F?\b", value)
     return float(m.group(1)) * {"p": 1e-6, "n": 1e-3, "u": 1, "µ": 1, "m": 1e3}[m.group(2)] if m else None
 
+HOT_FIRST_MM = 2.5    # first hot-loop capacitor: pad centre to the nearest switch pad centre on the same net
+
 def derive(build, design, out):
     sys.path.insert(0, design); import symlib
     d = json.load(open(f"{build}/netlist.json")); c = json.load(open(f"{build}/constraints.json"))
@@ -45,7 +47,18 @@ def derive(build, design, out):
     for name, h in sorted(c.get("hot_loops", {}).items()):
         for i, cap in enumerate(h["caps"]):
             for sp in h["switch_pins"]:
-                it["near"].append(dict(part=cap, to=pads(sp), max_mm=1.5 if i == 0 else (4.0 if (farads(d["comps"][cap]["value"]) or 0) <= 10 else 10.0), why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
+                # pad to pad: the capacitor's pad on the switch pin's net, so the capacitor also faces the right way
+                net = next((n for n, ps in d["nets"].items() if any(f"{r}.{q}" in pads(sp) for r, q in ps)), None)
+                mine = [f"{r}.{q}" for r, q in d["nets"].get(net, []) if r == cap]
+                it["near"].append(dict(part=cap, **({"pad": mine[0]} if mine else {}), to=pads(sp), weight=8 if i == 0 else 2, max_mm=HOT_FIRST_MM if i == 0 else (4.0 if (farads(d["comps"][cap]["value"]) or 0) <= 10 else 10.0), why=f"hot loop {name}: {'first' if i == 0 else 'bulk'} capacitor to {sp}"))
+    for name, h in sorted(c.get("hot_loops", {}).items()):      # the inductor at the switch node belongs to the stage
+        dev = h["switch_pins"][0].split(".")[0]
+        for n, v in sorted(c["nets"].items()):
+            ps = d["nets"].get(n, [])
+            if v.get("kind") != "switching" or not any(r == dev for r, _ in ps): continue
+            for r, q in ps:
+                if d["comps"][r]["lib"].split(":")[1] == "L" or r.rstrip("0123456789") == "L":
+                    it["near"].append(dict(part=r, pad=f"{r}.{q}", to=[f"{a}.{b}" for a, b in ps if a == dev], weight=4, max_mm=8.0, why=f"inductor at the switch node {n} of hot loop {name}"))
     sw = sorted(n for n, v in c["nets"].items() if v.get("kind") == "switching"); se = sorted(n for n, v in c["nets"].items() if v.get("kind") == "sensitive")
     for a in sw:
         blk = a.split("/")[0] if "/" in a else ""
@@ -65,6 +78,7 @@ def validate(intentf, build):
         part(s["part"], f"near[{i}]")
         for t in s["to"]:
             if t not in padset and t not in d["comps"]: bad.append(f"near[{i}]: no pad or part {t}")
+        if "pad" in s and s["pad"] not in padset: bad.append(f"near[{i}]: no pad {s['pad']}")
         if not (0 < s["max_mm"] < 100): bad.append(f"near[{i}]: max_mm {s['max_mm']}")
     for i, s in enumerate(it.get("keepapart", [])):
         for n in s["a_nets"] + s["b_nets"]: net(n, f"keepapart[{i}]")
@@ -97,7 +111,7 @@ def check(intentf, dumpf, placef=None):
     for s in it.get("near", []):
         n += 1; A = pt.get(s["part"]); B = [q for t in s["to"] for q in pt.get(t, [])]
         if not A or not B: fails.append(f"near: {s['part']} or its target is not on the board"); continue
-        dd = edge(boxes[s["part"]], B); worst.append(dd / s["max_mm"])
+        dd = dist(pt[s["pad"]], B) if s.get("pad") in pt else edge(boxes[s["part"]], B); worst.append(dd / s["max_mm"])
         if dd > s["max_mm"]: fails.append(f"near: {s['part']} is {dd:.1f} mm from {', '.join(s['to'])} (limit {s['max_mm']} mm; {s['why']})")
     for s in it.get("keepapart", []):
         n += 1; A = [q for a in s["a_nets"] for q in bynet.get(a, [])]; B = [q for b in s["b_nets"] for q in bynet.get(b, [])]
