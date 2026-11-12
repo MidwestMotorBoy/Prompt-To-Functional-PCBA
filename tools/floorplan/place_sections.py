@@ -65,7 +65,7 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
             if c not in bb or c in hot: continue
             hot[c] = (dev, sp, rp, hl["supply"], hl["ret"], k)
             gd = (blk[dev], side[dev]); gc = (blk[c], side[c])
-            if gc != gd: groups[gc].remove(c); groups[gd].append(c); side[c] = side[dev]
+            if gc != gd and c in groups[gc]: groups[gc].remove(c); groups[gd].append(c); side[c] = side[dev]
     def padbox(r, i, P_):     # pad box of a placed part, board-local
         x, y, k = P_; b = lpb[r][i]; cs = [rot((b[0], b[1]), k), rot((b[2], b[3]), k)]
         return x + min(c[0] for c in cs), y + min(c[1] for c in cs), x + max(c[0] for c in cs), y + max(c[1] for c in cs)
