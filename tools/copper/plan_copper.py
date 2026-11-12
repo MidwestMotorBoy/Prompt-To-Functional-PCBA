@@ -64,6 +64,9 @@ HOLE_GAP = 0.25      # drill edge to drill edge (KiCad's default hole-to-hole)
 PAD_HOLE_GAP = 0.45  # to a plated pad hole of 0.5 mm or more (Monolith's 'Pad hole spacing' rule)
 RAST_MM = 0.1        # margin for the planning raster on via and track clearances
 WIDE_COST = 3.0      # extra path cost, per cell, for running narrower than the target width
+DETOUR_MAX_MM = 6.0  # a detour on the other outer layer longer than this is not drawn (it would take the layer)
+WIND_MAX = 1.5       # a path longer than WIND_MAX x the straight distance + WIND_SLACK_MM is not drawn: the parts are
+WIND_SLACK_MM = 3.0  # too far apart or walled in, which is a placement failure, reported, not something to snake around
 
 def rings(g):
     """shapely (Multi)Polygon -> [{'ring','holes'}]"""
@@ -406,10 +409,21 @@ class Planner:
         for v in vs:
             self.vias.remove(v); self.viamap[self.disk(v["x"], v["y"], VIA_D / 2) & (self.viamap == self.netid[v["net"]])] = -1
 
+    def plen(self, pth):
+        return sum(math.hypot(a[0] - b[0], a[1] - b[1]) for a, b in zip(pth, pth[1:])) * RES
+
+    def winding(self, net, pth, ref, rep):
+        """True (and reported as a placement failure) when the path winds: much longer than the straight line."""
+        L = self.plen(pth); (i0, j0), (i1, j1) = pth[0], pth[-1]; d = math.hypot(i1 - i0, j1 - j0) * RES
+        if L <= WIND_MAX * d + WIND_SLACK_MM: return False
+        rep.setdefault("placement_failures", []).append(f"{ref}: path {L:.0f} mm for {d:.0f} mm straight")
+        return True
+
     def detour(self, net, L, gp, w, I, tree):
         """A terminal on L with no path to the tree on L: vias at the terminal, a corridor on the other outer layer
         to a point over the tree, and vias down into the tree there. True if it was drawn."""
         Lo = [l for l in self.outer if l != L][0]; n = vias_for(I); r = VIA_D / 2
+        if self.d.power[net]["kind"] == "switching": return False       # a switch node never spreads to the other side
         vs = self.place_vias(net, gp, n, link=(L, gp))
         if not vs: return False
         vg = unary_union([Point(v["x"], v["y"]).buffer(r, 8) for v in vs]); start = self.raster(vg)
@@ -420,7 +434,7 @@ class Planner:
         near = ndimage.binary_dilation(start | ok, iterations=int(NEAR_TERM_MM / RES))
         pth, rr = self.path(net, Lo, start, ok, w, near)
         if pth is None: pth, rr = self.path(net, Lo, start, ok, w, near, tight=True)
-        if pth is None: self.unvia(vs); return False
+        if pth is None or self.plen(pth) > DETOUR_MAX_MM: self.unvia(vs); return False
         if not start[pth[0]]: pth = pth[::-1]
         ex, ey = self.xy(*pth[-1]); zl = self.zones[(net, L)]["geom"]
         ve = self.place_vias(net, Point(ex, ey).buffer(0.3), n, inside=zl, toward=(ex, ey))
@@ -486,6 +500,7 @@ class Planner:
                     rep.setdefault("detour", []).append(g["ref"]); rep["joined"].append(g["ref"] + " (detour)"); continue
                 if pth is None:
                     rep["left_to_router"].append(g["ref"] + " (no path on " + main + ")"); continue
+                if self.winding(net, pth, g["ref"], rep): rep["left_to_router"].append(g["ref"] + " (path winds)"); continue
                 cor = self.clip_others(net, main, unary_union([self.corridor(pth, rr, w), gp]), loose_near=unary_union([gp, Point(self.xy(*pth[-1])).buffer(NEAR_TERM_MM)]))
                 self.spine(net, main, pth)
                 self.add_zone(net, main, cor, 20, kind="tree"); tree[main] = self.component(net, main, seed); rep["joined"].append(g["ref"])
@@ -505,6 +520,7 @@ class Planner:
                     pth, rr = self.path(net, main, tree[main], goal, w, near, tight=True)
                     if pth is not None: rep.setdefault("tight", []).append(g["ref"] + " (vias)")
                 if pth is None: rep["left_to_router"].append(g["ref"] + " (via array has no path on " + main + ")"); continue
+                if self.winding(net, pth, g["ref"] + " (vias)", rep): rep["left_to_router"].append(g["ref"] + " (via array path winds)"); continue
                 self.add_zone(net, main, self.clip_others(net, main, unary_union([self.corridor(pth, rr, w), vg.buffer(0.1)]), loose_near=unary_union([vg, Point(self.xy(*pth[-1])).buffer(NEAR_TERM_MM)])), 20, kind="tree")
                 self.spine(net, main, pth)
                 tree[main] = self.component(net, main, seed); rep["joined"].append(g["ref"] + " (vias)")
@@ -587,7 +603,7 @@ class Planner:
             for net in nets:
                 for L in self.outer:
                     z = self.zones.get((net, L))
-                    if not z or z["soft"]: continue
+                    if not z or z["soft"] or "mirror" in z["kinds"]: continue      # the copy stays a copy: the other side is for routing
                     g = z["geom"].buffer(d, 4).intersection(self.inside)
                     g = self.clip_others(net, L, g)
                     tr = [LineString([t["a"], t["b"]]).buffer(t["w"] / 2 + self.clr, 4) for t in self.tracks if t["layer"] == L and t["net"] != net]
@@ -598,6 +614,14 @@ class Planner:
                     a0 = z["geom"].area; z["geom"] = unary_union([z["geom"], g]); self.cu[L][self.raster(g) & (self.cu[L] < 0)] = self.netid[net]
                     rep[f"{net} {L}"] = round(rep.get(f"{net} {L}", 0) + z["geom"].area - a0, 1)
         self.report["grown_mm2"] = rep
+
+    def usage(self):
+        """Power copper area per outer layer against the board area: how much routing room the copper takes."""
+        a = self.inside.area; out = {}
+        for L in self.outer:
+            u = unary_union([z["geom"] for (n, l), z in self.zones.items() if l == L and not z["soft"] and self.d.role(n) == "power"] or [Polygon()])
+            out[L] = dict(power_mm2=round(u.area), board_pct=round(100 * u.area / a, 1))
+        self.report["outer_layer_use"] = out
 
     def return_join(self, net, L, sh):
         """A return pad (with the pour piece it sits in) where no via fits: a narrow path on its own layer to the
@@ -633,6 +657,7 @@ class Planner:
         self.return_step()
         if self.mirror > 0: self.mirror_step(self.mirror)
         if self.grow > 0: self.grow_step()
+        self.usage()
         self.report["seconds"] = round(time.time() - t0, 1); self.report["notes"] = self.notes
         zs = []
         for (net, L), z in sorted(self.zones.items(), key=lambda kv: (-kv[1]["priority"], kv[0])):

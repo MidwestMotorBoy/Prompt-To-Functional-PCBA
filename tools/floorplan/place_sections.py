@@ -1,4 +1,4 @@
-"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes, default J,H,TP,SW] [intent.json]
+"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes and exact refs (anchors), default J,H,TP,SW] [intent.json]
 Step 1 of the section placer: build each (section, side) group as a tight cluster on its own, in local
 coordinates, with no knowledge of where the parts sit on the dump board (the dump supplies pad geometry only).
 Order: the part with the most pads first, then always the unplaced part most connected to what is placed.
@@ -49,7 +49,7 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
         for c, (tr, tp) in serves.items(): near[c].append((tr, tp, 4.0))
     groups = defaultdict(list)
     for r in pos0:
-        if r in bb and r.rstrip("0123456789").upper() not in pre: groups[(blk[r], side[r])].append(r)
+        if r in bb and r.rstrip("0123456789").upper() not in pre and r not in pre: groups[(blk[r], side[r])].append(r)
     # Hot loops (circuit code): each capacitor goes into its switch part's group, is placed straight after the switch
     # part, and is pulled pad by pad: supply pad to the switch's supply pads, return pad to its return pads.
     bare = lambda n: (n or "").lstrip("/"); hot = {}; hotdev = {}; pp = cons.get("pin_pads", {})
