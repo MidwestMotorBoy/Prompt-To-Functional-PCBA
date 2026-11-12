@@ -64,7 +64,9 @@ HOLE_GAP = 0.25      # drill edge to drill edge (KiCad's default hole-to-hole)
 PAD_HOLE_GAP = 0.45  # to a plated pad hole of 0.5 mm or more (Monolith's 'Pad hole spacing' rule)
 RAST_MM = 0.1        # margin for the planning raster on via and track clearances
 WIDE_COST = 3.0      # extra path cost, per cell, for running narrower than the target width
-DETOUR_MAX_MM = 6.0  # a detour on the other outer layer longer than this is not drawn (it would take the layer)
+DETOUR_MAX_MM = 10.0 # a detour on the other outer layer longer than this is not drawn (it would take the layer). The
+                     # hand board takes Port 2's switch node from the half-bridge's enclosed SW pad to the inductor this
+                     # way, about 7 mm on B.Cu and In2; seed 9's 20 mm switch-node strips were what Logan rejected
 WIND_MAX = 1.5       # a path longer than WIND_MAX x the straight distance + WIND_SLACK_MM is not drawn: the parts are
 WIND_SLACK_MM = 3.0  # too far apart or walled in, which is a placement failure, reported, not something to snake around
 
@@ -423,7 +425,6 @@ class Planner:
         """A terminal on L with no path to the tree on L: vias at the terminal, a corridor on the other outer layer
         to a point over the tree, and vias down into the tree there. True if it was drawn."""
         Lo = [l for l in self.outer if l != L][0]; n = vias_for(I); r = VIA_D / 2
-        if self.d.power[net]["kind"] == "switching": return False       # a switch node never spreads to the other side
         vs = self.place_vias(net, gp, n, link=(L, gp))
         if not vs: return False
         vg = unary_union([Point(v["x"], v["y"]).buffer(r, 8) for v in vs]); start = self.raster(vg)
@@ -496,11 +497,12 @@ class Planner:
                 if pth is None:
                     pth, rr = self.path(net, main, tree[main], goal, w, nearT[main], tight=True)
                     if pth is not None: rep.setdefault("tight", []).append(g["ref"])
+                if pth is not None and self.winding(net, pth, g["ref"], rep): pth = None; why = " (path winds)"
+                else: why = " (no path on " + main + ")"
                 if pth is None and tree[main].any() and self.detour(net, main, gp, w, g["current_a"], tree[main]):
                     rep.setdefault("detour", []).append(g["ref"]); rep["joined"].append(g["ref"] + " (detour)"); continue
                 if pth is None:
-                    rep["left_to_router"].append(g["ref"] + " (no path on " + main + ")"); continue
-                if self.winding(net, pth, g["ref"], rep): rep["left_to_router"].append(g["ref"] + " (path winds)"); continue
+                    rep["left_to_router"].append(g["ref"] + why); continue
                 cor = self.clip_others(net, main, unary_union([self.corridor(pth, rr, w), gp]), loose_near=unary_union([gp, Point(self.xy(*pth[-1])).buffer(NEAR_TERM_MM)]))
                 self.spine(net, main, pth)
                 self.add_zone(net, main, cor, 20, kind="tree"); tree[main] = self.component(net, main, seed); rep["joined"].append(g["ref"])

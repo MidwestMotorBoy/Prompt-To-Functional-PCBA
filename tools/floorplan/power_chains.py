@@ -13,6 +13,11 @@ enters by). The limit is pad edge to pad edge: CHAIN_MM_HIGH at 3 A or more, CHA
 grows with the current (a 10 A path pulls harder than a 1 A one). Statements already in the intent file for the
 same pair are left as they are. Written with why = "power path <net>" so a person can find and edit them.
 
+--corridors=<out dump.json> --anchors=REF,REF,...: a copy of the board dump with a no-footprint keep-out along the
+straight line between the nearest pads of every chained pair whose two parts are both anchors (placed by a
+person, anchors.py), as wide as the current needs (roles.width_mm) plus CORRIDOR_ROOM_MM, on the parts' side. The
+placer then keeps its fill-in parts out of the power path (the first anchored trial lost two switch-node joins
+and most of PP5V to small parts dropped in the way). Keep-outs are boxes, so the line is a row of squares.
 --check=<board_dump.json>[,<placement.json>]: print each chain's distance on a board, or on the dump moved to a
 placement from place_pack.py, against its limit (to see what a placement does)."""
 import sys, os, json, math
@@ -21,6 +26,7 @@ from roles import Design
 
 CHAIN_MM_HIGH = 10.0   # set so the hand board meets them but for its two shunt runs (17 mm, carried on In3)
 CHAIN_MM_LOW = 20.0
+CORRIDOR_ROOM_MM = 0.8 # clearance and escape room on both sides of the corridor's copper
 BUS_TERMINALS = 6      # a net with this many series terminals is a bus (an inner-layer pour carries it): no chain
 
 def design(dumpf, consf):
@@ -71,6 +77,23 @@ if __name__ == "__main__":
                 p["box"] = [px + min(q[0][0], q[1][0]), py + min(q[0][1], q[1][1]), px + max(q[0][0], q[1][0]), py + max(q[0][1], q[1][1])]
         for c in ch:
             g = gap(P, c["pads"], c["to"]); print(f'{"FAIL" if g > c["max_mm"] else "ok  "} {c["net"]:28} {c["part"]:6} to {c["to"][0].split(".")[0]:6} {g:5.1f} mm (limit {c["max_mm"]})')
+    if "corridors" in opt:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "copper")); from roles import width_mm
+        anc = set(opt.get("anchors", "").split(",")); FIX = ("J", "H", "TP", "SW"); n = 0
+        isfix = lambda r: r in anc or r.rstrip("0123456789") in FIX
+        side = {f["ref"]: f.get("side", "F.Cu") for f in D["fps"]}; B = {f'{p["ref"]}.{p["num"]}': p["box"] for p in D["pads"]}
+        for c in ch:
+            src = c["to"][0].split(".")[0]
+            if not (isfix(c["part"]) and isfix(src)) or side[c["part"]] != side[src]: continue
+            pa = [B[k] for k in c["pads"] if k in B]; pb = [B[k] for k in c["to"] if k in B]
+            ctr = lambda b: ((b[0] + b[2]) / 2, (b[1] + b[3]) / 2)
+            (ax, ay), (bx, by) = min(((ctr(u), ctr(v)) for u in pa for v in pb), key=lambda q: math.dist(*q))
+            w = width_mm(c["current_a"]) + 2 * CORRIDOR_ROOM_MM; L = math.dist((ax, ay), (bx, by)); k = max(1, int(L / (w / 2)))
+            for i in range(k + 1):
+                x, y = ax + (bx - ax) * i / k, ay + (by - ay) * i / k
+                D.setdefault("keepouts", []).append(dict(name=f'power path {c["net"].strip("/")} {c["part"]}-{src}', box=[x - w / 2, y - w / 2, x + w / 2, y + w / 2], layers=[side[src]], no_footprints=True, no_tracks=False, no_vias=False, no_pours=False))
+            n += 1
+        json.dump(D, open(opt["corridors"], "w")); print(f"{n} power corridors kept clear -> {opt['corridors']}")
     if len(a) >= 4:
         it = json.load(open(a[2])); have = {(s["part"], s["to"][0].split(".")[0]) for s in it.get("near", [])}; n = 0
         for c in ch:
