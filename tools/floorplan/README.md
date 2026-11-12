@@ -289,12 +289,12 @@ checking where they land.
 |---|---|---|---|---|
 | Hand placement, rule copper | yes | 7 of 7 | 1.27 / 0.82, 0.94 / 0.77, 0.78 / 0.75, 0.74 | 361 |
 | Placer before this work (3 buildable seeds scored) | 18 of 24 | 4 or 5 of 7 (2 or 3 loops open) | closed loops up to 3 times the hand board | 357 to 365 |
-| Placer with stages | 6 of 8 | 7 of 7 on five seeds, 6 of 7 on one | 1.07 to 1.11 / 0.69 to 0.85 / 0.66 to 0.70 / 0.62 to 0.66 | 365 (seed 3) |
+| Placer with stages | 6 of 8 | 7 of 7 on five seeds, 6 of 7 on one | 1.07 to 1.11 / 0.69 to 0.85 / 0.66 to 0.70 / 0.62 to 0.66 | 365 (seed 3), 358 (seed 1) |
 
 Loop totals include 0.2 nH for the switch package and the capacitors' own inductance. The stage shapes are the
 same in every seed (that is the point of keeping them whole), so the loops barely move from seed to seed; the one
 failure (seed 5, the 3.3 V buck's capacitor with no path) was not the placement: see the tournament below. Signal wiring got longer (half-perimeter 2900 to 3840 mm against 2520 to 3150
-before) and the trial route did not get worse.
+before) and the trial route stayed in the same range as before (357 to 365).
 
 Limits of this result: the rule copper is not the final copper (on the hand placement the first capacitor of the
 four FET legs reads 13 to 19 % under the real hand copper; the converter ICs differ more, the 3.3 V buck 37 %
