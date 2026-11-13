@@ -34,6 +34,7 @@ from roles import width_mm
 FILL = 1.4          # block area over summed courtyards (1.7 left no room on Monolith's top side: 2840 of 3180 mm2)
 SIGNAL_W = 0.15     # cost per mm of signal half-perimeter between block centres (power dominates, as Logan asked)
 CONN_W = 1.0        # the same for a net that reaches a connector pin: port protection and the like sit at their connector
+PREFER_W = 3.0      # per mm2 of a block on the wrong half of the board (--prefer=SHEET:left|right,...): a soft rule
 SAME_W = 3.0        # per mm between the two sides' blocks of one section (a power stage's bottom parts sit under its top ones)
 OVERLAP_W = 40.0
 FIXED = ("J", "H", "TP", "SW")
@@ -97,6 +98,29 @@ class Model:
         self.box = D["box"]; self.side = [k[1] for k in B]
         self.ko = [(k["box"], k["layers"]) for k in D.get("keepouts", []) if k.get("no_footprints")]
         self.fixedbox = [(f["court"], f["side"]) for f in D["fps"] if f["ref"].rstrip("0123456789") in FIXED and "court" in f]
+        self.docked = {}; self.prefer = {}
+
+    def dock(self, N):
+        """A block whose section holds a fixed connector (the USB-C connector and its port protection) is not free: it
+        sits against the connector, on the board side of it, as wide as the connector (Logan, 2026-11-12: the USB
+        connectors are fixed, so their section's box must not float)."""
+        x0, y0, x1, y1 = self.box
+        for f in self.D["fps"]:
+            if f["ref"].rstrip("0123456789") != "J" or "court" not in f: continue
+            c = N.get(f["ref"], {}); k = (f"{c.get('block', f.get('sheet'))} / {c.get('section') or 'main'}", f["side"])
+            if k not in self.B: continue
+            i = self.B.index(k); b = f["court"]; A = self.area[i]; cx, cy = (b[0] + b[2]) / 2, (b[1] + b[3]) / 2
+            if min(cy - y0, y1 - cy) <= min(cx - x0, x1 - cx):        # on the top or bottom edge: grow inward in y
+                w = min(b[2], x1) - max(b[0], x0); h = A / w; ya = b[3] if cy - y0 < y1 - cy else b[1] - h
+                self.docked[i] = (max(b[0], x0), ya, max(b[0], x0) + w, ya + h)
+            else:
+                h = min(b[3], y1) - max(b[1], y0); w = A / h; xa = b[2] if cx - x0 < x1 - cx else b[0] - w
+                self.docked[i] = (xa, max(b[1], y0), xa + w, max(b[1], y0) + h)
+
+    def place(self, st):
+        R = rects(st, self.area)
+        for i, r in self.docked.items(): R[i] = r
+        return R
 
     def terms(self, R):
         pw = 0.0; loss = 0.0
@@ -120,26 +144,32 @@ class Model:
                 if self.side[i] in L: o += ov(r, kb)
             for fb, s in self.fixedbox:
                 if s == self.side[i]: o += ov(r, fb)
+        mid = (x0 + x1) / 2
+        for i, r in enumerate(R):
+            pf = self.prefer.get(self.B[i][0].split(" / ")[0])
+            if pf == "right": o += PREFER_W / OVERLAP_W * max(0, min(r[2], mid) - r[0]) * (r[3] - r[1])
+            elif pf == "left": o += PREFER_W / OVERLAP_W * max(0, r[2] - max(r[0], mid)) * (r[3] - r[1])
         return pw, sg, o, loss
 
     def cost(self, R, ow=OVERLAP_W):
         pw, sg, o, _ = self.terms(R); return pw + sg + ow * o
 
-    def anneal(self, seed, moves):
+    def anneal(self, seed, moves, start=None, T0=50.0):
         rnd = random.Random(seed); x0, y0, x1, y1 = self.box; n = len(self.B)
-        st = [[rnd.uniform(x0 + 5, x1 - 5), rnd.uniform(y0 + 5, y1 - 5), rnd.choice([0.5, 0.67, 1, 1.5, 2])] for _ in range(n)]
-        cur = self.cost(rects(st, self.area)); T0, T1 = 50.0, 0.05
+        st = [list(v) for v in start] if start else [[rnd.uniform(x0 + 5, x1 - 5), rnd.uniform(y0 + 5, y1 - 5), rnd.choice([0.5, 0.67, 1, 1.5, 2])] for _ in range(n)]
+        free = [i for i in range(n) if i not in self.docked]
+        cur = self.cost(self.place(st)); T1 = 0.05
         for s in range(moves):
-            t = T0 * (T1 / T0) ** (s / moves); i = rnd.randrange(n); old = [list(v) for v in st]; u = rnd.random()
+            t = T0 * (T1 / T0) ** (s / moves); i = rnd.choice(free); old = [list(v) for v in st]; u = rnd.random()
             if u < 0.15: st[i][2] = rnd.choice([0.33, 0.5, 0.67, 1, 1.5, 2, 3])
             elif u < 0.3:
-                j = rnd.randrange(n)
+                j = rnd.choice(free)
                 if self.side[j] == self.side[i]: st[i][:2], st[j][:2] = st[j][:2], st[i][:2]
             else:
                 rad = 0.3 + 15 * t / T0; st[i][0] += rnd.uniform(-rad, rad); st[i][1] += rnd.uniform(-rad, rad)
             ow = OVERLAP_W * min(1.0, 0.05 + 1.2 * s / moves)        # overlap weight rises: blocks pass through each other early on
-            if s % 1000 == 0: cur = self.cost(rects(old, self.area), ow)
-            new = self.cost(rects(st, self.area), ow)
+            if s % 1000 == 0: cur = self.cost(self.place(old), ow)
+            new = self.cost(self.place(st), ow)
             if new < cur or rnd.random() < math.exp(-(new - cur) / t): cur = new
             else: st[:] = old
         return st
@@ -188,7 +218,7 @@ def review(M, blocks, out):
     board = dict(box=D["box"], keepouts=[dict(box=[round(v, 2) for v in kb], sides=L) for kb, L in M.ko],
                  fixed=[dict(ref=f["ref"], value=f.get("value", ""), side=f["side"], box=[round(v, 2) for v in f["court"]]) for f in D["fps"] if f["ref"].rstrip("0123456789") in FIXED and "court" in f],
                  blocks=[dict(id=ids[i], sheet=k[0].split(" / ")[0], section=k[0].split(" / ", 1)[1], side="top" if k[1] == "F.Cu" else "bottom",
-                              area=round(float(M.area[i]), 1), parts=sorted(blocks[k], key=lambda r: (r.rstrip("0123456789"), int(r[len(r.rstrip("0123456789")):] or 0)))) for i, k in enumerate(M.B)],
+                              area=round(float(M.area[i]), 1), docked=i in M.docked, parts=sorted(blocks[k], key=lambda r: (r.rstrip("0123456789"), int(r[len(r.rstrip("0123456789")):] or 0)))) for i, k in enumerate(M.B)],
                  ties=[dict(a=node(a), b=node(b), amps=round(w, 2), width_mm=round(max(width_mm(w), 0.3), 3), net=net.strip("/")) for a, b, w, net in M.ties], rho_2oz=RHO_2OZ)
     opts = {}
     for f in sorted(os.listdir(out)):
@@ -200,6 +230,12 @@ def review(M, blocks, out):
 def main():
     a = [x for x in sys.argv[1:] if not x.startswith("--")]; opt = dict((x[2:].split("=", 1) + [""])[:2] for x in sys.argv[1:] if x.startswith("--"))
     D, d, B, blocks, area, ties, sig, key = build(*a[:3]); out = a[3]; os.makedirs(out, exist_ok=True); M = Model(D, d, B, area, ties, sig)
+    M.dock(json.load(open(a[1]))["comps"])
+    if opt.get("prefer"): M.prefer = dict(x.rsplit(":", 1) for x in opt["prefer"].split(","))
+    start = None
+    if opt.get("start"):        # a previous option to work from (its rectangles), annealed from a lower temperature
+        J = json.load(open(opt["start"])); idx = {f"{k[0]} | {k[1]}": i for i, k in enumerate(B)}; start = [None] * len(B)
+        for k, r in J["blocks"].items(): start[idx[k]] = [(r[0] + r[2]) / 2, (r[1] + r[3]) / 2, (r[2] - r[0]) / (r[3] - r[1])]
     if "review" in opt: review(M, blocks, out); return
     fp = {f["ref"]: f for f in D["fps"]}
     # reference: the blocks as the dump board has them (box round each section's parts)
@@ -210,7 +246,7 @@ def main():
     draw(M, Rh, f"{out}/hand.png", f"Hand board (reference): power {sh['power_mm_amps']} mm.A, loss est. {sh['loss_estimate_W']} W"); print("hand", sh)
     s0 = int(opt.get("first", 1))
     for s in range(s0, s0 + int(opt.get("seeds", 3))):
-        st = M.anneal(s, int(opt.get("moves", 200000))); R = rects(st, area); sm = summary(M, R)
+        st = M.anneal(s, int(opt.get("moves", 200000)), start, float(opt.get("t0", 50))); R = M.place(st); sm = summary(M, R)
         json.dump(dict(summary=sm, blocks={f"{k[0]} | {k[1]}": r for k, r in zip(B, R)}), open(f"{out}/floorplan_{s}.json", "w"), indent=1)
         draw(M, R, f"{out}/floorplan_{s}.png", f"Floorplan {s}: power {sm['power_mm_amps']} mm.A, loss est. {sm['loss_estimate_W']} W, overlap {sm['overlap_mm2']} mm2"); print(s, sm, flush=True)
 

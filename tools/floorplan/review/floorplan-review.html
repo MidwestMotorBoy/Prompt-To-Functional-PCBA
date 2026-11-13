@@ -51,6 +51,7 @@ h2{font-family:var(--display);font-weight:600;font-size:15px;margin:0}
 svg.pcb{width:100%;height:auto;display:block;touch-action:none;user-select:none}
 .blk{cursor:grab;stroke:var(--ink);stroke-opacity:.55;stroke-width:.15}
 .mode-comment .blk,.mode-comment svg.pcb{cursor:crosshair}
+.blk.dock{cursor:default;stroke-width:.35;stroke-opacity:.9}
 .blk.sel{stroke-width:.45;stroke-opacity:1}
 .blk.bad{stroke:var(--warn);stroke-width:.45;stroke-opacity:1;stroke-dasharray:.8 .5}
 .lbl{font-family:var(--body);font-size:1.55px;fill:var(--ink);pointer-events:none}
@@ -194,7 +195,7 @@ function renderBoards(){
     const defs=el("defs",{},svg);
     for(const b of B.blocks){if(b.side!==side||!R[b.id])continue;const r=R[b.id];const g=el("g",{},svg);
       const cp=el("clipPath",{id:`c-${side}-${b.id}`},defs);el("rect",{x:r[0],y:r[1],width:r[2]-r[0],height:r[3]-r[1]},cp);
-      const rect=el("rect",{x:r[0],y:r[1],width:r[2]-r[0],height:r[3]-r[1],rx:.4,fill:`var(${sheetOf(b)[0]})`,"fill-opacity":.82,class:"blk"+(S.sel===b.id?" sel":"")+(bad.has(b.id)?" bad":""),tabindex:0},g);
+      const rect=el("rect",{x:r[0],y:r[1],width:r[2]-r[0],height:r[3]-r[1],rx:.4,fill:`var(${sheetOf(b)[0]})`,"fill-opacity":.82,class:"blk"+(b.docked?" dock":"")+(S.sel===b.id?" sel":"")+(bad.has(b.id)?" bad":""),tabindex:0},g);
       rect.dataset.id=b.id;const tt=el("title",{},rect);tt.textContent=`${b.sheet}: ${b.section}`;
       const lg=el("g",{"clip-path":`url(#c-${side}-${b.id})`},g);
       const l=el("text",{x:r[0]+.5,y:r[1]+1.9,class:"lbl"},lg);l.textContent=`${sheetOf(b)[1]}: ${short(b.section)}`;
@@ -223,7 +224,8 @@ let drag=null;
 function onDown(ev,id,svg){
   ev.stopPropagation();
   if(S.mode==="comment"){const p=toMM(svg,ev);S.draft={side:svg.dataset.side,x:p[0],y:p[1],block:id};S.sel=id;renderAll();focusDraft();return}
-  S.sel=id;const r=rectsFor(S.cur)[id];drag={id,svg,start:toMM(svg,ev),r0:r.slice(),moved:false,target:ev.target};
+  S.sel=id;const blk=S.board.blocks.find(b=>b.id===id);if(blk&&blk.docked){renderAll();return}
+  const r=rectsFor(S.cur)[id];drag={id,svg,start:toMM(svg,ev),r0:r.slice(),moved:false,target:ev.target};
   ev.target.setPointerCapture(ev.pointerId);renderInspector();
   const move=e=>{const p=toMM(svg,e),dx=p[0]-drag.start[0],dy=p[1]-drag.start[1];if(Math.abs(dx)+Math.abs(dy)<.3&&!drag.moved)return;drag.moved=true;
     const n=[drag.r0[0]+dx,drag.r0[1]+dy,drag.r0[2]+dx,drag.r0[3]+dy].map(v=>Math.round(v*4)/4);drag.cur=n;
@@ -246,7 +248,7 @@ function renderInspector(){
   const h=document.createElement("h2");h.textContent=`${b.sheet}: ${b.section}`;box.appendChild(h);
   const R=rectsFor(S.cur),r=R[b.id],pins=pinsFor(S.cur);
   const dl=document.createElement("dl");dl.className="kv";const kv=(k,v)=>{const dt=document.createElement("dt");dt.textContent=k;const dd=document.createElement("dd");dd.textContent=v;dl.append(dt,dd)};
-  kv("Side",b.side);kv("Size",r?`${(r[2]-r[0]).toFixed(1)} × ${(r[3]-r[1]).toFixed(1)} mm`:"–");kv("Area needed",`${b.area} mm²`);kv("Status",pins.has(b.id)?"Pinned: kept here next round":"Free: the next round may move it");
+  kv("Side",b.side);kv("Size",r?`${(r[2]-r[0]).toFixed(1)} × ${(r[3]-r[1]).toFixed(1)} mm`:"–");kv("Area needed",`${b.area} mm²`);kv("Status",b.docked?"Fixed: sits against its connector":pins.has(b.id)?"Pinned: kept here next round":"Free: the next round may move it");
   box.appendChild(dl);
   const parts=document.createElement("div");parts.className="parts";parts.textContent=b.parts.join(" ");box.appendChild(parts);
   const ties=B.ties.filter(t=>t.a.block===b.id||t.b.block===b.id);
@@ -263,7 +265,7 @@ function renderInspector(){
   rot.onclick=()=>{if(!r)return;const c=centre(r),w=r[2]-r[0],hh=r[3]-r[1];const n=[c[0]-hh/2,c[1]-w/2,c[0]+hh/2,c[1]+w/2].map(v=>Math.round(v*100)/100);setEdit(S.cur,e=>{e.rects={...(e.rects||{}),[b.id]:n};e.pins=[...new Set([...(e.pins||[]),b.id])]})};
   const cm=document.createElement("button");cm.className="btn";cm.textContent="Comment on this box";
   cm.onclick=()=>{if(!r)return;const c=centre(r);S.draft={side:b.side,x:+c[0].toFixed(2),y:+c[1].toFixed(2),block:b.id};renderAll();focusDraft()};
-  row.append(pin,rot,cm);box.appendChild(row);
+  if(b.docked)row.append(cm);else row.append(pin,rot,cm);box.appendChild(row);
 }
 function renderComments(){
   const ul=$("comments");ul.textContent="";const list=S.comments.filter(c=>c.option===S.cur);
@@ -278,7 +280,7 @@ function renderComments(){
 }
 function renderPick(){
   const p=$("pick"),s=$("pickstate");p.disabled=!S.cur||!S.db||S.cur==="hand";
-  if(S.pick&&S.pick.option){const o=S.options[S.pick.option];s.textContent=S.pick.option===S.cur?"This is your pick.":`Your pick: ${o?(o.title||S.pick.option):S.pick.option}`;s.className=S.pick.option===S.cur?"picked":"status"}
+  if(S.pick&&S.pick.option){const o=S.options[S.pick.option];s.textContent=S.pick.option===S.cur?"This is your pick.":(o?`Your pick: ${o.title||S.pick.option}`:"Your last pick was from an earlier round. Pick again for this round.");s.className=S.pick.option===S.cur?"picked":"status"}
   else s.textContent=S.cur==="hand"?"The hand board is the reference.":"";
 }
 function renderLegend(){const l=$("legend");l.textContent="";for(const k in SHEETS){const s=document.createElement("span");const i=document.createElement("i");i.style.background=`var(${SHEETS[k][0]})`;s.append(i,k);l.appendChild(s)}
