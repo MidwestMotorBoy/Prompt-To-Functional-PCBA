@@ -1,4 +1,5 @@
-"""place_pack.py (BLOCK_FLOORPLAN=<floorplan json> starts the clusters in their boxes and skips the cluster stage) <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json] [crossing weight, mm per crossing, default 3] [escape room round parts with 12 or more pads, mm, default 0.5]
+"""place_pack.py (BLOCK_FLOORPLAN=<floorplan json> starts the clusters in their boxes and skips the cluster stage;
+PLACE_START=<placement json> with it starts every part where that placement has it and refines cooler) <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json] [crossing weight, mm per crossing, default 3] [escape room round parts with 12 or more pads, mm, default 0.5]
 Step 2 of the section placer: put the clusters from place_sections.py on the board.
 Each cluster moves and turns as one rigid piece (annealing over about 30 pieces); fixed parts stay where the
 dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board
@@ -326,7 +327,15 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
         settopo(); a = cost(xy, k, True)
         print(json.dumps(dict(step="clusters packed", signal_half_perimeter_mm=round(float(a[0])), overlap_mm2=round(float(a[1]), 1), off_board_mm=round(float(a[2]), 1), intent_excess_mm=round(float(a[3]), 1), crossings=int(a[4]))), flush=True)
         WOV[0] = 30.0
-    anneal(refine, 1.5, 0.02)
+    T_REF = 1.5
+    if os.environ.get("PLACE_START"):
+        # continue from a placement (copper_repair.py): every movable part where that placement has it, then a cooler refine
+        PS = json.load(open(os.environ["PLACE_START"]))
+        for r, i in ri.items():
+            if r in PS and not fixed[i]: put(i, (PS[r][0], PS[r][1]), int(PS[r][2]) // 90)
+        if FC is not None: settopo()
+        T_REF = 0.4
+    anneal(refine, T_REF, 0.02)
     repaired = []
     offb = lambda j: LO[j, 0] < box[0] + 0.5 or LO[j, 1] < box[1] + 0.5 or HI[j, 0] > box[2] - 0.5 or HI[j, 1] > box[3] - 0.5
     allp = np.ones(N, dtype=bool)
