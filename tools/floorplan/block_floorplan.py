@@ -232,6 +232,13 @@ def main():
     D, d, B, blocks, area, ties, sig, key = build(*a[:3]); out = a[3]; os.makedirs(out, exist_ok=True); M = Model(D, d, B, area, ties, sig)
     M.dock(json.load(open(a[1]))["comps"])
     if opt.get("prefer"): M.prefer = dict(x.rsplit(":", 1) for x in opt["prefer"].split(","))
+    if opt.get("pins"):         # the person's moves and pins from the review page (edits/<option>): those blocks stay put
+        Ed = json.load(open(opt["pins"])); ids = {slug(k): i for i, k in enumerate(B)}; ref = json.load(open(opt["start"]))["blocks"] if opt.get("start") else {}
+        names = {slug(k): f"{k[0]} | {k[1]}" for k in B}
+        for b in Ed.get("pins", []):
+            r = Ed.get("rects", {}).get(b) or ref.get(names[b])
+            if r and b in ids: M.docked[ids[b]] = tuple(r)
+        print("held where the person put them:", ", ".join(Ed.get("pins", [])))
     start = None
     if opt.get("start"):        # a previous option to work from (its rectangles), annealed from a lower temperature
         J = json.load(open(opt["start"])); idx = {f"{k[0]} | {k[1]}": i for i, k in enumerate(B)}; start = [None] * len(B)

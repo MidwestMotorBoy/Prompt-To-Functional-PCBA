@@ -1,4 +1,4 @@
-"""place_pack.py <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json] [crossing weight, mm per crossing, default 3] [escape room round parts with 12 or more pads, mm, default 0.5]
+"""place_pack.py (BLOCK_FLOORPLAN=<floorplan json> starts the clusters in their boxes and skips the cluster stage) <clusters.json> <board dump.json> <out placement.json> [moves] [seed] [refine moves] [intent.json] [crossing weight, mm per crossing, default 3] [escape room round parts with 12 or more pads, mm, default 0.5]
 Step 2 of the section placer: put the clusters from place_sections.py on the board.
 Each cluster moves and turns as one rigid piece (annealing over about 30 pieces); fixed parts stay where the
 dump board has them. Cost = half-perimeter of all signal nets at pad level + body overlap + parts off the board
@@ -12,6 +12,7 @@ it are re-annealed.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
 import json, sys, math, random
 FAST_CLUSTER_X = 20        # with the compiled core the cluster stage runs this many times the requested moves
+REG_MARGIN = 1.0           # mm a part may stand out of its block's box (BLOCK_FLOORPLAN) before it costs like being off the board
 TIGHT = 0.3                # mm of slack a hot-loop capacitor gets over the pad distances its cluster was built with
 import numpy as np
 import floorplan as F
@@ -139,6 +140,22 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     WOV = [30.0]
     def xy_pads(T): xy_, k_ = parts_xy(T); return xy_[pr] + rotv(pl, k_[pr])
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
+    import os
+    REG = np.zeros((N, 4))
+    if os.environ.get("BLOCK_FLOORPLAN"):
+        # start each cluster in its box of a reviewed block floorplan (block_floorplan.py json), turned so its long side
+        # runs along the box's long side, and skip the cluster stage: the refine stage then fills the boxes
+        BF = json.load(open(os.environ["BLOCK_FLOORPLAN"]))["blocks"]
+        for c, name in enumerate(names):
+            if name not in BF: continue
+            r = BF[name]; ps = list(cl[name].values()); w = max(v[0] for v in ps) - min(v[0] for v in ps); h = max(v[1] for v in ps) - min(v[1] for v in ps)
+            T[c] = ((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, 0 if (w >= h) == (r[2] - r[0] >= r[3] - r[1]) else 1)
+        moves = 0
+        bi = {r: n for n, r in enumerate(refs)}
+        for name, parts in cl.items():
+            if name in BF:
+                r = BF[name]
+                for ref in parts: REG[bi[ref]] = (r[0] - REG_MARGIN, r[1] - REG_MARGIN, r[2] + REG_MARGIN, r[3] + REG_MARGIN)
     if FC is None:
         cur = cost(*parts_xy(T)); T0, T1 = 60.0, 0.5
         for s in range(moves):
@@ -261,13 +278,13 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
         def settopo():
             topo(pads); E["a"], E["b"], E["n"] = TOPO["a"].astype(i64), TOPO["b"].astype(i64), TOPO["n"].astype(i64); E["p"], E["i"] = csr(TOPO["of"])
         geom = lambda: (xy, k, fixed, sideF, bigmov, bbx, tbx, thru, LO, HI, TLO, THI)
-        tail = lambda: (pads, pl, st64, en64, pp_ptr, pp_idx, pn_ptr, pn_idx, q_all, apr64, apl, ap_ptr, ap_idx, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"])
+        tail = lambda: (pads, pl, st64, en64, pp_ptr, pp_idx, pn_ptr, pn_idx, q_all, apr64, apl, ap_ptr, ap_idx, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"], REG)
         def anneal(n, T0, T1, legal_from=0.75, only=None):
             pool = (mv if only is None else only).astype(i64); early = WOV[0]
             for s0 in range(0, n, 50000):
                 settopo(); FC.anneal(rnd.randrange(2 ** 31), n, s0, min(n, s0 + 50000), T0, T1, legal_from, early, 400.0, pool, float(WX), TM, boxa, *geom(), *tail())
             WOV[0] = 400.0
-        def local(i): return FC.local(i, WOV[0], float(WX), boxa, fixed, sideF, bigmov, thru, LO, HI, TLO, THI, pads, st64, en64, pn_ptr, pn_idx, q_all, apr64, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"])
+        def local(i): return FC.local(i, WOV[0], float(WX), boxa, fixed, sideF, bigmov, thru, LO, HI, TLO, THI, pads, st64, en64, pn_ptr, pn_idx, q_all, apr64, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, E["a"], E["b"], E["n"], E["p"], E["i"], REG)
         def put(i, p, kk): FC.put(i, float(p[0]), float(p[1]), int(kk), TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
         def ovl(i, against=None): return FC.overlap_area(i, 0.03, against is not None, fixed if against is None else against, fixed, sideF, bigmov, thru, LO, HI, TLO, THI)
         def search(i, reach, step, hard=None): return bool(FC.search(i, float(reach), float(step), hard is not None, fixed if hard is None else hard, WOV[0], float(WX), TM, boxa, *geom(), *tail()))
