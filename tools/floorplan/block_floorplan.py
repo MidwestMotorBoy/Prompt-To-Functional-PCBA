@@ -237,6 +237,9 @@ def main():
     a = [x for x in sys.argv[1:] if not x.startswith("--")]; opt = dict((x[2:].split("=", 1) + [""])[:2] for x in sys.argv[1:] if x.startswith("--"))
     D, d, B, blocks, area, ties, sig, key = build(*a[:3]); out = a[3]; os.makedirs(out, exist_ok=True); M = Model(D, d, B, area, ties, sig)
     M.dock(json.load(open(a[1]))["comps"])
+    if opt.get("heavy"):         # NET-SUBSTRING:factor,...: weight some power ties up (a person asked for those paths short)
+        hv = [(x.rsplit(":", 1)[0], float(x.rsplit(":", 1)[1])) for x in opt["heavy"].split(",")]
+        M.ties = [(a_, b_, w * max([f for k, f in hv if k in net] or [1.0]), net) for a_, b_, w, net in M.ties]
     if opt.get("prefer"): M.prefer = dict(x.rsplit(":", 1) for x in opt["prefer"].split(","))
     if opt.get("pins"):         # the person's moves and pins from the review page (edits/<option>): those blocks stay put
         Ed = json.load(open(opt["pins"])); ids = {slug(k): i for i, k in enumerate(B)}; ref = json.load(open(opt["start"]))["blocks"] if opt.get("start") else {}

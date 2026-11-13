@@ -15,7 +15,7 @@ import json, sys, os, math, random
 FAST_CLUSTER_X = 20        # with the compiled core the cluster stage runs this many times the requested moves
 POWER_ROOM = 0.0           # mm of extra body round each part of a power path (tried 1.0 and 0.4 on Monolith round 2: the full top side packed worse and opened more paths)
 IC_POWER_ROOM = 1.5        # mm kept free beyond each side of an IC that has pins of a power net of 1 A or more
-REG_MARGIN = 1.0           # mm a part may stand out of its block's box (BLOCK_FLOORPLAN) before it costs like being off the board
+REG_MARGIN = float(os.environ.get("REG_MARGIN", 1.0))           # mm a part may stand out of its block's box (BLOCK_FLOORPLAN) before it costs like being off the board
 TIGHT = 0.3                # mm of slack a hot-loop capacitor gets over the pad distances its cluster was built with
 import numpy as np
 import floorplan as F
