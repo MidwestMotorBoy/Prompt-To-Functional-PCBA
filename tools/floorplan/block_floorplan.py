@@ -86,6 +86,9 @@ def rects(state, area):
 def gap(r, s):
     dx = max(s[0] - r[2], r[0] - s[2], 0); dy = max(s[1] - r[3], r[1] - s[3], 0); return dx + dy
 
+def man(p, q):
+    return abs(p[0] - q[0]) + abs(p[1] - q[1])
+
 def ptgap(r, p):
     return max(r[0] - p[0], 0, p[0] - r[2]) + max(r[1] - p[1], 0, p[1] - r[3])
 
@@ -126,9 +129,12 @@ class Model:
         pw = 0.0; loss = 0.0
         for a, b, w, net in self.ties:
             ra = R[a[1]] if a[0] == "b" else None; rb = R[b[1]] if b[0] == "b" else None
-            if ra and rb: L = gap(ra, rb)
-            elif ra: L = ptgap(ra, b[1])
-            elif rb: L = ptgap(rb, a[1])
+            # centre to centre: the parts that carry the current can sit anywhere in their box, and an edge-to-edge gap hid
+            # 40 mm of Port 2 PPHV inside tall boxes (round 2, option D)
+            cen = lambda r: ((r[0] + r[2]) / 2, (r[1] + r[3]) / 2)
+            if ra and rb: L = man(cen(ra), cen(rb))
+            elif ra: L = man(cen(ra), b[1])
+            elif rb: L = man(cen(rb), a[1])
             else: L = abs(a[1][0] - b[1][0]) + abs(a[1][1] - b[1][1])
             pw += w * L; loss += w * w * RHO_2OZ * L / max(width_mm(w), 0.3)
         c = [((r[0] + r[2]) / 2, (r[1] + r[3]) / 2) for r in R]

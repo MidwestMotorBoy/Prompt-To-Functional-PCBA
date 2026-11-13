@@ -10,8 +10,10 @@ Step 4 (repair): a small part that still overlaps is moved to the best free spot
 is treated as an anchor: it may take any spot clear of fixed and other large parts, and the small parts round
 it are re-annealed.
 Prints the same signal half-perimeter that floorplan.py score reports, so it compares directly with a board."""
-import json, sys, math, random
+import json, sys, os, math, random
 FAST_CLUSTER_X = 20        # with the compiled core the cluster stage runs this many times the requested moves
+POWER_ROOM = 0.0           # mm of extra body round each part of a power path (tried 1.0 and 0.4 on Monolith round 2: the full top side packed worse and opened more paths)
+IC_POWER_ROOM = 1.5        # mm kept free beyond each side of an IC that has pins of a power net of 1 A or more
 REG_MARGIN = 1.0           # mm a part may stand out of its block's box (BLOCK_FLOORPLAN) before it costs like being off the board
 TIGHT = 0.3                # mm of slack a hot-loop capacitor gets over the pad distances its cluster was built with
 import numpy as np
@@ -70,6 +72,28 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     # which had 9 to 18 parts within 0.3 mm against 2 to 5 on the scripted board that routes best.
     npads = np.bincount([ri[p["ref"]] for p in d["pads"]], minlength=N); many = (npads >= 12) & ~fixed
     bbx[many] += np.array([-ESC, -ESC, ESC, ESC])
+    # room round the parts of a power path (intent statements from power_chains.py) for its pour: option D's Port 1 PD
+    # chip was packed in so tightly that its 5 A PPHV pins had no way out
+    if intentf:
+        pw = {st["part"] for st in it.get("near", []) if st.get("why", "").startswith("power path")} | {t.split(".")[0] for st in it.get("near", []) if st.get("why", "").startswith("power path") for t in st["to"]}
+        for r in pw:
+            if r in ri and not fixed[ri[r]]: bbx[ri[r]] += np.array([-POWER_ROOM, -POWER_ROOM, POWER_ROOM, POWER_ROOM])
+        # an IC on a power path keeps room on each side where its power pins are, so the pour can leave it (round 2:
+        # the PD chips U401 and U501 were packed in by their own section's small parts on every seed, PPHV and PP5V open)
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "copper"))
+        import power_chains as PC
+        dsg, _ = PC.design(dumpf, os.environ.get("CONSTRAINTS", os.path.join(os.path.dirname(os.path.abspath(dumpf)), "constraints.json")))
+        for r in pw:
+            if not r.startswith("U") or r not in ri or fixed[ri[r]]: continue
+            i = ri[r]; x0, y0 = pos0[r]; b = bbx[i].copy()
+            for p in d["pads"]:
+                if p["ref"] != r or not p["net"] or p["net"] not in dsg.power or dsg.current(p["net"]) < 1.0: continue
+                px, py = p["x"] - x0, p["y"] - y0; dl, dr_, dt, db = px - b[0], b[2] - px, py - b[1], b[3] - py; m = min(dl, dr_, dt, db)
+                if m == dl: bbx[i][0] = min(bbx[i][0], b[0] - IC_POWER_ROOM)
+                elif m == dr_: bbx[i][2] = max(bbx[i][2], b[2] + IC_POWER_ROOM)
+                elif m == dt: bbx[i][1] = min(bbx[i][1], b[1] - IC_POWER_ROOM)
+                else: bbx[i][3] = max(bbx[i][3], b[3] + IC_POWER_ROOM)
+
     # a large part on a fixed part (connector, mounting hole, test point) is the failure repair cannot undo on a full board,
     # so it costs ten times an ordinary overlap from the first move
     bigfix = (((bbx[:, 2] - bbx[:, 0]) * (bbx[:, 3] - bbx[:, 1]) > 9.0) & ~fixed)[:, None] & fixed[None, :]; bigfix = bigfix | bigfix.T
@@ -140,7 +164,7 @@ def main(clf, dumpf, outf, moves=60000, seed=1, refine=150000, intentf=None, wx=
     WOV = [30.0]
     def xy_pads(T): xy_, k_ = parts_xy(T); return xy_[pr] + rotv(pl, k_[pr])
     T = np.array([[rnd.uniform(box[0] + 5, box[2] - 5), rnd.uniform(box[1] + 5, box[3] - 5), rnd.randrange(4)] for _ in range(C)])
-    import os
+
     REG = np.zeros((N, 4))
     if os.environ.get("BLOCK_FLOORPLAN"):
         # start each cluster in its box of a reviewed block floorplan (block_floorplan.py json), turned so its long side

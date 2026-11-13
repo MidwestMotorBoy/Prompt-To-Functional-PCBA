@@ -67,6 +67,7 @@ WIDE_COST = 3.0      # extra path cost, per cell, for running narrower than the 
 ROUTER_A = 1.0       # a power net under this current gets no outer-layer copper tree unless it is a bus: a router track
                      # carries it, and a tree would take a strip of the outer layer the length of the net (3V3, 0.5 A,
                      # ran 60 mm along Monolith's edge)
+EXIT_MM = 1.2        # exit lane kept for a power pin of an IC with pins of two or more power nets (exits())
 DETOUR_MAX_MM = 10.0 # a detour on the other outer layer longer than this is not drawn (it would take the layer). The
                      # hand board takes Port 2's switch node from the half-bridge's enclosed SW pad to the inductor this
                      # way, about 7 mm on B.Cu and In2; seed 9's 20 mm switch-node strips were what Logan rejected
@@ -147,6 +148,32 @@ class Planner:
         self.drilled = [(p["x"], p["y"], p["drill"]) for p in D["pads"] if p.get("drill")]
         self.viamap = np.full((self.H, self.W), -1, np.int32)
         self.signal = np.array([self.d.role(n) == "signal" for n in self.d.board_nets])
+        self.exits()
+
+    def exits(self):
+        """Exit lanes at ICs with pins of two or more power nets: from each such pin on the package edge, a strip
+        EXIT_MM outward, kept for that pin's net. Without them the first net's pour can wrap round the IC and wall
+        the other off (Monolith round 2: PPHV round the PD chip U401 closed in its VBUS and PP5V pins)."""
+        self.reserve = {L: np.full((self.H, self.W), -1, np.int32) for L in self.layers}; n = 0
+        by = {}
+        for p in self.d.pads:
+            if p["ref"].startswith("U"): by.setdefault(p["ref"], []).append(p)
+        for ref, ps in by.items():
+            pw = {p["net"] for p in ps if p["net"] in self.d.power and self.d.current(p["net"]) >= 1.0 and self.d.role(p["net"]) != "return" and p["net"] not in self.d.ret}
+            if len(pw) < 2: continue
+            for L in self.outer:
+                pp = [(p, self.d.pad_poly(p, L)) for p in ps if L in p["shapes"]]
+                if not pp: continue
+                x0, y0, x1, y1 = unary_union([g for _, g in pp]).bounds
+                for p, g in pp:
+                    if p["net"] not in pw: continue
+                    a0, b0, a1, b1 = g.bounds; e = EXIT_MM
+                    for hit, box in ((a0 - x0 < 0.3, (a0 - e, b0, a0, b1)), (x1 - a1 < 0.3, (a1, b0, a1 + e, b1)),
+                                     (b0 - y0 < 0.3, (a0, b0 - e, a1, b0)), (y1 - b1 < 0.3, (a0, b1, a1, b1 + e))):
+                        if hit:
+                            m = self.raster(Polygon([(box[0], box[1]), (box[2], box[1]), (box[2], box[3]), (box[0], box[3])])) & (self.padnet[L] < 0)
+                            self.reserve[L][m] = self.netid[p["net"]]; n += 1
+        self.report["exit_lanes"] = n
 
     # raster helpers
     def P(self, x, y): return ((x - self.x0) / RES, (y - self.y0) / RES)
@@ -166,6 +193,7 @@ class Planner:
         nid = self.netid[net]; pn = self.padnet[L]
         other = ((pn >= 0) & (pn != nid)) | self.block[L] | ((self.cu[L] >= 0) & (self.cu[L] != nid))
         other |= (self.viamap >= 0) & (self.viamap != nid)
+        other |= (self.reserve[L] >= 0) & (self.reserve[L] != nid)
         dist = ndimage.distance_transform_edt(~other) * RES - self.clr
         if loose or self.escape <= 0: return dist
         sig = (pn >= 0) & (pn != nid) & self.signal[np.maximum(pn, 0)]
