@@ -1987,7 +1987,7 @@
 	(footprint "MonolithDev:Infineon_PG-TDSON-8_6.15x5.15mm_D5-8"
 		(layer "F.Cu")
 		(uuid "085df036-8402-4ecf-af44-b66eaf8941c4")
-		(at 133.35 114.1195)
+		(at 95.7382 119.4746)
 		(descr "Q101/Q102 BSC007N04LS6 (TDSON-8 FL): drain leads numbered 5-8 (make_production.py). Infineon, PG-TDSON-8, 6.15x5.15x1mm, https://www.infineon.com/dgdl/Infineon-BSC520N15NS3_-DS-v02_02-en.pdf?fileId=db3a30432239cccd0122eee57d9b21a4")
 		(tags "Infineon OptiMOS")
 		(property "Reference" "Q102"
@@ -8991,7 +8991,7 @@
 	(footprint "MonolithDev:Vishay_PowerPAIR_3x3S"
 		(layer "F.Cu")
 		(uuid "25146cd6-a8fd-417f-bc93-811eb52c1ccd")
-		(at 131.855 136.5995 180)
+		(at 113.729101 105.0278 180)
 		(descr "Vishay PowerPAIR 3x3S (SiZ240DT), 3.3x3.3 mm, recommended land pattern doc 78115 (06-Aug-2020)")
 		(tags "PowerPAIR 3x3S SiZ240DT dual MOSFET half-bridge")
 		(property "Reference" "Q502"
@@ -13963,7 +13963,7 @@
 		(property "Reference" "L502"
 			(at 0 -3.6 90)
 			(layer "F.SilkS")
-			(uuid "1b3e9de6-62f4-4601-b2fa-4cb681fb5b99")
+			(uuid "acff08b3-4ee9-4fc3-90ad-37d454cbc944")
 			(effects
 				(font
 					(size 1 1)
@@ -13974,7 +13974,7 @@
 		(property "Value" "3.3u"
 			(at 0 3.6 90)
 			(layer "F.Fab")
-			(uuid "285346d8-7d79-48da-a98e-54ebab223556")
+			(uuid "6aef949c-87b9-41a2-970b-82c6c9dcc3c5")
 			(effects
 				(font
 					(size 1 1)
@@ -13986,7 +13986,7 @@
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "154f6670-813f-4d54-92c2-153f492114bc")
+			(uuid "89e7ff16-cba4-4b3f-a648-9a28df28cab0")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13997,7 +13997,7 @@
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "1dce9e42-0742-4f98-80e1-6cd29b1565c9")
+			(uuid "01c5447d-6a1d-449e-b9b5-31d3d73112cb")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16751,7 +16751,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "37f59a0e-abd1-4350-9465-2aa2fca5a40d")
-		(at 79.6544 74.0156)
+		(at 126.0856 104.394)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP512"
@@ -18086,7 +18086,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "401708c8-247e-4506-b416-9e0dbf36b39c")
-		(at 88.3412 125.8316)
+		(at 133.1468 109.728)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP301"
@@ -24633,7 +24633,7 @@
 			(at 0 -1.16 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "b6111b3f-d48a-427a-ad94-1d22cd7e1d0d")
+			(uuid "28ca3684-943c-48de-b95d-3c0d7fc35f52")
 			(effects
 				(font
 					(size 1 1)
@@ -24644,7 +24644,7 @@
 		(property "Value" "0.1u 50V"
 			(at 0 1.16 0)
 			(layer "F.Fab")
-			(uuid "12c43578-1401-4275-b619-b20e5f59ad3b")
+			(uuid "f123682b-0056-4f41-b0d7-f1066160abe3")
 			(effects
 				(font
 					(size 1 1)
@@ -24656,7 +24656,7 @@
 			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "04a99ea9-f65f-48d6-92a4-451fe915e36c")
+			(uuid "8de5cb60-e3bf-4c21-963f-8cb2106f7109")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24667,7 +24667,7 @@
 			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "84c81dc9-91e8-4878-95bc-1894f43cd31a")
+			(uuid "1574d0f0-998d-4561-90e3-8c72259258b5")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27581,7 +27581,7 @@
 	(footprint "MonolithDev:Vishay_PowerPAIR_3x3S"
 		(layer "F.Cu")
 		(uuid "5c50384d-89d2-40b2-bfb4-0799fa100d36")
-		(at 131.855 120.4295 180)
+		(at 86.2366 105.0388 180)
 		(descr "Vishay PowerPAIR 3x3S (SiZ240DT), 3.3x3.3 mm, recommended land pattern doc 78115 (06-Aug-2020)")
 		(tags "PowerPAIR 3x3S SiZ240DT dual MOSFET half-bridge")
 		(property "Reference" "Q401"
@@ -28390,7 +28390,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "5fdf2217-02e9-403c-bbb8-b9b0ff98912d")
-		(at 120.5484 86.9188)
+		(at 126.0856 89.0524)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP106"
@@ -30442,7 +30442,7 @@
 			)
 		)
 		(property "Value" "M24512-DFMC6TG"
-			(at 0 2 0)
+			(at -1.85 0 0)
 			(layer "F.Fab")
 			(uuid "e4a5cd26-5c4e-4bbf-a077-12516aa77421")
 			(effects
@@ -32991,7 +32991,7 @@
 	(footprint "MonolithDev:TI_WQFN-38-2EP_REF0038A_6x4mm_P0.4mm_2oz"
 		(layer "F.Cu")
 		(uuid "6f8ad19c-d27a-4250-a366-2dde9dfc7a22")
-		(at 133.12 181.4795)
+		(at 91.3196 78.8362)
 		(descr "Texas REF0038A WQFN, 38 Pin, 2EP (https://www.ti.com/lit/ds/symlink/tps25730.pdf#page=68)")
 		(tags "Texas Instruments WQFN NoLead")
 		(property "Reference" "U501"
@@ -37015,7 +37015,7 @@
 	(footprint "MonolithDev:Vishay_PowerPAIR_3x3S"
 		(layer "F.Cu")
 		(uuid "79ff79a4-b681-497e-b5da-8cf03f366eb1")
-		(at 131.855 125.8195 180)
+		(at 90.7573 105.0561 180)
 		(descr "Vishay PowerPAIR 3x3S (SiZ240DT), 3.3x3.3 mm, recommended land pattern doc 78115 (06-Aug-2020)")
 		(tags "PowerPAIR 3x3S SiZ240DT dual MOSFET half-bridge")
 		(property "Reference" "Q402"
@@ -38969,7 +38969,7 @@
 	(footprint "MonolithDev:L_Coilank_APS0730"
 		(layer "F.Cu")
 		(uuid "7fe4251b-bb2b-4609-9d8f-bc6da4903007")
-		(at 133.72 73.0595)
+		(at 88.4328 97.7392)
 		(descr "Inductor, Coilank APS0730 (APS-F series), 7.8x7.6x3.1mm, datasheet land pattern a 2.8 / b 7.4 / c 7.2 (datasheets/aps0730.pdf)")
 		(tags "inductor molded APS0730")
 		(property "Reference" "L401"
@@ -45269,7 +45269,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "9e9e1740-5326-47a8-b2c9-452946174b03")
-		(at 114.4524 78.4352)
+		(at 124.9172 82.4992)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP109"
@@ -46251,7 +46251,7 @@
 	(footprint "MonolithDev:Vishay_PowerPAIR_3x3S"
 		(layer "F.Cu")
 		(uuid "a752cc8e-f0ad-46e4-9181-d9f0207cb5a0")
-		(at 131.854999 131.2095 180)
+		(at 109.2382 105.0209 180)
 		(descr "Vishay PowerPAIR 3x3S (SiZ240DT), 3.3x3.3 mm, recommended land pattern doc 78115 (06-Aug-2020)")
 		(tags "PowerPAIR 3x3S SiZ240DT dual MOSFET half-bridge")
 		(property "Reference" "Q501"
@@ -48710,7 +48710,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "b1aaf7b9-cd9b-463a-8cdf-7e336b5977c0")
-		(at 108.458 114.808)
+		(at 127.3048 110.1344)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP113"
@@ -55045,7 +55045,7 @@
 	(footprint "MonolithDev:L_Coilank_APS0730"
 		(layer "F.Cu")
 		(uuid "ce42b145-cb4d-48ba-a2cd-d0b399b05c54")
-		(at 133.72 90.2395)
+		(at 111.4452 97.6376)
 		(descr "Inductor, Coilank APS0730 (APS-F series), 7.8x7.6x3.1mm, datasheet land pattern a 2.8 / b 7.4 / c 7.2 (datasheets/aps0730.pdf)")
 		(tags "inductor molded APS0730")
 		(property "Reference" "L501"
@@ -63145,7 +63145,7 @@
 	(footprint "TestPoint:TestPoint_Pad_D1.0mm"
 		(layer "F.Cu")
 		(uuid "e328acdf-12e4-4e42-ac01-f9e7aa4159fc")
-		(at 98.4504 113.9444)
+		(at 127.508 113.538)
 		(descr "SMD pad as test Point, diameter 1.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "TP412"
@@ -64110,7 +64110,7 @@
 	(footprint "MonolithDev:Infineon_PG-TDSON-8_6.15x5.15mm_D5-8"
 		(layer "F.Cu")
 		(uuid "e5a3d955-8ff6-4244-a1b9-e856e4cfe115")
-		(at 133.35 106.8895 180)
+		(at 103.1742 119.4654 180)
 		(descr "Q101/Q102 BSC007N04LS6 (TDSON-8 FL): drain leads numbered 5-8 (make_production.py). Infineon, PG-TDSON-8, 6.15x5.15x1mm, https://www.infineon.com/dgdl/Infineon-BSC520N15NS3_-DS-v02_02-en.pdf?fileId=db3a30432239cccd0122eee57d9b21a4")
 		(tags "Infineon OptiMOS")
 		(property "Reference" "Q101"
@@ -64977,7 +64977,7 @@
 	(footprint "MonolithDev:TI_WQFN-38-2EP_REF0038A_6x4mm_P0.4mm_2oz"
 		(layer "F.Cu")
 		(uuid "e727a2e8-18a8-4388-97af-5224447a615d")
-		(at 133.12 170.7595)
+		(at 104.4154 78.8778)
 		(descr "Texas REF0038A WQFN, 38 Pin, 2EP (https://www.ti.com/lit/ds/symlink/tps25730.pdf#page=68)")
 		(tags "Texas Instruments WQFN NoLead")
 		(property "Reference" "U401"
@@ -66462,7 +66462,7 @@
 	(footprint "MonolithDev:TI_MHA0024A_CC2340R5MODA_7x10mm"
 		(layer "F.Cu")
 		(uuid "e9d9952b-56d5-4517-9778-f4e68f5a0ffd")
-		(at 181.379999 165.349499 -90)
+		(at 116.17 121.6672 -90)
 		(descr "TI CC2340R5MODA Bluetooth LE module, MHA0024A QFM-24 7 x 10 mm, 1.0 mm pitch (SWRS349A p.63-64)")
 		(tags "CC2340R5MODA MHA0024A module BLE")
 		(property "Reference" "U301"
@@ -67229,7 +67229,7 @@
 			)
 			(polygon
 				(pts
-					(xy 186.379999 162.649499) (xy 186.379999 168.049499) (xy 183.179999 168.049499) (xy 183.179999 162.649499)
+					(xy 121.17 118.9672) (xy 121.17 124.3672) (xy 117.97 124.3672) (xy 117.97 118.9672)
 				)
 			)
 		)
@@ -67260,7 +67260,7 @@
 			)
 			(polygon
 				(pts
-					(xy 186.379999 161.849499) (xy 186.379999 168.849499) (xy 183.179999 168.849499) (xy 183.179999 161.849499)
+					(xy 121.17 118.1672) (xy 121.17 125.1672) (xy 117.97 125.1672) (xy 117.97 118.1672)
 				)
 			)
 		)
