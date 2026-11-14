@@ -2,7 +2,7 @@
 
   python route_server.py --repo <clone> --kicad-python <python.exe> --kicad-cli <kicad-cli> --pylib <dir> [--jobs 12] [--minutes 60]
 
-Teams queue a board by committing it to their branch (layout-team-A, -B, -C) as
+Teams queue a board by committing it to their branch (any layout-team-<X>) as
     docs/layout-teams/<team>/route_queue/<name>.kicad_pcb   (+ <name>.kicad_pro and <name>.kicad_dru beside it; the
                                                             template's are used when missing)
 The server polls every 2 minutes, routes every queued board it has not routed yet (same name and same file content =
@@ -21,7 +21,6 @@ ap.add_argument("--pylib", required=True); ap.add_argument("--jobs", type=int, d
 ap.add_argument("--work", default=None); ap.add_argument("--once", action="store_true")
 A = ap.parse_args()
 REPO = os.path.abspath(A.repo); WORK = os.path.abspath(A.work or os.path.join(REPO, "..", "route_work")); RES = os.path.join(WORK, "results")
-TEAMS = ["A", "B", "C"]
 os.makedirs(WORK, exist_ok=True)
 LAUNCH = os.path.join(WORK, "launch.py")
 open(LAUNCH, "w").write("import sys, runpy\nsys.path.insert(0, %r)\nscript = sys.argv[1]; sys.argv = sys.argv[1:]\nrunpy.run_path(script, run_name='__main__')\n" % os.path.abspath(A.pylib))
@@ -43,9 +42,9 @@ def results_tree():
 
 def queued():
     jobs = []
-    for t in TEAMS:
-        br = "layout-team-" + t
-        if not git("ls-remote", "--heads", "origin", br).strip(): continue
+    heads = [l.split("refs/heads/")[1] for l in git("ls-remote", "--heads", "origin", "layout-team-*").splitlines()]
+    for br in heads:                 # every layout-team-<X> branch, so a new team needs no restart
+        t = br[len("layout-team-"):]
         git("fetch", "-q", "origin", br)
         for line in git("ls-tree", "-r", "origin/" + br, "docs/layout-teams/%s/route_queue/" % t).splitlines():
             meta, path = line.split("\t", 1)
