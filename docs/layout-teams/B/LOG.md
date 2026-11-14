@@ -528,3 +528,66 @@ New team tools:
 - `tools/plan_only2.sh`: plan_only.sh with planner options;
 - `tools/plan_peek.py`: the planner raster for one net before its step;
 - `tools/detour_peek.py`: the detour attempts for one net, with the start vias, landing cells and path length.
+
+## 2026-11-14 21:35 UTC, lead: stitch and review, round 2 (candidates/r2.json = best_placement.json)
+
+**Stitch.** `tools/stitch.py fragments/port1.json fragments/port2.json fragments/pack.json` with both PD-pocket fragments
+of round 1's fix tasks: 245 parts, 17 on the bottom, 0 claim clashes, no border to resolve. Saved as `candidates/r2.json`
+(same content as `runs/p1pd-whole/placement.json`) and as `best_placement.json`.
+
+**Scorecard runs on r2** (all finished, nothing timed out):
+
+| Run | What | Blocked edges | Full route | Hot loops | Loss | DRC | Power open |
+|---|---|---|---|---|---|---|---|
+| hand (`runs/hand_screen`, charter) | reference | 56 of 452 | 391 of 448 | sum 8.15 nH | 1.36 W | 0 | PP5V at U401, 3V3 at L201, GND J301/J302 |
+| `runs/r1-hot` | round 1 | 58 of 451 | not run | 7 of 7, 5.78 nH | 1.142 W | 0 | GND J301/J302 |
+| `runs/r2-hot` | r2, `--hot=all`, route 0 | **39 of 446** | - | **7 of 7, 5.54 nH** | **1.133 W** | 0 | GND J301/J302 |
+| `runs/r2-route` | r2's copper (`--keep-copper` on `runs/r2-hot/cu.kicad_pcb`), `--route=45`, run here | 39 of 446 | **401 of 446, 45 failed**, about 27 min | - | 1.133 W | 0 | GND J301/J302 |
+| `runs/r2-esc06` | r2, `--plan="--escape=0.6"`, no loops | 30 of 444 | - | - | 1.143 W | 0 | **PP5V at U401** (hard miss), GND J301/J302 |
+
+Hot loops of r2 (loop total nH, hand reference in brackets): HL_3V3 1.02 (1.95), Port 1 HL_5V 0.70 (1.08), HL_IN 0.78
+(1.02), HL_OUT 0.74 (1.03), Port 2 HL_5V 0.76 (1.08), HL_IN 0.80 (0.99), HL_OUT 0.74 (1.00). The full route was run in
+this container, not queued on Logan's PC (the queue needs a push, which this session may not do).
+
+**Renders.** Looked at `runs/r2-hot/F.png` and `B.png`: stages, bucks and the pack FET block are compact, no power part
+sprawls. The long copper is the two PPHV ways from the PD chips to the chargers (as on the hand board) and Port 1's
+PP5V way on the bottom from C407 to C443.
+
+**Finding: a power pad the scorecard does not flag.** `dc.json` counts a terminal as joined when any one of its pads
+reaches the source and lists the rest under `pads_not_joined`; `score.json` power_open does not show them. The PD
+controller TPS25751D has two VBUS pad groups: pad 23 (VBUS_IN, the 5 A two-way switch to PPHV, pad 20) and pad 32 (VBUS,
+the 5 V source switch from PP5V, pad 34). New `tools/loose.py <run dir>` prints such pads:
+
+| Board | U401 (Port 1) | U501 (Port 2) |
+|---|---|---|
+| hand | pad 32 not joined | both joined |
+| r1 | **pad 23 not joined** | both joined |
+| r2 | **pad 23 not joined** | pad 32 not joined |
+
+On r1 and r2 the planner joins U401 at pad 32 through C450's lane; pad 23 sits on its own grown VBUS island
+(`plan/r2-zoom/u401_ne_F.png`), because C406 stands at (111.7, 75.34) turn 90 with its VBUS pad 5 mm north of pad 23
+(the hand has C406 at (110.949, 78.359) turn 0, its VBUS pad 0.05 mm from pad 23's north-east corner). So Port 1's 5 A path is left
+to a router track: by the scorecard's letter the hard limit is met, in substance it is not. This is why the round is
+not closed although the numbers beat the hand board.
+
+**Where the 45 full-route failures are** (all 45 read "no way even with every other route gone", so they are placement
+or copper blocks, not congestion; 39 of them are the blocked edges of the screen):
+- U401 north row, 9: CC1 (pad 28 to C401, C401 to U405.12), CC2 (pad 29 to C402, U405.11 to pad 29), GND pads 26, 27,
+  31, 36, C450.2. VBUS copper still lies along the row.
+- U501, 8: 3V3 pad 38, GND 36, DRV9_OFF 37, GND 31, LDO_1V5 pad 4 to C505.1, CC1 C501.1 to U505.12, and (full route
+  only) I2CC_SCL U503.1 to R503.2 and CHG_INT U503.3 to R504.2 at the new south wall.
+- Charger twins, 8 per port: HIDRV1 (pad 27 to R444/R544), ACOV (pad 35 to R410/R510.2), FB (pad 12 to R419/R519.1),
+  HG2 (R446/R546.2 to Q402/Q502.1), BAT_SNS_P R428/R528.1, PACK_P R429/R529.1, AC_SNS_N R426/R526.1, and PPHV R525.1 or
+  I2CC_SCL U402.6 to R403.2. HIDRV1, HG2, BAT_SNS_P, PACK_P fail on the hand board as well.
+- Port protection: C_CC1 U405.4 to .7 and to J401.A5, C_CC1/C_CC2 at U505 to J501, VBIAS C551.1 to U505.3 (the C_CC
+  ones fail on the hand too).
+- Rest: EN_5V1 U301.12 to U404.2 (two edges on the hand), U102 V4 to C112.1, GND C515.2, GND C304.2, CELL3 R103.1 to
+  J111 (search cap).
+
+**Decision: not done.** Two fix tasks for round 3: (1) Port 1: C406 back to pad 23 so pad 23 is on planned copper,
+then open U401's north row; (2) Port 2: pad 32 on planned copper through C550, then the rest of U501 and the two
+south-wall edges. r2 stays the best placement until a candidate beats it with `loose.py` clean.
+
+Files: `candidates/r2.json`, `best_placement.json`, `runs/r2-hot/` (score.json, hot.json, dc.json, ghost.log, F.png,
+B.png), `runs/r2-route/` (score.json, ghost.log), `plan/r2-route-failed.txt` (the result and FAILED lines of route.log),
+`runs/r2-esc06/` (score.json, dc.json, ghost.log); hot_gate.log and route.log are git-ignored and stay local; `plan/r2-zoom/` (u401_F.png, u501_F.png, chg1_F.png, u401_ne_F.png), `tools/loose.py`.

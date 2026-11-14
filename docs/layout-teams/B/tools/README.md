@@ -12,6 +12,7 @@ through docker, as the shared scorecard does. Shared tools are only called, neve
 | `apply_b.py` | KiCad python: placement to board, with flips and `--partial` |
 | `screen.sh` | Whole-board screen (shared scorecard) or partial screen (`score_part.sh`, `partcons.py`) |
 | `blame.py` | Blocked edges, open power pins, DRC errors by ref, chip and group; what stands next to each blocked pad |
+| `loose.py` | Power pads off the planned copper although their terminal counts as joined (`pads_not_joined` in dc.json); run it on every screen |
 | `hand_fragments.py` | The hand placement as fragments (`fragments/hand/`), the usual `--base` |
 | `hpwl.py`, `draw_boxes.py` | Wiring estimate and box picture (both take 4-element entries) |
 
@@ -74,3 +75,7 @@ One router or hot-loop job at a time per worker; run dirs under `runs/<unique-na
   absent group read as open there, and the blocked-edge total counts only edges between present pads.
 - The 5 V buck's B1 box (115.2..121.1, 66.4..85.8) cannot hold the three 22 uF output capacitors while the hand's
   9 V supply sits beside it; PLAN section 6 moves the 9 V supplies to the bottom first.
+- **A joined terminal can still have a loose pad.** dc.json joins a terminal when any one of its pads reaches the
+  source; power_open in score.json stays empty. The PD controllers have two VBUS pad groups (23 = the 5 A switch to
+  PPHV, 32 = the 5 V source switch); r1 and r2 left Port 1's pad 23 on an island. `tools/loose.py <run dir>` lists them.
+  Put a capacitor of the same net against each such pad so the grown copper merges with the capacitor's pad.
