@@ -1,0 +1,12 @@
+{"entry": "E01", "grader": "fable",
+ "scores": {
+  "3V3":   {"1":5,"2":4,"3":5,"4":5,"5":3,"6":4,"7":4,"8":5},
+  "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":3,"7":4,"8":3},
+  "MCU":   {"1":3,"2":3,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB":   {"1":4,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Power paths (3V3 buck, 5 V buck, four-switch stage with input caps, half-bridges, inductor and output caps, and the protection-FET chain) are drawn as wired left-to-right paths under clear block titles.",
+ "worst": [
+  "Cells sheet: parts stacked on the BQ40Z50 left pins (R113/TH101/TH104 thermistors, C105, R104) and R115/R116/R117 on the right overlap each other and their text, so refs and values there are unreadable.",
+  "Many small parts float alone tied only by labels (D101, D401 TVS, Q409, Q103, R432, TS connectors, MCU pull-ups hung on the 3V3 rail far from their lines, USB decoupling caps in a separate row), forcing net search.",
+  "Uneven use of space: large empty areas (bottom of USB and MCU sheets, middle of Cells) while pin numbers/labels collide at U401/U403 (gate resistors R444-R447, R412-R414) and USB text is small on the huge sheet."]}

@@ -1,0 +1,9 @@
+{"entry": "E07", "grader": "opus",
+ "scores": {
+  "3V3": {"1":4,"2":4,"3":4,"4":4,"5":1,"6":4,"7":3,"8":4},
+  "Cells": {"1":2,"2":2,"3":1,"4":2,"5":1,"6":1,"7":2,"8":1},
+  "MCU": {"1":3,"2":3,"3":2,"4":2,"5":1,"6":1,"7":3,"8":2},
+  "USB": {"1":2,"2":2,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 3,
+ "best": "The 3V3 buck and the USB four-switch power stage read as clean left-to-right textbook drawings with input caps, switches, inductor and output caps in order.",
+ "worst": ["Cells and Gauge sheet scatters parts (protection FETs, gate resistors, fuse, Q104, D101, caps) as islands tied only by labels, with dozens of auto-generated Net-(Uxxx-Pad) names and overlapping labels around U101/Q101", "Very poor use of space: content packed into strips or corners with huge empty regions (3V3, MCU, Cells), while the USB sheet is so large the text is tiny; MCU antenna-match title runs off the sheet edge and the pi network is split apart", "Long wandering wires and label-only connections around the BQ25756 charger and PD controller make datasheet checking require net tracing"]}

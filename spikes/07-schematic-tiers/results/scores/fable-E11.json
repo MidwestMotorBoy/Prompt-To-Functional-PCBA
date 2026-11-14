@@ -1,0 +1,11 @@
+{"entry": "E11", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":4,"2":3,"3":3,"4":2,"5":4,"6":4,"7":4,"8":3},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+  "USB": {"1":4,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Power paths are drawn as real wired left-to-right paths (3V3 buck, four-switch stage with input/output cap banks, 5 V buck, back-to-back protection FETs with fuse) under clear block titles and notes.",
+ "worst": ["Overlapping text around the gauge and charger ICs: C105/R105, TH101/R113/TH104 values and refs collide on the BQ40Z50, R445/R446 gate resistors and HG2 label collide on the BQ25756, pin-number piles at U401/U405 ground pins, J120/J116 texts run together.",
+  "Many parts float alone tied only by labels (D101, D401 TVS, Q409, Q103, EEPROM, EN_5V pull-down, pull-up row detached from its lines, CELL_1N label stubs everywhere), so checking against datasheets needs net-name searching.",
+  "Unbalanced page use: MCU and 3V3 sheets are half empty, USB sheets have a large empty lower-left/bottom while the charger block is dense with long wrap-around wires and small text."]}

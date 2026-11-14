@@ -1,0 +1,12 @@
+{"entry": "E12", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":3,"5":4,"6":4,"7":4,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB": {"1":4,"2":3,"3":3,"4":3,"5":4,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "Power paths (3V3 buck, 5 V buck, four-switch stage, pack fuse-FET-FET path) are drawn as true left-to-right wired paths under clear titled blocks with explanatory notes, and cell-input filter ladders are wired to their IC pins.",
+ "worst": [
+  "Several colliding parts and texts on the USB sheets: R417/R435 at CE_N, R415 over TH401, D442 over C410 at REGN/DRV_SUP, D441 over C458 text in the 9 V supply, R403 over C404; also C118, R113/SRN and R124 on Cells and R302 value on MCU",
+  "Orphan parts tied only by labels away from the pin they serve (C439 soft-start cap, R432 EN pull-down, Q409, EEPROM U402, TP301, shunt/Kelvin block far from SRP/SRN pins, gate resistors separated from the FETs)",
+  "Charger controller has long parallel staircase wire runs fanning out to peripheral parts, power FETs are drawn as generic boxes rather than MOSFET symbols, and sheets have sizeable empty areas (3V3 lower half, MCU centre, USB middle band)"]}

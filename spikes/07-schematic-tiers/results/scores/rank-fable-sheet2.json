@@ -1,0 +1,36 @@
+{
+ "grader": "fable",
+ "sheet": "sheet2",
+ "ranking": [
+  "E08",
+  "E13",
+  "E14",
+  "E03",
+  "E02",
+  "E10",
+  "E12",
+  "E05",
+  "E01",
+  "E09",
+  "E11",
+  "E04",
+  "E06",
+  "E07"
+ ],
+ "notes": {
+  "E08": "Two titled boxes (buck / pack bulk caps), C206 alone at VIN, EN wired to VIN, VOS wired after L201, numbered design notes, page well filled.",
+  "E13": "Same textbook buck and separate bulk-cap block with titles and notes, but spread thinly over a large page with the lower half empty and no block frames.",
+  "E14": "Single row but EN wired to VIN, one shared ground, three-line note explaining FB/VOS/SLEEP and which caps are bulk; bulk caps still mixed with C206.",
+  "E03": "EN wired, single ground, short note; but VOS goes to a 3V3 power symbol instead of a wire to the output, cap value texts nearly touch, ref and value of U204 crowd.",
+  "E02": "Single row with one-line flow note; EN tied by PACK_P label not wire, 7 input caps undifferentiated, half page empty. Pixel-identical to E02/E10/E12; order among them is arbitrary.",
+  "E10": "Single row with one-line flow note; EN tied by PACK_P label not wire, 7 input caps undifferentiated, half page empty. Pixel-identical to E02/E10/E12; order among them is arbitrary.",
+  "E12": "Single row with one-line flow note; EN tied by PACK_P label not wire, 7 input caps undifferentiated, half page empty. Pixel-identical to E02/E10/E12; order among them is arbitrary.",
+  "E05": "As E02 group (flow note) but ground symbols sit directly on the IC pins and the PACK_P/3V3_SLEEP labels butt against the pin numbers: slightly tighter.",
+  "E01": "Same single-row drawing without any note; EN by label, labels tight against pins, grounds jammed on pins, half page empty. Pixel-identical to E01/E09/E11; order among them is arbitrary.",
+  "E09": "Same single-row drawing without any note; EN by label, labels tight against pins, grounds jammed on pins, half page empty. Pixel-identical to E01/E09/E11; order among them is arbitrary.",
+  "E11": "Same single-row drawing without any note; EN by label, labels tight against pins, grounds jammed on pins, half page empty. Pixel-identical to E01/E09/E11; order among them is arbitrary.",
+  "E04": "Same un-annotated single-row drawing on a taller page: about three quarters of the sheet empty. Pixel-identical to E04/E06/E07; order among them is arbitrary.",
+  "E06": "Same un-annotated single-row drawing on a taller page: about three quarters of the sheet empty. Pixel-identical to E04/E06/E07; order among them is arbitrary.",
+  "E07": "Same un-annotated single-row drawing on a taller page: about three quarters of the sheet empty. Pixel-identical to E04/E06/E07; order among them is arbitrary."
+ }
+}

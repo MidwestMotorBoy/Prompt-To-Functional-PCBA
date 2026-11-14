@@ -1,0 +1,18 @@
+{"grader": "opus", "sheet": "sheet2",
+ "ranking": ["E08","E13","E14","E03","E02","E10","E12","E05","E01","E09","E11","E04","E06","E07"],
+ "notes": {
+  "E08": "Buck drawn textbook-style with C206 at VIN, EN wired to VIN, grounds joined; bulk caps in a separate titled box; numbered notes; compact, balanced page. Minor: GND symbol sits on box border.",
+  "E13": "Same good split (buck block + bulk block + notes), EN wired, VOS wired at inductor; A4 page leaves right half empty.",
+  "E14": "Single clean row, EN wired to VIN, VOS wired, grounds joined, good explanatory text; C206 still sits far from IC among the bulk caps.",
+  "E03": "EN wired, power symbols, joined grounds, compact page; VOS tied by 3V3 symbol instead of wire, C206 far from VIN, values left of caps.",
+  "E02": "Path-order note, short wire stubs to labels; EN fed by PACK_P label instead of wire, C206 lost among bulk caps, four separate GND symbols, lower half empty.",
+  "E10": "Pixel-identical to E02.",
+  "E12": "Pixel-identical to E02.",
+  "E05": "As E02 but labels butt directly on pins and GND symbols jammed at pin ends.",
+  "E01": "No explanatory note; EN by label, labels butt on pins, crammed GND symbols; C206 among bulk caps; empty lower half.",
+  "E09": "Pixel-identical to E01.",
+  "E11": "Pixel-identical to E01.",
+  "E04": "Same drawing as E01 on a taller A4 page: everything in top strip, ~75% of sheet empty.",
+  "E06": "Pixel-identical to E04.",
+  "E07": "Pixel-identical to E04."
+ }}

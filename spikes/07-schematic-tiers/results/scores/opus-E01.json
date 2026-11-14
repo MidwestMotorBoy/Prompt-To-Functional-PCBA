@@ -1,0 +1,10 @@
+{"entry": "E01", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "Cells": {"1":3,"2":2,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2},
+            "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":4,"7":4,"8":3},
+            "USB": {"1":3,"2":3,"3":3,"4":2,"5":2,"6":3,"7":4,"8":3}},
+ "overall": 5,
+ "best": "The power paths (3V3 buck input cap bank to inductor to output, and the USB four-switch stage with input/output banks around the H-bridge) read cleanly left to right like textbook drawings.",
+ "worst": ["Gauge (U101) area on Cells sheet has overlapping text: TH101/R113 labels collide, C105 sits on CELL_1N text, thermistors cramped against TS pins, and D101/TS NTC connectors/Q103 float alone tied only by labels.",
+           "USB sheets are oversized with tiny parts and large empty regions; BQ25756 gate resistors R444-R447 have overlapping ref/value text and long wandering wires to ACUV/ACOV/CE_N/TS.",
+           "Many support parts (USB U405/VBIAS caps, MCU pull-ups far from the module, MCU TP301) are placed away from the pins they serve, leaving pages unbalanced with empty lower halves."]}

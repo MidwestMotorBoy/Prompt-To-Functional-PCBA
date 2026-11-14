@@ -1,0 +1,18 @@
+{"grader": "fable", "sheet": "sheet5",
+ "ranking": ["E08","E13","E14","E03","E02","E12","E04","E10","E05","E06","E07","E09","E01","E11"],
+ "notes": {
+  "E08": "Boxed titled blocks, fully wired connector/PD/EEPROM, textbook four-switch stage with bootstrap and Kelvin filters in place, set-point notes, no overlaps, page well filled.",
+  "E13": "Same hand-drawn quality and wiring as E08 with notes, but denser: titles touch circuitry, a few ref/label collisions (R444/HIDRV1, P1_LDO_3V3), no block frames.",
+  "E14": "Clean wired blocks with per-block set-point notes and shunt filters drawn at the shunts; charger legible with no overlaps; connector-to-TPD CC still by label, some spread.",
+  "E03": "Power stage with sense filters on top, wired blocks and power symbols, legible charger; minor value/label overlaps at pull-ups (R441, R403, R402) and fewer notes than E14.",
+  "E02": "Connector wired to TPD6S300 and TVS, subtitles, labelled gate/program lines; but D411/C458, D410/C410, R417/R435 and R415/TH401 text collide and long stair-step wires fan from the charger.",
+  "E12": "Same as E02 but C439 and R432 float below the 5 V buck tied only by labels.",
+  "E04": "Charger block clean and overlap-free, but connector, TVS, TPD6S300, EEPROM and decoupling caps are isolated islands tied by labels; odd horizontal CC caps; empty areas.",
+  "E10": "E02-style wiring but block order scrambled (connector mid-right), extra overlaps (R425 on C409, C414 on C415, D410, D411) and floating C439/R432.",
+  "E05": "Subtitles and TVS by the connector, pull-ups at their pins, but pull-up refs/values overlap labels, C411 stuck sideways on DRV_SUP pin, floating islands and large gaps remain.",
+  "E06": "Same content as E04 on a tall portrait page: blocks strung vertically, bottom third empty, text small.",
+  "E07": "Same content as E04 on an oversized page: power stage stranded far right, huge empty right/bottom regions, everything tiny.",
+  "E09": "Label-island layout plus colliding gate-resistor refs (R445/R446/HG2) and program resistors crammed at the pins; charger pushed into top-right corner.",
+  "E01": "As E09 with overlapping R445/R446 and stacked R412-R414 chain, 9 V supply under the power stage, bottom third of the sheet empty.",
+  "E11": "As E09 with R412/R414 overlapping at the pins, R413 split off on its own, gate resistor text colliding, many label-only islands and empty lower page."
+ }}

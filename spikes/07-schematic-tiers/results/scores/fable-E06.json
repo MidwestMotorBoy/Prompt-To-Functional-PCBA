@@ -1,0 +1,53 @@
+{
+ "entry": "E06",
+ "grader": "fable",
+ "scores": {
+  "3V3": {
+   "1": 5,
+   "2": 4,
+   "3": 5,
+   "4": 5,
+   "5": 3,
+   "6": 5,
+   "7": 4,
+   "8": 5
+  },
+  "Cells": {
+   "1": 2,
+   "2": 2,
+   "3": 2,
+   "4": 2,
+   "5": 2,
+   "6": 2,
+   "7": 3,
+   "8": 2
+  },
+  "MCU": {
+   "1": 3,
+   "2": 3,
+   "3": 3,
+   "4": 3,
+   "5": 2,
+   "6": 2,
+   "7": 3,
+   "8": 3
+  },
+  "USB": {
+   "1": 3,
+   "2": 3,
+   "3": 3,
+   "4": 3,
+   "5": 3,
+   "6": 4,
+   "7": 4,
+   "8": 3
+  }
+ },
+ "overall": 5,
+ "best": "The 3V3 buck, the 5 V buck and the four-switch power stage are drawn as clean left-to-right textbook power paths with wired input/output cap banks and visible values.",
+ "worst": [
+  "Cells and Gauge is mostly label-tied islands: protection FETs, fuse, sense resistor, diode and connectors float apart with auto-generated Net-(Uxxx-pin) names, so the pack power path cannot be read as a path, and a long CELL_1N rail carries unrelated caps whose other ends are only labels.",
+  "Text overlaps and stray value/reference placement (J113/TP106 PACK_P labels, R105/R106/R117 on the gauge, C313 on the MCU RF pin, stacked pin numbers under U401) plus the MCU pi-match split into pieces, with C314 floating alone under its title.",
+  "Poor page balance: large empty areas (3V3 two-thirds empty, Cells bottom third, MCU centre, USB bottom) while text is small, and on USB the TVS, CC protector, EEPROM and decoupling bank sit detached from the pins they serve with long bundled wire runs around the charger IC."
+ ]
+}

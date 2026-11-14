@@ -1,0 +1,18 @@
+{"grader": "opus", "sheet": "sheet4",
+ "ranking": ["E13","E08","E14","E03","E02","E12","E05","E10","E11","E09","E01","E04","E07","E06"],
+ "notes": {
+  "E13": "Pull-ups drawn on the actual lines to labels at right, pi match wired to RFIO/ANT_IN, POR network at RSTN, numbered datasheet notes; fills the page",
+  "E08": "Compact, boxed blocks with titles, decoupling and pull-ups wired to pins, debug NRST wired to R302/C304; good notes; minor empty lower page",
+  "E14": "Pull-ups on their lines, pi match wired to the module, good block notes; long antenna loop wire and TP301 floats alone",
+  "E03": "Everything wired to U301 and pull-ups on lines, but the pi match is a tangled loop with C314 detached from its node",
+  "E02": "Clean textbook pi match with RF_MID and notes; pull-ups hang off 3V3 bus away from their pins (label-connected); R302 value touches C304",
+  "E12": "Pixel-identical to E02; placed second of the pair",
+  "E05": "Same as E02 with R302 text clear, but redundant 3V3 label on VDDS and labels butted to pins",
+  "E10": "Same as E02 plus redundant 3V3 label on VDDS wire and R302/C304 text overlap",
+  "E11": "Clear pi match drawing with note, but sheet mostly empty; pull-ups label-connected, debug pads isolated on right",
+  "E09": "As E11 without the pi-match note; large empty regions",
+  "E01": "Pi match readable but no notes, J302 dropped far down, large empty areas, pull-ups label-connected",
+  "E04": "Pi match broken apart with auto net labels Net-(C313-Pad2), C314 isolated in a corner, antenna title runs off sheet",
+  "E07": "Same broken pi match and off-sheet title as E04, with even more empty page",
+  "E06": "Broken pi match with Net-(C313-Pad2) labels, two section titles cut off at the border, tiny drawing on a huge mostly empty sheet"
+ }}

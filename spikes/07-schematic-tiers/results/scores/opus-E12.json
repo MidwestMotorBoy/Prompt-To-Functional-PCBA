@@ -1,0 +1,10 @@
+{"entry": "E12", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":4,"2":3,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":4,"8":3}},
+ "overall": 5,
+ "best": "Power paths like the 3V3 buck, the 5V PP5V buck and the four-switch stage read cleanly left to right in path order, with titled blocks and short explanatory notes.",
+ "worst": ["USB sheets have overlapping parts and text (D410 over C410, R415 over TH401, D411 over C458, R417/R435 text on wires) and tiny text on a huge, half-empty page",
+           "Many parts float tied only by labels (EEPROM U402, SS cap C439, R432, Q409, cell/load connector list, gauge IRQ FET), forcing net searches",
+           "Charger controller fans out long parallel wire runs to distant parts and the cells sheet leaves a large empty middle while the gauge and pack path are dense"]}

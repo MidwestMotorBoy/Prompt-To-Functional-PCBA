@@ -1,0 +1,11 @@
+{"entry": "E10", "grader": "opus",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+  "Cells": {"1":3,"2":4,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3},
+  "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":3,"7":4,"8":3},
+  "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 5,
+ "best": "The 3V3 buck and the pack-path/power-stage drawings read as clean left-to-right textbook paths (input caps, switch, inductor, output caps) with titled blocks and explanatory notes.",
+ "worst": ["USB port sheets have many text overlaps (C458/D411/DRV_SUP, R425/C409, C414/C415, R415/TH401, R417/R435 labels on bodies) and tiny text on a huge sheet",
+           "BQ25756 gate-drive/sense nets run as long wires to labels (HG1, LG1, SW1) far from the four-switch stage, so the charger must be traced by name across the sheet",
+           "Poor space use: large empty regions on 3V3, MCU and the USB middle band while parts are crammed elsewhere; MCU pins mostly connect only by labels"]}

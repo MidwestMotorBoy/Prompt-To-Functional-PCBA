@@ -1,0 +1,9 @@
+{"entry": "E11", "grader": "opus",
+ "scores": {
+  "3V3":   {"1":5,"2":4,"3":4,"4":5,"5":2,"6":4,"7":4,"8":4},
+  "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":3,"7":4,"8":3},
+  "MCU":   {"1":3,"2":3,"3":3,"4":4,"5":2,"6":4,"7":4,"8":3},
+  "USB":   {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 5,
+ "best": "The 3V3 buck and the four-switch power stage read as clean textbook left-to-right drawings, and titled blocks with short notes say what each section does.",
+ "worst": ["USB port sheets are tiny parts spread over a very large page with a big empty lower-left area, and the BQ25756 and TPS25751 connect to their support parts mostly by name-only stubs and long, wandering wires", "Text overlaps: R105/C105, TH101 against the PACK_P label, R445/R446 labels, J120/J116 labels, R111/Q102 names", "Many parts float alone tied only by labels (D101, J117/J119, TP301, Q409, R432, EN_5V1, U402 EEPROM, U405 support caps away from their pins) instead of sitting at the pin they serve"]}

@@ -1,0 +1,12 @@
+{"entry": "E09", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":3,"7":4,"8":3},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+  "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Power paths are drawn as real left-to-right wired paths (3V3 buck, 5 V buck, four-switch stage with sense resistors and cap banks in line, protection FET chain) under clear section titles.",
+ "worst": [
+  "Text collisions around the gauge IC and charger gate resistors: C105/R105 values, TH101/R113/PACK_P label, R115/R116 over the SCL label, R445/R446 over HG2, Q102 value over R111, J116/J120 captions run together.",
+  "Many parts float alone tied only by labels (D101, D401 TVS, U402 EEPROM, Q409, Q103, R432, NTC connectors, separate decoupling-cap groups) so their role must be found by net-name search.",
+  "Unbalanced page use: MCU and 3V3 sheets are more than half empty, the Cells sheet leaves the bottom third blank, while pin stubs and labels at the ICs are cramped; charger sheet has long parallel wire bundles to follow."]}

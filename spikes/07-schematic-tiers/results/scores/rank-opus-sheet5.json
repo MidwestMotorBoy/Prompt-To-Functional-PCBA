@@ -1,0 +1,17 @@
+{"grader": "opus", "sheet": "sheet5", "ranking": ["E08","E13","E14","E03","E02","E12","E10","E04","E05","E07","E06","E11","E09","E01"],
+ "notes": {
+  "E08": "Boxed blocks with descriptive titles, power stage drawn as a textbook left-to-right path with Kelvin filters at shunts, charger set-points annotated, numbered notes; dense but clean.",
+  "E13": "Wired connector->protection->PD chain, power stage textbook-like with boot diodes, good titles and notes; some crowding and text-on-wire (R444 near Q401, C401/C402 region).",
+  "E14": "Excellent annotation (set-points per resistor), power stage with Kelvin filters in line, charger readable; some empty areas and loose PD-controller wiring.",
+  "E03": "Clean compact page, power stage with sense filters drawn at the shunts, charger tidy with local wires; connector/protection and 9 V blocks a bit scattered, gate drives by label.",
+  "E02": "Connector wired to TPD6S300, charger spread with each pin's part on a wire, power stage path reads well; large empty middle-top and a couple of overlaps (TH401/R415, D410/C410).",
+  "E12": "Same as E02 but C439 and EN pull-up float alone tied by labels; same TH401/D410 overlaps.",
+  "E10": "Same block style as E02 shuffled; overlaps in charger (C414/R425, D410/C410) and 9 V supply (C458/D411), blocks placed with no flow.",
+  "E04": "Charger readable with filters left, but many parts float on labels (C401/C402, decoupling caps grouped as 'for U405'), large empty bottom.",
+  "E05": "Like E04; clean charger, but 9 V supply and Q409 isolated top-right, many label-only parts and empty space.",
+  "E07": "Same content as E06 on a wider page; power stage off on the right, big empty regions, label-tied decoupling caps.",
+  "E06": "Portrait page with everything in a long column; label-tied caps and pull-up, large empty lower area.",
+  "E11": "Charger crammed top-right with long wires, decoupling caps floating 'for U405', huge empty lower-left half.",
+  "E09": "Like E11 plus overlapping 0R gate-resistor labels at U403 (R445/R446), most of page empty.",
+  "E01": "Tiny charger squeezed in top-right with overlapping R444-R447 labels, parts floating on labels, bottom half empty; hardest to review."
+ }}

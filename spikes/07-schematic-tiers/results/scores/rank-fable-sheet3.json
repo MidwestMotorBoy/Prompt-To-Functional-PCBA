@@ -1,0 +1,18 @@
+{"grader": "fable", "sheet": "sheet3",
+ "ranking": ["E08","E03","E14","E13","E12","E02","E10","E05","E11","E09","E01","E04","E07","E06"],
+ "notes": {
+  "E08": "Boxed titled blocks, power path drawn left to right as one wired path, cell taps wired from their pads into the gauge, numbered notes, no overlaps, page well filled.",
+  "E03": "Pack+ and pack- rails drawn as real paths with the shunt in line, clean gauge and protector blocks, named ground symbols, values beside refs; FETs rotated and wire block separate.",
+  "E14": "Very clean gauge column with taps, shunt filter and NTC wires all wired to their pins, explanatory notes per block; but fuse is detached from the FET path and the load caps float on labels.",
+  "E13": "Everything wired including CHG/DSG gates and full pack path, rich notes; but cramped: ref/net text overlaps (R119-R122, R105/R106, D103), long vertical wires through the sheet, titles collide.",
+  "E12": "Clear blocks with subtitles, full pack path with fuse heater driver, Kelvin shunt drawn; R113 text sits on SRN label, C118 text overlaps, shunt and wire pads off in separate blocks.",
+  "E02": "Same drawing as E12 but the R113 ref/value sits on the TS1 wire and TS2 label, slightly worse.",
+  "E10": "Same content as E12 in a different arrangement; interrupt block top left ahead of the main circuit, R113/R119-R121 text overlaps, gauge pushed to the bottom.",
+  "E05": "Good pack path and shunt blocks, but gauge support parts are crammed against the IC with overlapping refs (D101/R105/R106, thermistors), R103/R120 detached, large empty areas.",
+  "E11": "Wired cell filters and FET path, but thermistors, R113, C105 overlap at the gauge pins, D101 floats alone on labels, vertical net labels, sparse lower right.",
+  "E09": "As E11 with more overlaps (R115/R116/SCL, J116/J120 text) and a large empty lower third.",
+  "E01": "As E09; additional text collisions at the gauge left pins and SMBus resistors, floating D101 and NTC pads, much empty space.",
+  "E04": "Label soup: Net-(...) auto names everywhere, FET stage broken into label-tied fragments, decoupling caps strung on one rail away from their pins, shunt alone.",
+  "E07": "Same fragmented label-tied drawing as E04 on a larger, emptier page; fuse and its FET float mid-sheet.",
+  "E06": "Same fragmented drawing as E04 on a tall page with about a third empty and parts scattered; hardest to review."
+ }}

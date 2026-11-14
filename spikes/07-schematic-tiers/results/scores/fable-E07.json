@@ -1,0 +1,11 @@
+{"entry": "E07", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":4,"4":5,"5":2,"6":5,"7":3,"8":4},
+  "Cells": {"1":2,"2":2,"3":2,"4":3,"5":2,"6":2,"7":3,"8":2},
+  "MCU": {"1":3,"2":3,"3":3,"4":3,"5":2,"6":2,"7":3,"8":3},
+  "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 5,
+ "best": "The 3V3 buck, the 5 V buck and the four-switch power stage read as clean left-to-right textbook power paths with input caps, switch, inductor and output caps in order.",
+ "worst": ["Cells and Gauge sheet is fragmented: protection FETs, gate dividers, fuse, Q104, D101 and connectors float as label-only islands with auto names like Net-(U101-VCC), and the gauge decoupling row is drawn with caps hanging off a CELL_1N rail and labels on the other end, so the pack path cannot be followed",
+           "Poor use of space: 3V3 and MCU sheets use only the top strip, Cells and USB sheets have large empty areas while series resistors are squeezed against IC pins with ref/value text overlapping net labels and pin numbers (R106, C313, U401 GND pins, PACK_P/TP106)",
+           "MCU antenna pi network is not drawn as a pi (C314 floats at the far right under a title clipped by the page edge, C313 text collides with its net label), and USB support parts (TVS D401, EEPROM U402, Q409, EN pull-down, decoupling groups) sit detached from the pins they serve"]}

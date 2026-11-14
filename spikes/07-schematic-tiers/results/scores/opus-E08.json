@@ -1,0 +1,10 @@
+{"entry": "E08", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":4,"4":5,"5":3,"6":5,"7":5,"8":5},
+            "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":5,"7":5,"8":4}},
+ "overall": 8,
+ "best": "The BQ25756 four-switch stage reads as a textbook left-to-right power path (input sense, input caps, half-bridge, inductor, half-bridge, output caps, RBAT sense to PACK_P), with titled blocks, setpoint annotations (16.8 V, 4.2 A, 500 kHz) and numbered notes throughout.",
+ "worst": ["Stacked GND/EP pin numbers on U401 and U405 render as an illegible overlapping red blob, plus a stray '(15)' pin marker on U401",
+           "The charge controller U403 connects to the power stage (HIDRV/LODRV/BTST/SW/SRP/SRN) only through stub net labels, so gate-drive and sense routing must be traced by name",
+           "Uneven page use: the 3V3 and MCU sheets leave the bottom third or more empty while the USB sheet is dense"]}

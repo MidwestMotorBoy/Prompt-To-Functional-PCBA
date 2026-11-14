@@ -1,0 +1,10 @@
+{"entry": "E03", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":4,"7":5,"8":5},
+            "Cells": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":3,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3}},
+ "overall": 7,
+ "best": "The pack power path on Cells and Gauge and the four-switch input stage on USB read left to right as real power paths (fuse, CHG/DSG FETs, shunt with Kelvin RC; input shunt, cap bank, half bridges, inductor), with clear section titles and explanatory notes.",
+ "worst": ["USB sheet: BQ25756 support parts (bootstrap diodes/caps, gate resistors, FB divider) hang off long orthogonal runs on the right while the power stage they drive sits at the top joined only by HG/LG/SW labels, and the middle of the sheet is largely empty with the EEPROM floating alone.",
+           "Small text collisions: I2CC_SCL/I2CC_SDA/CHG_INT labels overlap the R403/R402/R404 values, the stacked GND pin numbers under U401 and U405 are illegible, and D103's value runs into the C108 ground symbol.",
+           "BQ40Z50 cell-filter wiring uses crossing staircase runs to VC1-VC4/PBI/PACK/TS pins, and the MCU antenna pi match is drawn as a loop around rather than a textbook pi."]}

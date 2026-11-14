@@ -1,0 +1,11 @@
+{"entry": "E05", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":5,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":4,"7":4,"8":3},
+  "MCU": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB": {"1":4,"2":3,"3":3,"4":2,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Power paths (3V3 buck, 5 V buck, four-switch stage, pack fuse/back-to-back FET path) are drawn left to right as textbook circuits with titled blocks and one-line notes.",
+ "worst": ["Text collisions around the big ICs: BQ40Z50 left side (R106/FET_MID/CELL_1N, TS2/TS3 labels on thermistors, C118 value on its symbol) and TPS25751 right side (R402/R403/R404 refs over P1_LDO_3V3 labels, C405 on its label, stacked GND pin numbers)",
+           "Many small parts hang off IC pins or float tied only by labels (cell-wire connector grid, EEPROM, TVS, TPD6S300, decoupling group, EN_5V pull-down, gauge series resistors with values pushed far from the part), so nets must be chased by name",
+           "Uneven use of space: USB sheets are huge with large empty areas and tiny text while the IC neighbourhoods are cramped; long parallel dog-leg wire bundles into the BQ25756 and gauge VC pins are hard to follow"]}

@@ -1,0 +1,11 @@
+{"entry": "E10", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":3,"5":4,"6":4,"7":4,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB": {"1":4,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "Power paths (3V3 buck, 5V buck, four-switch stage, pack path with back-to-back FETs) are drawn as wired left-to-right textbook chains under titled blocks with short explanatory notes.",
+ "worst": ["Reference/value text collides with neighbouring parts in many places (USB D411/C458, R417/R435, C414/C415, R415/TH401, D410; Cells R104/C101, R119/C112, C118, R113)",
+  "USB sheet has stray label-only parts away from the pin they serve (SS_5V cap, EN_5V1 pull-down, Q409, EEPROM, gate resistors) and long staircase wire fans around the BQ25756 with large empty areas between blocks",
+  "Sparse, unbalanced page use (3V3 and MCU sheets half empty, lone test points, MCU pull-ups hung off a bus far from the pins and joined only by labels)"]}

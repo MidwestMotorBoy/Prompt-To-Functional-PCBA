@@ -1,0 +1,11 @@
+{"entry": "E08", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":5,"3":5,"4":5,"5":4,"6":5,"7":5,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":3,"7":5,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+  "USB": {"1":4,"2":4,"3":4,"4":3,"5":4,"6":4,"7":5,"8":4}},
+ "overall": 8,
+ "best": "Every sheet is split into titled functional blocks with left-to-right power paths (pack path, four-switch stage with sense filters, bucks with dividers) drawn as wires, set-point annotations and numbered design notes, so most checks against the datasheets need no net searching.",
+ "worst": ["Stacked ground/thermal-pad pin numbers pile into unreadable smears under the TPD6S300 and TPS25751, and a few texts collide (J113 'LOAD PACK_P' on the block border and PACK_P label, CHG_INH label over the J302 pin name, tight pin numbers next to MCU labels)",
+  "The power FETs are box symbols (SiZ240DT halves, BSC007N04LS6 with G/D/S boxes) so the four-switch bridge and back-to-back protection FETs do not read as the textbook transistor drawings, and gate drive/bootstrap/sense nets between the bridge and the BQ25756 are joined only by labels",
+  "Uneven use of space: the MCU and 3V3 sheets and the lower part of the Cells sheet leave large empty areas, the NTC wire block is four label-only connectors, and TP412 floats alone outside any block"]}

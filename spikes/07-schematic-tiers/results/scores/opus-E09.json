@@ -1,0 +1,10 @@
+{"entry": "E09", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":5,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":4,"7":4,"8":3},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":4,"8":2}},
+ "overall": 5,
+ "best": "Blocks carry clear descriptive titles and the simple circuits (3V3 buck, antenna pi match, back-to-back protection FETs, four-switch stage) are drawn as recognisable textbook paths with values visible.",
+ "worst": ["Overlapping reference/value text at the gauge and charger ICs (R105/C105, TH101, R116 over SCL label, R445/R446 near BQ25756) hurts legibility",
+           "Charger controller is wired to its support parts by long right-angle wires that wander around the IC, while the power stage and gate drive are tied only by labels, so the buck-boost does not read as one circuit",
+           "Poor use of space: dense tiny clusters at the top of each sheet with large empty regions below, and stray parts (Q409, R432, TP412, connector pins) floating alone tied only by labels"]}

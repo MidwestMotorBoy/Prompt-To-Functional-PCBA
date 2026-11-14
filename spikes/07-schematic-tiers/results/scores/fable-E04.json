@@ -1,0 +1,12 @@
+{"entry": "E04", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":4,"5":2,"6":5,"7":3,"8":4},
+  "Cells": {"1":2,"2":2,"3":2,"4":2,"5":3,"6":2,"7":3,"8":2},
+  "MCU": {"1":3,"2":3,"3":3,"4":3,"5":2,"6":2,"7":3,"8":3},
+  "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 5,
+ "best": "The 3V3 buck and the USB four-switch power stage, 5 V buck and BQ25756 dividers/sense filters are wired left to right and read like textbook circuits with titled blocks.",
+ "worst": [
+  "Cells and Gauge is largely label-tied fragments: sense resistor, back-to-back protection FETs, fuse, ignition FET, D101, pack caps and connectors float alone, with auto-named Net-(U101-xx) labels and gauge decoupling caps hung on a CELL_1N rail far from their pins, so the pack path cannot be followed without net search.",
+  "Text collisions: resistor ref/value text overlapping net labels around U101 (R105/R106/R117, C106), PACK_P label over J113's value, C313 text over its net label, stacked ground pin numbers on U401/U405, and the MCU antenna-match title running off the page.",
+  "Poor use of space and split sub-circuits: 3V3 uses only the top strip, MCU is mostly empty with the antenna pi network split (C314 stranded top right), pull-ups parked on a rail away from their pins, and USB TVS, EEPROM, Q409 and decoupling caps floating apart from what they serve."]}

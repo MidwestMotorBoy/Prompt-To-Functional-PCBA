@@ -1,0 +1,10 @@
+{"entry": "E06", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":1,"6":3,"7":3,"8":4},
+            "Cells": {"1":2,"2":2,"3":1,"4":2,"5":2,"6":1,"7":2,"8":1},
+            "MCU": {"1":3,"2":2,"3":2,"4":2,"5":2,"6":2,"7":3,"8":2},
+            "USB": {"1":3,"2":3,"3":2,"4":3,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 4,
+ "best": "The 3V3 buck and the USB four-switch power stage read as clean left-to-right power paths: input caps, switch/IC, inductor, output caps.",
+ "worst": ["Cells and Gauge sheet is fragmented: back-to-back protection FETs, the CHG/DSG gate resistors, fuse, Q104 and current-sense shunt are scattered islands tied only by labels, so the protection path and sense circuit are not recognisable",
+           "Auto-generated net names (Net-(U101-VC3), Net-(C313-Pad2), Net-(Q104-G)...) are used as labels everywhere, with the gauge cell-filter wiring crossing over itself to reach mis-ordered VC pins",
+           "Poor use of space and long wandering wires: 3V3 sheet crammed into the top strip, MCU antenna pi network split across the sheet (C314 far from C313/C315, value text on a wire), and charger nets (FB, FBG, CE_N, ACUV/ACOV) running long distances across the USB sheets"]}

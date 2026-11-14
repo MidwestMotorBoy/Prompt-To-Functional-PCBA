@@ -1,0 +1,10 @@
+{"entry": "E14", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":5,"5":3,"6":4,"7":5,"8":5},
+            "Cells": {"1":3,"2":3,"3":3,"4":4,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "The four-switch power stage and the 3V3 buck read as clean textbook left-to-right power paths with in-line shunts, Kelvin filters and well-annotated block titles and notes.",
+ "worst": ["The BQ40Z50 gauge and BQ25756 charger are fed by long parallel wire fans and bare net-name stubs, so pin-to-part tracing takes effort",
+           "Uneven density: large empty areas (3V3 lower half, Cells centre, MCU right) beside cramped USB/PD clusters",
+           "Small text collisions such as the stacked GND pin numbers under U401/U405 and many bare stub net names (CC1, CELL_1N) instead of wires or flags"]}

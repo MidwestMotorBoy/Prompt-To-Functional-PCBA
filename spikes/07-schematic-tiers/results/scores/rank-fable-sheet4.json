@@ -1,0 +1,36 @@
+{
+ "grader": "fable",
+ "sheet": "sheet4",
+ "ranking": [
+  "E13",
+  "E08",
+  "E14",
+  "E03",
+  "E05",
+  "E02",
+  "E12",
+  "E10",
+  "E11",
+  "E09",
+  "E01",
+  "E06",
+  "E04",
+  "E07"
+ ],
+ "notes": {
+  "E13": "Everything wired to the module: reset RC, pull-ups at their pins, pi match in order, long wires to labelled outputs, numbered design notes; slightly sprawling, one cap value overlap",
+  "E08": "Compact boxed blocks, pull-ups and pi match wired at pins, notes; cap value texts collide and reset RC sits in the debug box, lower page empty",
+  "E14": "Fully wired with shared pull-up rail and notes; pull-up drops cross signal lines, antenna wire detours left, duplicate 3V3 labels, lone test point",
+  "E03": "Wired decoupling, reset and pull-ups at pins; antenna match is tangled with a loop-back wire, not a recognisable pi",
+  "E05": "Label-based: pull-ups hang off a 3V3 bus far from pins, but pi match is a clean separate drawing with notes, no text overlap, compact page",
+  "E02": "Same as E05 layout but R302 ref/value overlaps C304; no redundant 3V3 label at VDDS",
+  "E12": "Pixel-identical to E02 (R302 text overlaps C304); placed after it only because ties are not allowed",
+  "E10": "As E02 with R302/C304 overlap plus a redundant 3V3 label sitting on the VDDS wire",
+  "E11": "Label-based, clean text and pi drawn with a note, but wide page mostly empty and blocks pushed to the top",
+  "E09": "As E11 without the pi note; over half the page empty",
+  "E01": "Label-based, no notes, connectors stacked in a tall mostly empty page",
+  "E06": "Pi match split in three places with auto net name Net-(C313-Pad2), C313 text overlapping, title cut off at page edge, very wide empty sheet",
+  "E04": "Pi match split with auto net names, C314 alone in the far corner under a cut-off title, C313 label collides with a net name, large empty page",
+  "E07": "Same faults as E04 on an even taller, emptier page"
+ }
+}

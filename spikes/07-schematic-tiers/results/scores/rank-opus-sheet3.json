@@ -1,0 +1,18 @@
+{"grader": "opus", "sheet": "sheet3",
+ "ranking": ["E08","E03","E14","E02","E12","E10","E13","E05","E11","E09","E01","E04","E07","E06"],
+ "notes": {
+  "E08": "Boxed blocks with descriptive titles and notes; pack path reads fuse->CHG->DSG->PACK_P left to right; cell-tap wires drawn straight into the RC filters; IRQ FET wired at BTP_INT.",
+  "E03": "Textbook pack path with RS101 in line on the return and Kelvin filter above it; gauge filters wired; clean, a little dense around D101/C105.",
+  "E14": "Well annotated; sense wires and NTCs wired into the gauge; protector->Q104 drawn as a chain; fuse F102 sits apart with a Net-(F102-HTR) label.",
+  "E02": "Clean blocks with subtitles; gauge inputs wired through filters; connectors grouped in a list away from the nets they serve.",
+  "E12": "Same as E02 except the R113 label sits on the SRN pin label.",
+  "E10": "Same content as E02 rearranged; readable, but the gauge is pushed to the lower left with empty space around it.",
+  "E13": "Fully wired with extensive notes, but cramped: the gauge area has overlapping refdes text and ground stubs, and a large note column squeezes the drawing.",
+  "E05": "Good pack path and current sense, but the gauge cluster is cramped with overlapping labels and a large empty area on the left.",
+  "E11": "Reasonable FET path and protector; gauge TS/PACK area has overlapping thermistor/R113 text; D101 and connectors float tied only by labels.",
+  "E09": "Similar to E11 but more cramped; text collisions at the gauge TS pins and Q102/R111.",
+  "E01": "Gauge cluttered with overlapping R113/TH101 text; D101 and connectors float; a long empty middle region.",
+  "E04": "Caps strung along a CELL_1N bus away from their pins; many auto Net-(...) labels; FETs and fuse split into label-tied fragments.",
+  "E07": "Same fragmented layout as E04 (Net-(...) labels, FETs separated from their gate parts), smaller and sparser.",
+  "E06": "Same fragmented layout as E04 on a tall sheet with large empty regions; pack path not recognisable."
+ }}

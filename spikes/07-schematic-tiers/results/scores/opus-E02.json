@@ -1,0 +1,10 @@
+{"entry": "E02", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":3,"2":3,"3":2,"4":3,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":3,"2":3,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 5,
+ "best": "Power paths (3V3 buck, four-switch stage, 5 V buck, pack protection FETs) read left to right in path order under clear titled sections with explanatory notes.",
+ "worst": ["USB sheet has overlapping parts/text (D410 on C410, R415 on TH401, D411 on C458 value, R417/R435 refs inside bodies) and long wandering FB/FBG/REGN/DRV_SUP runs across the charger block",
+           "Large empty regions (3V3 sheet mostly blank, USB sheet empty middle band, EEPROM floating alone) while other areas are dense",
+           "Many parts tied only by labels (Cells connector column, BQ40Z50 SRP/SRN/TS, PD controller GPIOs) so nets must be traced by name"]}

@@ -1,0 +1,12 @@
+{"entry": "E02", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":4,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":3,"5":3,"6":4,"7":4,"8":4},
+  "MCU": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB": {"1":4,"2":3,"3":3,"4":2,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "Power paths are drawn as real left-to-right paths with titled blocks and short notes: the 3V3 buck, the 5 V buck, the four-switch stage with its shunts and cap banks, and the pack fuse/back-to-back FET path all read like textbook drawings.",
+ "worst": [
+  "USB sheets have several parts drawn on top of each other so refs/values are unreadable: D410 over C410, D411 over C458, R415 over TH401, C417 over C418, R403 over C404, R417/R435 text on their own bodies (also C118 and R113 on the Cells sheet).",
+  "Sparse, unbalanced pages with stranded parts: EEPROM U402, Q409 (V9_EN switch), Q103, TP412 and the CE_N divider sit alone far from what they serve, tied only by labels, with large empty regions around them.",
+  "Charger and gauge pins fan out through long staircase wires that end in a label (gate drives, FB/FBG, ACUV/ACOV, VC1-4), so checking against the datasheet still means hopping by net name to the power stage and sense blocks."]}

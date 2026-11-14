@@ -1,0 +1,10 @@
+{"entry": "E13", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":4,"4":5,"5":2,"6":4,"7":5,"8":4},
+            "Cells": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":4,"8":4}},
+ "overall": 7,
+ "best": "The USB four-switch buck-boost stage and 3V3 buck read as textbook left-to-right power paths (sense resistor, input caps, bridge, inductor, output bridge, RBAT) with clear block titles and useful notes.",
+ "worst": ["Cells and Gauge: BQ40Z50 inputs arrive via long parallel wire bundles and dangling stub wires (TS2/TS3, ground stubs), with the gauge cluster cramped while the left PACK WIRES area and right notes column leave the sheet unbalanced",
+           "USB sheets: small overlaps and pile-ups (R444/R445 ref text on wires, stacked GND pin numbers under U401/U405, '(15)' pin text collision, PD controller I2C nets routed as long multi-wire detours)",
+           "3V3 sheet uses only the top-left third of the page, and bulk caps sit as a separate row tied only by a PACK_P power symbol"]}

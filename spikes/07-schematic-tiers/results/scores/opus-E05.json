@@ -1,0 +1,11 @@
+{"entry": "E05", "grader": "opus",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+  "Cells": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":4,"7":4,"8":3},
+  "MCU": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":3,"7":4,"8":4},
+  "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 6,
+ "best": "The pack protection path (fuse, back-to-back CHG/DSG FETs with gate resistors, zener and ESD caps) and the four-switch power stage read left to right like textbook drawings, with clear section titles and notes.",
+ "worst": ["USB sheet is huge with tiny text, mostly label-connected support parts and unbalanced empty regions, so the PD controller and charger require net-name tracing",
+           "Text collisions: J113/TP106 PACK_P labels overlap, R106/C105/FET_MID crowd the gauge VCC pins, C118 ref sits on its symbol, TS2/TS3 and stacked GND pin numbers overlap on U401/U405",
+           "Many parts float tied only by labels (cell/wire connectors grid, U405 CC caps, U402 EEPROM, decoupling groups 'for U401...' far from their pins), and the 3V3 sheet leaves most of the page empty"]}

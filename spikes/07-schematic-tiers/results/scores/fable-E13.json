@@ -1,0 +1,12 @@
+{"entry": "E13", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":5,"3":5,"4":5,"5":3,"6":5,"7":5,"8":5},
+  "Cells": {"1":4,"2":4,"3":3,"4":3,"5":3,"6":4,"7":5,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":3,"7":5,"8":4},
+  "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":5,"8":4}},
+ "overall": 7,
+ "best": "Every sheet is split into titled functional blocks with a clear left-to-right power path (3V3 buck, pack fuse-FET path, four-switch stage with sense filters above the shunts) and thorough numbered notes.",
+ "worst": [
+  "Reference/value text collides with net labels and neighbouring parts in many places (CELL_4P/R119, FET_MID/R106, PACK_P/R113, RS101/TP109, R444, GAUGE_FUSE on pin 25, adjacent bulk-cap values, stacked GND pin numbers on U401/U405).",
+  "Gauge and charger IC inputs are reached by dense staircase wire bundles with floating ground symbols and bare TS2/TS3 stubs, and long CHG/DSG gate wires run across the Cells sheet.",
+  "Uneven use of space: 3V3 sheet uses under half the page, Cells sheet has a sparse left-bottom and a cramped gauge input cluster; switch FETs are drawn as split boxes and the antenna match is not a textbook pi."]}

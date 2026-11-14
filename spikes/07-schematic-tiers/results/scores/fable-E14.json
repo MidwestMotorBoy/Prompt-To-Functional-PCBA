@@ -1,0 +1,11 @@
+{"entry": "E14", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":5,"8":5},
+  "Cells": {"1":4,"2":4,"3":3,"4":4,"5":4,"6":3,"7":4,"8":4},
+  "MCU": {"1":3,"2":4,"3":4,"4":4,"5":4,"6":3,"7":4,"8":4},
+  "USB": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4}},
+ "overall": 8,
+ "best": "Every block is titled with a short functional note and drawn as a clean left-to-right wired circuit (four-switch stage with shunts, filters, half bridges and inductor in path order; bucks; cell-tap RC ladder), with almost no text overlap.",
+ "worst": ["Gauge sheet routes about fifteen long parallel staircase wires into U101 that must be traced one by one, and the fuse F102 / heater FET Q104 are split apart and joined only by an auto-named label Net-(F102-HTR)",
+           "Power FETs (Q101/Q102, Q401/Q402 half bridges) are drawn as pin boxes rather than MOSFET symbols, and the MCU antenna pi match wraps backwards right-to-left under the module so it does not read as a pi network",
+           "Minor clutter and balance: stacked overlapping pin numbers at U401/U405 ground pads, pin-number/label collisions at IC edges, floating test points, and the 3V3 sheet leaves its lower half empty"]}

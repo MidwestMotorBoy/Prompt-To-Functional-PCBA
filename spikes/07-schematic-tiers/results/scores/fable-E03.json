@@ -1,0 +1,12 @@
+{"entry": "E03", "grader": "fable",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":4,"4":4,"5":4,"6":4,"7":4,"8":4},
+  "Cells": {"1":4,"2":4,"3":4,"4":3,"5":4,"6":4,"7":4,"8":4},
+  "MCU": {"1":4,"2":4,"3":3,"4":3,"5":3,"6":3,"7":4,"8":4},
+  "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "Power paths read as real left-to-right paths under titled blocks: the pack path (fuse, back-to-back FETs, shunt on the return) and the USB four-switch stage (input shunt, caps, half bridge, inductor, half bridge, caps, battery shunt) look like textbook drawings with helpful notes.",
+ "worst": [
+  "Net labels and values overprint each other in many places (R441/R403/R404 values under SBU_FLT/I2CC_SCL/CHG_INT, R126 on GAUGE_FUSE, R124 on Q104_G, D103 value on a ground symbol, 0R gate resistors touching HG/LG labels, stacked pin numbers on U401/U405 ground pins, SWDIO/CC1 labels on pin numbers).",
+  "USB charger controller is tied to its power stage only by labels and its right side is a bundle of long parallel doglegged wires (bootstrap, gate resistors, FB divider, REGN/DRV_SUP) that must be traced carefully; PD controller pull-ups and rail caps hang on long stepped wires.",
+  "MCU antenna pi match is drawn as a wire loop around the caps rather than a recognisable pi, a test point floats alone, and the MCU sheet leaves about half the page empty."]}
