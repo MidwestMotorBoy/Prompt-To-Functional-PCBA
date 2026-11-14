@@ -1,0 +1,33 @@
+(version 1)
+
+# JLC multilayer: component-hole annular ring >= 0.254 mm on 2 oz outer copper. Holes under 0.5 mm are vias
+# (including the thermal vias inside exposed pads) and follow the via rules. The Shou Han USB-C shell slots
+# (0.5 x 1.0 drill in 0.9 x 1.4 pads) follow the maker's layout instead.
+(rule "PTH annular ring (2 oz)"
+	(constraint annular_width (min 0.25mm))
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'Through-hole' && A.Hole_Size_X >= 0.5mm && !A.memberOfFootprint('J401') && !A.memberOfFootprint('J501')"))
+
+# 0.25 mm copper-to-edge margin everywhere except the USB-C signal pads, which sit 0.2 mm (JLC's minimum)
+# behind their notch.
+(rule "Edge margin"
+	(constraint edge_clearance (min 0.25mm))
+	(condition "!A.memberOfFootprint('J401') && !A.memberOfFootprint('J501')"))
+
+# JLC: non-plated holes >= 0.5 mm.
+(rule "NPTH minimum"
+	(constraint hole_size (min 0.5mm))
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'NPTH, mechanical'"))
+
+# Keep high-current tracks and pours a little further from small-signal copper (pads keep their footprints'
+# own spacing; 22 V max, so JLC's 0.15 mm is enough electrically). "Small signals" = nets in no other class (Default):
+# KiCad 10 flags a rule that names 'Default' as an undefined netclass, so it is written as the complement.
+(rule "HighCurrent copper to small signals"
+	(constraint clearance (min 0.25mm))
+	(condition "A.hasNetclass('HighCurrent') && !B.hasNetclass('HighCurrent') && !B.hasNetclass('Power') && !B.hasNetclass('GND') && !B.hasNetclass('GateDrive') && !B.hasNetclass('Kelvin') && A.Type != 'Pad' && B.Type != 'Pad'"))
+
+# JLC hole-to-hole: 0.2 mm between via holes (board setup minimum) and 0.45 mm where either hole is a pad
+# hole of 0.5 mm or more (PTH/NPTH: wire holes, pegs, Tag-Connect guides, USB-C shell). Via-sized pad holes, such as
+# thermal vias in exposed pads, follow the via rule.
+(rule "Pad hole spacing"
+	(constraint hole_to_hole (min 0.45mm))
+	(condition "(A.Type == 'Pad' && A.Hole_Size_X >= 0.5mm) || (B.Type == 'Pad' && B.Hole_Size_X >= 0.5mm)"))
