@@ -1,0 +1,13 @@
+[
+ {"note": "P-f, Port 1 9 V gate-drive supply (TPS7A4101 LDO from PACK_P, OUT diode-ORed into DRV_SUP through D411; Q409 turns it off from U401's DRV9_OFF). Bottom side, PLAN section 6 first choice: area 111.5..121.1 x 70.2..86.3 under the 5 V buck (no QFN thermal field or through-hole pad there). D410 and D411 stay on top at the charger (02-charger.json). U406 turn 0 with IN (pad 8) and OUT (pad 1) on the east column, C457 at IN, C458 at OUT, the FB divider at pad 2, Q409 at EN (pad 5)."},
+ {"twin_check": false, "dx": 0, "dy": 0},
+ {"side": ["U406", "Q409", "C457", "C458", "R452", "R453", "R454", "R455"], "to": "B"},
+ {"at_pin": "U406", "pads": {"1": "C411.1"}, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.1},
+ {"at_pin": "C457", "pads": {"1": "U406.8"}, "max_mm": 2.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "C458", "pads": {"1": "U406.1"}, "max_mm": 4.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "R452", "pads": {"2": "U406.2", "1": "U406.1"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "R453", "pads": {"1": "U406.2"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "Q409", "pads": {"3": "U406.5"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "R454", "pads": {"1": "U406.5"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
+ {"at_pin": "R455", "pads": {"2": "Q409.1"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05}
+]

@@ -1,0 +1,193 @@
+[
+ {
+  "note": "P-e, Port 1 5 V buck (TPS62933) in the east column, top-right corner. The 9 V supply goes to the bottom (06-9v.json), so the top from x 109.7 to the board edge is free above the stage. L402 lies horizontal between J111 and TP109 (y 71.0..76.8), turned 180: pad 1 (SW_5V) west under U404, pad 2 (PP5V) east over the output capacitors. U404 turn 90 sits above L402's SW pad: VIN/GND column west, SW/BST/SS/FB column east. C446 (first hot-loop capacitor) in the 1 mm gap between J111 and U404, across VIN (pad 3) and GND (pad 4), C444 north of U404 with its PACK_P pad toward VIN. Output capacitors C441..C443 stacked under L402's PP5V pad (the 9 V box is empty on top). PP5V reaches U401 pad 34 on an inner layer (the planner's bus): a via spot next to pad 34 is reserved in 04-pd.json."
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "put": "L402",
+  "at": [
+   117.78,
+   73.9
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "U404",
+  "at": [
+   117.25,
+   68.9
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "C446",
+  "at": [
+   115.35,
+   69.2
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "first HL_5V capacitor, put: the only 1 mm gap at VIN/GND (pads 3, 4) is between J111 and U404; PACK_P pad north at pad 3, GND pad south at pad 4"
+ },
+ {
+  "hot": "C444",
+  "switch": "U404",
+  "supply": [
+   "3"
+  ],
+  "ret": [
+   "1",
+   "4"
+  ],
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   113.07,
+   64.2,
+   121.1,
+   67.54
+  ],
+  "step": 0.05,
+  "turns": [
+   180
+  ]
+ },
+ {
+  "at_pin": "C440",
+  "pads": {
+   "1": "U404.6",
+   "2": "U404.5"
+  },
+  "max_mm": 1.5,
+  "within": [
+   118.59,
+   67.5,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C439",
+  "pads": {
+   "1": "U404.7"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R434",
+  "pads": {
+   "1": "U404.8"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R433",
+  "pads": {
+   "2": "R434.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R432",
+  "pads": {
+   "1": "U404.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   113.07,
+   64.2,
+   117.6,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "output capacitors stacked under L402's PP5V pad, PP5V pad east (toward L402 pad 2)"
+ },
+ {
+  "at_pin": "C441",
+  "pads": {
+   "1": "L402.2"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   115.52,
+   76.82,
+   121.1,
+   85.8
+  ],
+  "turns": [
+   0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C442",
+  "pads": {
+   "1": "C441.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   115.52,
+   76.82,
+   121.1,
+   85.8
+  ],
+  "turns": [
+   0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C443",
+  "pads": {
+   "1": "C442.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   115.52,
+   76.82,
+   121.1,
+   85.8
+  ],
+  "turns": [
+   0
+  ],
+  "step": 0.05
+ }
+]

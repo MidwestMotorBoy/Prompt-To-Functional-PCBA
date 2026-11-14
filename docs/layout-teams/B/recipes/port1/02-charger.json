@@ -1,0 +1,471 @@
+[
+ {
+  "note": "P-b, Port 1 charger U403 (BQ25756) and its programming parts, plus the stage's gate resistors and bootstrap parts (they sit between the FETs and U403, so U403 goes first). U403 turn 0: gate-drive row (pads 19-28) north toward the FETs, ACP/ACN and VAC (29-36) west, SRP/SRN and FB (11-14) east toward R427, the I2C/CE/TS row (1-10) south. U403 sits as high as the gate-resistor row and one row of radial capacitors allow (pad row 0.3 mm under them), so its south-row parts stay inside the port 1 region (y 113.2). Parts go by zone: NW corner (BTST1 parts, D410), north band (C410 at REGN), NE corner (BTST2 parts, C411, D411), west (VAC, ACP/ACN filter, input window, FSW), east (SRP/SRN filter), south and SE (FB divider, ICHG, ILIM, TS, CE_N). twin_check: every spot also legal shifted to Port 2."
+ },
+ {
+  "twin_check": true,
+  "dx": -23.02577,
+  "dy": 0.006368
+ },
+ {
+  "put": "U403",
+  "at": [
+   111.4,
+   108.0
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "ring": "U403",
+  "mm": 0.8
+ },
+ {
+  "note": "gate resistors in one row under the FETs (y 101.83..102.87), each with its gate-side pad under the gate pad it serves (R444 at Q401 pad 1, R445 at pad 8, R446 at Q402 pad 1, R447 at pad 8); put explicitly, the placer stacked them vertically into the U403 band"
+ },
+ {
+  "put": "R445",
+  "at": [
+   108.2,
+   102.33
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "R444",
+  "at": [
+   110.7,
+   102.33
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "R447",
+  "at": [
+   112.9,
+   102.33
+  ],
+  "turn": 270,
+  "side": "F"
+ },
+ {
+  "put": "R446",
+  "at": [
+   115.2,
+   102.33
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "note": "north band between the gate-resistor row and U403's gate-drive row (y 102.86..104.94): C412 at BTST1/SW1 (pad 26/28), C411 (DRV_SUP, 4.7 uF) lying across with its pad 1 on pad 23, C413 at BTST2 (pad 20) just east of the row; C410 (REGN, 4.7 uF, 4 mm limit) and the diodes go to the NW and NE corners. Put explicitly: the placer left the band empty and stranded the diodes."
+ },
+ {
+  "put": "C412",
+  "at": [
+   109.4,
+   103.85
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "C411",
+  "at": [
+   112.72,
+   103.89
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "C413",
+  "at": [
+   115.0,
+   103.88
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "note": "NW corner: C410 (REGN, 4.7 uF, 4 mm limit) and D404 (BTST1 from DRV_SUP) in one row under the gate resistors; D410 (REGN to DRV_SUP) goes to the strip west of the stage's input column"
+ },
+ {
+  "put": "C410",
+  "at": [
+   107.3,
+   103.5
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "D404",
+  "at": [
+   104.9,
+   103.7
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "at_pin": "D405",
+  "pads": {
+   "1": "C413.1",
+   "2": "C411.1"
+  },
+  "within": [
+   115.4,
+   102.86,
+   118.7,
+   105.15
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "west side, put explicitly (the greedy order stranded R411 and left C409, C415 over 2 mm): C414 across ACN 29 / ACP 30 at the 0.8 mm ring (it is not radial), C409 at VAC 32/33 radial at 0.3 mm, C415/C416 beside C414; the 10 R Kelvin filter resistors R425/R426 west of the stage's input column, on the way of R424's Kelvin pair (no room at the chip); the input window divider R409/R410/R411 at ACUV 34 / ACOV 35 and R412 at FSW 36 below."
+ },
+ {
+  "note": "west side, put explicitly (the greedy order stranded R411 and left C409, C415 over 2 mm): one radial column at the pad row (courtyards 0.02 mm from U403's): C416 at ACN 29, C414 across to ACP 30, C415 at ACP 30, C409 at VAC 32/33; the 10 R Kelvin filter R425/R426 west of the column, where R424's pair arrives; the input window divider R409/R410/R411 at ACUV 34 / ACOV 35 and R412 at FSW 36 in the SW corner below."
+ },
+ {
+  "put": "C416",
+  "at": [
+   106.88,
+   105.455
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "C414",
+  "at": [
+   106.88,
+   106.485
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C415",
+  "at": [
+   106.88,
+   107.515
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "C409",
+  "at": [
+   106.31,
+   108.84
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "at_pin": "R426",
+  "pads": {
+   "2": "C416.1"
+  },
+  "within": [
+   103.5,
+   104.4,
+   105.9,
+   109.6
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R425",
+  "pads": {
+   "2": "C415.1"
+  },
+  "within": [
+   103.5,
+   104.4,
+   105.9,
+   109.6
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R410",
+  "pads": {
+   "1": "U403.34",
+   "2": "U403.35"
+  },
+  "within": [
+   103.5,
+   109.6,
+   108.25,
+   113.2
+  ],
+  "step": 0.05,
+  "turns": [
+   90,
+   270
+  ]
+ },
+ {
+  "at_pin": "R409",
+  "pads": {
+   "2": "R410.1"
+  },
+  "within": [
+   103.5,
+   109.6,
+   108.25,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R411",
+  "pads": {
+   "1": "R410.2"
+  },
+  "within": [
+   103.5,
+   109.6,
+   108.25,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R412",
+  "pads": {
+   "1": "U403.36"
+  },
+  "within": [
+   103.5,
+   109.6,
+   108.25,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "east side: the SRP/SRN serves capacitors at pads 13/14, then the 10 R Kelvin filter R428/R429 between them and R427's inner pad edges"
+ },
+ {
+  "put": "C417",
+  "at": [
+   115.47,
+   108.5
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "at_pin": "R428",
+  "pads": {
+   "2": "C417.1",
+   "1": "R427.1"
+  },
+  "within": [
+   114.96,
+   102.86,
+   118.72,
+   107.32
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R429",
+  "pads": {
+   "2": "C417.2",
+   "1": "R427.2"
+  },
+  "within": [
+   114.96,
+   102.86,
+   118.72,
+   111.5
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C418",
+  "pads": {
+   "1": "U403.14"
+  },
+  "within": [
+   114.96,
+   105.2,
+   118.72,
+   111.5
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C419",
+  "pads": {
+   "1": "U403.13"
+  },
+  "within": [
+   114.96,
+   105.2,
+   118.72,
+   111.5
+  ],
+  "step": 0.05
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "note": "D411 (9 V supply to DRV_SUP) belongs to P-f, so it has no Port 2 twin; with the charger's corners full it goes where it fits nearest C411"
+ },
+ {
+  "at_pin": "D410",
+  "pads": {
+   "1": "C411.1",
+   "2": "C410.1"
+  },
+  "within": [
+   102.0,
+   95.0,
+   103.82,
+   102.8
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "D411",
+  "pads": {
+   "1": "C411.1"
+  },
+  "within": [
+   100.4,
+   95.0,
+   118.7,
+   107.32
+  ],
+  "step": 0.05
+ },
+ {
+  "twin_check": true,
+  "dx": -23.02577,
+  "dy": 0.006368
+ },
+ {
+  "at_pin": "R419",
+  "pads": {
+   "1": "U403.12",
+   "2": "U403.11"
+  },
+  "within": [
+   114.4,
+   110.4,
+   121.2,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R418",
+  "pads": {
+   "2": "R419.1"
+  },
+  "within": [
+   114.4,
+   110.4,
+   121.2,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "south row: ICHG 9, ILIM 10, TS 8 (R415 from REGN), CE_N 7 (R417 to 3V3, R435 to CHG_INH which leaves south for the MCU); pads 1-3 (I2C, CHG_INT) keep their way south"
+ },
+ {
+  "at_pin": "R413",
+  "pads": {
+   "1": "U403.9"
+  },
+  "within": [
+   114.4,
+   110.4,
+   121.2,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R414",
+  "pads": {
+   "1": "U403.10"
+  },
+  "within": [
+   114.4,
+   110.4,
+   121.2,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R416",
+  "pads": {
+   "1": "U403.8"
+  },
+  "within": [
+   108.2,
+   111.3,
+   114.6,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R415",
+  "pads": {
+   "2": "U403.8"
+  },
+  "within": [
+   108.2,
+   111.3,
+   114.6,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R417",
+  "pads": {
+   "1": "U403.7"
+  },
+  "within": [
+   108.2,
+   111.3,
+   114.6,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R435",
+  "pads": {
+   "2": "U403.7"
+  },
+  "within": [
+   108.2,
+   110.6,
+   121.2,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ }
+]
