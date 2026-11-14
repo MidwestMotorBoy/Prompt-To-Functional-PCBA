@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/rebuild-v5.kicad_pcb",
+ "sha": "be91c270eb13cd63c139d32522f8fc43143d590a",
+ "routed": 375,
+ "failed": 61,
+ "edges": 436,
+ "minutes": 80.7,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 2/HG2",
+  "FAILKEY /USB Port 2/LG1",
+  "FAILKEY /USB Port 1/LG1",
+  "FAILKEY /P1_LDO_3V3",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
