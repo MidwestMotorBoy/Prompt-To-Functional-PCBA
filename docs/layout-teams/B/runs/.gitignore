@@ -1,0 +1,10 @@
+# scorecard run folders: keep the numbers and pictures, not the board files
+*
+!*/
+!.gitignore
+!**/score.json
+!**/F.png
+!**/B.png
+!**/ghost.log
+!**/hot.json
+!**/dc.json

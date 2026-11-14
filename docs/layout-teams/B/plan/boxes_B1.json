@@ -1,0 +1,267 @@
+{
+ "summary": {
+  "name": "B1: r2d amended for the cup-fixed parts",
+  "from": "tools/floorplan/example/monolith/floorplan_r2d.json"
+ },
+ "blocks": {
+  "USB Port 1 / USB-C connector and port protection | F.Cu": [
+   100.2,
+   69.9,
+   113.0,
+   75.3
+  ],
+  "USB Port 1 / USB PD controller TPS25751D, EEPROM and I2C pull-ups | F.Cu": [
+   101.4,
+   75.3,
+   109.7,
+   87.6
+  ],
+  "USB Port 1 / 9 V gate-drive supply, diode-ORed with REGN | F.Cu": [
+   109.7,
+   79.7,
+   115.2,
+   88.0
+  ],
+  "USB Port 1 / 5 V buck for PP5V (TPS62933) | F.Cu": [
+   115.2,
+   66.4,
+   121.1,
+   85.8
+  ],
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": [
+   100.2,
+   88.0,
+   121.1,
+   102.8
+  ],
+  "USB Port 1 / BQ25756 buck-boost charger: controller and current sense | F.Cu": [
+   103.5,
+   102.8,
+   117.3,
+   113.6
+  ],
+  "USB Port 1 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": [
+   103.5,
+   102.8,
+   117.3,
+   113.6
+  ],
+  "USB Port 2 / USB-C connector and port protection | F.Cu": [
+   87.0,
+   69.9,
+   99.8,
+   75.2
+  ],
+  "USB Port 2 / USB PD controller TPS25751D, EEPROM and I2C pull-ups | F.Cu": [
+   86.0,
+   75.2,
+   98.5,
+   83.5
+  ],
+  "USB Port 2 / 9 V gate-drive supply, diode-ORed with REGN | F.Cu": [
+   78.9,
+   63.8,
+   86.0,
+   75.3
+  ],
+  "USB Port 2 / 5 V buck for PP5V (TPS62933) | F.Cu": [
+   78.9,
+   75.5,
+   86.2,
+   88.2
+  ],
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": [
+   78.9,
+   88.2,
+   99.8,
+   102.8
+  ],
+  "USB Port 2 / BQ25756 buck-boost charger: controller and current sense | F.Cu": [
+   80.5,
+   102.8,
+   96.5,
+   113.6
+  ],
+  "USB Port 2 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": [
+   80.5,
+   102.8,
+   96.5,
+   113.6
+  ],
+  "3V3 Rail / TPS62177 3.3 V always-on buck | F.Cu": [
+   78.9,
+   114.0,
+   91.0,
+   124.6
+  ],
+  "Cells and Gauge / Protection FETs (charge and discharge, back to back) | F.Cu": [
+   93.3,
+   115.4,
+   110.5,
+   122.8
+  ],
+  "Cells and Gauge / BQ40Z50 gauge: supply, cell inputs, SMBus | F.Cu": [
+   93.3,
+   123.0,
+   104.4,
+   132.4
+  ],
+  "Cells and Gauge / Second-level protector and fuse | F.Cu": [
+   111.6,
+   126.9,
+   121.1,
+   134.2
+  ],
+  "Cells and Gauge / Current sense | F.Cu": [
+   83.5,
+   130.8,
+   90.4,
+   134.3
+  ],
+  "Cells and Gauge / Gauge interrupt onto the shared IRQ line | F.Cu": [
+   83.6,
+   127.0,
+   89.4,
+   130.8
+  ],
+  "MCU / CC2340R5MODA module | F.Cu": [
+   109.0,
+   116.2,
+   121.1,
+   128.8
+  ],
+  "MCU / Pull-ups owned by this block | F.Cu": [
+   109.0,
+   116.2,
+   121.1,
+   128.8
+  ],
+  "MCU / Antenna match (pi network between RFIO and ANT_IN) | F.Cu": [
+   109.0,
+   116.2,
+   121.1,
+   128.8
+  ],
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": [
+   102.2,
+   91.6,
+   121.0,
+   100.5
+  ],
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": [
+   79.1,
+   91.6,
+   97.9,
+   100.5
+  ],
+  "3V3 Rail / Pack-rail bulk capacitance | B.Cu": [
+   95.9,
+   102.8,
+   105.8,
+   112.2
+  ],
+  "Cells and Gauge / Cell thermistors on the board | B.Cu": [
+   84.0,
+   111.5,
+   116.0,
+   113.5
+  ]
+ },
+ "why": {
+  "USB Port 1 / 9 V gate-drive supply, diode-ORed with REGN | F.Cu": "r2d box (87.8..99.2 x 83.8..91.2) is in Port 2's half and L501 (cup-fixed) covers its lower part; takes the r2d charger-programming box, whose parts go to the U403 pins they serve",
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": "r2d box kept; west edge 99.3 -> 100.2 for the port border lane",
+  "USB Port 1 / BQ25756 buck-boost charger: controller and current sense | F.Cu": "r2d box widened: it now also holds the charger programming parts, each at the U403 pin it serves",
+  "USB Port 1 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": "same box as the charger: R409..R419, R435, C410, C411 sit at the U403 pins they serve (r2d had them 15 mm away across the stage)",
+  "USB Port 2 / 5 V buck for PP5V (TPS62933) | F.Cu": "r2d box cut at y 88.2: L501 (cup-fixed) and the stage's west capacitor column start there; may spill east into y 83.7..88.2 up to x 90",
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": "r2d box (78.5..91.4 x 99.9..125.7) does not hold L501, TH501, C521, C556 (cup-fixed at y 88..100); the stage goes where its inductor is, Port 1's stage shifted by -23.03 mm",
+  "USB Port 2 / BQ25756 buck-boost charger: controller and current sense | F.Cu": "r2d box (85.8..98.8 x 91.2..99.9) is under L501; the charger goes below its stage like Port 1's, over the west gap-filler pad",
+  "USB Port 2 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": "same box as the charger: at the U503 pins they serve",
+  "3V3 Rail / TPS62177 3.3 V always-on buck | F.Cu": "r2d box (91.5..99.7 x 115..123.2) is needed for the protection FETs, which U301 (cup-fixed) pushes west; the buck draws 0.1 A so it goes to the free west area",
+  "Cells and Gauge / Protection FETs (charge and discharge, back to back) | F.Cu": "r2d box (99.7..121.6 x 117.2..124.5) is half under U301 and J301 (fixed); shifted west",
+  "Cells and Gauge / Second-level protector and fuse | F.Cu": "r2d box (109.3..121.6 x 124.5..132.7) is under U301 above y 126.7; F102 and Q104 stay at J112, U102 and its filters go beside the gauge or under it on the bottom",
+  "MCU / CC2340R5MODA module | F.Cu": "U301 is cup-fixed at 116.3,122.6 (r2d moved it to 98.6,108.2); its capacitors go in the rim round it",
+  "MCU / Pull-ups owned by this block | F.Cu": "at the U301 pins they serve (r2d box was beside the r2d module position)",
+  "MCU / Antenna match (pi network between RFIO and ANT_IN) | F.Cu": "at U301 pins 3 and 4 (r2d box was at the bottom edge, 20 mm from the fixed module)",
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": "holds only C421, C456 (cup-fixed)",
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": "holds only C521, C556 (cup-fixed)",
+  "3V3 Rail / Pack-rail bulk capacitance | B.Cu": "holds only C208..C213 (cup-fixed)",
+  "Cells and Gauge / Cell thermistors on the board | B.Cu": "holds only TH101, TH104 (cup-fixed)"
+ },
+ "regions": {
+  "port1": [
+   100.0,
+   63.8,
+   121.6,
+   113.6
+  ],
+  "port2": [
+   78.4,
+   63.8,
+   100.0,
+   113.6
+  ],
+  "pack": [
+   78.4,
+   113.6,
+   121.6,
+   137.2
+  ]
+ },
+ "bottom_free": {
+  "B_top_left": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "B_top_centre": [
+   93.7,
+   70.2,
+   106.3,
+   86.3
+  ],
+  "B_top_right": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "B_pack": [
+   93.7,
+   112.6,
+   106.3,
+   134.6
+  ],
+  "B_west_strip": [
+   78.9,
+   100.8,
+   83.8,
+   131.8
+  ],
+  "B_east_strip": [
+   116.2,
+   100.8,
+   121.1,
+   131.8
+  ]
+ },
+ "fixed_extra": [
+  "U301",
+  "L401",
+  "L501",
+  "TH101",
+  "TH104",
+  "TH401",
+  "TH501",
+  "C208",
+  "C209",
+  "C210",
+  "C211",
+  "C212",
+  "C213",
+  "C421",
+  "C456",
+  "C521",
+  "C556"
+ ]
+}
