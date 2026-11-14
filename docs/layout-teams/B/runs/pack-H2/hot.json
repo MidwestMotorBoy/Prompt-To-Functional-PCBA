@@ -1,0 +1,11 @@
+{
+ "HL_3V3": {
+  "per_cap_nH": {
+   "C206": 0.318
+  },
+  "all_parallel_with_esl_nH": 0.818,
+  "branches": 5738,
+  "vias": 55,
+  "cell_mm": 0.2
+ }
+}

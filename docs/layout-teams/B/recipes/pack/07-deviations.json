@@ -1,0 +1,72 @@
+[
+ {
+  "deviation": "K-a FET orientation",
+  "box": [
+   93.735,
+   115.875,
+   108.655,
+   121.605
+  ],
+  "why": "Lead asked for PACK_P pads facing north. Screened (partial, whole pack group): north-facing Q102 (W2) gives PACK_P 0.318 W but FET_MID 0.0158 W (hand 0.0038) and 5 blocked edges; the hand orientation (Q102 PACK_P pads west, drain pads facing each other, H2) gives PACK_P 0.336 W, FET_MID 0.0038 W, 3 blocked edges; totals 0.586 vs 0.588 W (within the 0.01 W noise). Kept the hand orientation: it meets the FET_MID gate and blocks fewer edges."
+ },
+ {
+  "deviation": "Kelvin resistors R107, R108 at RS101",
+  "box": [
+   86.9,
+   129.8,
+   89.8,
+   131.8
+  ],
+  "why": "R107/R108 sit over RS101's inner pad edges (the sense pair leaves the shunt as a pair) instead of at the gauge: removes the blocked CELL_N edge R107 to the CELL_N pour (2 of 153 blocked instead of 3 of 154). C106 stays at U101's SRP/SRN pins."
+ },
+ {
+  "deviation": "Gauge interrupt Q103, R117",
+  "box": [
+   78.9,
+   124.65,
+   89.4,
+   129.8
+  ],
+  "why": "box 83.6..89.4 x 127.0..130.8 moved 2.3 mm north (west of TP301) to make room for R107, R108 over RS101"
+ },
+ {
+  "deviation": "R313 at U204",
+  "box": [
+   78.9,
+   114.0,
+   90.98,
+   124.6
+  ],
+  "why": "3V3_SLEEP pull-up at the buck's EN pin (U204 pad 8) instead of U301 pad 15: its signal pads would narrow the CELL_P corridor west of U301 (CELL_P was 0.241 W with the MCU rim parts there, 0.107 W without)"
+ },
+ {
+  "deviation": "R302, R304, R305 in the pocket north-west of U301",
+  "box": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ],
+  "why": "same reason: CELL_P corridor west of U301; C304 stays within 2 mm of pin 14"
+ },
+ {
+  "deviation": "R115, R116, R126 south-east of U101",
+  "box": [
+   100.4,
+   130.15,
+   104.39,
+   135.28
+  ],
+  "why": "the area west of H103 is the CELL_P corridor (reserved cellp_corridor)"
+ },
+ {
+  "deviation": "Second-level protector on top",
+  "box": [
+   86.9,
+   123.5,
+   99.1,
+   136.4
+  ],
+  "why": "Lead's rule: keep the bottom only if blocked edges drop or the top variant does not fit. Partial screens: bottom (runs/pack-H3) 2 of 153 blocked (TS1 from TH101, GND at C304); top (runs/pack-H4top) 2 of 153 (R106 FET_MID, GND at C304), losses equal at 0.01 W. Same count and the top variant fits, so U102, C112..C117, R119..R124 stay on top west of the gauge (0 parts added to the bottom). The bottom group walled TS1's bottom-side path."
+ }
+]

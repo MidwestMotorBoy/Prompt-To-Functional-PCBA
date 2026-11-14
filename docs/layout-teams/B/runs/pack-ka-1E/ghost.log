@@ -1,0 +1,39 @@
+net classes: 18 high-current nets, 40 small-signal nets
+edges to route: 78 (0 on long nets)
+fan-out stubs: 8
+GHOSTFAIL SCL Pad 6 [SCL] of J302 on F.Cu -> Pad 9 [SCL] of U301 on F.Cu
+GHOSTFAIL GND Pad 1 [GND] of TP512 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C556 on B.Cu -> Zone plane
+GHOSTFAIL GND PTH pad SH [GND] of J501 -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of TH501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of RS101 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad A12 [GND] of J501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C521 on B.Cu -> Zone plane
+GHOSTFAIL GND PTH pad 1 [GND] of J114 -> Zone plane
+GHOSTFAIL GND Pad A1 [GND] of J501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C211 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C208 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 1 [GND] of TP412 on F.Cu -> Zone plane
+GHOSTFAIL GND PTH pad SH [GND] of J401 -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C212 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C210 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad B1 [GND] of J401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C209 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C213 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C456 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 5 [GND] of J302 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C108 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad A1 [GND] of J401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of TH401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 8 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 1 [GND] of TP109 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 5 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C421 on B.Cu -> Zone plane
+GHOSTFAIL GND Pad 22 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of Q104 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 5 [GND] of J301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 23 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 1 [GND] of U301 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 24 [GND] of U301 on F.Cu -> Zone plane
+GHOST noway 35 of 78 edges, 97 s

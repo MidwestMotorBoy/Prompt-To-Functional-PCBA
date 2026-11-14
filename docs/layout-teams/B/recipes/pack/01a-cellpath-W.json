@@ -1,0 +1,54 @@
+[
+ {
+  "note": "K-a cell path, order W: Q102 west (as on the hand board), Q101 east. Q102 turned 90 so its PACK_P pads face north toward the bulk capacitors' via field; Q101 unrotated so its CELL_P pads face east toward the corridor to F102. The two drain tabs (FET_MID) face each other across a 0.1 mm courtyard gap. FET courtyards 115.35..122.80 (box 115.4..122.8: 0.05 mm over at the top, clear of TP412, TP113 and the reserved via field)."
+ },
+ {
+  "put": "Q102",
+  "at": [
+   96.6,
+   119.075
+  ],
+  "turn": 90
+ },
+ {
+  "put": "Q101",
+  "at": [
+   103.29,
+   119.075
+  ],
+  "turn": 0
+ },
+ {
+  "put": "F102",
+  "at": [
+   113.8,
+   131.826
+  ],
+  "turn": 0,
+  "force": true,
+  "note": "pinned between J302 (court x 111.5) and the board edge (116.6 - 0.5): touching J302 by 0.005 mm, as on the hand board; pad 1 (CELL_P_RAW) over J112"
+ },
+ {
+  "put": "RS101",
+  "at": [
+   88.0,
+   133.0
+  ],
+  "turn": 0,
+  "note": "CELL_N pad over J108, GND pad toward J114"
+ },
+ {
+  "at_pin": "Q104",
+  "pads": {
+   "3": "F102.3"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   116.12,
+   126.7,
+   121.2,
+   131.87
+  ]
+ }
+]

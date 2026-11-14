@@ -1,0 +1,114 @@
+[
+ {
+  "note": "K-c top variant (kept): U102 and its filters on top where the placer finds room near the cell-tap resistors: west of the gauge, between H101, the cell-input ladder and J114. The area south of U101 is taken by the SMBus and FUSE resistors. Holding R122 out of the CELL_N pour (x > 90.85) moved it 5 mm from its pin, so it was not kept."
+ },
+ {
+  "at_pin": "U102",
+  "pads": {
+   "2": "R104.1",
+   "5": "R101.1"
+  },
+  "soft": true
+ },
+ {
+  "at_pin": "C116",
+  "pads": {
+   "1": "U102.1",
+   "2": "U102.6"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "C112",
+  "pads": {
+   "1": "U102.2",
+   "2": "U102.3"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "C113",
+  "pads": {
+   "1": "U102.3",
+   "2": "U102.4"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "C114",
+  "pads": {
+   "1": "U102.4",
+   "2": "U102.5"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "C115",
+  "pads": {
+   "1": "U102.5",
+   "2": "U102.6"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "C117",
+  "pads": {
+   "2": "U102.7"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R123",
+  "pads": {
+   "1": "C116.1"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R119",
+  "pads": {
+   "2": "C112.1"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R120",
+  "pads": {
+   "2": "C113.1"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R121",
+  "pads": {
+   "2": "C114.1"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R122",
+  "pads": {
+   "2": "C115.1"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ },
+ {
+  "at_pin": "R124",
+  "pads": {
+   "1": "U102.8"
+  },
+  "max_mm": 4.0,
+  "soft": true
+ }
+]

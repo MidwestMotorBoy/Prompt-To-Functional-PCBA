@@ -1,0 +1,5 @@
+net classes: 18 high-current nets, 62 small-signal nets
+edges to route: 153 (0 on long nets)
+fan-out stubs: 39
+GHOSTFAIL GND Pad 2 [GND] of C304 on F.Cu -> Zone plane
+GHOST noway 1 of 153 edges, 59 s

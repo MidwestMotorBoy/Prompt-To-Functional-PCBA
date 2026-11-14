@@ -1,0 +1,13 @@
+[
+ {"note": "K-a gate parts for order E (Q101 west, Q102 east, both turned 90). Q102's gate is its north-west corner, Q101's gate its south-east corner."},
+ {"at_pin": "D103", "pads": {"1": "Q102.4", "2": "Q102.3"}, "max_mm": 4.0, "soft": true, "within": [105.3, 114.0, 110.6, 123.0]},
+ {"at_pin": "R112", "pads": {"1": "Q102.4", "2": "Q102.3"}, "max_mm": 3.0, "soft": true},
+ {"at_pin": "R111", "pads": {"2": "Q102.4"}, "max_mm": 3.0, "soft": true},
+ {"at_pin": "C107", "pads": {"1": "Q102.1"}, "max_mm": 3.0, "soft": true, "within": [103.4, 114.0, 110.6, 123.0]},
+ {"at_pin": "C108", "pads": {"1": "C107.2"}, "max_mm": 2.0, "soft": true, "within": [103.4, 114.0, 110.6, 123.0]},
+ {"at_pin": "R110", "pads": {"1": "Q101.4", "2": "Q101.3"}, "max_mm": 3.0, "soft": true},
+ {"at_pin": "R109", "pads": {"2": "Q101.4"}, "max_mm": 3.0, "soft": true},
+ {"at_pin": "R118", "pads": {"1": "Q101.1", "2": "TP113.1"}, "max_mm": 4.0, "soft": true},
+ {"at_pin": "C110", "pads": {"1": "Q101.1"}, "max_mm": 3.0, "soft": true},
+ {"at_pin": "C111", "pads": {"1": "C110.2"}, "max_mm": 2.0, "soft": true}
+]

@@ -1,0 +1,206 @@
+[
+ {
+  "note": "K-c second-level protector U102 (BQ2947) and its cell-input filters on the bottom side under the cell-input ladder (x 93.7..100.0, y 122.9..132.55): clear of U101's thermal-via field, the FET tabs, the PACK_P vias, J114's through-hole pad and the rail keep-out (x < 93.5). Its cell taps share nets with the ladder resistors on top (R101..R104 west pads). Q104's gate network (R124, R125, R126, C118) stays on top at Q104: it serves pins within 2 mm there. U102 turned 90 on the bottom: V2, V3, V4, VDD pads face west toward the cell-tap vias, V1, VSS, CD, OUT face east."
+ },
+ {
+  "side": [
+   "U102",
+   "R119",
+   "R120",
+   "R121",
+   "R122",
+   "R123",
+   "C112",
+   "C113",
+   "C114",
+   "C115",
+   "C116",
+   "C117",
+   "R124"
+  ],
+  "to": "B"
+ },
+ {
+  "put": "U102",
+  "at": [
+   97.4,
+   127.6
+  ],
+  "turn": 90,
+  "side": "B"
+ },
+ {
+  "at_pin": "C117",
+  "pads": {
+   "2": "U102.7",
+   "1": "U102.6"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "C116",
+  "pads": {
+   "1": "U102.1",
+   "2": "U102.6"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "C112",
+  "pads": {
+   "1": "U102.2",
+   "2": "U102.3"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "C113",
+  "pads": {
+   "1": "U102.3",
+   "2": "U102.4"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "C115",
+  "pads": {
+   "1": "U102.5",
+   "2": "U102.6"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "C114",
+  "pads": {
+   "1": "U102.4",
+   "2": "U102.5"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R124",
+  "pads": {
+   "1": "U102.8"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R123",
+  "pads": {
+   "1": "C116.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R119",
+  "pads": {
+   "2": "C112.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R120",
+  "pads": {
+   "2": "C113.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R121",
+  "pads": {
+   "2": "C114.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ },
+ {
+  "at_pin": "R122",
+  "pads": {
+   "2": "C115.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   93.7,
+   122.9,
+   100.0,
+   132.55
+  ]
+ }
+]

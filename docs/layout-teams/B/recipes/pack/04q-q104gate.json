@@ -1,0 +1,21 @@
+[
+ {
+  "note": "Q104's gate network: R125 (pull-down) and C118 in the strip between U301 and Q104 (with R314). R124 (from U102 OUT) goes with U102 on the bottom, R126 (from the gauge FUSE pin) south-east of U101: the strip has room for two parts only."
+ },
+ {
+  "put": "C118",
+  "at": [
+   115.93,
+   127.215
+  ],
+  "turn": 180
+ },
+ {
+  "put": "R125",
+  "at": [
+   119.39,
+   127.22
+  ],
+  "turn": 270
+ }
+]

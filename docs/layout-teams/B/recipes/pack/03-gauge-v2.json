@@ -1,0 +1,218 @@
+[
+ {
+  "note": "K-b gauge U101 (BQ40Z50, QFN-32) turn 0, as on the hand board but 1.9 mm east: VC and SRP/SRN pads face west (cell-input ladder, shunt filter), FET-drive pads (CHG, DSG, PACK, VCC, BAT, FUSE) face north toward the FETs, SMBus pads face east toward U301 and J302, TS and BTP_INT pads face south. Ring 0.8 mm; C105 and C106 may sit at 0.3 mm. Explicit spots computed so no foreign courtyard enters the 1 mm escape zone of a signal pad."
+ },
+ {
+  "put": "U101",
+  "at": [
+   101.5,
+   126.9
+  ],
+  "turn": 0
+ },
+ {
+  "ring": "U101",
+  "mm": 0.8,
+  "allow": [
+   "C105",
+   "C106"
+  ]
+ },
+ {
+  "put": "C105",
+  "at": [
+   97.24,
+   123.845
+  ],
+  "turn": 0,
+  "note": "PBI capacitor north-west of U101, PBI pad east toward pin 1"
+ },
+ {
+  "put": "C101",
+  "at": [
+   97.75,
+   125.845
+  ],
+  "turn": 0,
+  "note": "cell-input ladder: C101..C104 stacked so neighbouring pads share a VC net (VC4 | VC3 | VC2 | VC1 | CELL_1N)"
+ },
+ {
+  "put": "C102",
+  "at": [
+   97.75,
+   127.78
+  ],
+  "turn": 0
+ },
+ {
+  "put": "C103",
+  "at": [
+   97.75,
+   129.715
+  ],
+  "turn": 0
+ },
+ {
+  "put": "C104",
+  "at": [
+   97.75,
+   131.65
+  ],
+  "turn": 0
+ },
+ {
+  "put": "R104",
+  "at": [
+   95.7,
+   125.415
+  ],
+  "turn": 90,
+  "note": "100 ohm cell-tap resistors, horizontal, VC pad east at the ladder junction, tap pad west"
+ },
+ {
+  "put": "R103",
+  "at": [
+   95.7,
+   126.81
+  ],
+  "turn": 90
+ },
+ {
+  "put": "R102",
+  "at": [
+   95.7,
+   128.745
+  ],
+  "turn": 90
+ },
+ {
+  "put": "R101",
+  "at": [
+   95.7,
+   130.68
+  ],
+  "turn": 90
+ },
+ {
+  "put": "C106",
+  "at": [
+   99.0,
+   130.37
+  ],
+  "turn": 270,
+  "note": "SRP/SRN filter at the south-west corner of U101"
+ },
+ {
+  "put": "R108",
+  "at": [
+   98.79,
+   132.33
+  ],
+  "turn": 0,
+  "note": "Kelvin series resistors under C106; their far pads (CELL_N, GND) carry the sense pair west to RS101's inner pad edges"
+ },
+ {
+  "put": "R107",
+  "at": [
+   99.84,
+   132.33
+  ],
+  "turn": 0
+ },
+ {
+  "put": "R105",
+  "at": [
+   100.48,
+   122.85
+  ],
+  "turn": 90,
+  "note": "band between Q101 and U101: BAT resistor, its diode, PACK and VCC resistors, all horizontal and outside the 1 mm escape zone of the north pads"
+ },
+ {
+  "put": "D101",
+  "at": [
+   102.33,
+   122.85
+  ],
+  "turn": 270
+ },
+ {
+  "put": "R113",
+  "at": [
+   104.18,
+   122.85
+  ],
+  "turn": 90
+ },
+ {
+  "put": "R106",
+  "at": [
+   106.15,
+   122.85
+  ],
+  "turn": 90
+ },
+ {
+  "at_pin": "R116",
+  "pads": {
+   "1": "U101.18"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   100.4,
+   130.15,
+   104.39,
+   135.28
+  ]
+ },
+ {
+  "at_pin": "R115",
+  "pads": {
+   "1": "U101.19"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   100.4,
+   130.15,
+   104.39,
+   135.28
+  ]
+ },
+ {
+  "at_pin": "R126",
+  "pads": {
+   "2": "U101.25"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "within": [
+   100.4,
+   130.15,
+   104.39,
+   135.28
+  ]
+ },
+ {
+  "reserve": "cellp_corridor",
+  "box": [
+   104.05,
+   123.5,
+   109.19,
+   129.7
+  ],
+  "sides": "F",
+  "note": "CELL_P from Q101's east pads round H103 to F102: the planner's outer-layer tree needs this free of signal pads (their 0.4 mm escape room narrows it)."
+ },
+ {
+  "reserve": "cellp_corridor_top",
+  "box": [
+   107.15,
+   121.96,
+   110.4,
+   123.5
+  ],
+  "sides": "F"
+ }
+]

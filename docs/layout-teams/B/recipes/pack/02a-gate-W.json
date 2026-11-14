@@ -1,0 +1,117 @@
+[
+ {
+  "note": "K-a gate parts for order W. The strip north of Q102's PACK_P pads (west of TP412) is kept for PACK_P copper and vias. Q102's gate (pad 4) is its north-west corner: D103, R112, R111 go west of Q102. Q101's gate (pad 4) is its north-east corner: R109, R110 east of it; R118 between Q101's CELL_P pads and TP113 (WAKE). The snubber pair C110, C111 at Q101's CELL_P pads (C111's PACK_P pad takes a via). C107, C108 (PACK_P to GND) west of Q102 beside D103. R109, R110 in the strip north of Q101 next to its gate (north-east corner), R118 beside them toward TP113; C110, C111 north-east of Q101 at the top of the CELL_P corridor, which stays free down to H103."
+ },
+ {
+  "reserve": "packp_north",
+  "box": [
+   93.75,
+   114.0,
+   97.4,
+   115.3
+  ],
+  "sides": "F"
+ },
+ {
+  "put": "D103",
+  "at": [
+   92.5,
+   116.42
+  ],
+  "turn": 90,
+  "note": "zener across Q102's gate (pad 4, north-west corner): DSG_G pad south toward the gate, PACK_P pad north"
+ },
+ {
+  "put": "R112",
+  "at": [
+   92.0,
+   119.82
+  ],
+  "turn": 180
+ },
+ {
+  "put": "R111",
+  "at": [
+   93.05,
+   119.82
+  ],
+  "turn": 0
+ },
+ {
+  "put": "C107",
+  "at": [
+   92.0,
+   121.79
+  ],
+  "turn": 90,
+  "note": "PACK_P to GND pair, their PACK_CMID pads side by side"
+ },
+ {
+  "put": "C108",
+  "at": [
+   93.03,
+   121.79
+  ],
+  "turn": 270
+ },
+ {
+  "put": "R118",
+  "at": [
+   106.4,
+   115.17
+  ],
+  "turn": 0
+ },
+ {
+  "put": "R110",
+  "at": [
+   104.4,
+   114.55
+  ],
+  "turn": 270
+ },
+ {
+  "put": "R109",
+  "at": [
+   104.4,
+   115.6
+  ],
+  "turn": 90
+ },
+ {
+  "at_pin": "C110",
+  "pads": {
+   "1": "Q101.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   107.03,
+   115.87,
+   111.6,
+   117.6
+  ],
+  "turns": [
+   0,
+   180
+  ]
+ },
+ {
+  "at_pin": "C111",
+  "pads": {
+   "1": "C110.2"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   107.03,
+   115.87,
+   111.6,
+   117.6
+  ],
+  "turns": [
+   0,
+   180
+  ]
+ }
+]

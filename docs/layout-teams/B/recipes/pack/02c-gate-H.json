@@ -1,0 +1,108 @@
+[
+ {
+  "note": "K-a gate parts for variant H. West of Q102 (gate pad 4 at its south-west corner, PACK_P pads on its west side): D103, R112, R111, C107, C108 as in order W. Q101's gate (pad 4) is its north-east corner: R109, R110 side by side in the strip north of Q101; R118 between TP113 and U301's pocket; the snubber pair C110, C111 in the band under Q102 (C111's PACK_P pad near Q102's PACK_P pads)."
+ },
+ {
+  "reserve": "packp_north",
+  "box": [
+   93.75,
+   114.0,
+   97.4,
+   115.3
+  ],
+  "sides": "F"
+ },
+ {
+  "put": "D103",
+  "at": [
+   92.5,
+   116.42
+  ],
+  "turn": 90,
+  "note": "zener across Q102's gate (pad 4, north-west corner): DSG_G pad south toward the gate, PACK_P pad north"
+ },
+ {
+  "put": "R112",
+  "at": [
+   92.0,
+   119.82
+  ],
+  "turn": 180
+ },
+ {
+  "put": "R111",
+  "at": [
+   93.05,
+   119.82
+  ],
+  "turn": 0
+ },
+ {
+  "put": "C107",
+  "at": [
+   92.0,
+   121.79
+  ],
+  "turn": 90,
+  "note": "PACK_P to GND pair, their PACK_CMID pads side by side"
+ },
+ {
+  "put": "C108",
+  "at": [
+   93.03,
+   121.79
+  ],
+  "turn": 270
+ },
+ {
+  "put": "R110",
+  "at": [
+   106.37,
+   114.85
+  ],
+  "turn": 270
+ },
+ {
+  "put": "R109",
+  "at": [
+   104.4,
+   114.85
+  ],
+  "turn": 90
+ },
+ {
+  "at_pin": "R118",
+  "pads": {
+   "1": "Q101.1",
+   "2": "TP113.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   109.52,
+   114.0,
+   111.6,
+   115.86
+  ],
+  "turns": [
+   90,
+   270
+  ]
+ },
+ {
+  "put": "C111",
+  "at": [
+   94.8,
+   122.15
+  ],
+  "turn": 180
+ },
+ {
+  "put": "C110",
+  "at": [
+   96.75,
+   122.15
+  ],
+  "turn": 180
+ }
+]

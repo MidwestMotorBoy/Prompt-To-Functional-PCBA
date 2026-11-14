@@ -1,0 +1,172 @@
+[
+ {
+  "note": "K-e parts round the fixed U301. The RF match (C313, C314, C315, R321) sits in the 0.95 mm strip between J301 and U301 as on the hand board (only place on top at pads 3, 4 without a via): courtyards touch J301 and U301 by 0.05 mm or less, forced. Supply capacitors and the SCL pull-up in the pocket north-west of U301 (west of J301); SDA pull-up west of pad 10; NRST and 3V3_SLEEP parts west of pads 14, 15; IRQ_N pull-up south of pad 21. U301 pads 11, 12, 13 (CHG_INH, EN_5V1, EN_5V2) keep a free 1 mm way west. The NRST parts and the SDA pull-up also go to that pocket and R313 (3V3_SLEEP pull-up) to U204 pin 8, so the CELL_P corridor west of U301 stays free of signal pads."
+ },
+ {
+  "put": "C314",
+  "at": [
+   114.305,
+   118.0
+  ],
+  "turn": 0,
+  "force": true
+ },
+ {
+  "put": "C313",
+  "at": [
+   116.245,
+   118.0
+  ],
+  "turn": 0,
+  "force": true
+ },
+ {
+  "put": "R321",
+  "at": [
+   118.195,
+   118.008
+  ],
+  "turn": 0,
+  "force": true
+ },
+ {
+  "put": "C315",
+  "at": [
+   120.145,
+   118.0
+  ],
+  "turn": 0,
+  "force": true
+ },
+ {
+  "at_pin": "C302",
+  "pads": {
+   "1": "U301.7"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "at_pin": "C303",
+  "pads": {
+   "1": "U301.6"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "at_pin": "C301",
+  "pads": {
+   "1": "U301.7"
+  },
+  "max_mm": 3.5,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "at_pin": "R304",
+  "pads": {
+   "2": "U301.9"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "at_pin": "R305",
+  "pads": {
+   "2": "U301.10"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "at_pin": "R302",
+  "pads": {
+   "2": "U301.14"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   109.6,
+   114.0,
+   114.39,
+   118.47
+  ]
+ },
+ {
+  "put": "C304",
+  "at": [
+   109.955,
+   124.08
+  ],
+  "turn": 0,
+  "note": "NRST capacitor within 2 mm of pin 14, between the escape zones of pins 13 and 15; it takes 1.5 mm off the CELL_P corridor's east edge"
+ },
+ {
+  "put": "R314",
+  "at": [
+   117.65,
+   127.1
+  ],
+  "turn": 0
+ },
+ {
+  "note": "gauge interrupt in Logan's box 83.6..89.4 x 127.0..130.8"
+ },
+ {
+  "at_pin": "Q103",
+  "pads": {
+   "1": "U101.15"
+  },
+  "soft": true,
+  "within": [
+   83.6,
+   127.0,
+   89.4,
+   130.8
+  ]
+ },
+ {
+  "at_pin": "R117",
+  "pads": {
+   "1": "Q103.1"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   83.6,
+   127.0,
+   89.4,
+   130.8
+  ]
+ }
+]

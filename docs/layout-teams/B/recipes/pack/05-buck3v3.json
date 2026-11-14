@@ -1,0 +1,73 @@
+[
+ {
+  "note": "K-d 3V3 buck U204 (TPS62177) in 78.9..91.0 x 114.0..124.6, turn 0: VIN and PGND pads west (input capacitor there, PACK_P via to the plane), SW pad 9 east to L201, output capacitor at L201 pad 2. C206 across pads 2, 3 (VIN) and pad 1 (PGND), pad edge to pad edge 1.5 mm or less."
+ },
+ {
+  "put": "U204",
+  "at": [
+   84.5,
+   118.6
+  ],
+  "turn": 0
+ },
+ {
+  "hot": "C206",
+  "switch": "U204",
+  "supply": [
+   "2",
+   "3"
+  ],
+  "ret": [
+   "1"
+  ],
+  "max_mm": 1.5,
+  "within": [
+   78.9,
+   114.0,
+   90.98,
+   124.6
+  ]
+ },
+ {
+  "at_pin": "L201",
+  "pads": {
+   "1": "U204.9"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   78.9,
+   114.0,
+   90.98,
+   124.6
+  ]
+ },
+ {
+  "at_pin": "C207",
+  "pads": {
+   "1": "L201.2"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   78.9,
+   114.0,
+   90.98,
+   124.6
+  ]
+ },
+ {
+  "at_pin": "R313",
+  "pads": {
+   "2": "U204.8"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   78.9,
+   114.0,
+   90.98,
+   124.6
+  ]
+ }
+]

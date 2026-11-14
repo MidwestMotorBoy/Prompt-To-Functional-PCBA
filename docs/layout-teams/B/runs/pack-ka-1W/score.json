@@ -1,0 +1,25 @@
+{
+ "partial": true,
+ "loss_W": 0.225,
+ "power_open": {},
+ "drc_errors": 0,
+ "unrouted_signal_items": 81,
+ "blocked_edges": "34 of 80",
+ "refs": [
+  "C107",
+  "C108",
+  "C110",
+  "C111",
+  "D103",
+  "F102",
+  "Q101",
+  "Q102",
+  "Q104",
+  "R109",
+  "R110",
+  "R111",
+  "R112",
+  "R118",
+  "RS101"
+ ]
+}

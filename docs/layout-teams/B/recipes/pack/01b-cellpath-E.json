@@ -1,0 +1,52 @@
+[
+ {
+  "note": "K-a cell path, order E: Q101 west, Q102 east (toward J113 and Port 1's R427). Both turned 90: Q102's PACK_P pads face north, Q101's CELL_P pads face south; the drain tabs face each other."
+ },
+ {
+  "put": "Q101",
+  "at": [
+   96.6,
+   119.075
+  ],
+  "turn": 90
+ },
+ {
+  "put": "Q102",
+  "at": [
+   102.43,
+   119.075
+  ],
+  "turn": 90
+ },
+ {
+  "put": "F102",
+  "at": [
+   113.8,
+   131.826
+  ],
+  "turn": 0,
+  "force": true
+ },
+ {
+  "put": "RS101",
+  "at": [
+   88.0,
+   133.0
+  ],
+  "turn": 0
+ },
+ {
+  "at_pin": "Q104",
+  "pads": {
+   "3": "F102.3"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   116.12,
+   126.7,
+   121.2,
+   131.87
+  ]
+ }
+]

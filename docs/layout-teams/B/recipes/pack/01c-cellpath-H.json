@@ -1,0 +1,54 @@
+[
+ {
+  "note": "K-a cell path, variant H: both FETs unrotated as on the hand board (Q102 west with its PACK_P pads facing west, Q101 east with its CELL_P pads facing east, the drain pads facing each other), at y 118.74 (courtyards 115.875..121.605, clear of TP113, TP412 and the reserved via field)."
+ },
+ {
+  "put": "Q102",
+  "at": [
+   97.46,
+   118.74
+  ],
+  "turn": 0
+ },
+ {
+  "put": "Q101",
+  "at": [
+   104.93,
+   118.74
+  ],
+  "turn": 0
+ },
+ {
+  "put": "F102",
+  "at": [
+   113.8,
+   131.826
+  ],
+  "turn": 0,
+  "force": true,
+  "note": "pinned between J302 (court x 111.5) and the board edge (116.6 - 0.5): touching J302 by 0.005 mm, as on the hand board; pad 1 (CELL_P_RAW) over J112"
+ },
+ {
+  "put": "RS101",
+  "at": [
+   88.4829,
+   132.9944
+  ],
+  "turn": 0,
+  "note": "hand spot: CELL_N pad over J108, GND pad toward J114"
+ },
+ {
+  "at_pin": "Q104",
+  "pads": {
+   "3": "F102.3"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   116.12,
+   126.7,
+   121.2,
+   131.87
+  ]
+ }
+]
