@@ -591,3 +591,15 @@ south-wall edges. r2 stays the best placement until a candidate beats it with `l
 Files: `candidates/r2.json`, `best_placement.json`, `runs/r2-hot/` (score.json, hot.json, dc.json, ghost.log, F.png,
 B.png), `runs/r2-route/` (score.json, ghost.log), `plan/r2-route-failed.txt` (the result and FAILED lines of route.log),
 `runs/r2-esc06/` (score.json, dc.json, ghost.log); hot_gate.log and route.log are git-ignored and stay local; `plan/r2-zoom/` (u401_F.png, u501_F.png, chg1_F.png, u401_ne_F.png), `tools/loose.py`.
+
+## 2026-11-14 22:45 UTC, orchestrator note: zone outlines vanish in the router (from team D, affects every routed count)
+tools/copper/write_copper.py writes one zone per net and layer with several outlines; KiCad keeps only the FIRST outline when the
+board is re-saved, so when tools/score/router.py refills zones most multi-outline F.Cu/B.Cu power pours vanish (Monolith: PACK_P F/B
+9 outlines, GND F 14, VBUS F 3, 3V3 F 4). Full-route counts (ours 401/446 and the hand 391/448 alike) are flattered because the router
+runs where the pours were, and --keep-copper scoring of routed boards shows open power paths. Signal routes on In2 can also cut the
+PACK_P In2 pour into islands.
+Team D's fix (branch layout-team-D, docs/layout-teams/D/tools/hr.py, see `git fetch origin layout-team-D`): split every zone into one
+zone per outline before write_copper, and lay wide PACK_P strap tracks before signal routing. Shared tools stay unchanged: copy the
+split into B/tools. For the final result, report BOTH the plain scorecard route and the route with zones split (and the hand board
+with the same split, so the comparison is fair), and check power paths on the routed board.
+Also: pushing route_queue files to layout-team-B IS allowed (see the 14:35 note); the PC can run the extra routes in parallel.
