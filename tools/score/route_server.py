@@ -72,6 +72,7 @@ def run(job):
                            cwd=d, stdout=lf, stderr=subprocess.STDOUT, timeout=A.minutes * 60)
         except subprocess.TimeoutExpired: status = "timed out at %d min" % A.minutes
     log = open(os.path.join(d, "route.log"), errors="replace").read()
+    if "KeyboardInterrupt" in log: return None      # server stopped mid-route: leave no result, so the board is routed again after a restart
     m = re.search(r"^routed (\d+) edges, (\d+) failed", log, re.M); e = re.search(r"edges to route: (\d+)", log)
     p = re.findall(r"routed (\d+), failing (\d+)", log)
     routed, failed = (int(m.group(1)), int(m.group(2))) if m else ((int(p[-1][0]), int(p[-1][1])) if p else (None, None))
@@ -103,6 +104,7 @@ while True:
         for key, f in list(running.items()):
             if f.done():
                 r = f.result() if not f.exception() else {"status": "crash: %s" % f.exception()}
+                if r is None: del running[key]; continue
                 if f.exception(): os.makedirs(os.path.dirname(key), exist_ok=True); json.dump(r, open(key, "w"))
                 print(time.strftime("%H:%M"), "finished", key, r.get("routed"), r.get("failed"), r.get("status"), flush=True)
                 publish("route %s: %s" % (os.path.basename(key), r.get("status"))); del running[key]
