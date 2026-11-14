@@ -29,7 +29,7 @@ The results go in `<outdir>/score.json`. With no input, it scores the hand place
 
 | Board | Blocked edges | Full route | Loss | Power |
 |---|---|---|---|---|
-| Hand placement, generated copper | 56 of 452 | 391 of 448 in 18 min | 1.36 W | PP5V open at U401 |
+| Hand placement, generated copper (scorecard, 2026-11-14) | 56 of 452 | 394 of 452 | 1.36 W, hot loops 7 of 7, 6.75 nH | PP5V open at U401 |
 | Skeleton q7s2 | | 299 of 442 | 1.20 W | all joined |
 | Round 3 w1_c | | 346 of 442 | 1.255 W | all joined |
 
