@@ -25,13 +25,13 @@ def keep(m):
             if inb(float(a.group(1)), float(a.group(2)), dr["box"]): return ""
     return blk
 if J["drop"]: txt = re.sub(r"\n\t\((?:segment|via)\n(?:\t\t.*\n)+?\t\)", keep, txt)
-open("%s/_hr2_in.kicad_pcb" % d, "w", encoding="utf-8").write(txt)
+open("%s/_hr2_%s_in.kicad_pcb" % (d, OUT), "w", encoding="utf-8").write(txt)
 for e in ("kicad_pro", "kicad_dru"):
-    shutil.copy("%s/%s.%s" % (d, IN, e), "%s/_hr2_in.%s" % (d, e)); shutil.copy("%s/%s.%s" % (d, IN, e), "%s/%s.%s" % (d, OUT, e))
-json.dump(J, open(d + "/_hr2.json", "w"))
-open(d + "/_hr2_apply.py", "w").write('''
+    shutil.copy("%s/%s.%s" % (d, IN, e), "%s/_hr2_%s_in.%s" % (d, OUT, e)); shutil.copy("%s/%s.%s" % (d, IN, e), "%s/%s.%s" % (d, OUT, e))
+json.dump(J, open(d + "/_hr2_%s.json" % OUT, "w"))
+open(d + "/_hr2_%s_apply.py" % OUT, "w").write('''
 import json, pcbnew, sys
-b = pcbnew.LoadBoard("_hr2_in.kicad_pcb"); J = json.load(open("_hr2.json")); FM = pcbnew.FromMM
+T = sys.argv[2]; b = pcbnew.LoadBoard("_hr2_%s_in.kicad_pcb" % T); J = json.load(open("_hr2_%s.json" % T)); FM = pcbnew.FromMM
 lid = {pcbnew.BOARD.GetStandardLayerName(l): l for l in b.GetEnabledLayers().CuStack()}
 def net(n):
     c = b.GetNetcodeFromNetname(n)
@@ -52,10 +52,10 @@ for r in J["routes"]:
         if (a[1], a[2]) != (c[1], c[2]):
             t = pcbnew.PCB_TRACK(b); t.SetStart(pcbnew.VECTOR2I(FM(a[1]), FM(a[2]))); t.SetEnd(pcbnew.VECTOR2I(FM(c[1]), FM(c[2])))
             t.SetWidth(FM(r.get("w", 0.2))); t.SetLayer(lid[c[0]]); t.SetNetCode(net(r["net"])); b.Add(t)
-pcbnew.ZONE_FILLER(b).Fill(b.Zones()); pcbnew.SaveBoard(sys.argv[1], b)
+b.BuildConnectivity(); pcbnew.ZONE_FILLER(b).Fill(b.Zones()); pcbnew.SaveBoard(sys.argv[1], b)
 ''')
 K = ["docker", "run", "--rm", "-u", "0", "-v", d + ":/w", "-w", "/w", "kicad/kicad:10.0", "sh", "-c"]
-subprocess.run(K + ["python3 _hr2_apply.py %s.kicad_pcb > _hr2.log 2>&1; cp _hr2_in.kicad_pro %s.kicad_pro; kicad-cli pcb drc --severity-all --format json -o %s.drc.json %s.kicad_pcb >/dev/null 2>&1" % (OUT, OUT, OUT, OUT)], check=False)
+subprocess.run(K + ["python3 _hr2_{0}_apply.py {0}.kicad_pcb {0} > _hr2_{0}.log 2>&1; cp _hr2_{0}_in.kicad_pro {0}.kicad_pro; kicad-cli pcb drc --severity-all --format json -o {0}.drc.json {0}.kicad_pcb >/dev/null 2>&1".format(OUT)], check=False)
 D = json.load(open("%s/%s.drc.json" % (d, OUT))); nets = {r["net"] for r in J["routes"]} | {v["net"] for v in J["vias"]} | {x["net"] for x in J["drop"]}
 errs = [v for v in D.get("violations", []) if v.get("severity") == "error"]
 for v in errs:
