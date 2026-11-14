@@ -1,0 +1,142 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 445 (0 on long nets)
+fan-out stubs: 118
+phase 1: 71 open connections tried again with every route free to move
+phase 2: 66 open connections tried again with every route free to move
+phase 3: 66 open connections tried again with every route free to move
+routes pulled and re-laid: 313
+fan-out stubs unused (removed) 52, trimmed 17
+unconnected after fill: 107
+routed 379 edges, 66 failed, items added 4600
+  FAILED /USB Port 1/LODRV2 112.10,108.35 (Pad 21  of U403 ) -> 118.24,99.05 (Pad 1  of R447 ) starts 72 goals 126 seen 182 | no way even with every other route gone
+  FAILED /USB Port 1/C_CC1 103.90,71.90 (Pad 4  of U405 ) -> 102.90,72.90 (Pad 7  of U405 ) starts 24 goals 26 seen 36 | no way even with every other route gone
+  FAILED /USB Port 2/C_CC1 82.30,71.90 (Pad 4  of U505 ) -> 81.30,72.90 (Pad 7  of U505 ) starts 22 goals 54 seen 77 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 108.03,80.00 (Pad 34  of U401 ) -> 109.60,79.97 (Pad 1  of C407 ) starts 67 goals 653 seen 69 | no way even with every other route gone
+  FAILED /USB Port 2/VBIAS 82.70,71.90 (Pad 3  of U505 ) -> 82.82,70.10 (Pad 1  of C551 ) starts 22 goals 128 seen 22 | no way even with every other route gone
+  FAILED Net-(D411-A) 101.40,109.65 (Pad 1  of C458 ) -> 101.38,107.15 (Pad 1  of U406 ) starts 759 goals 199 seen 460 | no way even with every other route gone
+  FAILED /USB Port 1/SBU_FLT 102.90,73.70 (Pad 9  of U405 ) -> 100.25,74.08 (Pad 2  of R441 ) starts 26 goals 62 seen 36 | no way even with every other route gone
+  FAILED /USB Port 1/C_CC2 103.50,71.90 (Pad 5  of U405 ) -> 104.75,69.17 (Pad B5  of J401 ) starts 73 goals 15 seen 15 | no way even with every other route gone
+  FAILED /USB Port 2/DRV9_OFF 86.10,76.17 (Pad 2  of R555 ) -> 85.00,79.01 (Pad 37  of U501 ) starts 62 goals 22 seen 45 | no way even with every other route gone
+  FAILED /USB Port 1/VBIAS 104.30,71.90 (Pad 3  of U405 ) -> 107.47,71.10 (Pad 1  of C451 ) starts 22 goals 86 seen 22 | no way even with every other route gone
+  FAILED /USB Port 1/FSW 104.80,110.77 (Pad 1  of R412 ) -> 107.95,112.50 (Pad 36  of U403 ) starts 61 goals 49 seen 94 | no way even with every other route gone
+  FAILED Net-(U406-FB) 98.55,108.09 (Pad 2  of R452 ) -> 102.03,107.15 (Pad 2  of U406 ) starts 126 goals 141 seen 317 | no way even with every other route gone
+  FAILED /USB Port 1/DRV9_OFF 108.03,79.00 (Pad 37  of U401 ) -> 105.32,76.55 (Pad 2  of R455 ) starts 22 goals 62 seen 30 | no way even with every other route gone
+  FAILED /USB Port 2/I2CC_SCL 81.15,82.61 (Pad 17  of U501 ) -> 81.07,86.90 (Pad 2  of R503 ) starts 45 goals 179 seen 59 | no way even with every other route gone
+  FAILED Net-(U403-ACOV) 109.15,116.54 (Pad 2  of R410 ) -> 107.95,112.00 (Pad 35  of U403 ) starts 271 goals 48 seen 74 | no way even with every other route gone
+  FAILED /USB Port 1/C_CC1 107.75,69.17 (Pad A5  of J401 ) -> 103.90,71.90 (Pad 4  of U405 ) starts 72 goals 24 seen 24 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 104.17,83.00 (Pad 18  of U401 ) -> 99.20,83.53 (Pad 2  of R404 ) starts 22 goals 47 seen 48 | no way even with every other route gone
+  FAILED Net-(U403-ACUV) 107.95,111.50 (Pad 34  of U403 ) -> 107.96,116.60 (Pad 2  of R409 ) starts 20 goals 187 seen 35 | no way even with every other route gone
+  FAILED /USB Port 1/CC1 106.98,88.75 (Pad 1  of C401 ) -> 108.03,82.60 (Pad 28  of U401 ) starts 81 goals 22 seen 30 | no way even with every other route gone
+  FAILED /USB Port 2/DRV_SUP 94.55,108.35 (Pad 1  of C511 ) -> 88.07,108.36 (Pad 23  of U503 ) starts 788 goals 72 seen 49500 | no way even with every other route gone
+  FAILED /USB Port 2/CC2 81.90,74.70 (Pad 11  of U505 ) -> 85.00,82.21 (Pad 29  of U501 ) starts 58 goals 17 seen 20 | no way even with every other route gone
+  FAILED /USB Port 2/CC1 82.30,74.70 (Pad 12  of U505 ) -> 85.00,82.61 (Pad 28  of U501 ) starts 278 goals 22 seen 134019 | no way even with every other route gone
+  FAILED /USB Port 1/CC2 103.50,74.70 (Pad 11  of U405 ) -> 108.03,82.20 (Pad 29  of U401 ) starts 473 goals 19 seen 411 | no way even with every other route gone
+  FAILED Net-(U406-FB) 102.03,107.15 (Pad 2  of U406 ) -> 98.10,99.21 (Pad 1  of R453 ) starts 141 goals 117 seen 317 | no way even with every other route gone
+  FAILED /USB Port 2/CC2 85.00,82.21 (Pad 29  of U501 ) -> 92.22,87.35 (Pad 1  of C502 ) starts 17 goals 128 seen 20 | no way even with every other route gone
+  FAILED /USB Port 1/CC1 108.03,82.60 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 22 goals 31 seen 33 | no way even with every other route gone
+  FAILED /USB Port 1/SBU_FLT 104.17,83.40 (Pad 19  of U401 ) -> 102.90,73.70 (Pad 9  of U405 ) starts 26 goals 26 seen 36 | no way even with every other route gone
+  FAILED /USB Port 1/DRV9_OFF 103.60,88.86 (Pad 1  of Q409 ) -> 108.03,79.00 (Pad 37  of U401 ) starts 308 goals 22 seen 30 | no way even with every other route gone
+  FAILED SCL 106.65,119.33 (Pad 2  of R115 ) -> 109.22,131.14 (Pad 6  of J302 ) starts 134 goals 191 seen 794 | no way even with every other route gone
+  FAILED Net-(Q409-D) 102.65,90.74 (Pad 3  of Q409 ) -> 103.33,102.85 (Pad 5  of U406 ) starts 350 goals 335 seen 1142 | no way even with every other route gone
+  FAILED /USB Port 2/C_CC1 94.75,69.17 (Pad A5  of J501 ) -> 82.30,71.90 (Pad 4  of U505 ) starts 72 goals 22 seen 22 | no way even with every other route gone
+  FAILED /USB Port 2/DRV9_OFF 85.00,79.01 (Pad 37  of U501 ) -> 95.80,90.01 (Pad 1  of Q509 ) starts 22 goals 341 seen 45 | no way even with every other route gone
+  FAILED /USB Port 2/PPHV 80.45,95.19 (Pad 1  of R525 ) -> 84.92,110.51 (Pad 32  of U503 ) starts 0 goals 387 seen 45 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.60,113.15 (Pad 3  of U403 ) -> 104.17,83.00 (Pad 18  of U401 ) starts 74 goals 22 seen 48 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 109.10,113.15 (Pad 2  of U403 ) -> 104.17,82.20 (Pad 16  of U401 ) starts 74 goals 42 seen 58 | no way even with every other route gone
+  FAILED /USB Port 1/BAT_SNS_P 120.35,105.24 (Pad 1  of R428 ) -> 120.35,105.24 (Zone 'pc_USB Port 1_BAT_SNS_P'  on F.Cu,) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED /USB Port 1/PPHV 103.45,95.19 (Pad 1  of R425 ) -> 103.45,95.19 (Zone 'pc_USB Port 1_PPHV'  on F.Cu,) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED /USB Port 2/PPHV 80.45,95.19 (Pad 1  of R525 ) -> 80.45,95.19 (Zone 'pc_USB Port 2_PPHV'  on F.Cu,) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED 3V3 108.03,78.60 (Pad 38  of U401 ) -> 108.03,78.60 (Zone planeZone plan) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED CELL_N 90.54,125.10 (Pad 1  of R107 ) -> 90.54,125.10 (Zone 'pc_CELL_N'  on F.Cu,) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED GND 85.00,79.41 (Pad 36  of U501 ) -> 85.00,79.41 (Zone planeZone plan) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED GND 85.00,81.41 (Pad 31  of U501 ) -> 85.00,81.41 (Zone planeZone plan) starts 0 goals 0 seen 72 | no way even with every other route gone
+  FAILED GND 85.00,83.01 (Pad 27  of U501 ) -> 85.00,83.01 (Zone planeZone plan) starts 24 goals 0 seen 52 | no way even with every other route gone
+  FAILED GND 85.00,83.41 (Pad 26  of U501 ) -> 85.00,83.41 (Zone planeZone plan) starts 0 goals 0 seen 52 | no way even with every other route gone
+  FAILED GND 86.30,83.93 (Pad 2  of C550 ) -> 86.30,83.93 (Zone planeZone plan) starts 17 goals 0 seen 168 | no way even with every other route gone
+  FAILED GND 104.78,111.95 (Pad 2  of C409 ) -> 104.78,111.95 (Zone planeZone plan) starts 137 goals 0 seen 175 | no way even with every other route gone
+  FAILED GND 108.03,79.40 (Pad 36  of U401 ) -> 108.03,79.40 (Zone planeZone plan) starts 0 goals 0 seen 175 | no way even with every other route gone
+  FAILED GND 108.03,81.40 (Pad 31  of U401 ) -> 108.03,81.40 (Zone planeZone plan) starts 0 goals 0 seen 175 | no way even with every other route gone
+  FAILED GND 108.03,83.00 (Pad 27  of U401 ) -> 108.03,83.00 (Zone planeZone plan) starts 23 goals 0 seen 47 | no way even with every other route gone
+  FAILED GND 108.03,83.40 (Pad 26  of U401 ) -> 108.03,83.40 (Zone planeZone plan) starts 0 goals 0 seen 47 | no way even with every other route gone
+  FAILED GND 109.35,83.93 (Pad 2  of C450 ) -> 109.35,83.93 (Zone planeZone plan) starts 38 goals 0 seen 39 | no way even with every other route gone
+  FAILED GND 109.60,81.53 (Pad 2  of C407 ) -> 109.60,81.53 (Zone planeZone plan) starts 149 goals 0 seen 149 | no way even with every other route gone
+  FAILED PACK_P 98.70,105.89 (Pad 1  of R529 ) -> 98.70,105.89 (Zone planeZone plan) starts 0 goals 0 seen 165 | no way even with every other route gone
+  FAILED PACK_P 115.04,106.00 (Pad 1  of R429 ) -> 115.04,106.00 (Zone planeZone plan) starts 0 goals 0 seen 165 | no way even with every other route gone
+  FAILED PACK_P 118.44,92.70 (Pad 1  of R418 ) -> 118.44,92.70 (Zone planeZone plan) starts 35 goals 0 seen 72 | no way even with every other route gone
+  FAILED /USB Port 2/LDO_3V3 83.95,86.97 (Pad 1  of R504 ) -> 80.53,87.65 (Pad 1  of R502 ) starts 472 goals 282 seen 9546 | no way even with every other route gone
+  FAILED /USB Port 1/HG2 115.69,100.78 (Pad 1  of Q402 ) -> 120.35,103.09 (Pad 2  of R446 ) starts 16 goals 126 seen 16 | no way even with every other route gone
+  FAILED /USB Port 2/HG2 92.66,100.78 (Pad 1  of Q502 ) -> 97.35,104.04 (Pad 2  of R546 ) starts 14 goals 126 seen 479 | no way even with every other route gone
+  FAILED /USB Port 2/HG1 88.16,100.78 (Pad 1  of Q501 ) -> 92.76,106.00 (Pad 2  of R544 ) starts 12 goals 126 seen 12 | no way even with every other route gone
+  FAILED /USB Port 1/LG2 112.42,100.78 (Pad 8  of Q402 ) -> 119.26,99.05 (Pad 2  of R447 ) starts 48 goals 126 seen 308 | no way even with every other route gone
+  FAILED /USB Port 2/LG2 89.40,100.78 (Pad 8  of Q502 ) -> 96.65,100.09 (Pad 2  of R547 ) starts 42 goals 84 seen 267 | no way even with every other route gone
+  FAILED /USB Port 1/LG1 101.86,96.70 (Pad 2  of R445 ) -> 107.92,100.78 (Pad 8  of Q401 ) starts 126 goals 15 seen 697 | no way even with every other route gone
+  FAILED /USB Port 1/HG1 111.19,100.78 (Pad 1  of Q401 ) -> 119.36,100.30 (Pad 2  of R444 ) starts 12 goals 126 seen 418 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL1 95.69,113.45 (Pad 1  of R122 ) -> 95.40,98.84 (Pad 1  of R101 ) starts 124 goals 126 seen 155744 | no way even with every other route gone
+  FAILED /USB Port 2/LG1 84.90,100.78 (Pad 8  of Q501 ) -> 86.09,117.15 (Pad 2  of R545 ) starts 12 goals 126 seen 12 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL1 95.40,98.84 (Pad 1  of R101 ) -> 86.10,69.48 (PTH pad 1  of J109) starts 126 goals 2662 seen 540 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV2
+FAILKEY /USB Port 1/C_CC1
+FAILKEY /USB Port 2/C_CC1
+FAILKEY /USB Port 1/PP5V
+FAILKEY /USB Port 2/VBIAS
+FAILKEY Net-(D411-A)
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/C_CC2
+FAILKEY /USB Port 2/DRV9_OFF
+FAILKEY /USB Port 1/VBIAS
+FAILKEY /USB Port 1/FSW
+FAILKEY Net-(U406-FB)
+FAILKEY /USB Port 1/DRV9_OFF
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY Net-(U403-ACOV)
+FAILKEY /USB Port 1/C_CC1
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY Net-(U403-ACUV)
+FAILKEY /USB Port 1/CC1
+FAILKEY /USB Port 2/DRV_SUP
+FAILKEY /USB Port 2/CC2
+FAILKEY /USB Port 2/CC1
+FAILKEY /USB Port 1/CC2
+FAILKEY Net-(U406-FB)
+FAILKEY /USB Port 2/CC2
+FAILKEY /USB Port 1/CC1
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/DRV9_OFF
+FAILKEY SCL
+FAILKEY Net-(Q409-D)
+FAILKEY /USB Port 2/C_CC1
+FAILKEY /USB Port 2/DRV9_OFF
+FAILKEY /USB Port 2/PPHV
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/BAT_SNS_P
+FAILKEY /USB Port 1/PPHV
+FAILKEY /USB Port 2/PPHV
+FAILKEY 3V3@Pad 38 [3V3] of U401 on F.Cu
+FAILKEY CELL_N
+FAILKEY GND@Pad 36 [GND] of U501 on F.Cu
+FAILKEY GND@Pad 31 [GND] of U501 on F.Cu
+FAILKEY GND@Pad 27 [GND] of U501 on F.Cu
+FAILKEY GND@Pad 26 [GND] of U501 on F.Cu
+FAILKEY GND@Pad 2 [GND] of C550 on F.Cu
+FAILKEY GND@Pad 2 [GND] of C409 on F.Cu
+FAILKEY GND@Pad 36 [GND] of U401 on F.Cu
+FAILKEY GND@Pad 31 [GND] of U401 on F.Cu
+FAILKEY GND@Pad 27 [GND] of U401 on F.Cu
+FAILKEY GND@Pad 26 [GND] of U401 on F.Cu
+FAILKEY GND@Pad 2 [GND] of C450 on F.Cu
+FAILKEY GND@Pad 2 [GND] of C407 on F.Cu
+FAILKEY PACK_P@Pad 1 [PACK_P] of R529 on F.Cu
+FAILKEY PACK_P@Pad 1 [PACK_P] of R429 on F.Cu
+FAILKEY PACK_P@Pad 1 [PACK_P] of R418 on F.Cu
+FAILKEY /USB Port 2/LDO_3V3
+FAILKEY /USB Port 1/HG2
+FAILKEY /USB Port 2/HG2
+FAILKEY /USB Port 2/HG1
+FAILKEY /USB Port 1/LG2
+FAILKEY /USB Port 2/LG2
+FAILKEY /USB Port 1/LG1
+FAILKEY /USB Port 1/HG1
+FAILKEY /Cells and Gauge/CELL1
+FAILKEY /USB Port 2/LG1
+FAILKEY /Cells and Gauge/CELL1
