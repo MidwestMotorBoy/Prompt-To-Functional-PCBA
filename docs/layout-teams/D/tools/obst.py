@@ -201,3 +201,17 @@ class HR(Obst):
     def drop(self, net, L, box): self.J["drop"].append({"net": net, "layer": L, "box": box})
     def save(self, path):
         json.dump(self.J, open(path, "w"), indent=0); print("saved %s: %d routes, %d vias, %s" % (path, len(self.J["routes"]), len(self.J["vias"]), "clean" if self.ok else "WITH PROBLEMS"))
+    def load(self, path):
+        """Take the routes of another routes file as obstacles (they are not saved again): build on a colleague's copper."""
+        J = json.load(open(path))
+        for v in J.get("vias", []):
+            self.vias.append((v["x"], v["y"], 0.45, v["net"]))
+            for L in SIG: self.items[L].append((Point(v["x"], v["y"]).buffer(0.225), v["net"], "via", v["net"]))
+        for r in J.get("routes", []):
+            p = r["path"]
+            for a, b in zip(p, p[1:]):
+                if a[0] != b[0]:
+                    self.vias.append((a[1], a[2], 0.45, r["net"]))
+                    for L in SIG: self.items[L].append((Point(a[1], a[2]).buffer(0.225), r["net"], "via", r["net"]))
+                if (a[1], a[2]) != (b[1], b[2]): self.items[b[0]].append((LineString([(a[1], a[2]), (b[1], b[2])]).buffer(r.get("w", 0.2) / 2), r["net"], "track", r["net"]))
+        self.tree = {L: STRtree([i[0] for i in self.items[L]]) for L in SIG}

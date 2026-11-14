@@ -55,7 +55,9 @@ for f in files:
                 S["vias"].append({"net": r["net"], "x": a[1], "y": a[2], "size": vs[0], "drill": vs[1]}); hand.append(("via", r["net"], a[1], a[2]))
             if (a[1], a[2]) != (b[1], b[2]):
                 S["tracks"].append({"net": r["net"], "layer": b[0], "a": [a[1], a[2]], "b": [b[1], b[2]], "w": r.get("w", 0.2)}); hand.append(("track", r["net"], (a[1] + b[1]) / 2, (a[2] + b[2]) / 2))
-S["zones"] = [z for z in S["zones"] if z["polys"]]
+# one zone per outline: KiCad keeps only the first outline of a multi-outline zone when the board is saved again, so the
+# router's refill silently dropped the other pours (found on the first routed board: VBUS and PACK_P pours on F gone)
+S["zones"] = [dict(z, polys=[p]) for z in S["zones"] for p in z["polys"]]
 json.dump(S, open(out + "/spec.json", "w"))
 for e in ("kicad_pro", "kicad_dru"): shutil.copy(base + "/bare." + e, out + "/hand." + e)
 shutil.copy(base + "/bare.kicad_pcb", out + "/bare.kicad_pcb")

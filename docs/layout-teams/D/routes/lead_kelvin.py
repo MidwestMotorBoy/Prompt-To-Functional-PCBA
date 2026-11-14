@@ -4,7 +4,7 @@ import sys, json; sys.path.insert(0, '../tools')
 from obst import HR
 from dlib import Board
 d, board = sys.argv[1], sys.argv[2]
-h = HR(d, board); b = Board(); b.set(json.load(open('../best_placement.json')))
+h = HR(d, board); h.load('lead_packp.json'); b = Board(); b.set(json.load(open('../best_placement.json')))
 def pad(ref, num, n=0):
     return [p for p in b.pads(ref) if p['num'] == num][n]
 for port, dx in (("1", 0.0), ("2", -23.1)):
@@ -21,5 +21,9 @@ for port, dx in (("1", 0.0), ("2", -23.1)):
         # inner edge point, 0.25 mm inside the pad
         if abs(op['x'] - cx) > abs(op['y'] - cy): tap = (x1 - 0.25 if op['x'] > cx else x0 + 0.25, cy)
         else: tap = (cx, y1 - 0.25 if op['y'] > cy else y0 + 0.25)
-        h.link(net, tap, (rp['x'], rp['y']), "In3.Cu", r=0.9)
+        if h.free_vias(net, rp['x'], rp['y'], 0.9, n=1): h.link(net, tap, (rp['x'], rp['y']), "In3.Cu", r=0.9)
+        else:                                  # a power strap runs under the sense resistor: via further out, F track to the pad
+            v = h.free_vias(net, rp['x'], rp['y'], 2.5, n=1)[0]; h.via(net, v[1], v[2]); h.auto(net, "F.Cu", (rp['x'], rp['y']), (v[1], v[2]))
+            tv = h.free_vias(net, tap[0], tap[1], 0.9, n=1)[0]; h.via(net, tv[1], tv[2]); h.seg(net, "F.Cu", [tap, (tv[1], tv[2])])
+            h.auto(net, "In3.Cu", (tv[1], tv[2]), (v[1], v[2]))
 h.save('lead_kelvin.json')
