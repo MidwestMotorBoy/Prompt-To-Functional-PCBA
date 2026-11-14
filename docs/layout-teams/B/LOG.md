@@ -239,3 +239,96 @@ Files:
 - `tools/plan_only.sh`
 - `fragments/port1.json`, `fragments/Port_1.json` and their meta files
 - `runs/port1-g1`, `port1-g2`, `port1-g3`, `port1-e7` (score.json, F.png, B.png)
+
+## 2026-11-14 17:45 UTC, Port 2 worker: whole group placed, fragments/port2.json written (also as fragments/Port_2.json)
+All 88 Port 2 parts are placed from five recipes in `recipes/port2/`, with 0 hard faults in check.py (`--group=port2`, and also
+with port1.json and pack.json together). stitch.py of all three fragments gives 245 parts and 0 claim clashes.
+
+Run it again with:
+`python3 tools/secplace.py recipes/common/border.json recipes/port2/01-stage-charger.json recipes/port2/02-charger-fix.json recipes/port2/03-buck5v.json recipes/port2/04-pd-protect.json recipes/port2/05-9v.json --group=port2 --out=fragments/port2.json`
+
+**Partial screens** (`screen.sh --partial --hot="USB Port 2/HL_5V,USB Port 2/HL_IN,USB Port 2/HL_OUT"`):
+
+| run | blocked | loss W | DRC | power open | HL_5V / HL_IN / HL_OUT nH | signal hpwl, my nets |
+|---|---|---|---|---|---|---|
+| hand partial (`runs/hand_port2`) | 42 of 173 | 0.407 | 0 | GND J301/J302 only | 1.17 / 0.84 / 0.85 | 714 mm |
+| g1 (`runs/port2-g1`) | 30 of 175 | 0.396 | 0 | GND J301/J302 only | 0.98 / 0.80 / 0.74 | 730 mm |
+| g2 (`runs/port2-g2`) | 32 of 179 | 0.384 | 0 | GND J301/J302 only | 0.98 / 0.80 / 0.74 | not measured |
+| **g3 (`runs/port2-g3`), kept** | **28 of 177** | **0.363** | **0** | GND J301/J302 only | **0.98 / 0.80 / 0.74**, 3 of 3 tier 1 | **757 mm** |
+
+PP5V is joined at U501.
+
+**Whole board** (`runs/port2-whole-1`): the three fragments stitched, no hot loops.
+- 58 of 451 blocked (port1 31, port2 29, pack 4, fixed 3), 1.142 W, DRC 0, only GND at J301/J302 open.
+- The hand whole board (`runs/hand_screen`) is 56 of 452 (port2 28), 1.36 W, with PP5V open at U401 and 3V3 open at L201.
+
+**Group gate:**
+- check.py clean, DRC 0, power joined, and 3 of 3 hot loops tier 1 below the hand partial's nH: met.
+- Blocked edges: 28 against the hand's 42, so met. The target of 12 or fewer is missed.
+- Signal hpwl is **missed: 757 against 714 mm.** EN_5V2 alone adds 58 mm, because the hand has the buck at y 118, outside the
+  Port 2 region, next to U301, while here it is in the north-west corner. The other 49 nets total 671 mm against the hand's 686.
+  D511-A runs 25 mm longer and DRV_SUP 24 mm shorter than in the hand.
+- Stage references:
+  - HL_IN is 0.80 against 0.786. This is over at the printed precision. The stage is the exact twin of Port 1's, which also gives 0.80.
+  - HL_OUT is 0.74 against 0.799: passes.
+  - HL_5V is 0.98 against the 0.88 reference. It is tier 1, and the hand partial is 1.17.
+
+**What was done:**
+- **Stage and charger (01, 02):**
+  - Twins of Port 1, written as explicit puts by the new `tools/twin_recipe.py` (secplace's translate turned some twins
+    wrong and left 0.01 mm courtyard overlaps).
+  - C530 and C538 sit 0.02 mm north of the exact copy.
+  - The twin spots of R513 and R514 fall in the centre area, so they are placed by at_pin west of x 96.45 (3.4 and 4.0 mm from
+    their pins).
+  - R524 sits between U501 pad 20 and C524. R527 is in the centre area at 96.87, 104.91, turn 180.
+- **5 V buck (03):**
+  - In the north-west corner: U504 at 83.6, 67.6 and L502 at 83.85, 73.68.
+  - The output caps C541 to C543 are in one row at y 79.35 with their PP5V pads north.
+  - EN_5V2 has free via sites west of U504.
+- **PD and protection (04):**
+  - U501 is at 91.5, 81.7 and U505 at 95.32, 75.1, east of H102.
+  - The west VBUS pair feeds D501 in the lane west of H102, then runs east under H102 to C550 and pad 32. The east pair feeds
+    C506 and the VBUS_IN entry at pad 23 (reserved).
+  - PPHV has kept boxes: a strip from pad 20 to R524, and a corridor south of U501 and down the west board strip to U503's VAC.
+    In g1, without them, the PPHV pour wrapped round the charger's south row (TS, CE_N, ICHG and ACOV were blocked).
+  - U502 and its pull-ups are on top, west of U501. In g2 they were on the bottom, where they sat in the planner's B.Cu VBUS
+    pour, and U501 had 18 blocked edges.
+  - g3 also adds C507 (above pad 34) and C503 (3V3, horizontal) north of U501, with PP5V coming in under C503.
+- **9 V supply (05):**
+  - Bottom side first. **Bottom count: 10** (U506, Q509, C557, C558, R552, R553, R554, R555, D510, D511).
+  - D510 and D511 could not go on top at U503 pad 23. On top, the charger has no free spot, and Port 1's D410-twin strip is
+    Port 2's PPHV way. The lane east of the output column left D510 9 mm from its pins.
+  - The diodes are on the bottom at 83.05, 104.2 and 83.05, 106.85, by vias.
+  - I tried moving U506 and its parts under the charger next to D511 (to shorten D511-A). It does not fit: KO_B_gap_filler_L
+    (84.0..93.0 x 88.5..114.5, B.Cu) leaves only the 5 mm west strip, which the diodes already fill. So U506 stays under U501.
+
+**Left open (g3 blame):**
+- U501 has 16 blocked edges. CC1 and CC2 at pads 28 and 29 sit next to the VBUS track into pad 32. GND pads 26, 27 and 31 sit
+  next to the VBUS pour.
+- U503 has 5 (inherited from the Port 1 copy).
+- U505 C_CC1 and C_CC2 (U505.6/7) are against H102.
+- SDA, SCL and IRQ_N to U301 are blocked as on the hand partial.
+
+**Borders:**
+- No Port 2 part leaves the region (0.4 setback). No claims are needed.
+- R527 is the only Port 2 part in the centre area. Both via fields are empty.
+- EN_5V2 runs from the north-west corner to U301 (pack side), about 86 mm half-perimeter. The pack side may want a via site or
+  route for it.
+- The bottom west strip x 78.9..84.0 under the charger (between the board edge and KO_B_gap_filler_L) holds D510 and D511.
+
+**For the lead (also helps Port 1):**
+- Port 1's R413/R414 twin spots fall in Port 2's centre area. Any Port 1 change there needs a Port 2 fix by hand.
+- Port 1's D410 strip spot is Port 2's PPHV path, so D410/D510 cannot be twins.
+- The charger's escape faults (U503 pads 1-3, 7, 9, 10, 12, 19-21, 24, 27, 34-36 in check.py) come with the copy from Port 1.
+  A fix in Port 1's charger moves Port 2's too.
+- In both ports, VBUS copper next to U*01's CC pads (28/29) blocks the CC edges. A kept box over the N row between the VBUS
+  sense way and pads 28 to 30 might help both.
+- secplace's translate does not land twins at the right turn when the template turns differ by 90°. `tools/twin_recipe.py`
+  writes explicit puts instead.
+- A recipe filter that drops steps by key must not use "side", because every put has it (cost me g3's recipe once).
+
+Files:
+- `recipes/port2/01-stage-charger.json`, `02-charger-fix.json`, `03-buck5v.json`, `04-pd-protect.json`, `05-9v.json`
+- `tools/twin_recipe.py`, `tools/group_hpwl.py`
+- `fragments/port2.json`, `fragments/Port_2.json` and their meta files
+- `runs/port2-g1`, `port2-g2`, `port2-g3`, `port2-whole-1` (score.json, F.png, B.png, hot.json, dc.json)

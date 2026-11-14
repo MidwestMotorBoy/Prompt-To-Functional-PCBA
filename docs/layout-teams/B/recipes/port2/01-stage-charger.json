@@ -1,0 +1,425 @@
+[
+ {
+  "note": "P-a and P-b for Port 2: Port 1's stage and charger (recipes/port1/01-stage.json, 02-charger.json, placed with twin_check on) copied to the 5xx twins by the L401-to-L501 offset (dx -23.02577, dy +0.006368). Written by tools/twin_recipe.py as explicit puts with the turn that matches the absolute pad positions (R545, C516, C515, R528 sit in the template 90 degrees from their Port 1 twins, so secplace's translate step turned them). C530 and C538 are 0.02 mm north of the exact copy (their courtyards are 0.01 mm larger than C430/C438's). R513 and R514 (ICHG, ILIM) are not copied: their copies fall in the centre area; they are placed at U503 pads 9, 10 in 02-charger-fix.json. R524/R527 are per port, D510/D511 belong to the 9 V section."
+ },
+ {
+  "put": "Q501",
+  "at": [
+   86.53503,
+   99.836368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of Q401: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "Q502",
+  "at": [
+   91.07423,
+   99.856368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of Q402: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C530",
+  "at": [
+   85.97423,
+   97.346368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C430: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; moved 0.02 mm north (courtyard 0.01 mm larger than the twin)"
+ },
+ {
+  "put": "C538",
+  "at": [
+   90.75423,
+   97.366368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C438: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; moved 0.02 mm north (courtyard 0.01 mm larger than the twin)"
+ },
+ {
+  "put": "C523",
+  "at": [
+   82.44423,
+   90.526368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C423: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C520",
+  "at": [
+   82.44423,
+   95.356368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C420: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C527",
+  "at": [
+   82.44423,
+   100.186368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C427: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C524",
+  "at": [
+   94.99423,
+   90.756368
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "twin of C424: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C534",
+  "at": [
+   94.99423,
+   95.476368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C434: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C531",
+  "at": [
+   94.99423,
+   100.196368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C431: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "U503",
+  "at": [
+   88.37423,
+   108.006368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of U403: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R545",
+  "at": [
+   85.17423,
+   102.336368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R445: turn 0 -> 270 (template orientations differ), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R544",
+  "at": [
+   87.67423,
+   102.336368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of R444: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R547",
+  "at": [
+   89.87423,
+   102.336368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R447: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R546",
+  "at": [
+   92.17423,
+   102.336368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of R446: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C512",
+  "at": [
+   86.37423,
+   103.856368
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "twin of C412: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C511",
+  "at": [
+   89.69423,
+   103.896368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of C411: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C513",
+  "at": [
+   91.97423,
+   103.886368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C413: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C510",
+  "at": [
+   84.27423,
+   103.506368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C410: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "D504",
+  "at": [
+   81.87423,
+   103.706368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of D404: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "D505",
+  "at": [
+   93.82423,
+   104.006368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of D405: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C516",
+  "at": [
+   83.85423,
+   105.461368
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "twin of C416: turn 90 -> 180 (template orientations differ), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C514",
+  "at": [
+   83.85423,
+   106.491368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C414: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C515",
+  "at": [
+   83.85423,
+   107.521368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C415: turn 90 -> 0 (template orientations differ), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C509",
+  "at": [
+   83.28423,
+   108.846368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C409: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R526",
+  "at": [
+   81.87423,
+   105.456368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R426: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R525",
+  "at": [
+   81.87423,
+   107.506368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R425: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R510",
+  "at": [
+   83.82423,
+   110.656368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R410: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R509",
+  "at": [
+   82.27423,
+   111.156368
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "twin of R409: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R511",
+  "at": [
+   83.32423,
+   112.206368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of R411: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R512",
+  "at": [
+   84.77423,
+   111.856368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R412: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C517",
+  "at": [
+   92.44423,
+   108.506368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of C417: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R528",
+  "at": [
+   93.82423,
+   105.306368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of R428: turn 90 -> 0 (template orientations differ), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R529",
+  "at": [
+   93.82423,
+   107.206368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R429: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C518",
+  "at": [
+   93.47423,
+   109.156368
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "twin of C418: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "C519",
+  "at": [
+   92.92423,
+   110.656368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of C419: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R519",
+  "at": [
+   92.52423,
+   111.706368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of R419: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R518",
+  "at": [
+   94.52423,
+   111.706368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of R418: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R516",
+  "at": [
+   89.12423,
+   112.056368
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "twin of R416: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R515",
+  "at": [
+   87.12423,
+   112.056368
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "twin of R415: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R517",
+  "at": [
+   90.52423,
+   112.256368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R417: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ },
+ {
+  "put": "R535",
+  "at": [
+   85.72423,
+   112.256368
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "twin of R435: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+ }
+]

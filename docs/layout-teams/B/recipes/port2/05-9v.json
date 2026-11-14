@@ -1,0 +1,170 @@
+[
+ {
+  "note": "P-f, Port 2 9 V gate-drive supply (TPS7A4101 LDO from PACK_P, output diode-ORed into DRV_SUP through D511; Q509 turns it off from U501's DRV9_OFF). All on the bottom side (PLAN section 6 first choice), U506 group in the area 78.9..88.5 x 70.2..86.3 under the buck's output capacitors and U501's LDO side. D510 (REGN to DRV_SUP) and D511 (9 V to DRV_SUP) also on the bottom, in the strip x 78.9..83.8 below y 100.8 under the charger's west side, by vias to C510/C511: on top Port 1's D410 spot (the strip west of the input column) is Port 2's PPHV way to U503's VAC, the charger has no free spot, and the lane east of the output column left D510 9 mm from its pins (tried)."
+ },
+ {
+  "side": [
+   "D510",
+   "D511",
+   "U506",
+   "Q509",
+   "C557",
+   "C558",
+   "R552",
+   "R553",
+   "R554",
+   "R555"
+  ],
+  "to": "B"
+ },
+ {
+  "at_pin": "D510",
+  "pads": {
+   "1": "C511.1",
+   "2": "C510.1"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "within": [
+   78.9,
+   100.8,
+   83.8,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "D511",
+  "pads": {
+   "1": "D510.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   78.9,
+   100.8,
+   83.8,
+   113.2
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "U506",
+  "pads": {
+   "1": "D511.2"
+  },
+  "within": [
+   78.9,
+   73.0,
+   86.6,
+   86.3
+  ],
+  "step": 0.1
+ },
+ {
+  "at_pin": "C557",
+  "pads": {
+   "1": "U506.8"
+  },
+  "max_mm": 2.0,
+  "soft": false,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.02
+ },
+ {
+  "at_pin": "C558",
+  "pads": {
+   "1": "U506.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R552",
+  "pads": {
+   "2": "U506.2",
+   "1": "U506.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R553",
+  "pads": {
+   "1": "U506.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "Q509",
+  "pads": {
+   "3": "U506.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R554",
+  "pads": {
+   "1": "U506.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R555",
+  "pads": {
+   "2": "Q509.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   70.2,
+   88.5,
+   86.3
+  ],
+  "step": 0.05
+ }
+]

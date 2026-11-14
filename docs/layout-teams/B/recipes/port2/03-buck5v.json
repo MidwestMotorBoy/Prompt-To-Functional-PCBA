@@ -1,0 +1,169 @@
+[
+ {
+  "note": "P-e, Port 2 5 V buck (TPS62933) in the north-west corner of the port (the 9 V supply goes to the bottom, 05-9v.json, so the box runs up to y 63.8). L502 vertical (pad 1 SW north, pad 2 PP5V south) between TP512/J109 and the VBUS lane west of H102; U504 turn 270 above it: VIN/GND row north (C546 pad to pad there, C544 beside), SW at the south-west corner toward L502 pad 1, BST/SS/FB row south. Output capacitors under L502 pad 2, PP5V pads north; PP5V then runs east under H102 to U501 pad 34 (strip reserved in 04-pd.json)."
+ },
+ {
+  "put": "L502",
+  "at": [
+   83.85,
+   73.68
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "0.15 mm west of the first try so D501 fits in the VBUS lane west of H102"
+ },
+ {
+  "put": "U504",
+  "at": [
+   83.6,
+   67.6
+  ],
+  "turn": 270,
+  "side": "F"
+ },
+ {
+  "hot": "C546",
+  "switch": "U504",
+  "supply": [
+   "3"
+  ],
+  "ret": [
+   "1",
+   "4"
+  ],
+  "max_mm": 1.5,
+  "within": [
+   79.5,
+   63.82,
+   85.18,
+   66.21
+  ],
+  "step": 0.02
+ },
+ {
+  "hot": "C544",
+  "switch": "U504",
+  "supply": [
+   "3"
+  ],
+  "ret": [
+   "1",
+   "4"
+  ],
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   85.18,
+   70.36
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C540",
+  "pads": {
+   "1": "U504.6",
+   "2": "U504.5"
+  },
+  "max_mm": 1.5,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   86.9,
+   70.36
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C539",
+  "pads": {
+   "1": "U504.7"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   86.9,
+   73.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R534",
+  "pads": {
+   "1": "U504.8"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   86.9,
+   73.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R533",
+  "pads": {
+   "2": "U504.8"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   86.9,
+   73.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R532",
+  "pads": {
+   "1": "U504.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   63.82,
+   86.9,
+   73.0
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "output capacitors in one row under L502, PP5V pads north on L502 pad 2's side, put explicitly (the greedy at_pin left no room for the third)"
+ },
+ {
+  "put": "C542",
+  "at": [
+   80.12,
+   79.35
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C541",
+  "at": [
+   82.53,
+   79.35
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C543",
+  "at": [
+   84.96,
+   79.35
+  ],
+  "turn": 0,
+  "side": "F"
+ }
+]

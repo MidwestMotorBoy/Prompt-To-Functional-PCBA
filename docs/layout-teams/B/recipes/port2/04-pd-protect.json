@@ -1,0 +1,327 @@
+[
+ {
+  "note": "P-c and P-d, Port 2 PD controller U501 (TPS25751D) and port protection U505 (TPD6S300). VBUS: J501's east pair (A4/B9, x 95.9) feeds C506 (top strip, VBUS pad right under the pair) and, down the east edge east of U505, U501's VBUS_IN pad 23 (reserved entry). The west pair (A9/B4, x 91.1) feeds D501 (TVS) in the lane west of H102 and goes on down the lane and east under H102 to U501's VBUS sense pad 32 (C550), between the PP5V way (from the buck, west, to pad 34) and the CC lines (U505 to pads 28/29), so no VBUS copper crosses a CC line (g2: VBUS fed pad 32 from the east and blocked both CC caps). U505 sits right of H102 under CC1 (A5): C_CC pins north/west, CC pins south onto U501 pads 28/29 with C501/C502 on the lines. PPHV pad 20 goes down a kept strip to R524 above C524's AC_SNS_N pad; the PPHV sense branch to U503's VAC (west side of the copied charger) gets a kept corridor west along U501's south and down the west board strip (g1: without it the planner wrapped PPHV round the charger's south row). U502 and its pull-ups west of U501's LDO side, I2CC by vias from pads 16/17 (g2: on the bottom under U501's east half they sat in the planner's B.Cu VBUS pour and 8 edges blocked)."
+ },
+ {
+  "put": "U505",
+  "at": [
+   95.32,
+   75.1
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "U501",
+  "at": [
+   91.5,
+   81.7
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "ring": "U501",
+  "mm": 0.8
+ },
+ {
+  "ring": "U505",
+  "mm": 0.8
+ },
+ {
+  "put": "D501",
+  "at": [
+   88.15,
+   71.64
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "TVS on the west VBUS pair, VBUS pads east (toward A9/B4), in the VBUS lane west of H102"
+ },
+ {
+  "put": "C506",
+  "at": [
+   97.25,
+   71.1
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "VBUS bulk under the east VBUS pair, VBUS pad west right below A4/B9, GND east by the shield"
+ },
+ {
+  "reserve": "pp5v_strip_L502_to_U501_34",
+  "box": [
+   86.2,
+   78.6,
+   89.3,
+   79.18
+  ],
+  "sides": "F",
+  "except": [
+   "C507"
+  ],
+  "note": "PP5V way from the buck output caps under C503 into C507 south pad and pad 34"
+ },
+ {
+  "reserve": "vbus_in_U501_23",
+  "box": [
+   95.0,
+   79.5,
+   99.6,
+   81.88
+  ],
+  "sides": "F",
+  "note": "VBUS from the east pair (D501, east lane) into U501 pad 23"
+ },
+ {
+  "reserve": "pphv_strip_U501_20_to_R524",
+  "box": [
+   95.0,
+   82.92,
+   97.0,
+   84.7
+  ],
+  "sides": "F"
+ },
+ {
+  "reserve": "pphv_corridor_south_of_U501",
+  "box": [
+   78.9,
+   85.0,
+   95.0,
+   86.45
+  ],
+  "sides": "F"
+ },
+ {
+  "reserve": "pphv_west_strip",
+  "box": [
+   78.9,
+   86.45,
+   80.78,
+   102.3
+  ],
+  "sides": "F"
+ },
+ {
+  "reserve": "i2c_vias_U501_8_10",
+  "box": [
+   88.6,
+   84.22,
+   90.8,
+   84.98
+  ],
+  "sides": "F"
+ },
+ {
+  "reserve": "vbus_sense_way_under_H102",
+  "box": [
+   86.9,
+   72.96,
+   91.6,
+   76.1
+  ],
+  "sides": "F",
+  "note": "west VBUS pair: D501, down the lane, east under H102 to pad 32"
+ },
+ {
+  "reserve": "i2cc_vias_U501_16_19",
+  "box": [
+   92.2,
+   84.22,
+   94.2,
+   84.98
+  ],
+  "sides": "F"
+ },
+ {
+  "put": "R524",
+  "at": [
+   96.0,
+   86.45
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "PPHV pad north (from pad 20 and the corridor), AC_SNS_N pad south over C524's AC_SNS_N pad and the strip along L501's top"
+ },
+ {
+  "put": "C552",
+  "at": [
+   92.74,
+   76.66
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "VPWR (U505 pad 10) faces H102, so C552 stands just south-west of U505 under H102, LDO_3V3 pad north at pad 10's level"
+ },
+ {
+  "put": "C507",
+  "at": [
+   90.12,
+   77.65
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "PP5V bypass, PP5V pad south right above pad 34, end of the PP5V way"
+ },
+ {
+  "put": "C502",
+  "at": [
+   93.5,
+   78.165
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "CC2 cap on the CC2 line from U505 pad 11 to U501 pad 29, CC2 pad east"
+ },
+ {
+  "put": "C501",
+  "at": [
+   95.5,
+   78.165
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "CC1 cap on the CC1 line from U505 pad 12 to U501 pad 28, CC1 pad west"
+ },
+ {
+  "put": "C550",
+  "at": [
+   91.51,
+   77.2
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "VBUS pad south at pad 32, between C507 and C552"
+ },
+ {
+  "put": "C549",
+  "at": [
+   96.0,
+   82.4
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "PPHV pad west at pad 20, GND east"
+ },
+ {
+  "put": "C504",
+  "at": [
+   87.2,
+   81.2
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "LDO_3V3 pad north at pad 1"
+ },
+ {
+  "put": "C505",
+  "at": [
+   87.4,
+   83.75
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "LDO_1V5 pad north at pad 4"
+ },
+ {
+  "at_pin": "C551",
+  "pads": {
+   "1": "U505.3"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.02
+ },
+ {
+  "note": "EEPROM group west of U501's LDO side, between the output capacitors and the PPHV corridor"
+ },
+ {
+  "put": "U502",
+  "at": [
+   83.3,
+   83.4
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "at_pin": "R502",
+  "pads": {
+   "2": "U502.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   81.72,
+   86.41,
+   84.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R503",
+  "pads": {
+   "2": "U502.6"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   78.9,
+   81.72,
+   86.41,
+   84.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C508",
+  "pads": {
+   "1": "U502.8"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   78.9,
+   81.72,
+   86.41,
+   84.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R504",
+  "pads": {
+   "2": "U501.18"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "within": [
+   78.9,
+   81.72,
+   86.41,
+   84.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R541",
+  "pads": {
+   "2": "U505.9"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "step": 0.05
+ },
+ {
+  "put": "C503",
+  "at": [
+   87.8,
+   77.795
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "VIN_3V3 bypass, horizontal over the PP5V way, 3V3 pad east above pad 38"
+ }
+]
