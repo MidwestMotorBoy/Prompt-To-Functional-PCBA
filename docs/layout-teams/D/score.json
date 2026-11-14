@@ -1,0 +1,13 @@
+{
+ "loss_W": 1.013,
+ "power_open": {
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 411,
+ "hot_loops": "7 of 7 pass, 6.16 nH",
+ "blocked_edges": "28 of 427"
+}
