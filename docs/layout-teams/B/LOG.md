@@ -332,3 +332,68 @@ Files:
 - `tools/twin_recipe.py`, `tools/group_hpwl.py`
 - `fragments/port2.json`, `fragments/Port_2.json` and their meta files
 - `runs/port2-g1`, `port2-g2`, `port2-g3`, `port2-whole-1` (score.json, F.png, B.png, hot.json, dc.json)
+
+## 2026-11-14 19:30 UTC, lead: stitch and review, round 1 (candidates/r1.json = best_placement.json)
+
+**Stitch.** `candidates/r1.json` is `stitch.py` of fragments/port1.json, port2.json and pack.json as the groups left them
+(245 parts, 17 on the bottom, 0 claim clashes, 0 hard faults in check.py). No border part had to move: no group leaves its
+region. It is the same placement as `runs/port2-whole-1`.
+
+**Whole-board screen with all 7 hot loops** (`screen.sh runs/r1-hot candidates/r1.json --hot=all`, route 0, finished, nothing
+timed out):
+
+| Measure | Hand (`runs/hand_screen`) | r1 (`runs/r1-hot`) |
+|---|---|---|
+| Blocked edges | 56 of 452 | **58 of 451** |
+| DRC errors | 0 | 0 |
+| Open power pins | PP5V at U401 (hard miss), 3V3 at L201, GND J301/J302 | GND J301/J302 only |
+| Hot loops | reference totals 1.95, 1.08, 1.02, 1.03, 1.08, 0.99, 1.0 (sum 8.15 nH) | 7 of 7 tier 1; 1.02, 0.70, 0.80, 0.74, 0.98, 0.80, 0.74 (sum 5.78 nH) |
+| Copper loss | 1.36 W | 1.142 W |
+| Full route | 391 of 448 (charter) | not run |
+
+Hard limits are met and ringing and loss are under the hand. Routability is 2 blocked edges over the hand, so r1 is not
+called done.
+
+**Where the 58 are** (`blame.py runs/r1-hot`): Port 1 31, Port 2 29, pack 4, fixed 3. By chip: U401 18 (hand 9), U501 17
+(hand 8), U503 5 (hand 9), U405 5, U403 4, U505 4, U402 3, U502 2. The pack's 4 are GND at C304 (hand has it too) and
+SDA, SCL, IRQ_N, which end at U401 and U501 pins. So the two PD chips hold 35 of the 58, and every edge that is over the
+hand's count is at them. About 20 of the 58 are also on the hand board and look like the router's own limits (HIDRV1, HG2,
+C_CC1 at U405/U505, the sealed Kelvin pads R428, R429, R528, R529, ACUV).
+
+**Renders** (`runs/r1-hot/F.png`, `B.png`, zooms in `plan/r1-zoom/`, made with the new `tools/zoom.py`):
+- Power stages, FET pair and both 5 V bucks are compact. Port 1's PP5V is the one sprawling net: the C443 bridge sits
+  7.7 mm from L402 and its pour runs across the east column.
+- U401 south row: the PPHV spine (pad 20 and C449 to C409 at the charger) runs west about 1 mm under the whole south row,
+  then down the west strip. It fences pads 8, 9, 10 (SDA, SCL, IRQ_N), 16, 17 (to U402), 18, 19 and GND 7 off from U402,
+  the pull-ups and every via site.
+- U401 north row: VBUS reaches pad 32 past C450 and its pour links pad 32 to pad 23 across pads 26 to 31, between the row
+  and C401, C402. CC1, CC2 and GND 26, 27, 31 have no way out.
+- U501 north row: the VBUS spine runs from pad 23 to pad 32 about 0.3 mm north of pads 24 to 31, in the 1.0 mm gap under
+  C501 and C502. Pad 32 is already fed from the west pin pair through C550.
+- U501 south row: the grown PPHV pour stands 0.55 mm south of the pads and the planner's GND via and track at pad 7 plug
+  the west end of that channel, so pads 16, 17, 18 cannot reach U502 and R504 beside the chip.
+- Port 1 input bulk capacitors C420, C423, C456 are a copper island (`plan.log`: no path on F.Cu; `hot.json` HL_IN per
+  capacitor 16872 nH, that is not reached). Port 2's twins are reached (3.5 and 3.9 nH; hand 1.6 and 2.1).
+
+**Planner escape room, tried as a lead knob** (`screen.sh ... --plan="--escape=X"`, no hot loops, both finished):
+
+| Run | escape | Blocked edges | Loss | Open power pins |
+|---|---|---|---|---|
+| `runs/r1-hot` | 0.4 (default) | 58 of 451 | 1.142 W | GND J301/J302 |
+| `runs/r1-esc06` | 0.6 | 48 of 449 | 1.153 W | **PP5V at U401**, GND J301/J302 |
+| `runs/r1-esc08` | 0.8 | 40 of 448 | 1.181 W | **PP5V at U401**, 3V3 at L201 (allowed), GND J301/J302 |
+
+More escape room moves VBUS to pad 23 round the east of H104 and opens U401's north row, but C407's copper no longer
+reaches pad 34, so PP5V opens: a hard miss, not usable yet. U401 still has 11 and U501 14 at 0.8, so placement at the PD
+chips is the main lever, and the escape option comes after PP5V at pad 34 is made to join at 0.8 as well.
+
+**Not done:** the full trial route of r1 was not queued. The push that the queue needs was refused by this session's
+permission system, and nothing was pushed. A local full route was not run in this round.
+
+**Next round (two fix tasks):** Port 1 PD pocket (U401 south and north rows, PP5V join that holds at escape 0.8, bulk
+capacitors joined) and Port 2 PD pocket (U501 north and south rows, HL_5V first capacitor). Stage and charger parts
+stay put so the twins hold.
+
+Files: `candidates/r1.json`, `best_placement.json` (same content), `runs/r1-hot/` (score.json, hot.json,
+dc.json, ghost.log, F.png, B.png), `runs/r1-esc06/`, `runs/r1-esc08/` (score.json, ghost.log, dc.json, F.png, B.png),
+`plan/r1-zoom/*.png`, `tools/zoom.py`.
