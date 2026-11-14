@@ -1,0 +1,6 @@
+[
+ {"note": "PLAN.md section 5 border rule 2: the two via fields for the north-south signals stay free of parts on both sides, and the centre area takes no parts except R527. Include this file first in every group's recipe list."},
+ {"reserve": "via_field_top", "box": [98.6, 83.8, 101.4, 87.8], "sides": "FB"},
+ {"reserve": "via_field_bottom", "box": [99.6, 113.0, 103.4, 115.2], "sides": "FB"},
+ {"reserve": "centre", "box": [96.5, 102.8, 103.5, 113.0], "sides": "F", "except": ["R527"]}
+]

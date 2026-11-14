@@ -1,0 +1,11 @@
+net classes: 18 high-current nets, 62 small-signal nets
+edges to route: 156 (0 on long nets)
+fan-out stubs: 38
+GHOSTFAIL SCL Pad 2 [SCL] of R115 on F.Cu -> Pad 6 [SCL] of J302 on F.Cu
+GHOSTFAIL 3V3 Pad 1 [3V3] of R313 on F.Cu -> Zone plane
+GHOSTFAIL 3V3 Pad 1 [3V3] of R302 on F.Cu -> Zone plane
+GHOSTFAIL 3V3 Pad 1 [3V3] of R305 on F.Cu -> Zone plane
+GHOSTFAIL CELL_N Pad 1 [CELL_N] of R107 on F.Cu -> Zone 'pc_CELL_N' [CELL_N] on F.Cu, priority 20
+GHOSTFAIL GND Pad 2 [GND] of C304 on F.Cu -> Zone plane
+GHOSTFAIL PACK_P Pad 1 [PACK_P] of C107 on F.Cu -> Zone plane
+GHOST noway 7 of 156 edges, 66 s

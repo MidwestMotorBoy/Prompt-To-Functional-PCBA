@@ -1,0 +1,133 @@
+{
+ "rings": [],
+ "reserved": [
+  {
+   "name": "inductor_and_output_caps",
+   "box": [
+    99.25,
+    102.5,
+    105.9,
+    108.42
+   ],
+   "sides": "F",
+   "except": [
+    "C441",
+    "C442",
+    "C443",
+    "L402"
+   ]
+  }
+ ],
+ "claims": [
+  {
+   "ref": "C446",
+   "box": [
+    104.2,
+    111.4,
+    105.4,
+    113.4
+   ],
+   "group": "port1",
+   "why": "hand spot, its courtyard reaches 0.1 mm past the port 1 region setback"
+  },
+  {
+   "ref": "C444",
+   "box": [
+    99.4,
+    112.4,
+    104.3,
+    116.0
+   ],
+   "group": "port1",
+   "why": "hand spot, crosses into the pack region"
+  },
+  {
+   "ref": "L402",
+   "box": [
+    98.9,
+    102.5,
+    106.0,
+    108.6
+   ],
+   "group": "port1",
+   "why": "hand spot, crosses the port border"
+  },
+  {
+   "ref": "C441",
+   "box": [
+    94.3,
+    102.5,
+    100.4,
+    110.0
+   ],
+   "group": "port1",
+   "why": "hand spot, port 2 side of the border"
+  },
+  {
+   "ref": "C442",
+   "box": [
+    94.3,
+    102.5,
+    100.4,
+    110.0
+   ],
+   "group": "port1",
+   "why": "hand spot, port 2 side of the border"
+  },
+  {
+   "ref": "C443",
+   "box": [
+    94.3,
+    102.5,
+    100.4,
+    110.0
+   ],
+   "group": "port1",
+   "why": "hand spot, port 2 side of the border"
+  },
+  {
+   "ref": "R433",
+   "box": [
+    98.9,
+    108.4,
+    100.6,
+    113.0
+   ],
+   "group": "port1",
+   "why": "FB divider at U404 pad 8, the hand spot on the port 2 side of the border"
+  },
+  {
+   "ref": "R434",
+   "box": [
+    98.9,
+    108.4,
+    100.6,
+    113.0
+   ],
+   "group": "port1",
+   "why": "FB divider at U404 pad 8, the hand spot on the port 2 side of the border"
+  }
+ ],
+ "bottom": [],
+ "deviations": [],
+ "failed": [],
+ "costs": {
+  "U404": 0.0,
+  "C446": 1.937,
+  "C444": 1.961,
+  "C440": 2.774,
+  "C439": 1.68,
+  "R433": 2.838,
+  "R434": 2.55,
+  "R432": 1.739,
+  "L402": 5.459,
+  "C441": 2.579,
+  "C442": 5.282,
+  "C443": 150.087
+ },
+ "recipes": [
+  "recipes/port1/05-buck5v.json"
+ ],
+ "base": "fragments/hand/port1.json",
+ "others": "fragments/hand"
+}

@@ -1,0 +1,29 @@
+net classes: 18 high-current nets, 76 small-signal nets
+edges to route: 179 (0 on long nets)
+fan-out stubs: 50
+GHOSTFAIL /USB Port 1/ACP_F Pad 1 [/USB Port 1/ACP_F] of C415 on F.Cu -> Pad 30 [/USB Port 1/ACP_F] of U403 on F.Cu
+GHOSTFAIL /USB Port 1/HIDRV1 Pad 27 [/USB Port 1/HIDRV1] of U403 on F.Cu -> Pad 1 [/USB Port 1/HIDRV1] of R444 on F.Cu
+GHOSTFAIL /USB Port 1/C_CC1 Pad 4 [/USB Port 1/C_CC1] of U405 on F.Cu -> Pad 7 [/USB Port 1/C_CC1] of U405 on F.Cu
+GHOSTFAIL /USB Port 1/I2CC_SDA Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu -> Pad 16 [/USB Port 1/I2CC_SDA] of U401 on F.Cu
+GHOSTFAIL Net-(U403-ACUV) Pad 1 [Net-(U403-ACUV)] of R410 on F.Cu -> Pad 34 [Net-(U403-ACUV)] of U403 on F.Cu
+GHOSTFAIL /USB Port 1/CC2 Pad 1 [/USB Port 1/CC2] of C402 on F.Cu -> Pad 11 [/USB Port 1/CC2] of U405 on F.Cu
+GHOSTFAIL /USB Port 1/VBUS Pad 32 [/USB Port 1/VBUS] of U401 on F.Cu -> Pad 23 [/USB Port 1/VBUS] of U401 on F.Cu
+GHOSTFAIL /USB Port 1/CC1 Pad 1 [/USB Port 1/CC1] of C401 on F.Cu -> Pad 12 [/USB Port 1/CC1] of U405 on F.Cu
+GHOSTFAIL /USB Port 1/I2CC_SDA Pad 5 [/USB Port 1/I2CC_SDA] of U402 on F.Cu -> Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu
+GHOSTFAIL /USB Port 1/C_CC1 Pad A5 [/USB Port 1/C_CC1] of J401 on F.Cu -> Pad 4 [/USB Port 1/C_CC1] of U405 on F.Cu
+GHOSTFAIL /USB Port 1/SBU_FLT Pad 19 [/USB Port 1/SBU_FLT] of U401 on F.Cu -> Pad 9 [/USB Port 1/SBU_FLT] of U405 on F.Cu
+GHOSTFAIL /USB Port 1/TS Pad 8 [/USB Port 1/TS] of U403 on F.Cu -> Pad 1 [/USB Port 1/TS] of TH401 on F.Cu
+GHOSTFAIL /USB Port 1/I2CC_SDA Pad 2 [/USB Port 1/I2CC_SDA] of U403 on F.Cu -> Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu
+GHOSTFAIL SCL Pad 9 [SCL] of U301 on F.Cu -> Pad 9 [SCL] of U401 on F.Cu
+GHOSTFAIL SDA Pad 10 [SDA] of U301 on F.Cu -> Pad 8 [SDA] of U401 on F.Cu
+GHOSTFAIL IRQ_N Pad 10 [IRQ_N] of U401 on F.Cu -> Pad 21 [IRQ_N] of U301 on F.Cu
+GHOSTFAIL /USB Port 1/BAT_SNS_P Pad 1 [/USB Port 1/BAT_SNS_P] of R428 on F.Cu -> Zone 'pc_USB Port 1_BAT_SNS_P' [/USB Port 1/BAT_SNS_P] on F.Cu, priority 30
+GHOSTFAIL /USB Port 1/PPHV Pad 1 [/USB Port 1/PPHV] of R425 on F.Cu -> Zone 'pc_USB Port 1_PPHV' [/USB Port 1/PPHV] on F.Cu, priority 20
+GHOSTFAIL GND Pad 36 [GND] of U401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 31 [GND] of U401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C449 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of Q409 on F.Cu -> Zone plane
+GHOSTFAIL PACK_P Pad 1 [PACK_P] of R429 on F.Cu -> Zone plane
+GHOSTFAIL /USB Port 1/HG2 Pad 1 [/USB Port 1/HG2] of Q402 on F.Cu -> Pad 2 [/USB Port 1/HG2] of R446 on F.Cu
+GHOSTFAIL /USB Port 1/LG1 Pad 2 [/USB Port 1/LG1] of R445 on F.Cu -> Pad 8 [/USB Port 1/LG1] of Q401 on F.Cu
+GHOST noway 25 of 179 edges, 46 s

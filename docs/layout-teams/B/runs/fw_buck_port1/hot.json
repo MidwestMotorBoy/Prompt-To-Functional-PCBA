@@ -1,0 +1,12 @@
+{
+ "USB Port 1/HL_5V": {
+  "per_cap_nH": {
+   "C446": 0.682,
+   "C444": 6362.026
+  },
+  "all_parallel_with_esl_nH": 0.982,
+  "branches": 8464,
+  "vias": 80,
+  "cell_mm": 0.2
+ }
+}

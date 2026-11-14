@@ -1,0 +1,34 @@
+{
+ "USB Port 1/HL_5V": {
+  "per_cap_nH": {
+   "C446": 0.57,
+   "C444": 1.664
+  },
+  "all_parallel_with_esl_nH": 0.72,
+  "branches": 8235,
+  "vias": 70,
+  "cell_mm": 0.2
+ },
+ "USB Port 1/HL_IN": {
+  "per_cap_nH": {
+   "C430": 0.374,
+   "C420": 17392.674,
+   "C423": 17393.086
+  },
+  "all_parallel_with_esl_nH": 0.673,
+  "branches": 14879,
+  "vias": 120,
+  "cell_mm": 0.2
+ },
+ "USB Port 1/HL_OUT": {
+  "per_cap_nH": {
+   "C438": 0.432,
+   "C431": 0.952,
+   "C434": 4.262
+  },
+  "all_parallel_with_esl_nH": 0.567,
+  "branches": 6280,
+  "vias": 135,
+  "cell_mm": 0.3
+ }
+}
