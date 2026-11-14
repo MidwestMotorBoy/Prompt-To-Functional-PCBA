@@ -1,0 +1,172 @@
+{
+ "summary": {
+  "power_mm_amps": 1942,
+  "signal_cost": 1001,
+  "overlap_mm2": 60.0,
+  "loss_estimate_W": 1.52
+ },
+ "blocks": {
+  "3V3 Rail / Pack-rail bulk capacitance | B.Cu": [
+   94.36711523608838,
+   122.92567432803715,
+   105.75187873824336,
+   134.31043783019211
+  ],
+  "3V3 Rail / TPS62177 3.3 V always-on buck | F.Cu": [
+   91.47264567868079,
+   115.03770930383187,
+   99.65846512452738,
+   123.22352874967847
+  ],
+  "Cells and Gauge / BQ40Z50 gauge: supply, cell inputs, SMBus | F.Cu": [
+   93.32607384346446,
+   124.91289490216428,
+   104.39703044169931,
+   132.29353263432085
+  ],
+  "Cells and Gauge / Cell thermistors on the board | B.Cu": [
+   111.3312239093141,
+   126.74683230571381,
+   113.00809599745918,
+   130.10057648200396
+  ],
+  "Cells and Gauge / Current sense | F.Cu": [
+   83.52822223689503,
+   130.8439218678984,
+   90.40180063537133,
+   134.28071106713654
+  ],
+  "Cells and Gauge / Gauge interrupt onto the shared IRQ line | F.Cu": [
+   83.6328955935701,
+   126.9610998342957,
+   89.39201010884067,
+   130.80050951114274
+  ],
+  "Cells and Gauge / Protection FETs (charge and discharge, back to back) | F.Cu": [
+   99.6833385162657,
+   117.20218537747957,
+   121.62081330257598,
+   124.51467697291633
+  ],
+  "Cells and Gauge / Second-level protector and fuse | F.Cu": [
+   109.30091058996535,
+   124.51642736935125,
+   121.63377886948575,
+   132.73833955569816
+  ],
+  "MCU / Antenna match (pi network between RFIO and ANT_IN) | F.Cu": [
+   97.57655496006221,
+   132.41952282958482,
+   103.29864898235859,
+   134.32688750368362
+  ],
+  "MCU / CC2340R5MODA module | F.Cu": [
+   91.47946314052639,
+   103.43022777085648,
+   105.6652257213678,
+   112.88740282475075
+  ],
+  "MCU / Pull-ups owned by this block | F.Cu": [
+   91.36494241466474,
+   129.13642633981055,
+   93.18039828028085,
+   132.7673380710428
+  ],
+  "USB Port 1 / 5 V buck for PP5V (TPS62933) | F.Cu": [
+   115.24035754320435,
+   66.43706891610147,
+   121.62305938490117,
+   85.7785896485161
+  ],
+  "USB Port 1 / 9 V gate-drive supply, diode-ORed with REGN | F.Cu": [
+   87.75,
+   83.75,
+   99.25,
+   91.25
+  ],
+  "USB Port 1 / BQ25756 buck-boost charger: controller and current sense | F.Cu": [
+   105.70617483721303,
+   102.82719921944059,
+   116.32745442114263,
+   113.4484788033702
+  ],
+  "USB Port 1 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": [
+   109.7015210936578,
+   79.6871916506455,
+   115.23979755840746,
+   87.95327592639126
+  ],
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": [
+   100.14789082298478,
+   85.79184088568856,
+   106.49285635480607,
+   105.01900916393485
+  ],
+  "USB Port 1 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": [
+   99.31070508542253,
+   87.95773133083463,
+   121.61148377137876,
+   102.82491712147211
+  ],
+  "USB Port 1 / USB PD controller TPS25751D, EEPROM and I2C pull-ups | F.Cu": [
+   101.39712400662954,
+   75.25589071428675,
+   109.69183353740878,
+   87.63605419306177
+  ],
+  "USB Port 1 / USB-C connector and port protection | F.Cu": [
+   99.955,
+   69.8695,
+   113.045,
+   74.65080481283422
+  ],
+  "USB Port 2 / 5 V buck for PP5V (TPS62933) | F.Cu": [
+   78.5,
+   75.5,
+   86.25,
+   91.25
+  ],
+  "USB Port 2 / 9 V gate-drive supply, diode-ORed with REGN | F.Cu": [
+   78.37602144562356,
+   63.82424382988738,
+   86.03598810351446,
+   75.25702988644092
+  ],
+  "USB Port 2 / BQ25756 buck-boost charger: controller and current sense | F.Cu": [
+   85.77829108231079,
+   91.2482005896227,
+   98.78664878034475,
+   99.92043905497867
+  ],
+  "USB Port 2 / Charger programming: input window, frequency, current limits, battery feedback, thermistor | F.Cu": [
+   80.23463542991345,
+   91.5030421674641,
+   85.77291189466311,
+   99.76912644320986
+  ],
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | B.Cu": [
+   93.50979274355099,
+   103.2164505925363,
+   99.85475827537225,
+   122.44361887078257
+  ],
+  "USB Port 2 / Four-switch power stage. 0R gate resistors are tuning positions | F.Cu": [
+   78.5183654620537,
+   99.92088633816523,
+   91.3937260395288,
+   125.67160749311545
+  ],
+  "USB Port 2 / USB PD controller TPS25751D, EEPROM and I2C pull-ups | F.Cu": [
+   86,
+   75.25,
+   98.5,
+   83.5
+  ],
+  "USB Port 2 / USB-C connector and port protection | F.Cu": [
+   86.955,
+   69.8695,
+   100.045,
+   74.65080481283424
+  ]
+ }
+}

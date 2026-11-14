@@ -283,6 +283,12 @@ def cells_gauge(gnd, irq_n, pack_p, scl, sda):
         # The gauge and protector take the cell-1 negative tab (Kelvin wire) as their ground. It differs from GND only
         # by the drop across RS101 and the pack wire.
         volts(0, cell_1n, cell_n)
+        # The pack current path, cell wire to pack bus: J112 -> fuse F102 -> CHG FET Q101 -> DSG FET Q102 -> PACK_P, and the
+        # return J108 -> RS101 -> GND. Same 10 A as PACK_P (top.py); the power copper stage sizes copper and vias from it.
+        for n in (cell_p_raw, cell_p, fet_mid, cell_n): declare(n, kind="power", current_a=10)
+        src = "Battery-Bank heat_sources.py, 100 W out, 12 V pack, 10.1 A"
+        heat("Q101", 0.58, src + ": 5.7 mohm warm"); heat("Q102", 0.58, src + ": 5.7 mohm warm")
+        heat("F102", 0.51, src + ": fuse 5 mohm hot"); heat("RS101", 0.10, src + ": 1 mohm shunt")
         volts(16.8, cell_4p, cell_p, cell_p_raw, fet_mid, wake, net_d101_k, net_u101_bat, net_u101_pack, net_u101_vcc,
               net_u101_pbi, net_u101_vc4, net_u102_v4, net_u102_vdd, net_f102_htr, net_c110_pad2, pack_cmid)
         volts(12.6, cell3, net_u101_vc3, net_u102_v3); volts(8.4, cell2, net_u101_vc2, net_u102_v2)

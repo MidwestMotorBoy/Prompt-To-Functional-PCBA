@@ -1,0 +1,3 @@
+#!/bin/bash
+# pp.sh <start.json> <out.json> <refine moves> [seed]: run place_pack (w1 copy) from a start placement on the q7s2 frozen skeleton
+cd /home/claude/prompt-to-functional-pcba/tools/floorplan && E=example/monolith && PLACE_START=$1 REG_MARGIN=${REGM:-3} CONSTRAINTS=$E/constraints.json BLOCK_FLOORPLAN=/home/claude/work/bfp7/floorplan_2.json PYTHONPATH=$PWD python3 ${PPY:-/home/claude/work/team/w1/pp_w1.py} ${CL:-/home/claude/work/hp/q7s2_fz_clusters.json} ${DU:-/home/claude/work/hp/q7s2_fz_dump.json} $2 0 ${4:-2} $3 /home/claude/work/anch/intent_pc.json | grep -v "clusters packed" | cut -c1-400

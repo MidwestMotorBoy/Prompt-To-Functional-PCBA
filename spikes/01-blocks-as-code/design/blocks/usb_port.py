@@ -239,6 +239,16 @@ def usb_port(name, n, pack_p, gnd, v3v3, sda, scl, irq_n, chg_inh, en_5v, ldo_3v
         R("R" + r(34), "22k", "0402", fb5, gnd, LCSC="C25768", MPN="0402WGF2202TCE")
         R("R" + r(32), "100k", R0201, en_5v, gnd, **R100K)
         hot_loop(f"{name}/HL_5V", pack_p, gnd, [f"U{r(4)}.VIN", f"U{r(4)}.GND"], ["C" + r(46), "C" + r(44)])
+        # Worst-case heat with this port carrying 100 W out (20 V 5 A) from a near-empty 12 V pack (10.1 A): Battery-Bank
+        # heat_sources.py, from warm datasheet resistances and a simple switching model; estimates, not measured.
+        src = "Battery-Bank heat_sources.py, 100 W out, 12 V pack"
+        heat(f"Q{r(1)}", 2.44, src + ": port leg, conduction 1.33 W + switching and dead time 1.11 W")
+        heat(f"Q{r(2)}", 1.33, src + ": battery leg, high side on, 13 mohm at 10.1 A")
+        heat(f"L{r(1)}", 1.43, src + ": 12 mohm DCR at 10.1 A + 0.2 W core")
+        heat("R" + r(27), 0.51, src + ": RBAT 5 mohm at 10.1 A")
+        heat("R" + r(24), 0.13, src + ": RAC 5 mohm at 5 A")
+        heat(f"U{r(1)}", 0.45, src + ": TPS25751 PPHV switch 18 mohm at 5 A")
+        heat(f"J{r(1)}", 0.25, src + ": USB-C contacts, 10 mohm loop at 5 A")
         draw_as("buck", "U" + r(4), vin="VIN", sw="SW", fb="FB", div=["R" + r(33), "R" + r(34)], bst="BST", boot="C" + r(40),
                 inductor="L" + r(2), cin=["C" + r(46), "C" + r(44), "C" + r(57)], cout=["C" + r(k) for k in (41, 42, 43, 7)])
 
