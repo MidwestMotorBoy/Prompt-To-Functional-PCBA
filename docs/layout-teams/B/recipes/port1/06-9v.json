@@ -1,13 +1,178 @@
 [
- {"note": "P-f, Port 1 9 V gate-drive supply (TPS7A4101 LDO from PACK_P, OUT diode-ORed into DRV_SUP through D411; Q409 turns it off from U401's DRV9_OFF). Bottom side, PLAN section 6 first choice: area 111.5..121.1 x 70.2..86.3 under the 5 V buck (no QFN thermal field or through-hole pad there). D410 and D411 stay on top at the charger (02-charger.json). U406 turn 0 with IN (pad 8) and OUT (pad 1) on the east column, C457 at IN, C458 at OUT, the FB divider at pad 2, Q409 at EN (pad 5)."},
- {"twin_check": false, "dx": 0, "dy": 0},
- {"side": ["U406", "Q409", "C457", "C458", "R452", "R453", "R454", "R455"], "to": "B"},
- {"at_pin": "U406", "pads": {"1": "C411.1"}, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.1},
- {"at_pin": "C457", "pads": {"1": "U406.8"}, "max_mm": 2.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "C458", "pads": {"1": "U406.1"}, "max_mm": 4.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "R452", "pads": {"2": "U406.2", "1": "U406.1"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "R453", "pads": {"1": "U406.2"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "Q409", "pads": {"3": "U406.5"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "R454", "pads": {"1": "U406.5"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05},
- {"at_pin": "R455", "pads": {"2": "Q409.1"}, "max_mm": 3.0, "soft": true, "within": [111.5, 70.2, 121.1, 86.3], "step": 0.05}
+ {
+  "note": "P-f, Port 1 9 V gate-drive supply (TPS7A4101 LDO from PACK_P, OUT diode-ORed into DRV_SUP through D411; Q409 turns it off from U401's DRV9_OFF). Bottom side, PLAN section 6 first choice, inside the area 111.5..121.1 x 70.2..86.3 under the 5 V buck but clear of the B.Cu box 103.6..113.6 x 75.6..82.65 (PP5V detour to C443, reserved) (no QFN thermal field or through-hole pad there). D410 stays on top at the charger (02-charger.json). D411 and the output capacitor C458 go on top north of the stage (free F.Cu 109.7..119.4 x 84.3..88.4), over U406's OUT pad: its anode net (U406 OUT, C458, R452) stays short and only its cathode runs to DRV_SUP at the charger. U406 turn 0 with IN (pad 8) and OUT (pad 1) on the east column, C457 at IN, C458 at OUT, the FB divider at pad 2, Q409 at EN (pad 5)."
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "reserve": "pp5v_detour_B",
+  "box": [
+   103.6,
+   75.6,
+   113.6,
+   82.65
+  ],
+  "sides": "B",
+  "why": "PP5V B.Cu detour from C407 (U401 pad 34) to the bridge capacitor C443, and via room under C443"
+ },
+ {
+  "side": [
+   "U406",
+   "Q409",
+   "C457",
+   "R452",
+   "R453",
+   "R454",
+   "R455"
+  ],
+  "to": "B"
+ },
+ {
+  "at_pin": "U406",
+  "pads": {
+   "1": "C411.1"
+  },
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.1
+ },
+ {
+  "at_pin": "C457",
+  "pads": {
+   "1": "U406.8"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R452",
+  "pads": {
+   "2": "U406.2",
+   "1": "U406.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R453",
+  "pads": {
+   "1": "U406.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "Q409",
+  "pads": {
+   "3": "U406.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R454",
+  "pads": {
+   "1": "U406.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R455",
+  "pads": {
+   "2": "Q409.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   111.5,
+   70.2,
+   121.1,
+   86.3
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "D411",
+  "pads": {
+   "2": "U406.1",
+   "1": "C411.1"
+  },
+  "within": [
+   109.7,
+   84.3,
+   119.4,
+   88.38
+  ],
+  "side": "F",
+  "step": 0.05
+ },
+ {
+  "at_pin": "C458",
+  "pads": {
+   "1": "U406.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   109.7,
+   84.3,
+   119.4,
+   88.38
+  ],
+  "step": 0.05,
+  "side": "F"
+ },
+ {
+  "deviation": "P-f",
+  "box": [
+   111.5,
+   84.3,
+   119.4,
+   88.38
+  ],
+  "why": "D411 and C458 on top north of the stage over U406's OUT pad instead of at U403 pad 23 (the charger's corners are full); the anode net stays short and only the cathode runs 16 mm to DRV_SUP. Bottom-side parts: 7"
+ }
 ]

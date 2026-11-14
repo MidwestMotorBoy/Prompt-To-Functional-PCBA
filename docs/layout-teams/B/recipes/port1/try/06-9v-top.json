@@ -1,0 +1,142 @@
+[
+ {
+  "note": "P-f top-side variant (for comparison with the bottom-side recipe 06-9v.json): the same parts on top in the r2d/B1 9 V box 109.7..115.2 x 79.7..88.0, allowed to spill east to x 119.4 under the 5 V buck's output capacitors (the B1 box alone is 1.37 full by courtyard area)."
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "side": [
+   "U406",
+   "Q409",
+   "C457",
+   "C458",
+   "R452",
+   "R453",
+   "R454",
+   "R455"
+  ],
+  "to": "F"
+ },
+ {
+  "at_pin": "U406",
+  "pads": {
+   "1": "C411.1"
+  },
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.1
+ },
+ {
+  "at_pin": "C457",
+  "pads": {
+   "1": "U406.8"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C458",
+  "pads": {
+   "1": "U406.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R452",
+  "pads": {
+   "2": "U406.2",
+   "1": "U406.1"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R453",
+  "pads": {
+   "1": "U406.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "Q409",
+  "pads": {
+   "3": "U406.5"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "within": [
+   100.4,
+   64.2,
+   121.1,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R454",
+  "pads": {
+   "1": "U406.5"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   109.7,
+   79.7,
+   119.4,
+   88.0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R455",
+  "pads": {
+   "2": "Q409.1"
+  },
+  "max_mm": 6.0,
+  "soft": true,
+  "within": [
+   100.4,
+   64.2,
+   121.1,
+   88.0
+  ],
+  "step": 0.05
+ }
+]

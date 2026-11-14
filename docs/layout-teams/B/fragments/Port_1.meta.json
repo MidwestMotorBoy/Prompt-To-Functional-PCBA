@@ -79,12 +79,21 @@
     "C406",
     "C449"
    ]
+  },
+  {
+   "name": "pp5v_detour_B",
+   "box": [
+    103.6,
+    75.6,
+    113.6,
+    82.65
+   ],
+   "sides": "B"
   }
  ],
  "claims": [],
  "bottom": [
   "C457",
-  "C458",
   "Q409",
   "R452",
   "R453",
@@ -92,7 +101,28 @@
   "R455",
   "U406"
  ],
- "deviations": [],
+ "deviations": [
+  {
+   "section": "P-e",
+   "box": [
+    111.21,
+    79.56,
+    113.6,
+    84.25
+   ],
+   "why": "C443 (22 uF PP5V output capacitor) leaves the east column for the bridge spot west of TP109, so that the planner can join U401 pad 34 by a B.Cu detour of under 10 mm (PP5V open at U401 otherwise, as on the hand whole board)"
+  },
+  {
+   "section": "P-f",
+   "box": [
+    111.5,
+    84.3,
+    119.4,
+    88.38
+   ],
+   "why": "D411 and C458 on top north of the stage over U406's OUT pad instead of at U403 pad 23 (the charger's corners are full); the anode net stays short and only the cathode runs 16 mm to DRV_SUP. Bottom-side parts: 7"
+  }
+ ],
  "failed": [],
  "costs": {
   "Q401": 0.0,
@@ -134,7 +164,6 @@
   "C418": 2.621,
   "C419": 3.073,
   "D410": 17.843,
-  "D411": 11.968,
   "R419": 6.902,
   "R418": 0.98,
   "R413": 6.641,
@@ -142,7 +171,7 @@
   "R416": 1.661,
   "R415": 10.091,
   "R417": 2.932,
-  "R435": 13.448,
+  "R435": 4.943,
   "L402": 0.0,
   "U404": 0.0,
   "C446": 0.0,
@@ -154,7 +183,7 @@
   "R432": 2.592,
   "C441": 4.158,
   "C442": 2.451,
-  "C443": 2.452,
+  "C443": 0.0,
   "U401": 0.0,
   "C407": 1.451,
   "C449": 1.122,
@@ -177,12 +206,13 @@
   "C452": 1.172,
   "U406": 19.203,
   "C457": 1.859,
-  "C458": 3.631,
   "R452": 10.106,
   "R453": 15.356,
   "Q409": 16.577,
   "R454": 24.889,
-  "R455": 1.259
+  "R455": 1.259,
+  "D411": 17.797,
+  "C458": 1.626
  },
  "recipes": [
   "recipes/common/border.json",
@@ -194,5 +224,5 @@
   "recipes/port1/06-9v.json"
  ],
  "base": null,
- "others": "fragments"
+ "others": "/home/claude/repo/docs/layout-teams/B/fragments"
 }

@@ -321,7 +321,7 @@
   "dy": 0
  },
  {
-  "note": "D411 (9 V supply to DRV_SUP) belongs to P-f, so it has no Port 2 twin; with the charger's corners full it goes where it fits nearest C411"
+  "note": "D411 (9 V supply to DRV_SUP) belongs to P-f and is placed in 06-9v.json next to the 9 V LDO's output"
  },
  {
   "at_pin": "D410",
@@ -334,19 +334,6 @@
    95.0,
    103.82,
    102.8
-  ],
-  "step": 0.05
- },
- {
-  "at_pin": "D411",
-  "pads": {
-   "1": "C411.1"
-  },
-  "within": [
-   100.4,
-   95.0,
-   118.7,
-   107.32
   ],
   "step": 0.05
  },
