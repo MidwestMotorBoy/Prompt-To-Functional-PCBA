@@ -1,0 +1,17 @@
+{
+ "team": "D",
+ "board": "docs/layout-teams/D/route_queue/r1_all.kicad_pcb",
+ "sha": "2bf0e6d4ab778f06ed7dfeaeec3c4cccf670cae6",
+ "routed": 387,
+ "failed": 41,
+ "edges": 428,
+ "minutes": 73.8,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/PPHV",
+  "FAILKEY /USB Port 2/HG1",
+  "FAILKEY /USB Port 1/HG1",
+  "FAILKEY /USB Port 2/PPHV",
+  "FAILKEY /P1_LDO_3V3"
+ ]
+}
