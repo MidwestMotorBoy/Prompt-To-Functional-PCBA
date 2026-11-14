@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/generic-g19.kicad_pcb",
+ "sha": "246f25319574617a1912a21729d36a8f7e8ee4c7",
+ "routed": 368,
+ "failed": 76,
+ "edges": 444,
+ "minutes": 56.5,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/HG2",
+  "FAILKEY /USB Port 1/LG2",
+  "FAILKEY /USB Port 1/LG1",
+  "FAILKEY /USB Port 2/LG1",
+  "FAILKEY /USB Port 2/LG2"
+ ]
+}
