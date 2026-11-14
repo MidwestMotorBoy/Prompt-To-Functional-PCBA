@@ -454,3 +454,77 @@ Files: `recipes/port2/03-buck5v.json`, `recipes/port2/04-pd-protect.json`, `frag
 `final_buck_F.png`, `whole_u501_u401_F.png`), new tools `tools/yard_check.py`, `tools/near.py` (pads of parts near a
 box), `tools/plan_only_p2.sh` (plan_only.sh printing Port 2 lines), `tools/plan_copper_dbg.py` (copy of the planner
 that prints one net's join order).
+
+## 2026-11-14, Port 1 worker: fix task "Port 1 PD pocket" (round 1), fragments/port1.json updated
+
+**What moved** (recipes `recipes/port1/04-pd.json`, `05-protect.json`, and two stage spots in `01-stage.json`;
+the variants tried are in `recipes/port1/try/pd/`):
+- South yard: new reserve `u401_yard` (102.8, 82.85)-(108.4, 84.08), both sides, kept free of parts. Wall south of it,
+  west to east: C408 (101.84, 84.845) turn 270, U402 (104.18, 85.395) turn 0 (SDA/SCL/VCC pads west), R402
+  (106.52, 84.845), R403 (107.36, 84.845), R404 (108.2, 84.845), all `put`. C405 (LDO_1V5) moved into the west column
+  at (101.3, 80.5); C403 (101.2, 74.92) and C404 (101.3, 78.0) turn 180 above it. R441 left the south row for
+  U405 pad 9 (at_pin in 05, within 100.4..102.5 x 69.9..72.33); C452 put at (101.5, 72.85).
+- PPHV: R424 (stage part, no Port 2 twin) moved from (108.6, 86.3) to (110.75, 86.3), same turn 90. PPHV now runs from
+  pad 20 and C449 east of the yard, past R424, then west south of the wall and north of C423 (court top 88.17).
+- AC_SNS_N bulk capacitors: C420 (stage part, has a Port 2 twin) moved from (105.47, 95.35) to (105.77, 95.35). The
+  planner's B.Cu detour from C420 pad 1 round the SW1 B.Cu detour was 10.13 mm against its 10.0 mm limit. It now fits,
+  and C420, C423 and C456 join the AC_SNS_N copper. `hot.json` HL_IN per capacitor: C420 3.058 nH and C423 3.53 nH (before:
+  16835 nH each, not reached).
+- North row: not changed in the end. C401/C402/C450 keep their at_pin spots, and VBUS still crosses north of pads 26 to 31.
+
+**Runs** (partial screens with `--partial`; HL = HL_5V / HL_IN / HL_OUT in nH; "-" = loops not run):
+
+| Run | Change | Blocked edges | U401 | HL | Loss | Power open |
+|---|---|---|---|---|---|---|
+| `runs/port1-g3` (before) | round-1 fragment | 29 of 175 | 16 | 0.70 / 0.80 / 0.74 | 0.318 W | GND J301/J302 |
+| `runs/pd-e1` | yard, wall, R441 north | 22 of 173 | 9 | - | 0.318 W | GND J301/J302 |
+| `runs/pd-e2` | + R424 east, west column restacked | 21 of 173 | 7 | - | 0.317 W | GND J301/J302 |
+| `runs/pd-e3` | + U402 turn 0 (check.py hard fault: C408 3.38 mm from U402.VCC) | 19 of 173 | 7 | - | 0.317 W | GND J301/J302 |
+| `runs/pd-e4h` | + C408 at the west end of the wall | 20 of 173 | 7 | 0.70 / 0.80 / 0.74 | 0.317 W | GND J301/J302 |
+| `runs/p1pd-final` | + C420 0.3 mm east (final) | 20 of 170 | 7 | 0.70 / 0.78 / 0.74 | 0.317 W | GND J301/J302 |
+| `runs/p1pd-esc08` | final, `--plan="--escape=0.8"` | 16 of 173 | 4 | - | 0.302 W | **PP5V at U401**, GND J301/J302 |
+| `runs/p1pd-whole` | whole board (stitch with current port2, pack), no loops | 39 of 446 | 7 | - | 1.133 W | GND J301/J302 |
+
+The round-1 whole board, `runs/r1-hot`, had 58 of 451 blocked edges, with U401 at 18 and a loss of 1.142 W. Every run finished; none timed out. DRC was 0 in all of them. check.py found 0 hard faults on the final fragment.
+
+The final partial run has DRC 0 and U401 at 7 blocked edges, with SDA, SCL and IRQ_N no longer blocked at either end (they were blocked at U301 in g3).
+
+Edges still blocked in the final partial run:
+- U401 north: CC1 at pad 28 to C401, CC2 at pad 29 to C402 and to U405.11, and GND at pads 36, 31, 27 and 26.
+- C450.2.
+- U402.6 to R403.2 (I2CC_SCL), in the south.
+- U403: 4. U405: 4.
+
+Whole-board blame by group: port1 20, port2 18, fixed 3, pack 1. By chip: U401 7, U505 5, U501 5, U403 4, U405 4, U503 3, U402 1.
+
+In F.png and B.png no power part sprawls more than it did in r1. Port 1's PP5V pour still crosses the east column on F to C443, and the B.Cu PP5V corridor runs from C407 to C443.
+
+**Not solved: PP5V at U401 with escape 0.8.** The planner tries U401 before C407 and finds no path on F.Cu, because VBUS stands between the tree and pad 34. U401's own detour cannot place a start via, for two reasons:
+- The channel north of pad 34, between GND pad 36 (x 104.1) and pad 32's VBUS exit lane (x from about 104.85), is 0.75 mm wide. The 0.4 mm via link needs 1.0 mm.
+- No via fits inside pad 34 (0.65 x 0.6 mm).
+
+C407 then joins by its own B.Cu detour, but its via sits inside its pad, so the anchor step finds no PP5V copper more than 0.25 mm from the terminal pads to aim at. At escape 0.4, the 1.5 mm grow joins C407 pad 1 to pad 34. At 0.8, signal pad 37's escape room covers the channel and the grow stops. This placement does not fix it; I see no placement inside the pocket that would. It needs one of these:
+- a lead decision on the planner (an anchor to a same-net terminal pad, or a narrower link);
+- a different VBUS feed to pad 32, with the lane moved.
+
+**Not solved: north row.** VBUS reaches pad 23 from the east and also runs west along H104's south edge to C450 pad 1, at (106.8, 77.28) above pads 29 and 30, and to pad 32. To keep VBUS off pads 26 to 31, C450 and pad 32 need another feed, as in Port 2, where pad 32 is fed from the west pin pair through C550. That conflicts with C407 above pad 34. Left for round 2.
+
+**For Port 2 and the lead:**
+- C420 moved 0.3 mm east, from (105.47, 95.35) to (105.77, 95.35). Port 2's twin C520 already joins at its spot, so the matching move is optional: from about (82.44, 95.36) to (82.74, 95.36).
+- R424 moved, but it has no twin.
+- No 02-charger part moved.
+
+Files:
+- `recipes/port1/01-stage.json`, `04-pd.json`, `05-protect.json`, `recipes/port1/try/pd/*`;
+- `fragments/port1.json` and `port1.meta.json`, with the same content in `Port_1.json` and `Port_1.meta.json`;
+- `candidates/r1_Port_1_PD_pocket.json`;
+- `runs/p1pd-final/`: score.json, hot.json, dc.json, ghost.log, F.png, B.png;
+- `runs/p1pd-esc08/` and `runs/p1pd-whole/`: score.json, dc.json, ghost.log, F.png, B.png.
+
+plan.log, blame.txt and the zooms (u401_F.png, u401_B.png, in_F.png) are git-ignored and stay in the local run folders.
+
+New team tools:
+- `tools/pd_iter.sh`: one iteration, from recipes to plan or screen and zooms;
+- `tools/plan_only2.sh`: plan_only.sh with planner options;
+- `tools/plan_peek.py`: the planner raster for one net before its step;
+- `tools/detour_peek.py`: the detour attempts for one net, with the start vias, landing cells and path length.

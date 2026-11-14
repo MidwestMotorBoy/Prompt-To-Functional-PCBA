@@ -1,0 +1,167 @@
+[
+ {
+  "note": "P-a, Port 1 four-switch stage (variant A: the hand topology, made legal). Q401 and Q402 turn 0 side by side south of L401, SW bar (pad 9) under its L401 pad, drains east, sources west, gates south toward U403. First caps C430/C438 at the north end of each FET across drain pads 2-4 and source pads 5-7. Input bulk C423, C420 (HL_IN) and C427 in the west column, output bulk C431, C434 (HL_OUT) and C424 in the east column (the hand had C434 west: 5.7 nH alone). twin_check keeps every stage spot legal when shifted to Port 2. C424 is turned 180 (AC_SNS_N pad south, over C421's AC_SNS_N pad on the bottom) to stay within 10 mm of Q401's drain."
+ },
+ {
+  "twin_check": true,
+  "dx": -23.02577,
+  "dy": 0.006368
+ },
+ {
+  "put": "Q401",
+  "at": [
+   109.5608,
+   99.83
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "Q402",
+  "at": [
+   114.1,
+   99.85
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "hot": "C430",
+  "switch": "Q401",
+  "supply": [
+   "2",
+   "3",
+   "4"
+  ],
+  "ret": [
+   "5",
+   "6",
+   "7"
+  ],
+  "max_mm": 1.5,
+  "within": [
+   107.3,
+   96.8,
+   110.85,
+   97.9
+  ],
+  "turns": [
+   0,
+   180
+  ],
+  "step": 0.02
+ },
+ {
+  "hot": "C438",
+  "switch": "Q402",
+  "supply": [
+   "2",
+   "3",
+   "4"
+  ],
+  "ret": [
+   "5",
+   "6",
+   "7"
+  ],
+  "max_mm": 1.5,
+  "within": [
+   112.8,
+   96.8,
+   116.4,
+   97.9
+  ],
+  "turns": [
+   0,
+   180
+  ],
+  "step": 0.02
+ },
+ {
+  "note": "bulk caps in two columns at the hand heights (west x 105.47, east x 118.17), supply pad north; the placer's hot cost turned C420 GND-up (supply pad stranded south of the gate pads), so they are put explicitly"
+ },
+ {
+  "put": "C423",
+  "at": [
+   105.47,
+   90.52
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C420",
+  "at": [
+   105.47,
+   95.35
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C427",
+  "at": [
+   105.47,
+   100.18
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C424",
+  "at": [
+   118.02,
+   90.75
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "C434",
+  "at": [
+   118.02,
+   95.47
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C431",
+  "at": [
+   118.02,
+   100.19
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "note": "R427 (BAT_SNS_P to PACK_P) in the current path from Q402's drain side to J113; placed per port, no twin."
+ },
+ {
+  "put": "R427",
+  "at": [
+   119.9,
+   104.9
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "note": "R424 (PPHV to AC_SNS_N, RAC) north of L401 between U401 pad 20 and the input path; pad 1 PPHV north, pad 2 AC_SNS_N south onto the AC_SNS_N pour along L401's north side. Kelvin taps leave from the inner pad edges west toward the ACP/ACN filter at U403 pads 29/30."
+ },
+ {
+  "put": "R424",
+  "at": [
+   110.75,
+   86.3
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "moved 2.15 mm east of the round-1 spot (108.6, 86.3), same turn: PPHV then joins U401 pad 20 through C449 east of the south-row via yard, and R424 pad 2 sits over the AC_SNS_N trunk between the L401 pads; no Port 2 twin"
+ }
+]

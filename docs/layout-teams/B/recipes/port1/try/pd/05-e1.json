@@ -1,0 +1,113 @@
+[
+ {
+  "note": "P-d, Port 1 port protection. U405 (TPD6S300) between J401's CC pads (A5, B5) and U401 pads 28/29, turn 0: C_CC pins (4-7) north toward the connector, CC pins (11, 12) south toward U401; west of the H104 peg slot as on the hand board. D401 (VBUS TVS) and C406 (VBUS bulk) on the VBUS path from J401's A4/B9 pads round the east side of H104 down to U401 pad 23: D401 east of H104 under J401 (VBUS pads west), C406 east of U401 (VBUS pad west at pad 23). The hand board had D401 at x 101.1, outside the port 1 region and the protection box with U405 in place."
+ },
+ {
+  "put": "U405",
+  "at": [
+   104.55,
+   73.55
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "ring": "U405",
+  "mm": 0.8
+ },
+ {
+  "put": "D401",
+  "at": [
+   111.9,
+   71.67
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "C406",
+  "at": [
+   111.7,
+   75.34
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "vertical under D401, VBUS pad north (within 4 mm of J401's A4/B9 VBUS pads), GND south"
+ },
+ {
+  "at_pin": "C450",
+  "pads": {
+   "1": "U401.32"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05,
+  "turns": [
+   0,
+   180
+  ]
+ },
+ {
+  "at_pin": "C401",
+  "pads": {
+   "1": "U401.28"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05,
+  "within": [
+   100.4,
+   75.66,
+   110.4,
+   77.78
+  ]
+ },
+ {
+  "at_pin": "C402",
+  "pads": {
+   "1": "U401.29"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05,
+  "within": [
+   100.4,
+   75.66,
+   110.4,
+   77.78
+  ]
+ },
+ {
+  "at_pin": "C451",
+  "pads": {
+   "1": "U405.3"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05
+ },
+ {
+  "at_pin": "C452",
+  "pads": {
+   "1": "U405.10"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05
+ },
+ {
+  "at_pin": "R441",
+  "pads": {
+   "2": "U405.9"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   100.4,
+   70.0,
+   102.6,
+   75.3
+  ],
+  "step": 0.05
+ }
+]

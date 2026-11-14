@@ -48,6 +48,47 @@
   ]
  },
  {
+  "reserve": "u401_yard",
+  "box": [
+   102.8,
+   82.85,
+   108.4,
+   84.08
+  ],
+  "sides": "FB",
+  "note": "via yard under U401 south row: no parts on either side"
+ },
+ {
+  "note": "west column, north to south: C403 (3V3, pad 38), C404 turned 180 (LDO_3V3 pad south at pads 1/2), C405 (LDO_1V5 pad north, 0.8 mm west of pad 4); C452 and R441 above C403 in 05"
+ },
+ {
+  "put": "C403",
+  "at": [
+   101.2,
+   74.92
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C404",
+  "at": [
+   101.3,
+   78.0
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "C405",
+  "at": [
+   101.3,
+   80.5
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
   "at_pin": "C407",
   "pads": {
    "1": "U401.34"
@@ -72,131 +113,51 @@
   "step": 0.05
  },
  {
-  "at_pin": "C403",
-  "pads": {
-   "1": "U401.38"
-  },
-  "max_mm": 4.0,
-  "soft": true,
-  "step": 0.05
+  "note": "south wall under the via yard (court tops at 84.1), west to east: C408 (U402 VCC cap, VCC pad south at U402 pad 8), U402 (I2C EEPROM, turned 0: SDA/SCL/VCC pads west, GND pads east), R402 (I2CC_SDA), R403 (I2CC_SCL), R404 (CHG_INT) pull-ups with their signal pads north on the yard; gaps 0.05 mm. R441 (SBU_FLT) sits at U405 pad 9 (05)."
  },
  {
-  "at_pin": "C404",
-  "pads": {
-   "1": [
-    "U401.1",
-    "U401.2"
-   ]
-  },
-  "max_mm": 4.0,
-  "soft": true,
-  "within": [
-   100.4,
-   75.7,
-   102.08,
-   88.0
+  "put": "U402",
+  "at": [
+   104.18,
+   85.395
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
-  "at_pin": "C405",
-  "pads": {
-   "1": "U401.4"
-  },
-  "max_mm": 4.0,
-  "soft": true,
-  "step": 0.05
- },
- {
-  "note": "U402 EEPROM south-east under pads 16/17 with its I2CC pull-ups; R404 (CHG_INT) at 18, R441 (SBU_FLT) at 19"
- },
- {
-  "at_pin": "U402",
-  "pads": {
-   "5": "U401.16",
-   "6": "U401.17"
-  },
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
+  "put": "C408",
+  "at": [
+   101.84,
+   84.845
   ],
-  "step": 0.05
+  "turn": 270,
+  "side": "F"
  },
  {
-  "at_pin": "C408",
-  "pads": {
-   "1": "U402.8"
-  },
-  "max_mm": 2.0,
-  "soft": true,
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
+  "put": "R402",
+  "at": [
+   106.52,
+   84.845
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
-  "at_pin": "R402",
-  "pads": {
-   "2": "U401.16"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
+  "put": "R403",
+  "at": [
+   107.36,
+   84.845
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
-  "at_pin": "R403",
-  "pads": {
-   "2": "U401.17"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
+  "put": "R404",
+  "at": [
+   108.2,
+   84.845
   ],
-  "step": 0.05
- },
- {
-  "at_pin": "R404",
-  "pads": {
-   "2": "U401.18"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
-  ],
-  "step": 0.05
- },
- {
-  "at_pin": "R441",
-  "pads": {
-   "2": "U401.19"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   101.4,
-   83.0,
-   107.5,
-   88.0
-  ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  }
 ]

@@ -92,11 +92,12 @@
  {
   "put": "C420",
   "at": [
-   105.47,
+   105.77,
    95.35
   ],
   "turn": 0,
-  "side": "F"
+  "side": "F",
+  "note": "0.3 mm east of the round-1 spot (105.47, 95.35), same turn: the planner's AC_SNS_N B.Cu detour from C420 pad 1 round the SW1 B.Cu detour then comes to 9.8 mm (limit 10.0; it was 10.13 mm), so C420, C423 and C456 join (HL_IN per capacitor 3.06 and 3.53 nH). Port 2's twin C520 passes at its old spot; moving it 0.3 mm east too is optional"
  },
  {
   "put": "C427",
@@ -157,10 +158,11 @@
  {
   "put": "R424",
   "at": [
-   108.6,
+   110.75,
    86.3
   ],
   "turn": 90,
-  "side": "F"
+  "side": "F",
+  "note": "moved 2.15 mm east of the round-1 spot (108.6, 86.3), same turn: PPHV then joins U401 pad 20 through C449 east of the south-row via yard, and R424 pad 2 sits over the AC_SNS_N trunk between the L401 pads; no Port 2 twin"
  }
 ]
