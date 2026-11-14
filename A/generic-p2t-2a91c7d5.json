@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/generic-p2t.kicad_pcb",
+ "sha": "2a91c7d59b2e4756fc4ca23bebb4526514a40e5c",
+ "routed": 374,
+ "failed": 74,
+ "edges": 448,
+ "minutes": 72.5,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/LG1",
+  "FAILKEY /USB Port 1/HG1",
+  "FAILKEY /Cells and Gauge/CELL1",
+  "FAILKEY /USB Port 2/LG1",
+  "FAILKEY /Cells and Gauge/CELL1"
+ ]
+}
