@@ -1,0 +1,999 @@
+{
+ "/USB Port 2/AC_SNS_N": {
+  "net": "/USB Port 2/AC_SNS_N",
+  "source": "Q501",
+  "cells": 14478,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "R524",
+    "current_a": 5.0,
+    "R_mohm": 1.742,
+    "drop_mV": 8.7,
+    "loss_W": 0.0436
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 9.26,
+    "at": [
+     87.58,
+     96.19,
+     "R524"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.88,
+     87.39,
+     "R524"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.88,
+     87.39,
+     "R524"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.88,
+     87.39,
+     "R524"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.88,
+     87.39,
+     "R524"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 4.84,
+    "at": [
+     87.48,
+     97.49,
+     "R524"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 95.95,
+    "y": 87.37,
+    "what": "via",
+    "A": 0.99,
+    "for_terminal": "R524",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.15,
+    "y": 87.97,
+    "what": "via",
+    "A": 0.87,
+    "for_terminal": "R524",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 87.55,
+    "y": 98.28,
+    "what": "via",
+    "A": 0.46,
+    "for_terminal": "R524",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 88.25,
+    "y": 98.58,
+    "what": "via",
+    "A": 0.37,
+    "for_terminal": "R524",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 87.45,
+    "y": 99.17,
+    "what": "via",
+    "A": 0.35,
+    "for_terminal": "R524",
+    "span": "In4.Cu-B.Cu"
+   }
+  ],
+  "worst_drop_mV": 8.7,
+  "loss_W": 0.0436,
+  "open": [],
+  "seconds": 0.1
+ },
+ "/USB Port 2/BAT_SNS_P": {
+  "net": "/USB Port 2/BAT_SNS_P",
+  "source": "Q502",
+  "cells": 8315,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "R527",
+    "current_a": 5.0,
+    "R_mohm": 0.309,
+    "drop_mV": 1.5,
+    "loss_W": 0.0077
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 3.22,
+    "at": [
+     93.08,
+     100.41,
+     "R527"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     96.68,
+     102.51,
+     "R527"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     96.68,
+     102.51,
+     "R527"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     96.68,
+     102.51,
+     "R527"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     96.68,
+     102.51,
+     "R527"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 1.02,
+    "at": [
+     96.58,
+     102.61,
+     "R527"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 96.65,
+    "y": 102.58,
+    "what": "via",
+    "A": 0.33,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.85,
+    "y": 102.78,
+    "what": "via",
+    "A": 0.29,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 92.75,
+    "y": 99.97,
+    "what": "via",
+    "A": 0.28,
+    "for_terminal": "R527",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 91.95,
+    "y": 99.78,
+    "what": "via",
+    "A": 0.26,
+    "for_terminal": "R527",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 92.45,
+    "y": 98.17,
+    "what": "via",
+    "A": 0.19,
+    "for_terminal": "R527",
+    "span": "In4.Cu-B.Cu"
+   }
+  ],
+  "worst_drop_mV": 1.5,
+  "loss_W": 0.0077,
+  "open": [],
+  "seconds": 0.0
+ },
+ "/USB Port 2/PP5V": {
+  "net": "/USB Port 2/PP5V",
+  "source": "L502",
+  "cells": 5304,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "U501",
+    "current_a": 1.5,
+    "R_mohm": 1.588,
+    "drop_mV": 2.4,
+    "loss_W": 0.0036
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 3.45,
+    "at": [
+     90.1,
+     79.13,
+     "U501"
+    ]
+   }
+  },
+  "top_vias": [],
+  "worst_drop_mV": 2.4,
+  "loss_W": 0.0036,
+  "open": [],
+  "seconds": 0.0
+ },
+ "/USB Port 2/PPHV": {
+  "net": "/USB Port 2/PPHV",
+  "source": "R524",
+  "cells": 10913,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "U501",
+    "current_a": 5.0,
+    "R_mohm": 0.402,
+    "drop_mV": 2.0,
+    "loss_W": 0.01
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 4.84,
+    "at": [
+     95.2,
+     83.96,
+     "U501"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.1,
+     82.46,
+     "U501"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.1,
+     82.46,
+     "U501"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.1,
+     82.46,
+     "U501"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.1,
+     82.46,
+     "U501"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 1.08,
+    "at": [
+     95.2,
+     82.46,
+     "U501"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 95.15,
+    "y": 82.47,
+    "what": "via",
+    "A": 0.37,
+    "for_terminal": "U501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.95,
+    "y": 85.58,
+    "what": "via",
+    "A": 0.37,
+    "for_terminal": "U501",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 84.15,
+    "y": 108.88,
+    "what": "via",
+    "A": 0.0,
+    "for_terminal": "U501",
+    "span": "F.Cu-In1.Cu"
+   }
+  ],
+  "worst_drop_mV": 2.0,
+  "loss_W": 0.01,
+  "open": [],
+  "seconds": 0.0
+ },
+ "/USB Port 2/SW1": {
+  "net": "/USB Port 2/SW1",
+  "source": "L501",
+  "cells": 5448,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "Q501",
+    "current_a": 5.0,
+    "R_mohm": 1.393,
+    "drop_mV": 7.0,
+    "loss_W": 0.0348
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 4.84,
+    "at": [
+     85.93,
+     98.87,
+     "Q501"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     85.93,
+     100.47,
+     "Q501"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     85.93,
+     100.47,
+     "Q501"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     85.93,
+     100.47,
+     "Q501"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     85.93,
+     100.47,
+     "Q501"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 7.33,
+    "at": [
+     85.93,
+     98.87,
+     "Q501"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 85.95,
+    "y": 98.97,
+    "what": "via",
+    "A": 1.88,
+    "for_terminal": "Q501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 85.95,
+    "y": 99.78,
+    "what": "via",
+    "A": 1.61,
+    "for_terminal": "Q501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 85.95,
+    "y": 100.58,
+    "what": "via",
+    "A": 1.51,
+    "for_terminal": "Q501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 86.45,
+    "y": 95.58,
+    "what": "via",
+    "A": 1.11,
+    "for_terminal": "Q501",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 85.65,
+    "y": 95.58,
+    "what": "via",
+    "A": 1.08,
+    "for_terminal": "Q501",
+    "span": "In4.Cu-B.Cu"
+   }
+  ],
+  "worst_drop_mV": 7.0,
+  "loss_W": 0.0348,
+  "open": [],
+  "seconds": 0.0
+ },
+ "/USB Port 2/SW2": {
+  "net": "/USB Port 2/SW2",
+  "source": "L501",
+  "cells": 6886,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "Q502",
+    "current_a": 5.0,
+    "R_mohm": 1.377,
+    "drop_mV": 6.9,
+    "loss_W": 0.0344
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 4.84,
+    "at": [
+     90.43,
+     98.95,
+     "Q502"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     90.43,
+     100.55,
+     "Q502"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     90.43,
+     100.55,
+     "Q502"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     90.43,
+     100.55,
+     "Q502"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     90.43,
+     100.55,
+     "Q502"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 7.13,
+    "at": [
+     90.53,
+     98.85,
+     "Q502"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 90.55,
+    "y": 98.97,
+    "what": "via",
+    "A": 1.88,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 90.55,
+    "y": 99.78,
+    "what": "via",
+    "A": 1.61,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 90.55,
+    "y": 100.58,
+    "what": "via",
+    "A": 1.52,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 91.15,
+    "y": 95.58,
+    "what": "via",
+    "A": 1.09,
+    "for_terminal": "Q502",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 91.95,
+    "y": 95.58,
+    "what": "via",
+    "A": 1.03,
+    "for_terminal": "Q502",
+    "span": "In4.Cu-B.Cu"
+   }
+  ],
+  "worst_drop_mV": 6.9,
+  "loss_W": 0.0344,
+  "open": [],
+  "seconds": 0.0
+ },
+ "/USB Port 2/VBUS": {
+  "net": "/USB Port 2/VBUS",
+  "source": "J501",
+  "cells": 9944,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "U501",
+    "current_a": 5.0,
+    "R_mohm": 1.287,
+    "drop_mV": 6.4,
+    "loss_W": 0.0322,
+    "pads_not_joined": [
+     "32"
+    ]
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 10.77,
+    "at": [
+     96.15,
+     69.67,
+     "U501"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     94.65,
+     80.47,
+     "U501"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     94.65,
+     80.47,
+     "U501"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     94.65,
+     80.47,
+     "U501"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     94.65,
+     80.47,
+     "U501"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 2.18,
+    "at": [
+     94.65,
+     80.57,
+     "U501"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 94.65,
+    "y": 80.58,
+    "what": "via",
+    "A": 0.77,
+    "for_terminal": "U501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.85,
+    "y": 71.08,
+    "what": "via",
+    "A": 0.57,
+    "for_terminal": "U501",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 94.85,
+    "y": 79.78,
+    "what": "via",
+    "A": 0.53,
+    "for_terminal": "U501",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.85,
+    "y": 71.87,
+    "what": "via",
+    "A": 0.39,
+    "for_terminal": "U501",
+    "span": "In4.Cu-B.Cu"
+   },
+   {
+    "x": 96.65,
+    "y": 71.58,
+    "what": "via",
+    "A": 0.34,
+    "for_terminal": "U501",
+    "span": "In4.Cu-B.Cu"
+   }
+  ],
+  "worst_drop_mV": 6.4,
+  "loss_W": 0.0322,
+  "open": [],
+  "seconds": 0.0
+ },
+ "PACK_P": {
+  "net": "PACK_P",
+  "source": "J113",
+  "cells": 97526,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "R527",
+    "current_a": 5.0,
+    "R_mohm": 2.238,
+    "drop_mV": 11.2,
+    "loss_W": 0.056
+   },
+   {
+    "ref": "U504",
+    "current_a": 1.0,
+    "R_mohm": 6.385,
+    "drop_mV": 6.4,
+    "loss_W": 0.0064
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 3.79,
+    "at": [
+     97.7,
+     105.5,
+     "R527"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.6,
+     107.3,
+     "R527"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 3.84,
+    "at": [
+     97.7,
+     105.5,
+     "R527"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.6,
+     107.3,
+     "R527"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 0.0,
+    "at": [
+     95.6,
+     107.3,
+     "R527"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 0.03,
+    "at": [
+     81.7,
+     66.3,
+     "U504"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 97.65,
+    "y": 105.47,
+    "what": "via",
+    "A": 1.32,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 96.85,
+    "y": 105.47,
+    "what": "via",
+    "A": 1.03,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.65,
+    "y": 107.28,
+    "what": "via",
+    "A": 0.95,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.85,
+    "y": 105.67,
+    "what": "via",
+    "A": 0.88,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 95.65,
+    "y": 106.47,
+    "what": "via",
+    "A": 0.83,
+    "for_terminal": "R527",
+    "span": "F.Cu-In1.Cu"
+   }
+  ],
+  "worst_drop_mV": 11.2,
+  "loss_W": 0.0624,
+  "open": [],
+  "seconds": 0.6
+ },
+ "GND": {
+  "net": "GND",
+  "source": "Q501",
+  "cells": 605097,
+  "res_mm": 0.1,
+  "terminals": [
+   {
+    "ref": "Q502",
+    "current_a": 6.0,
+    "R_mohm": 0.843,
+    "drop_mV": 5.1,
+    "loss_W": 0.0304
+   },
+   {
+    "ref": "J401",
+    "current_a": 5.0,
+    "R_mohm": 1.943,
+    "drop_mV": 9.7,
+    "loss_W": 0.0486
+   },
+   {
+    "ref": "J501",
+    "current_a": 5.0,
+    "R_mohm": 1.549,
+    "drop_mV": 7.7,
+    "loss_W": 0.0387
+   },
+   {
+    "ref": "U501",
+    "current_a": 1.0,
+    "R_mohm": 0.741,
+    "drop_mV": 0.7,
+    "loss_W": 0.0007
+   },
+   {
+    "ref": "J114",
+    "current_a": 1.0,
+    "R_mohm": 1.244,
+    "drop_mV": 1.2,
+    "loss_W": 0.0012
+   },
+   {
+    "ref": "J302",
+    "current_a": 1.0,
+    "open": true,
+    "why": "no copper path to Q501; its island: F.Cu x 108.8-109.6 y 132.0-132.8"
+   },
+   {
+    "ref": "Q509",
+    "current_a": 1.0,
+    "R_mohm": 1.521,
+    "drop_mV": 1.5,
+    "loss_W": 0.0015
+   },
+   {
+    "ref": "U502",
+    "current_a": 1.0,
+    "R_mohm": 0.914,
+    "drop_mV": 0.9,
+    "loss_W": 0.0009
+   },
+   {
+    "ref": "U503",
+    "current_a": 1.0,
+    "R_mohm": 1.403,
+    "drop_mV": 1.4,
+    "loss_W": 0.0014
+   },
+   {
+    "ref": "U504",
+    "current_a": 1.0,
+    "R_mohm": 1.815,
+    "drop_mV": 1.8,
+    "loss_W": 0.0018
+   },
+   {
+    "ref": "U505",
+    "current_a": 1.0,
+    "R_mohm": 0.969,
+    "drop_mV": 1.0,
+    "loss_W": 0.001
+   },
+   {
+    "ref": "U506",
+    "current_a": 1.0,
+    "R_mohm": 0.973,
+    "drop_mV": 1.0,
+    "loss_W": 0.001
+   },
+   {
+    "ref": "J301",
+    "current_a": 0.5,
+    "open": true,
+    "why": "no copper path to Q501; its island: F.Cu x 118.8-119.6 y 115.7-116.5"
+   }
+  ],
+  "peak_A_per_mm": {
+   "F.Cu": {
+    "A_per_mm": 7.95,
+    "at": [
+     89.5,
+     99.58,
+     "Q502"
+    ]
+   },
+   "In1.Cu": {
+    "A_per_mm": 4.43,
+    "at": [
+     89.5,
+     99.58,
+     "Q502"
+    ]
+   },
+   "In2.Cu": {
+    "A_per_mm": 1.78,
+    "at": [
+     87.7,
+     63.68,
+     "J501"
+    ]
+   },
+   "In3.Cu": {
+    "A_per_mm": 1.78,
+    "at": [
+     87.7,
+     63.68,
+     "J501"
+    ]
+   },
+   "In4.Cu": {
+    "A_per_mm": 4.09,
+    "at": [
+     100.7,
+     63.78,
+     "J401"
+    ]
+   },
+   "B.Cu": {
+    "A_per_mm": 2.61,
+    "at": [
+     84.6,
+     79.08,
+     "Q509"
+    ]
+   }
+  },
+  "top_vias": [
+   {
+    "x": 89.45,
+    "y": 99.58,
+    "what": "via",
+    "A": 2.71,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 89.45,
+    "y": 98.17,
+    "what": "via",
+    "A": 1.77,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 90.05,
+    "y": 97.58,
+    "what": "via",
+    "A": 1.52,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 84.75,
+    "y": 99.58,
+    "what": "via",
+    "A": 1.21,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   },
+   {
+    "x": 84.75,
+    "y": 98.78,
+    "what": "via",
+    "A": 1.11,
+    "for_terminal": "Q502",
+    "span": "F.Cu-In1.Cu"
+   }
+  ],
+  "worst_drop_mV": 9.7,
+  "loss_W": 0.1272,
+  "open": [
+   "J302",
+   "J301"
+  ],
+  "seconds": 9.1
+ }
+}

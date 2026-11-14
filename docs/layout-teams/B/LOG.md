@@ -397,3 +397,60 @@ stay put so the twins hold.
 Files: `candidates/r1.json`, `best_placement.json` (same content), `runs/r1-hot/` (score.json, hot.json,
 dc.json, ghost.log, F.png, B.png), `runs/r1-esc06/`, `runs/r1-esc08/` (score.json, ghost.log, dc.json, F.png, B.png),
 `plan/r1-zoom/*.png`, `tools/zoom.py`.
+
+## 2026-11-14, Port 2 worker: fix task "Port 2 PD pocket" (round 1), fragments/port2.json updated
+
+**What moved** (recipes/port2/04-pd-protect.json and 03-buck5v.json; stage and charger parts of 01/02 untouched, so the
+twins hold; bottom count still 10):
+- **South escape yard.** A strip x 88.95..94.15, y 84.22..85.48 below U501's south row is kept free of parts on both
+  sides (reserve `south_escape_yard_U501`, FB). It is walled so that no power copper can reach it: C505 standing at the
+  west end (88.4, 85.2), R502, R503, R504 lying in a row at y 85.9 (x 89.7, 91.4, 93.1; signal pads 0.55 mm apart),
+  R541 standing at the east end (94.58, 85.0) against pad 20 / R524's PPHV copper. U501's ring now allows C501, C502,
+  C505, R502..R504 and R541 at 0.3 mm. The PPHV corridor to the charger runs south of the wall. New `tools/yard_check.py`
+  tells whether power copper can leak into a box (it matched the planner: v1 without end closures leaked from both ends).
+- **North row.** C502 (CC2) stands over pads 29/30 with its CC2 pad south, C501 (CC1) stands over GND pads 26/27 with its
+  GND pad south; both 0.3 mm over the row, so no VBUS path is left along the row (the gap is 0.5 mm). CC1 from pad 28
+  runs up between them. C550 stands over pad 32 with its GND pad south and its VBUS pad north (1.98 mm from pad 32),
+  every gap round pad 32 under 0.6 mm. C507, C503 and C552 moved to make room.
+- **Buck.** U504 0.3 mm east and 0.4 mm north (clear of J109); C546 put the way Port 1 has C446: PACK_P pad over VIN
+  pad 3, GND pad over the adjacent GND pad 4, both 0.51 mm off the pins (was: GND pad over pad 1, the loop round EN pad 2).
+
+**Runs** (partial runs: `screen.sh ... --partial`; all finished, nothing timed out):
+
+| Run | What | Blocked edges | U501 | HL_5V / HL_IN / HL_OUT nH | Loss W | Power open |
+|---|---|---|---|---|---|---|
+| `runs/port2-g3` | before (r1 fragment) | 28 of 177 | 16 | 0.98 / 0.80 / 0.74 | 0.363 | GND J301/J302 |
+| `runs/p2pk-v2` | yard walled; C550 at pad 23 (rejected: C550 3.6 mm from U501.VBUS, check.py pin fault) | 17 of 176 | 5 | not run | 0.364 | GND J301/J302 |
+| `runs/p2pk-v3` | C550 back over pad 32, GND pad south | 19 of 177 | 5 | not run | 0.356 | GND J301/J302 |
+| `runs/p2pk-v4` | C501 0.45 mm east | 19 of 177 | 5 | not run | 0.356 | GND J301/J302 |
+| `runs/p2pk-v5` | C501 under U505 pad 12 (rejected: VBUS grew between the caps) | 21 of 179 | 8 | not run | 0.356 | GND J301/J302 |
+| `runs/p2pk-v6h` | C550 raised beside C502's GND pad | 18 of 176 | 5 | 0.98 / 0.80 / 0.74 | 0.356 | GND J301/J302 |
+| `runs/p2pk-v7h` | **final**: + C546 laid like C446 | **18 of 176** | **5** | **0.76** / 0.80 / 0.74 | 0.355 | GND J301/J302 |
+| `runs/p2pk-esc08` | final, `--plan="--escape=0.8"` | 10 of 175 | 3 | not run | 0.356 | GND J301/J302 |
+| `runs/p2pk-whole` | whole board, stitched with port1/pack as they are, no hot loops | **50 of 450** (r1 58 of 451, hand 56 of 452) | 8 (r1 17) | not run | 1.135 (r1 1.142) | GND J301/J302 |
+
+Final partial: DRC 0, check.py 0 hard faults, HL_5V first capacitor C546 0.367 nH (was 0.733). U501's 5 left:
+LDO_1V5 (C505.1 to pad 4, GND track of pads 5/6), DRV9_OFF 37, 3V3 38, GND 36 (all three under the PP5V way to C507
+and pad 34) and GND 31. SDA, SCL, IRQ_N (8, 9, 10) and I2CC/CHG_INT (16, 17, 18) are no longer blocked in the partial
+run. In the whole board SDA/SCL/IRQ_N still fail on the U401.x to U501.x edges, and R305 to U401.8 and R304 to U401.9
+fail too: the blocking end is U401's walled south row (Port 1's task), not U501. Whole board by group: port1 31,
+port2 21, pack 3, fixed 3.
+
+**Not as asked: VBUS pad 32.** The planner joins one pad per terminal: with the row closed, U501's VBUS terminal is
+joined at pad 23 (east, the 5 A pin) and C550 from the west lane, but nothing joins pad 32 itself (dc.json: U501
+`pads_not_joined: ["32"]`, VBUS terminal not open, power_open only GND J301/J302). Pad 32 is the VBUS sense/LDO pin
+on the 10 nF C550; DRC lists it as an unconnected item to the VBUS zone, and the ghost router finds that way (it is not
+blocked). Every placement that linked 23 and 32 by copper did it along the row and blocked CC1, CC2 and GND 26/27/31.
+Joining it by growth needs the VBUS fronts to meet before PP5V takes the 0.2 mm channel; I did not get that to happen.
+
+**For the lead / Port 1:** (1) the same row fix on U401 will leave U401 pad 32 to the router the same way: either
+accept a router track for the VBUS sense pin, or the planner should join every pad of a multi-pad terminal (shared tool,
+not changed here). (2) The yard wall recipe (end closures 0.35 mm from the row plus a row of 0402s at +4.2 mm) carries
+over to U401. (3) SDA/SCL/IRQ_N between the PD chips now only wait on U401's south row.
+
+Files: `recipes/port2/03-buck5v.json`, `recipes/port2/04-pd-protect.json`, `fragments/port2.json`, `fragments/Port_2.json`
+(+ meta), `candidates/r1_Port_2_PD_pocket.json` (stitched whole board = `runs/p2pk-whole/placement.json`),
+`runs/p2pk-*` (score.json, dc.json, ghost.log, hot.json, F.png, B.png), `plan/p2pocket/*.png` (zooms, `final_u501_F.png`,
+`final_buck_F.png`, `whole_u501_u401_F.png`), new tools `tools/yard_check.py`, `tools/near.py` (pads of parts near a
+box), `tools/plan_only_p2.sh` (plan_only.sh printing Port 2 lines), `tools/plan_copper_dbg.py` (copy of the planner
+that prints one net's join order).

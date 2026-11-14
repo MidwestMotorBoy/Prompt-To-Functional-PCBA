@@ -22,11 +22,25 @@
  },
  {
   "ring": "U501",
-  "mm": 0.8
+  "mm": 0.8,
+  "allow": [
+   "C501",
+   "C502",
+   "C505",
+   "R502",
+   "R503",
+   "R504",
+   "R541"
+  ],
+  "note": "C501/C502 sit 0.3 mm from the north row so no VBUS path is left along it; C505 and R541 close the ends of the south escape yard 0.35 mm from the south row"
  },
  {
   "ring": "U505",
-  "mm": 0.8
+  "mm": 0.8,
+  "allow": [
+   "C501",
+   "C502"
+  ]
  },
  {
   "put": "D501",
@@ -71,7 +85,7 @@
    81.88
   ],
   "sides": "F",
-  "note": "VBUS from the east pair (D501, east lane) into U501 pad 23"
+  "note": "VBUS from the east pair down the east side into U501 pad 23 (the U501 terminal's path)"
  },
  {
   "reserve": "pphv_strip_U501_20_to_R524",
@@ -84,12 +98,12 @@
   "sides": "F"
  },
  {
-  "reserve": "pphv_corridor_south_of_U501",
+  "reserve": "pphv_corridor_south_of_wall",
   "box": [
    78.9,
-   85.0,
+   86.35,
    95.0,
-   86.45
+   88.1
   ],
   "sides": "F"
  },
@@ -104,14 +118,15 @@
   "sides": "F"
  },
  {
-  "reserve": "i2c_vias_U501_8_10",
+  "reserve": "south_escape_yard_U501",
   "box": [
-   88.6,
+   88.95,
    84.22,
-   90.8,
-   84.98
+   94.15,
+   85.48
   ],
-  "sides": "F"
+  "sides": "FB",
+  "note": "two staggered rows of escape vias for pads 8-10 and 16-19, kept free of parts on both sides"
  },
  {
   "reserve": "vbus_sense_way_under_H102",
@@ -123,16 +138,6 @@
   ],
   "sides": "F",
   "note": "west VBUS pair: D501, down the lane, east under H102 to pad 32"
- },
- {
-  "reserve": "i2cc_vias_U501_16_19",
-  "box": [
-   92.2,
-   84.22,
-   94.2,
-   84.98
-  ],
-  "sides": "F"
  },
  {
   "put": "R524",
@@ -147,52 +152,52 @@
  {
   "put": "C552",
   "at": [
-   92.74,
-   76.66
+   92.7,
+   76.27
   ],
   "turn": 90,
   "side": "F",
-  "note": "VPWR (U505 pad 10) faces H102, so C552 stands just south-west of U505 under H102, LDO_3V3 pad north at pad 10's level"
+  "note": "U505 VPWR cap standing west of U505 pad 10, LDO_3V3 pad north, GND pad south over C502's GND pad"
  },
  {
   "put": "C507",
   "at": [
-   90.12,
+   90.06,
    77.65
   ],
   "turn": 90,
   "side": "F",
-  "note": "PP5V bypass, PP5V pad south right above pad 34, end of the PP5V way"
+  "note": "PP5V bypass, PP5V pad south over pad 34; 0.53 mm from C550's GND pad so no VBUS path passes between them"
  },
  {
   "put": "C502",
   "at": [
-   93.5,
-   78.165
+   92.54,
+   78.2
   ],
-  "turn": 270,
+  "turn": 0,
   "side": "F",
-  "note": "CC2 cap on the CC2 line from U505 pad 11 to U501 pad 29, CC2 pad east"
+  "note": "CC2 cap standing, CC2 pad south over pads 29/30, 0.55 mm east of C550's GND pad"
  },
  {
   "put": "C501",
   "at": [
-   95.5,
-   78.165
+   94.25,
+   78.2
   ],
-  "turn": 90,
+  "turn": 180,
   "side": "F",
-  "note": "CC1 cap on the CC1 line from U505 pad 12 to U501 pad 28, CC1 pad west"
+  "note": "CC1 cap standing over GND pads 26/27 (GND pad south, they join it straight up and it closes the gap between the caps to VBUS copper from pad 23), CC1 pad north toward U505 pad 12; CC1 from pad 28 runs up between C502 and C501"
  },
  {
   "put": "C550",
   "at": [
-   91.51,
-   77.2
+   91.38,
+   77.7
   ],
-  "turn": 0,
+  "turn": 180,
   "side": "F",
-  "note": "VBUS pad south at pad 32, between C507 and C552"
+  "note": "VBUS-pin cap over pad 32, GND pad south (beside C502's GND pad, 1.0 mm over pad 32), VBUS pad north 1.98 mm from pad 32 toward the lane under H102: the planner feeds C550 from the west and cannot reach pad 32 past it (all gaps round pad 32 under 0.6 mm), so the U501 terminal's path goes to pad 23 from the east; pad 32 is left to a short router track"
  },
  {
   "put": "C549",
@@ -217,12 +222,12 @@
  {
   "put": "C505",
   "at": [
-   87.4,
-   83.75
+   88.4,
+   85.2
   ],
   "turn": 0,
   "side": "F",
-  "note": "LDO_1V5 pad north at pad 4"
+  "note": "LDO_1V5 cap closes the west end of the escape yard (LDO_1V5 pad north)"
  },
  {
   "at_pin": "C551",
@@ -246,36 +251,6 @@
   "side": "F"
  },
  {
-  "at_pin": "R502",
-  "pads": {
-   "2": "U502.5"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   78.9,
-   81.72,
-   86.41,
-   84.98
-  ],
-  "step": 0.05
- },
- {
-  "at_pin": "R503",
-  "pads": {
-   "2": "U502.6"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   78.9,
-   81.72,
-   86.41,
-   84.98
-  ],
-  "step": 0.05
- },
- {
   "at_pin": "C508",
   "pads": {
    "1": "U502.8"
@@ -291,33 +266,52 @@
   "step": 0.05
  },
  {
-  "at_pin": "R504",
-  "pads": {
-   "2": "U501.18"
-  },
-  "max_mm": 6.0,
-  "soft": true,
-  "within": [
-   78.9,
-   81.72,
-   86.41,
-   84.98
-  ],
-  "step": 0.05
+  "note": "south wall: four 0402 pull-ups in a row 1.6 mm south of U501's south row (gaps 0.55 mm between signal pads), so the PPHV corridor and its growth stay south of the wall and the escape yard above it stays free"
  },
  {
-  "at_pin": "R541",
-  "pads": {
-   "2": "U505.9"
-  },
-  "max_mm": 6.0,
-  "soft": true,
-  "step": 0.05
+  "put": "R502",
+  "at": [
+   89.7,
+   85.9
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "I2CC_SDA pad east"
+ },
+ {
+  "put": "R503",
+  "at": [
+   91.4,
+   85.9
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "I2CC_SCL pad east"
+ },
+ {
+  "put": "R504",
+  "at": [
+   93.1,
+   85.9
+  ],
+  "turn": 90,
+  "side": "F",
+  "note": "CHG_INT pad east, under pad 18"
+ },
+ {
+  "put": "R541",
+  "at": [
+   94.58,
+   85.0
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "SBU_FLT pad north under pad 19; closes the east end of the yard against pad 20 / R524 PPHV copper"
  },
  {
   "put": "C503",
   "at": [
-   87.8,
+   87.73,
    77.795
   ],
   "turn": 270,

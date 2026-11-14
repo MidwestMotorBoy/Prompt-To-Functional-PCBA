@@ -1,0 +1,14 @@
+net classes: 18 high-current nets, 76 small-signal nets
+edges to route: 175 (0 on long nets)
+fan-out stubs: 59
+GHOSTFAIL /USB Port 2/HIDRV1 Pad 27 [/USB Port 2/HIDRV1] of U503 on F.Cu -> Pad 1 [/USB Port 2/HIDRV1] of R544 on F.Cu
+GHOSTFAIL Net-(U503-ACOV) Pad 35 [Net-(U503-ACOV)] of U503 on F.Cu -> Pad 2 [Net-(U503-ACOV)] of R510 on F.Cu
+GHOSTFAIL /USB Port 2/LDO_1V5 Pad 1 [/USB Port 2/LDO_1V5] of C505 on F.Cu -> Pad 4 [/USB Port 2/LDO_1V5] of U501 on F.Cu
+GHOSTFAIL Net-(U503-ACUV) Pad 1 [Net-(U503-ACUV)] of R510 on F.Cu -> Pad 34 [Net-(U503-ACUV)] of U503 on F.Cu
+GHOSTFAIL /USB Port 2/DRV9_OFF Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on B.Cu -> Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu
+GHOSTFAIL /USB Port 2/TS Pad 8 [/USB Port 2/TS] of U503 on F.Cu -> Pad 1 [/USB Port 2/TS] of TH501 on F.Cu
+GHOSTFAIL /USB Port 2/BAT_SNS_P Pad 1 [/USB Port 2/BAT_SNS_P] of R528 on F.Cu -> Zone 'pc_USB Port 2_BAT_SNS_P' [/USB Port 2/BAT_SNS_P] on F.Cu, priority 30
+GHOSTFAIL GND Pad 31 [GND] of U501 on F.Cu -> Zone plane
+GHOSTFAIL PACK_P Pad 1 [PACK_P] of R529 on F.Cu -> Zone plane
+GHOSTFAIL /USB Port 2/HG2 Pad 2 [/USB Port 2/HG2] of R546 on F.Cu -> Pad 1 [/USB Port 2/HG2] of Q502 on F.Cu
+GHOST noway 10 of 175 edges, 172 s

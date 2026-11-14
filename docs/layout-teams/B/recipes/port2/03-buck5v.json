@@ -15,30 +15,22 @@
  {
   "put": "U504",
   "at": [
-   83.6,
-   67.6
+   83.9,
+   67.2
   ],
   "turn": 270,
-  "side": "F"
+  "side": "F",
+  "note": "0.3 mm east and 0.4 mm north of the first spot (clear of J109) so C546 can lie over pads 3/4 clear of C544"
  },
  {
-  "hot": "C546",
-  "switch": "U504",
-  "supply": [
-   "3"
+  "put": "C546",
+  "at": [
+   83.17,
+   65.3
   ],
-  "ret": [
-   "1",
-   "4"
-  ],
-  "max_mm": 1.5,
-  "within": [
-   79.5,
-   63.82,
-   85.18,
-   66.21
-  ],
-  "step": 0.02
+  "turn": 0,
+  "side": "F",
+  "note": "first HL_5V capacitor laid like Port 1's C446: PACK_P pad over VIN pad 3, GND pad over the adjacent GND pad 4 (0.03 mm aside), both 0.51 mm from the pins, so the loop closes pad 3 to pad 4 without passing EN pad 2"
  },
  {
   "hot": "C544",
