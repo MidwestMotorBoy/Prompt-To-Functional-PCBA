@@ -1,0 +1,10 @@
+{"entry": "E27", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":5,"8":4}},
+ "overall": 8,
+ "best": "Clearly titled blocks with explanatory notes, and power paths (pack FETs, four-switch buck-boost, Kelvin shunt filter, cell RC inputs) drawn as recognisable textbook left-to-right circuits with real wires.",
+ "worst": ["Stacked hidden-pin numbers and GPIO11 text overlap at the bottom of the TPS25751 (U401/U501) body",
+           "Charger gate/switch nodes (HG1/LG1/SW1/HG2/LG2/SW2) and PD-to-charger I2C link the USB blocks only by net labels, so the power stage must be traced by name",
+           "Uneven page use: 3V3 and MCU sheets leave large empty areas while the antenna match and RSTN/C303 area on the MCU sheet are cramped"]}

@@ -1,0 +1,11 @@
+{"entry": "E22", "grader": "opus",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":4,"4":5,"5":3,"6":4,"7":5,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+  "MCU": {"1":4,"2":5,"3":4,"4":5,"5":3,"6":4,"7":5,"8":4},
+  "USB": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":5,"7":5,"8":4}},
+ "overall": 8,
+ "best": "Every block sits in a titled frame with a plain-language note giving the design values, and the four-switch stage, bucks, dividers and RC sense filters are drawn in clean, textbook form with decoupling at their pins.",
+ "worst": ["The Cells sheet has a 'Cell and load wires' block and a test-point block of wire pads tied only by labels, cut off from the circuits they serve, and the protection-FET stage puts the pack power path on a source rail under the FETs rather than reading as a clear series path.",
+  "On the USB sheets, the charger's HIDRV/LODRV/SW and sense nets and the TPD6S300 C_CC inputs reach the power stage and connector only through net-name stubs, so following the hot path means matching labels across blocks; stacked hidden-pin numbers (U401 pin 15, U405 GND/NC pins) also clutter the symbol edges.",
+  "Space use is uneven: the 3V3 and MCU sheets leave large empty areas while the USB sheet packs five blocks densely into small text."]}

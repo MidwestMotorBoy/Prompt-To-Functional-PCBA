@@ -1,0 +1,10 @@
+{"entry": "E15", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":5,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "MCU": {"1":3,"2":3,"3":3,"4":2,"5":3,"6":3,"7":3,"8":3},
+            "USB": {"1":3,"2":2,"3":2,"4":3,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 5,
+ "best": "The Cells and Gauge sheet draws the pack current path left to right with labelled charge/discharge FETs, cell-sense RC filters stacked by the gauge inputs, and a clear prose note on how the protection works.",
+ "worst": ["USB sheets leave many parts floating and tied only by labels (U405 caps, TVS D401, EEPROM U402, Q409, R454, R432/EN_5V1, supply decoupling groups marked 'for U405.VBIAS') with large empty regions on the page",
+           "MCU sheet has overlapping net labels (3V3_SLEEP label on top of its wire label), pull-up values placed far from their resistors, and the antenna-match title sits well below its pi network",
+           "Most of the BQ25756 charger is labels and long parallel buses into the IC, so the controller-to-power-stage connections (HG/LG, SW, BTST, sense) must be traced by name rather than seen"]}

@@ -1,0 +1,10 @@
+{"entry": "E26", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "Cells": {"1":3,"2":4,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":3,"6":3,"7":3,"8":2}},
+ "overall": 6,
+ "best": "Small sheets (3V3, MCU, pack power path) are clean, titled blocks with helpful notes, and the four-switch power stage reads as a textbook H-bridge with L401 between SW1/SW2.",
+ "worst": ["BQ25756 charger block fans every pin out on long parallel staircase wires ending in stub labels (HIDRV1, SW1, LODRV2...) so the gate-drive and sense loops must be traced by name rather than seen",
+           "Text collisions on USB and Cells sheets: C412/C413 values overlap SW1/SW2 labels, R410 value sits on ACOV wire, TH101/TH104 values overlap the thermistor symbols, TPS25751 bottom pin numbers stacked illegibly",
+           "Gauge cell-sense inputs route via long nested wires around U101 and power is split across sheets by labels (PACK_P bulk on 3V3 sheet, 5V buck and 9V supply as small boxes with large empty area between USB sections)"]}

@@ -1,0 +1,9 @@
+{"entry": "E21", "grader": "opus",
+ "scores": {
+  "3V3": {"1":5,"2":4,"3":5,"4":4,"5":3,"6":4,"7":5,"8":4},
+  "Cells": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+  "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 6,
+ "best": "The 3V3 rail and MCU sheets are clean wired drawings with a left-to-right buck path, decoupling and pull-ups at their pins, and helpful notes on design intent.",
+ "worst": ["USB sheets lean on labels: the connector, TPD6S300, TPS25751 and EEPROM blocks hang off net-name stubs with almost no wires between them, plus a floating Q409, and the page has a large empty middle", "Small-text clutter on the USB sheets: pin numbers overlap on the U401/U405 GND pins, labels crowd the IC pins, and the charger's long parallel buses to the sense/divider parts must be traced by eye", "On Cells and Gauge, the TS/NTC area is scattered: long vertical wires down to off-board connectors, a thermistor value overlapping its symbol, and loose J-pads tied only by CELL_1N labels"]}

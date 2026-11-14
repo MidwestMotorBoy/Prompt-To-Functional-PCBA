@@ -1,0 +1,9 @@
+{"entry": "E19", "grader": "opus",
+ "scores": {
+  "3V3": {"1":5,"2":5,"3":5,"4":5,"5":4,"6":4,"7":5,"8":5},
+  "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":5,"5":4,"6":4,"7":5,"8":4},
+  "USB": {"1":4,"2":4,"3":3,"4":4,"5":4,"6":4,"7":4,"8":4}},
+ "overall": 8,
+ "best": "Clean left-to-right power paths with titled, annotated blocks: the gauge FET path, sense resistor and four-switch stage read like textbook drawings with values legible and no overlaps.",
+ "worst": ["USB sheets tie the charger controller to its four-switch power stage, and the PD controller to the connector block, only through same-sheet text net labels (HIDRV1, SW1, PPHV, CC1/CC2) across large distances", "Gauge VC1-VC4 filter inputs reach U101 through long stepped wires and thermistors TS1-TS4 sit in a separate box tied only by labels", "Port 2 sheet keeps stale port-1 text in block subtitles (Q401/Q402, Q409), and some labels on the USB sheets are dense small text crowding pin numbers (e.g. DRAIN (15) on U401)"]}

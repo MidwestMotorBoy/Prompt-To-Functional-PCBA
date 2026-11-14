@@ -1,0 +1,8 @@
+{"entry": "E28", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":5,"3":5,"4":5,"5":3,"6":5,"7":5,"8":5},
+            "Cells": {"1":4,"2":4,"3":4,"4":4,"5":4,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":5,"5":4,"6":4,"7":5,"8":4},
+            "USB": {"1":4,"2":4,"3":4,"4":3,"5":4,"6":4,"7":5,"8":4}},
+ "overall": 8,
+ "best": "Every block is boxed under a descriptive title with a short explanatory note, and the power paths (3V3 buck, pack FET path, four-switch stage with input/output banks and sense resistors in line) read left to right like textbook drawings.",
+ "worst": ["Stacked GND pin numbers under U401 and U405 on the USB sheets overlap into an illegible clump", "BQ25756 and the four-switch stage are tied only by HIDRV/LODRV/BTST/SW net labels, so the gate drive must be traced by name across the sheet", "3V3 sheet leaves the lower half empty while the USB sheets are dense; MCU SWDIO/SWCLK/NRST are dangling local labels rather than wires to the debug header"]}

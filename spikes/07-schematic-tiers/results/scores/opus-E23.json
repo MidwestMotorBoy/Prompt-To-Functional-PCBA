@@ -1,0 +1,8 @@
+{"entry": "E23", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":3,"7":4,"8":3},
+            "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":4,"7":4,"8":3},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":3,"6":3,"7":3,"8":2}},
+ "overall": 5,
+ "best": "Titled blocks with clear power-stage drawings: the 3V3 buck, the four-switch H-bridge stage and the BQ25756 support network read as tidy textbook-style circuits with legible values.",
+ "worst": ["USB sheets connect many parts only by labels (USB-C connector, TPD6S300, PD controller, decoupling caps marked 'for U401...') so reviewing means tracing nets by name; TPS25751 GPIO/GND pins have stacked ground symbols and overlapping pin numbers", "Cells sheet has many isolated label-only parts (ESD caps, WAKE pull-up, PACK_CMID caps, test-point grid) and the gauge's long fan-in bus of wires to U101 is hard to follow", "Poor use of space: 3V3 and MCU sheets are mostly empty while the USB sheets cram small text into a large page; MCU antenna pi-match and debug connectors tie to the module only by labels"]}

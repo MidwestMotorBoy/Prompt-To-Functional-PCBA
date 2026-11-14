@@ -1,0 +1,10 @@
+{"entry": "E17", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":2,"2":2,"3":1,"4":2,"5":2,"6":1,"7":3,"8":1},
+            "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":3,"7":4,"8":3},
+            "USB": {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":3,"8":2}},
+ "overall": 4,
+ "best": "The 3V3 rail and the USB four-switch power stage read cleanly left to right (input caps, switches/inductor, output caps) with clear section titles and visible values.",
+ "worst": ["Cells and Gauge sheet is mostly label-tied fragments: protection FETs drawn as tiny boxes not back-to-back, divider/gate parts and connectors float alone with auto net names like U101.VC4/C110.2, nothing is traceable without search",
+           "Text collisions and detached annotation: stacked pin numbers on IC ground pins (TPD6S300, TPS25751), refdes/value labels displaced from their parts (R104/R105/R106, C401/C402, C405), net label over resistor body near U101.VCC",
+           "Poor page use: large empty regions on every sheet with parts clustered in rows/corners, and support parts (C451/C452/C404/C408, R432, TP412, decoupling for U405/U402) placed away from the pins they serve"]}

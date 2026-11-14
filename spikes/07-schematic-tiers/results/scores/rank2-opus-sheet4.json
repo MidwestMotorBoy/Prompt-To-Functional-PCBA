@@ -1,0 +1,16 @@
+{"grader": "opus", "sheet": "sheet4",
+ "ranking": ["E19","E08","E13","E28","E18","E22","E24","E14","E16","E03","E27","E06"],
+ "notes": {
+  "E19": "Framed module/antenna/debug blocks, pull-ups at their pins, textbook pi match, clear numbered notes, balanced page.",
+  "E08": "Framed blocks with descriptive titles, pull-ups and reset wired at pins, J301/J302 sharing NRST drawn as wire, good notes; pi feedback wire slightly awkward.",
+  "E13": "Everything wired, pi match drawn clearly below module, rich notes; long label runs to right edge and sparse lower half.",
+  "E28": "Clean framed layout, pull-ups at pins, readable pi match and notes; pi drawn a bit tangled and J302 pin order reversed.",
+  "E18": "Clean, legible, separate antenna block as textbook pi; RFIO/ANT_IN via labels instead of wire, large empty right/bottom.",
+  "E22": "Framed and tidy, decaps at VDDS; pi network wraps a long wire around to RFIO at bottom of module, tall stretched module.",
+  "E24": "Readable, framed; pi match squeezed in a line under NRST with wires running past parts; much empty space.",
+  "E14": "Pull-ups ganged in a row with long buses, pi match routed via long detour loop; notes good, layout loose.",
+  "E16": "Antenna match detached and tied only by labels, pull-ups use local 3V3 labels in odd orientations; plain titles.",
+  "E03": "Simple and legible but pi match loops around with a wandering wire, large empty lower half, TP301 floating.",
+  "E27": "Dense left cluster: TP301, R302 3V3 symbol and C303 value text crowd/overlap; pi match tangled around module.",
+  "E06": "Auto net names Net-(C313-Pad2) shown, antenna match split across sheet, pull-ups far from pins in a long row, connectors stranded at right edge, very wide sparse page."
+ }}

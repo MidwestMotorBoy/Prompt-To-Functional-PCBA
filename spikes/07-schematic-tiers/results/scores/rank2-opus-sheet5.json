@@ -1,0 +1,16 @@
+{"grader": "opus", "sheet": "sheet5",
+ "ranking": ["E19","E27","E08","E28","E13","E22","E24","E14","E16","E18","E03","E06"],
+ "notes": {
+  "E19": "Boxed titled blocks with notes; power stage drawn as textbook half bridges with Kelvin sense filters inline; clean, balanced, no overlaps.",
+  "E27": "Textbook MOSFET bridge, clear sense pairs at charger pins, explanatory notes per block; PD controller block a bit wire-heavy.",
+  "E08": "Very complete: boxed blocks, set-point annotations, long notes list, power stage left to right; dense and small text.",
+  "E28": "Clean and legible with sheet-interface box and notes; some caps grounded upward and much empty space in power stage.",
+  "E13": "Compact and logical, power stage with filters and bootstraps drawn; a few label/value overlaps (R444, C420) and unboxed blocks.",
+  "E22": "Boxed blocks with good descriptions and neat power stage; rotated cap values and charger crammed into a tall right column.",
+  "E24": "Boxed blocks with notes, readable power stage; small drawing, sparse regions and bootstrap/sense parts somewhat scattered.",
+  "E14": "Titled blocks with useful notes, but charger gate-drive parts strung on long wires and sparse layout.",
+  "E16": "Readable sections, but sense filters and bootstrap caps float alone tied by labels; large empty areas.",
+  "E18": "Drawing occupies a small part of a large sheet; cramped clusters, tiny text, power stage parts tightly packed.",
+  "E03": "Charger drawn with long wires wandering across the sheet to sense/drive parts; scattered layout, weak grouping.",
+  "E06": "Very tall sparse sheet, many parts floating alone joined only by labels, decoupling far from pins; hard to review."
+ }}

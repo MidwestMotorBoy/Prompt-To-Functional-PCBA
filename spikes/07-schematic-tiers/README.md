@@ -87,6 +87,63 @@ Sonnet+grader rounds (rubric / rank):
 - **Keep a grader, but cheaper and earlier.** Use one structured review after the first round, then lint-driven
   rounds.
 
+## Follow-up: helping Sonnet (2026-11-14 evening)
+
+Fourteen more Sonnet runs, all driven through a 4-round self-review loop (`harness/SELFREVIEW.md`):
+each round the agent rebuilds, opens every page, scores itself strictly against the rubric,
+writes `review-rN.md` with a top-5 list, fixes it and reports. Setups:
+
+- `ss-*`: default effort, original brief.
+- `sb-*`: default effort, brief plus a "facts earlier attempts got wrong" section (`harness/BRIEF-with-facts.md`).
+- `hi-*` / `mx-*`: high / max effort, original brief.
+- `sp-*`: Sonnet lead plus one Sonnet subagent per page (the lead cannot spawn agents, so the
+  orchestrator dispatched page agents and the lead merged them).
+- `gm-*` / `gh-*`: medium / high effort plus `harness/GUIDE.md`, a domain-agnostic working guide
+  written by Fable. The rule was that advice must not be task-specific; an Opus leak check found it clean.
+
+All 14 pass the netlist gate. Graded blind by Opus with the same rubric (entries E15-E28,
+`results/blind_key2.json`, `blind_key3.json`), plus a per-sheet ranking of the top 12
+(`harness/RANKER2.md`, `results/scores/rank2-*`). Costs from `harness/cost2.py`; active time
+counts gaps under 5 minutes.
+
+| Run | Setup | Rubric 0-5 | Mean rank of 12 | Cost | Active min |
+|---|---|---|---|---|---|
+| gh-2 | high + guide | 4.28 | 5.0 | $9.93 | 66 |
+| mx-2 | max effort | 4.25 | 1.0 | $38.19 | 214 |
+| mx-1 | max effort | 4.25 | 7.5 | $40.87 | 235 |
+| fable-2 | (reference) | 4.16 | 2.25 | $17.16 | |
+| hi-2 | high | 4.09 | 5.5 | $10.12 | 59 |
+| gh-1 | high + guide | 4.00 | 6.5 | $12.13 | 79 |
+| hi-1 | high | 3.97 | 6.75 | $11.43 | 82 |
+| opus-2 | (reference) | 3.81 | 9.5 | $11.98 | |
+| opus-1 | (reference) | 3.75 | 5.5 | $15.25 | |
+| fable-1 | (reference) | 3.66 | 8.0 | $13.30 | |
+| sb-2 | facts brief | 3.56 | 8.5 | $5.59 | 44 |
+| sp-2 | per-page | 3.44 | | $6.47 | 35 |
+| gm-2 | medium + guide | 3.41 | | $9.67 | 60 |
+| sp-1 | per-page | 3.28 | | $3.39 | 33 |
+| ss-1 | self-loop | 3.22 | | $4.77 | 37 |
+| sb-1 | facts brief | 3.19 | | $2.36 | 19 |
+| ss-2 | self-loop | 2.81 | | $1.32 | 8 |
+| gm-1 | medium + guide | 2.56 | | $0.97 | 5 |
+| baseline | | 2.47 | 12 | | |
+
+Findings:
+
+- Effort is the lever. High effort plus the self-loop reaches Opus level and close to Fable on the
+  rubric for about $10-12, cheaper than either.
+- Max effort gives the best single board (mx-2 ranked first on every sheet) but costs 2.3x a Fable
+  run and takes 3.5-4 hours. Not worth it; cap such runs at twice the Fable cost.
+- The generic guide adds about +0.1 at high effort, inside run-to-run noise. At medium effort it
+  does not stop early quitting (gm-1 stopped after 5 minutes).
+- At default effort, the self-loop, the facts brief and per-page subagents all land at 2.8-3.6:
+  better than plain Sonnet, but well short of Opus. Per-page splitting kept context small but the
+  pages stayed inconsistent with each other.
+- On the per-sheet ranking, fable-2 still beats every high-effort Sonnet run.
+
+PDFs of every run (cover page with score and cost, then the sheets) are in project files
+`schematic-tiers/sonnet-followup/`.
+
 ## Not done / caveats
 
 - Two runs per setup. The Sonnet+grader spread (rank 5.1 against 10.5) shows the variance is large.

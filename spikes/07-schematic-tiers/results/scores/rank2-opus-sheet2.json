@@ -1,0 +1,16 @@
+{"grader": "opus", "sheet": "sheet2",
+ "ranking": ["E19","E08","E13","E18","E24","E14","E28","E03","E27","E16","E22","E06"],
+ "notes": {
+  "E19": "Boxed buck and bulk blocks, clean L-to-R path with C206 at VIN and C207 at output, full numbered notes, good use of page",
+  "E08": "Boxed blocks with clear titles, textbook buck path, thorough notes; slightly sparse buck box",
+  "E13": "Clear buck path and separate titled bulk row, good notes; lower-right half of page empty",
+  "E18": "Clean buck and bulk sections with notes column; drawing sits small mid-page with large empty top and bottom",
+  "E24": "Everything in one box with good path and notes; bulk caps mixed into buck input row ahead of C206",
+  "E14": "Single clean row with an informative header; the six bulk caps crowd the input so C206 sits far from VIN visually",
+  "E28": "Good buck block and notes; bulk caps split into two rows with wire stubs past the last cap, layout wide and unbalanced",
+  "E03": "Compact clean row and short note; output 3V3 drawn as separate symbol at VOS, no section split for bulk, sparse notes",
+  "E27": "Good two-box grouping and notes, but the 3V3_SLEEP label sits on top of C206's ground symbol",
+  "E16": "Single row; VOS wire runs into C207's lead with no junction (looks like it crosses the symbol), notes scattered, big empty area",
+  "E22": "Rotated cap refs and values crammed between caps, hard to read; tall IC with VOS loop; small cramped page",
+  "E06": "EN driven by a PACK_P label instead of a wire, four ground symbols overlapped, minimal annotation, drawing confined to top strip"
+ }}

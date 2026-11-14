@@ -1,0 +1,16 @@
+{"grader": "opus", "sheet": "sheet3",
+ "ranking": ["E19","E08","E24","E27","E28","E16","E22","E18","E03","E14","E13","E06"],
+ "notes": {
+  "E19": "Boxed blocks with titles and notes; power path and PACK- shunt read left to right; gauge cell filters wired as a ladder; no clutter.",
+  "E08": "Clean boxed layout, textbook FET pair and low-side sense, cell ladder wired to gauge; notes explain; slightly dense power-path block.",
+  "E24": "Well-grouped boxes, power path with return/sense below reads clearly; gauge and protector tidy; NTC block uses labels only.",
+  "E27": "Large uncluttered gauge with all support parts wired at pins; good power path; tall gauge leaves some sparse space.",
+  "E28": "Gauge block includes cell taps, shunt and NTCs wired at pins; compact but small text and labels in power path; lots of empty lower right.",
+  "E16": "Clear power path at top, but gauge cell filters and shunt are separate label-tied islands; FET gate parts hang awkwardly.",
+  "E22": "Gauge drawn as tall column with parts at pins; fuse moved into protector block so power path lacks it; wire pads scattered.",
+  "E18": "Readable gauge and protector, but current sense and thermistors are isolated label-only fragments; uneven density.",
+  "E03": "Good power path with return, but gauge area has crossing wires near C105/R104 and cramped tangle; wire pads label-only.",
+  "E14": "Power path split from fuse and protector; cell pads label-only; gauge fanout of long parallel wires on the right.",
+  "E13": "Cramped: overlapping refs/values around R113/TH101 and RS101, long fanout to gauge, huge note column; hard to review.",
+  "E06": "Parts scattered as label-tied fragments with Net-(...) auto names; no power path drawn; large empty regions."
+ }}

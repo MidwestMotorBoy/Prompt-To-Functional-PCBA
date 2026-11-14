@@ -1,0 +1,10 @@
+{"entry": "E16", "grader": "opus",
+ "scores": {"3V3": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":4,"7":4,"8":4},
+            "Cells": {"1":4,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":3,"2":3,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Clear titled blocks with explanatory notes, and power paths (pack FET pair, four-switch stage, 3V3 buck) drawn left-to-right like textbook circuits.",
+ "worst": ["Many same-sheet connections done as bare stub net names (VC1-4, SRP/SRN, TS1-4, I2CC_*, CHG_INT) instead of wires, forcing name tracing on the Cells and USB sheets",
+           "Text collisions on USB sheets: DRV_SUP label runs into PACK_P label, C_CC2 overlaps DPDN_DCP, stacked GND pin numbers under U401/U405, misplaced 'I2Cc bus pull-ups' note next to C405",
+           "Unbalanced space: 3V3 sheet is one thin line on a mostly empty page, Cells and USB have large blank regions while some clusters (BQ294700 cap ladder text over pin wires) are cramped"]}

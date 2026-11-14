@@ -1,0 +1,11 @@
+{"entry": "E25", "grader": "opus",
+ "scores": {
+  "3V3": {"1":4,"2":4,"3":4,"4":4,"5":2,"6":3,"7":3,"8":4},
+  "Cells": {"1":1,"2":1,"3":1,"4":2,"5":1,"6":1,"7":2,"8":1},
+  "MCU": {"1":3,"2":3,"3":3,"4":4,"5":2,"6":2,"7":4,"8":3},
+  "USB": {"1":3,"2":3,"3":2,"4":3,"5":2,"6":2,"7":3,"8":2}},
+ "overall": 4,
+ "best": "The 3V3 buck and the BQ25756 charger core are drawn as clean wired left-to-right paths with bootstrap, sense filters and the FB divider beside their pins.",
+ "worst": ["Cells and Gauge is mostly label-tied fragments: protection FETs, gate resistors, NTC jacks and the second-level fuse float apart, the gauge decoupling row labels each cap to an unrelated net, and text overlaps (FET_MID/CELL_P at Q101, J117/J120)",
+           "In the USB sheets the four-switch power stage is far from the charger controller and joined only by HG/LG/SW labels, and the antenna pi network on the MCU sheet is split between two distant spots",
+           "Space is poorly used: large empty areas on every sheet (3V3 lower half, MCU middle, USB right side) while some clusters are cramped and drawn very small"]}

@@ -1,0 +1,11 @@
+{"entry": "E20", "grader": "opus",
+ "scores": {
+  "3V3":   {"1":4,"2":4,"3":4,"4":3,"5":2,"6":4,"7":4,"8":4},
+  "Cells": {"1":3,"2":3,"3":2,"4":3,"5":3,"6":3,"7":4,"8":3},
+  "MCU":   {"1":3,"2":4,"3":3,"4":3,"5":3,"6":4,"7":4,"8":4},
+  "USB":   {"1":3,"2":3,"3":2,"4":2,"5":2,"6":3,"7":4,"8":3}},
+ "overall": 6,
+ "best": "Every block has a title and a one-line note, and the textbook sub-circuits (cell-tap RC ladder, back-to-back protection FETs, four-switch stage with input/output caps, antenna pi network) are drawn in recognisable form.",
+ "worst": ["USB sheets put tiny parts on a huge page: the bottom third is nearly empty while the PD controller, connector and charger are small and dense, and the charger controller is joined to its four-switch stage only through labels such as SW1, HG1 and BTST1.",
+           "Text collisions: C405 and its value sit on top of the P1_LDO_3V3 label and wire, the R110 reference touches the wire in the FET block, the Q103 reference overlaps the IRQ_N transistor, and the 'Cell NTCs' note runs into the TS label stubs.",
+           "Many short connections are label-only stubs (gauge SRP/SRN/TS/PACK_SNS, PD controller VBUS/CC pins, the separate EEPROM block, which repeats the PD block's title), so a reviewer has to search net names instead of following wires."]}

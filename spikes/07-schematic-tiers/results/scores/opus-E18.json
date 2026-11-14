@@ -1,0 +1,8 @@
+{"entry": "E18", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":5,"8":5},
+            "Cells": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":4,"8":4},
+            "USB": {"1":4,"2":4,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 8,
+ "best": "Every block is titled with a one-line purpose note, and the power stages (TPS62177 buck, four-switch buck-boost with Kelvin-filtered sense resistors in line, back-to-back CHG/DSG FETs) are drawn as clear textbook left-to-right paths.",
+ "worst": ["Sheets leave large empty areas (bottom halves of the A2 USB and A3 Cells sheets, most of the 3V3 sheet) while the circuitry sits in small text in the upper region", "Many short local connections on the Cells and USB sheets are made by dangling net-name labels (TS1-TS4/NTC wires, BQ25756 pin stubs, gate-drive FB divider) instead of wires, so the charger and NTC wiring has to be traced by name", "Minor clutter: stacked hidden-pin numbers under U401/U405, Q101 ref overlapping its symbol, and the output feedback divider R418/R419 sitting orphaned in the gate-drive block"]}

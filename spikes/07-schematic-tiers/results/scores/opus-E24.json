@@ -1,0 +1,8 @@
+{"entry": "E24", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":4,"3":5,"4":5,"5":3,"6":5,"7":5,"8":5},
+            "Cells": {"1":4,"2":4,"3":3,"4":4,"5":4,"6":4,"7":5,"8":4},
+            "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+            "USB": {"1":4,"2":4,"3":3,"4":3,"5":4,"6":4,"7":4,"8":4}},
+ "overall": 8,
+ "best": "The four-switch buck-boost and the BQ29 protection power path are drawn as textbook left-to-right power paths with titled, dashed blocks and short explanatory notes on every block.",
+ "worst": ["BQ25756 charger connects to its FETs, bootstrap and sense nets mostly by local net labels (HIDRV1, SW1, SRP_F, FB...) rather than wires, so the gate-drive and sense loops must be traced by name", "Stacked GND pin numbers overlap on U401/U405 in the USB sheets, and USB Port 2 notes still cite Port 1 refs (D401, U405, Q401, R424/R427)", "Gauge sheet uses long orthogonal detour wires from cell taps and FET_MID into U101, plus local labels CELL1-CELL_4P/TS2-TS3 between blocks on the same sheet"]}
