@@ -1,0 +1,5 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 443 (0 on long nets)
+fan-out stubs: 114
+phase 1: 69 open connections tried again with every route free to move
+phase 2: 67 open connections tried again with every route free to move

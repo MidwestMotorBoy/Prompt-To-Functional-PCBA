@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/rebuild-v4.kicad_pcb",
+ "sha": "09827553d4c1d05989d756d0f5f39077c3bf416f",
+ "routed": 368,
+ "failed": 66,
+ "edges": 443,
+ "minutes": 60.1,
+ "status": "timed out at 60 min",
+ "tail": [
+  "net classes: 22 high-current nets, 146 small-signal nets",
+  "edges to route: 443 (0 on long nets)",
+  "fan-out stubs: 114",
+  "phase 1: 69 open connections tried again with every route free to move",
+  "phase 2: 67 open connections tried again with every route free to move"
+ ]
+}
