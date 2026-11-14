@@ -1,4 +1,4 @@
-"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes, default J,H,TP,SW] [intent.json]
+"""place_sections.py <board dump.json> <netlist.json> <constraints.json> <out clusters.json> [fixed ref prefixes and exact refs (anchors), default J,H,TP,SW] [intent.json]
 Step 1 of the section placer: build each (section, side) group as a tight cluster on its own, in local
 coordinates, with no knowledge of where the parts sit on the dump board (the dump supplies pad geometry only).
 Order: the part with the most pads first, then always the unplaced part most connected to what is placed.
@@ -49,7 +49,7 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
         for c, (tr, tp) in serves.items(): near[c].append((tr, tp, 4.0))
     groups = defaultdict(list)
     for r in pos0:
-        if r in bb and r.rstrip("0123456789").upper() not in pre: groups[(blk[r], side[r])].append(r)
+        if r in bb and r.rstrip("0123456789").upper() not in pre and r not in pre: groups[(blk[r], side[r])].append(r)
     # Hot loops (circuit code): each capacitor goes into its switch part's group, is placed straight after the switch
     # part, and is pulled pad by pad: supply pad to the switch's supply pads, return pad to its return pads.
     bare = lambda n: (n or "").lstrip("/"); hot = {}; hotdev = {}; pp = cons.get("pin_pads", {})
@@ -65,7 +65,7 @@ def main(dumpf, netf, consf, outf, fixed_prefixes="J,H,TP,SW", intentf=None):
             if c not in bb or c in hot: continue
             hot[c] = (dev, sp, rp, hl["supply"], hl["ret"], k)
             gd = (blk[dev], side[dev]); gc = (blk[c], side[c])
-            if gc != gd: groups[gc].remove(c); groups[gd].append(c); side[c] = side[dev]
+            if gc != gd and c in groups[gc]: groups[gc].remove(c); groups[gd].append(c); side[c] = side[dev]
     def padbox(r, i, P_):     # pad box of a placed part, board-local
         x, y, k = P_; b = lpb[r][i]; cs = [rot((b[0], b[1]), k), rot((b[2], b[3]), k)]
         return x + min(c[0] for c in cs), y + min(c[1] for c in cs), x + max(c[0] for c in cs), y + max(c[1] for c in cs)

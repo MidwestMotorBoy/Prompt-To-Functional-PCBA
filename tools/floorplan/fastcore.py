@@ -4,7 +4,8 @@ of the numpy version, which place_pack.py still uses when numba is not installed
   signal pads (sorted by net)  pads, pr, pl, starts, ends; per part: pp_ptr/pp_idx (its pads), pn_ptr/pn_idx (its nets)
   intent pads  q_all, apr, apl; per part ap_ptr/ap_idx; statements: sk (0 near, 1 apart), slim, sa_ptr/sa_idx, sb_ptr/sb_idx;
                per part ps_ptr/ps_idx
-  keep-outs  ko (K x 4), koF, koB;   crossing edges  EA, EB, EN; per part pe_ptr/pe_idx;   box (4)"""
+  keep-outs  ko (K x 4), koF, koB;   crossing edges  EA, EB, EN; per part pe_ptr/pe_idx;   box (4); reg (N x 4): each part's box from a block floorplan
+  (costed like being off the board), x1 <= x0 for none"""
 import numpy as np
 from numba import njit
 
@@ -109,7 +110,7 @@ def stmt(s, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx):
 
 @njit(cache=True)
 def local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx,
-          q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx):
+          q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg):
     c = 0.0
     for t in range(pn_ptr[i], pn_ptr[i + 1]): c += net_hp(pn_idx[t], pads, starts, ends)
     if WX > 0.0:
@@ -117,6 +118,8 @@ def local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, star
     ov, off = part_ov(i, -1, fixed, box, fixed, sideF, big, thru, LO, HI, TLO, THI, ko, koF, koB)
     ic = 0.0
     for t in range(ps_ptr[i], ps_ptr[i + 1]): ic += stmt(ps_idx[t], q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx)
+    if reg[i, 2] > reg[i, 0]:      # a box the part belongs in (a reviewed block floorplan): mm outside it
+        off += max(0.0, reg[i, 0] - LO[i, 0]) + max(0.0, HI[i, 0] - reg[i, 2]) + max(0.0, reg[i, 1] - LO[i, 1]) + max(0.0, HI[i, 1] - reg[i, 3])
     return c + wov * ov + 60.0 * off + 25.0 * ic
 
 @njit(cache=True)
@@ -173,25 +176,25 @@ def anneal_clusters(seed, n, s_from, s_to, T0, T1, wov0, wov1, WX, TM, T, loc, l
 @njit(cache=True)
 def anneal(seed, n, s_from, s_to, T0, T1, legal_from, wov_early, wov_late, pool, WX, TM, box, xy, k, fixed, sideF, big, bbx, tbx, thru, LO, HI, TLO, THI,
            pads, pl, starts, ends, pp_ptr, pp_idx, pn_ptr, pn_idx, q_all, apr, apl, ap_ptr, ap_idx,
-           sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx):
+           sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg):
     np.random.seed(seed); late = int(n * legal_from)
     for s in range(s_from, s_to):
         wov = wov_late if s >= late else wov_early
         t = T0 * (T1 / T0) ** (s / n); i = pool[np.random.randint(len(pool))]; ox = xy[i, 0]; oy = xy[i, 1]; ok = k[i]
-        before = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx)
+        before = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg)
         if np.random.random() < 0.1:
             put(i, ox, oy, np.random.randint(4), TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
         else:
             rad = 0.2 + 2.0 * (t / 1.5)
             put(i, ox + np.random.uniform(-rad, rad), oy + np.random.uniform(-rad, rad), ok, TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
-        dc = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx) - before
+        dc = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg) - before
         if not (dc < 0 or np.random.random() < np.exp(-dc / t)):
             put(i, ox, oy, ok, TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
 
 @njit(cache=True)
 def search(i, reach, step, use_hard, hard, wov, WX, TM, box, xy, k, fixed, sideF, big, bbx, tbx, thru, LO, HI, TLO, THI,
            pads, pl, starts, ends, pp_ptr, pp_idx, pn_ptr, pn_idx, q_all, apr, apl, ap_ptr, ap_idx,
-           sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx):
+           sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg):
     """best spot for part i within reach (all four turns); with use_hard only spots clear of the hard parts"""
     ox = xy[i, 0]; oy = xy[i, 1]; ok = k[i]; best = 1e300; bx = ox; by = oy; bk = ok; found = False; m = int(round(2 * reach / step)) + 1
     for kk in range(4):
@@ -201,7 +204,7 @@ def search(i, reach, step, use_hard, hard, wov, WX, TM, box, xy, k, fixed, sideF
                 put(i, px, py, kk, TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
                 if LO[i, 0] < box[0] + 0.5 or LO[i, 1] < box[1] + 0.5 or HI[i, 0] > box[2] - 0.5 or HI[i, 1] > box[3] - 0.5: continue
                 if use_hard and overlap_area(i, 0.03, True, hard, fixed, sideF, big, thru, LO, HI, TLO, THI) > 0: continue
-                c = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx)
+                c = local(i, wov, WX, box, fixed, sideF, big, thru, LO, HI, TLO, THI, pads, starts, ends, pn_ptr, pn_idx, q_all, apr, sk, slim, sa_ptr, sa_idx, sb_ptr, sb_idx, ps_ptr, ps_idx, ko, koF, koB, EA, EB, EN, pe_ptr, pe_idx, reg)
                 if c < best: best = c; bx = px; by = py; bk = kk; found = True
     put(i, bx, by, bk, TM, xy, k, bbx, tbx, thru, LO, HI, TLO, THI, pads, pl, pp_ptr, pp_idx, q_all, apl, ap_ptr, ap_idx)
     return found

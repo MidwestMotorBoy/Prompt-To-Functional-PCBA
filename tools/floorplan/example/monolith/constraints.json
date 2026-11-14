@@ -470,13 +470,19 @@
    "max_v": 16.8
   },
   "CELL_N": {
-   "max_v": 0
+   "max_v": 0,
+   "kind": "power",
+   "current_a": 10
   },
   "CELL_P": {
-   "max_v": 16.8
+   "max_v": 16.8,
+   "kind": "power",
+   "current_a": 10
   },
   "CELL_P_RAW": {
-   "max_v": 16.8
+   "max_v": 16.8,
+   "kind": "power",
+   "current_a": 10
   },
   "CHG": {
    "max_v": 28.8
@@ -500,7 +506,9 @@
    "max_v": 3.6
   },
   "FET_MID": {
-   "max_v": 16.8
+   "max_v": 16.8,
+   "kind": "power",
+   "current_a": 10
   },
   "GAUGE_FUSE": {
    "max_v": 16.8
@@ -1318,5 +1326,79 @@
  "waive": {
   "recmax: U101.CHG": "the gauge's own charge pump sets this level (pack + 10.5 to 12 V); the 26 V row in the recommended table is lower than what the part itself produces on a 16.8 V pack. Logan confirmed 2026-11-11: these are the external FET drive pins, 32 V absolute maximum, so 28.8 V is expected",
   "recmax: U101.DSG": "same as U101.CHG"
+ },
+ "heat": {
+  "Q401": {
+   "w": 2.44,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: port leg, conduction 1.33 W + switching and dead time 1.11 W"
+  },
+  "Q402": {
+   "w": 1.33,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: battery leg, high side on, 13 mohm at 10.1 A"
+  },
+  "L401": {
+   "w": 1.43,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: 12 mohm DCR at 10.1 A + 0.2 W core"
+  },
+  "R427": {
+   "w": 0.51,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: RBAT 5 mohm at 10.1 A"
+  },
+  "R424": {
+   "w": 0.13,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: RAC 5 mohm at 5 A"
+  },
+  "U401": {
+   "w": 0.45,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: TPS25751 PPHV switch 18 mohm at 5 A"
+  },
+  "J401": {
+   "w": 0.25,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: USB-C contacts, 10 mohm loop at 5 A"
+  },
+  "Q501": {
+   "w": 2.44,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: port leg, conduction 1.33 W + switching and dead time 1.11 W"
+  },
+  "Q502": {
+   "w": 1.33,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: battery leg, high side on, 13 mohm at 10.1 A"
+  },
+  "L501": {
+   "w": 1.43,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: 12 mohm DCR at 10.1 A + 0.2 W core"
+  },
+  "R527": {
+   "w": 0.51,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: RBAT 5 mohm at 10.1 A"
+  },
+  "R524": {
+   "w": 0.13,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: RAC 5 mohm at 5 A"
+  },
+  "U501": {
+   "w": 0.45,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: TPS25751 PPHV switch 18 mohm at 5 A"
+  },
+  "J501": {
+   "w": 0.25,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack: USB-C contacts, 10 mohm loop at 5 A"
+  },
+  "Q101": {
+   "w": 0.58,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack, 10.1 A: 5.7 mohm warm"
+  },
+  "Q102": {
+   "w": 0.58,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack, 10.1 A: 5.7 mohm warm"
+  },
+  "F102": {
+   "w": 0.51,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack, 10.1 A: fuse 5 mohm hot"
+  },
+  "RS101": {
+   "w": 0.1,
+   "why": "Battery-Bank heat_sources.py, 100 W out, 12 V pack, 10.1 A: 1 mohm shunt"
+  }
  }
 }
