@@ -1,0 +1,195 @@
+[
+ {
+  "note": "P-e, Port 1 5 V buck (TPS62933) in the east column, top-right corner. The 9 V supply goes to the bottom (06-9v.json), so the top from x 109.7 to the board edge is free above the stage. L402 lies horizontal between J111 and TP109 (y 71.0..76.8), turned 180: pad 1 (SW_5V) west under U404, pad 2 (PP5V) east over the output capacitors. U404 turn 90 sits above L402's SW pad: VIN/GND column west, SW/BST/SS/FB column east. C446 (first hot-loop capacitor) in the 1 mm gap between J111 and U404, across VIN (pad 3) and GND (pad 4), C444 north of U404 with its PACK_P pad toward VIN. Output capacitors C441 and C442 stacked under L402's PP5V pad (the 9 V box is empty on top). C443 is the PP5V bridge: turned 270 (PP5V pad north) at 112.4, 81.9, west of TP109 and east of U401's VBUS/PPHV side, 7.7 mm from L402 pad 2. On the hand board PP5V is a bus on In3 only while the partial board leaves In3 free; on the whole board 3V3 takes In3 and PP5V stays open at U401. Here PP5V is a local net (span under 25 mm): VBUS (J401 to pads 32/23) and PPHV (pad 20 to R424) wall U401 pad 34 off from the east column on F.Cu, so the planner joins C407 (and through its copper pad 34) by a B.Cu detour of about 8 mm to C443, which must stay within the planner's 10 mm detour limit. The B.Cu under C443 and on the way to C407 is kept free of parts (06-9v.json)."
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "put": "L402",
+  "at": [
+   117.78,
+   73.9
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "U404",
+  "at": [
+   117.25,
+   68.9
+  ],
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "put": "C446",
+  "at": [
+   115.35,
+   69.2
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "first HL_5V capacitor, put: the only 1 mm gap at VIN/GND (pads 3, 4) is between J111 and U404; PACK_P pad north at pad 3, GND pad south at pad 4"
+ },
+ {
+  "hot": "C444",
+  "switch": "U404",
+  "supply": [
+   "3"
+  ],
+  "ret": [
+   "1",
+   "4"
+  ],
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   113.07,
+   64.2,
+   121.1,
+   67.54
+  ],
+  "step": 0.05,
+  "turns": [
+   180
+  ]
+ },
+ {
+  "at_pin": "C440",
+  "pads": {
+   "1": "U404.6",
+   "2": "U404.5"
+  },
+  "max_mm": 1.5,
+  "within": [
+   118.59,
+   67.5,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C439",
+  "pads": {
+   "1": "U404.7"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R434",
+  "pads": {
+   "1": "U404.8"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R433",
+  "pads": {
+   "2": "R434.1"
+  },
+  "max_mm": 2.5,
+  "soft": true,
+  "within": [
+   118.59,
+   64.2,
+   121.1,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "R432",
+  "pads": {
+   "1": "U404.2"
+  },
+  "max_mm": 3.0,
+  "soft": true,
+  "within": [
+   113.07,
+   64.2,
+   117.6,
+   70.98
+  ],
+  "step": 0.05
+ },
+ {
+  "note": "output capacitors stacked under L402's PP5V pad, PP5V pad east (toward L402 pad 2)"
+ },
+ {
+  "at_pin": "C441",
+  "pads": {
+   "1": "L402.2"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   115.52,
+   76.82,
+   121.1,
+   85.8
+  ],
+  "turns": [
+   0
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C442",
+  "pads": {
+   "1": "C441.1"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   115.52,
+   76.82,
+   121.1,
+   85.8
+  ],
+  "turns": [
+   0
+  ],
+  "step": 0.05
+ },
+ {
+  "put": "C443",
+  "at": [
+   112.75,
+   81.9
+  ],
+  "turn": 270,
+  "side": "F",
+  "note": "PP5V out cap, 0.35 mm east of r2 so C406 (turn 270) can stand east of U401 pad 23"
+ },
+ {
+  "deviation": "P-e",
+  "box": [
+   111.21,
+   79.56,
+   113.6,
+   84.25
+  ],
+  "why": "C443 (22 uF PP5V output capacitor) leaves the east column for the bridge spot west of TP109, so that the planner can join U401 pad 34 by a B.Cu detour of under 10 mm (PP5V open at U401 otherwise, as on the hand whole board)"
+ }
+]

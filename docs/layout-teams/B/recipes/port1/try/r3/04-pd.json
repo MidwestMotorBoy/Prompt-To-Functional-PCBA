@@ -1,0 +1,163 @@
+[
+ {
+  "note": "P-c, Port 1 PD controller U401 (TPS25751D) with EEPROM U402. U401 turn 0 as on the hand board: VBUS (32) and PP5V (34) and CC1/CC2 (28/29) on the north row toward J401 and U405, VBUS (23) and PPHV (20) on the east side toward C406 and R424, SDA/SCL/IRQ_N (8-10) on the south row's west end toward the top via field (98.6..101.4 x 83.8..87.8, reserved in border.json), I2CC/CHG_INT/SBU_FLT (16-19) south-east toward U402 and its pull-ups, LDO pins (1-6) west. Ring first, then 1 mm kept free round pads 34, 32, 23 for other nets, and a PP5V via spot reserved north-west of pad 34 (PP5V arrives on an inner layer from the 5 V buck in the east column; on the hand board the planner found no room for that via and PP5V stayed open at U401)."
+ },
+ {
+  "twin_check": false,
+  "dx": 0,
+  "dy": 0
+ },
+ {
+  "put": "U401",
+  "at": [
+   105.6,
+   80.3
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "ring": "U401",
+  "mm": 0.8
+ },
+ {
+  "reserve": "pp5v_via_U401_34",
+  "box": [
+   103.7,
+   76.5,
+   105.3,
+   77.78
+  ],
+  "sides": "F",
+  "except": [
+   "C407"
+  ]
+ },
+ {
+  "reserve": "keep_U401_23_20_free",
+  "box": [
+   109.12,
+   78.7,
+   110.1,
+   81.8
+  ],
+  "sides": "F",
+  "except": [
+   "C449",
+   "C406"
+  ]
+ },
+ {
+  "reserve": "u401_yard",
+  "box": [
+   102.8,
+   82.85,
+   108.4,
+   84.08
+  ],
+  "sides": "FB",
+  "note": "via yard under U401 south row: no parts on either side"
+ },
+ {
+  "note": "west column, north to south: C403 (3V3, pad 38), C404 turned 180 (LDO_3V3 pad south at pads 1/2), C405 (LDO_1V5 pad north, 0.8 mm west of pad 4); C452 and R441 above C403 in 05"
+ },
+ {
+  "put": "C403",
+  "at": [
+   101.2,
+   74.92
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C404",
+  "at": [
+   101.3,
+   78.0
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "put": "C405",
+  "at": [
+   101.3,
+   80.5
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "at_pin": "C407",
+  "pads": {
+   "1": "U401.34"
+  },
+  "max_mm": 4.0,
+  "soft": true,
+  "within": [
+   100.4,
+   75.7,
+   105.3,
+   77.78
+  ],
+  "step": 0.05
+ },
+ {
+  "at_pin": "C449",
+  "pads": {
+   "1": "U401.20"
+  },
+  "max_mm": 2.0,
+  "soft": true,
+  "step": 0.05
+ },
+ {
+  "note": "south wall under the via yard (court tops at 84.1), west to east: C408 (U402 VCC cap, VCC pad south at U402 pad 8), U402 (I2C EEPROM, turned 0: SDA/SCL/VCC pads west, GND pads east), R402 (I2CC_SDA), R403 (I2CC_SCL), R404 (CHG_INT) pull-ups with their signal pads north on the yard; gaps 0.05 mm. R441 (SBU_FLT) sits at U405 pad 9 (05)."
+ },
+ {
+  "put": "U402",
+  "at": [
+   104.18,
+   85.395
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "C408",
+  "at": [
+   101.84,
+   84.845
+  ],
+  "turn": 270,
+  "side": "F"
+ },
+ {
+  "put": "R402",
+  "at": [
+   106.52,
+   84.845
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "R403",
+  "at": [
+   107.36,
+   84.845
+  ],
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "R404",
+  "at": [
+   108.2,
+   84.845
+  ],
+  "turn": 0,
+  "side": "F"
+ }
+]

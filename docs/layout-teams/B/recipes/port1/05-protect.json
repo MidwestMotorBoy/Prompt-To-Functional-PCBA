@@ -6,14 +6,20 @@
   "put": "U405",
   "at": [
    104.55,
-   73.55
+   72.35
   ],
   "turn": 0,
-  "side": "F"
+  "side": "F",
+  "note": "Round 3: 1.2 mm north of round 2 (73.55). The PP5V copper of C407 grows 1.5 mm; with U405 at 73.55 it reached the escape room of U405 pads 11/12 and walled CC1/CC2 in (ghost: CC escape cells blocked). At 72.35 a 0.7 mm lane is left under the south pins."
  },
  {
   "ring": "U405",
-  "mm": 0.8
+  "mm": 0.8,
+  "allow": [
+   "C401",
+   "C402",
+   "C450"
+  ]
  },
  {
   "put": "D401",
@@ -27,55 +33,42 @@
  {
   "put": "C406",
   "at": [
-   111.7,
-   75.34
+   110.31,
+   78.0
   ],
-  "turn": 90,
+  "turn": 270,
   "side": "F",
-  "note": "vertical under D401, VBUS pad north (within 4 mm of J401's A4/B9 VBUS pads), GND south"
+  "note": "VBUS bulk standing east of U401 pad 23 (round 3): VBUS pad south (x 109.41..111.21, y 78.90..80.05, 0.56 mm east of pad 23, level with it), GND pad north. The VBUS trunk comes down east of H104 and C406 into this pad, and the planner's path to U401 ends at pad 23 next to it (pad 23 on planned copper, dc.json and KiCad). The hand spot (110.949, 78.359) turn 0 overlaps U401's courtyard by 0.49 mm; check.py's 4 mm rule to J401.VBUS fails here (9.23 mm), as it does on the hand board."
  },
  {
-  "at_pin": "C450",
-  "pads": {
-   "1": "U401.32"
-  },
-  "max_mm": 2.0,
-  "soft": true,
-  "step": 0.05,
-  "turns": [
-   0,
-   180
-  ]
+  "put": "C450",
+  "at": [
+   105.55,
+   76.8
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "VBUS-pin cap standing over pad 32 (VBUS pad south, 105.24..105.86 x 77.03..77.59, 0.49 mm over pad 32; GND pad north). No VBUS copper can reach it on F.Cu (C407, C402's CC2 pad and the row close it), so the planner joins it by a via in the pad and a B.Cu detour to the trunk at pad 23; pad 32's copper merges with its pad."
  },
  {
-  "at_pin": "C401",
-  "pads": {
-   "1": "U401.28"
-  },
-  "max_mm": 2.0,
-  "soft": true,
-  "step": 0.05,
-  "within": [
-   100.4,
-   75.66,
-   110.4,
-   77.78
-  ]
+  "put": "C401",
+  "at": [
+   108.05,
+   76.8
+  ],
+  "turn": 180,
+  "side": "F",
+  "note": "CC1 cap standing, GND pad south 0.5 mm over pads 26/27 (107.74..108.36), CC1 pad north; CC1 from pad 28 runs up the 0.73 mm channel between C402 and C401, then west under U405"
  },
  {
-  "at_pin": "C402",
-  "pads": {
-   "1": "U401.29"
-  },
-  "max_mm": 2.0,
-  "soft": true,
-  "step": 0.05,
-  "within": [
-   100.4,
-   75.66,
-   110.4,
-   77.78
-  ]
+  "put": "C402",
+  "at": [
+   106.7,
+   76.8
+  ],
+  "turn": 0,
+  "side": "F",
+  "note": "CC2 cap standing, CC2 pad south 0.5 mm over pads 29/30 (106.39..107.01), GND pad north with its via; 0.53 mm from C450's VBUS pad so GND pad 31 keeps a lane"
  },
  {
   "at_pin": "C451",
@@ -84,16 +77,25 @@
   },
   "max_mm": 2.0,
   "soft": true,
-  "step": 0.05
+  "step": 0.05,
+  "side": "B",
+  "within": [
+   102.5,
+   69.9,
+   106.6,
+   71.5
+  ],
+  "note": "U405 VBIAS cap on the bottom right under pad 3 (round 3): with U405 1.2 mm north there is no room between J401 and U405 on top, and the nearest top spot (107.6, 70.95) is 2.19 mm from pad 3 (limit 2.0)"
  },
  {
   "put": "C452",
   "at": [
    101.5,
-   72.85
+   73.41
   ],
   "turn": 0,
-  "side": "F"
+  "side": "F",
+  "note": "U405 VPWR cap, LDO_3V3 pad east level with U405 pad 10, below pad 9 so SBU_FLT pad 9 escapes west"
  },
  {
   "at_pin": "R441",
@@ -106,8 +108,9 @@
    100.4,
    69.9,
    102.5,
-   72.33
+   72.85
   ],
-  "step": 0.05
+  "step": 0.05,
+  "note": "SBU_FLT pull-up at U405 pad 9, west of U405 (within box widened to y 72.85 for U405's new spot)"
  }
 ]

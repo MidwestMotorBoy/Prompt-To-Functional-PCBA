@@ -175,11 +175,12 @@
  {
   "put": "C443",
   "at": [
-   112.4,
+   112.75,
    81.9
   ],
   "turn": 270,
-  "side": "F"
+  "side": "F",
+  "note": "PP5V output cap of the 5 V buck, 0.35 mm east of round 2 (112.4) so C406 can stand east of U401 pad 23 (round 3)"
  },
  {
   "deviation": "P-e",

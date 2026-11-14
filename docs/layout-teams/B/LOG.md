@@ -603,3 +603,88 @@ zone per outline before write_copper, and lay wide PACK_P strap tracks before si
 split into B/tools. For the final result, report BOTH the plain scorecard route and the route with zones split (and the hand board
 with the same split, so the comparison is fair), and check power paths on the routed board.
 Also: pushing route_queue files to layout-team-B IS allowed (see the 14:35 note); the PC can run the extra routes in parallel.
+
+## 2026-11-14 23:30 UTC, Port 1 worker: fix task "Port 1 VBUS pad 23 and north row" (round 3), fragments/port1.json updated
+
+**Result.** Step 1 holds: U401 VBUS pad 23 is on planned copper (`loose.py` prints no U401 line; in KiCad's own
+connectivity pad 23 is also joined to J401 now, which it was not on r2). Step 2 holds only in part: VBUS copper no longer runs
+along the north row on F.Cu, CC1, CC2 and SBU_FLT route at both ends, but GND pads 26, 31 and 36 still have no via room.
+Partial screen: 15 of 170 blocked (target 14), U401 4 (target 3). Hot loops, loss and VBUS resistance meet their targets.
+check.py reports 1 hard fault that step 1 brings with it (C406 vs J401, below).
+
+**What moved** (recipes `recipes/port1/03-buck5v.json`, `04-pd.json`, `05-protect.json`; no part of 01-stage or
+02-charger moved; working copies and the variant helper are in `recipes/port1/try/r3/` and `tools/p1r3_variant.py`):
+
+| Part | r2 spot | new spot | why |
+|---|---|---|---|
+| C406 (VBUS bulk) | (111.7, 75.34) t90 | (110.31, 78.0) t270 | VBUS pad south, 0.56 mm east of pad 23 and level with it; the trunk comes down east of H104 and C406 into it, the planner's U401 path ends at pad 23 |
+| C443 (PP5V out) | (112.4, 81.9) | (112.75, 81.9) | room for C406 |
+| C450 (VBUS pin cap) | (106.8, 76.8) t0 | (105.55, 76.8) t0 | standing over pad 32 (VBUS pad 0.49 mm above it); joined by a via in its pad and a B.Cu detour to the trunk at pad 23 |
+| C402 (CC2) | (109.8, 76.8) t0 | (106.70, 76.8) t0 | CC2 pad 0.5 mm over pads 29/30 |
+| C401 (CC1) | (108.3, 76.75) t90 | (108.05, 76.8) t180 | GND pad 0.5 mm over pads 26/27; CC1 runs up the 0.73 mm channel between C402 and C401 |
+| C407 (PP5V) | (103.75, 77.0) | (103.50, 77.0) | room for C450 over pad 32 |
+| U405 | (104.55, 73.55) | (104.55, 72.35) | C407's PP5V copper grows 1.5 mm; at 73.55 it reached the escape room of U405 pads 11/12 (ghost debug: CC escape cells blocked) |
+| C451 (U405 VBIAS) | (104.05, 70.95) t180 F | (104.05, 70.95) t0 **B** | no room left between J401 and U405 on top; the nearest top spot was 2.19 mm from pad 3 (limit 2.0) |
+| C452, R441 | (101.5, 72.85), (101.7, 71.45) t90 | (101.5, 73.41), (101.6, 72.1) t180 | C452 level with U405 pad 10, so SBU_FLT pad 9 escapes west |
+| C403, C404, C405 | (101.2, 74.92), (101.3, 78.0), (101.3, 80.5) | (101.175, 75.46), (101.3, 79.35), (101.3, 81.85) | room for C407 |
+
+The hand spot for C406, (110.949, 78.359) turn 0, overlaps U401's courtyard by 0.49 mm (check.py hard overlap), and any spot
+within 0.3 mm of it does too, so C406 stands turned 270 instead.
+
+**Runs** (partial screens `--partial`, Port 1 only; U401 = blame.py count; HL = HL_5V / HL_IN / HL_OUT nH; "-" = not run;
+every run finished, none timed out, DRC 0 in all):
+
+| Run | Change | Blocked | U401 | Loose pads (loose.py) | HL | Loss | VBUS R at U401 | Power open |
+|---|---|---|---|---|---|---|---|---|
+| `runs/p1pd-final` (before) | round-2 fragment | 20 of 170 | 7 | **pad 23** | 0.70 / 0.78 / 0.74 | 0.317 W | 2.24 mohm | GND J301/J302 |
+| `runs/p1r3-s1a-s` | step 1 only (C406, C443) | 19 of 170 | 7 | none | - | 0.334 W | 1.742 | GND J301/J302 |
+| `runs/p1r3-v2a-s` | + step 2 caps (C450, C402, C401 standing, C407 west) | 17 of 170 | 4 | none | - | 0.311 W | 2.032 | GND J301/J302 |
+| `runs/p1r3-v3d-s` | + C450 nearer the centre of pad 32 | 17 of 170 | 4 | none | - | 0.311 W | 2.037 | GND J301/J302 |
+| `runs/p1r3-v4a` | + U405 0.45 mm north | 17 of 168 | 4 | none | - | 0.314 W | - | GND J301/J302 |
+| `runs/p1r3-v5a-s` | + U405 1.2 mm north (C451 on top, check.py pin fault) | 17 of 170 | 5 | none | - | 0.313 W | 2.104 | GND J301/J302 |
+| `runs/p1r3-v5b-s` | + C451 on B, C452/R441 restacked | 15 of 170 | 4 | none | - | 0.312 W | 2.093 | GND J301/J302 |
+| `runs/p1r3-final` | + C402/C401 0.05/0.2 mm east (final = v5c) | **15 of 170** | **4** | **none** | **0.70 / 0.78 / 0.74** | **0.313 W** | **2.093** | GND J301/J302 |
+| `runs/p1r3-whole` | whole board (stitch with current port2, pack), no loops | **34 of 446** | 4 | U501 pad 32 only (Port 2) | - | **1.129 W** | 2.09 | GND J301/J302 |
+
+r2 whole board for comparison: 39 of 446, loss 1.133 W, U401 pad 23 loose. In `runs/p1r3-final/hot.json`, HL_IN per capacitor
+is C420 3.058 nH and C423 3.53 nH. PP5V is joined at U401 pad 34 in dc.json at 6.31 mohm, and KiCad also joins pad 34.
+
+**Port 1 edges still blocked in the final partial run.** Four are at U401:
+- VBUS from pad 32 to the B.Cu detour track;
+- GND pads 36, 31 and 26 to the plane.
+
+The rest are not in the pocket: C_CC1 (U405.4 to .7 and J401.A5 to U405.4, which also fail on the hand board), I2CC_SCL
+(U402.6 to R403.2), and the charger twins (HIDRV1, ACOV, ACUV, FB, HG2, BAT_SNS_P, PACK_P, AC_SNS_N), whose parts are
+placed by 01/02. CC1 and CC2 are no longer blocked anywhere; on r2 they were blocked at U401 and at U405.
+
+**What stopped the rest of step 2:**
+- **No via room for the GND row pads.** VBUS cannot reach C450 on F.Cu without crossing the CC lines: pad 32 lies west of
+  pads 28/29 and VBUS enters from the north-east. So C450 is joined through B.Cu: a via in C450's VBUS pad, then a
+  B.Cu track under the row to the trunk at pad 23. PP5V reaches C407 the same way, by a via in C407's pad and a B.Cu
+  corridor to C443. Its corridor runs north of the VBUS track, and after the 1.5 mm grow it fills the bottom layer under
+  the whole pocket (see `runs/p1r3-v5c-s`, z_B.png). Pads 26, 31 and 36 need a via to the plane, and no via fits on B.Cu.
+- **Pad 31's lane.** The lane north of pad 31 is also pinched by the VBUS fill between C450 and pad 32. That fill keeps
+  only the 0.15 mm power clearance from GND pad 31.
+- **Pad 36** sits under C407's PP5V pad. Moving C407 east to open a gap above pad 36 would take C450 off pad 32.
+- **Pad 32's VBUS edge comes from the zone writer** (orchestrator note 22:45). The saved F.Cu fill piece that covers both
+  C450.1 and pad 32 belongs to an outline that KiCad drops. `tools/padconn.py` (KiCad connectivity on the saved board) shows
+  pad 32 with 1 connected item, so the ghost asks for a track to the B.Cu detour. dc.json counts pad 32 as joined.
+  `tools/fillnear.py` shows that the saved fill covers pad 32. I did not screen with zones split, so I have not checked
+  that splitting clears this edge.
+
+**For the lead and Port 2:**
+- C406 now breaks check.py's serves rule: 9.23 mm from J401.VBUS against a 4 mm limit. The hand board also places it
+  8+ mm from J401. Step 1 cannot hold without this fault. Either waive the rule for C406 (in substance it serves U401
+  pad 23) or say which you prefer.
+- C451 is now on the bottom, so the board has 18 bottom parts (port1 8).
+- No Port 2 file changed. The Port 2 twin of the north-pocket problem is U501 pad 32 (loose in `runs/p1r3-whole`). It may
+  respond to the same moves: U505 north so the PP5V/VBUS growth leaves U505's CC pins free, and a VBUS pin cap fed
+  through a via in its pad.
+- `recipes/port2/04-pd-protect.json` is modified in the working tree by another agent. I did not commit it.
+
+Files: `recipes/port1/03-buck5v.json`, `04-pd.json`, `05-protect.json`, `recipes/port1/try/r3/` (step-1 working copies);
+`fragments/port1.json` + meta (= `Port_1.json` + meta); `candidates/r2_Port_1_VBUS_pad_23_and_north_row.json` (= `runs/p1r3-whole/placement.json`);
+`runs/p1r3-final/`, `runs/p1r3-whole/` (score.json, dc.json, ghost.log, F.png, B.png, plus hot.json for final), score.json/ghost.log/dc.json
+of `runs/p1r3-s1a-s`, `p1r3-v2a-s`, `p1r3-v5b-s`. New team tools: `tools/p1r3_variant.py` (recipe variants from overrides),
+`tools/pocket_peek.py` (planned vias/tracks in a box), `tools/padconn.py` (KiCad connectivity of pads on a saved board; run in
+the kicad image), `tools/fillnear.py` (saved zone fills of a net in a box).

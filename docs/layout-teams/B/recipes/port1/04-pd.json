@@ -18,14 +18,20 @@
  },
  {
   "ring": "U401",
-  "mm": 0.8
+  "mm": 0.8,
+  "allow": [
+   "C401",
+   "C402",
+   "C450",
+   "C407"
+  ]
  },
  {
   "reserve": "pp5v_via_U401_34",
   "box": [
-   103.7,
+   103.4,
    76.5,
-   105.3,
+   104.95,
    77.78
   ],
   "sides": "F",
@@ -64,44 +70,42 @@
  {
   "put": "C403",
   "at": [
-   101.2,
-   74.92
+   101.175,
+   75.46
   ],
   "turn": 0,
-  "side": "F"
+  "side": "F",
+  "note": "VIN_3V3 cap at pad 38, west column; round 3: 0.27 mm lower and at the region's west edge (100.4) so C407 can sit 0.25 mm further west"
  },
  {
   "put": "C404",
   "at": [
    101.3,
-   78.0
+   79.35
   ],
   "turn": 180,
-  "side": "F"
+  "side": "F",
+  "note": "LDO_3V3 cap, turned 180 (LDO_3V3 pad south at pads 1/2); round 3: 1.35 mm lower, out of C407's row"
  },
  {
   "put": "C405",
   "at": [
    101.3,
-   80.5
+   81.85
   ],
   "turn": 0,
-  "side": "F"
+  "side": "F",
+  "note": "LDO_1V5 cap below C404 (LDO_1V5 pad north, 0.5 mm from pad 4)"
  },
  {
-  "at_pin": "C407",
-  "pads": {
-   "1": "U401.34"
-  },
-  "max_mm": 4.0,
-  "soft": true,
-  "within": [
-   100.4,
-   75.7,
-   105.3,
-   77.78
+  "put": "C407",
+  "at": [
+   103.5,
+   77.0
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F",
+  "note": "PP5V cap flat above pad 34 (PP5V pad 103.83..104.72, 0.6 mm over the row); round 3: 0.25 mm west so C450 stands over pad 32"
  },
  {
   "at_pin": "C449",
