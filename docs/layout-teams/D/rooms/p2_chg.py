@@ -8,7 +8,7 @@ rm.put('U503', CX, CY, 0)
 W = rm.court('U503')                      # chip courtyard
 
 # ---- north strip: only C510 (REGN), straight above its pin; the gate/boot nets fan out on both sides of it
-rm.beside('C510', 'U503.24', 'N', gap=0.25)
+rm.beside('C510', 'U503.24', 'N', gap=0.95)        # r2: up 0.7, via room at pin 23
 
 # ---- west, top: input-shunt sense filter; taps R525.1 / R526.1 face north (vias above / beside them)
 xa = 80.72                                 # ACP column (R525 over C514 pad 1), ACN column 0.96 to the east

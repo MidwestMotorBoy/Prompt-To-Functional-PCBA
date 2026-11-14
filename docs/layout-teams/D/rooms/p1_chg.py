@@ -23,7 +23,10 @@ rm.beside('C439', 'C440', 'W', gap=0.05, rot=0)
 rm.beside('U404', 'C440.2', 'S', gap=0.0, rot=0, pad=5)
 # first input cap (hot loop): GND pad level with pin 4, PACK_P pad below; pin 3 reaches it under pin 4.
 # Free copper under pins 3/4 and C446 for the PACK_P vias (In2 pack rail).
-rm.beside('C446', 'U404.4', 'E', gap=0.05, rot=0)
+# round 2: C446 turned flat right under pins 3/4 (PACK_P pad under pin 3, GND pad under pin 4 / east of it), so its GND
+# pad sits south of the bottom capacitors' PACK_P pads (B side, y < 111.9) where a return via fits on both outer layers;
+# round 1 had it beside pin 4 over C209's PACK_P pad: no via fitted and U404's GND was left open.
+rm.beside('C446', 'U404.3', 'S', gap=0.05, rot=90)
 # EN pull-down, flat under pins 1/2 and shifted west: GND pad (W) takes pin 1, EN pad (E) takes pin 2;
 # keeps the strip under pin 3 free so the PACK_P copper can reach pin 3 and C446 (hot loop)
 p1 = rm.pad('U404.1')
@@ -47,11 +50,11 @@ rm.beside('C409', 'U403.32', 'W', gap=0.0, rot=0, shift=0.25)
 rm.beside('R412', 'U403.36', 'W', gap=0.0, rot=0, shift=0.12)
 
 # ================= programming dividers under C409 (ACUV/ACOV), CE_N pair below them
-X2 = rm.court('C446')[2] + 0.6
+X2 = 105.33                     # round-1 column position (was C446's east edge + 0.6)
 rm.put_court('R409', 180, left=X2, top=rm.court('C409')[3] + 0.06)        # PPHV (W) -> ACUV (E)
 rm.put_court('R410', 0, left=X2, top=rm.court('R409')[3] + 0.15)          # ACUV (W) ... ACOV (E)
 rm.put_court('R411', 0, left=X2, top=rm.court('R410')[3] + 0.15)          # GND (W) ... ACOV (E)
-rm.put_court('R435', 0, left=rm.court('R432')[2] + 0.1, top=rm.court('C446')[3] + 0.75)   # CHG_INH -> CE_N
+rm.put_court('R435', 0, left=rm.court('R432')[2] + 0.1, top=114.25)   # CHG_INH -> CE_N
 rm.put_court('R417', 0, left=rm.court('R432')[2] + 0.1, top=rm.court('R435')[3] + 0.05)   # 3V3 pull-up on CE_N
 
 # ================= north strip: REGN / DRV_SUP
