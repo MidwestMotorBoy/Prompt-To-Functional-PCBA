@@ -1,0 +1,137 @@
+{
+ "source_run": "/home/claude/repo/docs/layout-teams/B/runs/r3b-hot",
+ "straps": [
+  {
+   "net": "PACK_P",
+   "layer": "In2.Cu",
+   "source": "Q102 (10 vias, at 94.2,117.1)",
+   "groups": 18,
+   "tied": 18,
+   "untied": [],
+   "segments": 96,
+   "length_mm": 187.9,
+   "across_lanes_mm": 55.9,
+   "narrow_mm": 9.6,
+   "clearance_faults": [],
+   "paths": [
+    {
+     "to": "Q102 (1 vias, at 94.5,119.2)",
+     "cells": 7
+    },
+    {
+     "to": "D103 (1 vias, at 92.4,114.8)",
+     "cells": 20
+    },
+    {
+     "to": "C208 (1 vias, at 97.5,111.3)",
+     "cells": 67
+    },
+    {
+     "to": "C210 (1 vias, at 100.8,111.3)",
+     "cells": 34
+    },
+    {
+     "to": "C209 (1 vias, at 103.8,111.3)",
+     "cells": 31
+    },
+    {
+     "to": "C213 (1 vias, at 103.3,103.7)",
+     "cells": 77
+    },
+    {
+     "to": "C212 (1 vias, at 100.8,103.7)",
+     "cells": 22
+    },
+    {
+     "to": "C211 (1 vias, at 98.3,103.7)",
+     "cells": 26
+    },
+    {
+     "to": "R527 (5 vias, at 96.3,106.1)",
+     "cells": 24
+    },
+    {
+     "to": "C206+U204 (4 vias, at 82.4,118.8)",
+     "cells": 115
+    },
+    {
+     "to": "C457 (1 vias, at 118.7,85.6)",
+     "cells": 354
+    },
+    {
+     "to": "R427 (5 vias, at 119.9,106.4)",
+     "cells": 201
+    },
+    {
+     "to": "J113 (0 vias, at 119.4,109.0)",
+     "cells": 27
+    },
+    {
+     "to": "C444+C446 (6 vias, at 115.2,66.9)",
+     "cells": 253
+    },
+    {
+     "to": "C557 (1 vias, at 85.1,82.0)",
+     "cells": 484
+    },
+    {
+     "to": "C544 (5 vias, at 81.2,67.7)",
+     "cells": 131
+    },
+    {
+     "to": "C546 (1 vias, at 83.6,65.3)",
+     "cells": 54
+    }
+   ]
+  }
+ ],
+ "route_minutes": 0,
+ "drc_errors": 0,
+ "blocked_edges": "31 of 423",
+ "route": null,
+ "pre_route": {
+  "loss_W": 1.123,
+  "power_open": {
+   "GND": [
+    "J302",
+    "J301"
+   ]
+  }
+ },
+ "routed": null,
+ "hot_routed": null,
+ "hot_pre_source": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.54,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.02,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.7,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.78,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 0.76,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.8,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   }
+  }
+ }
+}

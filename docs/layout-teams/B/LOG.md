@@ -863,3 +863,74 @@ Files: `candidates/r3.json`, `candidates/r3a.json`, `best_placement.json`; `reci
 `runs/r3-split/`, `runs/r3b-split/`, `runs/hand-split/`, `runs/r3-split-route/`, `runs/hand-split-route/` (score.json, dc.json, ghost.log),
 `runs/r3-split-routed-dc/dc.json`, `runs/hand-split-routed-dc/dc.json`, `plan/r3-split-route-failed.txt`, `plan/hand-split-route-failed.txt`, `plan/r3-zoom/`. Boards, route.log and
 hot_gate.log stay local.
+
+## 2026-11-15 03:40 UTC, routed-board worker: fix task "Routed-board check with PACK_P straps" (round 3/4), tools only
+
+**What was built** (new files only; no placement, fragment, recipe or candidate touched):
+- `tools/straps.py <spec.json> <cu.json> <out spec.json> [--net --layer --source --lanes ...]`: groups the net's vias
+  and through-hole pads on the planned pour by hard ties only (via in/next to a pad, vias closer than 0.5 mm edge to
+  edge, planned tracks; a pour on another layer does not join, it is soft too), then lays a greedy Steiner tree of hard
+  tracks from the source's group (Q102) to every other group on a 0.1 mm grid: 1.0 mm wide where it fits, 0.5 mm
+  minimum, inside the planned pour outline, 0.25 mm from every other net's via, through-hole pad, track, pour and
+  keep-out on the layer, few runs across the signal lanes (east-west on In2 costs 6x, 1.5x along the board edge and
+  under large pads), and kept from under small signal pads (their via escapes). Every segment is checked exactly
+  (shapely); `--png` draws it. Default PACK_P on In2.Cu; `--net=3V3 --layer=In3.Cu --lanes=H` for the 3V3 bus.
+- `tools/final_route.sh <screened run> <out> [--route=45] [--no-straps] [--no-hot] [--straps=...]`: plan + straps,
+  `write_copper_split.py`, shared scorecard `--keep-copper --no-hot`, then on routed.kicad_pcb cu_dump + dc_score,
+  loose.py, KiCad DRC (errors, unconnected items of PACK_P/3V3/GND) and the 7 hot loops (hot_score.py + power_gate.py
+  as score_board.sh step 4 calls them); writes and prints `<out>/final.json` (`tools/final_json.py`). Same command on
+  the hand board. How to run it and what each number means: `tools/README.md`, last section.
+
+**Which soft pours the route cuts** (pieces before -> after routing, r3a routed without straps, `runs/r3-split-route`):
+PACK_P In2 1 -> 2 (J113/R427 island: needs straps); PACK_P F.Cu 7 -> 9 (D103's via cut off the Q102 piece, still joined
+through In2; the straps tie it); 3V3 In3 1 -> 2 (the PD chips' 3V3 vias at C403/C503 cut off; r3 with PACK_P straps
+1 -> 5); GND In1/In4 stay one piece, GND F.Cu 13 -> 13, PACK_P B.Cu 12 -> 12: no straps needed there.
+
+**Results** (all runs finished, none timed out; "no straps" rows are the earlier runs, r3a = r3 before the 3-part
+Port 2 change; r3 itself was not full-routed without straps):
+
+| Run | Board, straps | Blocked edges | Route (routed / failed of edges) | Timed out | DRC (copper board) | Power open before routing | Loss before | Power open after routing | Loss after | Hot loops after routing |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `runs/r3b-split` | r3, none | 28 of 421 | - | - | 0 | GND J301/J302 | 1.123 W | - | - | (before: 7 of 7, 5.54 nH) |
+| `runs/r3-split-route` + `-routed-dc` | r3a, none | 30 of 421 | 385 / 36 of 421, about 22 min | no | 0 | GND J301/J302 | 1.119 W | **PACK_P J113, R427**; 3V3 L201 | 1.102 W (J113, R427 carry nothing) | not run |
+| **`runs/r3-final`** | **r3, PACK_P** | **29 of 422** | **387 / 35 of 422**, about 30 min | no | **0** | GND J301/J302 | **1.123 W** | **3V3 L201 only** | **1.754 W** | **7 of 7, 5.55 nH** |
+| `runs/r3-final-3v3` | r3, PACK_P + 3V3 | 28 of 427 | 391 / 36 of 427, about 23 min | no | 0 | GND J301/J302 | 1.123 W | 3V3 L201 only | 2.926 W | 7 of 7, 5.55 nH |
+| `runs/hand-split-route` + `-routed-dc` | hand, none | 58 of 422 | 363 / 59 of 422, about 13 min | no | 0 | PP5V U401, 3V3 L201, GND J301/J302 | 1.359 W | PACK_P J113, R427, D103, U204; PP5V U401; 3V3 L201 | - | not run |
+| **`runs/hand-final`** | **hand, PACK_P** | **58 of 423** | **365 / 58 of 423**, about 14 min | no | **0** | PP5V U401, 3V3 L201, GND J301/J302 | **1.359 W** | **PP5V U401** (open before routing too) | **2.413 W** | **7 of 7, 6.76 nH** |
+
+Hot loops after routing, loop total nH (HL_3V3, P1 5V, P1 IN, P1 OUT, P2 5V, P2 IN, P2 OUT): r3-final 1.02 / 0.70 /
+0.78 / 0.74 / 0.76 / **0.81** / 0.74 (before routing 0.80 for P2 HL_IN); r3-final-3v3 1.02 / 0.70 / **0.79** / 0.74 /
+0.76 / 0.80 / 0.74; hand-final 1.33 / 0.92 / 0.87 / 0.77 / 1.18 / 0.84 / 0.85 (P1 HL_IN and P2 HL_OUT: bulk caps not
+reached by the rule copper, still tier-1 pass). No loop opens. The two +0.01 nH steps are signal vias the router put
+into the GND F.Cu return pour inside the loop: Port 2 HL_IN (board part 0.603 -> 0.606 nH) by I2CC_SCL vias at
+(82.38, 90.72) and (81.33, 90.02) and an I2CC_SDA via at (81.63, 90.72) next to C523, a SW1 via at (84.13, 97.92) and a
+Net-(D511-A) via at (83.18, 94.97) by C520; Port 1 HL_IN in the 3V3 run (0.583 -> 0.585 nH) by SW1 (107.18, 97.97),
+SDA (104.88, 90.52), I2CC_SDA (106.18, 94.97) and CHG_INT (107.33, 92.72) vias. Not fixed (report only).
+
+**Targets.** Met: routed r3 power open is 3V3 at L201 only (PACK_P joined at J113, R427 and every terminal); DRC 0 with
+the straps; loss before routing 1.123 W (= without straps); blocked 29 of 422 (+1 against 28 of 421); route 387 of 422
+(>= 380); routed hot loops 7 of 7. The hand board went through the same command.
+
+**Two findings for the lead:**
+1. *Straps keep PACK_P joined but cannot keep its resistance.* In2 is 0.5 oz (about 1 mohm per square); a 1 mm strap
+   is about 1 mohm per mm. J113 (10 A) and R427 (5 A) take their current through what the router leaves of the In2
+   sheet: J113 2.23 mohm before routing, 6.84 after (`runs/r3-final`), 16.2 in the 3V3 run of the same board; hand
+   10.1. So routed loss is 1.754 / 2.926 W on r3 and 2.413 W on the hand, against 1.12 / 1.36 W before routing; PACK_P
+   alone 0.32 -> 0.92 W on r3. The loss of a routed board moves with each route. Cure is not in straps: either an
+   In2 corridor Q102 -> J113/R427 that signals may not cross (a router or plan change in the shared tools), or the
+   10 A path on 2 oz outer copper. `straps.py --main=J113:4` (wide strap to a terminal) is there but the only 4 mm
+   way on r3 runs 69 mm round the north, so final_route.sh does not use it.
+2. *The 3V3 In3 bus needs straps too* (it is cut by the In3 horizontal lanes; dc_score cannot see it, only KiCad's
+   unconnected list). With 3V3 straps (0.5 mm, 112 mm, 56 mm across the In3 lanes) In3 3V3 stays one piece and the
+   route did not suffer (28 of 427, 391 of 427). Not made the default because the hand board was run with PACK_P only.
+
+Routed boards (router output, not the copper board) carry KiCad clearance errors: r3 2 (CELL_1N F.Cu track against
+BTP_INT and U101-SMBD tracks at about (102.5 to 103.4, 127.9 to 128.8)), hand 3. The candidate file for this task
+is not written: the placement is unchanged (= candidates/r3.json), and the task said not to touch candidates/.
+
+Files: `tools/straps.py`, `tools/final_route.sh`, `tools/final_json.py`, `tools/README.md`; per run (`runs/r3-final`,
+`runs/hand-final`, `runs/r3-final-3v3`, screens `runs/r3c-straps-screen`, `runs/r3c-straps-screen2`,
+`runs/r3c-straps3v3-screen`): score.json, final.json, dc.json, ghost.log, route_failed.txt (FAILED lines), routed/dc.json,
+routed/hot.json, routed/hot_gate.json, split/straps.log, split/straps_*.png. Boards and route.log stay local.
+(`runs/r3c-straps-screen` is an earlier strap setting, 31 of 423: three Port 1 edges at D410 under a centre trunk; the
+under-pad cost added after it brought the count to 29.)

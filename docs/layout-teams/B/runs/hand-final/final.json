@@ -1,0 +1,183 @@
+{
+ "source_run": "/home/claude/repo/docs/layout-teams/B/runs/hand_screen",
+ "straps": [
+  {
+   "net": "PACK_P",
+   "layer": "In2.Cu",
+   "source": "C111+Q102+R112 (10 vias, at 94.2,117.7)",
+   "groups": 18,
+   "tied": 18,
+   "untied": [],
+   "segments": 51,
+   "length_mm": 137.6,
+   "across_lanes_mm": 52.5,
+   "narrow_mm": 5.4,
+   "clearance_faults": [],
+   "paths": [
+    {
+     "to": "C544 (3 vias, at 90.4,117.7)",
+     "cells": 22
+    },
+    {
+     "to": "C546 (1 vias, at 90.3,116.4)",
+     "cells": 21
+    },
+    {
+     "to": "D103 (1 vias, at 89.5,122.8)",
+     "cells": 78
+    },
+    {
+     "to": "C444 (3 vias, at 103.3,114.0)",
+     "cells": 105
+    },
+    {
+     "to": "C446 (1 vias, at 104.7,112.9)",
+     "cells": 38
+    },
+    {
+     "to": "C209+U404 (1 vias, at 104.4,110.9)",
+     "cells": 20
+    },
+    {
+     "to": "C208 (1 vias, at 97.5,111.3)",
+     "cells": 59
+    },
+    {
+     "to": "C211 (1 vias, at 97.2,103.7)",
+     "cells": 88
+    },
+    {
+     "to": "C212 (1 vias, at 100.8,103.7)",
+     "cells": 25
+    },
+    {
+     "to": "C213 (1 vias, at 104.1,103.7)",
+     "cells": 34
+    },
+    {
+     "to": "R527 (5 vias, at 98.2,98.7)",
+     "cells": 48
+    },
+    {
+     "to": "C557 (1 vias, at 98.8,87.0)",
+     "cells": 121
+    },
+    {
+     "to": "C210 (1 vias, at 100.8,110.3)",
+     "cells": 30
+    },
+    {
+     "to": "C206+U204 (2 vias, at 80.1,129.3)",
+     "cells": 162
+    },
+    {
+     "to": "C457 (1 vias, at 118.6,87.0)",
+     "cells": 341
+    },
+    {
+     "to": "J113 (1 vias, at 119.4,109.0)",
+     "cells": 216
+    },
+    {
+     "to": "R427 (5 vias, at 118.1,106.5)",
+     "cells": 10
+    }
+   ]
+  }
+ ],
+ "route_minutes": 45,
+ "drc_errors": 0,
+ "blocked_edges": "58 of 423",
+ "route": {
+  "routed": 365,
+  "failed": 58,
+  "edges": 423,
+  "timed_out": false,
+  "unconnected_after_fill": 73,
+  "text": "365 of 423 routed, 58 failed"
+ },
+ "pre_route": {
+  "loss_W": 1.359,
+  "power_open": {
+   "/USB Port 1/PP5V": [
+    "U401"
+   ],
+   "3V3": [
+    "L201"
+   ],
+   "GND": [
+    "J302",
+    "J301"
+   ]
+  }
+ },
+ "routed": {
+  "loss_W": 2.413,
+  "power_open": {
+   "/USB Port 1/PP5V": [
+    "U401"
+   ]
+  },
+  "loose": [
+   "/home/claude/repo/docs/layout-teams/B/runs/hand-final/routed: /USB Port 1/VBUS at U401: pads not joined ['32'] (5.0 A terminal, joined by its other pads at 0.976 mohm)"
+  ],
+  "drc_errors": 3,
+  "drc_error_types": [
+   "clearance"
+  ],
+  "unconnected_items": 73,
+  "unconnected_power": [
+   "Track [GND] on B.Cu, length 3.1500 mm | Pad 36 [GND] of U501 on F.Cu",
+   "Track [GND] on In2.Cu (signal V + 3V3), length 1.3000 mm | Pad 31 [GND] of U501 on F.Cu",
+   "Pad 27 [GND] of U501 on F.Cu | Pad 26 [GND] of U501 on F.Cu",
+   "Pad 2 [GND] of C549 on F.Cu | Pad 2 [GND] of Q509 on F.Cu",
+   "Pad 2 [GND] of Q103 on F.Cu | Pad 2 [GND] of C304 on F.Cu",
+   "Via [GND] on F.Cu - B.Cu | Pad 31 [GND] of U401 on F.Cu",
+   "Pad 2 [GND] of Q409 on F.Cu | Pad 2 [GND] of C449 on F.Cu",
+   "Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10 | Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10",
+   "Pad 1 [PACK_P] of R518 on F.Cu | Pad 1 [PACK_P] of R529 on F.Cu",
+   "Pad 1 [PACK_P] of R113 on F.Cu | Pad 1 [PACK_P] of C107 on F.Cu",
+   "Zone 'pc_3V3' [3V3] on F.Cu, priority 20 | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
+   "Zone 'pc_3V3' [3V3] on F.Cu, priority 20 | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
+   "Pad 1 [3V3] of R302 on F.Cu | Pad 1 [3V3] of R313 on F.Cu",
+   "Pad 1 [3V3] of R302 on F.Cu | Pad 1 [3V3] of R305 on F.Cu",
+   "Via [3V3] on F.Cu - B.Cu | Pad 1 [3V3] of R305 on F.Cu",
+   "Pad 6 [3V3] of U301 on F.Cu | Pad 1 [3V3] of R314 on F.Cu"
+  ]
+ },
+ "hot_routed": {
+  "pass_count": "7 of 7",
+  "sum_nH": 6.76,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.33,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.92,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.87,
+    "tier1": "pass (bulk not reached by the rule copper: C420, C423)"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.77,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 1.18,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.84,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.85,
+    "tier1": "pass (bulk not reached by the rule copper: C534)"
+   }
+  }
+ },
+ "hot_pre_source": null
+}
