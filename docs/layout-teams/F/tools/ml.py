@@ -371,6 +371,11 @@ class ML(HR):
                 return None
             gg = {L: ps for L in layers}
         return self.route(net, a, a, w=w, layers=layers, margin=reach, goal_geoms=gg, end_via=True, quiet=quiet)
+    def force(self, net, layer, pts, w=0.2):
+        """a track through exact points that the search grid cannot find (0.05 mm grid); NOT checked here, the real DRC
+        in hr2.py is the check. Use for short stubs out of fine-pitch pins and for exact 0.1 mm nudges."""
+        self.J["routes"].append({"net": net, "w": w, "path": [[layer, round(x, 3), round(y, 3)] for x, y in pts]})
+        self._add(layer, LineString(pts).buffer(w / 2, 8), net, "track")
     def try_route(self, net, a, b, **kw):
         """route with fall-backs: 0.2 mm, then 0.15 mm, then a wider window"""
         for w, m in ((kw.pop("w", 0.2), 4.0), (0.15, 4.0), (0.15, 12.0)):
