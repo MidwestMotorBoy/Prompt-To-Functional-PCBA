@@ -1,0 +1,28 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 148
+phase 1: 20 open connections tried again with every route free to move
+phase 2: 19 open connections tried again with every route free to move
+phase 3: 13 open connections tried again with every route free to move
+routes pulled and re-laid: 918
+fan-out stubs unused (removed) 64, trimmed 24
+unconnected after fill: 30
+routed 355 edges, 9 failed, items added 6280
+  FAILED /USB Port 1/LODRV2 112.09,108.84 (Pad 21  of U403 ) -> 112.17,103.26 (Pad 1  of R447 ) starts 73 goals 129 seen 265 | no way even with every other route gone
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 70 goals 132 seen 125 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/HIDRV1 86.06,108.84 (Pad 27  of U503 ) -> 88.16,103.21 (Pad 1  of R544 ) starts 75 goals 131 seen 126 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 192 goals 41 seen 45 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 447 goals 45 seen 101931 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-VC2) 95.00,120.80 (Pad 4  of U101 ) -> 92.15,120.83 (Pad 2  of C102 ) starts 23 goals 281 seen 28 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 129 seen 1084 | no way even with every other route gone
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 21 goals 62 seen 27 | blocked by routes that have been pulled too often
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 551 seen 621 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV2
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 2/HIDRV1
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY Net-(U101-VC2)
+FAILKEY /USB Port 1/BTST1
+FAILKEY Net-(U101-SMBC)
+FAILKEY SCL
