@@ -237,7 +237,7 @@ class ML(HR):
                 g, n, kind, name = self.items[L][int(i)]
                 if n == net and kind != "pour" and g.distance(P) < 0.03: out.setdefault(L, []).append(g)
         return out
-    def route(self, net, a, b, w=0.2, layers=SIG, margin=4.0, via_cost=1.5, quiet=False, goal_geoms=None, box=None):
+    def route(self, net, a, b, w=0.2, layers=SIG, margin=4.0, via_cost=1.5, quiet=False, goal_geoms=None, box=None, end_via=False):
         """a, b = (x, y) on copper of the net (pad centre, via, track end). Returns the path [[layer, x, y], ...] or None."""
         layers = tuple(layers); half = w / 2
         xs = [a[0], b[0]]; ys = [a[1], b[1]]
@@ -285,7 +285,10 @@ class ML(HR):
             if not quiet: print("  route %s: no copper of the net at %s" % (net, a if not A else b))
             self.ok = False; return None
         start = mask(A, a); goal = mask(B, b)
-        blk[(start > 0) | (goal > 0)] = 0              # inside its own copper a track is always allowed
+        if end_via:                                    # the goal is "any legal via spot inside these shapes"
+            goal = goal & viaok[None, :, :] & (1 - (vpen > 0).astype(np.uint8))[None, :, :]; blk[start > 0] = 0
+        else:
+            blk[(start > 0) | (goal > 0)] = 0          # inside its own copper a track is always allowed
         lc = np.array([{"F.Cu": 1.15, "B.Cu": 1.15}.get(L, 1.0) for L in layers])
         tx, ty = (b[0] - self.x0) / G - c0, (b[1] - self.y0) / G - r0
         res = _astar(blk, viaok, vpen, start, goal, tx, ty, lc, via_cost / G, 3.0)
@@ -309,6 +312,7 @@ class ML(HR):
                 if not first and (pts[-1][1], pts[-1][2]) != (e[1], e[2]): pts.append(e)
         snap(a, True)
         if goal_geoms is None: snap(b, False)
+        if end_via: pts.append([[L_ for L_ in SIG if L_ != pts[-1][0]][-1], pts[-1][1], pts[-1][2]]); pts.append(list(pts[-1]))
         self.J["routes"].append({"net": net, "w": w, "path": pts})
         for p, q in zip(pts, pts[1:]):
             if p[0] != q[0]:
@@ -321,6 +325,20 @@ class ML(HR):
             nv = sum(1 for p, q in zip(pts, pts[1:]) if p[0] != q[0]); ln = sum(math.hypot(q[1] - p[1], q[2] - p[2]) for p, q in zip(pts, pts[1:]))
             print("  route %s ok: %.1f mm, %d vias, layers %s" % (net, ln, nv, "".join(sorted({p[0][:3] for p in pts}))))
         return pts
+    PLANE = {"GND": None, "3V3": "In3.Cu", "PACK_P": "In2.Cu"}
+    def plane(self, net, a, reach=3.0, w=0.2, layers=("F.Cu",), quiet=False):
+        """a pad of GND / 3V3 / PACK_P: a short track on the pad's layer to the nearest legal via spot that lands on the
+        net's plane (GND: anywhere, In1/In4 are solid; 3V3: inside its In3 pour; PACK_P: inside its In2 pour)."""
+        pl = self.PLANE[net]; bx = sbox(a[0] - reach, a[1] - reach, a[0] + reach, a[1] + reach)
+        if pl is None: gg = {L: [bx] for L in layers}
+        else:
+            ps = [self.items[pl][int(i)][0] for i in self.tree[pl].query(bx) if self.items[pl][int(i)][1] == net and self.items[pl][int(i)][2] in ("pour", "track")]
+            ps = [g.buffer(-0.45).intersection(bx) for g in ps]; ps = [g for g in ps if not g.is_empty]
+            if not ps:
+                if not quiet: print("  plane %s: no %s copper of the net within %.1f mm" % (net, pl, reach))
+                return None
+            gg = {L: ps for L in layers}
+        return self.route(net, a, a, w=w, layers=layers, margin=reach, goal_geoms=gg, end_via=True, quiet=quiet)
     def try_route(self, net, a, b, **kw):
         """route with fall-backs: 0.2 mm, then 0.15 mm, then a wider window"""
         for w, m in ((kw.pop("w", 0.2), 4.0), (0.15, 4.0), (0.15, 12.0)):
@@ -343,7 +361,9 @@ class ML(HR):
     def close(self, drc, only=None, skip=None, **kw):
         todo = self.opens(drc, only, skip); todo.sort(key=lambda t: math.hypot(t[1][0] - t[2][0], t[1][1] - t[2][1])); left = []
         for net, a, b, da, db in todo:
-            p = self.try_route(net, a, b, **kw)
+            p = self.try_route(net, a, b, **kw) if net not in self.PLANE else None
+            if p is None and net in self.PLANE:        # plane nets: each end gets its own via to the plane
+                p = self.plane(net, a, quiet=True) or self.plane(net, b, quiet=True)
             if p is None: left.append((net, a, b, da, db)); print("  LEFT %s  %s @%.2f,%.2f -> %s @%.2f,%.2f" % (net, da, a[0], a[1], db, b[0], b[1]))
             else: print("  closed %s (%.2f, %.2f)->(%.2f, %.2f)" % (net, a[0], a[1], b[0], b[1]))
         print("closed %d of %d, %d left" % (len(todo) - len(left), len(todo), len(left))); self.fail = left; return left
