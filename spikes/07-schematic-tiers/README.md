@@ -141,6 +141,10 @@ Findings:
   pages stayed inconsistent with each other.
 - On the per-sheet ranking, fable-2 still beats every high-effort Sonnet run.
 
+Fable at high effort (fh-1, same single-agent prompt as fable-1/2, no review rounds): rubric 3.91,
+$30.68, 77 min wall. That is inside the spread of the two default-effort Fable runs (3.66, 4.16) at about
+twice their cost. Not in the per-sheet ranking.
+
 PDFs of every run (cover page with score and cost, then the sheets) are in project files
 `schematic-tiers/sonnet-followup/`.
 

@@ -1,0 +1,8 @@
+{"entry": "E29", "grader": "opus",
+ "scores": {"3V3": {"1":5,"2":5,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+  "Cells": {"1":4,"2":4,"3":3,"4":4,"5":3,"6":4,"7":5,"8":4},
+  "MCU": {"1":4,"2":4,"3":4,"4":4,"5":3,"6":4,"7":5,"8":4},
+  "USB": {"1":4,"2":4,"3":3,"4":3,"5":3,"6":4,"7":4,"8":3}},
+ "overall": 7,
+ "best": "Clearly titled functional blocks with explanatory notes, and power paths (four-switch stage with sense resistors and Kelvin filters, back-to-back protection FETs, current sense) drawn as recognisable left-to-right textbook circuits.",
+ "worst": ["USB sheet: stacked/overlapping GND pin numbers under TPD6S300 and TPS25751, and the I2C/CHG_INT bus runs as long parallel wires across the PD block instead of short labels", "Gauge and charger pins fed by long dog-leg wires (cell sense, TS lines, ICHG/ILIM resistors) that must be traced to map part to pin", "Uneven page use: large empty areas (Cells bottom-middle, USB centre, 3V3 lower half) next to dense clusters"]}
