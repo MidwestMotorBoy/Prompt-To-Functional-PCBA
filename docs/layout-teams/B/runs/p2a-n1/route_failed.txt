@@ -1,0 +1,38 @@
+edges to route: 422 (0 on long nets)
+unconnected after fill: 44
+routed 387 edges, 35 failed, items added 4153
+FAILED /USB Port 1/HIDRV2 113.65,105.60 (Pad 19  of U403 ) -> 114.69,102.33 (Pad 1  of R446 ) starts 68 goals 109 seen 693 | no way even with every other route gone
+FAILED /USB Port 1/C_CC1 104.15,70.95 (Pad 4  of U405 ) -> 103.15,71.95 (Pad 7  of U405 ) starts 21 goals 48 seen 21 | no way even with every other route gone
+FAILED /USB Port 2/C_CC1 93.92,74.70 (Pad 7  of U505 ) -> 94.92,73.70 (Pad 4  of U505 ) starts 9 goals 13 seen 23 | no way even with every other route gone
+FAILED /USB Port 1/TS 112.66,112.05 (Pad 1  of R416 ) -> 112.65,110.40 (Pad 8  of U403 ) starts 223 goals 74 seen 113 | no way even with every other route gone
+FAILED /USB Port 1/CE_N 113.55,111.93 (Pad 1  of R417 ) -> 112.15,110.40 (Pad 7  of U403 ) starts 49 goals 76 seen 257 | pulled 1
+FAILED Net-(U403-FBG) 114.30,109.75 (Pad 11  of U403 ) -> 115.04,111.70 (Pad 2  of R419 ) starts 82 goals 126 seen 418 | blocked by routes that have been pulled too often
+FAILED Net-(U102-V4) 93.65,129.75 (Pad 2  of U102 ) -> 93.80,127.62 (Pad 1  of C112 ) starts 68 goals 169 seen 91 | no way even with every other route gone
+FAILED EN_5V1 116.51,68.65 (Pad 2  of U404 ) -> 114.37,68.20 (Pad 1  of R432 ) starts 56 goals 62 seen 97 | blocked by routes that have been pulled too often
+FAILED /USB Port 1/I2CC_SDA 106.52,84.53 (Pad 2  of R402 ) -> 106.80,82.22 (Pad 16  of U401 ) starts 142 goals 43 seen 49305 | pulled 1
+FAILED EN_5V2 84.15,66.46 (Pad 2  of U504 ) -> 84.60,69.03 (Pad 1  of R532 ) starts 78 goals 520 seen 231 | blocked by routes that have been pulled too often
+FAILED /USB Port 1/SW2 114.30,106.25 (Pad 18  of U403 ) -> 115.00,103.40 (Pad 2  of C413 ) starts 71 goals 226 seen 826 | no way even with every other route gone
+FAILED Net-(U403-FB) 114.30,109.25 (Pad 12  of U403 ) -> 116.06,111.70 (Pad 1  of R419 ) starts 72 goals 166 seen 272 | no way even with every other route gone
+FAILED /USB Port 1/C_CC1 107.75,69.17 (Pad A5  of J401 ) -> 104.15,70.95 (Pad 4  of U405 ) starts 72 goals 21 seen 21 | no way even with every other route gone
+FAILED /USB Port 2/C_CC1 94.92,73.70 (Pad 4  of U505 ) -> 94.75,69.17 (Pad A5  of J501 ) starts 13 goals 72 seen 86 | no way even with every other route gone
+FAILED /USB Port 1/CC2 106.70,77.28 (Pad 1  of C402 ) -> 103.75,73.75 (Pad 11  of U405 ) starts 185 goals 66 seen 313 | no way even with every other route gone
+FAILED /USB Port 2/C_CC2 94.52,73.70 (Pad 5  of U505 ) -> 91.75,69.17 (Pad B5  of J501 ) starts 113 goals 18 seen 26 | no way even with every other route gone
+FAILED /USB Port 2/DRV9_OFF 84.64,77.20 (Pad 1  of Q509 ) -> 89.50,79.78 (Pad 37  of U501 ) starts 376 goals 22 seen 106707 | no way even with every other route gone
+FAILED Net-(U403-ICHG) 113.15,110.40 (Pad 9  of U403 ) -> 119.10,111.09 (Pad 1  of R413 ) starts 74 goals 126 seen 113 | no way even with every other route gone
+FAILED /USB Port 2/SBU_FLT 93.92,75.50 (Pad 9  of U505 ) -> 93.90,83.62 (Pad 19  of U501 ) starts 19 goals 93 seen 24 | no way even with every other route gone
+FAILED /USB Port 1/TS 112.65,110.40 (Pad 8  of U403 ) -> 111.31,97.31 (Pad 1  of TH401) starts 74 goals 84 seen 113 | no way even with every other route gone
+FAILED /USB Port 1/I2CC_SDA 109.65,110.40 (Pad 2  of U403 ) -> 106.52,84.53 (Pad 2  of R402 ) starts 74 goals 138 seen 594 | no way even with every other route gone
+FAILED EN_5V1 111.57,122.08 (Pad 12  of U301 ) -> 116.51,68.65 (Pad 2  of U404 ) starts 255 goals 56 seen 97 | no way even with every other route gone
+FAILED /Cells and Gauge/CELL_P 106.88,114.85 (Pad 2  of R110 ) -> 106.88,114.85 (Zone 'pc_Cells and Gauge_CELL_P'  on F.Cu,) starts 79 goals 0 seen 223 | blocked by routes that have been pulled too often
+FAILED 3V3 89.10,79.78 (Pad 38  of U501 ) -> 89.10,79.78 (Zone planeZone plan) starts 12 goals 0 seen 20 | no way even with every other route gone
+FAILED 3V3 103.20,78.38 (Pad 38  of U401 ) -> 103.20,78.38 (Zone planeZone plan) starts 26 goals 0 seen 53 | no way even with every other route gone
+FAILED GND 89.90,79.78 (Pad 36  of U501 ) -> 89.90,79.78 (Zone planeZone plan) starts 0 goals 0 seen 492 | no way even with every other route gone
+FAILED GND 91.90,79.78 (Pad 31  of U501 ) -> 91.90,79.78 (Zone planeZone plan) starts 0 goals 0 seen 492 | no way even with every other route gone
+FAILED GND 104.00,78.38 (Pad 36  of U401 ) -> 104.00,78.38 (Zone planeZone plan) starts 0 goals 0 seen 492 | no way even with every other route gone
+FAILED GND 106.00,78.38 (Pad 31  of U401 ) -> 106.00,78.38 (Zone planeZone plan) starts 0 goals 0 seen 492 | no way even with every other route gone
+FAILED GND 107.60,78.38 (Pad 27  of U401 ) -> 107.60,78.38 (Zone planeZone plan) starts 33 goals 0 seen 80 | no way even with every other route gone
+FAILED GND 108.00,78.38 (Pad 26  of U401 ) -> 108.00,78.38 (Zone planeZone plan) starts 0 goals 0 seen 5481 | no way even with every other route gone
+FAILED GND 109.64,124.08 (Pad 2  of C304 ) -> 109.64,124.08 (Zone planeZone plan) starts 14 goals 0 seen 14 | no way even with every other route gone
+FAILED /USB Port 1/HG2 115.71,102.33 (Pad 2  of R446 ) -> 115.74,100.83 (Pad 1  of Q402 ) starts 57 goals 12 seen 12 | no way even with every other route gone
+FAILED /USB Port 2/HG2 92.68,102.34 (Pad 2  of R546 ) -> 92.71,100.83 (Pad 1  of Q502 ) starts 65 goals 12 seen 12 | no way even with every other route gone
+FAILED /Cells and Gauge/CELL_P 109.99,115.30 (Pad 1  of R118 ) -> 106.88,114.85 (Pad 2  of R110 ) starts 126 goals 79 seen 103844 | no way even with every other route gone
