@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/final-d-FBA3JS.kicad_pcb",
+ "sha": "febab3210b925f03fa7d7c9edbc0e03302b280e8",
+ "routed": 363,
+ "failed": 38,
+ "edges": 401,
+ "minutes": 88.0,
+ "status": "done",
+ "tail": [
+  "FAILKEY GND@Pad 31 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad 27 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad B12 [GND] of J401 on F.Cu",
+  "FAILKEY /USB Port 2/HG1",
+  "FAILKEY /Cells and Gauge/CELL2"
+ ]
+}
