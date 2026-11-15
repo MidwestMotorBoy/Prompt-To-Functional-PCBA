@@ -108,8 +108,8 @@ The final board is run p17: the three text files in `place/` as committed, route
 
 ## Cost
 
-One agent, no subagents. From the session transcript up to this report: 0.50 M output tokens, 1.52 M cache-write
-tokens and 88 M cache-read tokens over 367 model turns, which is about $62 at list prices ($40 per million output,
+One agent, no subagents. From the session transcript up to this report: 0.52 M output tokens, 1.56 M cache-write
+tokens and 95 M cache-read tokens over 387 model turns, which is about $65 at list prices ($40 per million output,
 $16 per million one-hour cache writes, $0.20 per million cache reads). The transcript may undercount. Wall time was
 about four hours of work on either side of the pause.
 
