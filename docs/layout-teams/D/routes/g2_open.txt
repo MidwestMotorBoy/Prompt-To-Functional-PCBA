@@ -1,0 +1,55 @@
+DRC clearance at (98.12, 129.62): Track [/Cells and Gauge/TS1] on F.Cu, length 0.3245 mm | Track [/Cells and Gauge/CELL_1N] on F.Cu, length 0.1630 mm
+DRC clearance at (101.02, 128.40): Track [Net-(U101-SMBD)] on F.Cu, length 0.3061 mm | Track [/Cells and Gauge/CELL_1N] on F.Cu, length 0.2398 mm
+DRC clearance at (100.12, 129.30): Track [/Cells and Gauge/BTP_INT] on F.Cu, length 0.3245 mm | Track [/Cells and Gauge/CELL_1N] on F.Cu, length 2.0749 mm
+OPEN Zone 'pc_GND' [GND] on F.Cu, priority 25 @78.86,64.54 -> Zone 'plane_GND' [GND] on In1.Cu (GND), priority 0 @88.10,63.12
+OPEN Track [GND] on F.Cu, length 0.9500 mm @84.38,81.32 -> Pad 36 [GND] of U501 on F.Cu @84.00,80.38
+OPEN Pad 31 [GND] of U501 on F.Cu @86.00,80.38 -> Track [GND] on F.Cu, length 0.1500 mm @85.12,81.27
+OPEN Pad 1 [GND] of U404 on F.Cu @101.58,112.06 -> Pad 2 [GND] of R432 on F.Cu @100.75,113.14
+OPEN Pad 36 [GND] of U401 on F.Cu @105.79,80.46 -> Track [GND] on B.Cu, length 0.4000 mm @105.12,81.17
+OPEN Via [GND] on F.Cu - B.Cu @107.15,81.58 -> Pad 31 [GND] of U401 on F.Cu @107.79,80.46
+OPEN Pad 13 [EN_5V2] of U301 on F.Cu @111.57,123.08 -> Pad 2 [EN_5V2] of U504 on F.Cu @81.22,65.09
+OPEN Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priori @79.75,63.60 -> Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 @83.66,118.03
+OPEN Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 @92.77,121.07 -> Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priori @79.75,63.60
+OPEN Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 @96.28,113.53 -> Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priori @79.75,63.60
+OPEN Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 @96.28,113.53 -> Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 @96.28,113.53
+OPEN Pad 1 [/P1_LDO_3V3] of R441 on F.Cu @110.47,87.22 -> Pad 1 [/P1_LDO_3V3] of R404 on F.Cu @108.67,87.22
+OPEN Pad 1 [/P1_LDO_3V3] of R441 on F.Cu @110.47,87.22 -> Pad 1 [/P1_LDO_3V3] of R455 on F.Cu @114.81,81.53
+OPEN PTH pad 1 [/Cells and Gauge/CELL3] of J111 @113.90,69.48 -> Track [/Cells and Gauge/CELL3] on In2.Cu (signal V + 3V3), l @94.22,127.92
+OPEN Pad 8 [/USB Port 2/TS] of U503 on F.Cu @89.06,112.91 -> Pad 1 [/USB Port 2/TS] of TH501 on F.Cu @88.29,97.31
+OPEN Track [3V3] on F.Cu, length 0.0707 mm @83.08,80.67 -> Track [3V3] on F.Cu, length 0.1801 mm @87.91,114.97
+OPEN Pad 1 [3V3] of C207 on F.Cu @86.40,125.38 -> Track [3V3] on F.Cu, length 0.1801 mm @87.91,114.97
+OPEN Via [3V3] on F.Cu - B.Cu @98.62,115.17 -> Track [3V3] on F.Cu, length 0.1801 mm @87.91,114.97
+OPEN Pad 1 [3V3] of C403 on F.Cu @103.84,79.02 -> Pad 38 [3V3] of U501 on F.Cu @83.20,80.38
+OPEN Track [3V3] on F.Cu, length 0.2000 mm @104.88,80.42 -> Zone 'pc_3V3' [3V3] on F.Cu, priority 20 @103.48,78.59
+OPEN Pad 1 [3V3] of R313 on F.Cu @109.62,125.38 -> Pad 1 [3V3] of R302 on F.Cu @109.62,123.58
+OPEN Pad 1 [3V3] of R313 on F.Cu @109.62,125.38 -> Track [3V3] on F.Cu, length 0.4500 mm @104.12,125.32
+OPEN Via [3V3] on F.Cu - B.Cu @110.22,118.87 -> Track [3V3] on F.Cu, length 0.3039 mm @102.34,115.48
+OPEN Pad 1 [3V3] of R305 on F.Cu @110.36,119.77 -> Pad 1 [3V3] of R302 on F.Cu @109.62,123.58
+OPEN Track [IRQ_N] on In2.Cu (signal V + 3V3), length 2.5000 mm @94.83,88.17 -> Track [IRQ_N] on F.Cu, length 1.6540 mm @104.67,125.11
+OPEN Track [/USB Port 1/TS] on In2.Cu (signal V + 3V3), length 2. @110.72,102.72 -> Pad 1 [/USB Port 1/TS] of TH401 on F.Cu @111.31,97.31
+OPEN Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priori @85.81,79.78 -> Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priori @91.53,80.75
+OPEN Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priori @95.90,69.99 -> Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priori @91.53,80.75
+OPEN Track [/Cells and Gauge/CELL_P] on F.Cu, length 0.3572 mm @107.11,117.31 -> Pad 3 [/Cells and Gauge/CELL_P] of Q101 on F.Cu @108.20,121.10
+OPEN Pad 1 [/Cells and Gauge/CELL_P] of R118 on F.Cu @110.11,117.53 -> Track [/Cells and Gauge/CELL_P] on F.Cu, length 0.3572 mm @107.11,117.31
+OPEN Pad A5 [/USB Port 1/C_CC1] of J401 on F.Cu @107.75,69.17 -> Track [/USB Port 1/C_CC1] on F.Cu, length 0.2121 mm @103.03,72.02
+OPEN Pad 5 [/USB Port 1/C_CC2] of U405 on F.Cu @102.65,72.50 -> Pad B5 [/USB Port 1/C_CC2] of J401 on F.Cu @104.75,69.17
+OPEN Pad 19 [/USB Port 1/SBU_FLT] of U401 on F.Cu @109.79,84.31 -> Pad 9 [/USB Port 1/SBU_FLT] of U405 on F.Cu @102.05,74.30
+OPEN Track [Net-(Q409-D)] on F.Cu, length 1.9851 mm @118.68,84.78 -> Pad 1 [Net-(Q409-D)] of R454 on F.Cu @115.47,86.73
+OPEN Pad 2 [SCL] of R115 on F.Cu @102.22,127.81 -> Pad 6 [SCL] of J302 on F.Cu @109.22,131.14
+OPEN Pad 9 [SCL] of U401 on F.Cu @105.79,84.31 -> Pad 9 [SCL] of U501 on F.Cu @84.00,84.22
+OPEN Pad 6 [SCL] of J302 on F.Cu @109.22,131.14 -> Track [SCL] on F.Cu, length 1.4695 mm @112.72,119.33
+OPEN Track [SCL] on F.Cu, length 1.4695 mm @112.72,119.33 -> Pad 9 [SCL] of U401 on F.Cu @105.79,84.31
+OPEN Pad 1 [/USB Port 1/HG1] of Q401 on F.Cu @106.96,98.83 -> Pad 2 [/USB Port 1/HG1] of R444 on F.Cu @110.44,102.47
+OPEN Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priori @108.14,71.33 -> Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priori @103.60,69.94
+OPEN Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priori @107.50,80.73 -> Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priori @108.14,71.33
+OPEN Pad 1 [/USB Port 1/ILIM] of R414 on F.Cu @113.92,115.00 -> Pad 10 [/USB Port 1/ILIM] of U403 on F.Cu @114.69,112.84
+OPEN Track [/USB Port 2/CHG_INT] on B.Cu, length 0.3536 mm @91.58,85.87 -> Pad 18 [/USB Port 2/CHG_INT] of U501 on F.Cu @87.60,84.22
+OPEN Pad 2 [/USB Port 2/SW1] of C512 on F.Cu @83.64,103.70 -> Pad 28 [/USB Port 2/SW1] of U503 on F.Cu @85.56,108.11
+OPEN Zone 'pc_USB Port 2_SW1' [/USB Port 2/SW1] on F.Cu, priority @85.18,97.05 -> Pad 2 [/USB Port 2/SW1] of C512 on F.Cu @83.64,103.70
+OPEN Pad 2 [/USB Port 1/I2CC_SDA] of U403 on F.Cu @110.69,112.84 -> Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu @105.07,86.58
+OPEN Pad 12 [Net-(U403-FB)] of U403 on F.Cu @115.34,111.69 -> Pad 1 [Net-(U403-FB)] of R419 on F.Cu @116.52,111.73
+OPEN Pad 1 [/USB Port 2/HG1] of Q501 on F.Cu @83.86,98.83 -> Pad 2 [/USB Port 2/HG1] of R544 on F.Cu @87.02,102.47
+OPEN Pad 2 [/USB Port 1/DRV9_OFF] of R455 on F.Cu @114.81,82.17 -> Pad 37 [/USB Port 1/DRV9_OFF] of U401 on F.Cu @105.39,80.46
+OPEN Track [Net-(C313-Pad2)] on F.Cu, length 0.9120 mm @115.37,118.02 -> Pad 1 [Net-(C313-Pad2)] of R321 on F.Cu @118.11,118.02
+OPEN Pad 2 [/USB Port 1/CHG_INT] of R404 on F.Cu @108.67,86.58 -> Pad 3 [/USB Port 1/CHG_INT] of U403 on F.Cu @111.19,112.84
+OPEN Pad 5 [/USB Port 2/C_CC2] of U505 on F.Cu @95.55,75.92 -> Pad B5 [/USB Port 2/C_CC2] of J501 on F.Cu @91.75,69.17

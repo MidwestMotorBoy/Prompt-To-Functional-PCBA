@@ -16,5 +16,9 @@ def strap(L, widths):
                 if p: print(L, w, p); return True
     print(L, 'NO STRAP'); return False
 r = [strap('In2.Cu', (3.0, 2.5, 2.0, 1.5)), strap('B.Cu', (2.0, 1.5, 1.0))]
-h.ok = all(r[:2])
+# second strap: the Port 2 5 V buck (U504, top-left corner) hangs on the In2 pour by a long neck down the left edge;
+# signal tracks along y 80 cut it off on the second routed board and no legal bridge was left afterwards
+A = ((79.85, 65.575),); B = ((79.45, 83.975), (80.2, 83.975), (81.0, 83.975))
+r.append(strap('In2.Cu', (1.5, 1.0, 0.8)))
+h.ok = all(r)
 h.save('lead_packp.json')

@@ -1,0 +1,16 @@
+{
+ "loss_W": 1.114,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "PACK_P": [
+   "U504"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 31,
+ "hot_loops": "7 of 7 pass, 6.20 nH",
+ "blocked_edges": "15 of 25",
+ "route": "TIMED OUT at 15 min; last 10 routed, 15 failing of 25"
+}

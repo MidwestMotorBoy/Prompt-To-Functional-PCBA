@@ -16,7 +16,7 @@ Write a script `docs/layout-teams/D/routes/<your name>.py`:
 ```python
 import sys; sys.path.insert(0, '/home/claude/prompt-to-functional-pcba/docs/layout-teams/D/tools')
 from obst import HR
-h = HR('/home/claude/runs/r2_route', 'k2')            # the routed board you build on; loads every obstacle
+h = HR('/home/claude/runs/r2_route', 'g2')            # the routed board you build on; loads every obstacle
 h.near(x, y, 0.5)                                     # what copper is within 0.5 mm of a point, per layer
 h.free_vias(net, x, y, 1.5)                           # nearest spots where a via of this net is legal: [(dist, x, y), ...]
 h.via(net, x, y)                                      # add a via (prints PROBLEM if not legal)
@@ -35,7 +35,7 @@ Everything you add becomes an obstacle for what you add next. A pad point is the
 its net: pad centre, via centre, or an existing track end.
 
 Apply and check with the real DRC (about 1 minute):
-`python3 tools/hr2.py /home/claude/runs/r2_route k2 <out name> routes/<your name>.json`
+`python3 tools/hr2.py /home/claude/runs/r2_route g2 <out name> routes/<your name>.json`
 It prints every DRC error on the board, the connections of your nets that are still open, and the totals. Use your
 own out name (start it with your name). Pictures: `python3 /home/claude/prompt-to-functional-pcba/tools/copper/render.py
 <board>.kicad_pcb <board>.json /tmp/x.png F.Cu x0,y0,x1,y1 60` (also In2.Cu, In3.Cu, B.Cu); look before you guess.
@@ -58,3 +58,14 @@ own out name (start it with your name). Pictures: `python3 /home/claude/prompt-t
 Edit only `routes/<your name>.py` and `.json`. No git commits. Do not change tools; report tool problems. Never
 order PCBs. Do not move parts. Stop when your list is done or after about 40 tool calls on the hard ones; report what
 is left and why.
+
+## Notes from the first pass (read these)
+- The checker is stricter than DRC (0.2 mm to copper, 0.3 to hard pours). `h.auto(..., clr=0.15)` finds corridors the
+  default misses; HighCurrent nets (CELL_1N, power nets) need 0.25 mm from small signals, so keep the default near them.
+- `auto` cannot start inside a 0.4 mm-pitch pin row: draw the first 0.3 to 0.5 mm straight out of the pin yourself
+  with `h.seg` (w=0.15), then `auto` from the end of that stub.
+- The wide PACK_P tracks on In2 and B.Cu from (100.8, 116.3) to (119.0, 106.8) are the pack power path. Never drop
+  or cut them; cross them on In3 or F.Cu.
+- Tracks are allowed inside the J301/J302 no-via areas even though the checker flags them; confirm with hr2.
+- F.Cu power pours (VBUS, PPHV, PP5V, AC_SNS_N, BAT_SNS_P, SW, CELL_P) are hard: a track through one cuts the power
+  path. Go under them on an inner layer.

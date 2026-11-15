@@ -155,7 +155,13 @@ class HR(Obst):
             bg = geo.buffer((0.3 if kind == "pour" else clr) + w / 2 + g * 0.5)
             for q in (bg.geoms if hasattr(bg, "geoms") else [bg]):
                 d.polygon([((x - x0) / g, (y - y0) / g) for x, y in q.exterior.coords], fill=1)
-        ob = self.outline.buffer(-0.4)
+        ob = self.outline.buffer(-(0.35 + w / 2))              # copper keeps 0.3 mm from the board edge
+        em = Image.new("L", (W, H), 1); ed = ImageDraw.Draw(em)
+        for q in (ob.geoms if hasattr(ob, "geoms") else [ob]):
+            ed.polygon([((x - x0) / g, (y - y0) / g) for x, y in q.exterior.coords], fill=0)
+            for hole in q.interiors: ed.polygon([((x - x0) / g, (y - y0) / g) for x, y in hole.coords], fill=1)
+        from PIL import ImageChops
+        im = ImageChops.lighter(im, em)
         px = im.load(); C = lambda p: (int(round((p[0] - x0) / g)), int(round((p[1] - y0) / g)))
         s, t = C(a), C(b)
         for c in (s, t):                                       # the ends are allowed (inside their own pad / via halo)
