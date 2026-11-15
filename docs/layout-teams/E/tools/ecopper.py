@@ -7,6 +7,7 @@ per line ('#' comments):
     via   NET x,y [x,y ...]                    0.45/0.3 vias
     drop  NET LAYER|*  x0,y0,x1,y1             remove the planner's tracks and vias of NET that lie in the box
                                                (zones of NET on that layer are clipped to outside the box)
+    unvia NET x,y ...                          remove the planner's via of NET at each point (one that a hand via replaces)
     dropz NET LAYER|*  x0,y0,x1,y1             the same, but the vias stay
     shift dx dy                                added to every coordinate on the lines that follow (0 0 to end)
 NET may be a short name (matched against the end of the board net name; NAME@1 = /USB Port 1/NAME). Planner tracks
@@ -65,6 +66,11 @@ for ln, line in enumerate(open(F), 1):
                     if q.is_empty or q.area < 0.2: continue
                     nz.append(dict(z, polys=[dict(ring=[list(c) for c in q.exterior.coords[:-1]], holes=[[list(c) for c in h.coords[:-1]] for h in q.interiors])]))
         S["zones"] = nz; added.append("drop %s: %d tracks, %d vias" % (a[1], t0 - len(S["tracks"]), v0 - len(S["vias"])))
+    elif k == "unvia":
+        n = net(a[1]); v0 = len(S["vias"])
+        for q in a[2:]:
+            x, y = pt(q); S["vias"] = [v for v in S["vias"] if not (v["net"] == n and abs(v["x"] - x) < 0.06 and abs(v["y"] - y) < 0.06)]
+        added.append("unvia %s: %d vias" % (a[1], v0 - len(S["vias"])))
     elif k == "shift": SH[0], SH[1] = float(a[1]), float(a[2])
     else: sys.exit("ecopper line %d: %s?" % (ln, k))
 json.dump(S, open(sys.argv[1], "w"))

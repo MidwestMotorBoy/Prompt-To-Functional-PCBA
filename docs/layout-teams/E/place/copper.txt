@@ -28,15 +28,20 @@ via AC_SNS_N@1 109.1,87.4 109.9,87.4 110.7,87.4 111.5,87.4 112.3,87.4
 zone AC_SNS_N@2 F.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
 zone AC_SNS_N@2 B.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
 via AC_SNS_N@2 88.0,86.4 88.8,86.4 89.6,86.4 88.4,87.2 89.2,87.2
-
-
-
+# --- PD chips' second VBUS pin (32, the 5 V source path): one via in the gap between its capacitor and the pin; on
+#     F.Cu it would take the channel the CC pins need, so it leaves on B.Cu (hand track at the end of this file)
 via VBUS@1 104.9,77.27
 track VBUS@1 F.Cu 0.4 104.9,76.6 104.9,77.9
 via VBUS@2 85.12,77.3
 track VBUS@2 F.Cu 0.4 85.12,76.6 85.12,77.9
 # --- USB-C connectors: the two VBUS pad pairs joined by a B.Cu bar under the pad row, two vias below each pair
-box VBUS@1 B.Cu 40 103.4,69.95,109.7,70.9
+# the planner's F.Cu track from the left VBUS pad pair runs where C_CC2 has to come down; it is laid again 0.3 mm further west
+drop VBUS@1 F.Cu 102.6,69.8,104.3,71.2
+track VBUS@1 F.Cu 0.4 104.1,69.3 104.1,69.75 103.55,70.3 103.0,70.75 102.418,71.316
+# (planner vias that sit within a drill of a hand via are taken out: unvia)
+unvia VBUS@1 109.25,70.174
+unvia VBUS@2 90.65,70.374
+box VBUS@1 B.Cu 40 102.75,69.95,109.7,70.9
 via VBUS@1 103.55,70.3 103.0,70.75 108.75,70.35 109.35,70.35
 box VBUS@1 F.Cu 41 103.5,69.4,104.5,70.6
 box VBUS@1 F.Cu 42 108.55,69.4,109.55,70.6
@@ -53,6 +58,7 @@ via PPHV@2 89.2,84.0
 via AC_SNS_N@2 90.1,84.5
 via BAT_SNS_P@2 97.6,100.89
 via PACK_P 98.5,99.39
+unvia PACK_P 98.05,99.575
 # --- the PACK_P pour kept off the battery-sense filter resistor R429 pad 1, so its tap (place/routes.txt) is the only way in
 dropz PACK_P F.Cu 117.35,110.35,118.6,111.7
 # pack-side Kelvin tap of Port 1: no via site next to R429, so a hand via east of the pad
@@ -65,5 +71,21 @@ via DRV_SUP@2 88.66,107.5
 track DRV_SUP@2 F.Cu 0.2 88.66,107.5 88.66,108.0
 # second VBUS pin (32) of each PD chip: from its via on B.Cu under the CC capacitors' pads to the VBUS copper east of
 # the chip (not along the channel between capacitors and chip: the CC1/CC2 vias need that)
-track VBUS@1 B.Cu 0.8 104.9,77.27 104.9,76.8 105.3,76.4 107.2,76.4 107.58,76.02 108.65,76.02 109.4,76.77
-track VBUS@2 B.Cu 0.8 85.12,77.3 85.12,76.85 85.5,76.47 87.3,76.47 87.45,76.62 88.7,76.62
+track VBUS@1 B.Cu 0.8 104.9,77.27 104.9,76.8 105.3,76.4 107.2,76.4 107.6,76.22 108.0,75.82 108.75,75.82 109.4,76.47 109.4,76.77
+# Port 2: 0.7 mm and 0.02 mm higher, or no via for CC2 fits between this track and the PD chip's pin row (window 0.05 mm)
+track VBUS@2 B.Cu 0.7 85.12,77.3 85.12,76.85 85.52,76.45 87.3,76.45 87.47,76.62 88.7,76.62
+# CC2 of the Port 2 PD chip (pin 29): its via by hand in that window, on the way from the pin to its capacitor
+via CC2@2 86.4,77.33
+track CC2@2 F.Cu 0.2 86.511,78.0 86.511,77.7 86.4,77.55 86.4,76.6
+# --- Port 1 connector CC knot, laid by hand on F.Cu (the router sends C_CC1 from pin 4 straight up to the connector and
+#     shuts C_CC2 in). U405 pins 5, 4, 3 are C_CC2, C_CC1, VBIAS from the west; C_CC2's connector pad (B5) is the
+#     westmost of the three targets, so C_CC2 comes down first and C_CC1 and VBIAS leave east under it, one above the other.
+track C_CC2@1 F.Cu 0.15 104.75,69.4 104.75,70.084 103.724,71.11 103.724,71.6
+track C_CC1@1 F.Cu 0.15 104.124,71.6 104.124,71.18 104.534,70.77 105.9,70.77 106.25,70.42 107.4,70.42 107.75,70.07 107.75,69.4
+track VBIAS@1 F.Cu 0.15 104.524,71.6 104.524,71.25 104.674,71.1 107.0,71.1
+# --- Port 2 protector (U505) pins 11 (CC2) and 12 (CC1): both need a via in the pocket between C552 and R552. The
+#     router put CC1's via straight under pin 12 and left no site for CC2. CC1's via goes under the GND pin 13 instead.
+via CC1@2 96.95,79.45
+track CC1@2 F.Cu 0.15 96.371,78.4 96.371,78.72 96.95,79.3 96.95,79.45
+via CC2@2 96.05,79.35
+track CC2@2 F.Cu 0.15 95.971,78.4 95.971,79.0 96.05,79.2 96.05,79.35

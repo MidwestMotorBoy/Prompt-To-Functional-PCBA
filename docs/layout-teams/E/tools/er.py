@@ -344,6 +344,7 @@ class World:
         self.rid = 0
         self.fill_override = None
         self.voids = []                # [dict(x, y, r)]: no pour within r of (x, y) on any layer
+        self.softpen = None            # [NL, NY, NX] price per cell on a current-carrying soft pour (set_softpen)
         self._nonet = 100000
         self.pad_cells = {}
         self.znet = np.full((NL, NY, NX), -1, np.int32)                       # hard pour at this cell: its net (pours give way to tracks)
@@ -627,6 +628,17 @@ class World:
         cx1, cy1 = self.cell(max(xs) + margin, max(ys) + margin)
         return max(cx0, 0), max(cy0, 0), min(cx1 + 1, self.NX), min(cy1 + 1, self.NY)
 
+    def set_softpen(self, n, L, wt):
+        """A price per cell for other nets' tracks on layer L where net n's soft pour lies: a sheet that carries current
+        and that signal tracks would cut into strips (the soft pours themselves cost nothing to cross)."""
+        self.softpen = np.zeros((NL, self.NY, self.NX), np.float32); self.softpen_net = n
+        for L2, polys in self.soft_fill.get(n, []):
+            bb = self._poly_bbox(polys, 0.1) if L2 == L else None
+            if bb is None: continue
+            zx0, zy0, zx1, zy1 = bb
+            m = self._fill_mask(polys, zx0, zy0, zx1 - zx0, zy1 - zy0)
+            self.softpen[L, zy0:zy1, zx0:zx1][m] = wt
+
     def all_items(self, n, with_soft=True):
         out = list(self.net_items.get(n, []))
         for rec in self.dyn.values():
@@ -861,12 +873,14 @@ class World:
             zp[np.isin(zn, list(self.hard_nets)) & zo] = 5000.0
         pen += zp
         vpen += 4.0 * zp.sum(axis=0)
+        if self.softpen is not None and n != self.softpen_net:
+            pen += self.softpen[:, y0:y1, x0:x1]
         if acc_pen:
             ac = self.acc[:, y0:y1, x0:x1]
             fo = (ac > 0) & (ac != n + 1)
             if fo.any():
                 pen += np.where(fo, acc_pen, 0.0).astype(np.float32)
-                vpen += np.where(ndimage.binary_dilation(fo[0] | fo[NL - 1], iterations=4), 25.0 * acc_pen, 0.0).astype(np.float32)
+                vpen += np.where(ndimage.binary_dilation(fo[0] | fo[NL - 1], iterations=9), 25.0 * acc_pen, 0.0).astype(np.float32)      # 0.45 mm: a via nearer than that shuts the strip
         free = fs.astype(np.uint8)
         freed = fsd.astype(np.uint8)
         sidx = np.flatnonzero((src_mask & ~zrim).ravel())

@@ -29,10 +29,11 @@ $K sh -c "kicad-cli pcb drc --severity-all --format json -o drc.json cu.kicad_pc
 python3 $T/copper/dc_score.py cu.kicad_pcb cu.json $C dc.json --lossmap=loss.npz > dc.log 2>&1
 for L in F.Cu B.Cu; do python3 $T/copper/render.py cu.kicad_pcb cu.json ${L%%.*}.png $L - 24 > /dev/null 2>&1; done
 if [ $HOT = 1 ]; then
-  rm -f hot_parts.log
+  rm -f hot_parts.log hot_part.*.log; i=0      # the seven loops side by side, HOTJOBS at a time (a routed board takes minutes per loop)
   for L in HL_3V3 "Port 1/HL_5V" "Port 1/HL_IN" "Port 1/HL_OUT" "Port 2/HL_5V" "Port 2/HL_IN" "Port 2/HL_OUT"; do
-    PCB=cu.kicad_pcb python3 $T/floorplan/hot_score.py $C "$L" 2>&1 | grep "HL_" | tail -1 >> hot_parts.log
-  done
+    i=$((i+1)); (PCB=cu.kicad_pcb python3 $T/floorplan/hot_score.py $C "$L" 2>&1 | grep "HL_" | tail -1 > hot_part.$i.log) &
+    [ $((i % ${HOTJOBS:-3})) = 0 ] && wait
+  done; wait; cat hot_part.[1-7].log > hot_parts.log
   python3 - <<'P'
 import json; out={}
 for l in open('hot_parts.log'):

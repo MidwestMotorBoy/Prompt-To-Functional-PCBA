@@ -1,0 +1,109 @@
+{
+ "/Cells and Gauge/CELL_P": {
+  "loss_W": 0.1572,
+  "open": [],
+  "worst_drop_mV": 15.7
+ },
+ "/Cells and Gauge/CELL_P_RAW": {
+  "loss_W": 0.0212,
+  "open": [],
+  "worst_drop_mV": 2.1
+ },
+ "/Cells and Gauge/FET_MID": {
+  "loss_W": 0.0045,
+  "open": [],
+  "worst_drop_mV": 0.4
+ },
+ "/USB Port 1/AC_SNS_N": {
+  "loss_W": 0.0302,
+  "open": [],
+  "worst_drop_mV": 6.0
+ },
+ "/USB Port 1/BAT_SNS_P": {
+  "loss_W": 0.009,
+  "open": [],
+  "worst_drop_mV": 1.8
+ },
+ "/USB Port 1/PP5V": {
+  "loss_W": 0.0282,
+  "open": [],
+  "worst_drop_mV": 18.8
+ },
+ "/USB Port 1/PPHV": {
+  "loss_W": 0.0074,
+  "open": [],
+  "worst_drop_mV": 1.5
+ },
+ "/USB Port 1/SW1": {
+  "loss_W": 0.0407,
+  "open": [],
+  "worst_drop_mV": 8.1
+ },
+ "/USB Port 1/SW2": {
+  "loss_W": 0.0468,
+  "open": [],
+  "worst_drop_mV": 9.4
+ },
+ "/USB Port 1/VBUS": {
+  "loss_W": 0.0303,
+  "open": [],
+  "worst_drop_mV": 6.1
+ },
+ "/USB Port 2/AC_SNS_N": {
+  "loss_W": 0.0281,
+  "open": [],
+  "worst_drop_mV": 5.6
+ },
+ "/USB Port 2/BAT_SNS_P": {
+  "loss_W": 0.0114,
+  "open": [],
+  "worst_drop_mV": 2.3
+ },
+ "/USB Port 2/PP5V": {
+  "loss_W": 0.0353,
+  "open": [],
+  "worst_drop_mV": 23.5
+ },
+ "/USB Port 2/PPHV": {
+  "loss_W": 0.007,
+  "open": [],
+  "worst_drop_mV": 1.4
+ },
+ "/USB Port 2/SW1": {
+  "loss_W": 0.059,
+  "open": [],
+  "worst_drop_mV": 11.8
+ },
+ "/USB Port 2/SW2": {
+  "loss_W": 0.0463,
+  "open": [],
+  "worst_drop_mV": 9.3
+ },
+ "/USB Port 2/VBUS": {
+  "loss_W": 0.0294,
+  "open": [],
+  "worst_drop_mV": 5.9
+ },
+ "3V3": {
+  "loss_W": 0,
+  "open": [
+   "L201"
+  ],
+  "worst_drop_mV": 0
+ },
+ "CELL_N": {
+  "loss_W": 0.0087,
+  "open": [],
+  "worst_drop_mV": 0.9
+ },
+ "PACK_P": {
+  "loss_W": 0.2302,
+  "open": [],
+  "worst_drop_mV": 15.6
+ },
+ "GND": {
+  "loss_W": 0.3135,
+  "open": [],
+  "worst_drop_mV": 10.6
+ }
+}

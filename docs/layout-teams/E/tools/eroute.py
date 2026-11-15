@@ -168,7 +168,9 @@ def knot(W, n, opt, log=print, grow=1.5, maxnets=4, maxperm=60):
     if len(perms) > maxperm:
         import random
         random.Random(1).shuffle(perms); perms = perms[:maxperm]
+    t0 = time.time()
     for perm in perms:
+        if time.time() - t0 > opt.get("knot_s", 60): break
         left = []
         for m in perm:
             if not join(W, m, opt): left.append(m)
@@ -327,6 +329,8 @@ if __name__ == "__main__":
         import shutil; shutil.copy(HERE + "/edump.py", d)
         subprocess.run(["docker", "run", "--rm", "-u", "0", "-v", d + ":/w", "-w", "/w", "kicad/kicad:10.0", "sh", "-c", "python3 edump.py %s.kicad_pcb %s.e.json 2>&1 | grep -v swig" % (base, base)])
     W = er.World(dump)
+    if "softpen" in O:             # --softpen=NET:LAYER INDEX:PRICE   e.g. PACK_P:2:2.0
+        nm, L, wt = O["softpen"].split(":"); W.set_softpen(W.netid[nm], int(L), float(wt))
     if "fills" in O:
         F = json.load(open(O["fills"])); W.fill_override = {}
         for n in W.net_items: W.net_items[n] = [it for it in W.net_items[n] if it[0] != "Z"]
