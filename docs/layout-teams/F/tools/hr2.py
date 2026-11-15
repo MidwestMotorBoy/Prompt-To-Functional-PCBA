@@ -21,6 +21,7 @@ def keep(m):
             a = re.search(r"\(start ([-\d.]+) ([-\d.]+)\)", blk); b = re.search(r"\(end ([-\d.]+) ([-\d.]+)\)", blk)
             if inb(float(a.group(1)), float(a.group(2)), dr["box"]) and inb(float(b.group(1)), float(b.group(2)), dr["box"]): return ""
         else:
+            if dr.get("tracks_only"): continue
             a = re.search(r"\(at ([-\d.]+) ([-\d.]+)\)", blk)
             if inb(float(a.group(1)), float(a.group(2)), dr["box"]): return ""
     return blk

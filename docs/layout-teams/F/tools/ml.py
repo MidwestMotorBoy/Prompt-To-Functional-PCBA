@@ -316,7 +316,7 @@ class ML(HR):
         if not A or not B:
             if not quiet: print("  route %s: no copper of the net at %s" % (net, a if not A else b))
             self.ok = False; return None
-        start = mask(A, a); goal = mask(B, b)
+        start = mask(A, a if start_geoms is None else (-1e6, -1e6)); goal = mask(B, b if goal_geoms is None else (-1e6, -1e6))
         if end_via:                                    # the goal is "any legal via spot inside these shapes"
             goal = goal & viaok[None, :, :] & (1 - (vpen > 0).astype(np.uint8))[None, :, :]; blk[start > 0] = 0
         else:
