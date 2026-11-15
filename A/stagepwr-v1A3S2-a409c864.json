@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/stagepwr-v1A3S2.kicad_pcb",
+ "sha": "a409c864c4fc255fe65a9fd6b1fe9a515ac6bcd0",
+ "routed": 355,
+ "failed": 43,
+ "edges": 398,
+ "minutes": 45.4,
+ "status": "done",
+ "tail": [
+  "FAILKEY GND@Pad 36 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad 31 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad A1 [GND] of J401 on F.Cu",
+  "FAILKEY /Cells and Gauge/CELL_P",
+  "FAILKEY /USB Port 2/HG1"
+ ]
+}
