@@ -1023,3 +1023,73 @@ Files: `tools/straps.py`, `tools/final_route.sh`, `tools/final_json.py`, `tools/
 routed/hot.json, routed/hot_gate.json, split/straps.log, split/straps_*.png. Boards and route.log stay local.
 (`runs/r3c-straps-screen` is an earlier strap setting, 31 of 423: three Port 1 edges at D410 under a centre trunk; the
 under-pad cost added after it brought the count to 29.)
+
+## 2026-11-15 04:40 UTC, lead: stitch and review, round 4 (last round)
+
+**r4** = `candidates/r4.json` = `best_placement.json`: the stitch of the three fragments as they stand after the charger
+worker's round (`tools/stitch.py`, 245 parts, 18 on the bottom, claim clashes 0, hpwl 2120 mm). It is the same placement
+as `candidates/r3_charger.json` (compared part by part), so the worker's whole-board screen with all hot loops,
+`runs/r4chg-hot`, is r4's screen; the lead changed no part this round. The charger worker's files were staged but not
+committed (its commit was refused); the lead committed them as 9a00fbc. The README rows for `part_peek.py`,
+`quick_split_ghost.sh` and the routed-board tools were added.
+
+**Runs of r4** (all finished, none timed out; the two full routes ran here one after the other, 45 min cap each):
+
+| Run | What | Blocked edges | Full route | Hot loops | Loss | DRC | Power open |
+|---|---|---|---|---|---|---|---|
+| hand (`runs/hand_screen`, charter) | reference, shared scorecard | 56 of 452 | 391 of 448 | sum 8.15 nH | 1.36 W | 0 | PP5V U401, 3V3 L201, GND J301/J302 |
+| `runs/r2-hot`, `runs/r2-route` | r2, shared scorecard | 39 of 446 | 401 of 446 | 7 of 7, 5.54 nH | 1.133 W | 0 | GND J301/J302 |
+| `runs/r3b-hot` | r3, `--hot=all` | 31 of 443 | not run | 7 of 7, 5.54 nH | 1.125 W | 0 | GND J301/J302 |
+| `runs/r4chg-hot` | **r4**, `--hot=all` (worker's run) | **19 of 437** | - | **7 of 7, 5.54 nH** (1.02 / 0.70 / 0.78 / 0.74 / 0.76 / 0.80 / 0.74) | **1.125 W** | 0 | GND J301/J302 |
+| `runs/r4-route` | **r4**, the same copper through the shared scorecard, `--keep-copper --route=45 --no-hot` | 19 of 437 | **411 of 437, 26 failed**, about 17 min | - | 1.125 W | 0 | GND J301/J302 |
+| `runs/r4chg-hot-split` | r4, one zone per outline | 15 of 415 (hand 58 of 422, r3 28 of 421) | - | - | 1.124 W | 0 | GND J301/J302 |
+| `runs/r4chg-split-route` | r4, one zone per outline, `--route=45` (worker's run) | 15 of 415 | 393 of 415, 22 failed (hand 363 of 422, r3a 385 of 421) | - | 1.124 W | 0 | GND J301/J302 |
+| `runs/r4-final` | r4 through `tools/final_route.sh` (PACK_P straps, one zone per outline, full route, routed board scored) | 16 of 416 | 391 of 416, 25 failed, about 31 min (hand 365 of 423, r3 387 of 422) | routed board: 7 of 7, 5.56 nH (1.02 / 0.70 / 0.79 / 0.74 / 0.76 / 0.81 / 0.74) | before routing 1.124 W; routed board **2.854 W** | copper board 0; routed board 3 (router's own) | before: GND J301/J302; routed board: **3V3 L201 only** |
+
+`tools/loose.py` prints nothing on `runs/r4chg-hot`, its split twin and the routed board (`runs/r4-final/routed`).
+`tools/check.py`: overlap, keep-out, edge, ring, reserved, region all 0; hard faults 2, both the waived `pin` lines of
+C406 and C506 (they serve the PD chips' VBUS_IN pads, as on the hand board); bottom parts 18.
+Renders `runs/r4chg-hot/F.png`, `B.png` and `runs/r4-final/F.png` looked at: the two charger stages are mirror twins
+with the inductor between the FET pairs and the hot-loop capacitors against the FETs, the 5 V bucks and the pack FET
+block are compact; no sprawling power part.
+
+**Against the hand board** (same tool each time): blocked edges 19 of 437 against 56 of 452 (split 15 of 415 against
+58 of 422); full route 411 of 437 against 391 of 448 (split 393 of 415 against 363 of 422; with straps 391 of 416
+against 365 of 423); hot loops 7 of 7 with sum 5.54 nH against 8.15 nH, every loop lower; loss before routing 1.125 W
+against 1.36 W; power open before routing only GND at J301/J302 (the router joins them), where the hand also has PP5V
+open at U401 and 3V3 at L201; DRC 0.
+
+**What is left** (none of it is a part standing in the way that a move would cure; the lead stops here):
+- The 15 blocked edges with zones split, all blocked on r3 and most on the hand board too: C_CC1 x4 and C_CC2 at
+  U405/U505 and the connectors, DRV9_OFF (Q509.1 to U501.37), U501.38 (3V3), GND pads U401.26/31/36 and U501.31/36,
+  C304.2, HG2 x2 (R446.2 to Q402.1 and twin: the BAT_SNS_P copper wraps the gate pad; needs a planner rule, the hand
+  fails the same way). The plain count of 19 adds the four zone-outline artifacts (U401 pad 32, R426.1, R526.1,
+  R429.1) that are joined when each outline is its own zone.
+- Full-route failures beyond those (`plan/r4-route-failed.txt`, `plan/r4chg-split-route-failed.txt`,
+  `runs/r4-final/route_failed.txt`): EN_5V1 x2, Port 1 CC2, Net-(U102-V4) in all three routes; TS1 (TH101 to U101.10)
+  and Port 1 I2CC_SDA (U403.2 to R402.2) in two of three; SS_5V, Net-(U504-FB) x2, Port 1 I2CC_SCL and Port 2 I2CC_SDA
+  only in the strap route. The last group changes from route to route, so it is congestion, not a blocked pin.
+- **Routed-board loss moves with the route and is high.** 2.854 W on r4 (r3 1.754 W and 2.926 W in two routes of the
+  same board, hand 2.413 W), against 1.12 W before routing. All of the rise is PACK_P from Q102 to J113 (0.224 W
+  before, 1.561 W after routing, about 15.6 mohm) and R427 (0.054 to 0.384 W): north-south signal tracks on In2 cut
+  the half-ounce PACK_P sheet into slabs that only the 1 mm straps join. The straps keep the path joined (the hard
+  limit) but not low in resistance. This is a copper-plan and router matter, the same on every placement and on the
+  hand board: either a corridor on In2 from Q102 to J113/R427 that signals may not cross, or the 10 A path on outer
+  2 oz copper. Not fixed by team B.
+- **3V3 on the routed board:** dc_score reports only L201 open, but KiCad's unconnected list of `runs/r4-final/routed`
+  also names 3V3 pieces (U401 pad 38, R314, F.Cu and In3 pours): the In3 3V3 bus is cut by the route, as the
+  routed-board worker found on r3. `final_route.sh --straps="--net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V;--net=3V3 --layer=In3.Cu --source=J301 --lanes=H"`
+  keeps it whole (r3: 391 of 427 routed); not rerun on r4.
+- The routed board carries 3 KiCad clearance errors made by the router (CELL_1N F.Cu track against TS1, BTP_INT and
+  U101-SMBD tracks at x 100.1 to 103.4, y 127.9 to 128.8, 0.25 mm high-current rule); the copper board has 0.
+
+**Verdict: done.** Hard limits met on the scorecard (power paths joined before routing but for GND at J301/J302, which
+the router joins; DRC 0; 7 of 7 hot loops tier 1), routability above the hand board in every flow, ringing and loss
+below it. For the final scorecard: `bash tools/score/score_board.sh <outdir> docs/layout-teams/B/best_placement.json`
+(shared flow, expect about 19 of 437 blocked and about 411 of 437 routed) and, for the routed-board power paths,
+`bash tools/final_route.sh runs/r4chg-hot runs/<new>` next to `runs/hand-final`.
+
+Files: `candidates/r4.json`, `best_placement.json`, `tools/README.md`, `plan/r4-route-failed.txt`, `runs/r4-route/`
+(score.json, dc.json, ghost.log, F.png, B.png), `runs/r4-final/` (final.json, score.json, dc.json, ghost.log,
+route_failed.txt, routed/dc.json, routed/hot.json, routed/hot_gate.json, split/straps.log, split/straps_PACK_P.png,
+F.png, B.png). Boards and route.log stay local.

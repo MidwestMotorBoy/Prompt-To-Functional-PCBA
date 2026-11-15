@@ -14,6 +14,9 @@ through docker, as the shared scorecard does. Shared tools are only called, neve
 | `blame.py` | Blocked edges, open power pins, DRC errors by ref, chip and group; what stands next to each blocked pad |
 | `loose.py` | Power pads off the planned copper although their terminal counts as joined (`pads_not_joined` in dc.json); run it on every screen |
 | `write_copper_split.py`, `split_screen.sh` | The same planned copper written with one zone per outline, then the shared scorecard with `--keep-copper` (blocked edges, optional full route). Run it on every whole-board screen and on the hand (`runs/hand-split`: 58 of 422) |
+| `straps.py`, `final_route.sh`, `final_json.py` | The routed-board check: hard PACK_P straps, one zone per outline, full route, then power paths, DRC and the seven hot loops of the routed board into `final.json` (last section) |
+| `part_peek.py` | Courtyard, pads and legality faults of named parts, with `--set=REF:x,y,turn` overrides: a look before writing a put step |
+| `quick_split_ghost.sh` | `quick_ghost.sh` on a plan-only run written with one zone per outline (a quick, optimistic split count between full screens) |
 | `hand_fragments.py` | The hand placement as fragments (`fragments/hand/`), the usual `--base` |
 | `hpwl.py`, `draw_boxes.py` | Wiring estimate and box picture (both take 4-element entries) |
 
