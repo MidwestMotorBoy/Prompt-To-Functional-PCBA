@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead-Z.kicad_pcb",
+ "sha": "bd03cd0ee835854639269c97a57ad340f9366f99",
+ "routed": 352,
+ "failed": 17,
+ "edges": 369,
+ "minutes": 92.2,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /USB Port 1/PP5V",
+  "FAILKEY /P1_LDO_3V3",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
