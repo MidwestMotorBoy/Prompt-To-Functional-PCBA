@@ -106,6 +106,19 @@ bash tools/final_route.sh runs/hand_screen runs/hand-final        # the hand boa
 `--no-straps` gives the same flow without straps (the comparison). The result is `runs/<new dir>/final.json`
 (also printed as the last line, `FINAL {...}`).
 
+**Phase 2 hooks (2026-11-15; nothing changes without them).** `--filters="<script> <options>;..."` runs copper-plan
+filters after the straps, each as `python3 tools/<script> <spec.json in> <source run's cu.json> <spec.json out> <options>`
+(the call form of `straps.py`; a filter that exits with a code other than 0 stops the run; logs `split/filter_<n>.log`).
+`--post="<script> <options>"` runs a finishing pass after the full route as `bash|python3 tools/<script> <out dir> <options>`;
+it reads `<out dir>/routed.kicad_pcb` (beside it `cu.kicad_pcb`, the board before routing, `drc.json` and `route.log`)
+and writes `<out dir>/finished.kicad_pcb`, which is then the board the routed-board check scores (`scored_board` in
+final.json; log `post.log`). The phase 2 baseline (plan in `PLAN2.md`):
+```
+ST="--net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V;--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"
+bash tools/final_route.sh runs/r4chg-hot runs/<new> --straps="$ST" [--filters="..."] [--post="..."] [--route=0] [--no-hot]
+```
+`runs/p2-base-screen` is that command with `--route=0`: 15 of 420 blocked, DRC 0, 1.124 W.
+
 **What each number in final.json means**
 | Field | Meaning | Pass mark |
 |---|---|---|

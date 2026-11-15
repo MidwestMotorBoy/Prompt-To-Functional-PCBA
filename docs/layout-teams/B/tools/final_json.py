@@ -41,6 +41,8 @@ if rmin != "0" and os.path.exists(os.path.join(out, "route.log")):
     u = re.search(r"unconnected after fill: (\d+)", r)
     F["route"]["unconnected_after_fill"] = int(u.group(1)) if u else None
     F["route"]["text"] = sc.get("route")
+F["scored_board"] = "finished.kicad_pcb (after --post)" if os.path.exists(os.path.join(out, "finished.kicad_pcb")) else "routed.kicad_pcb"
+F["filters"] = sorted(f for f in os.listdir(os.path.join(out, "split")) if f.startswith("filter_")) if os.path.isdir(os.path.join(out, "split")) else []
 F["pre_route"] = dc_sum(J(out, "dc.json"))
 F["routed"] = dc_sum(J(out, "routed", "dc.json"))
 if F["routed"] is not None:

@@ -1,0 +1,19 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 420 (0 on long nets)
+fan-out stubs: 142
+GHOSTFAIL /USB Port 1/C_CC1 Pad 4 [/USB Port 1/C_CC1] of U405 on F.Cu -> Pad 7 [/USB Port 1/C_CC1] of U405 on F.Cu
+GHOSTFAIL /USB Port 2/C_CC1 Pad 7 [/USB Port 2/C_CC1] of U505 on F.Cu -> Pad 4 [/USB Port 2/C_CC1] of U505 on F.Cu
+GHOSTFAIL /USB Port 1/C_CC1 Pad A5 [/USB Port 1/C_CC1] of J401 on F.Cu -> Pad 4 [/USB Port 1/C_CC1] of U405 on F.Cu
+GHOSTFAIL /USB Port 2/C_CC1 Pad 4 [/USB Port 2/C_CC1] of U505 on F.Cu -> Pad A5 [/USB Port 2/C_CC1] of J501 on F.Cu
+GHOSTFAIL /USB Port 2/C_CC2 Pad 5 [/USB Port 2/C_CC2] of U505 on F.Cu -> Pad B5 [/USB Port 2/C_CC2] of J501 on F.Cu
+GHOSTFAIL /USB Port 2/DRV9_OFF Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on B.Cu -> Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu
+GHOSTFAIL 3V3 Pad 38 [3V3] of U501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 36 [GND] of U501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 31 [GND] of U501 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 36 [GND] of U401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 31 [GND] of U401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 26 [GND] of U401 on F.Cu -> Zone plane
+GHOSTFAIL GND Pad 2 [GND] of C304 on F.Cu -> Zone plane
+GHOSTFAIL /USB Port 1/HG2 Pad 2 [/USB Port 1/HG2] of R446 on F.Cu -> Pad 1 [/USB Port 1/HG2] of Q402 on F.Cu
+GHOSTFAIL /USB Port 2/HG2 Pad 2 [/USB Port 2/HG2] of R546 on F.Cu -> Pad 1 [/USB Port 2/HG2] of Q502 on F.Cu
+GHOST noway 15 of 420 edges, 277 s

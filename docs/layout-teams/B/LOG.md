@@ -1093,3 +1093,51 @@ Files: `candidates/r4.json`, `best_placement.json`, `tools/README.md`, `plan/r4-
 (score.json, dc.json, ghost.log, F.png, B.png), `runs/r4-final/` (final.json, score.json, dc.json, ghost.log,
 route_failed.txt, routed/dc.json, routed/hot.json, routed/hot_gate.json, split/straps.log, split/straps_PACK_P.png,
 F.png, B.png). Boards and route.log stay local.
+
+## 2026-11-15 15:05 UTC, lead: phase 1 deliverables closed, phase 2 plan (PLAN2.md), baseline screen
+
+Logan asked to go on from placement r4 to a fully routed board. Nothing was rerouted for this entry.
+
+**Phase 1 deliverables (from existing runs, no rerun).** `score.json` is the shared scorecard's result for r4, merged
+from `runs/r4chg-hot` (loss 1.125 W, power open GND at J301/J302, DRC 0, blocked 19 of 437, hot loops 7 of 7 with
+5.54 nH and each loop from hot_gate.json, thermal.json) and `runs/r4-route` (411 of 437 routed, 26 failed, about
+17 min, not timed out); its `sources` block names the run of every number, and it carries the routed-board check of
+`runs/r4-final/final.json` as a separate block. `F.png` and `B.png` are those of `runs/r4chg-hot`, looked at again.
+Still owed from the charter: `REPORT.md` and `SKILL-NOTES.md` (not written in phase 1; planned for the last round of phase 2).
+
+**Phase 2 plan: `PLAN2.md`.** Definition of done, all on the routed board: 0 unconnected items (signal and power),
+`routed.power_open` empty (3V3 at L201 and GND at J301/J302 joined on the routed board), 0 DRC errors, 7 of 7 hot
+loops, routed sum within 0.05 nH of 5.54, routed loss 1.25 W or less with PACK_P to J113 and R427 at 3.0 mohm or less,
+renders of F, B, In2, In3 looked at. Two work packages for round 1: A, power copper that survives routing; B, the
+failed connections (pin escapes before routing, finishing pass after it).
+
+**What the existing routed board shows** (`runs/r4-final/routed.kicad_pcb`, pictures made with `tools/zoom.py` on In2,
+B and F, window 88,98 to 123,126, looked at):
+- The In2 PACK_P sheet west of J113 is cut by three north-south signal nets: EN_5V2 (x 113.1 to 116.3, y 104.8 to
+  114.1), Port 1 TS (x 114.2 to 118.0, y 96.9 to 113.2) and SCL (x 117.3 to 119.2, y 93.0 to 107.4). J113 and R427 are
+  fed by the strap from the north at x 120.2 (1 mm, 0.5 mm in places): 15.6 and 15.4 mohm against 2.24 and 2.17 before routing.
+- The bottom (2 oz, four times In2) is nearly empty on that way before routing: 2.8 mm between the PACK_P pours of the
+  fixed bottom capacitors (to y 111.9) and the FET_MID bottom pour (from y 114.7), then free to J113 (through-hole) past
+  TH104. A bottom PACK_P trunk is the first cure to try (worker A).
+- KiCad on that board: 37 unconnected items (GND 8, 3V3 7, 22 on 18 other nets, among them one each on Port 1 VBUS,
+  Port 2 VBUS, CELL_P, CELL_1N and Port 2 BAT_SNS_P), 3 errors, all rule `HighCurrent copper to small signals` (0.25 mm): a CELL_1N F.Cu
+  track 0.224 to 0.225 mm from TS1, BTP_INT and Net-(U101-SMBD) tracks. The router keeps 0.15 mm for that pair.
+- `tools/score/route_server.py` (Logan's PC) runs the stock router with the stock options and returns counts and the
+  log only, not the routed board: use it to compare copper-plan variants by route count; routed-board numbers and a
+  team copy of the router need a local route.
+
+**Tool change (lead's files).** `tools/final_route.sh` has two optional hooks, `--filters="<script> <options>;..."`
+(copper-plan filters after the straps, same call form as `straps.py`) and `--post="<script> <options>"` (finishing pass
+on the routed board; when it writes `finished.kicad_pcb`, that board is scored); `tools/final_json.py` adds
+`scored_board` and `filters` to final.json. Without the options the flow is as before. README section "Routed-board
+check" has the call forms and the phase 2 baseline command.
+
+**Baseline screen of phase 2** (`runs/p2-base-screen`, the hook test: r4 from `runs/r4chg-hot`, one zone per outline,
+PACK_P straps on In2 and 3V3 straps on In3, a no-op filter, `--route=0 --no-hot`): PACK_P 18 of 18 groups tied
+(189.2 mm), 3V3 5 of 5 tied (112.1 mm), DRC 0, **15 of 420 blocked**, loss before routing 1.124 W, power open GND at
+J301/J302. No full route was run locally. The same copper board is queued on Logan's PC as `route_queue/p2-base`
+(result expected at `origin/route-results:B/p2-base-27962aaa.json`; not back when this was written).
+
+Files: `score.json`, `F.png`, `B.png`, `PLAN2.md`, `tools/final_route.sh`, `tools/final_json.py`, `tools/README.md`,
+`route_queue/p2-base.kicad_pcb` (+ `.kicad_pro`, `.kicad_dru`), `runs/p2-base-screen/` (final.json, score.json, dc.json,
+ghost.log, split/straps.log).
