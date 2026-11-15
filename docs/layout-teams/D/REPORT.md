@@ -30,6 +30,32 @@ Round by round (placement):
 Where the loss went (W): PACK_P 0.26 (hand 0.21 to J113 alone plus other branches), GND 0.33, CELL_P 0.11
 (hand 0.14), Port 1 input sense path 0.04 (hand 0.23), Port 2 0.03.
 
+### Fully routed board (2026-11-15, lead closing pass)
+
+`routed/final.kicad_pcb` is now the fully routed board: **KiCad DRC reports 0 errors and 0 unconnected items**, every
+power path is joined with the board's own copper, 7 of 7 hot loops pass at 6.30 nH, and the loss with its own copper is
+**1.845 W** (`routed/final.score.json`, pictures `routed/final_F.png`, `routed/final_B.png`).
+
+| | Worker-tier board (pass 3, q2) | Fully routed board |
+|---|---|---|
+| Unconnected items in DRC | 26 | 0 |
+| DRC errors | 0 | 0 |
+| Open power paths | 3V3 at L201 (allowed) | none |
+| Hot loops | 7 of 7, 6.30 nH | 7 of 7, 6.30 nH |
+| Loss, own copper | 1.187 W | 1.845 W |
+
+The loss is higher than the pass 3 board because the bottom-side pack strap is gone: the I2C, interrupt and
+thermistor lines cross the pack path on the bottom layer where that strap ran, so the pack path to J113 is the 3 mm
+In2 strap alone (5.7 mohm instead of 2.3). Pack net 0.98 W of the total (0.40 W before). Routing count was put
+ahead of loss, as Logan ranked them.
+
+Things a reviewer should know about this board:
+- Two ground vias sit in the ground pad of C543 (79.45, 78.7 and 79.3). The Port 2 5 V capacitors' ground pour had no
+  via to the planes on any earlier board, and the In2 pack track plus the bottom 5 V pour leave no other legal site.
+- The In2 pack strap is 2 mm wide (not 3) for 5 mm under the Port 1 charger's south pins, so pins 3 and 7 get vias.
+- The Port 2 pack feed (R527) crosses from In2 to the bottom pour through three vias at (100.05, 112.67),
+  (99.5, 112.95), (99.9, 113.65); 8.3 mohm to R527.
+
 ## What was tried
 
 ### Placement
@@ -82,26 +108,52 @@ I2CC_SDA at U403 south pins (under the PACK_P strap), FB at U403.12 (walled by a
 R110/R118, CELL3 at J111, IRQ_N and EN_5V2 long runs, both thermistor lines, Net-(C313-Pad2).
 Most of these are consequences of earlier copper (straps, Kelvin tracks, router vias), not of placement.
 
-`routed/final.kicad_pcb` is pass 3 with the worker tier: 409 of 427 connections closed by real copper (96 %), 0 DRC
+The pass 3 board with the worker tier (kept as `routed/pass3_workers.kicad_pcb`): 409 of 427 connections closed by real copper (96 %), 0 DRC
 errors, every power path joined after routing (only the allowed 3V3 at L201), 7 of 7 hot loops at 6.30 nH, 1.187 W.
 It is the first Monolith board scored after routing with its pours intact; the hand board's 1.36 W and the plain
 router counts are pre-route / pour-less numbers and are not like for like.
 
-The 18 still open: the north 3V3 In3 island (U401.38, C403) and the R314 3V3 group, SDA / IRQ_N / CHG_INT long runs
+The 18 that were still open on that board (all closed later by the lead, see below): the north 3V3 In3 island (U401.38, C403) and the R314 3V3 group, SDA / IRQ_N / CHG_INT long runs
 from the Port 1 side to the MCU (blocked by the In2 PACK_P strap and the busy In3 south of it), I2CC_SDA at U401.16
 and U503.2, CHG_INT at U501.18, CELL_P taps at R110.2 / R118.1, SCL at the Tag-Connect pad J302.6, FB at U403.12
 (walled by the SRN_F Kelvin track), CE_N, Net-(C313-Pad2), both thermistor lines. Several are caused by the lead's
 own straps and Kelvin tracks: the next plan should leave a crossing lane through the strap for the I2C bus and
 keep Kelvin tracks off chip pins.
 
+### Closing pass by the lead (26 unconnected items to 0)
+
+Whole-net rip-up, region rip-up with 8 orders, and a recursive rip-up all closed nothing more after 12 were left.
+What closed the rest was slower and local (scripts `routes/hand_c.py` to `hand_q.py`, each applied with `tools/hr2.py`
+and checked by real DRC):
+
+1. Look first. `tools/crop.py` draws the four signal layers of a window with net names; `routes/lane_map.py` prints a
+   text map of free lanes. Every remaining open was read off a picture before any copper moved.
+2. Fine-pitch pins: a hand stub straight out of the pin to a via site tried one by one (`escape_try`), neighbours
+   pulled only inside a 1 mm circle and re-laid (`cross2`). Closed FB, both I2CC_SDA pins, Port 2 CHG_INT and TS.
+3. The pack strap under the Port 1 charger: narrowed from 3 mm to 2 mm for 5 mm and moved 0.4 mm north. That gave
+   pins 3 and 7 (CHG_INT, CE_N) via sites; both then closed with local re-lays.
+4. SDA, the last and longest (PD chips to MCU, 45 mm): laid as forced pieces. Hand-placed seeds (a bottom-layer hop
+   past the Port 2 pack-feed vias, an In2 run beside the thermistor and charge lines moved 0.15 mm by hand, a via at
+   (101.6, 119.3), an In3 lane north of the 3V3_SLEEP line with 0.03 mm to spare) and the path search joining seed to
+   seed inside a 2 to 4 mm margin. Left free, the search always took the cheapest path, which walled the pack pour.
+5. Score after every pass with the board's own copper. A 0.4 mm ground track that an earlier automatic pass had laid
+   on In2 cut the pack pour off from the Port 2 feed: nothing was reported open, loss went to 4.05 W (R527 at
+   98 mohm). Removing that one track brought it back to 1.72 W. The first SDA route did the same and split the pack
+   net in two; DRC caught that one.
+6. 3V3 pour pieces cut by a refill were rejoined with a track between a via and a pad, not pour to pour, because the
+   next refill cut the pour-to-pour link again.
+7. The last DRC item named a zone corner at the top-left of the board. The real island was 15 mm away: the ground
+   pour under the Port 2 5 V capacitors, with five ground pads and no via.
+
 ## Cost
 Placement: 8 room workers + 2 fixers. Routing: 2 + 3 region workers (170 to 290 k tokens each). A quick score takes
 6 to 20 min in the container, a router tier pass 20 to 45 min, a full plain route 71 to 74 min on the PC.
 
 ## What I would do next
-1. Third tear-up of the routing plan, not the placement: reserve via fields and 3V3 In3 necks the same way as the
-   PACK_P straps (hard copper first), then router tiers, then workers once.
-2. Give the checker the real rule set (0.15 / 0.25 HighCurrent) and a two-layer path search; both were the workers'
-   main complaints.
-3. Vertical pack FET stack to shorten PACK_P to J113.
-4. Fix `write_copper.py` and score every routed board with `--keep-copper` in the shared scorecard.
+1. Plan the bottom layer as well as In2 for the pack path before any signal: this board paid about 0.5 W for the
+   bottom strap the signals took over. A 4 mm slot for the I2C bus through both straps at the plan stage would keep both.
+2. Put "score with own copper" and "list pour islands without a via" into the shared scorecard; both found real
+   faults that DRC and the open-power check missed.
+3. Give the workers the closing tools (`crop.py`, `lane_map.py`, `hand_lib.py`) and the forced-pieces method; the
+   lead spent most of the closing pass on reading geometry a cheaper worker could read.
+4. Vertical pack FET stack to shorten PACK_P to J113.

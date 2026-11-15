@@ -1,12 +1,8 @@
 {
- "loss_W": 1.187,
- "power_open": {
-  "3V3": [
-   "L201"
-  ]
- },
+ "loss_W": 1.845,
+ "power_open": {},
  "drc_errors": 0,
- "unrouted_signal_items": 26,
+ "unrouted_signal_items": 0,
  "hot_loops": "7 of 7 pass, 6.30 nH",
- "blocked_edges": "13 of 18"
+ "blocked_edges": "0 of 0"
 }

@@ -79,3 +79,25 @@ their area with scripted helpers that check each step. Everything is under `docs
   tiers, the worker tier has to be redone, so settle power straps and key routes first.
 - Background jobs in the container stop after 30 min unless started with a longer limit; the docker container keeps
   running, so wait on `docker ps` rather than restarting.
+
+## Closing the last connections by hand (lead, 2026-11-15)
+
+- Rip-up over whole nets or whole regions stops working when 10 to 15 connections are left: every re-lay breaks a pin
+  escape somewhere else. Go local instead: pull a neighbour only inside a 1 mm circle round the crossing point the
+  path search reports (`hand_lib.cross2`), and undo the lot if any pulled line does not come back.
+- Look before routing. `tools/crop.py <dir> <board> x0 y0 x1 y1 out.png [nets]` draws the four signal layers with
+  net names; `routes/lane_map.py` prints free lanes as text. Three "impossible" nets were one hand stub away once
+  the picture was read (a pin escape 0.03 mm too close to its neighbour, a via that needed a strap 1 mm narrower).
+- Long nets: lay forced pieces. Put hand seeds (short stubs, vias) where the net must go, then let the path search
+  join seed to seed with a 2 to 4 mm margin. A free search takes the cheapest path, and on this board the cheapest
+  path for a signal is a long In2 column through the pack pour.
+- A signal on the pour layer is a cut in the pour. Before laying an In2 column, find which neck or via feeds each
+  load behind it, and hop to another layer across that neck. Then score with the board's own copper
+  (`score_board.sh ... --keep-copper --route=0`): a walled pour reports nothing open, only a loss several times higher.
+- The model treats power pours as hard copper. KiCad refills a pour round a new via, so a via that nicks a pour edge
+  is legal after the refill; let hand stubs do that, but never across a pour's only neck.
+- Join pour pieces between hard copper (a via and a pad). A pour-to-pour link is cut again by the next refill.
+- A DRC "unconnected" item between two zones prints the zones' corners. List the filled islands of the zone that hold
+  no via of the net to find the real one.
+- Moving a line 0.1 to 0.2 mm by hand (exact numbers from the rules: via 0.225 radius + 0.15 + half the track) often
+  frees a lane the 0.05 mm grid search cannot see.
