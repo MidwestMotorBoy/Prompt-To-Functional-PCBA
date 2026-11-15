@@ -20,9 +20,9 @@ def keep(m):
             if dr.get("layer") and '(layer "%s")' % dr["layer"] not in blk: continue
             a = re.search(r"\(start ([-\d.]+) ([-\d.]+)\)", blk); b = re.search(r"\(end ([-\d.]+) ([-\d.]+)\)", blk)
             if inb(float(a.group(1)), float(a.group(2)), dr["box"]) and inb(float(b.group(1)), float(b.group(2)), dr["box"]): return ""
-        else:
+        elif not dr.get("tracks_only"):
             a = re.search(r"\(at ([-\d.]+) ([-\d.]+)\)", blk)
-            if inb(float(a.group(1)), float(a.group(2)), dr["box"]): return ""
+            if a and inb(float(a.group(1)), float(a.group(2)), dr["box"]): return ""
     return blk
 if J["drop"]: txt = re.sub(r"\n\t\((?:segment|via)\n(?:\t\t.*\n)+?\t\)", keep, txt)
 open("%s/_hr2_%s_in.kicad_pcb" % (d, OUT), "w", encoding="utf-8").write(txt)

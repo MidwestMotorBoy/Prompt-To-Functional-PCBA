@@ -93,7 +93,7 @@ class MR(HR):
         if ca is cb or all(ca.get(L) == cb.get(L) for L in SIG): print("  route %s: both ends are already joined" % net); return []
         return self._search(net, (min(a[0], b[0]) - margin, min(a[1], b[1]) - margin, max(a[0], b[0]) + margin, max(a[1], b[1]) + margin), ca, cb, w, **kw)
 
-    def _search(self, net, bb, SRC, DST, w=0.2, layers=SIG, g=0.05, via_cost=1.5, avoid=(), quiet=False, max_cells=8000000):
+    def _search(self, net, bb, SRC, DST, w=0.2, layers=SIG, g=0.05, via_cost=1.5, avoid=(), quiet=False, max_cells=8000000, ghost=None):
         x0, y0, x1, y1 = bb
         W, H = int((x1 - x0) / g) + 1, int((y1 - y0) / g) + 1; win = sbox(x0, y0, x1, y1)
         PX = lambda x, y: ((x - x0) / g, (y - y0) / g)
@@ -103,29 +103,37 @@ class MR(HR):
                 d.polygon([PX(x, y) for x, y in q.exterior.coords], fill=fill)
                 for hole in q.interiors: d.polygon([PX(x, y) for x, y in hole.coords], fill=1 - fill)
         tm = {}; vim = Image.new("L", (W, H), 0); vd = ImageDraw.Draw(vim); src = {}; dst = {}
+        gn = sorted(ghost) if ghost else []; gi = {n: i + 1 for i, n in enumerate(gn)}; labt = {}; lvi = Image.new("I", (W, H), 0); lvd = ImageDraw.Draw(lvi)
         edge_t = self.outline.buffer(-(0.3 + w / 2)); edge_v = self.outline.buffer(-0.55)
         for L in SIG:
             im = Image.new("L", (W, H), 1); d = ImageDraw.Draw(im); draw(d, edge_t, 0)        # outside the board: blocked
+            lim = Image.new("I", (W, H), 0); ld = ImageDraw.Draw(lim)
             for i in self.tree[L].query(win):
                 geo, n, kind, name = self.items[L][int(i)]
                 if kind == "keepout" or n == net: continue
                 if kind == "pour" and self.soft_pour(n, L): continue
                 c = self.clr(net, n, kind) + 0.03
+                if n in gi and kind in ("track", "via"):               # a route that may be pulled: passable at a price
+                    draw(ld, geo.buffer(c + w / 2), gi[n]); draw(lvd, geo.buffer(c + 0.225), gi[n]); continue
                 draw(d, geo.buffer(c + w / 2)); draw(vd, geo.buffer(c + 0.225))
             for KL, kg in self.ko_t:
                 if KL == L: draw(d, kg.buffer(w / 2))
             for bx in avoid: draw(d, sbox(*bx))
-            tm[L] = np.array(im, dtype=bool)
+            tm[L] = np.array(im, dtype=bool); labt[L] = np.array(lim, dtype=np.int32)
             for C_, out in ((SRC, src), (DST, dst)):
                 om = Image.new("L", (W, H), 0); od = ImageDraw.Draw(om)
                 for geo in C_.get(L, []):
-                    if geo.intersects(win): draw(od, geo.buffer(-0.02))
+                    if not geo.intersects(win): continue
+                    e = geo.buffer(-max(0.02, w / 2 - 0.01))                 # the new track must lie inside its own copper there
+                    draw(od, e if not e.is_empty else geo.centroid.buffer(0.04))
                 out[L] = np.array(om, dtype=bool)
         for kg in self.ko_v: draw(vd, kg.buffer(0.225))
         em = Image.new("L", (W, H), 1); draw(ImageDraw.Draw(em), edge_v, 0)
         for vx, vy, s_, n in self.vias:
-            if x0 - 1 < vx < x1 + 1 and y0 - 1 < vy < y1 + 1: vd.ellipse([PX(vx - 0.6, vy - 0.6), PX(vx + 0.6, vy + 0.6)], fill=1)
-        vb = np.array(vim, dtype=bool) | np.array(em, dtype=bool)
+            if x0 - 1 < vx < x1 + 1 and y0 - 1 < vy < y1 + 1:
+                if n in gi: lvd.ellipse([PX(vx - 0.6, vy - 0.6), PX(vx + 0.6, vy + 0.6)], fill=gi[n])
+                else: vd.ellipse([PX(vx - 0.6, vy - 0.6), PX(vx + 0.6, vy + 0.6)], fill=1)
+        vb = np.array(vim, dtype=bool) | np.array(em, dtype=bool); labv = np.array(lvi, dtype=np.int32); lt = [labt[L] for L in SIG]; PEN = 12.0
         free = {L: src[L] | dst[L] for L in SIG}
         blk = [tm[L] & ~free[L] for L in SIG]; gl = [dst[L] for L in SIG]; fr = [free[L] for L in SIG]
         ok_layer = [L in layers for L in SIG]; lc = [1.15, 1.0, 1.0, 1.15]; VC = via_cost / g
@@ -156,13 +164,13 @@ class MR(HR):
                 nx, ny = x + dx, y + dy
                 if not (0 <= nx < W and 0 <= ny < H) or blk[l][ny, nx]: continue
                 if not ok_layer[l] and not fr[l][ny, nx]: continue
-                nk = (l, ny, nx); ng = gk + cst * lc[l] + (0.5 if pk is not None and pk[0] == l and (x - pk[2], y - pk[1]) != (dx, dy) else 0)
+                nk = (l, ny, nx); ng = gk + cst * lc[l] + (0.5 if pk is not None and pk[0] == l and (x - pk[2], y - pk[1]) != (dx, dy) else 0) + (PEN if lt[l][ny, nx] else 0)
                 if ng < best.get(nk, 1e18):
                     best[nk] = ng; par[nk] = k; heapq.heappush(pq, (ng + hh(nx, ny), nk))
             if not vb[y, x]:
                 for l2 in range(4):
                     if l2 == l or blk[l2][y, x] or not (ok_layer[l2] or fr[l2][y, x]): continue
-                    nk = (l2, y, x); ng = gk + VC
+                    nk = (l2, y, x); ng = gk + VC + (PEN * 6 if labv[y, x] else 0)
                     if ng < best.get(nk, 1e18):
                         best[nk] = ng; par[nk] = k; heapq.heappush(pq, (ng + hh(x, y), nk))
         if found is None:
@@ -171,6 +179,12 @@ class MR(HR):
         cells = []; k = found
         while k is not None: cells.append(k); k = par[k]
         cells.reverse()
+        if ghost:                                              # report whose routes are in the way, add nothing
+            v = set()
+            for i, (l, y, x) in enumerate(cells):
+                if lt[l][y, x]: v.add(gn[lt[l][y, x] - 1])
+                if i and cells[i - 1][0] != l and labv[y, x]: v.add(gn[labv[y, x] - 1])
+            return ("RIP", sorted(v))
         pts = [(SIG[l], round(x0 + x * g, 3), round(y0 + y * g, 3)) for l, y, x in cells]
         # split into per-layer runs, drop collinear points
         runs = []; cur = [pts[0]]
@@ -192,3 +206,23 @@ class MR(HR):
             out += s2
         if not quiet: print("  route %s: %.1f mm, %d vias, layers %s" % (net, sum(math.hypot(out[i + 1][1] - out[i][1], out[i + 1][2] - out[i][2]) for i in range(len(out) - 1)), len(runs) - 1, "/".join(dict.fromkeys(p[0][:-3] for p in out))))
         return out
+    def npads(self, net): return len({name for L in SIG for _, n, kind, name in self.items[L] if n == net and kind == "pad"})
+    def rip(self, net):
+        """Pull every track and via of a net (the board's and this session's) so it can be laid again."""
+        from shapely.strtree import STRtree
+        for L in SIG:
+            self.items[L] = [i for i in self.items[L] if not (i[1] == net and i[2] in ("track", "via"))]; self.tree[L] = STRtree([i[0] for i in self.items[L]])
+        self.vias = [v for v in self.vias if v[3] != net]
+        self.J["routes"] = [r for r in self.J["routes"] if r["net"] != net]; self.J["vias"] = [v for v in self.J["vias"] if v["net"] != net]
+        if not any(d["net"] == net for d in self.J["drop"]): self.J["drop"].append({"net": net, "layer": None, "box": [0, 0, 999, 999]})
+    def rip_tracks(self, net, layer, box):
+        """Pull the tracks of a net on one layer that lie inside a box (vias stay): for moving a power strap."""
+        from shapely.strtree import STRtree
+        bx = sbox(*box)
+        self.items[layer] = [i for i in self.items[layer] if not (i[1] == net and i[2] == "track" and bx.contains(i[0]))]
+        self.tree[layer] = STRtree([i[0] for i in self.items[layer]])
+        self.J["drop"].append({"net": net, "layer": layer, "box": list(box), "tracks_only": True})
+    def strap(self, net, a, b, w, layer):
+        """A wide single-layer track between two via fields of a power net, even when a pour already joins them."""
+        at = lambda p: {L: [geo for geo, n, kind, name in self.items[L] if n == net and kind in ("via", "pad") and geo.distance(Point(p)) < 0.03] for L in SIG}
+        return self._search(net, (min(a[0], b[0]) - 6, min(a[1], b[1]) - 6, max(a[0], b[0]) + 6, max(a[1], b[1]) + 6), at(a), at(b), w, layers=(layer,), quiet=True)
