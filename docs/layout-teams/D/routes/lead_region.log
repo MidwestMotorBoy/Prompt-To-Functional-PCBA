@@ -1,0 +1,16 @@
+U403 south and east pins: stuck ['/USB Port 1/CE_N', '/USB Port 1/CHG_INT', 'Net-(U403-FB)'], group of 28 nets
+   try 0: failed ['/USB Port 1/I2CC_SCL', '/USB Port 1/TS', '/MCU/NRST', 'EN_5V2', '/USB Port 1/SRP_F', '/USB Port 1/BTST1'] (129 s)
+   try 1: failed ['/USB Port 1/CE_N', 'EN_5V2', 'Net-(U403-ICHG)', '/USB Port 1/HIDRV2', '/USB Port 1/TS', '/USB Port 1/SRP_F'] (295 s)
+   try 2: failed ['/USB Port 1/I2CC_SCL', '/USB Port 1/SRN_F', 'EN_5V2', '/USB Port 1/BTST1', '/USB Port 1/BTST2', '/USB Port 1/TS'] (412 s)
+   try 3: failed ['/USB Port 1/CE_N', 'EN_5V2', 'Net-(U403-ACOV)', '/USB Port 1/I2CC_SCL', 'Net-(U403-ICHG)', '/USB Port 1/HIDRV2'] (532 s)
+   try 4: failed ['/USB Port 1/I2CC_SCL', 'EN_5V2', '/USB Port 1/TS', '/USB Port 1/BTST1', 'Net-(U403-ACOV)', '/USB Port 1/SRP_F'] (651 s)
+   try 5: failed ['/USB Port 1/CE_N', '/USB Port 1/BTST2', 'Net-(U403-ICHG)', '/USB Port 1/LODRV2', '/USB Port 1/TS', '/USB Port 1/I2CC_SCL'] (903 s)
+   try 6: failed ['/USB Port 1/I2CC_SCL', 'EN_5V2', '/USB Port 1/SRP_F', '/USB Port 1/TS', '/MCU/NRST', '/USB Port 1/LODRV2'] (1047 s)
+   try 7: failed ['/USB Port 1/CE_N', 'EN_5V2', '/USB Port 1/I2CC_SCL', 'Net-(U403-ICHG)', '/USB Port 1/TS', '/USB Port 1/LODRV2'] (1211 s)
+U401 south pins: stuck ['/USB Port 1/I2CC_SDA'], group of 8 nets
+   try 0: failed ['/USB Port 1/I2CC_SCL', 'IRQ_N', '/USB Port 1/CHG_INT', 'SDA'] (139 s)
+   try 1: failed ['/USB Port 1/I2CC_SCL', 'IRQ_N', 'SDA', '/USB Port 1/CHG_INT'] (278 s)
+   try 2: failed ['IRQ_N', '/USB Port 1/I2CC_SCL', 'SDA', '/USB Port 1/CHG_INT'] (432 s)
+   try 3: failed ['/USB Port 1/CHG_INT', 'IRQ_N', 'SDA', '/USB Port 1/I2CC_SCL'] (579 s)
+   try 4: failed ['/USB Port 1/I2CC_SCL', 'IRQ_N', 'SDA', '/USB Port 1/CHG_INT'] (710 s)
+   try 5: failed ['/USB Port 1/I2CC_SCL', '/USB Port 1/CHG_INT', 'SDA', 'IRQ_N'] (839 s)
