@@ -773,3 +773,93 @@ Files:
 - New team tools:
   - `tools/recipe_put.py` edits put steps and ring allow lists in place.
   - `tools/quick_ghost.sh` runs a ghost-only route on a plan_only run, optionally with `--only=<regex>`. Results are optimistic, because other nets' stubs are missing.
+
+## 2026-11-15 01:25 UTC, lead: stitch and review, round 3 (candidates/r3.json = best_placement.json)
+
+**Stitch.** `tools/stitch.py fragments/port1.json fragments/port2.json fragments/pack.json` with both round-3 fix fragments
+(commits 9e0dc96 and 4bc56d9): 245 parts, 18 on the bottom, 0 claim clashes, no border to resolve. This first stitch is
+kept as `candidates/r3a.json` (same content as `runs/p2v-iw/placement.json`). After one lead change in Port 2 (below) the
+stitch is `candidates/r3.json` = `best_placement.json`.
+
+**Lead change in Port 2: the TVS goes back to the connector.** The Port 2 worker had moved D501 next to U501 pad 23 so
+that pad 23 joins, and asked whether a TVS 10 to 11 mm from J501 is acceptable. It is not: the TVS belongs at the
+connector, and the two ports should be built the same way. Port 1 and the hand board join pad 23 with the 4.7 uF VBUS
+capacitor (C406, hand C506) and keep the TVS at the connector. Port 2 now does the same (`recipes/port2/04-pd-protect.json`):
+
+| Part | r3a | r3 | Why |
+|---|---|---|---|
+| D501 | (96.4, 80.69) t0, at pad 23 | (97.9, 71.67) t0 | VBUS pads west (x 96.83 to 97.20), 1.3 mm from J501 A4/B9; the east VBUS trunk runs through them (connector, TVS, trunk). D401 is 2.0 mm from J401 A4/B9 |
+| C506 | (97.25, 71.1) t0, under A4/B9 | (96.21, 79.55) t270 | standing east of pad 23 like C406 at U401: VBUS pad south, 0.56 mm from pad 23, so the planner joins pad 23 through C506 |
+| C551 | (94.38, 72.08) t270 | (95.32, 72.08) t270 | not put by hand: its at_pin step now finds the spot straight over U505 pin 3 (C506 used to be in the way) |
+
+Also: C506 and D501 added to U505's ring allow list (they face unconnected and GND pins), reserve `vbus_in_U501_23`
+moved to the new trunk lane [97.6, 73.0, 99.6, 80.2]. C506 now breaks check.py's 4 mm serves rule to J501.VBUS (10.78 mm),
+as C406 does to J401.VBUS (9.23 mm). **Decision: both are waived.** These capacitors serve the PD chips' VBUS_IN pads
+(as on the hand board); the connector is guarded by the TVS. check.py therefore shows 2 hard faults, both these lines.
+The swap also cleared two blocked edges (CC1 C501.1 to U505.12 and VBIAS C551.1 to U505.3) and added none.
+
+**New tool: the same copper with one zone per outline.** `tools/write_copper_split.py` (copy of the shared writer, one
+zone per outline) and `tools/split_screen.sh <screened run> <new dir> [--route=MIN]` (shared scorecard with
+`--keep-copper` on that board). It confirms the 22:45 note and the Port 1 worker's guess: with zones split the edges
+"VBUS track to U401 pad 32", PPHV R525.1 and PACK_P R529.1 are gone, because those pads were on outlines KiCad dropped.
+The total edge count falls from 443 to 421 for the same reason. Compare split with split.
+
+**Scorecard runs** (all finished, nothing timed out; DRC 0 in every run; loose = `tools/loose.py`):
+
+| Run | Board | Blocked edges | Full route | Hot loops | Loss | Power open | Loose pads |
+|---|---|---|---|---|---|---|---|
+| `runs/hand_screen` | hand | 56 of 452 | 391 of 448 (charter) | sum 8.15 nH | 1.36 W | PP5V U401, 3V3 L201, GND J301/J302 | U401 pad 32 |
+| `runs/hand-split` | hand, zones split | 58 of 422 | - | - | 1.359 W | same | U401 pad 32 |
+| `runs/hand-split-route` | hand, zones split, `--route=45` | 58 of 422 | **363 of 422, 59 failed**, about 13 min | - | 1.359 W | same | U401 pad 32 |
+| `runs/r2-hot` | r2 | 39 of 446 | 401 of 446 (`runs/r2-route`) | 7 of 7, 5.54 nH | 1.133 W | GND J301/J302 | U401 pad 23, U501 pad 32 |
+| `runs/r3-hot` | r3a, `--hot=all` | 33 of 443 | - | 7 of 7, 5.54 nH | 1.122 W | GND J301/J302 | none |
+| `runs/r3-split` | r3a, zones split | 30 of 421 | - | - | 1.119 W | GND J301/J302 | none |
+| `runs/r3-split-route` | r3a, zones split, `--route=45` | 30 of 421 | **385 of 421, 36 failed**, about 22 min | - | 1.119 W | GND J301/J302 | none |
+| `runs/r3b-hot` | **r3**, `--hot=all` | **31 of 443** | - | **7 of 7, 5.54 nH** | **1.125 W** | GND J301/J302 | none |
+| `runs/r3b-split` | **r3**, zones split | **28 of 421** | - | - | 1.123 W | GND J301/J302 | none |
+
+Hot loops of r3 (loop total nH, unchanged from r2): HL_3V3 1.02, Port 1 HL_5V 0.70, HL_IN 0.78, HL_OUT 0.74, Port 2
+HL_5V 0.76, HL_IN 0.80, HL_OUT 0.74. VBUS at U401 2.09 mohm, at U501 1.16 mohm (r3a 1.00); PP5V at U401 6.31, at U501
+1.54 mohm. The full route was run here, not on Logan's PC (this session does not push). r3 itself was not full-routed;
+r3a differs from it by the three parts above.
+
+**Renders.** Looked at `runs/r3-hot/F.png`, `B.png` and `runs/r3b-hot/F.png`, `B.png`, plus zooms in `plan/r3-zoom/`
+(chg1_F, chg2_F, pd_F, pd_B, r3b_pd_F): stages, bucks and the pack FET block are compact, no power part sprawls. The
+largest copper on the bottom is Port 1's PP5V pour under the PD pocket with the thin VBUS track to C450 beside it.
+
+**Finding: the routed board loses PACK_P at J113 and R427.** `runs/r3-split-routed-dc` is `cu_dump.py` and `dc_score.py`
+on `runs/r3-split-route/routed.kicad_pcb`: loss 1.102 W, open PACK_P at J113 and R427, 3V3 at L201 (allowed), GND at
+J301/J302 joined by the router. PACK_P's In2 bus zone is soft for the router (`--softnets=GND,PACK_P,3V3`); before
+routing it is one piece of 1897 mm2, after routing two pieces (1365 and 15.6 mm2), and the small one holds the five
+vias at J113/R427.2. The screen cannot show this. It needs PACK_P strap tracks laid before signal routing (team D's
+cure, 22:45 note). The hand board through the same steps (`runs/hand-split-routed-dc`) loses more: PACK_P open at J113, R427, D103 and U204, besides PP5V at U401 and 3V3 at L201 that are open before routing.
+
+**Where the 28 blocked edges of r3 (zones split) are:**
+- Chargers, 14: HIDRV1 (U403.27/U503.27), ACOV and ACUV (pins 35, 34 to R410/R510), FB U403.12, HG2 (R446/R546 to
+  Q402/Q502), and the sealed Kelvin taps R426.1, R526.1 (AC_SNS_N), R428.1, R528.1 (BAT_SNS_P), R429.1 (PACK_P). The
+  router never routes to a sealed tap, so a tap is blocked unless its own net's planned copper reaches the pad.
+- PD pockets, 8: U401 GND pads 26, 31, 36; U501 GND 31, 36, 3V3 pad 38, DRV9_OFF pad 37; I2CC_SCL U402.6 to R403.2
+  (C408 stands in front of pins 5 and 6).
+- Port protection, 5: C_CC1 at U405 (2) and U505 (2), C_CC2 U505.5 to J501.B5 (these fail on the hand too).
+- Pack, 1: GND C304.2.
+What stands in front of the charger pins (pad boxes from `runs/r3b-hot/cu.json`): C409 pad 1 (PPHV) 0.67 mm in front
+of pins 34/35; C412 straight above pin 27 between it and R444.1; C417.2, C418.2, C419 and pin 11's own stub round
+pin 12. check.py's escape lines name the same parts. Nobody has worked on these since the charger was first placed.
+
+**Decision: not done.** By the letter r3 meets the bar (hard limits met before routing, 31 of 443 against the hand's 56
+of 452, split 28 of 421 against 58 of 422, split full route of r3a 385 of 421). Two things are worth the last round:
+(1) the charger pin escapes, 15 edges that have a named cause and a cheap cure; (2) the routed board must keep PACK_P
+joined, or the final result breaks a hard limit after routing. Fix tasks for round 4:
+1. Charger and EEPROM pin escapes, both ports (the only worker who moves parts).
+2. Routed-board check: PACK_P straps before routing, one command for the final scorecard, r3 and hand through it.
+
+**For the round-4 lead.** Stitch the three fragments (candidate of task 1: `candidates/r3_charger.json`), screen with
+`--hot=all`, then run task 2's command on the best board and on the hand, and report plain and split numbers side by
+side. r3 stays the best placement unless the new candidate has loose.py clean, 7 of 7 loops and fewer blocked edges.
+
+Files: `candidates/r3.json`, `candidates/r3a.json`, `best_placement.json`; `recipes/port2/04-pd-protect.json`,
+`fragments/port2.json` + meta (= `Port_2.json` + meta); `tools/write_copper_split.py`, `tools/split_screen.sh`,
+`tools/README.md`; `runs/r3-hot/`, `runs/r3b-hot/` (score.json, hot.json, dc.json, ghost.log, F.png, B.png),
+`runs/r3-split/`, `runs/r3b-split/`, `runs/hand-split/`, `runs/r3-split-route/`, `runs/hand-split-route/` (score.json, dc.json, ghost.log),
+`runs/r3-split-routed-dc/dc.json`, `runs/hand-split-routed-dc/dc.json`, `plan/r3-split-route-failed.txt`, `plan/hand-split-route-failed.txt`, `plan/r3-zoom/`. Boards, route.log and
+hot_gate.log stay local.

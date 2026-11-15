@@ -13,6 +13,7 @@ through docker, as the shared scorecard does. Shared tools are only called, neve
 | `screen.sh` | Whole-board screen (shared scorecard) or partial screen (`score_part.sh`, `partcons.py`) |
 | `blame.py` | Blocked edges, open power pins, DRC errors by ref, chip and group; what stands next to each blocked pad |
 | `loose.py` | Power pads off the planned copper although their terminal counts as joined (`pads_not_joined` in dc.json); run it on every screen |
+| `write_copper_split.py`, `split_screen.sh` | The same planned copper written with one zone per outline, then the shared scorecard with `--keep-copper` (blocked edges, optional full route). Run it on every whole-board screen and on the hand (`runs/hand-split`: 58 of 422) |
 | `hand_fragments.py` | The hand placement as fragments (`fragments/hand/`), the usual `--base` |
 | `hpwl.py`, `draw_boxes.py` | Wiring estimate and box picture (both take 4-element entries) |
 
@@ -79,3 +80,8 @@ One router or hot-loop job at a time per worker; run dirs under `runs/<unique-na
   source; power_open in score.json stays empty. The PD controllers have two VBUS pad groups (23 = the 5 A switch to
   PPHV, 32 = the 5 V source switch); r1 and r2 left Port 1's pad 23 on an island. `tools/loose.py <run dir>` lists them.
   Put a capacitor of the same net against each such pad so the grown copper merges with the capacitor's pad.
+- **A zone with several outlines loses all but the first when KiCad loads the board.** The shared copper writer puts
+  every outline of a net and layer into one zone. The saved fill still blocks the router, but KiCad's connectivity no
+  longer counts the lost pieces, so pads on them come back as extra edges to route (r3: U401 pad 32, R525, R529) and the
+  routed board's last refill drops those pours. `tools/split_screen.sh <screened run> <new dir> [--route=MIN]` writes
+  the same plan with one zone per outline and scores it; compare split with split (r3 30 of 421, hand 58 of 422).
