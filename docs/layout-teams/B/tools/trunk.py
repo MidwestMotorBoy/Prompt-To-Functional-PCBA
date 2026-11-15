@@ -30,6 +30,7 @@ What it does:
   6. Writes the plan with a 'trunks' record (terminals, length, width profile, faults); --png draws the result.
 Options: --net=PACK_P --layer=B.Cu --source=Q102 --to=J113,R427 --w=3.0 --wmin=1.0 --wstep=0.25 --clr=0.25
          --g=0.1 --turn=15 --near=1.5 --margin=6 --esc=0.6 --near_sig=2 --under=0.3 --stitch=0 --stitch_layer=In2.Cu
+         --avoid=REF:mm,... (close the room within mm of the part's pads: its pin escapes)
          --pw=1.5 (a step costs (w / width that fits)^pw) --nearest (next terminal = the nearest, not the --to order)
          --png=<file>
 Exit 1 when a terminal could not be reached or a track has a clearance fault (the plan is still written)."""
@@ -118,6 +119,15 @@ def cxy(c): return (X0 + (c % NX) * G, Y0 + (c // NX) * G)
 WIN = box(X0, Y0, X0 + NX * G, Y0 + NY * G)
 blocked = raster(OBST.intersection(WIN.buffer(1))) | ~raster(BOARD.buffer(-0.25))
 if not SML.is_empty: blocked |= raster(SML.buffer(UNDER))
+# --avoid=U403:1.2,U503:1.2: the room within that many mm of a named part's pads (both outer layers) is closed: the
+# part's pin escapes (vias next to its pins) stay free. Without it a trunk under a QFN takes its escape vias (r4: the
+# 3 mm trunk under the Port 1 charger U403 cost 9 routed edges on the route server, p2a-t3).
+for av in [a for a in O.get("avoid", "").split(",") if a]:
+    ref, mm_ = av.split(":")
+    ag = [poly(r) for p in D["pads"] if p["ref"] == ref and p["net"] != NET for L in ("F.Cu", "B.Cu") for r in p["shapes"].get(L, [])]
+    if ag:
+        hull = unary_union(ag).convex_hull.buffer(float(mm_))
+        blocked |= raster(hull)        # closed before the distance transform: the trunk's width stays out too
 # distance (mm) from each cell centre to the nearest blocked cell, minus half a cell (raster error), minus clearance
 dist = distance_transform_edt(~blocked) * G - G * 0.75
 WFIT = np.clip(2 * (dist - CLR - TOL), 0, None)
