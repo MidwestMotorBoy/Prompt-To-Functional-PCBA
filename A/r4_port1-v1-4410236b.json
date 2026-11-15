@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r4_port1-v1.kicad_pcb",
+ "sha": "4410236b50223877928b15d880c8e4ca316364f9",
+ "routed": 355,
+ "failed": 14,
+ "edges": 369,
+ "minutes": 102.9,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /Cells and Gauge/CELL_P",
+  "FAILKEY /USB Port 1/HG1",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
