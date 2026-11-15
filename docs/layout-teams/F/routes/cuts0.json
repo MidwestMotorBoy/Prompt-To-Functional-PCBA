@@ -1,0 +1,2 @@
+{"cuts": [{"net": "/USB Port 1/VBUS", "layer": "F.Cu", "box": [102.9, 69.85, 105.0, 70.95]},
+          {"net": "/USB Port 2/VBUS", "layer": "F.Cu", "box": [83.3, 78.7, 85.5, 80.3]}]}
