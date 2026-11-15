@@ -1,0 +1,9 @@
+/USB Port 1/LODRV2 112.09,108.84 (Pad 21  of U403 ) -> 112.17,103.26 (Pad 1  of R447 ) starts 73 goals 134 seen 122 | no way even with every other route gone
+/USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 72 goals 126 seen 98 | no way even with every other route gone
+/USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 116 goals 47 seen 127294 | no way even with every other route gone
+/USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 970 goals 47 seen 64 | no way even with every other route gone
+/USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 72 seen 102385 | blocked by routes that have been pulled too often
+/USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 207 seen 19 | blocked by routes that have been pulled too often
+EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 173 goals 263 seen -12000001 | no way even with every other route gone
+/USB Port 1/PP5V 112.00,83.99 (Pad 1  of R433 ) -> 112.00,83.99 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 74 goals 0 seen 201 | no way even with every other route gone
+/USB Port 1/HG1 106.33,98.82 (Pad 1  of Q401 ) -> 111.19,102.19 (Pad 2  of R444 ) starts 30 goals 131 seen 231 | no way even with every other route gone

@@ -1,0 +1,58 @@
+{
+ "/USB Port 1/VBUS": {
+  "source": "J401",
+  "R_mohm": {
+   "U401": {
+    "A4+B9": 1.477,
+    "A9+B4": 5.708,
+    "all": 1.405,
+    "share": {
+     "A4+B9": 0.885,
+     "A9+B4": 0.115
+    },
+    "with_plug_rc10mohm": {
+     "R_total_mohm": 4.49,
+     "share": {
+      "A4+B9": 0.634,
+      "A9+B4": 0.366
+     }
+    },
+    "with_plug_rc30mohm": {
+     "R_total_mohm": 9.649,
+     "share": {
+      "A4+B9": 0.559,
+      "A9+B4": 0.441
+     }
+    }
+   }
+  }
+ },
+ "/USB Port 2/VBUS": {
+  "source": "J501",
+  "R_mohm": {
+   "U501": {
+    "A4+B9": 6.355,
+    "A9+B4": 1.863,
+    "all": 1.863,
+    "share": {
+     "A4+B9": 0.0,
+     "A9+B4": 1.0
+    },
+    "with_plug_rc10mohm": {
+     "R_total_mohm": 5.258,
+     "share": {
+      "A4+B9": 0.345,
+      "A9+B4": 0.655
+     }
+    },
+    "with_plug_rc30mohm": {
+     "R_total_mohm": 10.46,
+     "share": {
+      "A4+B9": 0.435,
+      "A9+B4": 0.565
+     }
+    }
+   }
+  }
+ }
+}

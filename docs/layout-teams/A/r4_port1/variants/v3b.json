@@ -1,0 +1,33 @@
+{
+"_why": "port-2 b1 cluster (pdfix a3 + ports b1) copied to port 1: +21.0 mm (U401 - U501); CHG_INT pull-up R404 straight in front of pin 18, SBU_FLT pull-up R441 staggered deeper beside it (SKILL 3.6)",
+"C408": [
+103.3,
+84.7,
+0
+],
+"U402": [
+105.4,
+86.5,
+90
+],
+"R402": [
+103.2,
+86.8,
+90
+],
+"R403": [
+102.3,
+86.8,
+90
+],
+"R404": [
+107.1,
+84.45,
+90
+],
+"R441": [
+108.1,
+85.5,
+90
+]
+}

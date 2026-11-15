@@ -1,0 +1,6 @@
+{
+ "_why": "expected findings: the charter's allowed opens (3V3 at L201 = J301 seen from the other side; J301/J302 test GND) and the PD chip's small VBUS_32 pin (IC supply, mA, finished by the router; dc_score lists it as pads_not_joined)",
+ "3V3": ["J301", "L201"],
+ "GND": ["J301", "J302"],
+ "VBUS": ["U401.32", "U501.32"]
+}
