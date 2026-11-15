@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r4_vbus-v2.kicad_pcb",
+ "sha": "47a59708fb92914ece895d7bbc0aa78515091170",
+ "routed": 351,
+ "failed": 18,
+ "edges": 369,
+ "minutes": 75.6,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /USB Port 1/PP5V",
+  "FAILKEY /P1_LDO_3V3",
+  "FAILKEY /Cells and Gauge/CELL_P",
+  "FAILKEY /USB Port 2/HG1"
+ ]
+}
