@@ -7,7 +7,8 @@ Plan (x right, y down):
   bottom-side PACK_P capacitor pads.
 - U403 stays at the hand position. West of it: sense filter (R425/R426, C416, C415/C414 with C414 on pins 29/30), then
   a stack C409, R409, R410, R411, R412 in pin order. North strip: only C410 and C411, on their pins. D410 sits in the
-  east end of box 1 (REGN/DRV_SUP both leave north anyway). R415/R416 (thermistor divider) in the column east of L402.
+  east end of box 1 (REGN/DRV_SUP both leave north anyway). The column east of L402 (x 104.5-105.85, y 104.9-110.1) is
+  kept empty as via land. R415/R416 (thermistor divider) sit in box 3 under J113; REGN, TS and GND reach them by via.
 - East: C417 on pins 13/14, C418 above, R419 on pins 11/12, then a second column R428, R429, C419; R418 under J113.
 """
 import sys; sys.path.insert(0, '../tools')
@@ -40,8 +41,9 @@ rm.put_court('R426', rot=0, left=106.87, top=105.05)
 rm.put_court('C416', rot=90, left=105.92, top=107.03)     # ACN_F east under R426, GND west
 rm.put('C414', 107.375, 109.03, 270)                     # ACN_F north on pin 29, ACP_F south on pin 30
 rm.put('C415', 106.355, 109.03, 180)                     # ACP_F south beside C414, GND north
-rm.put_court('R415', rot=90, left=104.55, top=104.9)    # REGN north, TS south
-rm.put_court('R416', rot=0,  left=104.55, top=106.9)    # TS north, GND south
+# (The thermistor divider R415/R416 used to stand here, x 104.55-105.58, y 104.9-108.85, squeezed between the PPHV
+#  power copper on its west and the sense filter on its east: TS had no via spot at all. It now sits in box 3 under
+#  J113, see below; this column is left free as via land: ACP_F runs down it, REGN / PPHV-tap vias go here.)
 rm.put_court('C409', rot=180, right=107.55, top=110.15)   # PPHV WEST (power copper lands from the west, clear of pins 34-36), thin link to pins 32/33 along y 110.05
 rm.put_court('R409', rot=180, right=107.3,  top=111.75)   # ACUV east (pin 34), PPHV west
 rm.put_court('R410', rot=0,   right=107.4,  top=112.8)  # ACOV east, ACUV west
@@ -49,14 +51,17 @@ rm.put_court('R411', rot=0,   right=107.39, top=113.85)   # ACOV east, GND west
 rm.put_court('R412', rot=0,   right=107.39, top=114.9)  # FSW east, GND west
 
 # ---------------- north strip ----------------
-rm.put('C410', 111.19, 106.4, 90)                        # REGN south on pin 24
-rm.put_court('C411', rot=90, left=111.71, bottom=107.35) # DRV_SUP west at pin 23, GND east
+rm.put('C410', 111.19, 106.4, 90)                        # REGN south on pin 24 (untested option: C410 x 111.34 and C411 left 111.86 give LODRV1 a straight run north)
+rm.put_court('C411', rot=90, left=111.71, top=104.65)    # DRV_SUP west above pin 23, GND east; 1.0 mm lane between its pads and pins 22-19 so LODRV2/BTST2/HIDRV2 can turn east/north
 
 # ---------------- south ----------------
-rm.put('R413', 112.91, 114.66, 0)
+# Slot x 111.6-112.6 between the CE_N pads and R413 is for TS (pin 8): track south, via at about (112.12, 114.55),
+# GND via of R413/R414 under it at (112.12, 115.35). West of R435/R417 (x 108.3-110.4) is via land for SCL, SDA, CHG_INT,
+# CHG_INH and 3V3.
+rm.put('R413', 112.91, 114.66, 0)                        # (cannot go lower: C301 of the sys room sits at y 115.57 under them)
 rm.put('R414', 113.93, 114.66, 0)
-rm.put_court('R435', rot=0, right=112.36, top=113.72)    # CE_N east under pin 7
-rm.put_court('R417', rot=0, right=112.36, top=114.55)
+rm.put_court('R435', rot=0, right=111.81, top=113.87)    # CE_N east, south-west of pin 7
+rm.put_court('R417', rot=0, right=111.81, top=114.70)
 
 # ---------------- east ----------------
 rm.put('C417', 115.55, 110.5, 0)                         # SRP_F north / SRN_F south on pins 14/13
@@ -66,6 +71,9 @@ rm.put('R428', 116.62, 108.33, 0)                        # BAT_SNS_P tap north, 
 rm.put('R429', 116.62, 110.33, 270)                      # PACK_P tap north, SRN_F south
 rm.put('C419', 117.72, 111.65, 0)                        # SRN_F north (beside R429 pad 2), GND south
 rm.put('R418', 116.62, 112.3, 180)                       # FB north beside R419 pad 1, PACK_P south
+# thermistor divider, in the free strip under J113 (below the PACK_P copper): all three nets arrive by via
+rm.put_court('R415', rot=270, left=118.9, top=111.3)     # TS north, REGN south
+rm.put_court('R416', rot=0,  left=119.93, top=111.3)     # TS north, GND south
 
 if '--pads' in sys.argv:
     for r in rm.parts:

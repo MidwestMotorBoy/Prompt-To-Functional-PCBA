@@ -24,13 +24,13 @@ pp('C405', 1, 103.2, 81.34, 0)                                 # LDO_1V5 pad lev
 
 # ---- pull-ups under pins 16, 17 and 19 (their pads are the via sites and keep power copper off the pins); pin 18
 #      (CHG_INT) gets the free slot between R403 and R441 for its via. Row 1.15 mm below the pins for the fan-out.
-for r, x in (('R402', 108.0), ('R403', 108.79), ('R441', 110.1)):
+for r, x in (('R402', 107.6), ('R403', 108.79), ('R441', 110.1)):   # 0.9 mm slots R402|R403 and R403|R441: signal pads on both sides keep the power copper out, a via fits in each
     rm.put_court(r, rot=0, left=x - 0.395, top=83.6)     # tight under the pins: with R424 pad 2 below, a wall no power strip can pass
 
 # ---- EEPROM south-west of the chip, signal pads east; free block x 105..107.3, y 83.8..86 for the vias of
 #      SDA / SCL / IRQ_N (pins 8..10); C408 under the GND pins 11..14
 rm.put_court('U402', rot=180, left=101.1, top=83.7)
-pp('C408', 1, 106.3, 84.3, 0)
+pp('C408', 1, 106.2, 84.3, 0)
 
 # ---- PPHV: pad 20 -> C449 -> strip down the east side of the chip -> shunt lying on the bottom edge, pad 1 (PPHV)
 #      west under the strip, pad 2 (AC_SNS_N) east, leaving straight south. West of pad 1 the strip y 86.2..87.7 is
@@ -40,6 +40,8 @@ rm.put_court('R424', rot=180, left=107.3, top=85.05)     # pad 2 (AC_SNS_N) west
 
 # ---- connector protection. U405 a quarter turn: connector-side CC pads at its NE corner under J401, system-side CC
 #      pads west (via field west of it), only GND / unused pads on the south side where the PP5V run passes
+# Run p1_top_x2 tried C452 right under J401 A12 / B4 as a fence with U405 at y 73.4: the planner then took VBUS round the
+# west and south of U405 as a ring and walled 9 of its pads. Do not repeat; this is the placement of run c again.
 rm.put('U405', 103.8, 72.62, 90)
 pp('C451', 1, 106.34, 72.9, 90)                                # VBIAS pad beside pad 3; closes the gap U405 - H104 to VBUS copper
 pp('C452', 1, 101.3, 70.5, 0)                                  # LDO_3V3 pad west of pad 10
@@ -55,7 +57,7 @@ rm.put_court('R453', rot=0, left=115.85, bottom=79.47)
 rm.put_court('R452', rot=0, left=117.85, bottom=79.47)
 rm.put_court('C458', rot=180, left=118.0, bottom=78.35)        # output pad just above R452's output pad
 rm.put_court('D411', rot=270, right=121.5, bottom=79.47)
-pp('R454', 1, 117.12, 86.28, 0)                                # straight below U406's EN pad, REGN pad south
+pp('R454', 1, 114.55, 81.215, 180)                             # above Q409's drain pad (same node as U406 EN), REGN pad north with a free via spot above it; the bottom strip under Q409 / U406 stays free for AC_SNS_N
 rm.done()
 if '--pads' in sys.argv:
     for r in sys.argv[sys.argv.index('--pads')+1:]:

@@ -100,7 +100,7 @@ def _astar(blk, viaok, vpen, start, goal, tx, ty, lcost, via_cost, bend):
 class ML(HR):
     def __init__(self, d, board, pro=None):
         super().__init__(d, board)
-        d = os.path.abspath(d); self.dir = d
+        d = os.path.abspath(d); self.dir = d; self.board = board
         D = json.load(open("%s/%s.json" % (d, board)))
         pro = pro or "%s/%s.kicad_pro" % (d, board)
         if not os.path.exists(pro): pro = d + "/cu.kicad_pro"
@@ -228,6 +228,38 @@ class ML(HR):
         self.vias = [v for v in self.vias if not (v[3] == net and B.contains(Point(v[0], v[1])))]
         self.tree = {LL: STRtree([i[0] for i in self.items[LL]]) for LL in SIG}; self._grids = {}
 
+    def via_free(self, net, x, y):
+        """True if a 0.45 / 0.3 via of this net is legal at this point by the real rules"""
+        c = int(round((x - self.x0) / G)); r = int(round((y - self.y0) / G)); me = self.nid(net); vr = 0.15 + 0.225 + TOL; k = self.cls(net)
+        for L in SIG:
+            v = self.grid(L, vr)[r, c]
+            if v != EMPTY and v != me: return False
+            if k in ("Default", "HighCurrent"):
+                v = self.grid(L, vr, "hc" if k == "Default" else "small")[r, c]
+                if v != EMPTY and v != me: return False
+        return self._viahole()[r, c] == EMPTY and not self.edge(0.225)[r, c]
+    def via_near(self, net, x, y, r=1.0, n=1, inside=None):
+        """nearest legal via spots to a point (optionally only inside a shapely shape): [(dist, x, y)]"""
+        out = []; k = int(r / G)
+        for i in range(-k, k + 1):
+            for j in range(-k, k + 1):
+                px, py = round(x + i * G, 3), round(y + j * G, 3); d = math.hypot(px - x, py - y)
+                if d <= r and (inside is None or inside.contains(Point(px, py))) and self.via_free(net, px, py): out.append((round(d, 3), px, py))
+        out.sort(); res = []
+        for o in out:
+            if all(math.hypot(o[1] - q[1], o[2] - q[2]) > 0.3 for q in res): res.append(o)
+            if len(res) >= n: break
+        return res
+    def pad(self, ref, num, n=0):
+        """pad centre and shape from the board dump: (x, y, polygon, net, layer)"""
+        if not hasattr(self, "_pads"):
+            D = json.load(open("%s/%s.json" % (self.dir, self.board))); self._pads = {}
+            for p in D["pads"]:
+                if not p["shapes"]: continue
+                L = "F.Cu" if "F.Cu" in p["shapes"] else list(p["shapes"])[0]
+                self._pads.setdefault((p["ref"], p["num"]), []).append((p["x"], p["y"], Polygon(p["shapes"][L][0]["ring"]).buffer(0), p["net"], L))
+        return self._pads[(ref, str(num))][n]
+
     # ---- search
     def _own(self, net, p, layers):
         """same-net copper under a point: {layer: [geoms]} (pads, vias, tracks, pours of the net that contain it)"""
@@ -237,7 +269,7 @@ class ML(HR):
                 g, n, kind, name = self.items[L][int(i)]
                 if n == net and kind != "pour" and g.distance(P) < 0.03: out.setdefault(L, []).append(g)
         return out
-    def route(self, net, a, b, w=0.2, layers=SIG, margin=4.0, via_cost=1.5, quiet=False, goal_geoms=None, box=None, end_via=False):
+    def route(self, net, a, b, w=0.2, layers=SIG, margin=4.0, via_cost=1.5, quiet=False, goal_geoms=None, box=None, end_via=False, start_geoms=None):
         """a, b = (x, y) on copper of the net (pad centre, via, track end). Returns the path [[layer, x, y], ...] or None."""
         layers = tuple(layers); half = w / 2
         xs = [a[0], b[0]]; ys = [a[1], b[1]]
@@ -280,7 +312,7 @@ class ML(HR):
                 if 0 <= cx < Ww and 0 <= cy < Hh: mm[cy, cx] = 1
                 m[li] = mm
             return m
-        A = self._own(net, a, layers); B = goal_geoms if goal_geoms is not None else self._own(net, b, layers)
+        A = start_geoms if start_geoms is not None else self._own(net, a, layers); B = goal_geoms if goal_geoms is not None else self._own(net, b, layers)
         if not A or not B:
             if not quiet: print("  route %s: no copper of the net at %s" % (net, a if not A else b))
             self.ok = False; return None
@@ -310,7 +342,7 @@ class ML(HR):
                 e = [L, round(pt[0], 3), round(pt[1], 3)]
                 if first and (pts[0][1], pts[0][2]) != (e[1], e[2]): pts.insert(0, e)
                 if not first and (pts[-1][1], pts[-1][2]) != (e[1], e[2]): pts.append(e)
-        snap(a, True)
+        if start_geoms is None: snap(a, True)
         if goal_geoms is None: snap(b, False)
         if end_via: pts.append([[L_ for L_ in SIG if L_ != pts[-1][0]][-1], pts[-1][1], pts[-1][2]]); pts.append(list(pts[-1]))
         self.J["routes"].append({"net": net, "w": w, "path": pts})

@@ -40,7 +40,8 @@ def build(name, dx, P2):
     # ---- output side
     rm.put(R('Q402'), 115.25 + dx, CY, 90)           # S2 row north, D1 row south, gates on the west end
     if not P2:
-        place('C438', 1, 'S', left=117.23, top=CY - 0.3 - 0.955)
+        place('C438', 1, 'S', left=117.23, top=CY - 0.93 - 0.955)   # GND pad on the S2 pin row (y 98.4-99.0): the return
+                                                                    #   via lands in the pad (stage_x1: 0.37 nH on Port 2 vs 0.51 here 0.63 mm lower)
         place('C431', 1, 'S', left=118.27, top=95.44)
         place('C434', 1, 'N', left=118.3, top=100.15)        # BAT pads of C431 and C434 face each other beside Q402's D1
         place('R427', 1, 'W', left=116.83, top=104.85)       # shunt on its side: PACK_P pad east, 1 mm above J113

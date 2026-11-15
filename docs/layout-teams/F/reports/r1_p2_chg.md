@@ -1,0 +1,3 @@
+Room p2_chg, round 1 (run p2_chg_b): only the 4 Kelvin taps blocked. U503 at (87.6, 111.1).
+Via spots: SCL 85.00,114.70 | SDA 85.70,115.35 | CHG_INT 86.35,114.75 | 3V3 87.10,116.20 | CHG_INH 87.90,116.20 | TS 88.15,117.10 | REGN south 84.00,117.10 | REGN 87.20,105.05 | GND 88.05,105.05 | DRV_SUP 88.90,105.05 | DRV9_OFF 81.25,113.30 | DRV_SUP D511 91.40,118.25, C511 91.25,107.35 | taps R526.1 83.05,105.80, R525.1 80.20,110.10, R528.1 93.10,108.75, R529.1 92.575,114.07 | PACK_P U506/C557 80.17,120.40
+No via at x 84.2-84.8, y 111.7-113.3 (bottom-side TH101 pads). C509 need not be a 5 A PPHV terminal.
