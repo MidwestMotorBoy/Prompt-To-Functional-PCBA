@@ -160,3 +160,78 @@ clearance fault (both printed). Files of a run: `split/spec.json` (plan with str
   dc_score does not see it (3V3 has only L201 as a terminal), KiCad's unconnected list does. Add 3V3 straps with
   `--straps="--net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V;--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"`
   (on r3: In3 3V3 stays one piece, 28 of 427 blocked, 391 of 427 routed). Run the hand board with the same option.
+
+## Phase 2: pin escapes and finishing pass
+
+Two hooks for `tools/final_route.sh`, plus the tools behind them. All geometry checks go through `tools/pinlib.py`
+(shapely, exact): other nets' pads, tracks, vias, pours, keep-outs, the antenna box and the board edge; copper 0.15 mm,
+HighCurrent to small signals 0.25 mm (pads excepted, as the DRC rule), edge 0.25 mm, zone clearance 0.2 mm, the
+router's via rules (0.6 mm same net, 0.75 mm other nets, 0.9 / 1.1 mm to through-hole pads), no via on an SMD pad of
+1.6 mm or less. New copper keeps 3 um more than each rule (KiCad measures its own polygons).
+
+**pins.py: a copper-plan filter** (`--filters="pins.py"`): lays the copper for connections no router can start, before
+routing. Rules, in order: `ep` (QFN GND / 3V3 pin stubbed into its own exposed pad), `gate` (a gate pad wrapped by its
+own stage's pour: the pour is cut back by clearance + track + clearance and a 0.3 mm gate track laid), `table`
+(explicit escapes, `plan/p2-pins.json`), `rail` (GND / 3V3 pads the planner left to the router: a via with a stub, on
+the planes for GND, never in another pin's escape lane when anything else fits). A pour is cut only where a rule or a
+table entry names its net, never a hot-loop pour, and a cut that would split a pour into more held pieces is refused.
+Every item is checked again at the end; on any fault nothing is written and the run stops (exit 1).
+```
+python3 tools/pins.py runs/r4chg-hot/spec.json runs/r4chg-hot/cu.json /tmp/spec_pins.json --png=/tmp/pins_png
+python3 tools/pins.py in.json cu.json out.json --rules=table --table=my.json --only=C304.2 --dry   # try one entry
+python3 tools/pinlib.py look <spec.json | board.kicad_pcb> <cu.json> out.png U405.5 --r=2.6 --w=0.15   # look at a pin
+bash tools/spec_ghost.sh <spec.json> runs/r4chg-hot <out dir> [--only=<net regex>] [--no-ghost]   # copper + DRC + ghost of a plan
+```
+Table format (`plan/p2-pins.json`, a list; refs and pads relative to the part, so the entries survive a nudge and
+serve both ports with `"ref": "U405|U505"`; any value may be per port with `"a|b"`):
+```
+{"ref": "U405|U505", "pad": "4", "dir": "N", "via": true, "w": 0.15, "max": 1.6,
+ "cut": ["/USB Port 1/VBUS|"], "keep": ["U405.3:N:0.6|"], "via_gap": "0.65|0.75", "why": "..."}
+{"ref": "U401", "pad": "27", "to": "C401.2", "w": 0.2, "max": 2, "cut": ["/USB Port 1/VBUS"], "why": "..."}
+```
+`dir` N/S/E/W/out: lead out of the pad (`lead` mm beyond its edge, default 0.15), then the shortest exact way to a
+free via spot within `max` mm (existing same-net vias count as goals). `to`: a whole one-layer connection pad to pad.
+`cut`: nets whose (non-hot) pours may be cut. `keep`: `REF.PAD:DIR:LEN` strips kept free for another pin's escape.
+`via_gap`: minimum distance to other nets' vias (default 0.75, the router's; 0.65 only where both pins are escaped
+here). Entry order matters: an earlier via can close a later pin (put the tight pin first, with a keep strip for its
+neighbour).
+
+**finish.sh: the finishing pass** (`--post="finish.sh"`): reads `<out>/routed.kicad_pcb` and `<out>/cu.kicad_pcb`,
+writes `<out>/finished.kicad_pcb` (work files in `<out>/fin/`, log `post.log`):
+1. KiCad DRC of the routed board;
+2. up to `--passes` (2) continuation routes with `tools/router_b.py --cont` while anything is open or a DRC error
+   is left: those nets lose their routed copper and are routed again with more pulls, time and search (`--rips=900
+   --riptime=1500 --maxrip=6 --phases=4 --capx=2`, `--min=30` minutes each), HighCurrent copper with `--hcx=0.16`
+   (the 0.25 mm rule holds on the grid's diagonal steps too), hot-loop pours closed to other nets (`--hotko`); a pass
+   is kept only if it leaves fewer open connections + DRC errors;
+3. `--hand=<json>`: hand-laid tracks and vias (`tools/handroute.py`);
+4. dangling ends removed (`tools/fin_clean.py`, only items the router laid), zones refilled, DRC again;
+5. power guard (`tools/fin_guard.py`): dc_score loss no more than the routed board's + `--tol` (0.001 W), no new power
+   open, no new track or via of another net in a hot-loop pour. The best candidate that passes is copied; if none
+   does, the routed board itself.
+The last line of `post.log`: `finish: finished (<candidate>) unconnected N {net: n} ; DRC errors M {type: n} ; loss ...`.
+```
+bash tools/final_route.sh runs/r4chg-hot runs/p2b-<name> --straps="$ST" --filters="pins.py" --post="finish.sh"
+cp -r runs/r4-final/. runs/p2b-<name>/ && bash tools/finish.sh runs/p2b-<name>            # an earlier routed run (copy it first)
+bash tools/finish.sh runs/p2b-<name> --no-route --hand=runs/p2b-<name>/hand.json          # hand tracks only
+```
+**handroute.py** lays the last connections by coordinates read off zoom pictures (`tools/zoom.py` or
+`pinlib.py look` on the routed board):
+```
+python3 tools/handroute.py in.kicad_pcb out.kicad_pcb hand.json [--cu=<cu.json of in>] [--check] [--no-drc]
+{"board": "runs/p2b-x/fin/r1.kicad_pcb",
+ "tracks": [{"net": "/USB Port 1/C_CC2", "layer": "F.Cu", "w": 0.15, "points": [[104.75, 69.17], [104.9, 69.9]]}],
+ "vias": [{"net": "/USB Port 1/C_CC2", "x": 105.85, "y": 70.9}]}
+```
+The check uses the board's filled copper (GND / PACK_P / 3V3 fills may be crossed: the refill carves round the new
+copper; hot-loop pours may not). Any fault: nothing is written, exit 1. Keep the json beside the run; `board` says which
+board the coordinates belong to (they are only valid on that board).
+
+**Traps.**
+- A via escape can close the next pin (U405.4's via closed VBIAS and SBU_FLT): the table order and `keep` strips fix it.
+- A pour cut on a power net costs loss: C304.2 cut west of the pad cost 5.8 mW of CELL_P, the same via north 0.9 mW.
+  Look at dc.json per net before and after (`runs/p2-base-screen/dc.json` is the plan without the filter).
+- Closing GND opens (J301 / J302 via the rail rule) adds their loss to the sum: the plan without the filter hides it.
+- `router_b.py` with no options is the shared router; finish.sh passes `--hcx=0.16 --hotko=<hot parts>` (r4-final had 3 HighCurrent-to-signal clearance errors at CELL_1N with the shared 0.1).
+- `fin_clean.py` removes only dangling items not in the plan; a dangling pins.py escape (its net failed) stays.
+- `final_route.sh --post` only runs with a full route (`--route` not 0).
