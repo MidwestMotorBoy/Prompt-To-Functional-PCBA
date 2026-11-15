@@ -1,0 +1,13 @@
+[finish] 21:15:05 1. DRC of the routed board and of the plan
+[finish] 21:15:11 routed: unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 21:15:11 3. hand tracks /home/claude/repo/docs/layout-teams/B/runs/p2b-full2h/hand.json on r0
+    handroute: 1 segments, 0 vias checked, 0 faults (coordinates for runs/p2b-full1/fin/r0.kicad_pcb (= runs/p2b-full1/routed.kicad_pcb); the track lies in plan copper (Port 2 BAT_SNS_P pour), so it is checked again on whatever board finish.sh hands it)
+[finish] 21:15:32 hand: unconnected 17 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 21:15:32 4. dangling ends of h
+    removed 2
+[finish] 21:15:51 cleaned: unconnected 17 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 21:15:51 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 21:16:24 c: guard ok: 1 new tracks, 0 new vias; loss 2.9033 -> 2.9033 W; power open 1 -> 1; hot-pour violations 0
+finish: routed unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; loss 2.9033 W, power open 1
+finish: finished (c) unconnected 17 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; loss 2.9033 W, power open 1

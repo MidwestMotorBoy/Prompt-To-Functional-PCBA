@@ -1,5 +1,5 @@
 {
- "about": "Pin escapes for tools/pins.py (team B, phase 2), relative to part and pad; 'A|B' applies an entry to both ports (and 'to' pairs in the same order). Entries run in this order, each checked exactly against everything laid before it. Written for placement r4 (best_placement.json).",
+ "about": "Pin escapes for tools/pins.py (team B, phase 2), relative to part and pad; 'A|B' applies an entry to both ports (and 'to' pairs in the same order). Entries run in this order, each checked exactly against everything laid before it. Written for placement r4 (best_placement.json). 'at': 'dx,dy' puts the via of a via escape at that offset (mm, board axes) from the pad centre instead of searching for a spot (phase 2 round 1, Port 1 corner of U405).",
  "escapes": [
   {
    "ref": "J501",
@@ -13,30 +13,60 @@
    "why": "Port 2 C_CC2: B5 is wrapped by the connector's own VBUS pour; the way south-east into the free lane west of U505 needs a small notch"
   },
   {
-   "ref": "U405|U505",
+   "ref": "U405",
+   "pad": "6",
+   "to": "U405.5",
+   "w": 0.15,
+   "max": 1.5,
+   "why": "Port 1 C_CC2: pins 5 and 6 joined round the corner (pin 5 has no way out of its own once the C_CC1 via sits over its tip)"
+  },
+  {
+   "ref": "U405",
    "pad": "4",
    "dir": "N",
    "via": true,
+   "at": "-0.4,-0.75",
    "w": 0.15,
    "max": 1.6,
    "cut": [
-    "/USB Port 1/VBUS|"
+    "/USB Port 1/VBUS"
    ],
-   "why": "C_CC1 pass-through: pins 4 and 7 are split by the C_CC2 pins 5/6 at the corner; a via north of pin 4 (Port 1: in a notch of the VBUS pour of B4/A9, the only room left beside the VBIAS via)",
-   "via_gap": "0.65|0.75",
-   "keep": [
-    "U405.3:N:0.6|"
-   ]
+   "why": "Port 1 C_CC1 pass-through: pin 4 is boxed by pins 3/5 and the exposed pad; out north and north-west to a via over the tip of pin 5 (pin 5 is joined to pin 6 at the corner instead), so that the strip north of pins 3/2 stays free for VBIAS and the C_CC2 escape of J401.B5",
+   "lead": 0.05
   },
   {
    "ref": "U405",
    "pad": "3",
    "dir": "N",
    "via": true,
+   "at": "-0.02,-0.75",
    "w": 0.15,
    "max": 1.0,
-   "via_gap": 0.65,
-   "why": "Port 1 VBIAS to C451 on the bottom: the spot north of pin 3 is taken by the CC vias, so out north and east under B5's via to a via north of pin 1 (unused pins 1, 2)"
+   "why": "Port 1 VBIAS to C451 on the bottom: a via straight north of pin 3, 0.75 mm east of the C_CC1 via of pin 4"
+  },
+  {
+   "ref": "J401",
+   "pad": "B5",
+   "dir": "S",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.55,1.025",
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 1/VBUS"
+   ],
+   "why": "Port 1 C_CC2 at the connector: B5 sits over the VBIAS via; out south-east, between the VBIAS via and the unused A8 pad, to a via north of the unused pins 1/2 of U405 (as the router did on r4-final); the router joins it to pins 5/6 on an inner layer"
+  },
+  {
+   "ref": "U505",
+   "pad": "4",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "why": "C_CC1 pass-through: pins 4 and 7 are split by the C_CC2 pins 5/6 at the corner; a via north of pin 4 (Port 1: in a notch of the VBUS pour of B4/A9, the only room left beside the VBIAS via)",
+   "via_gap": 0.75
   },
   {
    "ref": "U505",

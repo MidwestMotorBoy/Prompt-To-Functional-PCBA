@@ -360,7 +360,7 @@ def keep_strips(specs):
     return unary_union(out) if out else None
 
 
-def via_escape(p, L, net, w=0.2, R=1.6, d=None, lead=0.15, cut=(), avoid_lanes=True, tag="", via=True, goal_geom=None, keep=None):
+def via_escape(p, L, net, w=0.2, R=1.6, d=None, lead=0.15, cut=(), avoid_lanes=True, tag="", via=True, goal_geom=None, keep=None, at=None):
     """Lead out of the pad (direction d, or none), then the cheapest exact way to a free via spot (or into goal_geom)."""
     (ax_, ay_), hl, hw = axis(p, L)
     start = (p["x"], p["y"]); lead_pts = [start]
@@ -389,12 +389,14 @@ def via_escape(p, L, net, w=0.2, R=1.6, d=None, lead=0.15, cut=(), avoid_lanes=T
         if keep is not None:
             kb = keep.buffer(VIA_D / 2 + 0.1); cand = [c for c in cand if not kb.contains(Point(c))]
         cand.sort(key=lambda c: math.hypot(c[0] - start[0], c[1] - start[1]))
+        if at is not None:                                 # table 'at': the via spot itself, relative to the pad centre
+            cand = [(round(p["x"] + at[0], 4), round(p["y"] + at[1], 4))]
         for c in cand[:600]:
             if not check_via(net, c[0], c[1], cut) and (net != "GND" or inside_plane(c)):
                 goals.append(c)
         old = [(vx, vy) for vx, vy, vn in G.vias if vn == net and math.hypot(vx - start[0], vy - start[1]) <= R]
         goals += old
-        if not goals: return None, "no free via spot within %.1f mm" % R
+        if not goals: return None, ("via spot %s blocked: %s" % (cand, check_via(net, cand[0][0], cand[0][1], cut)[:2])) if at is not None else "no free via spot within %.1f mm" % R
         if av is not None:                                  # a via in front of another pin takes its escape: only if nothing else fits
             from shapely import contains_xy as _cxy
             inl = _cxy(av, np.array([g[0] for g in goals]), np.array([g[1] for g in goals]))
@@ -562,8 +564,10 @@ def rule_table():
                     res, why = via_escape(p, L, net, w=w, R=e.get("max", 4.0), d=d, lead=e.get("lead", 0.15), cut=cut,
                                           avoid_lanes=False, via=False, goal_geom=shp(q, L).buffer(-0.04), tag="table " + nm)
                 else:
-                    res, why = via_escape(p, L, net, w=w, R=e.get("max", 1.6), d=d, lead=e.get("lead", 0.15), cut=cut,
-                                          avoid_lanes=e.get("avoid_lanes", True), tag="table " + nm, keep=keep_strips([c.split("|")[k_] if "|" in c else c for c in e.get("keep", []) if (c.split("|")[k_] if "|" in c else c)]))
+                    at_ = str(e.get("at", "")); at_ = at_.split("|")[k_] if "|" in at_ else at_
+                    at_ = tuple(float(v) for v in at_.split(",")) if at_ else None
+                    res, why = via_escape(p, L, net, w=w, R=e.get("max", 1.6), d=d, lead=e.get("lead", 0.15), cut=cut, at=at_,
+                                          avoid_lanes=e.get("avoid_lanes", True) and at_ is None, tag="table " + nm, keep=keep_strips([c.split("|")[k_] if "|" in c else c for c in e.get("keep", []) if (c.split("|")[k_] if "|" in c else c)]))
                 if res: break
             if res is None:
                 say("table %s %s: FAILED (%s)" % (nm, net, why)); continue

@@ -1,0 +1,25 @@
+[finish] 19:44:22 1. DRC of the routed board and of the plan
+[finish] 19:44:29 routed: unconnected 18 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3}
+[finish] 19:44:29 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.521,128.530 (pad U101.10)
+      /Cells and Gauge/CELL_1N F.Cu start 100.100,128.800 -> 100.089,129.070 (pad U101.9)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      /Cells and Gauge/CELL_1N F.Cu start 102.900,128.800 -> 102.911,129.070 (pad U101.16)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.670,128.312 (pad U101.17)
+    trimmed 6 stub ends (3 errors looked at)
+[finish] 19:44:49 trimmed: unconnected 18 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 19:44:50 2. continuation pass 1 (keepre) from t0 (25 min; rips 900, riptime 900, maxrip 6, phases 4, capx 2, hcx 0.16)
+[finish] 20:09:50 pass 1 timed out after 25 min (no board written)
+[finish] 20:09:50 pass 1 wrote no board (exit 124)
+[finish] 20:09:50 3. hand tracks /home/claude/repo/docs/layout-teams/B/runs/p2r1_full1fin/hand.json on t0
+    handroute: 1 segments, 0 vias checked, 0 faults (coordinates for runs/p2b-full1/fin/r0.kicad_pcb (= runs/p2b-full1/routed.kicad_pcb); the track lies in plan copper (Port 2 BAT_SNS_P pour), so it is checked again on whatever board finish.sh hands it)
+[finish] 20:10:20 hand: unconnected 17 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 20:10:20 4. dangling ends of h
+    removed 5
+[finish] 20:10:46 cleaned: unconnected 17 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 20:10:46 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 20:11:23 c: guard ok: 7 new tracks, 0 new vias; loss 2.2414 -> 2.2414 W; power open 1 -> 1; hot-pour violations 0
+finish: routed unconnected 18 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3} ; loss 2.2414 W, power open 1
+finish: finished (c) unconnected 17 {'EN_5V2': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC2': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; loss 2.2414 W, power open 1

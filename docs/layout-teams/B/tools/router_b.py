@@ -3,6 +3,7 @@
    --viacost=MM  via cost in mm of track (shared 4.0)    --offdir=F  off-direction step factor on In2/In3 (shared 2.5)
    --keepre      (continuation) nets with open connections keep their copper and only the open connections are routed;
                  nets with DRC errors and no open connection are still lifted and routed afresh
+   --deadline=S  seconds after the start: no more pulls and no new phase past it (the board is still written)
    --hotko       hot-loop pours (soft GND pours of a hot loop's caps / switch parts) are closed to other nets' tracks and vias
    ghost screen: --gdebug prints starts / goals / boxed / nodes of a failed edge; --dump works with --ghostonly
 A* signal router for the ground-up Monolith layout (adapted from hardware/DevBoard/tools/route_signals6.py).
@@ -18,6 +19,8 @@ import pcbnew
 from PIL import Image, ImageDraw
 
 import json
+import time as _tm
+_T_START = _tm.time()                     # team B: wall clock at start (--deadline)
 PCB, RPT, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 OPT = dict(a[2:].split("=", 1) if "=" in a else (a[2:], "1") for a in sys.argv[4:] if a.startswith("--"))
 MAX_EDGES = int(OPT.get("max", 10 ** 6))
@@ -1506,6 +1509,10 @@ if "ghostonly" in OPT:      # w3: placement check only: which edges have no path
                                 nets=np.array([[str(k), v.GetNetCode()] for k, v in board.GetNetsByName().items()]))
     sys.exit(0)
 NPH = int(OPT.get("phases", 3))
+DEADLINE = float(OPT.get("deadline", 0))      # team B: seconds after start; past it no more rip-up and no new phase,
+# the queue is finished without pulls and the board is written
+def over_time(): return DEADLINE > 0 and time.time() - _T_START > DEADLINE
+_said = [False]
 while True:
     while queue:
         eid = queue.popleft()
@@ -1520,7 +1527,9 @@ while True:
         if route_edge(eid):
             FAILINFO.pop(eid, None)
             continue
-        if not FIX or RIP_BUDGET[0] <= 0 or t_rip > RIPTIME or "norip" in OPT:
+        if over_time() and not _said[0]:
+            _said[0] = True; print("deadline: %.0f s reached, no more pulls" % DEADLINE, flush=True)
+        if not FIX or RIP_BUDGET[0] <= 0 or t_rip > RIPTIME or "norip" in OPT or over_time():
             continue
         t0 = time.time()
         n_e = board.FindNet(edges[eid][2]).GetNetCode()
@@ -1565,7 +1574,7 @@ while True:
             if "debug" in OPT:
                 print("  rip", edges[eid][2], "pulled", [PSEUDO.get(b) or edges[b][2] for b in bl], "->", ok, flush=True)
         t_rip += time.time() - t0
-    if PHASE[0] >= NPH or not FAILINFO or not FIX0:
+    if PHASE[0] >= NPH or not FAILINFO or not FIX0 or over_time():
         break
     # next phase: every route laid for good is free to be pulled again, the open connections are tried once more
     PHASE[0] += 1

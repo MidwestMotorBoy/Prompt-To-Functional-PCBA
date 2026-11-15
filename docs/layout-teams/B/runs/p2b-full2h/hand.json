@@ -1,0 +1,4 @@
+{"board": "runs/p2b-full1/fin/r0.kicad_pcb (= runs/p2b-full1/routed.kicad_pcb); the track lies in plan copper (Port 2 BAT_SNS_P pour), so it is checked again on whatever board finish.sh hands it",
+ "why": "Port 2 BAT_SNS_P: the planned pour leaves R528.1 (Kelvin tap of shunt R527) on a 0.29 mm2 island of its own (also in runs/p2-base-screen); a 0.2 mm track joins it to the main BAT_SNS_P pour north-east of the pad",
+ "tracks": [{"net": "/USB Port 2/BAT_SNS_P", "layer": "F.Cu", "w": 0.2, "points": [[95.3, 104.75], [95.9, 104.15]]}],
+ "vias": []}

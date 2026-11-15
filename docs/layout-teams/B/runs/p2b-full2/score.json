@@ -1,0 +1,8 @@
+{
+ "loss_W": 1.132,
+ "power_open": {},
+ "drc_errors": 0,
+ "unrouted_signal_items": 362,
+ "blocked_edges": "0 of 367",
+ "route": "362 of 367 routed, 5 failed"
+}

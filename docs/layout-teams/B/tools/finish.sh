@@ -12,11 +12,15 @@
 #      the 0.25 mm rule on the grid's diagonal steps too); hot-loop pours are closed to other nets (--hotko with the
 #      hot loops' parts). A pass is kept only if it leaves fewer open connections + DRC errors; the next starts from
 #      the best board so far.
+#   1b/2b. Stub trim (tools/fin_trim.py): stub ends of neighbouring pins named in a clearance error are moved to the
+#      pad edge (CELL_1N against TS1 / BTP_INT / SMBD at U101), before the continuation and after each pass.
 #   3. --hand=<json>: tools/handroute.py lays explicit tracks / vias (exact clearance check first).
 #   4. Dangling ends the router left are removed (tools/fin_clean.py), zones refilled, DRC again.
 #   5. Power guard (tools/fin_guard.py): dc_score loss and power opens no worse than the routed board's (+ --tol W),
 #      no new track or via of another net in a hot-loop pour. The best candidate that passes becomes finished.kicad_pcb
 #      (the routed board itself when none does).
+#      Each pass gets --deadline=<min*60-300> s: past it the router stops pulling and starting phases and writes its
+#      board, so the outer timeout (--min) does not kill a pass that has a better board (r1 of runs/p2r1_full1fin did).
 #   Last two lines: 'finish: routed unconnected N {net: n} ; DRC errors M {type: n} ; loss ..., power open ...' and the
 #   same for the finished board ('finish: finished (<candidate>) ...').
 set -o pipefail
@@ -32,9 +36,16 @@ F=$OUT/fin; rm -rf $F; mkdir -p $F; cd $F
 log() { echo "[finish] $(date +%T) $*"; }
 K="docker run --rm -u 0 -v $F:/w -w /w kicad/kicad:10.0"
 cp $OUT/routed.kicad_pcb r0.kicad_pcb; cp $OUT/cu.kicad_pcb keep.kicad_pcb
-cp $R/tools/copper/cu_dump.py $TOOLS/fin_clean.py $TOOLS/router_b.py .; cp -r $S/pylib pylib
+cp $R/tools/copper/cu_dump.py $TOOLS/fin_clean.py $TOOLS/fin_trim.py $TOOLS/router_b.py .; cp -r $S/pylib pylib
 pro() { for e in kicad_pro kicad_dru; do cp $S/template/board.$e $1.$e; done; }
 drc() { pro $1; $K sh -c "kicad-cli pcb drc --severity-all --format json -o $1.drc.json $1.kicad_pcb >/dev/null 2>&1"; }
+nerr() { python3 -c "import json; print(sum(v['severity'] == 'error' for v in json.load(open('$1.drc.json'))['violations']))"; }
+# trim <board> <out>: stub ends of neighbouring pins in clearance errors moved to the pad edge (tools/fin_trim.py)
+trim() { [ "$(nerr $1)" = 0 ] && return 1
+  log "stub ends in the clearance errors of $1 (fin_trim.py)"
+  $K sh -c "python3 fin_trim.py $1.kicad_pcb $1.drc.json $2.kicad_pcb 2>&1 | grep -v -e swig -e Debug:" | sed 's/^/    /'
+  [ -f $2.kicad_pcb ] || return 1; drc $2; log "trimmed: $(summ $2)"
+  [ "$(score $2)" -lt "$(score $1)" ] || { log "trim not better, dropped"; return 1; }; }
 score() { python3 - $1.drc.json <<'P'
 import json, sys; d = json.load(open(sys.argv[1]))
 print(len(d.get("unconnected_items", [])) + sum(v["severity"] == "error" for v in d["violations"]))
@@ -54,18 +65,21 @@ print(','.join(sorted({r for v in h.values() for r in v['caps']} | {s.split('.')
 log "1. DRC of the routed board and of the plan"
 drc r0; drc keep; log "routed: $(summ r0)"
 BEST=r0; CANDS="r0"
+# 1b. stub trim first, so that the continuation does not lift (and maybe lose) a net only for a stub clearance error
+trim r0 t0 && { BEST=t0; CANDS="t0 $CANDS"; }
 # 2. continuation passes
 p=0
 for MODE in ${MODES//,/ }; do
   [ $ROUTE = 1 ] && [ "$(score $BEST)" != 0 ] || break
   p=$((p+1)); N=r$p; KR=""; [ $MODE = keepre ] && KR="--keepre"
   log "2. continuation pass $p ($MODE) from $BEST (${MIN} min; rips $RIPS, riptime $RIPTIME, maxrip $MAXRIP, phases $PHASES, capx $CAPX, hcx $HCX)"
-  $K sh -c "PYTHONPATH=/w/pylib timeout ${MIN}m python3 -u router_b.py $BEST.kicad_pcb $BEST.drc.json $N.kicad_pcb --cont --keep=keep.kicad_pcb --orig=keep.drc.json --softnets=GND,PACK_P,3V3 --hcx=$HCX --viacost=$VIAC --hotko=$HOT --rips=$RIPS --riptime=$RIPTIME --maxrip=$MAXRIP --phases=$PHASES --capx=$CAPX $KR" > $N.log 2>&1
+  $K sh -c "PYTHONPATH=/w/pylib timeout ${MIN}m python3 -u router_b.py $BEST.kicad_pcb $BEST.drc.json $N.kicad_pcb --cont --keep=keep.kicad_pcb --orig=keep.drc.json --softnets=GND,PACK_P,3V3 --hcx=$HCX --viacost=$VIAC --hotko=$HOT --deadline=$((MIN*60-300)) --rips=$RIPS --riptime=$RIPTIME --maxrip=$MAXRIP --phases=$PHASES --capx=$CAPX $KR" > $N.log 2>&1
   rc=$?; [ $rc = 124 ] && log "pass $p timed out after $MIN min (no board written)"
   [ -f $N.kicad_pcb ] || { log "pass $p wrote no board (exit $rc)"; break; }
   grep -E "^ *(routed |continuation|unconnected after fill)" $N.log | sed 's/^/    /'
   drc $N; log "pass $p: $(summ $N)"
   if [ "$(score $N)" -lt "$(score $BEST)" ]; then BEST=$N; CANDS="$N $CANDS"; else log "pass $p not better, dropped"; fi
+  trim $BEST t$p && { BEST=t$p; CANDS="t$p $CANDS"; }
 done
 # 3. hand-laid tracks
 if [ -n "$HAND" ]; then

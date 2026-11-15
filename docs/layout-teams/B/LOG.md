@@ -1231,3 +1231,70 @@ Files: `tools/netclusters.py` (new), `tools/trunk.py` (`~` in `--net`), `tools/R
 routed/dc.json, routed/hot_gate.json, routed/hot.json, split/*.log, routed_*.png), `runs/p2r1_w5n20s/` (final.json,
 score.json, dc.json, ghost.log, split/*.log, split/trunk_w5n20.png), `runs/p2r1_qw3n20hv/hot_vias.png`,
 `runs/p2r1_look/*.png`. Boards and route.log stay local (`runs/p2r1_w3n20/routed.kicad_pcb`).
+
+## 2026-11-15 21:20 UTC, worker B (phase 2 round 1, resumed): pin escapes and finishing pass
+
+Continued from the paused worker (tools `pins.py`, `pinlib.py`, `finish.sh`, `router_b.py`, `handroute.py`,
+`fin_clean.py`, `fin_guard.py` were already there; its run `runs/p2b-full1` had ghost 1 of 367, route 361 of 367).
+
+**Pins before routing (`--filters="pins.py"`, table `plan/p2-pins.json`).** Per blocked edge of the baseline
+(`runs/p2-base-screen`, 15 of 420): C_CC1 U405 4-7 and J401.A5-U405.4: table vias (pin 4 north-west, pin 7 west,
+A5 south); C_CC1 U505 7-4 and U505.4-J501.A5: same for Port 2; C_CC2 U505.5-J501.B5: table `to` J501.B5 -> U505.6
+(VBUS notch); DRV9_OFF Q509.1-U501.37 and 3V3 U501.38: table vias in PP5V notches; GND U401.31/36, U501.31/36: `ep`
+rule (stub into the exposed pad); GND U401.26/27: table `to` C401.2; GND C304.2: table via north (CELL_P notch);
+HG2 R446.2-Q402.1, R546.2-Q502.1: `gate` rule (BAT_SNS_P cut back 0.421 mm2 per port). New this session: the paused
+table closed Port 1 C_CC2 (U405.5-J401.B5: the pin 4 via sat under B4/B5 and VBIAS's via under B5). Cure: new table
+key `at` (via spot relative to the pad), pin 4 via at -0.4,-0.75 (over the tip of pin 5), VBIAS via at -0.02,-0.75,
+J401.B5 via at 0.55,1.025 (south-east, between the VBIAS via and the unused A8 pad), pins 5 and 6 joined round the
+corner. Picture: `runs/p2r1_pins/look/u405_corner.png`, on the routed board `runs/p2b-full2/look/fin_u405_F.png`.
+The U405 nudge of the paused worker (`candidates/r5_pins.json`, 2 of 367) is no longer needed.
+- Ghost screen `runs/p2b-pins2`: **0 of 366 blocked** (baseline 15 of 420), copper-board DRC 0, loss before routing
+  1.131 W (base 1.124 W: GND +2.9 mW because J301/J302 GND are no longer open and now count, CELL_P +0.9 mW from the
+  C304 notch, BAT_SNS_P +0.7 mW per port from the gate cut (R 0.300 -> 0.329 mohm Port 1, 0.35 Port 2), VBUS P1
+  +1.5 mW, PP5V P2 +0.8 mW), power open none.
+
+**Finishing pass (`--post="finish.sh --min=25"`).** New: `tools/fin_trim.py` (stub trim, also run before the
+continuation): the 3 'HighCurrent copper to small signals' errors at U101 are fan-out stubs of 0.4 mm pitch pins
+starting at the pad centres (0.225 mm apart); moving each stub end to its pad edge cures them: DRC 3 -> 0 on
+`runs/p2r1_full1fin` (board of p2b-full1), `runs/p2b-r4final2` (copy of r4-final) and `runs/p2b-full2`.
+`router_b.py --deadline` (finish.sh passes min*60-300 s): the continuation of `runs/p2r1_full1fin` hit the 25 min
+timeout and wrote no board (exit 124); with the deadline it writes one.
+
+**Full route `runs/p2b-full2`** (r4, ST straps, `--filters="pins.py" --post="finish.sh --min=25"`, hot loops on):
+blocked 0 of 367, routed 362 of 367 (5 failed: U102-V4, EN_5V1 x2, EN_5V2, Port 1 CC2), not timed out (27 min).
+Routed board: 18 unconnected, DRC 3 (U101 stubs). Finishing pass: trim -> DRC 0; continuation (keepre, deadline
+20 min) routed U102-V4, AC_SNS_N, CELL_P, Port 1 CC2 and two 3V3 items but lost SDA/SCL x4, Port 1 CC1 x2, I2CC_SDA,
+CHG_INT, REGN (pulled before the deadline, not re-laid after it): 22 + 2 DRC, dropped by the pass rule. Finished
+board: **unconnected 18, DRC errors 0**; loss 2.903 W (routed 2.903 W, pre-route 1.132), power open 3V3 L201 (as
+routed); hot loops on the finished board **7 of 7 tier 1, 5.56 nH** (pre 5.54). With `hand.json` (Port 2 BAT_SNS_P
+island at R528.1, one 0.2 mm F.Cu track; coordinates are plan copper, valid for r4 plans):
+`runs/p2b-full2h`: **17 unconnected, DRC 0**, loss and power open unchanged, guard ok.
+
+**Existing r4-final board** (`runs/p2b-r4final2`, `finish.sh --no-route --hand`): unconnected 37 -> 36, DRC 3 -> 0,
+loss 2.854 W unchanged, power open 1 -> 1. Its pin-blocked edges (GND QFN pins, HG2, C_CC, DRV9_OFF) need the pins
+filter before routing; the paused worker's keepre continuation on the same board (`runs/p2b-r4final`) went 37 -> 36.
+
+**Left on `runs/p2b-full2h/finished.kicad_pcb` (17), by name and why** (pictures `runs/p2b-full2/look/*.png`):
+- Plan copper, router never routes zone-zone: Port 1 VBUS (J401.B4 piece 104.0,69.7) and Port 2 VBUS (95.9,69.9):
+  the second VBUS pin pair of each receptacle; the room under B4 holds the C_CC1 via of U405.4/U505.4 (needs a lead
+  decision: a VBUS via + inner link competes with the CC escapes). PACK_P In2 island (83.45,63.31); 3V3 F.Cu pour
+  piece vs In3 (116.3,116.9): 3V3/PACK_P copper of worker A.
+- 3V3 x4 (In3 strap ends 85.97,121.87 / 90.14,113.83 not met by a via at their F.Cu stubs; U301.6-7; R314.1):
+  router/strap ends, the continuation closed two of five here.
+- EN_5V1 U404.2-R432.1 and U301.12-U404.2 (`look/U404_2.png`, `R432_1.png`): both pads sit inside the HL_5V hot PACK_P
+  F.Cu pour (not cuttable); a pins.py `to` through it fails ("no way"). Needs a lead decision (R432 nudge <= 0.5 mm
+  out of the pour, or a gap in the HL_5V pour that is allowed).
+- EN_5V2 U504.2-R532.1: congestion; a pins.py entry `{"ref": "U504", "pad": "2", "to": "R532.1", "w": 0.15,
+  "max": 4}` lays it under the U504 body between the pin rows (3.07 mm, exact check clean, `runs/p2r1_pins/png_en/`),
+  NOT yet in the table or screened.
+- U102-V4, Port 1 CC2, AC_SNS_N, CELL_P C110.1, LDO_3V3 R503-R504, Net-(C313-Pad2): congestion; the continuation
+  routes the first four when it has time.
+
+**Recommended strings:** `--filters="pins.py"` (after worker A's filters) and `--post="finish.sh --min=25"`
+(`--hand=<run>/hand.json` for the BAT_SNS_P island unless worker A's links.py is in the filters). Next: give the
+continuation 45 min with `--riptime=400 --phases=3`, or restore pulled routes at the deadline.
+Commit and push of this session's files were refused by the session's permission check (see final message).
+
+Files: `tools/pins.py` (`at`), `tools/fin_trim.py` (new), `tools/finish.sh` (trim, deadline), `tools/router_b.py`
+(`--deadline`), `tools/README.md`, `plan/p2-pins.json`; runs `p2b-pins2`, `p2b-full2`, `p2b-full2h`, `p2r1_full1fin`,
+`p2b-r4final2`, `p2r1_pins`, `p2r1_trim` (boards local).

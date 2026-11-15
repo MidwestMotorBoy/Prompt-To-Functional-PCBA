@@ -1,0 +1,22 @@
+[finish] 20:11:59 1. DRC of the routed board and of the plan
+[finish] 20:12:09 routed: unconnected 37 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/BAT_SNS_P': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 3 {'clearance': 3}
+[finish] 20:12:09 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      /Cells and Gauge/CELL_1N F.Cu start 102.900,128.800 -> 102.911,129.070 (pad U101.16)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.670,128.312 (pad U101.17)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.479,128.530 (pad U101.10)
+      /Cells and Gauge/CELL_1N F.Cu start 100.100,128.800 -> 100.089,129.070 (pad U101.9)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+    trimmed 6 stub ends (3 errors looked at)
+[finish] 20:12:31 trimmed: unconnected 37 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/BAT_SNS_P': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 0 {}
+[finish] 20:12:31 3. hand tracks /home/claude/repo/docs/layout-teams/B/runs/p2b-r4final2/hand.json on t0
+    handroute: 1 segments, 0 vias checked, 0 faults (coordinates for runs/p2b-r4final/routed.kicad_pcb (copy of runs/r4-final/routed.kicad_pcb); the track lies in plan copper (Port 2 BAT_SNS_P pour), so it is checked again on whatever board finish.sh hands it)
+[finish] 20:12:58 hand: unconnected 36 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 0 {}
+[finish] 20:12:58 4. dangling ends of h
+    removed 3
+[finish] 20:13:25 cleaned: unconnected 36 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 0 {}
+[finish] 20:13:25 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 20:14:06 c: guard ok: 7 new tracks, 0 new vias; loss 2.8536 -> 2.8536 W; power open 1 -> 1; hot-pour violations 0
+finish: routed unconnected 37 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/BAT_SNS_P': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 3 {'clearance': 3} ; loss 2.8536 W, power open 1
+finish: finished (c) unconnected 36 {'GND': 8, '/USB Port 1/I2CC_SCL': 1, '/USB Port 2/SS_5V': 1, '3V3': 7, 'Net-(U504-FB)': 2, '/USB Port 2/HG2': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/C_CC1': 2, '/USB Port 1/CC2': 1, '/Cells and Gauge/CELL_1N': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, '/USB Port 2/I2CC_SDA': 1, '/USB Port 2/DRV9_OFF': 1, '/USB Port 1/HG2': 1, 'EN_5V1': 2, '/USB Port 2/C_CC1': 2, '/USB Port 2/C_CC2': 1} ; DRC errors 0 {} ; loss 2.8536 W, power open 1

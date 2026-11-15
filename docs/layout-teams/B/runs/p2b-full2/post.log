@@ -1,0 +1,25 @@
+[finish] 20:51:15 1. DRC of the routed board and of the plan
+[finish] 20:51:21 routed: unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3}
+[finish] 20:51:21 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      /Cells and Gauge/CELL_1N F.Cu start 102.900,128.800 -> 102.911,129.070 (pad U101.16)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+      /Cells and Gauge/CELL_1N F.Cu start 100.100,128.800 -> 100.089,129.070 (pad U101.9)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.521,128.530 (pad U101.10)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.670,128.312 (pad U101.17)
+    trimmed 6 stub ends (3 errors looked at)
+[finish] 20:51:41 trimmed: unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 20:51:42 2. continuation pass 1 (keepre) from t0 (25 min; rips 900, riptime 900, maxrip 6, phases 4, capx 2, hcx 0.16)
+    continuation: 11 nets routed afresh (0 items lifted), 148 nets keep their copper but may be pulled
+    unconnected after fill: 22
+    routed 238 edges, 12 failed, items added 2047
+[finish] 21:12:29 pass 1: unconnected 22 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '/USB Port 2/REGN': 1, '3V3': 3, '/USB Port 2/VBUS': 1, '/USB Port 1/CC1': 2, '/Cells and Gauge/CELL_1N': 1, 'SCL': 2, 'SDA': 2, '/USB Port 1/VBUS': 1, '/USB Port 1/I2CC_SDA': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 2 {'clearance': 2}
+[finish] 21:12:29 pass 1 not better, dropped
+[finish] 21:12:29 4. dangling ends of t0
+    removed 5
+[finish] 21:12:48 cleaned: unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+[finish] 21:12:48 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 21:13:19 c: guard ok: 6 new tracks, 0 new vias; loss 2.9033 -> 2.9033 W; power open 1 -> 1; hot-pour violations 0
+finish: routed unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3} ; loss 2.9033 W, power open 1
+finish: finished (c) unconnected 18 {'EN_5V2': 1, 'PACK_P': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/BAT_SNS_P': 1, '3V3': 5, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U102-V4)': 1, '/USB Port 1/VBUS': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; loss 2.9033 W, power open 1

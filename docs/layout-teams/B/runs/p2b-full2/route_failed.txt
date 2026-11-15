@@ -1,0 +1,8 @@
+edges to route: 367 (0 on long nets)
+unconnected after fill: 18
+routed 362 edges, 5 failed, items added 2842
+FAILED Net-(U102-V4) 93.65,129.75 (Pad 2  of U102 ) -> 93.80,127.62 (Pad 1  of C112 ) starts 68 goals 169 seen 91 | no way even with every other route gone
+FAILED EN_5V1 116.51,68.65 (Pad 2  of U404 ) -> 114.37,68.20 (Pad 1  of R432 ) starts 56 goals 62 seen 101 | blocked by routes that have been pulled too often
+FAILED EN_5V2 84.15,66.46 (Pad 2  of U504 ) -> 84.60,69.03 (Pad 1  of R532 ) starts 78 goals 238 seen 231 | blocked by routes that have been pulled too often
+FAILED /USB Port 1/CC2 106.70,77.28 (Pad 1  of C402 ) -> 103.75,73.75 (Pad 11  of U405 ) starts 185 goals 66 seen 313 | no way even with every other route gone
+FAILED EN_5V1 111.57,122.08 (Pad 12  of U301 ) -> 116.51,68.65 (Pad 2  of U404 ) starts 263 goals 56 seen 101 | no way even with every other route gone
