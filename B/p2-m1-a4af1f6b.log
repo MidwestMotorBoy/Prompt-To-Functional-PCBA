@@ -1,0 +1,36 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 368 (0 on long nets)
+fan-out stubs: 134
+phase 1: 20 open connections tried again with every route free to move
+phase 2: 14 open connections tried again with every route free to move
+phase 3: 14 open connections tried again with every route free to move
+routes pulled and re-laid: 732
+fan-out stubs unused (removed) 56, trimmed 18
+unconnected after fill: 26
+routed 355 edges, 13 failed, items added 4907
+  FAILED /USB Port 1/CE_N 113.55,111.93 (Pad 1  of R417 ) -> 112.15,110.40 (Pad 7  of U403 ) starts 51 goals 129 seen 354 | pulled 2
+  FAILED Net-(U403-FBG) 114.30,109.75 (Pad 11  of U403 ) -> 115.04,111.70 (Pad 2  of R419 ) starts 81 goals 123 seen 247 | blocked by routes that have been pulled too often
+  FAILED Net-(U102-V4) 93.65,129.75 (Pad 2  of U102 ) -> 93.80,127.62 (Pad 1  of C112 ) starts 68 goals 149 seen 91 | no way even with every other route gone
+  FAILED EN_5V1 116.51,68.65 (Pad 2  of U404 ) -> 114.37,68.20 (Pad 1  of R432 ) starts 56 goals 62 seen 97 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST2 115.00,104.36 (Pad 1  of C413 ) -> 113.15,105.60 (Pad 20  of U403 ) starts 161 goals 72 seen 41082 | no way even with every other route gone
+  FAILED EN_5V2 84.15,66.46 (Pad 2  of U504 ) -> 84.60,69.03 (Pad 1  of R532 ) starts 78 goals 169 seen 231 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CC2 106.70,77.28 (Pad 1  of C402 ) -> 103.75,73.75 (Pad 11  of U405 ) starts 185 goals 66 seen 313 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 109.64,112.05 (Pad 1  of R415 ) -> 111.15,105.60 (Pad 24  of U403 ) starts 126 goals 128 seen 2660 | blocked by routes that have been pulled too often
+  FAILED SDA 103.60,82.22 (Pad 8  of U401 ) -> 110.00,118.02 (Pad 2  of R305 ) starts 40 goals 169 seen 1525414 | no way even with every other route gone
+  FAILED EN_5V1 111.57,122.08 (Pad 12  of U301 ) -> 116.51,68.65 (Pad 2  of U404 ) starts 225 goals 56 seen 97 | no way even with every other route gone
+  FAILED 3V3 103.20,78.38 (Pad 38  of U401 ) -> 103.20,78.38 (Zone planeZone plan) starts 26 goals 0 seen 53 | no way even with every other route gone
+  FAILED /Cells and Gauge/WAKE 108.46,114.81 (Pad 1  of TP113) -> 111.01,115.30 (Pad 2  of R118 ) starts 253 goals 126 seen 625 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/CHG_G 107.75,116.83 (Pad 4  of Q101 ) -> 105.86,114.85 (Pad 1  of R110 ) starts 303 goals 165 seen 811 | no way even with every other route gone
+FAILKEY /USB Port 1/CE_N
+FAILKEY Net-(U403-FBG)
+FAILKEY Net-(U102-V4)
+FAILKEY EN_5V1
+FAILKEY /USB Port 1/BTST2
+FAILKEY EN_5V2
+FAILKEY /USB Port 1/CC2
+FAILKEY /USB Port 1/REGN
+FAILKEY SDA
+FAILKEY EN_5V1
+FAILKEY 3V3@Pad 38 [3V3] of U401 on F.Cu
+FAILKEY /Cells and Gauge/WAKE
+FAILKEY /Cells and Gauge/CHG_G

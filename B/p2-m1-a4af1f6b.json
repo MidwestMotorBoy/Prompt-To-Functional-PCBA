@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2-m1.kicad_pcb",
+ "sha": "a4af1f6b8588415a3535748fde84175af779b652",
+ "routed": 355,
+ "failed": 13,
+ "edges": 368,
+ "minutes": 67.4,
+ "status": "done",
+ "tail": [
+  "FAILKEY SDA",
+  "FAILKEY EN_5V1",
+  "FAILKEY 3V3@Pad 38 [3V3] of U401 on F.Cu",
+  "FAILKEY /Cells and Gauge/WAKE",
+  "FAILKEY /Cells and Gauge/CHG_G"
+ ]
+}
