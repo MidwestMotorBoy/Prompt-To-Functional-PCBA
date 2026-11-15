@@ -688,3 +688,88 @@ Files: `recipes/port1/03-buck5v.json`, `04-pd.json`, `05-protect.json`, `recipes
 of `runs/p1r3-s1a-s`, `p1r3-v2a-s`, `p1r3-v5b-s`. New team tools: `tools/p1r3_variant.py` (recipe variants from overrides),
 `tools/pocket_peek.py` (planned vias/tracks in a box), `tools/padconn.py` (KiCad connectivity of pads on a saved board; run in
 the kicad image), `tools/fillnear.py` (saved zone fills of a net in a box).
+
+## 2026-11-14 23:35 UTC, Port 2 worker: fix task "Port 2 VBUS pad 32 and U501 rest" (round 3), fragments/port2.json updated
+
+**Step 1 is done.** U501's VBUS pad 32 is now on planned copper:
+- loose.py prints no U501 line.
+- PP5V is still joined at pad 34, at 1.49 mohm (was 1.57).
+- VBUS R at U501 is 0.996 mohm (was 1.288; the limit is 1.31).
+- Only one VBUS sliver is in the north row. It is on F.Cu, wraps C550's GND pad and reaches at most x 91.97, which is the west 0.17 mm of pad 31's span, at y 78.0 to 79.2. There is no VBUS copper over pads 26 to 30.
+
+How it works:
+- C550 lies flat right over pad 32. Its VBUS pad is the west pad, so the planner feeds the lane under H102 into C550 and straight down to pad 32.
+- D501 moved next to pad 23. The planner had been joining U501's VBUS terminal at pad 32 (nearest to the tree), which left pad 23 loose. With D501's VBUS pads facing pad 23, pad 23 now merges into the D501 terminal.
+- **Trade-off:** the TVS now clamps at the PD's VBUS_IN pin, 11.7 mm from J501's west VBUS pair (A9/B4) and 10.9 mm from the east pair, not at the connector. D501 has no serves rule in check.py. The lead should decide whether that is acceptable.
+
+**What moved** (recipes/port2/04-pd-protect.json; 01/02 stage and charger parts not touched):
+
+| Part | Old | New | Why |
+|---|---|---|---|
+| C550 | (91.38, 77.7) t180 | (91.70, 78.65) t90 flat | VBUS pad (90.94-91.50) right over pad 32; GND pad over pad 31; x 91.70 keeps the VBUS spine 0.15 mm off pad 34 (x 91.65 gave a DRC error); added to U501's ring allow list |
+| D501 | (88.15, 71.64) t180, west lane | (96.4, 80.69) t0 | VBUS pads (95.32-95.69) face pad 23 so pad 23 merges; at t90 VBUS ran north of pads 26/27 (26 blocked) |
+| C507 | (90.06, 77.65) t90 | (89.95, 77.65) t90 | clear of C550's VBUS pad |
+| C503 | (87.73, 77.795) t270 | (87.54, 77.07) t0 standing | frees the x room C550 needed |
+| C502 | (92.54, 78.2) t0 | (92.3, 77.5) t270 flat | CC2 pad east, GND west beside C550's GND |
+| C552 | (92.7, 76.27) t90 | (92.3, 75.8) t180 flat | keeps the U505.8 / .13 GND via sites and SBU_FLT open (moving it north blocked 22) |
+| C549 | (96.0, 82.4) t270 | (96.0, 82.51) t270 | courtyard against D501 |
+| C504 | (87.2, 81.2) t0 | (87.0, 81.2) t0 | opens a via site west of pad 4: LDO_1V5 C505 to U501.4 now routes |
+| R502 | (89.7, 85.9) t90 | (89.7, 85.9) t270 | LDO_3V3 pads pair R502.1/R503.1 |
+| R504 | (93.1, 85.9) t90 | (93.1, 85.9) t270 | LDO_3V3 pads pair R504.1/R541.1; SCL (R503.2) and CHG_INT (R504.2) share one gap, with in-pad via sites at x 91.72 and 92.78 |
+
+The reserves changed as follows:
+- vbus_in_U501_23 is now [95.0, 77.2, 99.6, 79.1].
+- pphv_strip_U501_20_to_R524 is now [95.0, 83.04, 97.0, 84.7].
+- vbus_sense_way_under_H102 is split in two: [86.9, 72.96, 91.3, 75.5], plus a new _b box [88.35, 75.5, 91.3, 76.1] east of the standing C503.
+
+**Runs** (Port 2 partial unless marked whole; U501 = GHOSTFAIL edges at U501; HL = HL_5V / HL_IN / HL_OUT nH; "-" = not run;
+DRC 0 in all screens):
+
+| Run | Change | Blocked | U501 | Loose pads | HL | Loss | VBUS R U501 | Power open |
+|---|---|---|---|---|---|---|---|---|
+| `runs/p2pk-v7h` (before) | round-2 fragment | 18 of 176 | 5 | **U501 pad 32** | 0.76 / 0.80 / 0.74 | 0.355 W | 1.288 mohm | GND J301/J302 |
+| `runs/p2v-b/scr` | C550 flat + D501 t90 | 26 of 179 | - | none | - | - | - | - |
+| `runs/p2v-c/scr` | + D501 t0, C552 north | 22 of 174 | 7 | none | - | - | - | - |
+| `runs/p2v-d/scr` | + C552 flat, C503 standing, C550 x 91.70 | 18 of 175 | 5 | none | - | 0.348 W | 0.995 | - |
+| `runs/p2v-g/hot` | + C504 0.2 west (pad 4 routes) | 17 of 174 | 4 | none | 0.76 / 0.80 / 0.74 | 0.348 W | - | GND J301/J302 |
+| `runs/p2v-i/scr` (final) | + R502/R504 turned (`--route=25`: TIMED OUT at the 25 min cap, last progress 153 routed / 21 failing, no FAILED lines) | **17 of 174** | **4** | **none** | **0.76 / 0.80 / 0.74** | **0.348 W** | **0.996** | GND J301/J302 |
+| `runs/p2v-iw` | whole board (current port1, pack), no loops | **33 of 443** | 4 | none | - | **1.122 W** | 0.995 | GND J301/J302 |
+| `runs/p2v-route50` | same placement, partial full route `--route=50` (finished in about 40 min) | 17 of 174 | 4 | none | - | 0.348 W | - | GND J301/J302; route **153 of 174 routed, 21 failed** |
+
+The whole-board blame breaks down as port2 17, port1 15, fixed 3, pack 1. For comparison, r2 was 39 of 446 at 1.133 W, and Port 1's round-3 whole board was 34 of 446.
+
+In both p2v-g/hot and p2v-i/scr, check.py shows 0 hard faults and Port 2 has 10 bottom parts (18 on the whole board). The p2v-iw stitch uses the fragments/port1.json from commit 9e0dc96 (Port 1 round 3).
+
+I looked at F.png, B.png and z U501 (`runs/p2v-iw/zoom_u501.png`). Power copper stays compact, and no power pour sprawls across Port 2.
+
+Tries that failed and were reverted:
+- C550 and C502 lifted 0.35 mm to open a pad-31 via: the planner still left U501.31 to the router.
+- C501 moved east: VBUS flooded the north row.
+- C505 next to pad 4: this opened the south escape yard, and yard_check reported a leak.
+
+**Targets not met:**
+- Blocked edges are 17 (target 13).
+- U501 has 4 blocked edges (target 2). These are still blocked:
+  - **Pads 36 (GND), 37 (DRV9_OFF, to Q509 on B) and 38 (3V3).** They sit under the PP5V strip and its 1.5 mm growth from L502 to pad 34. The only cure I see is re-routing PP5V, which means moving the buck output caps of 03, so I left it.
+  - **Pad 31 (GND).** C550's planner GND via at (92.25, 78.67) and the VBUS sliver round C550's GND pad take the via room.
+- CC1 (C501.1 to U505.12) is still blocked by the VBUS pour east of C501, from J501's east pair to pad 23. The C_CC1 edges at U505 fail on the hand board too.
+- Step 3 (I2CC_SCL U503.1 to R503.2, CHG_INT U503.3 to R504.2): **done.** In `runs/p2v-route50/route.log`, no FAILED line names I2CC_SCL or CHG_INT, so both route.
+
+The 21 FAILED lines are:
+- **Pocket:** CC1 C501.1 to U505.12; C_CC1 U505.7 to .4 and .4 to J501.A5; C_CC2 U505.5 to J501.B5; VBIAS C551.1 to U505.3.
+- **U501:** DRV9_OFF Q509.1 to U501.37; plane links of U501.38 (3V3), .36 (GND) and .31 (GND).
+- **Charger twins from 01/02:** HIDRV1, ACOV, FB, HG2, BAT_SNS_P (R528), PACK_P (R529), PPHV (R525), AC_SNS_N (R526), GND C515.2.
+- **Cross-port nets SCL, SDA and CHG_INH from U301:** in a partial run their far end is only roughly placed.
+
+**For the lead and Port 1:**
+- D501 (TVS) no longer sits at the connector (see the trade-off above).
+- Port 1 could try the same pad-32 cure for U401: a flat VBUS cap over pad 32 with its VBUS pad on the lane, and D401 next to pad 23. This would avoid the B.Cu detour that leaves U401's GND pads with no via room.
+
+Files:
+- `recipes/port2/04-pd-protect.json`.
+- `fragments/port2.json` + meta, which are the same as `Port_2.json` + meta.
+- `candidates/r2_Port_2_VBUS_pad_32_and_U501_rest.json`, which is `runs/p2v-iw/placement.json`.
+- `runs/p2v-i/scr`, `runs/p2v-g/hot`, `runs/p2v-iw` and `runs/p2v-route50`: score.json, dc.json, ghost.log, F.png and B.png, plus hot.json where present. Two more files are force-added: `runs/p2v-route50/route.log` and `runs/p2v-iw/zoom_u501.png`.
+- New team tools:
+  - `tools/recipe_put.py` edits put steps and ring allow lists in place.
+  - `tools/quick_ghost.sh` runs a ghost-only route on a plan_only run, optionally with `--only=<regex>`. Results are optimistic, because other nets' stubs are missing.
