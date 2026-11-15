@@ -1,0 +1,48 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 368 (0 on long nets)
+fan-out stubs: 144
+phase 1: 22 open connections tried again with every route free to move
+phase 2: 18 open connections tried again with every route free to move
+phase 3: 21 open connections tried again with every route free to move
+routes pulled and re-laid: 966
+fan-out stubs unused (removed) 63, trimmed 19
+unconnected after fill: 36
+routed 349 edges, 19 failed, items added 6522
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 67 goals 133 seen 127 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/HIDRV1 86.06,108.84 (Pad 27  of U503 ) -> 88.16,103.21 (Pad 1  of R544 ) starts 73 goals 135 seen 174 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/LODRV2 89.06,108.84 (Pad 21  of U503 ) -> 93.87,91.20 (Pad 1  of R547 ) starts 84 goals 126 seen 153 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_1N 96.90,121.00 (Pad 33  of U101 ) -> 98.30,122.90 (Pad 16  of U101 ) starts 988 goals 65 seen 185 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 106.45,85.30 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 110858 | ghost path found no blocker
+  FAILED /USB Port 1/CHG_INT 108.40,85.08 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 59 goals 47 seen 115 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 87.10,106.03 (Pad 1  of C510 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 213 goals 81 seen 102 | no way even with every other route gone
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 207 seen 19 | blocked by routes that have been pulled too often
+  FAILED Net-(U503-ACOV) 87.13,117.20 (Pad 2  of R510 ) -> 84.91,112.49 (Pad 35  of U503 ) starts 183 goals 72 seen 202669 | pulled 1
+  FAILED /USB Port 1/FSW 107.94,112.99 (Pad 36  of U403 ) -> 109.10,118.38 (Pad 1  of R412 ) starts 65 goals 62 seen 209 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/SBU_FLT 107.50,82.92 (Pad 19  of U401 ) -> 102.90,73.70 (Pad 9  of U405 ) starts 234 goals 52 seen 61 | no way even with every other route gone
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 434439 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 369 seen 621 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 147 goals 66 seen 853031 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 59 seen 115 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 112.00,85.01 (Pad 1  of R433 ) -> 112.00,85.01 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 82 goals 0 seen 219 | no way even with every other route gone
+  FAILED /P1_LDO_3V3 108.40,87.42 (Pad 1  of R441 ) -> 108.40,85.72 (Pad 1  of R404 ) starts 62 goals 214 seen 251 | no way even with every other route gone
+  FAILED /USB Port 1/BTST2 113.29,107.73 (Pad 1  of C413 ) -> 113.40,105.70 (Pad 1  of D405 ) starts 187 goals 163 seen 1647 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 116.14,105.40 (Pad 2  of D410 ) -> 110.15,106.03 (Pad 1  of C410 ) starts 160 goals 204 seen 107000 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 2/HIDRV1
+FAILKEY /USB Port 2/LODRV2
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 2/REGN
+FAILKEY /USB Port 1/CC1
+FAILKEY Net-(U503-ACOV)
+FAILKEY /USB Port 1/FSW
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 2/REGN
+FAILKEY SCL
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/PP5V
+FAILKEY /P1_LDO_3V3
+FAILKEY /USB Port 1/BTST2
+FAILKEY /USB Port 1/REGN
