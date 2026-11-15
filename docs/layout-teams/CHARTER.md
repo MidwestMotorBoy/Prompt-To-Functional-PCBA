@@ -29,7 +29,7 @@ The results go in `<outdir>/score.json`. With no input, it scores the hand place
 
 | Board | Blocked edges | Full route | Loss | Power |
 |---|---|---|---|---|
-| Hand placement, generated copper | 56 of 452 | 391 of 448 in 18 min | 1.36 W | PP5V open at U401 |
+| Hand placement, generated copper (scorecard, 2026-11-14) | 56 of 452 | 394 of 452 | 1.36 W, hot loops 7 of 7, 6.75 nH | PP5V open at U401 |
 | Skeleton q7s2 | | 299 of 442 | 1.20 W | all joined |
 | Round 3 w1_c | | 346 of 442 | 1.255 W | all joined |
 
@@ -60,3 +60,13 @@ The results go in `<outdir>/score.json`. With no input, it scores the hand place
 - Logan is reviewer only. Do not ask him to place parts.
 - Report real numbers only, from the scorecard. Say when a route timed out.
 - No model names in commits or PRs.
+
+## Full routes on Logan's PC (16 cores, approved by Logan 2026-11-14)
+`tools/score/route_server.py` runs on Logan's PC and routes up to 12 boards at once. To queue a board:
+1. Copy the scorecard's `cu.kicad_pcb`, `cu.kicad_pro` and `cu.kicad_dru` to `docs/layout-teams/<team>/route_queue/<name>.kicad_pcb` (and `.kicad_pro`, `.kicad_dru`).
+2. Commit and push to your team branch.
+
+The server checks every 2 minutes. When a route finishes, it pushes the result to branch `route-results`:
+`git fetch origin route-results && git show origin/route-results:<team>/<name>-<first 8 of the file's git blob sha>.json`
+
+The result holds the routed count, failed count, total edges, minutes and status, and a `.log` beside it. Use a new name for each changed board. The router is the same one as in score_board.sh, but a route on the PC is one thread, so it is not faster per board, only many at once. Keep running the blocked-edge screen in your own container.
