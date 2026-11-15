@@ -1,0 +1,5 @@
+HL_3V3 {"per_cap_nH": {"C206": 0.836}, "all_parallel_with_esl_nH": 1.336, "branches": 6570, "vias": 45, "cell_mm": 0.2}
+USB Port 1/HL_5V {"per_cap_nH": {"C446": 0.276, "C444": 0.856}, "all_parallel_with_esl_nH": 0.463, "branches": 6881, "vias": 60, "cell_mm": 0.2}
+USB Port 1/HL_IN {"per_cap_nH": {"C430": 7726.803, "C420": 7726.622, "C423": 7726.618}, "all_parallel_with_esl_nH": 1020684.65, "branches": 10010, "vias": 80, "cell_mm": 0.2}
+USB Port 1/HL_OUT {"per_cap_nH": {"C438": 0.791, "C431": 1.002, "C434": 1.013}, "all_parallel_with_esl_nH": 0.881, "branches": 8513, "vias": 80, "cell_mm": 0.2}
+USB Port 2/HL_5V {"per_cap_nH": {"C546": 0.47, "C544": 0.734}, "all_parallel_with_esl_nH": 0.692, "branches": 6917, "vias": 65, "cell_mm": 0.2}

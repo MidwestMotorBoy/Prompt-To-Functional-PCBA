@@ -1,0 +1,18 @@
+# Scorecard run outputs that are large and can be regenerated (see PAUSED.md)
+pylib/
+__pycache__/
+*.kicad_pcb
+!route_queue/*.kicad_pcb
+*.kicad_prl
+*.npz
+drc.json
+bare.json
+cu.json
+spec.json
+ghost.log
+route.log
+thermal.json
+runs/**/apply_placement.py
+runs/**/cu_dump.py
+runs/**/write_copper.py
+runs/**/router.py

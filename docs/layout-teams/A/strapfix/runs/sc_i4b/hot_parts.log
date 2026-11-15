@@ -1,0 +1,7 @@
+HL_3V3 {"per_cap_nH": {"C206": 0.833}, "all_parallel_with_esl_nH": 1.333, "branches": 7879, "vias": 45, "cell_mm": 0.2}
+USB Port 1/HL_5V {"per_cap_nH": {"C446": 0.276, "C444": 0.845}, "all_parallel_with_esl_nH": 0.463, "branches": 8447, "vias": 65, "cell_mm": 0.2}
+USB Port 1/HL_IN {"per_cap_nH": {"C430": 0.506, "C420": 0.955, "C423": 1.128}, "all_parallel_with_esl_nH": 0.594, "branches": 4447, "vias": 90, "cell_mm": 0.3}
+USB Port 1/HL_OUT {"per_cap_nH": {"C438": 0.502, "C431": 1.089, "C434": 0.974}, "all_parallel_with_esl_nH": 0.606, "branches": 4115, "vias": 80, "cell_mm": 0.3}
+USB Port 2/HL_5V {"per_cap_nH": {"C546": 0.471, "C544": 0.736}, "all_parallel_with_esl_nH": 0.693, "branches": 8545, "vias": 65, "cell_mm": 0.2}
+USB Port 2/HL_IN {"per_cap_nH": {"C530": 0.493, "C520": 0.79, "C523": 1.015}, "all_parallel_with_esl_nH": 0.569, "branches": 5690, "vias": 85, "cell_mm": 0.3}
+USB Port 2/HL_OUT {"per_cap_nH": {"C538": 0.469, "C531": 1.011, "C534": 0.949}, "all_parallel_with_esl_nH": 0.567, "branches": 4482, "vias": 70, "cell_mm": 0.3}
