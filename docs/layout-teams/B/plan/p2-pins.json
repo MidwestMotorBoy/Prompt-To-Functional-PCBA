@@ -1,0 +1,130 @@
+{
+ "about": "Pin escapes for tools/pins.py (team B, phase 2), relative to part and pad; 'A|B' applies an entry to both ports (and 'to' pairs in the same order). Entries run in this order, each checked exactly against everything laid before it. Written for placement r4 (best_placement.json).",
+ "escapes": [
+  {
+   "ref": "J501",
+   "pad": "B5",
+   "to": "U505.6",
+   "w": 0.15,
+   "max": 6.0,
+   "cut": [
+    "/USB Port 2/VBUS"
+   ],
+   "why": "Port 2 C_CC2: B5 is wrapped by the connector's own VBUS pour; the way south-east into the free lane west of U505 needs a small notch"
+  },
+  {
+   "ref": "U405|U505",
+   "pad": "4",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 1/VBUS|"
+   ],
+   "why": "C_CC1 pass-through: pins 4 and 7 are split by the C_CC2 pins 5/6 at the corner; a via north of pin 4 (Port 1: in a notch of the VBUS pour of B4/A9, the only room left beside the VBIAS via)",
+   "via_gap": "0.65|0.75",
+   "keep": [
+    "U405.3:N:0.6|"
+   ]
+  },
+  {
+   "ref": "U405",
+   "pad": "3",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 1.0,
+   "via_gap": 0.65,
+   "why": "Port 1 VBIAS to C451 on the bottom: the spot north of pin 3 is taken by the CC vias, so out north and east under B5's via to a via north of pin 1 (unused pins 1, 2)"
+  },
+  {
+   "ref": "U505",
+   "pad": "9",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.4,
+   "why": "Port 2 SBU_FLT runs south to U501.19, but LDO_3V3 copper walls pin 9 in on the west and south-west: its via first, before the C_CC1 via of pin 7 takes the last spot north-west",
+   "keep": [
+    "U505.7:W:0.9"
+   ]
+  },
+  {
+   "ref": "U405|U505",
+   "pad": "7",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "why": "C_CC1 pass-through, the other end: a via west of pin 7; the router joins the vias on an inner layer"
+  },
+  {
+   "ref": "J401|J501",
+   "pad": "A5",
+   "dir": "S",
+   "via": true,
+   "w": 0.15,
+   "max": 1.4,
+   "why": "C_CC1 at the connector: its only way out is south, into the lane the CC escapes need; a via takes it off F.Cu"
+  },
+  {
+   "ref": "U501",
+   "pad": "37",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 2.4,
+   "cut": [
+    "/USB Port 2/PP5V"
+   ],
+   "why": "DRV9_OFF between the 3V3 pin and a GND pin, the exposed pad south, the PP5V pour, a PP5V track and C507 north: out north, west over pin 38 to a via in a notch of the PP5V pour, keeping the strip west of pin 38 free for it; laid before pin 38",
+   "keep": [
+    "U501.38:W:0.7"
+   ]
+  },
+  {
+   "ref": "U501",
+   "pad": "38",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 2/PP5V"
+   ],
+   "why": "3V3 corner pin: the PP5V pour wraps pins 36-38 at its clearance; a notch at the corner lets the pin out west to a via"
+  },
+  {
+   "ref": "U401",
+   "pad": "27",
+   "to": "C401.2",
+   "w": 0.2,
+   "max": 2.0,
+   "cut": [
+    "/USB Port 1/VBUS"
+   ],
+   "why": "GND pin beside the PD_DRAIN exposed pad (not its own): a short track north to the GND pad of C401, 0.8 mm away; the VBUS pour outline is 0.16 mm too close for a lead"
+  },
+  {
+   "ref": "U401",
+   "pad": "26",
+   "to": "U401.27",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "GND corner pin: tied to its GND neighbour pin 27"
+  },
+  {
+   "ref": "C304",
+   "pad": "2",
+   "dir": "N",
+   "via": true,
+   "w": 0.2,
+   "max": 1.6,
+   "cut": [
+    "/Cells and Gauge/CELL_P"
+   ],
+   "why": "GND pad of the NRST capacitor wrapped by the CELL_P pour: a via in a notch north of it (west cut 0.76 mm2 cost 5.8 mW of CELL_P loss, north 0.37 mm2 costs 0.9 mW)"
+  }
+ ]
+}
