@@ -1,0 +1,6 @@
+{"m":  {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90"},
+ "ms": {"HOOKS": "cpd,cpower,cpdl,cside,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90",
+        "SIDE_POST": "30", "SIDE_VS_MM": "1", "SIDE_GVS_MM": "0.5", "SIDE_VS_PWR": "1.0", "SIDE_VS_HARD": "1", "SIDE_VRES": "1",
+        "SIDE_CU": "/home/claude/repo/docs/layout-teams/C/sides/cu_prior_s4.json"},
+ "mb": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "98,74,105,90", "PD_BOX1": "106,74,118,90"},
+ "mn": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90", "NOISE": "0.3"}}

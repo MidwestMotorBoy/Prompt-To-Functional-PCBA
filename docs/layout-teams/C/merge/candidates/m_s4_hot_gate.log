@@ -1,0 +1,11 @@
+| Hot loop | Switch | Tier 1 | Loop total, nH | Tier-1 limit, nH | Peak at switch / rating, V | First capacitor, nH | Reference total, nH |
+|---|---|---|---|---|---|---|---|
+| HL_3V3 | U204 | pass | 1.03 | 27.5 (edge) | 17.3 / 30 | 0.33 | 1.95 |
+| USB Port 1/HL_5V | U404 | pass | 0.72 | 6.98 (edge) | 18.5 / 33.0 | 0.29 | 1.08 |
+| USB Port 1/HL_IN | Q401 | pass | 0.67 | 1.3 (ring) | 34.9 / 40 | 0.34 | 1.02 |
+| USB Port 1/HL_OUT | Q402 | pass | 0.69 | 2.17 (ring) | 29.9 / 40 | 0.35 | 1.03 |
+| USB Port 2/HL_5V | U504 | pass | 0.83 | 6.98 (edge) | 18.7 / 33.0 | 0.4 | 1.08 |
+| USB Port 2/HL_IN | Q501 | pass | 0.69 | 1.3 (ring) | 35.1 / 40 | 0.35 | 0.99 |
+| USB Port 2/HL_OUT | Q502 | pass | 0.69 | 2.17 (ring) | 29.9 / 40 | 0.34 | 1.0 |
+
+7 of 7 hot loops pass tier 1; tier-2 score (sum of loop totals that close): 5.32 nH

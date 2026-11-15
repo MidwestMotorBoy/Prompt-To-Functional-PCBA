@@ -1,0 +1,27 @@
+{
+ "loss_W": 1.121,
+ "power_open": {
+  "/Cells and Gauge/CELL_P": [
+   "F102"
+  ],
+  "/Cells and Gauge/FET_MID": [
+   "Q102"
+  ],
+  "/USB Port 1/PP5V": [
+   "U401"
+  ],
+  "/USB Port 1/PPHV": [
+   "U401"
+  ],
+  "/USB Port 2/PPHV": [
+   "U501"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 430,
+ "blocked_edges": "56 of 452"
+}

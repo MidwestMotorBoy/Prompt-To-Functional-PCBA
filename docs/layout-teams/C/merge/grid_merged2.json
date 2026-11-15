@@ -1,0 +1,4 @@
+{"r1": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90", "PDW_B": "20"},
+ "r2": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90", "PDW_B": "20", "PD_RIN_W2": "6"},
+ "r3": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90", "PD_RIN_W2": "6"},
+ "r4": {"HOOKS": "cpd,cpower,cpdl,ccorr", "PD_BUCK1": "97,74,105,88", "PD_BOX1": "106,75,118,90", "PD_BOX2": "84,75,94,84", "PDW_B": "20", "PD_RIN_W2": "6"}}

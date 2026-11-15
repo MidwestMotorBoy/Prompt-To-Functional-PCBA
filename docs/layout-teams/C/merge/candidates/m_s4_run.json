@@ -1,0 +1,28 @@
+{
+ "tag": "m_s4",
+ "config": "m",
+ "env": {
+  "HOOKS": "cpd,cpower,cpdl,ccorr",
+  "PD_BUCK1": "97,74,105,88",
+  "PD_BOX1": "106,75,118,90",
+  "SEED": "4"
+ },
+ "cmd": "HOOKS=cpd,cpower,cpdl,ccorr PD_BOX1=106,75,118,90 PD_BUCK1=97,74,105,88 SEED=4 /home/claude/repo/docs/layout-teams/C/cplace/run.sh /home/claude/work/C/sweep/merged/runs/m_s4/p.json /home/claude/work/C/in",
+ "cwd": "/home/claude/repo/docs/layout-teams/C/cplace",
+ "git": "8d63761",
+ "cplace_files_md5": {
+  "c_apply.py": "638a35af97",
+  "ccorr.py": "2d0021db39",
+  "cpd.py": "fba70ded69",
+  "cpdl.py": "6f0a0fbf26",
+  "cplace.py": "eefc88ff88",
+  "cpower.py": "d20898c147",
+  "cside.py": "9e6a24d094",
+  "metrics.py": "a733a02c51",
+  "pp_bodies.py": "730917a91c"
+ },
+ "start": "2026-11-14 21:47:57",
+ "rc": 0,
+ "secs": 116.0,
+ "n_parts": 247
+}

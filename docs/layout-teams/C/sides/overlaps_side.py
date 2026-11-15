@@ -1,0 +1,47 @@
+"""overlaps_side.py <board dump.json> [placement.json]: side-aware copy of tools/floorplan/overlaps.py (team C, package sides).
+An entry with a 4th element "F"/"B" other than the dump side is on that side, with its courtyard and pad offsets mirrored
+in x (lx -> -lx) before the quarter turns, and its pad layers swapped F<->B. Otherwise identical output. It lists courtyard overlaps, through-hole pads under parts on the other side, keep-out hits and parts off the board."""
+import json, sys
+d = json.load(open(sys.argv[1])); P = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else {}
+B = {}; OTHER = {"F.Cu": "B.Cu", "B.Cu": "F.Cu"}
+FL = lambda f: len(P.get(f["ref"], [])) > 3 and P[f["ref"]][3] + ".Cu" != f["side"]       # flipped by the placement
+for f in d["fps"]:
+    if "court" not in f: continue
+    c = [f["court"][0] - f["x"], f["court"][1] - f["y"], f["court"][2] - f["x"], f["court"][3] - f["y"]]; x, y, a = P.get(f["ref"], [f["x"], f["y"], 0])[:3]
+    if FL(f): c = [-c[2], c[1], -c[0], c[3]]
+    q = [(c[0], c[1]), (c[2], c[3])]
+    for _ in range(int(a) // 90 % 4): q = [(-v, u) for u, v in q]
+    B[f["ref"]] = (x + min(q[0][0], q[1][0]), y + min(q[0][1], q[1][1]), x + max(q[0][0], q[1][0]), y + max(q[0][1], q[1][1]), OTHER[f["side"]] if FL(f) else f["side"])
+T = {}                                   # pads that reach the other side (through-hole, thermal pads on the back)
+for p in d["pads"]:
+    if p["ref"] not in B: continue
+    f = next(f for f in d["fps"] if f["ref"] == p["ref"]); lay = [OTHER.get(l, l) for l in p["layers"]] if FL(f) else p["layers"]
+    if "*.Cu" in lay or ("B.Cu" if B[p["ref"]][4] == "F.Cu" else "F.Cu") in lay:
+        x, y, a = P.get(p["ref"], [f["x"], f["y"], 0])[:3]; b = p["box"]
+        q = [(b[0] - f["x"], b[1] - f["y"]), (b[2] - f["x"], b[3] - f["y"])]
+        if FL(f): q = [(-q[1][0], q[0][1]), (-q[0][0], q[1][1])]
+        for _ in range(int(a) // 90 % 4): q = [(-v, u) for u, v in q]
+        T.setdefault(p["ref"], []).append((x + min(q[0][0], q[1][0]), y + min(q[0][1], q[1][1]), x + max(q[0][0], q[1][0]), y + max(q[0][1], q[1][1])))
+rs = sorted(B); tot = 0
+for a, boxes in sorted(T.items()):
+    for b in rs:
+        if b == a or B[b][4] == B[a][4]: continue
+        for A in boxes:
+            ox = min(A[2], B[b][2]) - max(A[0], B[b][0]); oy = min(A[3], B[b][3]) - max(A[1], B[b][1])
+            if ox > 0.01 and oy > 0.01: tot += ox * oy; print(f"far-side pad of {a} under {b}: {ox:.2f} x {oy:.2f} mm")
+for i, a in enumerate(rs):
+    for b in rs[i + 1:]:
+        A, C = B[a], B[b]
+        if A[4] != C[4]: continue
+        ox = min(A[2], C[2]) - max(A[0], C[0]); oy = min(A[3], C[3]) - max(A[1], C[1])
+        if ox > 0.01 and oy > 0.01: tot += ox * oy; print(f"overlap {a} / {b}: {ox:.2f} x {oy:.2f} mm")
+for k in d.get("keepouts", []):
+    if not k.get("no_footprints"): continue
+    for r, A in B.items():
+        if A[4] in k["layers"]:
+            ox = min(A[2], k["box"][2]) - max(A[0], k["box"][0]); oy = min(A[3], k["box"][3]) - max(A[1], k["box"][1])
+            if ox > 0.01 and oy > 0.01: tot += ox * oy; print(f"keep-out {k['name']}: {r} {ox:.2f} x {oy:.2f} mm")
+bx = d["box"]
+for r, A in B.items():
+    if A[0] < bx[0] or A[1] < bx[1] or A[2] > bx[2] or A[3] > bx[3]: print(f"off board: {r}")
+print(f"total {tot:.2f} mm2")

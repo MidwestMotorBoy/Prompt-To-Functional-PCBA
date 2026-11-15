@@ -1,0 +1,29 @@
+{
+ "tag": "r1_s1",
+ "config": "r1",
+ "env": {
+  "HOOKS": "cpd,cpower,cpdl,ccorr",
+  "PD_BUCK1": "97,74,105,88",
+  "PD_BOX1": "106,75,118,90",
+  "PDW_B": "20",
+  "SEED": "1"
+ },
+ "cmd": "HOOKS=cpd,cpower,cpdl,ccorr PDW_B=20 PD_BOX1=106,75,118,90 PD_BUCK1=97,74,105,88 SEED=1 /home/claude/repo/docs/layout-teams/C/cplace/run.sh /home/claude/work/C/sweep/merged2/runs/r1_s1/p.json /home/claude/work/C/in",
+ "cwd": "/home/claude/repo/docs/layout-teams/C/cplace",
+ "git": "8d63761",
+ "cplace_files_md5": {
+  "c_apply.py": "638a35af97",
+  "ccorr.py": "2d0021db39",
+  "cpd.py": "4e74b425a9",
+  "cpdl.py": "6f0a0fbf26",
+  "cplace.py": "eefc88ff88",
+  "cpower.py": "d20898c147",
+  "cside.py": "9e6a24d094",
+  "metrics.py": "a733a02c51",
+  "pp_bodies.py": "730917a91c"
+ },
+ "start": "2026-11-14 23:38:24",
+ "rc": 0,
+ "secs": 112.0,
+ "n_parts": 247
+}

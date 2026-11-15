@@ -1,0 +1,14 @@
+{
+ "loss_W": 1.15,
+ "power_open": {
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 433,
+ "hot_loops": "7 of 7 pass, 5.32 nH",
+ "blocked_edges": "59 of 454",
+ "route": "TIMED OUT at 45 min; last 383 routed, 71 failing of 454"
+}
