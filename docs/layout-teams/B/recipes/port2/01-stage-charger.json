@@ -1,6 +1,6 @@
 [
  {
-  "note": "P-a and P-b for Port 2: Port 1's stage and charger (recipes/port1/01-stage.json, 02-charger.json, placed with twin_check on) copied to the 5xx twins by the L401-to-L501 offset (dx -23.02577, dy +0.006368). Written by tools/twin_recipe.py as explicit puts with the turn that matches the absolute pad positions (R545, C516, C515, R528 sit in the template 90 degrees from their Port 1 twins, so secplace's translate step turned them). C530 and C538 are 0.02 mm north of the exact copy (their courtyards are 0.01 mm larger than C430/C438's). R513 and R514 (ICHG, ILIM) are not copied: their copies fall in the centre area; they are placed at U503 pads 9, 10 in 02-charger-fix.json. R524/R527 are per port, D510/D511 belong to the 9 V section."
+  "note": "P-a and P-b for Port 2: Port 1's stage and charger (recipes/port1/01-stage.json, 02-charger.json, placed with twin_check on) copied to the 5xx twins by the L401-to-L501 offset (dx -23.02577, dy +0.006368). Written by tools/twin_recipe.py as explicit puts with the turn that matches the absolute pad positions (R545, C516, C515, R528 sit in the template 90 degrees from their Port 1 twins, so secplace's translate step turned them). C530 and C538 are 0.02 mm north of the exact copy (their courtyards are 0.01 mm larger than C430/C438's). R513 and R514 (ICHG, ILIM) are not copied: their copies fall in the centre area; they are placed at U503 pads 9, 10 in 02-charger-fix.json. R524/R527 are per port, D510/D511 belong to the 9 V section. Round 4 (pin escapes): the puts of C509, C512, C517, C518, C519, D504, R509, R510, R511, R512, R526, R528, R529 were re-copied from the new Port 1 fragment with the same tool."
  },
  {
   "put": "Q501",
@@ -155,12 +155,12 @@
  {
   "put": "C512",
   "at": [
-   86.37423,
+   85.87423,
    103.856368
   ],
   "turn": 180,
   "side": "F",
-  "note": "twin of C412: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of C412: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "C511",
@@ -195,12 +195,12 @@
  {
   "put": "D504",
   "at": [
-   81.87423,
-   103.706368
+   81.25423,
+   104.406368
   ],
-  "turn": 90,
+  "turn": 180,
   "side": "F",
-  "note": "twin of D404: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of D404: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "D505",
@@ -245,22 +245,22 @@
  {
   "put": "C509",
   "at": [
-   83.28423,
+   82.05423,
    108.846368
   ],
   "turn": 0,
   "side": "F",
-  "note": "twin of C409: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of C409: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R526",
   "at": [
-   81.87423,
-   105.456368
+   82.55423,
+   103.606368
   ],
-  "turn": 270,
+  "turn": 0,
   "side": "F",
-  "note": "twin of R426: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R426: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R525",
@@ -275,92 +275,92 @@
  {
   "put": "R510",
   "at": [
-   83.82423,
-   110.656368
+   84.29423,
+   109.266368
   ],
-  "turn": 270,
+  "turn": 90,
   "side": "F",
-  "note": "twin of R410: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R410: turn 90 -> 90 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R509",
   "at": [
-   82.27423,
-   111.156368
+   82.77423,
+   110.156368
   ],
   "turn": 180,
   "side": "F",
-  "note": "twin of R409: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R409: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R511",
   "at": [
-   83.32423,
-   112.206368
+   83.77423,
+   111.206368
   ],
   "turn": 0,
   "side": "F",
-  "note": "twin of R411: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R411: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R512",
   "at": [
-   84.77423,
-   111.856368
+   84.47423,
+   112.156368
   ],
-  "turn": 270,
+  "turn": 0,
   "side": "F",
-  "note": "twin of R412: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R412: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "C517",
   "at": [
    92.44423,
-   108.506368
+   108.226368
   ],
   "turn": 0,
   "side": "F",
-  "note": "twin of C417: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of C417: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R528",
   "at": [
-   93.82423,
+   94.69423,
    105.306368
   ],
   "turn": 0,
   "side": "F",
-  "note": "twin of R428: turn 90 -> 0 (template orientations differ), worst pad error 0.000 mm"
+  "note": "twin of R428: turn 90 -> 0 (template orientations differ), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R529",
   "at": [
-   93.82423,
-   107.206368
+   94.69423,
+   106.606368
   ],
-  "turn": 270,
+  "turn": 0,
   "side": "F",
-  "note": "twin of R429: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of R429: turn 0 -> 0 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "C518",
   "at": [
    93.47423,
-   109.156368
+   108.756368
   ],
   "turn": 180,
   "side": "F",
-  "note": "twin of C418: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of C418: turn 180 -> 180 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "C519",
   "at": [
-   92.92423,
+   93.57423,
    110.656368
   ],
   "turn": 270,
   "side": "F",
-  "note": "twin of C419: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm"
+  "note": "twin of C419: turn 270 -> 270 (template orientations match), worst pad error 0.000 mm; round 4: re-copied after the Port 1 pin-escape moves"
  },
  {
   "put": "R519",

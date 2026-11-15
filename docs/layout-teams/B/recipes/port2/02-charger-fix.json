@@ -3,34 +3,25 @@
   "note": "Port 2 charger: what a Port 2 fixed part or area forces on the copied charger. R513 (ICHG, U503 pad 9) and R514 (ILIM, pad 10): their twin spots (x 96.07, 97.12) are in the centre area 96.5..103.5, so they go to the nearest free spot at their pins, west of the centre area."
  },
  {
-  "at_pin": "R514",
-  "pads": {
-   "1": "U503.10"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   86.0,
-   109.0,
-   96.45,
-   113.2
-  ],
-  "step": 0.05
+  "note": "Round 4: R513/R514 put explicitly in one column east of C518/C519 (C519 moved 0.65 mm east with Port 1's FB-lane fix and took R514's old spot; the greedy then found no spot for R513)"
  },
  {
-  "at_pin": "R513",
-  "pads": {
-   "1": "U503.9"
-  },
-  "max_mm": 3.0,
-  "soft": true,
-  "within": [
-   86.0,
-   109.0,
-   96.45,
-   113.2
+  "put": "R514",
+  "at": [
+   95.45,
+   110.188
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
+ },
+ {
+  "put": "R513",
+  "at": [
+   95.16,
+   108.2
+  ],
+  "turn": 0,
+  "side": "F"
  },
  {
   "note": "R527 (RBAT, BAT_SNS_P to PACK_P) per port: at the exact twin spot of R427 relative to the stage (south-east of C531, in the centre area west of x 100, the one part allowed there), so the copied Kelvin filter R528/R529 meets its inner pad edges as in Port 1 and its PACK_P pad sits over the C211/C212 bulk via field. Turn 180 matches R427's pads (template orientations differ)."
@@ -42,6 +33,39 @@
    104.906368
   ],
   "turn": 180,
+  "side": "F"
+ },
+ {
+  "note": "Round 4: R509 (PPHV to ACUV) 0.45 mm lower and 0.97 mm west of its twin spot. With C509 west (copied from Port 1) the board edge leaves the PPHV planner only the narrow way under C509; at the twin spot the path was refused as winding (46 mm for 27 mm straight, runs/chg-po2-p2), here C509 joins (runs/chg-p2tryW1)."
+ },
+ {
+  "put": "R509",
+  "at": [
+   81.8,
+   110.6
+  ],
+  "turn": 180,
+  "side": "F"
+ },
+ {
+  "note": "Round 4: D505 0.38 mm and R528 0.39 mm north of their twin spots. Port 2's PACK_P pour (R527.2 over the C211/C212 via field) is bigger than Port 1's and took the mouth between R527's pads, so BAT_SNS_P did not reach R528's sealed tap at the twin spot (runs/chg-p2v2/qsplit); one step closer to R527.1 it does (runs/chg-p2tryK1)."
+ },
+ {
+  "put": "D505",
+  "at": [
+   93.82423,
+   103.63
+  ],
+  "turn": 270,
+  "side": "F"
+ },
+ {
+  "put": "R528",
+  "at": [
+   94.69423,
+   104.92
+  ],
+  "turn": 0,
   "side": "F"
  }
 ]

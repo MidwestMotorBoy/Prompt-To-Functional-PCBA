@@ -18,7 +18,10 @@
  },
  {
   "ring": "U403",
-  "mm": 0.8
+  "mm": 0.8,
+  "allow": [
+   "R410"
+  ]
  },
  {
   "note": "gate resistors in one row under the FETs (y 101.83..102.87), each with its gate-side pad under the gate pad it serves (R444 at Q401 pad 1, R445 at pad 8, R446 at Q402 pad 1, R447 at pad 8); put explicitly, the placer stacked them vertically into the U403 band"
@@ -65,7 +68,7 @@
  {
   "put": "C412",
   "at": [
-   109.4,
+   108.9,
    103.85
   ],
   "turn": 180,
@@ -102,12 +105,15 @@
   "side": "F"
  },
  {
+  "note": "D404 (BTST1 diode) stands west of R426 (round 4), BTST1 pad south toward the lane over C416 to C412, DRV_SUP pad north toward D410; it gave its spot under C427 to R426"
+ },
+ {
   "put": "D404",
   "at": [
-   104.9,
-   103.7
+   104.28,
+   104.4
   ],
-  "turn": 90,
+  "turn": 180,
   "side": "F"
  },
  {
@@ -160,24 +166,23 @@
  {
   "put": "C409",
   "at": [
-   106.31,
+   105.08,
    108.84
   ],
   "turn": 0,
   "side": "F"
  },
  {
-  "at_pin": "R426",
-  "pads": {
-   "2": "C416.1"
-  },
-  "within": [
-   103.5,
-   104.4,
-   105.9,
-   109.6
+  "note": "R426 (10 R ACN filter) stands under C427 with its sealed AC_SNS_N tap pad 1 north, 0.6 mm under C427.1, so the AC_SNS_N copper reaches the tap (round 4); was at_pin at (104.9, 105.45) beside the PPHV pour"
+ },
+ {
+  "put": "R426",
+  "at": [
+   105.58,
+   103.6
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
   "at_pin": "R425",
@@ -193,22 +198,16 @@
   "step": 0.05
  },
  {
-  "at_pin": "R410",
-  "pads": {
-   "1": "U403.34",
-   "2": "U403.35"
-  },
-  "within": [
-   103.5,
-   109.6,
-   108.25,
-   113.2
+  "note": "R410 (ACUV/ACOV divider middle) stands right at the stub ends of pins 34/35 (round 4): pad 1 ACUV level with pin 34, pad 2 ACOV just below pin 35's stub, so both pins reach it straight and the pads' escape room keeps PPHV copper out of the lane; allowed into U403's ring at the serves distance"
+ },
+ {
+  "put": "R410",
+  "at": [
+   107.32,
+   109.26
   ],
-  "step": 0.05,
-  "turns": [
-   90,
-   270
-  ]
+  "turn": 90,
+  "side": "F"
  },
  {
   "at_pin": "R409",
@@ -256,38 +255,34 @@
   "put": "C417",
   "at": [
    115.47,
-   108.5
+   108.22
   ],
   "turn": 0,
   "side": "F"
  },
  {
-  "at_pin": "R428",
-  "pads": {
-   "2": "C417.1",
-   "1": "R427.1"
-  },
-  "within": [
-   114.96,
-   102.86,
-   118.72,
-   107.32
-  ],
-  "step": 0.05
+  "note": "R428 (10 R BAT_SNS_P filter) put with its sealed tap pad 1 at the west mouth between R427's pads, 0.53 mm from R427.1/R427.2 (round 4): BAT_SNS_P copper can reach the tap; was at_pin at (116.85, 105.3)"
  },
  {
-  "at_pin": "R429",
-  "pads": {
-   "2": "C417.2",
-   "1": "R427.2"
-  },
-  "within": [
-   114.96,
-   102.86,
-   118.72,
-   111.5
+  "put": "R428",
+  "at": [
+   117.72,
+   105.3
   ],
-  "step": 0.05
+  "turn": 90,
+  "side": "F"
+ },
+ {
+  "note": "R429 (10 R PACK_P filter) lying with its sealed tap pad 1 east, 0.53 mm west of R427.2 on the PACK_P copper (round 4); was standing at (116.85, 107.2)"
+ },
+ {
+  "put": "R429",
+  "at": [
+   117.72,
+   106.6
+  ],
+  "turn": 0,
+  "side": "F"
  },
  {
   "at_pin": "C418",
@@ -303,17 +298,16 @@
   "step": 0.05
  },
  {
-  "at_pin": "C419",
-  "pads": {
-   "1": "U403.13"
-  },
-  "within": [
-   114.96,
-   105.2,
-   118.72,
-   111.5
+  "note": "C419 put east of the FB lane (round 4): pad 1 SRN_F 0.6 mm east of where the greedy put it, so pin 12 (FB) has a lane south to R419.1 at x 115.3-115.8"
+ },
+ {
+  "put": "C419",
+  "at": [
+   116.6,
+   110.65
   ],
-  "step": 0.05
+  "turn": 270,
+  "side": "F"
  },
  {
   "twin_check": false,
@@ -343,60 +337,43 @@
   "dy": 0.006368
  },
  {
-  "at_pin": "R419",
-  "pads": {
-   "1": "U403.12",
-   "2": "U403.11"
-  },
-  "within": [
-   114.4,
-   110.4,
-   121.2,
-   113.2
+  "put": "R419",
+  "at": [
+   115.55,
+   111.7
   ],
-  "step": 0.05
+  "turn": 90,
+  "side": "F"
  },
  {
-  "at_pin": "R418",
-  "pads": {
-   "2": "R419.1"
-  },
-  "within": [
-   114.4,
-   110.4,
-   121.2,
-   113.2
+  "put": "R418",
+  "at": [
+   117.55,
+   111.7
   ],
-  "step": 0.05
+  "turn": 90,
+  "side": "F"
  },
  {
   "note": "south row: ICHG 9, ILIM 10, TS 8 (R415 from REGN), CE_N 7 (R417 to 3V3, R435 to CHG_INH which leaves south for the MCU); pads 1-3 (I2C, CHG_INT) keep their way south"
  },
  {
-  "at_pin": "R413",
-  "pads": {
-   "1": "U403.9"
-  },
-  "within": [
-   114.4,
-   110.4,
-   121.2,
-   113.2
+  "put": "R413",
+  "at": [
+   119.1,
+   111.6
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
-  "at_pin": "R414",
-  "pads": {
-   "1": "U403.10"
-  },
-  "within": [
-   114.4,
-   110.4,
-   121.2,
-   113.2
+  "put": "R414",
+  "at": [
+   120.15,
+   111.6
   ],
-  "step": 0.05
+  "turn": 0,
+  "side": "F"
  },
  {
   "at_pin": "R416",

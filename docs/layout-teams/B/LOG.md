@@ -864,6 +864,95 @@ Files: `candidates/r3.json`, `candidates/r3a.json`, `best_placement.json`; `reci
 `runs/r3-split-routed-dc/dc.json`, `runs/hand-split-routed-dc/dc.json`, `plan/r3-split-route-failed.txt`, `plan/hand-split-route-failed.txt`, `plan/r3-zoom/`. Boards, route.log and
 hot_gate.log stay local.
 
+## 2026-11-15 03:10 UTC, charger worker: fix task "Charger and EEPROM pin escapes, both ports" (round 4), candidates/r3_charger.json
+
+Only small parts moved; no power stage, hot-loop capacitor, U403/U503, 5 V buck or PD-pocket part (north of y 88)
+except C408. Bottom count stays 18 (D511 moved on the bottom, nothing flipped).
+
+**What blocked each edge, and the move** (cause found with `quick_ghost.sh`, `zoom.py` and the router's stub code;
+spots are fragment values, Port 2 = Port 1 + (-23.02577, +0.006368) unless said):
+
+| Edge | What blocked it | Move |
+|---|---|---|
+| I2CC_SCL U402.6 to R403.2 | C408's pads 0.5 mm west of pins 5/6: no way north for SCL | C408 1.1 mm south: pad 1 level with pin 8, pad 2 with pin 7, pins 5/6 free to the west |
+| HIDRV1 U403.27 to R444.1 (both) | C412.1 (BTST1) right over pin 27 and pin 26's fan-out stub beside it: the stub end was boxed | C412 0.5 mm west (over pin 28): pin 27 goes straight north to R444.1 |
+| FB U403.12 to R419.1 (both) | C417.2 0.09 mm too close over pin 12's way south; C419 across the only lane east of pin 11's stub | C417 0.28 mm north; C419 0.65 mm east (lane x 115.3-115.8 to R419.1 free); R418/R419/R413/R414 held at their spots with puts |
+| ACUV/ACOV U403.34/35 to R410 (both) | C409's PPHV pad 0.67 mm in front of both pins, and the PPHV copper hugging it | C409 1.23 mm west (pad 1 1.9 mm from pin 33, inside the 2 mm serves limit); R410 stands at the two stub ends (pad 1 level with pin 34, pad 2 under pin 35's stub, turned so the edges do not cross), allowed into U403's ring at the serves distance; its pads' escape room keeps PPHV copper out of the lane. R409/R411/R412 re-placed by their at_pin steps |
+| AC_SNS_N tap R426.1 / R526.1 | 3 mm under the AC_SNS_N copper of C427, beside PPHV | R426 stands under C427 with pad 1 0.6 mm under C427.1 (the pour reaches it); D404 gave up that spot and stands west of R426 (BTST1 pad south toward the lane over C416 to C412) |
+| BAT_SNS_P tap R428.1 / R528.1 | PACK_P copper between the BAT_SNS_P pour and the pad | R428 0.87 mm east into the west mouth between R427's pads; Port 2 also D505 0.38 and R528 0.39 mm north (Port 2's PACK_P pour over the C211/C212 via field is bigger and took the mouth at the twin spot) |
+| PACK_P tap R429.1 | 0.45 mm from the PACK_P copper | R429 lying, tap pad east 0.53 mm west of R427.2, on the PACK_P copper |
+| HG2 R446.2 to Q402.1 (both) | not cleared: BAT_SNS_P copper wraps Q402.1 (near its own terminal only the clearance applies) and crosses the 0.96 mm gap; R446 cannot move closer (courtyard touches Q402's) | none; fails on the hand board too |
+
+Port 2 needed three extra changes beyond the copy (`recipes/port2/02-charger-fix.json`, `05-9v.json`):
+- R509 (81.8, 110.6) t180 instead of the twin spot: with C509 west, the board edge leaves the PPHV planner only the narrow
+  way under C509; at the twin spot the planner refused the path as winding (46 mm for 27 mm straight, C509 left to the
+  router and R525's sealed tap blocked, `runs/chg-po2-p2`).
+- D511 (bottom) 1.05 mm west: its pad sat under C515.2, so C515.2 had no return via; once the PPHV copper passed west of
+  C515 its GND pad was walled in (`runs/chg-p2tryW1`). The 9 V parts placed after D511 are held at their r3 spots with
+  puts (the greedy would have moved them north of y 88).
+- R513/R514 put in one column east of C518/C519 (C519 took R514's spot; the greedy then found none for R513).
+
+| Part | r3 | now | | Part | r3 | now |
+|---|---|---|---|---|---|---|
+| C408 | (101.84, 84.84) t270 | (101.84, 85.95) t270 | | C509 | (83.28, 108.85) t0 | (82.05, 108.85) t0 |
+| C409 | (106.31, 108.84) t0 | (105.08, 108.84) t0 | | C512 | (86.37, 103.86) t180 | (85.87, 103.86) t180 |
+| C412 | (109.40, 103.85) t180 | (108.90, 103.85) t180 | | C517 | (92.44, 108.51) t0 | (92.44, 108.23) t0 |
+| C417 | (115.47, 108.50) t0 | (115.47, 108.22) t0 | | C518 | (93.47, 109.16) t180 | (93.47, 108.76) t180 |
+| C418 | (116.50, 109.15) t180 | (116.50, 108.75) t180 | | C519 | (92.92, 110.66) t270 | (93.57, 110.66) t270 |
+| C419 | (115.95, 110.65) t270 | (116.60, 110.65) t270 | | D504 | (81.87, 103.71) t90 | (81.25, 104.41) t180 |
+| D404 | (104.90, 103.70) t90 | (104.28, 104.40) t180 | | D505 | (93.82, 104.01) t270 | (93.82, 103.63) t270 |
+| R409 | (105.30, 111.15) t180 | (105.80, 110.15) t180 | | D511 (B) | (83.05, 106.85) t90 | (82.00, 106.85) t90 |
+| R410 | (106.85, 110.65) t270 | (107.32, 109.26) t90 | | R509 | (82.27, 111.16) t180 | (81.80, 110.60) t180 |
+| R411 | (106.35, 112.20) t0 | (106.80, 111.20) t0 | | R510 | (83.82, 110.66) t270 | (84.29, 109.27) t90 |
+| R412 | (107.80, 111.85) t270 | (107.50, 112.15) t0 | | R511 | (83.32, 112.21) t0 | (83.77, 111.21) t0 |
+| R426 | (104.90, 105.45) t270 | (105.58, 103.60) t0 | | R512 | (84.77, 111.86) t270 | (84.47, 112.16) t0 |
+| R428 | (116.85, 105.30) t90 | (117.72, 105.30) t90 | | R513 | (95.00, 109.60) t270 | (95.16, 108.20) t0 |
+| R429 | (116.85, 107.20) t270 | (117.72, 106.60) t0 | | R514 | (94.90, 110.65) t270 | (95.45, 110.19) t0 |
+| | | | | R526 | (81.87, 105.46) t270 | (82.55, 103.61) t0 |
+| | | | | R528 | (93.82, 105.31) t0 | (94.69, 104.92) t0 |
+| | | | | R529 | (93.82, 107.21) t270 | (94.69, 106.61) t0 |
+
+**Scorecard runs** (all finished, none timed out; DRC 0 in every run; loose = `tools/loose.py`, prints nothing = clean):
+
+| Run | Board | Blocked edges | Hot loops (nH) | Loss | Power open | Loose pads |
+|---|---|---|---|---|---|---|
+| `runs/p1r3-final` (ref) | Port 1 r3, partial | 15 of 170 | 0.70 / 0.78 / 0.74 | 0.313 W | GND J301/J302 | - |
+| `runs/chg-p1v1` | Port 1 now, partial | 9 of 169 | 0.70 / 0.78 / 0.74 | 0.313 W | GND J301/J302 | none |
+| `runs/p2v-i/scr` (ref) | Port 2 before the TVS swap, partial | 17 of 174 | 0.76 / 0.80 / 0.74 | 0.348 W | GND J301/J302 | - |
+| `runs/chg-p2v3` | Port 2 now, partial | 9 of 169 | 0.76 / 0.80 / 0.74 | 0.349 W | GND J301/J302 | none |
+| `runs/r3b-hot` (ref) | r3, `--hot=all` | 31 of 443 | 1.02 / 0.70 / 0.78 / 0.74 / 0.76 / 0.80 / 0.74, sum 5.54 | 1.125 W | GND J301/J302 | none |
+| `runs/r3b-split` (ref) | r3, zones split | 28 of 421 | - | 1.123 W | GND J301/J302 | none |
+| `runs/r4chg-hot` | **r3_charger**, `--hot=all` | **19 of 437** | **1.02 / 0.70 / 0.78 / 0.74 / 0.76 / 0.80 / 0.74, sum 5.54, 7 of 7 tier 1** | **1.125 W** | GND J301/J302 | none |
+| `runs/r4chg-hot-split` | **r3_charger**, zones split | **15 of 415** | - | 1.124 W | GND J301/J302 | none |
+| `runs/r3-split-route` (ref) | r3a, zones split, `--route=45` | 30 of 421; **full route 385 of 421, 36 failed** | - | 1.119 W | GND J301/J302 | none |
+| `runs/r4chg-split-route` | **r3_charger**, zones split, `--route=45` | 15 of 415; **full route 393 of 415, 22 failed**, about 19 min, not timed out | - | 1.124 W | GND J301/J302 | none |
+
+Plain runs still list R426.1, R526.1 (AC_SNS_N) and R429.1 (PACK_P) as blocked: those pads sit on pour outlines that
+the shared writer's multi-outline zones lose (the README trap); with zones split they are joined. The 15 left (split):
+HG2 x2 (item 6), C_CC1 x4 and C_CC2 at U405/U505, DRV9_OFF, U501.38 (3V3), GND pads U401.26/31/36 and U501.31/36,
+C304.2: all were blocked in r3 too, none is new. Full route failures (`plan/r4chg-split-route-failed.txt`): the 15 above
+(GND U401.27 shows there too) plus EN_5V1, CC2 (Port 1), Net-(U102-V4), and two that routed on r3a: TS1 (TH101 to U101,
+pack side) and I2CC_SDA (U403.2 to R402.2, 26 mm); both have a way on the empty board (not in the screen), so they are
+lost to congestion in this route. Gone from r3a's list: HIDRV1 x2, ACOV x2, FB x2, I2CC_SCL, the four sealed taps,
+C515.2, CC1/VBIAS/LDO_1V5 at U505/U501 (lead's TVS swap and round 3). check.py: hard faults only C406 and C506 (waived), touching 8 (r3 8),
+hpwl 2120 mm (r3 2113). Renders `runs/r4chg-hot/F.png`, `B.png` looked at: same power copper as r3, no sprawl.
+Pictures: `plan/chg-zoom/r4chg_chg1_F.png`, `r4chg_chg2_F.png`, `r4chg_u402_F.png` (split run, blocked edges red).
+
+For the lead: (1) Port 1 and Port 2 now differ in four parts (R509, D505, R528 and the bottom D511), each for a named
+Port 2 cause above. (2) R410 is in U403's/U503's ring by allow, at the serves distance (0.3 mm), so that it can stand at
+the stub ends. (3) HG2 needs either R446 closer than its courtyard allows or a planner rule that keeps escape room at a
+gate pad near its own terminal; not a placement fix. (4) Two quick-look helpers added: `tools/part_peek.py`
+(courtyard, pads and faults of named parts with `--set` overrides) and `tools/quick_split_ghost.sh` (`quick_ghost.sh` on
+a plan-only run written with one zone per outline); the README rows were not added because tools/README.md holds
+another worker's uncommitted edit.
+
+Files: `recipes/port1/02-charger.json`, `recipes/port1/04-pd.json`, `recipes/port2/01-stage-charger.json`,
+`recipes/port2/02-charger-fix.json`, `recipes/port2/05-9v.json`, `fragments/port1.json`, `port2.json` + meta
+(= `Port_1.json`, `Port_2.json` + meta), `candidates/r3_charger.json` (=
+`candidates/r3_Charger_and_EEPROM_pin_escapes_both_ports.json`), `tools/part_peek.py`, `tools/quick_split_ghost.sh`,
+`plan/chg-zoom/`, `plan/r4chg-split-route-failed.txt`, `runs/r4chg-hot/`, `runs/r4chg-hot-split/`, `runs/r4chg-split-route/`,
+`runs/chg-p1v1/`, `runs/chg-p2v3/` (score.json, dc.json, hot.json, ghost.log, F.png, B.png). Boards, hot_gate.json and route.log stay local.
+
 ## 2026-11-15 03:40 UTC, routed-board worker: fix task "Routed-board check with PACK_P straps" (round 3/4), tools only
 
 **What was built** (new files only; no placement, fragment, recipe or candidate touched):
