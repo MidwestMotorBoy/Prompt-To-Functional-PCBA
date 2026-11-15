@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/stagepwr-split-B4.kicad_pcb",
+ "sha": "e71baf6f1d807d8462c4e9d0ed8d11780f5deb92",
+ "routed": 350,
+ "failed": 48,
+ "edges": 398,
+ "minutes": 102.0,
+ "status": "done",
+ "tail": [
+  "FAILKEY /Cells and Gauge/CELL_P",
+  "FAILKEY /USB Port 1/REGN",
+  "FAILKEY /USB Port 2/HG1",
+  "FAILKEY /USB Port 1/HG1",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
