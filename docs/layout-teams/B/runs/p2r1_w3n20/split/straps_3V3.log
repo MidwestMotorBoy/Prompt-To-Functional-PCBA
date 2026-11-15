@@ -1,0 +1,5 @@
+straps 3V3 on In3.Cu: 5 groups, 5 tied to C303 (1 vias, at 114.5,117.1), untied 0; 40 segments, 112.1 mm (56.4 mm across the lanes, 0 mm at 0.5 mm); clearance faults 0; 1 s
+  tied L201 (1 vias, at 90.0,118.2)
+  tied C301 (1 vias, at 111.8,118.0)
+  tied C403 (1 vias, at 101.1,76.3)
+  tied C503 (1 vias, at 87.5,77.9)

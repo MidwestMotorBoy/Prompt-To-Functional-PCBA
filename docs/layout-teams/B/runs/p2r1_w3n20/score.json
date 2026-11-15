@@ -1,0 +1,13 @@
+{
+ "loss_W": 1.01,
+ "power_open": {
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 397,
+ "blocked_edges": "15 of 422",
+ "route": "394 of 422 routed, 28 failed"
+}

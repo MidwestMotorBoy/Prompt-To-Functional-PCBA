@@ -1141,3 +1141,93 @@ J301/J302. No full route was run locally. The same copper board is queued on Log
 Files: `score.json`, `F.png`, `B.png`, `PLAN2.md`, `tools/final_route.sh`, `tools/final_json.py`, `tools/README.md`,
 `route_queue/p2-base.kicad_pcb` (+ `.kicad_pro`, `.kicad_dru`), `runs/p2-base-screen/` (final.json, score.json, dc.json,
 ghost.log, split/straps.log).
+
+## 2026-11-15 20:45 UTC, worker A: fix task "Power copper that survives routing" (phase 2 round 1, resumed after the pause)
+
+Placement r4 unchanged (`runs/r4chg-hot`). Before the pause (commits "Team B worker A", 15:17 to 17:25 UTC) this task
+built `tools/trunk.py` (hard outer-layer trunk), `tools/ruleareas.py` (rule areas: protected soft pours, hot-loop
+areas, corridors), `tools/links.py` (explicit power links), `tools/quick_dc.sh`, rule areas in
+`tools/write_copper_split.py`, ran `runs/p2a-base` and `runs/p2a-n1` locally and queued 11 boards on Logan's PC. After
+the pause: one local full route of the best PC variant with the seven hot loops (`runs/p2r1_w3n20`), two more PC
+boards (`p2a-w3n20hv`, `p2a-w5n20`), a screen of the 5 mm trunk (`runs/p2r1_w5n20s`), the cause of every power item on
+KiCad's unconnected list, `tools/netclusters.py`, `~` for spaces in `trunk.py --net`, README section "Phase 2: power
+copper under routing". (`runs/p2a-w3n15` and the first `runs/p2a-w3n20` were stopped by the pause: their "TIMED OUT
+... 202 routed" is the pause, not the cap.)
+
+**Local full routes** (same flow, `final_route.sh`, none timed out; 3V3 In3 straps in all; J113 / R427 = PACK_P
+terminal mohm from `dc.json` and `routed/dc.json`):
+
+| Run | Copper plan | Blocked | Route | Loss before / routed | J113 before / routed | R427 before / routed | Routed power open | Routed DRC | Hot loops routed |
+|---|---|---|---|---|---|---|---|---|---|
+| `runs/r4-final` (lead) | PACK_P straps only | 16 of 416 | 391 of 416 | 1.124 / 2.854 W | 2.24 / 15.6 | 2.17 / 15.4 | 3V3 L201 | 3 | 7 of 7, 5.56 nH |
+| `runs/p2a-base` | PACK_P + 3V3 straps (baseline) | 15 of 421 | **399 of 421**, 38 min | 1.124 / 2.206 W | 2.24 / 10.4 | 2.17 / 10.2 | 3V3 L201 | 3 | not run |
+| `runs/p2a-n1` | links + protect + trunk `--w=3` + PACK_P straps after it | 15 of 422 | 387 of 422, about 60 min (PC: 391) | 1.001 / **1.198 W** | 1.27 / **2.27** | 1.32 / **2.36** | **none** | 3 | 7 of 7, 5.55 nH |
+| **`runs/p2r1_w3n20`** | the same, trunk `--w=3 --narrow=U403:0.8:2.0` | 15 of 422 | **394 of 422**, about 41 min (PC: 396) | 1.009 / 1.306 W | 1.34 / 3.05 | 1.38 / 3.11 | **none** | 3 | **7 of 7, 5.54 nH (every loop = before routing)** |
+
+Routed loss by net (W, before / n1 / w3n20 / base): PACK_P 0.20 / 0.35 / 0.46 / 1.37; GND 0.32 / 0.36 / 0.36 / 0.36;
+the rest unchanged. On `p2r1_w3n20` the In2 PACK_P sheet east of x 113 is cut away by signals south of y 107 (picture
+`runs/p2r1_w3n20/routed_In2.Cu.png`): J113 and R427 hang on the B.Cu trunk alone, so their mohm follows the trunk's
+squares (11.1 for n1, 12.7 for w3n20: the 2 mm neck at U403). Routed DRC errors are the router's own 3
+`HighCurrent copper to small signals` at CELL_1N (x 100.1 to 103.4, y 127.9 to 128.8), as on every routed board (worker B).
+
+**Logan's PC** (stock router, counts only; edges 421 or 422; all done, none timed out):
+
+| Board | Copper plan | Routed | Minutes |
+|---|---|---|---|
+| p2-base | baseline (straps) | **399 of 421** | 38.0 |
+| p2a-t3 / p2a-t2 | trunk 3 / 2 mm, PACK_P straps before it | 390 / 390 of 422 | 60.8 / 66.4 |
+| p2a-tp | + links + protect | 388 of 422 | 56.7 |
+| p2a-n1 / p2a-n2 | trunk 3 mm, straps after it (`--across=15`) / + `ruleareas --hot` | 391 / 393 of 422 | 61.6 / 51.3 |
+| p2a-av | trunk round U403 (`--avoid=U403:0.7`, 40 mm) | 392 of 422 | 41.9 |
+| p2a-t15 | trunk 1.5 mm | 395 of 421 | 29.2 |
+| p2a-w3n15 / -h | 3 mm, 1.5 mm at U403 / + hot areas | 392 of 422 / 394 of 421 | 49.7 / 46.9 |
+| **p2a-w3n20** / -h | **3 mm, 2.0 mm at U403** / + hot areas (no tracks) | **396** / 393 of 422 | 30.8 / 52.9 |
+| p2a-w3n20hv | w3n20 + hot areas no vias only | 394 of 422 | 32.3 |
+| p2a-w5n20 | 5 mm, 2.0 mm at U403 (11.3 squares; screen `runs/p2r1_w5n20s`: 15 of 421, DRC 0, 1.000 W, J113 1.26, R427 1.31 mohm) | queued, result at `origin/route-results:B/p2a-w5n20-4560c549.json` | - |
+
+Two routes of the same plan differ by about 4 edges (n1: 391 PC, 387 local), so differences of 1 to 3 are noise.
+
+**Against the goals** (best variant `runs/p2r1_w3n20`): power open on the routed board none (3V3 reaches L201) - met;
+loose none - met; copper board DRC 0 - met; blocked 15 of 422 (baseline 15) - met; hot loops 7 of 7, routed sum 5.54
+nH = before routing, no loop up - met (the no-via hot areas are not needed on this route and cost 2 edges on the PC);
+J113 3.05 and R427 3.11 mohm against 3.0 - **missed by 0.05 and 0.11**; routed loss 1.306 W against 1.25 - **missed**;
+route 394 against 399 - **5 below, limit 3**. `p2a-n1` meets J113/R427 (2.27/2.36) and loss (1.198 W) but routes 8 to 12
+below the baseline. The trade is the trunk's width under U403 (Port 1 charger): wide there costs U403's south pin
+escapes (TS, CE_N, ICHG, CHG_INT, BTST2/SW2 fail in n1), narrow costs mohm. `p2a-w5n20` keeps the 2 mm neck and widens
+the rest (11.3 squares, about n1's 11.1): if the PC returns 395 or more, it is the candidate to route locally next.
+
+**Recommended --filters** (with `--straps="--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"`, `--route=80`):
+`links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8;ruleareas.py --protect=3V3:F.Cu,PACK_P:F.Cu;trunk.py --w=3 --narrow=U403:0.8:2.0;straps.py --net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V --across=15`
+(replace `--w=3` by `--w=5` if `p2a-w5n20` routes as well).
+
+**Power items on KiCad's unconnected list of the routed board, cause of each** (`runs/p2r1_w3n20/routed/drc.json`,
+39 items; clusters from `tools/netclusters.py`):
+- *Copper plan, not fixed here*: **Port 1 VBUS** (J401.A9/B4 on a 0.9 mm2 F.Cu piece, not joined to A4/B9, U401,
+  C406) and **Port 2 VBUS** (U501.32, C550, J501.A9/B4 on one F.Cu piece; A4/B9, U501.23, C506, D501 on the other).
+  Present on the copper board before routing. The router never routes an item whose two ends are both zones
+  (`router.py parse_edges`), so no route closes it. The only F.Cu join (`trunk.py` on the VBUS net) runs under the
+  receptacle's CC/D+/D-/SBU pads at y 70 and closes their escapes; with `--avoid=J501:1.5` there is none. A join needs
+  a via in each piece and a B.Cu or In3 link, which competes with the CC pin escapes of worker B's table
+  (`plan/p2-pins.json`): the lead should give it to one worker with both in view.
+- *Fixed*: Port 2 BAT_SNS_P island at R528.1 (`links.py`, gone on n1 and w3n20); 3V3 at L201 (In3 straps + F.Cu
+  protect areas: L201.2 is in the main 3V3 cluster); the GND F.Cu hot-loop zone in two islands at U404 (on r4-final and
+  p2a-base; not on n1 or w3n20).
+- *Router edges, worker B*: GND U401.26/27/31/36, U501.31/36, C304.2; 3V3 U401.38, U501.38 and R314.1 (R314's In3 edge);
+  CELL_P C110.1, R110.2, R118.1 (signal-size pads off the CELL_P pour: the router counts the zone outline, the fill does
+  not reach; also on p2a-base); HG2 x2, CC x5, DRV9_OFF, EN_5V1 x2, EN_5V2, U403 TS/CE_N/CHG_INT/HIDRV1, SRP_F, ACUV,
+  U102-V4, LDO_3V3, AC_SNS_N.
+- *New on w3n20, harmless for dc_score, still a KiCad item*: "Zone PACK_P In2 | Zone PACK_P B.Cu": In2 PACK_P slabs
+  south of C210 (islands touching one via or one track) cut by a signal track; every PACK_P pad is in one cluster.
+
+**Left, and why:** J113/R427 and loss sit just above the limits with the narrow trunk (p2a-w5n20 is the next try;
+a local route of it takes about 45 min); the VBUS pin-pair joins (shared with the CC escapes); the CELL_P small pads and
+R314 (router/finisher). Renders looked at: `runs/p2r1_w3n20/routed_In2.Cu.png`, `routed_B.Cu.png` (the trunk is a
+3 mm diagonal strip from Q102 past TH104 to J113 and R427, stepped in width at U403; no power part sprawls),
+`runs/p2r1_w5n20s/split/trunk_w5n20.png` (the 5 mm version is a wide, rounded strip in the same place),
+`runs/p2r1_look/vbus*.png`.
+
+Files: `tools/netclusters.py` (new), `tools/trunk.py` (`~` in `--net`), `tools/README.md`, `route_queue/p2a-w3n20hv.*`,
+`route_queue/p2a-w5n20.*`; `runs/p2r1_w3n20/` (final.json, score.json, dc.json, ghost.log, route_failed.txt,
+routed/dc.json, routed/hot_gate.json, routed/hot.json, split/*.log, routed_*.png), `runs/p2r1_w5n20s/` (final.json,
+score.json, dc.json, ghost.log, split/*.log, split/trunk_w5n20.png), `runs/p2r1_qw3n20hv/hot_vias.png`,
+`runs/p2r1_look/*.png`. Boards and route.log stay local (`runs/p2r1_w3n20/routed.kicad_pcb`).

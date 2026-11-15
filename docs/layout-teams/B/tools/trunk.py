@@ -47,7 +47,7 @@ from scipy.ndimage import distance_transform_edt
 A = [a for a in sys.argv[1:] if not a.startswith("--")]
 O = dict(a[2:].split("=", 1) if "=" in a else (a[2:], "1") for a in sys.argv[1:] if a.startswith("--"))
 if len(A) < 3: print(__doc__); sys.exit(2)
-NET = O.get("net", "PACK_P"); LAY = O.get("layer", "B.Cu"); SRC = O.get("source", "Q102")
+NET = O.get("net", "PACK_P").replace("~", " "); LAY = O.get("layer", "B.Cu"); SRC = O.get("source", "Q102")
 TO = [t for t in O.get("to", "J113,R427").split(";" if ";" in O.get("to", "") else ",") if t]
 W, WMIN, WSTEP, CLR, G = (float(O.get(k, d)) for k, d in (("w", 3.0), ("wmin", 1.0), ("wstep", 0.25), ("clr", 0.25), ("g", 0.1)))
 TURN, NEAR, MARGIN = float(O.get("turn", 15)), float(O.get("near", 1.5)), float(O.get("margin", 6))

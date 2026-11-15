@@ -190,7 +190,10 @@ serve both ports with `"ref": "U405|U505"`; any value may be per port with `"a|b
 {"ref": "U401", "pad": "27", "to": "C401.2", "w": 0.2, "max": 2, "cut": ["/USB Port 1/VBUS"], "why": "..."}
 ```
 `dir` N/S/E/W/out: lead out of the pad (`lead` mm beyond its edge, default 0.15), then the shortest exact way to a
-free via spot within `max` mm (existing same-net vias count as goals). `to`: a whole one-layer connection pad to pad.
+free via spot within `max` mm (existing same-net vias count as goals). `at`: `"dx,dy"` (mm, board axes, from the pad
+centre; per port `"a|b"`) fixes the via spot instead of searching for one, for corners where the first free spot
+closes the next pin (Port 1 corner of U405: C_CC1 pin 4 via over the tip of pin 5 at `-0.4,-0.75`, VBIAS pin 3 via at
+`-0.02,-0.75`, C_CC2 J401.B5 via at `0.55,1.025` south-east of B5, pins 5 and 6 joined round the corner). `to`: a whole one-layer connection pad to pad.
 `cut`: nets whose (non-hot) pours may be cut. `keep`: `REF.PAD:DIR:LEN` strips kept free for another pin's escape.
 `via_gap`: minimum distance to other nets' vias (default 0.75, the router's; 0.65 only where both pins are escaped
 here). Entry order matters: an earlier via can close a later pin (put the tight pin first, with a keep strip for its
@@ -206,6 +209,14 @@ writes `<out>/finished.kicad_pcb` (work files in `<out>/fin/`, log `post.log`):
    is kept only if it leaves fewer open connections + DRC errors;
 3. `--hand=<json>`: hand-laid tracks and vias (`tools/handroute.py`);
 4. dangling ends removed (`tools/fin_clean.py`, only items the router laid), zones refilled, DRC again;
+(1b, and after each pass) stub trim (`tools/fin_trim.py <in> <its drc.json> <out>`): a track named in a clearance
+   error whose end lies on a pad of its own net (and on nothing else) is shortened along itself to that pad's edge
+   (0.03 mm inside). The router starts every fan-out stub at the pad centre, so stubs of neighbouring 0.4 mm pitch
+   pins that leave in opposite directions are 0.225 mm apart inside the pads: the 3 'HighCurrent copper to small
+   signals' errors at U101 (CELL_1N against TS1, BTP_INT, SMBD). The trim runs before the continuation, so the
+   continuation does not lift CELL_1N for a stub error (on r4-final it lifted it and could not route it again).
+   The input board needs its .kicad_pro / .kicad_dru beside it (the refill uses the project's rules; without them the
+   PACK_P pour fills at 0.2 mm and DRC shows 200 new errors);
 5. power guard (`tools/fin_guard.py`): dc_score loss no more than the routed board's + `--tol` (0.001 W), no new power
    open, no new track or via of another net in a hot-loop pour. The best candidate that passes is copied; if none
    does, the routed board itself.
@@ -235,3 +246,51 @@ board the coordinates belong to (they are only valid on that board).
 - `router_b.py` with no options is the shared router; finish.sh passes `--hcx=0.16 --hotko=<hot parts>` (r4-final had 3 HighCurrent-to-signal clearance errors at CELL_1N with the shared 0.1).
 - `fin_clean.py` removes only dangling items not in the plan; a dangling pins.py escape (its net failed) stays.
 - `final_route.sh --post` only runs with a full route (`--route` not 0).
+- A continuation pass that hits finish.sh's `timeout --min` writes NO board (exit 124; `runs/p2r1_full1fin` lost a pass
+  that had routed 12 of 18 open connections). `router_b.py --deadline=S` (finish.sh passes `min*60-300`) stops pulls and
+  new phases after S seconds and writes the board; keep `--riptime` x `--phases` in mind, each phase gets its own riptime.
+- The router never routes an unconnected item whose two ends are zones: the VBUS island of J401.B4 / J501.B4 (the
+  receptacle's second VBUS pin pair) and the Port 2 BAT_SNS_P island at R528.1 stay open after any route or
+  continuation. BAT_SNS_P: `hand.json` beside the run (one 0.2 mm F.Cu track) or worker A's `links.py`; VBUS: a plan
+  join (the room south of B4 holds the C_CC1 via of U405.4 / U505.4), not done in round 1.
+- pins.py table `at` offsets are board axes, not part axes: they hold for a nudge, not for a rotated part; the Port 2
+  entries of U505 keep the searched via spots.
+
+## Phase 2: power copper under routing (worker A)
+
+Copper-plan filters for `final_route.sh --filters` (call form `python3 tools/<f> <spec in> <cu.json> <spec out> [opts]`),
+so that PACK_P to J113/R427 keeps its pre-route resistance on the ROUTED board. Write a space in a net name as `~`.
+
+| Tool | What it does |
+|---|---|
+| `trunk.py` | A HARD (tracks, not pour) wide trunk of a net on an outer layer (default PACK_P on B.Cu, Q102 -> J113, R427): least-resistance Steiner path on a 0.1 mm grid (step cost (w / width that fits)^pw), width capped at `--w`, closed where `--wmin` does not fit; clear of other nets' pads, vias, tracks, pours and keep-outs by `--clr`, and of small signal pads by `--under` (their escapes); `--narrow=REF:mm:w` caps the width near a part (keeps its pin escapes open), `--avoid=REF:mm` closes the room near it; `--stitch=MM` adds through vias where one is free on every layer. Every track is checked exactly (shapely); `--png` draws it. Exit 1 on a missed terminal or a clearance fault. |
+| `ruleareas.py` | KiCad rule areas in the plan (`spec["rule_areas"]`, written by `write_copper_split.py`): `--protect=NET:LAYER,...` no-tracks over every planned pour of a soft net on that layer; `--hot` no-tracks over the hot loops' GND F.Cu return pours (`--hot_mode=vias`: no vias only); `--corridor="In2.Cu:2.5:x,y/x,y"` a no-signal corridor. Areas are cut back from plan tracks/vias (KiCad flags any track in a no-tracks area) and from other nets' pads by `--esc`. The router obeys them (`router.py mark_ko`). |
+| `links.py` | Short explicit power links by coordinates (`--link="NET|LAYER|W|x,y/x,y"`, `--via="NET|x,y"`), each checked exactly; exit 1 and nothing written on a fault. Used for the Port 2 BAT_SNS_P island at R528.1. |
+| `quick_dc.sh` | `bash tools/quick_dc.sh <spec.json> <out dir>`: plan -> board (one zone per outline), KiCad DRC, dc_score; prints DRC errors and PACK_P J113/R427 mohm. About 1 min; not a scorecard number. The out dir's `cu.kicad_pcb/.kicad_pro/.kicad_dru` are what goes into `route_queue/` for Logan's PC. |
+| `netclusters.py` | `docker run ... kicad/kicad:10.0 python3 tools/netclusters.py <board> <net> [...]`: KiCad's connectivity clusters of a net (pads, vias, zones per cluster): which piece of a power net is cut off. |
+
+**The recommended filter string** (r4, `runs/r4chg-hot`; 3V3 straps stay in `--straps`, the PACK_P In2 straps move
+AFTER the trunk so they tie to it instead of running east-west across the In2 lanes):
+```
+ST3="--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"
+FA="links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8;ruleareas.py --protect=3V3:F.Cu,PACK_P:F.Cu;trunk.py --w=3 --narrow=U403:0.8:2.0;straps.py --net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V --across=15"
+bash tools/final_route.sh runs/r4chg-hot runs/<new> --straps="$ST3" --filters="$FA" --route=80     # PACK_P route needs > 45 min here
+```
+Add `;ruleareas.py --hot` (no tracks) or `;ruleareas.py --hot --hot_mode=vias` at the end for the hot-loop areas.
+
+**Traps.**
+- Order matters: with the links and protect areas, PACK_P straps BEFORE the trunk (189 mm, 72 mm east-west across
+  the In2 lanes) gave 22 of 422 blocked (`runs/p2a-combo-s`); the same filters with the straps AFTER the trunk and
+  `--across=15` tie to it (142 mm, 36 mm across) and gave 15 of 422 (`runs/p2a-n1`). Trunk alone with the straps
+  before: 15 of 422 (`runs/p2a-t3s`).
+- A 3 mm trunk under U403 (the Port 1 charger) takes the room its south pins escape through: the route loses U403
+  TS / CE_N / ICHG / I2CC_SDA / CHG_INT edges. `--narrow=U403:0.8:2.0` gave the best route count; `--avoid=U403`
+  (round it, 40 mm) and a plain 1.5 mm trunk were worse or no better.
+- Route counts move by about 4 edges between two routes of what is the same copper plan (`p2a-n1`: 391 of 422 on
+  Logan's PC, 387 locally; the local board file differs in bytes after the scorecard rewrite). Do not pick between
+  variants on differences of 1 to 3 edges from one route each.
+- The router never routes an unconnected item whose two ends are both zones (`router.py parse_edges`: `if A and B
+  both Zone: continue`). A pour planned in two pieces that no pad joins (Port 1 and Port 2 VBUS at the USB-C
+  receptacle's two VBUS pin pairs, Port 2 BAT_SNS_P at R528.1) stays open on the routed board whatever the route
+  does: it must be joined in the copper plan (`links.py`, `trunk.py` for the net) or by a hand track.
+- The local route of a trunk board is slow (60 min for `p2a-n1`): use `--route=80`, and say when it times out.
