@@ -1,0 +1,50 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 371 (0 on long nets)
+fan-out stubs: 138
+phase 1: 25 open connections tried again with every route free to move
+phase 2: 26 open connections tried again with every route free to move
+phase 3: 19 open connections tried again with every route free to move
+routes pulled and re-laid: 606
+fan-out stubs unused (removed) 56, trimmed 24
+unconnected after fill: 44
+routed 351 edges, 20 failed, items added 4608
+  FAILED /USB Port 2/HIDRV1 86.06,108.84 (Pad 27  of U503 ) -> 88.16,103.21 (Pad 1  of R544 ) starts 75 goals 135 seen 126 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 106.45,85.30 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 71 goals 47 seen 115702 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/REGN 110.15,106.03 (Pad 1  of C410 ) -> 110.59,108.84 (Pad 24  of U403 ) starts 242 goals 72 seen 85 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/SBU_FLT 108.40,86.78 (Pad 2  of R441 ) -> 107.50,82.92 (Pad 19  of U401 ) starts 62 goals 1043 seen 286 | no way even with every other route gone
+  FAILED /USB Port 2/C_CC2 94.95,72.25 (Pad 5  of U505 ) -> 91.75,69.17 (Pad B5  of J501 ) starts 123 goals 18 seen 25 | no way even with every other route gone
+  FAILED /USB Port 1/C_CC1 107.75,69.17 (Pad A5  of J401 ) -> 103.90,71.90 (Pad 4  of U405 ) starts 72 goals 168 seen 86 | no way even with every other route gone
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 53 seen 19 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/CC1 95.35,75.05 (Pad 12  of U505 ) -> 85.70,79.08 (Pad 28  of U501 ) starts 50 goals 22 seen 34 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 107.59,120.60 (Pad 1  of R415 ) -> 110.59,108.84 (Pad 24  of U403 ) starts 126 goals 72 seen 85 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 435 seen 621 | no way even with every other route gone
+  FAILED /USB Port 2/I2CC_SDA 82.20,86.48 (Pad 2  of R502 ) -> 86.06,113.64 (Pad 2  of U503 ) starts 408 goals 80 seen 950935 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 182 goals 72 seen 551 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 148 seen 123 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 112.00,85.01 (Pad 1  of R433 ) -> 112.00,85.01 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 82 goals 0 seen 219 | no way even with every other route gone
+  FAILED GND 107.10,79.08 (Pad 27  of U401 ) -> 107.10,79.08 (Zone planeZone plan) starts 33 goals 0 seen 226 | no way even with every other route gone
+  FAILED /P1_LDO_3V3 108.40,87.42 (Pad 1  of R441 ) -> 108.40,85.72 (Pad 1  of R404 ) starts 62 goals 102 seen 251 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 114.55,106.15 (Pad 2  of D410 ) -> 110.15,106.03 (Pad 1  of C410 ) starts 150 goals 126 seen 117254 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 105.82,102.35 (Pad 2  of R454 ) -> 110.15,106.03 (Pad 1  of C410 ) starts 15 goals 126 seen 288 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL1 86.10,69.48 (PTH pad 1  of J109) -> 89.99,121.20 (Pad 1  of R101 ) starts 2658 goals 329 seen -12000001 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2667 goals 353 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 2/HIDRV1
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/REGN
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 2/C_CC2
+FAILKEY /USB Port 1/C_CC1
+FAILKEY /USB Port 1/CC1
+FAILKEY /USB Port 2/CC1
+FAILKEY /USB Port 1/REGN
+FAILKEY SCL
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/PP5V
+FAILKEY GND@Pad 27 [GND] of U401 on F.Cu
+FAILKEY /P1_LDO_3V3
+FAILKEY /USB Port 1/REGN
+FAILKEY /USB Port 1/REGN
+FAILKEY /Cells and Gauge/CELL1
+FAILKEY /Cells and Gauge/CELL3
