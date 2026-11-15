@@ -28,20 +28,42 @@ via AC_SNS_N@1 109.1,87.4 109.9,87.4 110.7,87.4 111.5,87.4 112.3,87.4
 zone AC_SNS_N@2 F.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
 zone AC_SNS_N@2 B.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
 via AC_SNS_N@2 88.0,86.4 88.8,86.4 89.6,86.4 88.4,87.2 89.2,87.2
-# --- PD chips' second VBUS pin (32, the 5 V source path): one via in the gap between its capacitor and the pin,
-#     then a B.Cu track to the VBUS vias by the bulk capacitor. On F.Cu it would take the only way out of the CC pins.
+
+
+
 via VBUS@1 104.9,77.27
 track VBUS@1 F.Cu 0.4 104.9,76.6 104.9,77.9
-track VBUS@1 B.Cu 0.8 104.9,77.27 107.9,77.27 108.95,77.78
 via VBUS@2 85.12,77.3
 track VBUS@2 F.Cu 0.4 85.12,76.6 85.12,77.9
-track VBUS@2 B.Cu 0.8 85.12,77.3 87.6,77.3 88.65,78.37
 # --- USB-C connectors: the two VBUS pad pairs joined by a B.Cu bar under the pad row, two vias below each pair
 box VBUS@1 B.Cu 40 103.4,69.95,109.7,70.9
-via VBUS@1 103.7,70.35 104.3,70.35 108.75,70.35 109.35,70.35
+via VBUS@1 103.55,70.3 103.0,70.75 108.75,70.35 109.35,70.35
 box VBUS@1 F.Cu 41 103.5,69.4,104.5,70.6
 box VBUS@1 F.Cu 42 108.55,69.4,109.55,70.6
 box VBUS@2 B.Cu 40 90.4,69.95,96.7,70.9
-via VBUS@2 90.7,70.35 91.3,70.35 95.75,70.35 96.35,70.35
+via VBUS@2 90.55,70.3 91.1,70.2 95.75,70.35 96.35,70.35
 box VBUS@2 F.Cu 41 90.5,69.4,91.5,70.6
 box VBUS@2 F.Cu 42 95.55,69.4,96.55,70.6
+# --- Kelvin tap vias at the inner edge of each charger shunt pad (the taps themselves: place/routes.txt)
+via PPHV@1 109.0,83.95
+via AC_SNS_N@1 109.9,84.45
+via BAT_SNS_P@1 117.7,104.24
+via PACK_P 118.65,105.74
+via PPHV@2 89.2,84.0
+via AC_SNS_N@2 90.1,84.5
+via BAT_SNS_P@2 97.6,100.89
+via PACK_P 98.5,99.39
+# --- the PACK_P pour kept off the battery-sense filter resistor R429 pad 1, so its tap (place/routes.txt) is the only way in
+dropz PACK_P F.Cu 117.35,110.35,118.6,111.7
+# pack-side Kelvin tap of Port 1: no via site next to R429, so a hand via east of the pad
+via PACK_P 118.75,111.3
+track PACK_P F.Cu 0.2 117.968,111.023 118.75,111.3
+# charger DRV_SUP pin (23) sits between the REGN capacitor's pads: one via fits in the 0.6 mm band above the pin
+via DRV_SUP@1 111.6858,107.47
+track DRV_SUP@1 F.Cu 0.2 111.6858,107.47 111.6858,107.95
+via DRV_SUP@2 88.66,107.5
+track DRV_SUP@2 F.Cu 0.2 88.66,107.5 88.66,108.0
+# second VBUS pin (32) of each PD chip: from its via on B.Cu under the CC capacitors' pads to the VBUS copper east of
+# the chip (not along the channel between capacitors and chip: the CC1/CC2 vias need that)
+track VBUS@1 B.Cu 0.8 104.9,77.27 104.9,76.8 105.3,76.4 107.2,76.4 107.58,76.02 108.65,76.02 109.4,76.77
+track VBUS@2 B.Cu 0.8 85.12,77.3 85.12,76.85 85.5,76.47 87.3,76.47 87.45,76.62 88.7,76.62

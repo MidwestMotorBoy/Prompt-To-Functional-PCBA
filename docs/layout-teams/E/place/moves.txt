@@ -15,3 +15,9 @@ U405 +0 -0.45
 C451 107.55 71.0
 C450,C402,C401 +0 -0.45
 C550,C502,C501 +0 -0.45
+# room under the PD chips' bottom pin row (SDA, SCL, IRQ could not get out)
+U402,C408,R402,R403,R404,R441 +0 +1.0
+U502,C508,R502,R503,R504,R541 +0 +1.0
+# REGN capacitor off the four signal pins it sat on: now straight above the chip's REGN and GND pins
+C410 111.6858 106.8324 r180
+C510 88.66 106.8388 r180

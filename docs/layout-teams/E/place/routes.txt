@@ -1,0 +1,18 @@
+# Team E hand-directed routes, laid by the router before everything else and pinned (tools/eroute.py --taps=).
+#   NET x,y REF.PAD [layers]   Kelvin tap: thin track from the filter resistor pad to the tap via at x,y (place/copper.txt),
+#                              arriving on an inner layer (3 = In3), clear of every other piece of the net's copper
+#   join NET x,y LAYERS W      the piece with copper at x,y is joined to the rest of its net on those layers only
+#   void x,y [r]               no pour within r (0.52 mm) of the hand via of a tap at x,y, on every layer (the router adds
+#                              the same void round every via of the taps it lays itself)
+# (the second VBUS pin of each PD chip was a 'join ... 5 0.8' here; it is now a hand B.Cu track in place/copper.txt,
+#  laid under the capacitor pads so that the channel between capacitors and chip keeps room for the CC vias)
+# --- charger current sense: input shunts (PPHV side, AC_SNS_N side) and battery shunts (BAT_SNS_P side, PACK_P side)
+PPHV@1 109.0,83.95 R425.1
+AC_SNS_N@1 109.9,84.45 R426.1
+BAT_SNS_P@1 117.7,104.24 R428.1
+PACK_P 118.65,105.74 R429.1
+PPHV@2 89.2,84.0 R525.1
+AC_SNS_N@2 90.1,84.5 R526.1
+BAT_SNS_P@2 97.6,100.89 R528.1
+PACK_P 98.5,99.39 R529.1
+void 118.75,111.3

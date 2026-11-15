@@ -35,6 +35,7 @@ EDGE_CLR = 0.25
 VIA_D, VIA_DRILL = 0.45, 0.3
 TOL_O, TOL_D = 0.031, 0.043          # raster margins: straight steps, diagonal steps
 SOFTNETS = ("GND", "PACK_P", "3V3")
+ACC_LEN = 0.7                        # pin access strip in front of a fine-pitch IC pin
 EDGE_NET = -2
 
 
@@ -342,6 +343,7 @@ class World:
         self.dyn = {}                  # route id -> dict(net, items)
         self.rid = 0
         self.fill_override = None
+        self.voids = []                # [dict(x, y, r)]: no pour within r of (x, y) on any layer
         self._nonet = 100000
         self.pad_cells = {}
         self.znet = np.full((NL, NY, NX), -1, np.int32)                       # hard pour at this cell: its net (pours give way to tracks)
@@ -404,6 +406,30 @@ class World:
                     cx0, cy0 = self.cell(b[0] - m, b[1] - m)
                     cx1, cy1 = self.cell(b[2] + m, b[3] + m)
                     self.smd[max(cy0, 0):cy1 + 1, max(cx0, 0):cx1 + 1] = n + 1
+        # ---- pin access: the strip a fine-pitch IC pin needs to get out (0.7 mm outward from the pad) is dear for
+        # every other net, on the pad's layer, and a foreign via next to it is dearer still
+        self.acc = np.zeros((NL, NY, NX), np.int32)
+        fpc = {f["ref"]: f for f in D.get("fps", [])}
+        npad = {}
+        for p in D["pads"]:
+            npad[p["net"]] = npad.get(p["net"], 0) + 1
+        for p in D["pads"]:
+            f = fpc.get(p["ref"])
+            if f is None or f.get("npads", 0) < 8 or max(p["drill"]) > 0 or not p["net"] or npad[p["net"]] < 2:
+                continue
+            b = p["box"]; pw, ph = b[2] - b[0], b[3] - b[1]
+            if min(pw, ph) > 0.4 or max(pw, ph) < 1.5 * min(pw, ph):
+                continue
+            if ph > pw:
+                sg = 1 if p["y"] > f["y"] else -1
+                r = (b[0] - 0.08, b[3] if sg > 0 else b[1] - ACC_LEN, b[2] + 0.08, b[3] + ACC_LEN if sg > 0 else b[1])
+            else:
+                sg = 1 if p["x"] > f["x"] else -1
+                r = (b[2] if sg > 0 else b[0] - ACC_LEN, b[1] - 0.08, b[2] + ACC_LEN if sg > 0 else b[0], b[3] + 0.08)
+            cx0, cy0 = self.cell(r[0], r[1]); cx1, cy1 = self.cell(r[2], r[3])
+            for lname in p["shapes"]:
+                sub = self.acc[LAYERS.index(lname), max(cy0, 0):cy1 + 1, max(cx0, 0):cx1 + 1]
+                sub[sub == 0] = p["_n"] + 1
         # ---- zones
         self.soft_fill = {}            # net id -> [(L, polys)] soft pours (not obstacles; reached by via / track end)
         for z in D["zones"]:
@@ -637,6 +663,16 @@ class World:
                 zm = self._fill_mask(it[2], x0, y0, w, h)
                 zm &= self.zone_ok(n, it[1], win)
                 zcu[it[1]] |= zm.astype(np.uint8)
+        # a pour that only touches a pad or a track along its edge does not connect in KiCad: pull every pour in by
+        # one cell, so that only a real overlap counts
+        for L in range(NL):
+            if zcu[L].any():
+                zcu[L] = ndimage.binary_erosion(zcu[L], structure=np.ones((3, 3), bool)).astype(np.uint8)
+        if self.voids:                                # pour voids round Kelvin tap vias (rule areas on the board)
+            vm = np.zeros((h, w), np.uint8)
+            for v in self.voids:
+                paint_seg(vm, v["x"], v["y"], v["x"], v["y"], v["r"], X0w, Y0w, 1)
+            zcu[:, vm > 0] = 0
         self._zonly = zcu & ~cu                       # cells that are copper only by a pour
         self._zall = zcu
         cu |= zcu
@@ -736,7 +772,7 @@ class World:
     # ---------------------------------------------------------------- one connection
     def connect(self, n, src_piece=None, w=0.2, layers=(0, 2, 3, 5), ghost=False, margin=4.0, via_cost=60.0, bend=3.0,
                 lcost=(1.25, 9, 1.0, 1.0, 9, 1.35), pref=(0, 0, 1, 2, 0, 0), hist=None, win=None, maxn=6000000, neck=0.15,
-                only_target=None, allow_padvia=False, extra_pen=None, zcost=(0.5, 12.0), narrow_pen=0.6):
+                only_target=None, allow_padvia=False, extra_pen=None, zcost=(0.5, 12.0), narrow_pen=0.6, tap=None, acc_pen=6.0):
         """Join piece src_piece of net n (default: its smallest piece) to any other piece. Returns dict(items, cells, ...)
         or None. With ghost=True routed copper of other nets may be crossed at a price; the result lists the crossed
         route ids in 'blockers' and nothing is added."""
@@ -773,6 +809,27 @@ class World:
             vs = vs | own
         src_mask = (lab == src_piece)
         tgt = ((lab > 0) & ~src_mask) & ~zrim
+        if tap is not None:
+            # Kelvin tap: the only target is the tap via at (x, y), reached on an inner layer; every other piece of
+            # the net's own copper is an obstacle (the tap must not touch the pour it senses across)
+            tx, ty, tl = tap
+            X0w, Y0w = self.X0 + x0 * G, self.Y0 + y0 * G
+            tg2 = np.zeros(tgt.shape, np.uint8)
+            for L in tl:
+                paint_seg(tg2[L], tx, ty, tx, ty, VIA_D / 2 - 0.05, X0w, Y0w, 1)
+            near = np.zeros(tgt.shape[1:], np.uint8)
+            paint_seg(near, tx, ty, tx, ty, VIA_D / 2 + 0.6, X0w, Y0w, 1)
+            own = (lab > 0) & ~src_mask
+            it = int(round((hw_n + ZCLR + 0.05) / G))
+            blk = np.zeros(own.shape, bool)
+            for L in range(NL):
+                if own[L].any():
+                    blk[L] = ndimage.binary_dilation(own[L] & ~(near > 0), iterations=it)
+            fs = fs & ~blk
+            fsd = fsd & ~blk
+            f2 = f2 & ~blk
+            vs = vs & ~(blk[0] | blk[NL - 1])
+            tgt = tg2.astype(bool)
         if only_target is not None:
             tgt &= np.isin(lab, list(only_target) if hasattr(only_target, "__iter__") else [only_target])
         # a track must end well inside a pour: targets on pours are trimmed by the raster (they are cell centres inside copper)
@@ -804,6 +861,12 @@ class World:
             zp[np.isin(zn, list(self.hard_nets)) & zo] = 5000.0
         pen += zp
         vpen += 4.0 * zp.sum(axis=0)
+        if acc_pen:
+            ac = self.acc[:, y0:y1, x0:x1]
+            fo = (ac > 0) & (ac != n + 1)
+            if fo.any():
+                pen += np.where(fo, acc_pen, 0.0).astype(np.float32)
+                vpen += np.where(ndimage.binary_dilation(fo[0] | fo[NL - 1], iterations=4), 25.0 * acc_pen, 0.0).astype(np.float32)
         free = fs.astype(np.uint8)
         freed = fsd.astype(np.uint8)
         sidx = np.flatnonzero((src_mask & ~zrim).ravel())

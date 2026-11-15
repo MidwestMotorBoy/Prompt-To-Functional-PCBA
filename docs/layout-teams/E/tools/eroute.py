@@ -2,12 +2,13 @@
   <dir>/<base>.kicad_pcb is the placed board with its power copper. Writes <dir>/<out>.routes.json, then (unless --noapply)
   <out>.kicad_pcb (zones refilled), <out>.drc.json and <out>.e.json through eapply.sh.
   --routes=FILE     start from earlier routes (kept, rip-able unless --pin)
-  --fills=FILE      take the soft pours (GND, PACK_P, 3V3 planes) as filled in this dump (a routed board's .e.json)
+  --fills=FILE      take every pour as KiCad filled it in this dump (a routed board's .e.json)
   --only=REGEX --skip=REGEX   nets to route
   --rips=N          rip-up budget (default 400)         --maxrip=K   times one net may be pulled (default 4)
   --w=0.2 --neck=0.15   track width and the width used where 0.2 does not fit
   --layers=0,2,3,5  routing layers (0 F, 1 In1, 2 In2, 3 In3, 4 In4, 5 B)
   --pin             earlier routes are fixed
+  --taps=FILE       first lay the Kelvin taps listed in FILE (see tap_pass); these stay pinned
   --power[=terms.json]  first join the power pieces (pads that carry current) with wide tracks; these stay pinned"""
 import sys, os, re, json, time, subprocess, math
 import numpy as np
@@ -16,6 +17,7 @@ import er
 
 def load_routes(W, path, pin=False):
     J = json.load(open(path)); n = 0
+    W.voids += [v for v in J.get("voids", []) if (v["x"], v["y"]) not in {(u["x"], u["y"]) for u in W.voids}]
     for r in J["routes"]:
         nid = W.netid[r["net"]]
         rid = W.add_route(nid, [tuple(it) for it in r["items"]], dict(r.get("meta", {}), pin=pin or r.get("meta", {}).get("pin", False)))
@@ -24,6 +26,13 @@ def load_routes(W, path, pin=False):
 
 def save_routes(W, path):
     J = {"routes": [dict(net=W.netname[rec["net"]], items=[list(it) for it in rec["items"]], meta=rec["meta"]) for rid, rec in sorted(W.dyn.items())]}
+    # pour voids: no pour may touch a Kelvin tap's vias (the tap would sense the pour there instead of the shunt pad)
+    V = {(v["x"], v["y"]): v for v in W.voids}
+    for rec in W.dyn.values():
+        if rec["meta"].get("tap"):
+            for it in rec["items"]:
+                if it[0] == "V": V.setdefault((it[2], it[3]), dict(x=it[2], y=it[3], r=0.52))
+    J["voids"] = list(V.values())
     json.dump(J, open(path, "w"))
 
 def net_span(W, n):
@@ -116,6 +125,67 @@ def swap(W, n, opt, depth=0, locked=frozenset(), log=print):
         W.restore(snap)
     return False
 
+def knot(W, n, opt, log=print, grow=1.5, maxnets=4, maxperm=60):
+    """Net n is still open after rip-up and swap. Pull every loose route in the box round its unconnected pads that
+    belongs to n or to a net with a pad in that box (the local nets), then lay those nets again in every order
+    (n first), until one order closes them all. If none does, keep the best order when it leaves fewer connections
+    open than before, else put everything back. Returns the nets left open (empty list = all closed), or None."""
+    import itertools
+    win, lab, k, cu, thr = W.pieces(n)
+    if k < 2: return []
+    x0, y0, x1, y1 = win
+    sizes = np.bincount(lab.ravel(), minlength=k + 1); sizes[0] = 0; big = int(np.argmax(sizes))
+    small = [p for p in range(1, k + 1) if p != big]
+    c = np.argwhere(np.isin(lab, small))
+    if len(c) == 0: return None
+    if (c[:, 1].max() - c[:, 1].min() + c[:, 2].max() - c[:, 2].min()) * er.G > 12.0:
+        c = np.argwhere(lab == min(small, key=lambda p: sizes[p]))
+    bx0, by0 = W.xy(int(c[:, 2].min()) + x0, int(c[:, 1].min()) + y0); bx1, by1 = W.xy(int(c[:, 2].max()) + x0, int(c[:, 1].max()) + y0)
+    # the box also holds the cheapest way across (through loose routes) from the smallest piece to the rest
+    res = W.connect(n, src_piece=min(small, key=lambda p: sizes[p]), w=opt["w"], neck=opt["neck"], layers=opt["layers"], win=win, ghost=True)
+    if res and res.get("cells"):
+        for (L, cy, cx) in res["cells"]:
+            x, y = W.xy(cx, cy); bx0 = min(bx0, x); bx1 = max(bx1, x); by0 = min(by0, y); by1 = max(by1, y)
+    bx0 -= grow; by0 -= grow; bx1 += grow; by1 += grow
+    inbox = lambda x, y: bx0 <= x <= bx1 and by0 <= y <= by1
+    def touches(items):
+        return any((inbox(it[2], it[3]) or (it[0] == "T" and inbox(it[4], it[5]))) for it in items)
+    cand = {}
+    for rid, rec in W.dyn.items():
+        if not rec["meta"].get("pin") and touches(rec["items"]): cand.setdefault(rec["net"], []).append(rid)
+    npad = {}
+    for m in cand:
+        npad[m] = sum(1 for it in W.net_items.get(m, []) if it[0] == "P" and inbox(float(it[2].mean()), float(it[3].mean())))
+    local = sorted([m for m in cand if m != n and npad[m] > 0 and m not in W.soft_ids], key=lambda m: -npad[m])[:maxnets]
+    nets = [n] + local
+    before = sum(W.pieces(m)[2] - 1 for m in nets)
+    if opt.get("verbose"): log("  knot %s box %.1f,%.1f,%.1f,%.1f nets %s open %d" % (W.netname[n], bx0, by0, bx1, by1, [W.netname[m].split("/")[-1] for m in nets], before))
+    snap0 = W.snapshot()
+    W.rip([r for m in nets for r in cand.get(m, [])])
+    snap1 = W.snapshot()
+    best = None
+    perms = list(itertools.permutations(nets))
+    if len(perms) > maxperm:
+        import random
+        random.Random(1).shuffle(perms); perms = perms[:maxperm]
+    for perm in perms:
+        left = []
+        for m in perm:
+            if not join(W, m, opt): left.append(m)
+        if not left:
+            log("  knot at %s closed: order %s" % (W.netname[n], ", ".join(W.netname[m].split("/")[-1] for m in perm)))
+            return []
+        op = sum(W.pieces(m)[2] - 1 for m in nets)
+        if opt.get("verbose"): log("    order %s: open %d (%s)" % ([W.netname[m].split("/")[-1] for m in perm], op, [W.netname[m].split("/")[-1] for m in left]))
+        if best is None or op < best[0]: best = (op, perm, left)
+        W.restore(snap1)
+    if best and best[0] < before:
+        for m in best[1]: join(W, m, opt)
+        log("  knot at %s: %d of %d connections still open (%s)" % (W.netname[n], best[0], before, ", ".join(W.netname[m].split("/")[-1] for m in best[2])))
+        return list(best[2])
+    W.restore(snap0)
+    return None
+
 def power_pass(W, terms, opt, log=print):
     """Power paths the copper plan left open: join the pieces that hold current-carrying pads (terms.json from go.sh:
     the scorecard's terminals) with wide tracks, widest first, before any signal. These routes are pinned."""
@@ -166,6 +236,57 @@ def power_pass(W, terms, opt, log=print):
                 bad.add((int(sizes[sp]), round(I, 2))); failed.append((net, I)); log("  power %s: NO PATH for a %.1f A piece" % (net, I))
     return done, failed
 
+def tap_pass(W, path, opt, log=print):
+    """Kelvin taps (place/taps.txt): 'NET x,y REF.PAD [layers]' = a thin track of NET from pad REF.PAD to the tap via at
+    x, y (a hand via at the inner edge of the shunt pad), arriving on an inner layer (default In3; '2,3' for In2 or In3)
+    and keeping the clearance from every other piece of NET's copper. Pinned."""
+    ok = bad = 0
+    for line in open(path):          # 'void x,y [r]': keep every pour away from a hand via of a tap at x, y
+        a = line.split("#")[0].split()
+        if a and a[0] == "void":
+            vx, vy = [float(v) for v in a[1].split(",")]
+            W.voids.append(dict(x=vx, y=vy, r=float(a[2]) if len(a) > 2 else 0.52, hand=True))
+    for line in open(path):
+        a = line.split("#")[0].split()
+        if not a or a[0] == "void": continue
+        join = a[0] == "join"
+        if join: a = a[1:]
+        nm = a[0]
+        if "@" in nm: nm = "/USB Port %s/%s" % (nm.split("@")[1], nm.split("@")[0])
+        m = [x for x in W.netid if x == nm or x.endswith("/" + nm)]
+        if len(m) != 1: log("  tap: net %s matches %s" % (a[0], m)); bad += 1; continue
+        n = W.netid[m[0]]; tx, ty = [float(v) for v in a[1].split(",")]
+        if join:
+            # 'join NET x,y LAYERS W': the piece of NET that has copper at x, y is joined to the rest of the net on the
+            # given layers only (5 = B.Cu), at width W; pinned. For a power pin that must leave on one layer.
+            ls = tuple(int(v) for v in a[2].split(",")); wj = float(a[3])
+            win, lab, k, cu, thr = W.pieces(n); x0, y0, x1, y1 = win; cx, cy = W.cell(tx, ty)
+            sp = max(int(lab[L, cy - y0, cx - x0]) for L in range(er.NL))
+            res = None
+            if k < 2: log("  join %s at %s: already one piece" % (a[0], a[1])); ok += 1; continue
+            for neck in (min(wj, 0.4), 0.25):
+                res = W.connect(n, src_piece=sp, w=wj, neck=neck, layers=ls, win=win, narrow_pen=4.0, pref=(0,) * 6, lcost=(1.0,) * 6) if sp and k > 1 else None
+                if res and res.get("items"): break
+            if res and res.get("items"):
+                W.add_route(n, res["items"], dict(pin=True, join=a[1])); ok += 1
+                log("  join %s at %s: %.1f mm, widths %s" % (a[0], a[1], sum(math.hypot(it[4] - it[2], it[5] - it[3]) for it in res["items"] if it[0] == "T"), sorted({it[6] for it in res["items"] if it[0] == "T"})))
+            else: bad += 1; log("  join %s at %s: NO PATH" % (a[0], a[1]))
+            continue
+        ref, num = a[2].split(".")
+        tl = tuple(int(v) for v in a[3].split(",")) if len(a) > 3 else (3,)
+        p = [q for q in W.D["pads"] if q["ref"] == ref and q["num"] == num]
+        if not p: log("  tap: no pad %s" % a[2]); bad += 1; continue
+        win, lab, k, cu, thr = W.pieces(n); x0, y0, x1, y1 = win
+        cx, cy = W.cell(p[0]["x"], p[0]["y"]); L = er.LAYERS.index(list(p[0]["shapes"])[0])
+        sp = int(lab[L, cy - y0, cx - x0])
+        res = W.connect(n, src_piece=sp, w=0.15, neck=0.15, layers=opt["layers"], win=win, tap=(tx, ty, tl), via_cost=40.0) if sp else None
+        if res and res.get("items"):
+            W.add_route(n, res["items"], dict(pin=True, tap=a[2])); ok += 1
+            W.voids += [dict(x=it[2], y=it[3], r=0.52) for it in res["items"] if it[0] == "V"]
+            log("  tap %s %s: %.1f mm, %d vias" % (a[0], a[2], sum(math.hypot(it[4] - it[2], it[5] - it[3]) for it in res["items"] if it[0] == "T"), sum(1 for it in res["items"] if it[0] == "V")))
+        else: bad += 1; log("  tap %s %s: NO PATH" % (a[0], a[2]))
+    return ok, bad
+
 def route_all(W, nets, opt, log=print):
     stats = dict(routed=0, rips=0, ripcount={})
     queue = list(nets); failed = []; t0 = time.time(); it = 0
@@ -189,6 +310,13 @@ def route_all(W, nets, opt, log=print):
     for rnd in range(2):
         for n in list(failed):
             if swap(W, n, opt, log=log): failed.remove(n); log("  swap closed %s" % W.netname[n])
+    for n in list(failed):
+        if n not in failed or W.pieces(n)[2] < 2: continue
+        left = knot(W, n, opt, log)
+        if left is None: continue
+        for m in set(failed) | set(left):
+            if W.pieces(m)[2] < 2 and m in failed: failed.remove(m)
+            elif W.pieces(m)[2] > 1 and m not in failed: failed.append(m)
     return failed, stats
 
 if __name__ == "__main__":
@@ -201,11 +329,13 @@ if __name__ == "__main__":
     W = er.World(dump)
     if "fills" in O:
         F = json.load(open(O["fills"])); W.fill_override = {}
+        for n in W.net_items: W.net_items[n] = [it for it in W.net_items[n] if it[0] != "Z"]
         for z in F["zones"]:
-            if z["net"] in er.SOFTNETS:
-                L = er.LAYERS.index(z["layer"])
-                if (0 < L < er.NL - 1) or z["prio"] == 0 or z["name"].startswith("plane_"):
-                    W.fill_override.setdefault(W.netid[z["net"]], []).append((L, z["fill"]))
+            L = er.LAYERS.index(z["layer"])
+            if z["net"] in er.SOFTNETS and ((0 < L < er.NL - 1) or z["prio"] == 0 or z["name"].startswith("plane_")):
+                W.fill_override.setdefault(W.netid[z["net"]], []).append((L, z["fill"]))
+            elif z["net"] in W.netid:
+                W.net_items.setdefault(W.netid[z["net"]], []).append(("Z", L, z["fill"]))     # hard pours as KiCad really filled them
     if "routes" in O: print("loaded %d earlier routes" % load_routes(W, O["routes"], "pin" in O))
     only = re.compile(O["only"]) if "only" in O else None; skip = re.compile(O["skip"]) if "skip" in O else None
     opt = dict(w=float(O.get("w", 0.2)), neck=float(O.get("neck", 0.15)), layers=tuple(int(v) for v in O.get("layers", "0,2,3,5").split(",")),
@@ -221,6 +351,8 @@ if __name__ == "__main__":
         rank = 0 if "Kelvin" in c else 1 if "GateDrive" in c else 3 if W.netname[n] in er.SOFTNETS else 2
         return (rank, net_span(W, n))
     nets.sort(key=key)
+    if "taps" in O:
+        print("taps: %d laid, %d failed" % tap_pass(W, O["taps"], opt, lambda s: print(s, flush=True)), flush=True)
     if "power" in O:
         T = json.load(open(O["power"] if O["power"] != "1" else d + "/terms.json"))
         dn, fl = power_pass(W, T, opt, lambda s: print(s, flush=True))
