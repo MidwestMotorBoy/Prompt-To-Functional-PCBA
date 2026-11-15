@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r4_port1-v6p.kicad_pcb",
+ "sha": "a9bf3a33bfd9d5aa0a0cfd8162fa64fe8b056fa1",
+ "routed": 345,
+ "failed": 19,
+ "edges": 364,
+ "minutes": 106.4,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/REGN",
+  "FAILKEY SCL",
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY 3V3@Pad 1 [3V3] of R302 on F.Cu"
+ ]
+}
