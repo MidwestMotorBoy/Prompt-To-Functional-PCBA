@@ -180,11 +180,11 @@ class MR(HR):
         while k is not None: cells.append(k); k = par[k]
         cells.reverse()
         if ghost:                                              # report whose routes are in the way, add nothing
-            v = set()
+            v = set(); where = {}
             for i, (l, y, x) in enumerate(cells):
-                if lt[l][y, x]: v.add(gn[lt[l][y, x] - 1])
-                if i and cells[i - 1][0] != l and labv[y, x]: v.add(gn[labv[y, x] - 1])
-            return ("RIP", sorted(v))
+                if lt[l][y, x]: n_ = gn[lt[l][y, x] - 1]; v.add(n_); where.setdefault(n_, (SIG[l][:-3], round(x0 + x * g, 1), round(y0 + y * g, 1)))
+                if i and cells[i - 1][0] != l and labv[y, x]: n_ = gn[labv[y, x] - 1]; v.add(n_); where.setdefault(n_, ("via", round(x0 + x * g, 1), round(y0 + y * g, 1)))
+            return ("RIP", sorted(v), where)
         pts = [(SIG[l], round(x0 + x * g, 3), round(y0 + y * g, 3)) for l, y, x in cells]
         # split into per-layer runs, drop collinear points
         runs = []; cur = [pts[0]]
