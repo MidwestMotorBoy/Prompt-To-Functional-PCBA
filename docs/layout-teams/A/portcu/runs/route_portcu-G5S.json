@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/portcu-G5S.kicad_pcb",
+ "sha": "1a82e7bd90b2ce37a8233076a2e6b834e49ba503",
+ "routed": 353,
+ "failed": 18,
+ "edges": 371,
+ "minutes": 86.0,
+ "status": "done",
+ "tail": [
+  "FAILKEY SCL",
+  "FAILKEY /Cells and Gauge/TS1",
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/PP5V",
+  "FAILKEY /USB Port 2/HG1"
+ ]
+}

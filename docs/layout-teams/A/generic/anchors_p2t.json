@@ -1,0 +1,261 @@
+{
+ "_doc": "Poses of the big parts only (absolute KiCad x, y in mm and rotation in degrees, as groundup placement.json). 'pose' = typed (taken from tools/battery-bank/groundup/placement.json); 'translate' = derived by place_generic.py: the pose of the port-1 twin shifted by the offset between a pair of FIXED parts (here L401 -> L501), no number typed. Which parts are anchors is a rule in place_generic.py (ICs, inductors, fuses, shunts, kelvin sense resistors, FETs and diodes with 8 or more pads); this file must hold a pose or a derivation for each. Variant p2t: every port-2 anchor derived from its port-1 twin by the L401->L501 translation.",
+ "anchors": {
+  "U101": {
+   "pose": [
+    96.9,
+    121.0,
+    0
+   ],
+   "why": "gauge, bottom block"
+  },
+  "U102": {
+   "pose": [
+    99.2,
+    131.5,
+    0
+   ],
+   "why": "cell protector"
+  },
+  "U204": {
+   "pose": [
+    82.4,
+    128.2,
+    0
+   ],
+   "why": "3V3 buck"
+  },
+  "U401": {
+   "pose": [
+    106.1,
+    81.0,
+    -90
+   ],
+   "why": "port 1 PD controller"
+  },
+  "U402": {
+   "pose": [
+    101.3,
+    85.6,
+    90
+   ],
+   "why": "port 1 EEPROM"
+  },
+  "U403": {
+   "pose": [
+    110.84,
+    111.24,
+    90
+   ],
+   "why": "port 1 charger controller"
+  },
+  "U404": {
+   "pose": [
+    115.0,
+    84.0,
+    90
+   ],
+   "why": "port 1 5 V buck"
+  },
+  "U405": {
+   "pose": [
+    104.3,
+    73.3,
+    -90
+   ],
+   "why": "port 1 port protector"
+  },
+  "U406": {
+   "pose": [
+    102.35,
+    105.0,
+    90
+   ],
+   "why": "port 1 9 V gate-drive LDO"
+  },
+  "U501": {
+   "translate": "U401",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "U502": {
+   "translate": "U402",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "U503": {
+   "translate": "U403",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "port 2 charger stage = port 1 stage translated by the fixed inductor pair"
+  },
+  "U504": {
+   "translate": "U404",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "U505": {
+   "translate": "U405",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "U506": {
+   "translate": "U406",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "Q101": {
+   "pose": [
+    103.4,
+    126.0,
+    90
+   ],
+   "why": "CHG protection FET"
+  },
+  "Q102": {
+   "pose": [
+    103.4,
+    118.5,
+    270
+   ],
+   "why": "DSG protection FET"
+  },
+  "Q401": {
+   "pose": [
+    109.55,
+    99.8,
+    180
+   ],
+   "why": "port 1 input-leg half bridge"
+  },
+  "Q402": {
+   "pose": [
+    114.05,
+    99.8,
+    180
+   ],
+   "why": "port 1 battery-leg half bridge"
+  },
+  "Q501": {
+   "translate": "Q401",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "port 2 charger stage = port 1 stage translated by the fixed inductor pair"
+  },
+  "Q502": {
+   "translate": "Q402",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "port 2 charger stage = port 1 stage translated by the fixed inductor pair"
+  },
+  "L201": {
+   "pose": [
+    86.6,
+    128.3,
+    0
+   ],
+   "why": "3V3 buck inductor"
+  },
+  "L402": {
+   "pose": [
+    114.6,
+    79.3,
+    180
+   ],
+   "why": "port 1 5 V buck inductor"
+  },
+  "L502": {
+   "translate": "L402",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "F102": {
+   "pose": [
+    113.79,
+    131.83,
+    180
+   ],
+   "why": "chemical fuse"
+  },
+  "RS101": {
+   "pose": [
+    88.6,
+    133.0,
+    0
+   ],
+   "why": "gauge shunt"
+  },
+  "R424": {
+   "pose": [
+    105.6,
+    86.3,
+    -90
+   ],
+   "why": "port 1 RAC sense resistor"
+  },
+  "R427": {
+   "pose": [
+    118.45,
+    104.1,
+    -90
+   ],
+   "why": "port 1 RBAT sense resistor"
+  },
+  "R524": {
+   "translate": "R424",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  },
+  "R527": {
+   "translate": "R427",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "port 2 charger stage = port 1 stage translated by the fixed inductor pair"
+  },
+  "D401": {
+   "pose": [
+    100.85,
+    71.75,
+    0
+   ],
+   "why": "port 1 VBUS TVS"
+  },
+  "D501": {
+   "translate": "D401",
+   "pair": [
+    "L401",
+    "L501"
+   ],
+   "why": "generality test: port 2 = port 1 translated by the fixed L401->L501 offset (no typed pose)"
+  }
+ }
+}

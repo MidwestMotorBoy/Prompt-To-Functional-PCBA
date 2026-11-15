@@ -1,0 +1,3 @@
+placed 289/289  failures 0  check errors 0  anchors 32 (typed 28, derived 4)  support own 189 twins 9  untargeted 1  serves max 9.8 mm, over 3 mm: {'C427': 9.8, 'C527': 9.8, 'C506': 7.64, 'C423': 7.02, 'C523': 7.02, 'C442': 6.75, 'C406': 6.5, 'C411': 6.2, 'C424': 6.12, 'C524': 6.12, 'C443': 5.4, 'C511': 5.28, 'R554': 5.25, 'C434': 5.13, 'C534': 5.13, 'C543': 4.75, 'C430': 4.59, 'C530': 4.59, 'C404': 4.5, 'C504': 4.5, 'C510': 4.43, 'C410': 4.4, 'R454': 4.3, 'C451': 4.15, 'C441': 4.01, 'C542': 3.98, 'C420': 3.48, 'C431': 3.48, 'C520': 3.48, 'C531': 3.48, 'C301': 3.36, 'C405': 3.18}  86.5 s
+239 parts differ from the template, of 289
+serves caps 85: max 9.80 mean 3.13 median 2.39 over 3 mm 32 over 5 mm 15

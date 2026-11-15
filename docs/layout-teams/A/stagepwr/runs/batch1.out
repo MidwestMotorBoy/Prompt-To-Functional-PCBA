@@ -1,0 +1,19 @@
+== v1 "blocked": "30 of 400" drc="drc_errors": 0 open={'3V3': ['L201'], 'GND': ['J302', 'J301']}
+   CHG_INH Pad 1 [CHG_INH] of R535 on F.Cu -> Pad 2 [CHG_INH] of J302 on F.Cu
+   /USB Port 2/DRV9_OFF Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu -> Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on F.Cu
+   /USB Port 1/I2CC_SDA Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu -> Pad 2 [/USB Port 1/I2CC_SDA] of U403 on F.Cu
+   /USB Port 1/SW1 Pad 2 [/USB Port 1/SW1] of C412 on F.Cu -> Zone 'pc_USB Port 1_SW1' [/USB Port 1/SW1] on F.Cu, priority 20
+   /USB Port 2/SW1 Pad 2 [/USB Port 2/SW1] of C512 on F.Cu -> Zone 'pc_USB Port 2_SW1' [/USB Port 2/SW1] on F.Cu, priority 20
+   /USB Port 1/REGN Pad 2 [/USB Port 1/REGN] of R454 on F.Cu -> Pad 1 [/USB Port 1/REGN] of C410 on F.Cu
+   /USB Port 2/HG1 Pad 1 [/USB Port 2/HG1] of Q501 on F.Cu -> Pad 2 [/USB Port 2/HG1] of R544 on F.Cu
+   /USB Port 1/HG1 Pad 1 [/USB Port 1/HG1] of Q401 on F.Cu -> Pad 2 [/USB Port 1/HG1] of R444 on F.Cu
+== v1A "blocked": "31 of 398" drc="drc_errors": 0 open={'3V3': ['L201'], 'GND': ['J302', 'J301']}
+   /USB Port 1/HIDRV1 Pad 27 [/USB Port 1/HIDRV1] of U403 on F.Cu -> Pad 1 [/USB Port 1/HIDRV1] of R444 on F.Cu
+   /USB Port 2/HIDRV1 Pad 27 [/USB Port 2/HIDRV1] of U503 on F.Cu -> Pad 1 [/USB Port 2/HIDRV1] of R544 on F.Cu
+   /USB Port 1/BTST1 Pad 26 [/USB Port 1/BTST1] of U403 on F.Cu -> Pad 1 [/USB Port 1/BTST1] of C412 on F.Cu
+   /USB Port 2/BTST1 Pad 26 [/USB Port 2/BTST1] of U503 on F.Cu -> Pad 1 [/USB Port 2/BTST1] of C512 on F.Cu
+   /USB Port 2/BTST1 Pad 1 [/USB Port 2/BTST1] of D504 on F.Cu -> Pad 26 [/USB Port 2/BTST1] of U503 on F.Cu
+   /USB Port 1/BTST1 Pad 1 [/USB Port 1/BTST1] of D404 on F.Cu -> Pad 26 [/USB Port 1/BTST1] of U403 on F.Cu
+   CHG_INH Pad 1 [CHG_INH] of R535 on F.Cu -> Pad 2 [CHG_INH] of J302 on F.Cu
+   /USB Port 2/DRV9_OFF Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu -> Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on F.Cu
+   /USB Port 1/HG1 Pad 1 [/USB Port 1/HG1] of Q401 on F.Cu -> Pad 2 [/USB Port 1/HG1] of R444 on F.Cu

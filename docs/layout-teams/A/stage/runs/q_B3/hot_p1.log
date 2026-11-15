@@ -1,0 +1,2 @@
+USB Port 1/HL_IN {"per_cap_nH": {"C430": 0.514, "C420": 0.783, "C423": 1.08}, "all_parallel_with_esl_nH": 0.565, "branches": 4904, "vias": 105, "cell_mm": 0.3}
+USB Port 1/HL_OUT {"per_cap_nH": {"C438": 0.466, "C431": 0.835, "C434": 0.948}, "all_parallel_with_esl_nH": 0.546, "branches": 4715, "vias": 100, "cell_mm": 0.3}

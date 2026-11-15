@@ -1,0 +1,4 @@
+bare.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+{"loss_W": 1.021, "power_open": {"/USB Port 1/AC_SNS_N": ["R424"], "3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0, "ret_left": ["C302.2", "C315.2", "J301.5", "J302.5", "J401.A1", "J401.B12", "U301.1", "U301.2", "U301.24", "U401.27", "U401.3", "U401.31"], "blocked": "35 of 436"}
+/home/claude/repo/docs/layout-teams/A/pdfix/runs/a2: 35 of 436  stage 6  p1 14  p2 13  other 2

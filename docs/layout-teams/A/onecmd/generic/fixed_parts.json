@@ -1,0 +1,81 @@
+{
+ "rule": "a part is fixed when it is locked, on B.Cu, or its reference class is J, H, TP or SW (connectors, holes, test pads, switches stay where the template has them)",
+ "explicit": [
+  {
+   "ref": "L401",
+   "why": "port 1 charger inductor: tall part, the cup was checked against its position (groundup README: L401/L501 unchanged so the board drops into the same cup)"
+  },
+  {
+   "ref": "L501",
+   "why": "port 2 charger inductor: same as L401"
+  },
+  {
+   "ref": "U301",
+   "why": "BLE module: antenna position against the cup wall"
+  },
+  {
+   "ref": "J113",
+   "why": "wire pad / Tag-Connect footprint: holes go through the board, cup side checked (J* would be fixed by the rule anyway)"
+  },
+  {
+   "ref": "J114",
+   "why": "as J113"
+  },
+  {
+   "ref": "J117",
+   "why": "as J113"
+  },
+  {
+   "ref": "J118",
+   "why": "as J113"
+  },
+  {
+   "ref": "J119",
+   "why": "as J113"
+  },
+  {
+   "ref": "J120",
+   "why": "as J113"
+  },
+  {
+   "ref": "J301",
+   "why": "Tag-Connect programming footprint: holes through the board, cup side checked"
+  },
+  {
+   "ref": "J302",
+   "why": "Tag-Connect: as J301"
+  },
+  {
+   "ref": "C313",
+   "why": "antenna matching network of U301: tuned with the module position"
+  },
+  {
+   "ref": "C314",
+   "why": "antenna matching network"
+  },
+  {
+   "ref": "C315",
+   "why": "antenna matching network"
+  },
+  {
+   "ref": "R321",
+   "why": "antenna matching network"
+  },
+  {
+   "ref": "C301",
+   "why": "BLE module decoupling, kept next to the fixed module"
+  },
+  {
+   "ref": "C302",
+   "why": "BLE module decoupling"
+  },
+  {
+   "ref": "C303",
+   "why": "BLE module decoupling"
+  },
+  {
+   "ref": "R304",
+   "why": "BLE module support part kept next to the fixed module"
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+04:29 q_EC_P5 [--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1] pl=base_score.json blocked=7 of 373  stage 0  p1 1  p2 4  other 2 drc=0 loss 1.034 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}

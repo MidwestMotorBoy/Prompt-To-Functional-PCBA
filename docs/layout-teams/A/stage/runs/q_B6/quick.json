@@ -1,0 +1,36 @@
+{
+ "loss_W": 1.108,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "closes": {
+  "Port 1/HL_5V": "closes ['C446']",
+  "Port 1/HL_IN": "closes ['C430']",
+  "Port 1/HL_OUT": "closes ['C438'",
+  "Port 2/HL_5V": "closes ['C546'",
+  "Port 2/HL_IN": "closes ['C530']",
+  "Port 2/HL_OUT": "closes ['C538'"
+ },
+ "ret_left": [
+  "C302.2",
+  "C315.2",
+  "C550.2",
+  "J301.5",
+  "J302.5",
+  "U301.1",
+  "U301.2",
+  "U301.24",
+  "U401.3",
+  "U401.26",
+  "U401.31",
+  "U401.36"
+ ],
+ "blocked": "46 of 433"
+}

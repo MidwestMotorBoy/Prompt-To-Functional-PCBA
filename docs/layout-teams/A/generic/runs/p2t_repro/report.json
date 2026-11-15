@@ -1,0 +1,902 @@
+{
+ "corridors": {
+  "USB Port 2/PPHV": [
+   [
+    "R524",
+    "U501",
+    1.47,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 1/PPHV": [
+   [
+    "R424",
+    "U401",
+    1.47,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "CELL_N": [
+   [
+    "J108",
+    "RS101",
+    2.73,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 1/VBUS": [
+   [
+    "D401",
+    "J401",
+    3.05,
+    "F.Cu",
+    "straight"
+   ],
+   [
+    "D401",
+    "U401",
+    10.49,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 1/BAT_SNS_P": [
+   [
+    "Q402",
+    "R427",
+    3.73,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/BAT_SNS_P": [
+   [
+    "Q502",
+    "R527",
+    3.73,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/PP5V": [
+   [
+    "L502",
+    "U501",
+    4.56,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 1/PP5V": [
+   [
+    "L402",
+    "U401",
+    7.12,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/VBUS": [
+   [
+    "D501",
+    "J501",
+    9.46,
+    "F.Cu",
+    "too long: none"
+   ],
+   [
+    "D501",
+    "U501",
+    10.7,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 1/AC_SNS_N": [
+   [
+    "Q401",
+    "R424",
+    12.89,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 2/AC_SNS_N": [
+   [
+    "Q501",
+    "R524",
+    12.89,
+    "F.Cu",
+    "too long: none"
+   ]
+  ]
+ },
+ "legalised_anchors": {
+  "D501": [
+   [
+    77.824,
+    71.756,
+    0
+   ],
+   [
+    80.75,
+    70.0,
+    0
+   ]
+  ],
+  "L201": [
+   [
+    86.6,
+    128.3,
+    0
+   ],
+   [
+    86.6,
+    129.15,
+    0
+   ]
+  ],
+  "L402": [
+   [
+    114.6,
+    79.3,
+    180
+   ],
+   [
+    114.6,
+    74.5,
+    180
+   ]
+  ],
+  "U403": [
+   [
+    110.84,
+    111.24,
+    90
+   ],
+   [
+    110.85,
+    110.75,
+    90
+   ]
+  ],
+  "U502": [
+   [
+    78.274,
+    85.606,
+    90
+   ],
+   [
+    80.7,
+    89.9,
+    90
+   ]
+  ],
+  "U505": [
+   [
+    81.274,
+    73.306,
+    -90
+   ],
+   [
+    82.7,
+    73.3,
+    -90
+   ]
+  ],
+  "U506": [
+   [
+    79.324,
+    105.006,
+    90
+   ],
+   [
+    81.2,
+    105.0,
+    90
+   ]
+  ]
+ },
+ "placed": 289,
+ "total": 289,
+ "missing": [],
+ "failures": [],
+ "check_errors": [],
+ "fixed": 50,
+ "anchors": 32,
+ "anchors_typed": 20,
+ "anchors_derived": 12,
+ "anchors_dropped": [],
+ "support_parts": 207,
+ "placed_own": 185,
+ "twins": 11,
+ "untargeted": 1,
+ "serves_max_mm": 12.28,
+ "serves_over_3mm": {
+  "C427": 12.28,
+  "C527": 12.28,
+  "C504": 9.56,
+  "C506": 8.02,
+  "C558": 8.0,
+  "C442": 7.09,
+  "C542": 7.09,
+  "C423": 7.02,
+  "C523": 7.02,
+  "C505": 6.77,
+  "C441": 6.75,
+  "C541": 6.75,
+  "C511": 6.48,
+  "C411": 6.37,
+  "C557": 6.35,
+  "C406": 6.31,
+  "C424": 6.12,
+  "C524": 6.12,
+  "C510": 5.45,
+  "C405": 5.43,
+  "C404": 5.17,
+  "C434": 5.13,
+  "C534": 5.13,
+  "C410": 4.95,
+  "C514": 4.61,
+  "C552": 4.6,
+  "C430": 4.59,
+  "C530": 4.59,
+  "C543": 4.2,
+  "C414": 4.01,
+  "C443": 4.01,
+  "C519": 3.53,
+  "C420": 3.48,
+  "C431": 3.48,
+  "C520": 3.48,
+  "C531": 3.48,
+  "C540": 3.48,
+  "C301": 3.36,
+  "C451": 3.27,
+  "R454": 3.26,
+  "C417": 3.16
+ },
+ "serves_dist": {
+  "C206": 2.02,
+  "C207": 2.21,
+  "C301": 3.36,
+  "C302": 2.01,
+  "C303": 2.67,
+  "C304": 1.22,
+  "C403": 2.1,
+  "C404": 5.17,
+  "C405": 5.43,
+  "C406": 6.31,
+  "C407": 1.58,
+  "C408": 1.4,
+  "C409": 1.88,
+  "C410": 4.95,
+  "C411": 6.37,
+  "C412": 2.36,
+  "C413": 2.3,
+  "C414": 4.01,
+  "C415": 2.3,
+  "C416": 2.95,
+  "C417": 3.16,
+  "C418": 2.3,
+  "C419": 2.38,
+  "C420": 3.48,
+  "C423": 7.02,
+  "C424": 6.12,
+  "C427": 12.28,
+  "C430": 4.59,
+  "C431": 3.48,
+  "C434": 5.13,
+  "C438": 1.39,
+  "C439": 2.55,
+  "C440": 2.12,
+  "C441": 6.75,
+  "C442": 7.09,
+  "C443": 4.01,
+  "C449": 2.73,
+  "C450": 2.54,
+  "C451": 3.27,
+  "C452": 1.91,
+  "C457": 1.83,
+  "C458": 2.5,
+  "C503": 2.11,
+  "C504": 9.56,
+  "C505": 6.77,
+  "C506": 8.02,
+  "C507": 1.55,
+  "C508": 1.4,
+  "C509": 2.63,
+  "C510": 5.45,
+  "C511": 6.48,
+  "C512": 2.31,
+  "C513": 2.26,
+  "C514": 4.61,
+  "C515": 2.55,
+  "C516": 2.91,
+  "C517": 2.81,
+  "C518": 2.28,
+  "C519": 3.53,
+  "C520": 3.48,
+  "C523": 7.02,
+  "C524": 6.12,
+  "C527": 12.28,
+  "C530": 4.59,
+  "C531": 3.48,
+  "C534": 5.13,
+  "C538": 1.39,
+  "C539": 2.57,
+  "C540": 3.48,
+  "C541": 6.75,
+  "C542": 7.09,
+  "C543": 4.2,
+  "C549": 2.01,
+  "C550": 2.52,
+  "C551": 1.8,
+  "C552": 4.6,
+  "C557": 6.35,
+  "C558": 8.0,
+  "R302": 1.9,
+  "R304": 1.8,
+  "R305": 1.22,
+  "R313": 1.25,
+  "R314": 1.22,
+  "R454": 3.26,
+  "R554": 2.92
+ },
+ "rings": {
+  "U405": 0.42,
+  "U102": 1.2,
+  "U503": 0.9,
+  "U402": 0.45,
+  "U406": 0.22,
+  "U501": 0.6,
+  "U502": 0.45,
+  "U404": 0.75,
+  "U204": 0.24,
+  "U403": 0.9,
+  "U505": 0.42,
+  "U506": 0.22,
+  "U101": 0.79,
+  "U401": 0.6,
+  "U504": 0.75
+ },
+ "limits": {
+  "outline_bounds": [
+   78.4,
+   62.8245,
+   121.6,
+   137.175
+  ],
+  "outline_vertices": 16,
+  "pad_to_edge_mm": 0.25,
+  "keepouts": {
+   "F.Cu": [
+    [
+     "KO_top_stop_L",
+     [
+      78.4,
+      62.825,
+      86.0,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_top_stop_R",
+     [
+      114.0,
+      62.825,
+      121.6,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "lip_left",
+     [
+      78.4,
+      62.825,
+      79.4,
+      114.475
+     ],
+     "F.Cu lip of the cup over the long edge where pack z >= 27 (groundup placelib LIP_X/LIP_Y)"
+    ],
+    [
+     "lip_right",
+     [
+      120.96,
+      62.825,
+      121.6,
+      114.475
+     ],
+     "as lip_left, right edge"
+    ]
+   ],
+   "B.Cu": [
+    [
+     "KO_top_stop_L",
+     [
+      78.4,
+      62.825,
+      86.0,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_top_stop_R",
+     [
+      114.0,
+      62.825,
+      121.6,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_gap_filler_R",
+     [
+      107.0,
+      88.475,
+      116.0,
+      114.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_L_bottom",
+     [
+      88.7,
+      116.475,
+      93.5,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_R_top",
+     [
+      106.5,
+      62.825,
+      111.3,
+      86.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL2",
+     [
+      98.0,
+      134.875,
+      102.0,
+      137.076
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_R_bottom",
+     [
+      106.5,
+      116.475,
+      111.3,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_PACKN",
+     [
+      85.575,
+      134.326,
+      88.375,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_1N",
+     [
+      90.4,
+      134.601,
+      92.15,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_gap_filler_L",
+     [
+      84.0,
+      88.475,
+      93.0,
+      114.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_PACKP",
+     [
+      111.625,
+      134.326,
+      114.425,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_4P",
+     [
+      107.85,
+      134.601,
+      109.6,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_L_top",
+     [
+      88.7,
+      62.825,
+      93.5,
+      86.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL3",
+     [
+      111.9,
+      62.825,
+      115.9,
+      69.975
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL1",
+     [
+      84.1,
+      62.825,
+      88.1,
+      69.975
+     ],
+     "board rule area (no footprints)"
+    ]
+   ]
+  }
+ },
+ "plane_nets": [
+  "3V3",
+  "GND",
+  "PACK_P"
+ ],
+ "sense_resistors": [
+  "R424",
+  "R427",
+  "R524",
+  "R527",
+  "RS101"
+ ],
+ "how": {
+  "J301": "fixed",
+  "J113": "fixed",
+  "J120": "fixed",
+  "H103": "fixed",
+  "J110": "fixed",
+  "C302": "fixed",
+  "TP301": "fixed",
+  "J302": "fixed",
+  "TP109": "fixed",
+  "J111": "fixed",
+  "C313": "fixed",
+  "C521": "fixed",
+  "C456": "fixed",
+  "J501": "fixed",
+  "R321": "fixed",
+  "C315": "fixed",
+  "C213": "fixed",
+  "J401": "fixed",
+  "J114": "fixed",
+  "C556": "fixed",
+  "L501": "fixed",
+  "H102": "fixed",
+  "U301": "fixed",
+  "TP512": "fixed",
+  "C303": "fixed",
+  "TP412": "fixed",
+  "C314": "fixed",
+  "J118": "fixed",
+  "J119": "fixed",
+  "C211": "fixed",
+  "C208": "fixed",
+  "J115": "fixed",
+  "R304": "fixed",
+  "TH104": "fixed",
+  "J117": "fixed",
+  "C209": "fixed",
+  "L401": "fixed",
+  "J109": "fixed",
+  "C301": "fixed",
+  "J116": "fixed",
+  "H104": "fixed",
+  "C421": "fixed",
+  "H101": "fixed",
+  "C212": "fixed",
+  "TP113": "fixed",
+  "J108": "fixed",
+  "TH101": "fixed",
+  "J112": "fixed",
+  "TP106": "fixed",
+  "C210": "fixed",
+  "D401": "anchor typed",
+  "F102": "anchor typed",
+  "L201": "anchor typed",
+  "L402": "anchor typed",
+  "Q101": "anchor typed",
+  "Q102": "anchor typed",
+  "Q401": "anchor typed",
+  "Q402": "anchor typed",
+  "R424": "anchor typed",
+  "R427": "anchor typed",
+  "RS101": "anchor typed",
+  "U101": "anchor typed",
+  "U102": "anchor typed",
+  "U204": "anchor typed",
+  "U401": "anchor typed",
+  "U402": "anchor typed",
+  "U403": "anchor typed",
+  "U404": "anchor typed",
+  "U405": "anchor typed",
+  "U406": "anchor typed",
+  "D501": "anchor = D401 + (L401->L501)",
+  "L502": "anchor = L402 + (L401->L501) (legalised on its own)",
+  "Q501": "anchor = Q401 + (L401->L501)",
+  "Q502": "anchor = Q402 + (L401->L501)",
+  "R524": "anchor = R424 + (L401->L501)",
+  "R527": "anchor = R427 + (L401->L501)",
+  "U501": "anchor = U401 + (L401->L501)",
+  "U502": "anchor = U402 + (L401->L501)",
+  "U503": "anchor = U403 + (L401->L501)",
+  "U504": "anchor = U404 + (L401->L501)",
+  "U505": "anchor = U405 + (L401->L501)",
+  "U506": "anchor = U406 + (L401->L501)",
+  "C206": "hot_loop HL_3V3",
+  "C446": "hot_loop USB Port 1/HL_5V",
+  "C444": "hot_loop USB Port 1/HL_5V",
+  "C430": "hot_loop USB Port 1/HL_IN",
+  "C530": "twin of C430 +(-23.025999999999996,0.006000000000000227)",
+  "C420": "hot_loop USB Port 1/HL_IN",
+  "C520": "twin of C420 +(-23.025999999999996,0.006000000000000227)",
+  "C423": "hot_loop USB Port 1/HL_IN",
+  "C523": "twin of C423 +(-23.025999999999996,0.006000000000000227)",
+  "C438": "hot_loop USB Port 1/HL_OUT",
+  "C538": "twin of C438 +(-23.025999999999996,0.006000000000000227)",
+  "C431": "hot_loop USB Port 1/HL_OUT",
+  "C531": "twin of C431 +(-23.025999999999996,0.006000000000000227)",
+  "C434": "hot_loop USB Port 1/HL_OUT",
+  "C534": "twin of C434 +(-23.025999999999996,0.006000000000000227)",
+  "C546": "hot_loop USB Port 2/HL_5V",
+  "C544": "hot_loop USB Port 2/HL_5V",
+  "C424": "serves Q401.D1",
+  "C524": "twin of C424 +(-23.025999999999996,0.006000000000000227)",
+  "C427": "serves Q401.D1",
+  "C527": "twin of C427 +(-23.025999999999996,0.006000000000000227)",
+  "C207": "serves L201.2",
+  "C457": "serves U406.IN",
+  "C441": "serves L402.2",
+  "C541": "twin of C441 +(-23.049999999999997,4.799999999999997)",
+  "C442": "serves L402.2",
+  "C542": "twin of C442 +(-23.049999999999997,4.799999999999997)",
+  "C443": "serves L402.2",
+  "C407": "serves U401.PP5V",
+  "C557": "serves U506.IN",
+  "C543": "serves L502.2",
+  "C507": "serves U501.PP5V",
+  "Q103": "netlist",
+  "Q409": "netlist",
+  "Q509": "netlist",
+  "Q104": "netlist",
+  "C450": "serves U401.VBUS",
+  "C550": "serves U501.VBUS",
+  "C439": "serves U404.SS",
+  "C539": "serves U504.SS",
+  "C304": "serves U301.RSTN",
+  "C408": "serves U402.VCC",
+  "C415": "serves U403.ACP",
+  "C416": "serves U403.ACN",
+  "C418": "serves U403.SRP",
+  "C419": "serves U403.SRN",
+  "C449": "serves U401.PPHV",
+  "C451": "serves U405.VBIAS",
+  "C508": "serves U502.VCC",
+  "C515": "serves U503.ACP",
+  "C516": "serves U503.ACN",
+  "C518": "serves U503.SRP",
+  "C519": "serves U503.SRN",
+  "C549": "serves U501.PPHV",
+  "C551": "serves U505.VBIAS",
+  "C412": "serves U403.BTST1",
+  "C413": "serves U403.BTST2",
+  "C440": "serves U404.BST",
+  "C512": "serves U503.BTST1",
+  "C513": "serves U503.BTST2",
+  "C540": "serves U504.BST",
+  "C414": "serves U403.ACP",
+  "C417": "serves U403.SRP",
+  "C514": "serves U503.ACP",
+  "C517": "serves U503.SRP",
+  "C409": "serves U403.VAC",
+  "C452": "serves U405.VPWR",
+  "C509": "serves U503.VAC",
+  "C552": "serves U505.VPWR",
+  "C406": "serves J401.VBUS",
+  "C410": "serves U403.REGN",
+  "C411": "serves U403.DRV_SUP",
+  "C506": "serves J501.VBUS",
+  "C510": "serves U503.REGN",
+  "C511": "serves U503.DRV_SUP",
+  "C403": "serves U401.VIN_3V3",
+  "C404": "serves U401.LDO_3V3",
+  "C405": "serves U401.LDO_1V5",
+  "C503": "serves U501.VIN_3V3",
+  "C504": "serves U501.LDO_3V3",
+  "C505": "serves U501.LDO_1V5",
+  "C458": "serves U406.OUT",
+  "C558": "serves U506.OUT",
+  "R305": "serves U301.DIO8",
+  "R314": "serves U301.DIO11",
+  "R302": "serves U301.RSTN",
+  "R454": "serves U406.EN",
+  "R554": "serves U506.EN",
+  "R313": "serves U301.DIO21_A10",
+  "R113": "kelvin",
+  "R429": "kelvin",
+  "R529": "kelvin",
+  "R108": "kelvin",
+  "R107": "kelvin",
+  "R425": "kelvin",
+  "R426": "kelvin",
+  "R428": "kelvin",
+  "R525": "kelvin",
+  "R526": "kelvin",
+  "R528": "kelvin",
+  "C101": "netlist",
+  "C102": "netlist",
+  "C103": "netlist",
+  "C104": "netlist",
+  "C105": "netlist",
+  "C106": "netlist",
+  "C112": "netlist",
+  "C113": "netlist",
+  "C114": "netlist",
+  "C115": "netlist",
+  "C116": "netlist",
+  "C117": "netlist",
+  "C118": "netlist",
+  "D404": "netlist",
+  "D405": "netlist",
+  "D410": "netlist",
+  "D411": "netlist",
+  "D504": "netlist",
+  "D505": "netlist",
+  "D510": "netlist",
+  "D511": "netlist",
+  "R101": "netlist",
+  "R102": "netlist",
+  "R103": "netlist",
+  "R104": "netlist",
+  "R106": "netlist",
+  "R109": "netlist",
+  "R110": "netlist",
+  "R111": "netlist",
+  "R115": "netlist",
+  "R116": "netlist",
+  "R117": "netlist",
+  "R118": "netlist",
+  "R119": "netlist",
+  "R120": "netlist",
+  "R121": "netlist",
+  "R122": "netlist",
+  "R123": "netlist",
+  "R124": "netlist",
+  "R126": "netlist",
+  "R402": "netlist",
+  "R403": "netlist",
+  "R404": "netlist",
+  "R409": "netlist",
+  "R410": "netlist",
+  "R415": "netlist",
+  "R419": "netlist",
+  "R433": "netlist",
+  "R435": "netlist",
+  "R441": "netlist",
+  "R444": "netlist",
+  "R445": "netlist",
+  "R446": "netlist",
+  "R447": "netlist",
+  "R452": "netlist",
+  "R455": "netlist",
+  "R502": "netlist",
+  "R503": "netlist",
+  "R504": "netlist",
+  "R509": "netlist",
+  "R510": "netlist",
+  "R515": "netlist",
+  "R519": "netlist",
+  "R533": "netlist",
+  "R535": "netlist",
+  "R541": "netlist",
+  "R544": "netlist",
+  "R545": "netlist",
+  "R546": "netlist",
+  "R547": "netlist",
+  "R552": "netlist",
+  "R555": "netlist",
+  "TH401": "thermistor at Q401",
+  "TH501": "twin of TH401 +(-23.025999999999996,0.006000000000000227)",
+  "C401": "netlist",
+  "C402": "netlist",
+  "C501": "netlist",
+  "C502": "netlist",
+  "D103": "netlist",
+  "R112": "netlist",
+  "R125": "netlist",
+  "R411": "netlist",
+  "R412": "netlist",
+  "R413": "netlist",
+  "R414": "netlist",
+  "R416": "netlist",
+  "R417": "netlist",
+  "R418": "netlist",
+  "R432": "netlist",
+  "R434": "netlist",
+  "R453": "netlist",
+  "R511": "netlist",
+  "R512": "netlist",
+  "R513": "netlist",
+  "R514": "netlist",
+  "R516": "netlist",
+  "R517": "netlist",
+  "R518": "netlist",
+  "R532": "netlist",
+  "R534": "netlist",
+  "R553": "netlist",
+  "C110": "netlist",
+  "C111": "netlist",
+  "D101": "netlist",
+  "R105": "netlist",
+  "C107": "no target: centre of its sheet",
+  "C108": "netlist"
+ },
+ "seconds": 75.9,
+ "args": {
+  "dump": "/home/claude/repo/docs/layout-teams/A/generic/runs/p2t_repro/base.json",
+  "pro": "/home/claude/repo/tools/score/template/board.kicad_pro",
+  "dru": "/home/claude/repo/tools/score/template/board.kicad_dru",
+  "constraints": "/home/claude/repo/tools/floorplan/example/monolith/constraints.json",
+  "anchors": "/home/claude/repo/docs/layout-teams/A/generic/anchors_p2t.json",
+  "fixed": "/home/claude/repo/docs/layout-teams/A/generic/fixed_parts.json",
+  "enclosure": "/home/claude/repo/docs/layout-teams/A/generic/enclosure.json",
+  "out": "/home/claude/repo/docs/layout-teams/A/generic/runs/p2t_repro",
+  "gap": 0.25,
+  "ringk": 1.0,
+  "wgnd": 0.5,
+  "order": "serves,kelvin,bridge",
+  "no_sheet": false,
+  "wpull": 0.15,
+  "derive": "",
+  "no_twins": false,
+  "corr": 0.3,
+  "corr_path": 0,
+  "corr_floor": 1.4,
+  "corr_maxlen": 8.0,
+  "corr_pin": 2.0,
+  "serves_noring": 2,
+  "corr_max": 1.5,
+  "corr_min": 1.0,
+  "anchor_only": ""
+ }
+}

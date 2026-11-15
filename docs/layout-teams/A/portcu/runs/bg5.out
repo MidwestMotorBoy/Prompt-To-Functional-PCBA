@@ -1,0 +1,1 @@
+03:56 q_G_E [--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1] pl=base_score.json blocked=9 of 371  stage 0  p1 2  p2 5  other 2 drc=0 loss 1.034 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}

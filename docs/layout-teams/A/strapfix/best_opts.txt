@@ -1,0 +1,11 @@
+# strapfix best board (sc_i4b): v1 placement, planner A, NO In2 straps, PACK_P second copy on In4, soft GND fill on B.Cu
+placement: docs/layout-teams/A/stagepwr/best_score.json   (unchanged v1; no strapfix placement overrides)
+cd /home/claude/repo/docs/layout-teams/A
+PLANNER=$PWD/stagepwr/tools/plan_copper_a.py \
+BUS4="--mode=strip+copy --w=3 --box=96,100,122,140" \
+BUS4B="--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1" \
+strapfix/tools/score_sf.sh <outdir> stagepwr/best_score.json --route=0 --plan="--sealed=1 --taps=1"
+# (STRAPS unset: no In2 strap tracks)
+# BUS4  = PACK_P on In4.Cu: 3 mm bands along a Kruskal MST over the PACK_P via groups, plus the whole In2 PACK_P
+#         pour outline inside x 96-122, y 100-140 (the Q102 -> J113 / R427 10 A area); priority 10 over the In4 GND plane.
+# BUS4B = GND fill over the whole B.Cu outline, priority 0 (under every hard B.Cu zone), soft (router may cut it).

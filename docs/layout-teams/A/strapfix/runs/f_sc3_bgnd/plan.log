@@ -1,0 +1,2 @@
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "zones": 1, "area_mm2": 658.7}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 4.0, "zones": 1, "area_mm2": 2267.4}

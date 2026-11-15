@@ -1,0 +1,18 @@
+{
+ "loss_W": 1.02,
+ "power_open": {
+  "/USB Port 1/AC_SNS_N": [
+   "R424"
+  ],
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 413,
+ "blocked_edges": "38 of 434"
+}

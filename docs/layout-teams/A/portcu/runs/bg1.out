@@ -1,0 +1,2 @@
+03:10 q_A [--sealed=1 --taps=1] pl=base_score.json blocked=24 of 396  stage 0  p1 13  p2 9  other 2 drc=0 loss 1.035 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}
+03:15 q_AJ [--sealed=1 --taps=1 --joinfix=1] pl=base_score.json blocked=19 of 398  stage 0  p1 8  p2 9  other 2 drc=0 loss 1.035 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}

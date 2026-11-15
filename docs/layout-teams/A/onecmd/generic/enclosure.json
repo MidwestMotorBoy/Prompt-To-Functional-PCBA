@@ -1,0 +1,31 @@
+{
+ "why": "limits of the cup that the board file does not hold. Everything else (outline with its notches and connector cut-outs, the no-footprint rule areas, holes, copper-to-edge rule) is read from the board.",
+ "keepout_boxes": [
+  {
+   "name": "lip_left",
+   "layers": [
+    "F.Cu"
+   ],
+   "box": [
+    78.4,
+    62.8245,
+    79.4,
+    114.475
+   ],
+   "why": "F.Cu lip of the cup over the long edge where pack z >= 27 (groundup placelib LIP_X/LIP_Y)"
+  },
+  {
+   "name": "lip_right",
+   "layers": [
+    "F.Cu"
+   ],
+   "box": [
+    120.96,
+    62.8245,
+    121.6,
+    114.475
+   ],
+   "why": "as lip_left, right edge"
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+# portcu best board (G5); scorecard outdir runs/sc_G5
+placement: docs/layout-teams/A/portcu/base_score.json   (gu format: base_gu.json = stagepwr/best_gu.json + ports/best_overrides_gu.json)
+planner:   PLANNER=docs/layout-teams/A/portcu/tools/plan_copper_p.py   (default of portcu/tools/score_board_split_p.sh)
+options:   --sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1
+command:   docs/layout-teams/A/portcu/tools/score_board_split_p.sh <outdir> docs/layout-teams/A/portcu/base_score.json --route=0 --plan="--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1"
+with PACK_P straps (G5S, runs/sc_G5S): prefix STRAPS="--net=PACK_P --layer=In2.Cu"

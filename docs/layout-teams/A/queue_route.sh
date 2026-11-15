@@ -11,7 +11,7 @@ mkdir -p "$A/route_queue"
 for e in kicad_pcb kicad_pro kicad_dru; do cp "$OUT/cu.$e" "$A/route_queue/$N.$e"; done
 cd "$R"
 git add docs/layout-teams/A/route_queue/$N.kicad_pcb docs/layout-teams/A/route_queue/$N.kicad_pro docs/layout-teams/A/route_queue/$N.kicad_dru
-git commit -q -m "Team A: queue full route $N" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -- docs/layout-teams/A/route_queue/$N.kicad_pcb docs/layout-teams/A/route_queue/$N.kicad_pro docs/layout-teams/A/route_queue/$N.kicad_dru
+git commit -q -m "Team A: queue full route $N" -m "Co-Authored-By: Claude <noreply@anthropic.com>" -- docs/layout-teams/A/route_queue/$N.kicad_pcb docs/layout-teams/A/route_queue/$N.kicad_pro docs/layout-teams/A/route_queue/$N.kicad_dru
 for i in 1 2 3 4; do git push -q -u origin layout-team-A && break; sleep $((2**i)); done
 SHA=$(git hash-object docs/layout-teams/A/route_queue/$N.kicad_pcb | cut -c1-8)
 echo "queued: A/$N-$SHA.json"

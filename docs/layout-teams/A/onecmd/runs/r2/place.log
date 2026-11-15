@@ -1,0 +1,199 @@
+fixed 50  anchors by rule 32  plane nets ['3V3', 'GND', 'PACK_P']  sense resistors ['R424', 'R427', 'R524', 'R527', 'RS101']
+twin pairs found from the netlist: 64
+escape rings (derived): {'U405': 0.42, 'U102': 1.2, 'U503': 0.9, 'U402': 0.45, 'U406': 0.22, 'U501': 0.6, 'U502': 0.45, 'U404': 0.75, 'U204': 0.24, 'U403': 0.9, 'U505': 0.42, 'U506': 0.22, 'U101': 0.79, 'U401': 0.6, 'U504': 0.75}
+stage template: 34 parts from the fixed inductors, keep boxes [(110.3708, 98.2984, 111.3708, 102.7984), (87.34503000000001, 98.304768, 88.34503000000001, 102.804768)]
+U401 pd chip: big pads ['20', '23', '32', '34'] toward connector J401 VBUS + inductor L401 (dot 0.79) -> (105.1, 81.0, 0)
+U501 pd chip: big pads ['20', '23', '32', '34'] toward connector J501 VBUS + inductor L501 (dot 0.78) -> (84.1, 81.0, 0)
+legalised anchor L201: (86.6, 128.3, 0) -> (86.6, 129.15, 0)
+legalised anchor L402: (114.6, 79.3, 180) -> (114.6, 74.5, 180)
+D401 rule tvs at J401.A4 (connector VBUS pin nearest U401.23, its largest VBUS pad) -> (114.3, 67.3, 270) cost 20.25
+D501 rule tvs at J501.A9 (connector VBUS pin nearest U501.23, its largest VBUS pad) -> (88.3, 71.2, 90) cost 12.54
+R424 rule sense beside U401.20: +2.41 out, +2.59 along toward the consumer (cap C449) -> (110.45, 85.15, 270) cost 0.08
+R524 rule sense beside U501.20: +2.41 out, +2.58 along toward the consumer (cap C549) -> (89.45, 86.4, 270) cost 2.67
+power corridors (net: part pairs): {'USB Port 2/VBUS': [('D501', 'J501', 2.43, 'F.Cu', 'straight'), ('D501', 'U501', 9.53, 'F.Cu', 'too long: none')], 'CELL_N': [('J108', 'RS101', 2.73, 'F.Cu', 'straight')], 'USB Port 1/PPHV': [('R424', 'U401', 3.53, 'F.Cu', 'straight')], 'USB Port 2/PPHV': [('R524', 'U501', 4.52, 'F.Cu', 'straight')], 'USB Port 1/BAT_SNS_P': [('Q402', 'R427', 4.56, 'F.Cu', 'straight')], 'USB Port 2/BAT_SNS_P': [('Q502', 'R527', 4.56, 'F.Cu', 'straight')], 'USB Port 1/VBUS': [('D401', 'J401', 4.85, 'F.Cu', 'straight'), ('J401', 'U401', 9.93, 'F.Cu', 'too long: none')], 'USB Port 2/PP5V': [('L502', 'U501', 8.9, 'F.Cu', 'too long: none')], 'USB Port 1/PP5V': [('L402', 'U401', 9.61, 'F.Cu', 'too long: none')], 'USB Port 2/AC_SNS_N': [('Q501', 'R524', 13.63, 'F.Cu', 'too long: none')], 'USB Port 1/AC_SNS_N': [('Q401', 'R424', 14.03, 'F.Cu', 'too long: none')]}
+pull-up rule: {'R404': 'pull-up in front of walled pin U401.18 (CHG_INT) (edge gap 0.63)', 'R441': 'pull-up in front of walled pin U401.19 (SBU_FLT) (edge gap 0.40)', 'R455': 'pull-up in front of walled pin U401.37 (DRV9_OFF) (edge gap 0.57)', 'R504': 'pull-up in front of walled pin U501.18 (CHG_INT) (edge gap 0.63)', 'R541': 'pull-up in front of walled pin U501.19 (SBU_FLT) (edge gap 0.40)', 'R555': 'pull-up in front of walled pin U501.37 (DRV9_OFF) (edge gap 0.57)'}
+power-pin cap shift: {'C403': ([np.float64(-0.4), np.float64(0.0)], 'row signals 0/1: shifted -0.40 along the row'), 'C407': ([np.float64(0.4), np.float64(0.0)], 'row signals 1/0: shifted +0.40 along the row'), 'C450': ([np.float64(-0.4), np.float64(0.0)], 'row signals 0/1: shifted -0.40 along the row'), 'C503': ([np.float64(-0.4), np.float64(0.0)], 'row signals 0/1: shifted -0.40 along the row'), 'C507': ([np.float64(0.4), np.float64(0.0)], 'row signals 1/0: shifted +0.40 along the row'), 'C550': ([np.float64(-0.4), np.float64(0.0)], 'row signals 0/1: shifted -0.40 along the row')}
+C206   hot_loop HL_3V3                    -> (79.5, 127.45, 90) cost 5.48
+C446   hot_loop USB Port 1/HL_5V          -> (115.5, 86.1, 0) cost 3.38
+C444   hot_loop USB Port 1/HL_5V          -> (118.35, 83.3, 90) cost 9.29
+C546   hot_loop USB Port 2/HL_5V          -> (96.0, 86.1, 90) cost 3.38
+C544   hot_loop USB Port 2/HL_5V          -> (98.4, 86.1, 90) cost 10.53
+C207   serves L201.2                      -> (90.9, 130.35, 0) cost 3.65
+C457   serves U406.IN                     -> (100.6, 100.85, 180) cost 5.99
+C441   serves L402.2                      -> (108.75, 76.75, 180) cost 5.48
+C442   serves L402.2                      -> (112.0, 80.5, 270) cost 6.06
+C443   serves L402.2                      -> (119.3, 73.05, 90) cost 8.00
+C557   serves U506.IN                     -> (97.4, 100.05, 90) cost 6.04
+C541   serves L502.2                      -> (90.55, 76.7, 180) cost 3.29
+C542   serves L502.2                      -> (97.45, 79.35, 0) cost 4.79
+C543   serves L502.2                      -> (97.45, 81.95, 0) cost 7.78
+C450   serves U401.VBUS                   -> (104.0, 77.8, 180) cost 2.13
+C550   serves U501.VBUS                   -> (83.0, 77.8, 180) cost 2.13
+C403   serves U401.VIN_3V3                -> (101.3, 77.15, 180) cost 5.24
+C407   serves U401.PP5V                   -> (100.5, 75.35, 180) cost 11.78
+C503   serves U501.VIN_3V3                -> (82.05, 76.3, 0) cost 4.97
+C507   serves U501.PP5V                   -> (85.7, 77.5, 0) cost 4.44
+R441   pull-up in front of walled pin U401.19 (SBU_FLT) (edge gap 0.40) -> (107.5, 84.4, 90) cost 0.55
+R541   pull-up in front of walled pin U501.19 (SBU_FLT) (edge gap 0.40) -> (86.5, 84.4, 90) cost 0.55
+R455   pull-up in front of walled pin U401.37 (DRV9_OFF) (edge gap 0.57) -> (103.2, 76.6, 270) cost 2.91
+R555   pull-up in front of walled pin U501.37 (DRV9_OFF) (edge gap 0.57) -> (81.7, 77.8, 270) cost 0.98
+R404   pull-up in front of walled pin U401.18 (CHG_INT) (edge gap 0.63) -> (106.75, 84.4, 90) cost 1.30
+R504   pull-up in front of walled pin U501.18 (CHG_INT) (edge gap 0.63) -> (85.75, 84.4, 90) cost 1.30
+U402   netlist                            -> (105.4, 86.85, 0) cost 11.36
+U502   netlist                            -> (83.05, 85.8, 0) cost 11.50
+Q103   netlist                            -> (100.45, 97.9, 90) cost 43.97
+Q409   netlist                            -> (100.65, 90.95, 270) cost 26.46
+Q509   netlist                            -> (95.1, 90.95, 0) cost 38.84
+Q104   netlist                            -> (118.3, 130.65, 180) cost 4.02
+U403   netlist                            -> (93.5, 112.8, 0) cost 449.50
+U503   netlist                            -> (85.15, 109.95, 90) cost 227.29
+C439   serves U404.SS                     -> (112.2, 84.05, 270) cost 4.34
+C539   serves U504.SS                     -> (97.8, 89.65, 270) cost 10.90
+C304   serves U301.RSTN                   -> (110.35, 123.75, 90) cost 5.62
+C408   serves U402.VCC                    -> (108.1, 86.4, 270) cost 2.40
+C415   serves U403.ACP                    -> (91.1, 107.6, 180) cost 10.53
+C416   serves U403.ACN                    -> (98.2, 110.4, 270) cost 6.17
+C418   serves U403.SRP                    -> (92.45, 118.0, 180) cost 5.74
+C419   serves U403.SRN                    -> (92.75, 119.7, 270) cost 7.51
+C449   serves U401.PPHV                   -> (109.35, 81.2, 90) cost 3.63
+C451   serves U405.VBIAS                  -> (101.1, 72.4, 270) cost 4.85
+C508   serves U502.VCC                    -> (85.75, 85.85, 270) cost 3.18
+C515   serves U503.ACP                    -> (80.0, 109.2, 270) cost 5.55
+C516   serves U503.ACN                    -> (80.0, 107.05, 90) cost 7.22
+C518   serves U503.SRP                    -> (90.8, 106.35, 0) cost 9.79
+C519   serves U503.SRN                    -> (87.55, 105.3, 180) cost 7.87
+C549   serves U501.PPHV                   -> (88.3, 81.2, 90) cost 3.55
+C551   serves U505.VBIAS                  -> (98.95, 72.75, 270) cost 4.78
+C412   serves U403.BTST1                  -> (99.45, 111.05, 90) cost 7.67
+C413   serves U403.BTST2                  -> (98.65, 115.7, 0) cost 7.85
+C440   serves U404.BST                    -> (115.5, 81.15, 0) cost 5.00
+C512   serves U503.BTST1                  -> (80.5, 104.85, 90) cost 12.01
+C513   serves U503.BTST2                  -> (89.7, 105.1, 0) cost 10.75
+C540   serves U504.BST                    -> (87.55, 86.35, 90) cost 12.60
+C414   serves U403.ACP                    -> (99.9, 109.35, 0) cost 8.79
+C417   serves U403.SRP                    -> (90.75, 118.45, 270) cost 7.81
+C514   serves U503.ACP                    -> (80.0, 111.35, 90) cost 9.49
+C517   serves U503.SRP                    -> (88.05, 114.65, 0) cost 9.99
+C409   serves U403.VAC                    -> (95.15, 117.35, 0) cost 10.62
+C452   serves U405.VPWR                   -> (104.8, 76.5, 0) cost 5.70
+C509   serves U503.VAC                    -> (83.05, 114.0, 0) cost 7.24
+C552   serves U505.VPWR                   -> (94.85, 76.85, 0) cost 3.87
+C406   serves J401.VBUS                   -> (117.0, 67.7, 90) cost 12.15
+C410   serves U403.REGN                   -> (98.65, 116.95, 0) cost 10.48
+C411   serves U403.DRV_SUP                -> (101.45, 113.25, 0) cost 9.04
+C506   serves J501.VBUS                   -> (82.65, 69.15, 180) cost 13.63
+C510   serves U503.REGN                   -> (85.75, 114.65, 0) cost 11.48
+C511   serves U503.DRV_SUP                -> (85.4, 117.1, 270) cost 14.25
+C404   serves U401.LDO_3V3                -> (102.05, 85.85, 270) cost 8.26
+C405   serves U401.LDO_1V5                -> (98.6, 77.45, 180) cost 11.49
+C504   serves U501.LDO_3V3                -> (82.45, 74.55, 0) cost 9.59
+C505   serves U501.LDO_1V5                -> (80.0, 85.3, 270) cost 7.94
+C458   serves U406.OUT                    -> (102.8, 109.65, 0) cost 4.88
+C558   serves U506.OUT                    -> (106.35, 107.3, 0) cost 13.46
+R305   serves U301.DIO8                   -> (110.35, 119.75, 270) cost 3.89
+R314   serves U301.DIO11                  -> (117.4, 127.05, 0) cost 6.53
+R302   serves U301.RSTN                   -> (110.35, 122.3, 270) cost 6.70
+R454   serves U406.EN                     -> (98.25, 108.75, 180) cost 16.85
+R554   serves U506.EN                     -> (92.1, 105.2, 180) cost 18.49
+R313   serves U301.DIO21_A10              -> (110.0, 125.05, 0) cost 7.56
+R113   kelvin                             -> (101.15, 111.4, 180) cost 44.13
+R108   kelvin                             -> (94.0, 127.3, 90) cost 15.54
+R107   kelvin                             -> (91.05, 125.1, 0) cost 17.84
+R425   kelvin                             -> (104.95, 96.0, 180) cost 35.24
+R426   kelvin                             -> (106.65, 96.65, 270) cost 32.68
+R525   kelvin                             -> (83.95, 96.65, 270) cost 29.74
+R526   kelvin                             -> (82.25, 96.0, 180) cost 28.89
+C101   netlist                            -> (92.45, 121.4, 0) cost 8.06
+C102   netlist                            -> (92.45, 122.65, 0) cost 6.82
+C103   netlist                            -> (92.9, 124.35, 90) cost 7.80
+C104   netlist                            -> (95.0, 125.0, 0) cost 5.35
+C105   netlist                            -> (97.95, 125.55, 0) cost 12.29
+C106   netlist                            -> (95.25, 126.7, 270) cost 6.14
+C112   netlist                            -> (95.7, 131.45, 270) cost 5.95
+C113   netlist                            -> (98.25, 135.2, 90) cost 6.88
+C114   netlist                            -> (103.1, 132.25, 180) cost 8.39
+C115   netlist                            -> (103.1, 131.0, 180) cost 6.02
+C116   netlist                            -> (98.55, 127.8, 90) cost 4.95
+C117   netlist                            -> (99.8, 127.8, 270) cost 4.86
+C118   netlist                            -> (116.1, 128.15, 180) cost 10.13
+D404   netlist                            -> (104.15, 112.3, 270) cost 9.64
+D405   netlist                            -> (105.85, 113.25, 90) cost 12.74
+D410   netlist                            -> (105.85, 110.45, 90) cost 11.83
+D411   netlist                            -> (107.55, 110.45, 90) cost 8.61
+D504   netlist                            -> (80.55, 115.4, 270) cost 16.11
+D505   netlist                            -> (87.4, 116.65, 270) cost 13.65
+D510   netlist                            -> (82.85, 115.75, 0) cost 5.84
+D511   netlist                            -> (88.7, 118.9, 0) cost 24.01
+R101   netlist                            -> (90.55, 102.95, 270) cost 60.75
+R102   netlist                            -> (95.7, 129.3, 90) cost 16.94
+R103   netlist                            -> (101.9, 94.75, 270) cost 69.22
+R104   netlist                            -> (97.3, 127.8, 90) cost 28.87
+R106   netlist                            -> (107.0, 120.25, 90) cost 13.01
+R109   netlist                            -> (107.0, 123.95, 270) cost 22.46
+R110   netlist                            -> (108.25, 124.65, 270) cost 10.61
+R111   netlist                            -> (107.0, 117.4, 90) cost 18.97
+R115   netlist                            -> (107.9, 119.65, 90) cost 15.92
+R116   netlist                            -> (107.0, 121.6, 0) cost 13.29
+R117   netlist                            -> (90.75, 122.4, 90) cost 14.23
+R118   netlist                            -> (108.35, 117.7, 90) cost 9.88
+R119   netlist                            -> (94.45, 129.8, 270) cost 6.24
+R120   netlist                            -> (107.8, 113.0, 0) cost 54.12
+R121   netlist                            -> (101.65, 135.2, 90) cost 5.92
+R122   netlist                            -> (90.3, 120.4, 0) cost 41.13
+R123   netlist                            -> (94.0, 131.5, 180) cost 8.52
+R124   netlist                            -> (103.2, 133.5, 0) cost 24.10
+R126   netlist                            -> (108.7, 122.95, 180) cost 27.97
+R402   netlist                            -> (105.65, 84.7, 0) cost 3.98
+R403   netlist                            -> (108.25, 84.95, 90) cost 4.97
+R409   netlist                            -> (88.6, 120.85, 90) cost 26.72
+R410   netlist                            -> (86.65, 120.05, 90) cost 19.81
+R415   netlist                            -> (89.05, 122.55, 0) cost 27.76
+R419   netlist                            -> (84.95, 119.6, 0) cost 23.54
+R433   netlist                            -> (116.25, 79.45, 270) cost 10.36
+R435   netlist                            -> (100.15, 117.0, 90) cost 27.59
+R444   netlist                            -> (97.5, 97.8, 0) cost 25.30
+R452   netlist                            -> (108.85, 107.7, 90) cost 10.86
+R502   netlist                            -> (86.5, 86.05, 270) cost 3.50
+R503   netlist                            -> (86.1, 87.15, 180) cost 4.39
+R509   netlist                            -> (82.25, 117.7, 90) cost 11.85
+R510   netlist                            -> (83.5, 117.7, 90) cost 10.71
+R515   netlist                            -> (79.05, 115.45, 90) cost 16.46
+R519   netlist                            -> (82.8, 119.4, 0) cost 28.38
+R533   netlist                            -> (87.0, 76.0, 0) cost 22.00
+R535   netlist                            -> (89.2, 115.9, 90) cost 19.31
+R544   netlist                            -> (80.5, 102.7, 90) cost 13.91
+R552   netlist                            -> (110.1, 107.15, 90) cost 19.51
+C401   netlist                            -> (100.65, 70.7, 180) cost 7.86
+C402   netlist                            -> (107.95, 71.1, 0) cost 8.78
+C501   netlist                            -> (92.1, 71.1, 180) cost 7.80
+C502   netlist                            -> (86.95, 74.75, 0) cost 6.74
+D103   netlist                            -> (110.9, 113.95, 90) cost 6.86
+R112   netlist                            -> (110.4, 117.1, 180) cost 2.05
+R125   netlist                            -> (119.35, 128.15, 0) cost 2.68
+R411   netlist                            -> (86.65, 122.2, 270) cost 2.55
+R412   netlist                            -> (92.75, 108.0, 0) cost 3.01
+R413   netlist                            -> (84.95, 120.85, 180) cost 13.81
+R414   netlist                            -> (84.95, 122.1, 180) cost 14.67
+R416   netlist                            -> (83.25, 122.05, 90) cost 8.70
+R417   netlist                            -> (100.15, 115.55, 90) cost 0.98
+R418   netlist                            -> (80.6, 119.6, 0) cost 3.91
+R432   netlist                            -> (115.05, 87.0, 0) cost 2.66
+R434   netlist                            -> (117.95, 79.95, 0) cost 1.46
+R453   netlist                            -> (109.5, 109.4, 0) cost 2.78
+R511   netlist                            -> (80.55, 117.45, 180) cost 3.89
+R512   netlist                            -> (80.35, 113.05, 270) cost 3.42
+R513   netlist                            -> (87.4, 123.9, 0) cost 13.37
+R514   netlist                            -> (84.95, 123.35, 180) cost 14.96
+R516   netlist                            -> (79.55, 120.85, 0) cost 8.22
+R517   netlist                            -> (88.85, 117.0, 180) cost 1.72
+R518   netlist                            -> (82.0, 121.3, 90) cost 2.01
+R532   netlist                            -> (96.4, 87.75, 270) cost 2.74
+R534   netlist                            -> (97.8, 91.8, 270) cost 9.94
+R553   netlist                            -> (110.6, 105.45, 0) cost 1.45
+C110   netlist                            -> (109.05, 121.15, 270) cost 3.88
+C111   netlist                            -> (112.85, 114.4, 90) cost 12.20
+D101   netlist                            -> (93.3, 130.15, 270) cost 2.07
+R105   netlist                            -> (86.55, 125.6, 90) cost 26.73
+C107   no target: centre of its sheet     -> (105.35, 134.55, 0) cost 16.05
+C108   netlist                            -> (107.05, 135.05, 270) cost 1.50
+placed 289/289  failures 0  check errors 0  anchors 32 (typed 18, derived 10)  support own 183 twins 0  untargeted 1  serves max 9.22 mm, over 3 mm: {'C427': 9.22, 'C527': 9.22, 'C511': 8.6, 'C406': 8.1, 'C558': 8.03, 'R454': 7.58, 'C409': 7.48, 'R554': 7.29, 'C510': 7.11, 'C506': 6.98, 'C443': 6.75, 'C424': 5.94, 'C524': 5.94, 'C540': 5.63, 'C504': 5.47, 'C519': 5.4, 'C539': 5.19, 'C404': 5.08, 'C410': 4.95, 'C405': 4.86, 'C543': 4.75, 'C414': 4.7, 'C407': 4.68, 'C411': 4.6, 'C442': 4.56, 'C517': 4.48, 'C518': 4.47, 'C512': 4.06, 'C423': 4.02, 'C523': 4.02, 'C542': 3.98, 'C415': 3.92, 'C514': 3.85, 'C505': 3.81, 'C509': 3.8, 'C412': 3.55, 'C419': 3.52, 'C417': 3.38, 'C513': 3.37, 'C301': 3.36, 'C441': 3.24, 'C451': 3.2, 'C551': 3.2}  99.2 s

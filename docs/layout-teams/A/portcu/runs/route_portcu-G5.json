@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/portcu-G5.kicad_pcb",
+ "sha": "155c0266261713ae018a17b69456f290b917cd00",
+ "routed": 353,
+ "failed": 16,
+ "edges": 369,
+ "minutes": 104.2,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /USB Port 1/PP5V",
+  "FAILKEY /P1_LDO_3V3",
+  "FAILKEY /USB Port 1/HG1",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}

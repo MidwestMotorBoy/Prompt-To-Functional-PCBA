@@ -1,0 +1,17 @@
+== sc3_bgnd | --mode=strip+copy --w=3 --box=96,100,122,140 | BUSB=--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1
+injected 2 zones on all
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "zones": 1, "area_mm2": 658.7}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 4.0, "zones": 1, "area_mm2": 2267.4}
+dc.json loss_W 0.835 PACK_P 0.131 GND 0.225 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.138 PACK_P 0.254 GND 0.384 open {} DRC 0 unconn 61
+== copy_bgnd | --mode=copy | BUSB=--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1
+injected 2 zones on all
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "copy", "w": 4.0, "zones": 1, "area_mm2": 1365.7}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 4.0, "zones": 1, "area_mm2": 2267.4}
+dc.json loss_W 0.849 PACK_P 0.124 GND 0.246 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.146 PACK_P 0.214 GND 0.432 open {} DRC 0 unconn 61
+== sc3b | --mode=strip+copy --w=3 --box=96,100,122,140;78,118,96,140 | BUSB=
+injected 1 zones on all
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "zones": 1, "area_mm2": 782.0}
+dc.json loss_W 1.029 PACK_P 0.131 GND 0.419 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.261 PACK_P 0.251 GND 0.51 open {} DRC 0 unconn 61

@@ -1,0 +1,203 @@
+{
+ "_doc": "onecmd rules anchors: pose = typed absolute (x, y, rot); pd_chip = typed x, y with derived rotation; rule/stage/auto = no typed number.",
+ "anchors": {
+  "U101": {
+   "pose": [
+    96.9,
+    121.0,
+    0
+   ],
+   "why": "gauge, bottom block (typed: merged3 pose)"
+  },
+  "U102": {
+   "pose": [
+    99.2,
+    131.5,
+    0
+   ],
+   "why": "cell protector (typed: merged3 pose)"
+  },
+  "U204": {
+   "pose": [
+    82.4,
+    128.2,
+    0
+   ],
+   "why": "3V3 buck (typed: merged3 pose)"
+  },
+  "L201": {
+   "pose": [
+    86.6,
+    128.3,
+    0
+   ],
+   "why": "3V3 buck inductor (typed: merged3 pose)"
+  },
+  "Q101": {
+   "pose": [
+    103.4,
+    126.0,
+    90
+   ],
+   "why": "CHG protection FET (typed: merged3 pose)"
+  },
+  "Q102": {
+   "pose": [
+    103.4,
+    118.5,
+    270
+   ],
+   "why": "DSG protection FET (typed: merged3 pose)"
+  },
+  "F102": {
+   "pose": [
+    113.79,
+    131.83,
+    180
+   ],
+   "why": "chemical fuse (typed: merged3 pose)"
+  },
+  "RS101": {
+   "pose": [
+    88.6,
+    133.0,
+    0
+   ],
+   "why": "gauge shunt (typed: merged3 pose)"
+  },
+  "U404": {
+   "pose": [
+    115.0,
+    84.0,
+    90
+   ],
+   "why": "port 1 5 V buck (typed: merged3 pose)"
+  },
+  "L402": {
+   "pose": [
+    114.6,
+    79.3,
+    180
+   ],
+   "why": "port 1 5 V buck inductor (typed: merged3 pose)"
+  },
+  "U504": {
+   "pose": [
+    93.9,
+    86.6,
+    180
+   ],
+   "why": "port 2 5 V buck (typed: merged3 pose)"
+  },
+  "L502": {
+   "pose": [
+    92.0,
+    81.4,
+    90
+   ],
+   "why": "port 2 5 V buck inductor (typed: merged3 pose)"
+  },
+  "U405": {
+   "pose": [
+    104.3,
+    73.3,
+    -90
+   ],
+   "why": "port 1 port protector (typed: merged3 pose)"
+  },
+  "U505": {
+   "pose": [
+    95.75,
+    73.65,
+    -90
+   ],
+   "why": "port 2 port protector (typed: merged3 pose)"
+  },
+  "U406": {
+   "pose": [
+    102.35,
+    105.0,
+    90
+   ],
+   "why": "port 1 gate-drive LDO (typed: merged3 pose)"
+  },
+  "U506": {
+   "pose": [
+    98.35,
+    105.0,
+    90
+   ],
+   "why": "port 2 gate-drive LDO (typed: merged3 pose)"
+  },
+  "U401": {
+   "pd_chip": [
+    105.1,
+    81.0
+   ],
+   "why": "port 1 PD chip: x, y typed (merged3), rotation derived (rules.pd_rotation)"
+  },
+  "U501": {
+   "pd_chip": [
+    84.1,
+    81.0
+   ],
+   "why": "port 2 PD chip: x, y typed (merged3), rotation derived"
+  },
+  "R424": {
+   "rule": "sense",
+   "why": "AC sense resistor beside the PD chip PPHV pad (rules.sense_targets)"
+  },
+  "R524": {
+   "rule": "sense",
+   "why": "AC sense resistor beside the PD chip PPHV pad (rules.sense_targets)"
+  },
+  "D401": {
+   "rule": "tvs",
+   "why": "VBUS TVS at the connector VBUS pin nearest the PD chip VBUS pad (rules.tvs_targets)"
+  },
+  "D501": {
+   "rule": "tvs",
+   "why": "VBUS TVS at the connector VBUS pin nearest the PD chip VBUS pad (rules.tvs_targets)"
+  },
+  "Q401": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "Q402": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "R427": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "Q501": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "Q502": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "R527": {
+   "stage": true,
+   "why": "charger stage template hung from the fixed inductor (L401 / L501)"
+  },
+  "U403": {
+   "stage": true,
+   "why": "charger controller: stage template pose relative to Q401 (hung from L401)"
+  },
+  "U503": {
+   "stage": true,
+   "why": "as U403 on L501"
+  },
+  "U402": {
+   "auto": true,
+   "why": "placed by the greedy placer from netlist targets (charger controller: its gate/sense nets to the stage parts; EEPROM: to the PD chip)"
+  },
+  "U502": {
+   "auto": true,
+   "why": "placed by the greedy placer from netlist targets (charger controller: its gate/sense nets to the stage parts; EEPROM: to the PD chip)"
+  }
+ }
+}

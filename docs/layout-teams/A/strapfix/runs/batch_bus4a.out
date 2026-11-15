@@ -1,0 +1,20 @@
+== --mode=copy --box=78,104,122,140
+injected 1 zones on In4.Cu
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "copy", "w": 4.0, "zones": 1, "area_mm2": 728.5}
+dc.json loss_W 1.032 PACK_P 0.134 GND 0.419 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.282 PACK_P 0.268 GND 0.514 open {} DRC 0 unconn 61
+dc_routed.json loss_W 1.282 PACK_P 0.268 GND 0.514 open {} DRC 0 unconn 61
+== --mode=strip+copy --w=3 --box=78,104,122,140
+strapfix/tools/fastcu.sh: line 20: unexpected EOF while looking for matching `"'
+== --mode=strip+copy --w=3 --box=96,100,122,140
+injected 1 zones on all
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "zones": 1, "area_mm2": 658.7}
+dc.json loss_W 1.012 PACK_P 0.131 GND 0.402 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.238 PACK_P 0.254 GND 0.485 open {} DRC 0 unconn 61
+dc_routed.json loss_W 1.238 PACK_P 0.254 GND 0.485 open {} DRC 0 unconn 61
+== --mode=strip --w=10
+injected 1 zones on all
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip", "w": 10.0, "zones": 1, "area_mm2": 1050.9}
+dc.json loss_W 1.048 PACK_P 0.136 GND 0.434 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.282 PACK_P 0.254 GND 0.528 open {} DRC 0 unconn 61
+dc_routed.json loss_W 1.282 PACK_P 0.254 GND 0.528 open {} DRC 0 unconn 61

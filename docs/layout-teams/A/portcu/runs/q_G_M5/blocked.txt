@@ -1,0 +1,11 @@
+/home/claude/repo/docs/layout-teams/A/portcu/runs/q_G_M5: 10 of 373  stage 0  p1 3  p2 5  other 2
+   other SCL Pad 6 [SCL] of J302 on F.Cu -> Pad 9 [SCL] of U301 on F.Cu
+   other /Cells and Gauge/GAUGE_FUSE Pad 25 [/Cells and Gauge/GAUGE_FUSE] of U101 on F.Cu -> Pad 2 [/Cells and Gauge/GAUGE_FUSE] of R126 on F.Cu
+   p1 /USB Port 1/C_CC1 Pad A5 [/USB Port 1/C_CC1] of J401 on F.Cu -> Pad 4 [/USB Port 1/C_CC1] of U405 on F.Cu
+   p1 /USB Port 1/I2CC_SDA Pad 2 [/USB Port 1/I2CC_SDA] of R402 on F.Cu -> Pad 2 [/USB Port 1/I2CC_SDA] of U403 on F.Cu
+   p1 GND Pad B12 [GND] of J401 on F.Cu -> Zone plane
+   p2 /USB Port 2/C_CC2 Pad 5 [/USB Port 2/C_CC2] of U505 on F.Cu -> Pad B5 [/USB Port 2/C_CC2] of J501 on F.Cu
+   p2 /USB Port 2/CC1 Pad 12 [/USB Port 2/CC1] of U505 on F.Cu -> Pad 28 [/USB Port 2/CC1] of U501 on F.Cu
+   p2 /USB Port 2/CC2 Pad 11 [/USB Port 2/CC2] of U505 on F.Cu -> Pad 29 [/USB Port 2/CC2] of U501 on F.Cu
+   p2 CHG_INH Pad 1 [CHG_INH] of R535 on F.Cu -> Pad 2 [CHG_INH] of J302 on F.Cu
+   p2 /USB Port 2/DRV9_OFF Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu -> Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on F.Cu

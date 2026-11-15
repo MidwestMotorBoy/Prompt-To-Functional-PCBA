@@ -1,0 +1,3 @@
+bare.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+SCORE {"loss_W": 1.052, "power_open": {"3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0, "unrouted_signal_items": 391, "hot_loops": "7 of 7 pass, 6.15 nH", "blocked_edges": "29 of 400"}

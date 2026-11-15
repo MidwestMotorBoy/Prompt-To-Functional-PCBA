@@ -1,0 +1,5 @@
+== bgnd_only | - | BUSB=--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1
+injected 1 zones on all
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 4.0, "zones": 1, "area_mm2": 2267.4}
+dc.json loss_W 0.911 PACK_P 0.222 GND 0.21 open {'3V3': ['L201'], 'GND': ['J302', 'J301']} DRC 0 unconn 387
+dc_routed.json loss_W 1.655 PACK_P 0.828 GND 0.328 open {'PACK_P': ['D103', 'U204']} DRC 0 unconn 63

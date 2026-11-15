@@ -1,0 +1,2 @@
+03:46 q_G_M5 [--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --mirror_minw=0.5] pl=base_score.json blocked=10 of 373  stage 0  p1 3  p2 5  other 2 drc=0 loss 1.032 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}
+03:51 q_G_M5T [--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --mirror_minw=0.5 --nogrow_detour=1] pl=base_score.json blocked=10 of 373  stage 0  p1 3  p2 5  other 2 drc=0 loss 1.083 open {'3V3': ['L201'], 'GND': ['J302', 'J301']}

@@ -1,0 +1,851 @@
+{
+ "corridors": {
+  "USB Port 2/VBUS": [
+   [
+    "D501",
+    "J501",
+    2.43,
+    "F.Cu",
+    "straight"
+   ],
+   [
+    "D501",
+    "U501",
+    9.53,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 1/VBUS": [
+   [
+    "D401",
+    "J401",
+    2.7,
+    "F.Cu",
+    "straight"
+   ],
+   [
+    "D401",
+    "U401",
+    9.35,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "CELL_N": [
+   [
+    "J108",
+    "RS101",
+    2.73,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 1/PPHV": [
+   [
+    "R424",
+    "U401",
+    3.53,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/PPHV": [
+   [
+    "R524",
+    "U501",
+    4.52,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 1/BAT_SNS_P": [
+   [
+    "Q402",
+    "R427",
+    4.56,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/BAT_SNS_P": [
+   [
+    "Q502",
+    "R527",
+    4.56,
+    "F.Cu",
+    "straight"
+   ]
+  ],
+  "USB Port 2/PP5V": [
+   [
+    "L502",
+    "U501",
+    8.9,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 1/PP5V": [
+   [
+    "L402",
+    "U401",
+    9.61,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 2/AC_SNS_N": [
+   [
+    "Q501",
+    "R524",
+    13.63,
+    "F.Cu",
+    "too long: none"
+   ]
+  ],
+  "USB Port 1/AC_SNS_N": [
+   [
+    "Q401",
+    "R424",
+    14.03,
+    "F.Cu",
+    "too long: none"
+   ]
+  ]
+ },
+ "legalised_anchors": {
+  "L201": [
+   [
+    86.6,
+    128.3,
+    0
+   ],
+   [
+    86.6,
+    129.15,
+    0
+   ]
+  ],
+  "L402": [
+   [
+    114.6,
+    79.3,
+    180
+   ],
+   [
+    114.6,
+    74.5,
+    180
+   ]
+  ]
+ },
+ "placed": 289,
+ "total": 289,
+ "missing": [],
+ "failures": [],
+ "check_errors": [],
+ "fixed": 50,
+ "anchors": 32,
+ "anchors_typed": 18,
+ "anchors_derived": 10,
+ "anchors_dropped": [
+  "U402",
+  "U403",
+  "U502",
+  "U503"
+ ],
+ "support_parts": 183,
+ "placed_own": 183,
+ "twins": 0,
+ "untargeted": 1,
+ "serves_max_mm": 9.22,
+ "serves_over_3mm": {
+  "C427": 9.22,
+  "C527": 9.22,
+  "C511": 8.6,
+  "C558": 8.03,
+  "R454": 7.58,
+  "C409": 7.48,
+  "C406": 7.3,
+  "R554": 7.29,
+  "C510": 7.11,
+  "C506": 6.98,
+  "C443": 6.75,
+  "C424": 5.94,
+  "C524": 5.94,
+  "C540": 5.63,
+  "C504": 5.47,
+  "C519": 5.4,
+  "C404": 5.2,
+  "C539": 5.19,
+  "C410": 4.95,
+  "C405": 4.86,
+  "C543": 4.75,
+  "C414": 4.7,
+  "C407": 4.68,
+  "C411": 4.6,
+  "C442": 4.56,
+  "C517": 4.48,
+  "C518": 4.47,
+  "C512": 4.06,
+  "C423": 4.02,
+  "C523": 4.02,
+  "C542": 3.98,
+  "C415": 3.92,
+  "C514": 3.85,
+  "C509": 3.8,
+  "C505": 3.71,
+  "C412": 3.55,
+  "C419": 3.52,
+  "C451": 3.47,
+  "C417": 3.38,
+  "C513": 3.37,
+  "C301": 3.36,
+  "C441": 3.24,
+  "C551": 3.2
+ },
+ "serves_dist": {
+  "C206": 2.02,
+  "C207": 2.21,
+  "C301": 3.36,
+  "C302": 2.01,
+  "C303": 2.67,
+  "C304": 1.22,
+  "C403": 2.02,
+  "C404": 5.2,
+  "C405": 4.86,
+  "C406": 7.3,
+  "C407": 4.68,
+  "C408": 1.48,
+  "C409": 7.48,
+  "C410": 4.95,
+  "C411": 4.6,
+  "C412": 3.55,
+  "C413": 2.54,
+  "C414": 4.7,
+  "C415": 3.92,
+  "C416": 2.95,
+  "C417": 3.38,
+  "C418": 2.32,
+  "C419": 3.52,
+  "C420": 2.27,
+  "C423": 4.02,
+  "C424": 5.94,
+  "C427": 9.22,
+  "C430": 1.88,
+  "C431": 2.26,
+  "C434": 2.8,
+  "C438": 1.88,
+  "C439": 2.57,
+  "C440": 2.12,
+  "C441": 3.24,
+  "C442": 4.56,
+  "C443": 6.75,
+  "C449": 1.33,
+  "C450": 1.34,
+  "C451": 3.47,
+  "C452": 2.79,
+  "C457": 2.0,
+  "C458": 2.54,
+  "C503": 2.81,
+  "C504": 5.47,
+  "C505": 3.71,
+  "C506": 6.98,
+  "C507": 2.41,
+  "C508": 1.48,
+  "C509": 3.8,
+  "C510": 7.11,
+  "C511": 8.6,
+  "C512": 4.06,
+  "C513": 3.37,
+  "C514": 3.85,
+  "C515": 2.25,
+  "C516": 2.35,
+  "C517": 4.48,
+  "C518": 4.47,
+  "C519": 5.4,
+  "C520": 2.27,
+  "C523": 4.02,
+  "C524": 5.94,
+  "C527": 9.22,
+  "C530": 1.88,
+  "C531": 2.26,
+  "C534": 2.8,
+  "C538": 1.88,
+  "C539": 5.19,
+  "C540": 5.63,
+  "C541": 2.65,
+  "C542": 3.98,
+  "C543": 4.75,
+  "C549": 1.28,
+  "C550": 1.34,
+  "C551": 3.2,
+  "C552": 2.4,
+  "C557": 2.03,
+  "C558": 8.03,
+  "R302": 1.9,
+  "R304": 1.8,
+  "R305": 1.22,
+  "R313": 1.25,
+  "R314": 1.22,
+  "R454": 7.58,
+  "R554": 7.29
+ },
+ "rings": {
+  "U405": 0.42,
+  "U102": 1.2,
+  "U503": 0.9,
+  "U402": 0.45,
+  "U406": 0.22,
+  "U501": 0.6,
+  "U502": 0.45,
+  "U404": 0.75,
+  "U204": 0.24,
+  "U403": 0.9,
+  "U505": 0.42,
+  "U506": 0.22,
+  "U101": 0.79,
+  "U401": 0.6,
+  "U504": 0.75
+ },
+ "limits": {
+  "outline_bounds": [
+   78.4,
+   62.8245,
+   121.6,
+   137.175
+  ],
+  "outline_vertices": 16,
+  "pad_to_edge_mm": 0.25,
+  "keepouts": {
+   "F.Cu": [
+    [
+     "KO_top_stop_L",
+     [
+      78.4,
+      62.825,
+      86.0,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_top_stop_R",
+     [
+      114.0,
+      62.825,
+      121.6,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "lip_left",
+     [
+      78.4,
+      62.825,
+      79.4,
+      114.475
+     ],
+     "F.Cu lip of the cup over the long edge where pack z >= 27 (groundup placelib LIP_X/LIP_Y)"
+    ],
+    [
+     "lip_right",
+     [
+      120.96,
+      62.825,
+      121.6,
+      114.475
+     ],
+     "as lip_left, right edge"
+    ]
+   ],
+   "B.Cu": [
+    [
+     "KO_top_stop_L",
+     [
+      78.4,
+      62.825,
+      86.0,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_top_stop_R",
+     [
+      114.0,
+      62.825,
+      121.6,
+      63.825
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_gap_filler_R",
+     [
+      107.0,
+      88.475,
+      116.0,
+      114.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_L_bottom",
+     [
+      88.7,
+      116.475,
+      93.5,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_R_top",
+     [
+      106.5,
+      62.825,
+      111.3,
+      86.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL2",
+     [
+      98.0,
+      134.875,
+      102.0,
+      137.076
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_R_bottom",
+     [
+      106.5,
+      116.475,
+      111.3,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_PACKN",
+     [
+      85.575,
+      134.326,
+      88.375,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_1N",
+     [
+      90.4,
+      134.601,
+      92.15,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_gap_filler_L",
+     [
+      84.0,
+      88.475,
+      93.0,
+      114.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_PACKP",
+     [
+      111.625,
+      134.326,
+      114.425,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_wire_4P",
+     [
+      107.85,
+      134.601,
+      109.6,
+      137.175
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_rail_L_top",
+     [
+      88.7,
+      62.825,
+      93.5,
+      86.475
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL3",
+     [
+      111.9,
+      62.825,
+      115.9,
+      69.975
+     ],
+     "board rule area (no footprints)"
+    ],
+    [
+     "KO_B_tail_CELL1",
+     [
+      84.1,
+      62.825,
+      88.1,
+      69.975
+     ],
+     "board rule area (no footprints)"
+    ]
+   ]
+  }
+ },
+ "plane_nets": [
+  "3V3",
+  "GND",
+  "PACK_P"
+ ],
+ "sense_resistors": [
+  "R424",
+  "R427",
+  "R524",
+  "R527",
+  "RS101"
+ ],
+ "how": {
+  "H104": "fixed",
+  "TP301": "fixed",
+  "J401": "fixed",
+  "C303": "fixed",
+  "R321": "fixed",
+  "H102": "fixed",
+  "J501": "fixed",
+  "H101": "fixed",
+  "C421": "fixed",
+  "J117": "fixed",
+  "J112": "fixed",
+  "R304": "fixed",
+  "L401": "fixed",
+  "J110": "fixed",
+  "J109": "fixed",
+  "C210": "fixed",
+  "J301": "fixed",
+  "J113": "fixed",
+  "TH101": "fixed",
+  "TH104": "fixed",
+  "TP109": "fixed",
+  "C521": "fixed",
+  "C212": "fixed",
+  "L501": "fixed",
+  "C456": "fixed",
+  "J108": "fixed",
+  "C301": "fixed",
+  "J115": "fixed",
+  "C209": "fixed",
+  "TP113": "fixed",
+  "J116": "fixed",
+  "C315": "fixed",
+  "J119": "fixed",
+  "C213": "fixed",
+  "J120": "fixed",
+  "J302": "fixed",
+  "C302": "fixed",
+  "U301": "fixed",
+  "H103": "fixed",
+  "C211": "fixed",
+  "C313": "fixed",
+  "C314": "fixed",
+  "J118": "fixed",
+  "C556": "fixed",
+  "J114": "fixed",
+  "C208": "fixed",
+  "TP512": "fixed",
+  "J111": "fixed",
+  "TP412": "fixed",
+  "TP106": "fixed",
+  "F102": "anchor typed",
+  "L201": "anchor typed",
+  "L402": "anchor typed",
+  "L502": "anchor typed",
+  "Q101": "anchor typed",
+  "Q102": "anchor typed",
+  "RS101": "anchor typed",
+  "U101": "anchor typed",
+  "U102": "anchor typed",
+  "U204": "anchor typed",
+  "U404": "anchor typed",
+  "U405": "anchor typed",
+  "U406": "anchor typed",
+  "U504": "anchor typed",
+  "U505": "anchor typed",
+  "U506": "anchor typed",
+  "Q401": "stage template (hung from the fixed inductor)",
+  "Q402": "stage template (hung from the fixed inductor)",
+  "C430": "stage template (hung from the fixed inductor)",
+  "C438": "stage template (hung from the fixed inductor)",
+  "C420": "stage template (hung from the fixed inductor)",
+  "C423": "stage template (hung from the fixed inductor)",
+  "C424": "stage template (hung from the fixed inductor)",
+  "C427": "stage template (hung from the fixed inductor)",
+  "C431": "stage template (hung from the fixed inductor)",
+  "C434": "stage template (hung from the fixed inductor)",
+  "TH401": "stage template (hung from the fixed inductor)",
+  "R446": "stage template (hung from the fixed inductor)",
+  "R447": "stage template (hung from the fixed inductor)",
+  "R445": "stage template (hung from the fixed inductor)",
+  "R427": "stage template (hung from the fixed inductor)",
+  "R428": "stage template (hung from the fixed inductor)",
+  "R429": "stage template (hung from the fixed inductor)",
+  "Q501": "stage template (hung from the fixed inductor)",
+  "Q502": "stage template (hung from the fixed inductor)",
+  "C530": "stage template (hung from the fixed inductor)",
+  "C538": "stage template (hung from the fixed inductor)",
+  "C520": "stage template (hung from the fixed inductor)",
+  "C523": "stage template (hung from the fixed inductor)",
+  "C524": "stage template (hung from the fixed inductor)",
+  "C527": "stage template (hung from the fixed inductor)",
+  "C531": "stage template (hung from the fixed inductor)",
+  "C534": "stage template (hung from the fixed inductor)",
+  "TH501": "stage template (hung from the fixed inductor)",
+  "R546": "stage template (hung from the fixed inductor)",
+  "R547": "stage template (hung from the fixed inductor)",
+  "R545": "stage template (hung from the fixed inductor)",
+  "R527": "stage template (hung from the fixed inductor)",
+  "R528": "stage template (hung from the fixed inductor)",
+  "R529": "stage template (hung from the fixed inductor)",
+  "U401": "pd chip: big pads ['20', '23', '32', '34'] toward connector J401 VBUS + inductor L401 (dot 0.79)",
+  "U501": "pd chip: big pads ['20', '23', '32', '34'] toward connector J501 VBUS + inductor L501 (dot 0.78)",
+  "D401": "tvs at J401.A9 (connector VBUS pin nearest U401.32)",
+  "D501": "tvs at J501.A9 (connector VBUS pin nearest U501.32)",
+  "R424": "sense beside U401.20: +2.41 out, +2.59 along toward the consumer (cap C449)",
+  "R524": "sense beside U501.20: +2.41 out, +2.58 along toward the consumer (cap C549)",
+  "C206": "hot_loop HL_3V3",
+  "C446": "hot_loop USB Port 1/HL_5V",
+  "C444": "hot_loop USB Port 1/HL_5V",
+  "C546": "hot_loop USB Port 2/HL_5V",
+  "C544": "hot_loop USB Port 2/HL_5V",
+  "C207": "serves L201.2",
+  "C457": "serves U406.IN",
+  "C441": "serves L402.2",
+  "C442": "serves L402.2",
+  "C443": "serves L402.2",
+  "C557": "serves U506.IN",
+  "C541": "serves L502.2",
+  "C542": "serves L502.2",
+  "C543": "serves L502.2",
+  "C450": "serves U401.VBUS",
+  "C550": "serves U501.VBUS",
+  "C403": "serves U401.VIN_3V3",
+  "C407": "serves U401.PP5V",
+  "C503": "serves U501.VIN_3V3",
+  "C507": "serves U501.PP5V",
+  "R404": "pull-up in front of walled pin U401.18 (CHG_INT) (edge gap 0.63)",
+  "R441": "pull-up in front of walled pin U401.19 (SBU_FLT) (edge gap 0.40)",
+  "R455": "pull-up in front of walled pin U401.37 (DRV9_OFF) (edge gap 0.57)",
+  "R504": "pull-up in front of walled pin U501.18 (CHG_INT) (edge gap 0.63)",
+  "R541": "pull-up in front of walled pin U501.19 (SBU_FLT) (edge gap 0.40)",
+  "R555": "pull-up in front of walled pin U501.37 (DRV9_OFF) (edge gap 0.57)",
+  "U402": "netlist",
+  "U502": "netlist",
+  "Q103": "netlist",
+  "Q409": "netlist",
+  "Q509": "netlist",
+  "Q104": "netlist",
+  "U403": "netlist",
+  "U503": "netlist",
+  "C439": "serves U404.SS",
+  "C539": "serves U504.SS",
+  "C304": "serves U301.RSTN",
+  "C408": "serves U402.VCC",
+  "C415": "serves U403.ACP",
+  "C416": "serves U403.ACN",
+  "C418": "serves U403.SRP",
+  "C419": "serves U403.SRN",
+  "C449": "serves U401.PPHV",
+  "C451": "serves U405.VBIAS",
+  "C508": "serves U502.VCC",
+  "C515": "serves U503.ACP",
+  "C516": "serves U503.ACN",
+  "C518": "serves U503.SRP",
+  "C519": "serves U503.SRN",
+  "C549": "serves U501.PPHV",
+  "C551": "serves U505.VBIAS",
+  "C412": "serves U403.BTST1",
+  "C413": "serves U403.BTST2",
+  "C440": "serves U404.BST",
+  "C512": "serves U503.BTST1",
+  "C513": "serves U503.BTST2",
+  "C540": "serves U504.BST",
+  "C414": "serves U403.ACP",
+  "C417": "serves U403.SRP",
+  "C514": "serves U503.ACP",
+  "C517": "serves U503.SRP",
+  "C409": "serves U403.VAC",
+  "C452": "serves U405.VPWR",
+  "C509": "serves U503.VAC",
+  "C552": "serves U505.VPWR",
+  "C406": "serves J401.VBUS",
+  "C410": "serves U403.REGN",
+  "C411": "serves U403.DRV_SUP",
+  "C506": "serves J501.VBUS",
+  "C510": "serves U503.REGN",
+  "C511": "serves U503.DRV_SUP",
+  "C404": "serves U401.LDO_3V3",
+  "C405": "serves U401.LDO_1V5",
+  "C504": "serves U501.LDO_3V3",
+  "C505": "serves U501.LDO_1V5",
+  "C458": "serves U406.OUT",
+  "C558": "serves U506.OUT",
+  "R305": "serves U301.DIO8",
+  "R314": "serves U301.DIO11",
+  "R302": "serves U301.RSTN",
+  "R454": "serves U406.EN",
+  "R554": "serves U506.EN",
+  "R313": "serves U301.DIO21_A10",
+  "R113": "kelvin",
+  "R108": "kelvin",
+  "R107": "kelvin",
+  "R425": "kelvin",
+  "R426": "kelvin",
+  "R525": "kelvin",
+  "R526": "kelvin",
+  "C101": "netlist",
+  "C102": "netlist",
+  "C103": "netlist",
+  "C104": "netlist",
+  "C105": "netlist",
+  "C106": "netlist",
+  "C112": "netlist",
+  "C113": "netlist",
+  "C114": "netlist",
+  "C115": "netlist",
+  "C116": "netlist",
+  "C117": "netlist",
+  "C118": "netlist",
+  "D404": "netlist",
+  "D405": "netlist",
+  "D410": "netlist",
+  "D411": "netlist",
+  "D504": "netlist",
+  "D505": "netlist",
+  "D510": "netlist",
+  "D511": "netlist",
+  "R101": "netlist",
+  "R102": "netlist",
+  "R103": "netlist",
+  "R104": "netlist",
+  "R106": "netlist",
+  "R109": "netlist",
+  "R110": "netlist",
+  "R111": "netlist",
+  "R115": "netlist",
+  "R116": "netlist",
+  "R117": "netlist",
+  "R118": "netlist",
+  "R119": "netlist",
+  "R120": "netlist",
+  "R121": "netlist",
+  "R122": "netlist",
+  "R123": "netlist",
+  "R124": "netlist",
+  "R126": "netlist",
+  "R402": "netlist",
+  "R403": "netlist",
+  "R409": "netlist",
+  "R410": "netlist",
+  "R415": "netlist",
+  "R419": "netlist",
+  "R433": "netlist",
+  "R435": "netlist",
+  "R444": "netlist",
+  "R452": "netlist",
+  "R502": "netlist",
+  "R503": "netlist",
+  "R509": "netlist",
+  "R510": "netlist",
+  "R515": "netlist",
+  "R519": "netlist",
+  "R533": "netlist",
+  "R535": "netlist",
+  "R544": "netlist",
+  "R552": "netlist",
+  "C401": "netlist",
+  "C402": "netlist",
+  "C501": "netlist",
+  "C502": "netlist",
+  "D103": "netlist",
+  "R112": "netlist",
+  "R125": "netlist",
+  "R411": "netlist",
+  "R412": "netlist",
+  "R413": "netlist",
+  "R414": "netlist",
+  "R416": "netlist",
+  "R417": "netlist",
+  "R418": "netlist",
+  "R432": "netlist",
+  "R434": "netlist",
+  "R453": "netlist",
+  "R511": "netlist",
+  "R512": "netlist",
+  "R513": "netlist",
+  "R514": "netlist",
+  "R516": "netlist",
+  "R517": "netlist",
+  "R518": "netlist",
+  "R532": "netlist",
+  "R534": "netlist",
+  "R553": "netlist",
+  "C110": "netlist",
+  "C111": "netlist",
+  "D101": "netlist",
+  "R105": "netlist",
+  "C107": "no target: centre of its sheet",
+  "C108": "netlist"
+ },
+ "seconds": 98.7,
+ "args": {
+  "dump": "/home/claude/repo/docs/layout-teams/A/onecmd/runs/r1/base.json",
+  "pro": "/home/claude/repo/tools/score/template/board.kicad_pro",
+  "dru": "/home/claude/repo/tools/score/template/board.kicad_dru",
+  "constraints": "/home/claude/repo/tools/floorplan/example/monolith/constraints.json",
+  "anchors": "/home/claude/repo/docs/layout-teams/A/onecmd/generic/anchors_rules.json",
+  "fixed": "/home/claude/repo/docs/layout-teams/A/onecmd/generic/fixed_parts.json",
+  "enclosure": "/home/claude/repo/docs/layout-teams/A/onecmd/generic/enclosure.json",
+  "out": "/home/claude/repo/docs/layout-teams/A/onecmd/runs/r1",
+  "gap": 0.25,
+  "ringk": 1.0,
+  "wgnd": 0.5,
+  "order": "serves,kelvin,bridge",
+  "no_sheet": false,
+  "wpull": 0.15,
+  "derive": "",
+  "no_twins": false,
+  "corr": 0.3,
+  "corr_path": 0,
+  "corr_floor": 1.4,
+  "corr_maxlen": 8.0,
+  "corr_pin": 2.0,
+  "serves_noring": 2,
+  "corr_max": 1.5,
+  "corr_min": 1.0,
+  "stage": "/home/claude/repo/docs/layout-teams/A/onecmd/generic/../stage/stage_template.json",
+  "rules": "pincap,pullup",
+  "anchor_only": ""
+ }
+}

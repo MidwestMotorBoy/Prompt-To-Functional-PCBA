@@ -1,0 +1,18 @@
+{
+ "loss_W": 1.227,
+ "power_open": {
+  "/USB Port 2/PP5V": [
+   "U501"
+  ],
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 425,
+ "blocked_edges": "62 of 436"
+}
