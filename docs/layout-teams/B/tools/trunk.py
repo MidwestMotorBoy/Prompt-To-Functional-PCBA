@@ -30,6 +30,7 @@ What it does:
   6. Writes the plan with a 'trunks' record (terminals, length, width profile, faults); --png draws the result.
 Options: --net=PACK_P --layer=B.Cu --source=Q102 --to=J113,R427 --w=3.0 --wmin=1.0 --wstep=0.25 --clr=0.25
          --g=0.1 --turn=15 --near=1.5 --margin=6 --esc=0.6 --near_sig=2 --under=0.3 --stitch=0 --stitch_layer=In2.Cu
+         --narrow=REF:mm:w,... (at most w mm wide within mm of the part's pads)
          --avoid=REF:mm,... (close the room within mm of the part's pads: its pin escapes)
          --pw=1.5 (a step costs (w / width that fits)^pw) --nearest (next terminal = the nearest, not the --to order)
          --png=<file>
@@ -131,6 +132,14 @@ for av in [a for a in O.get("avoid", "").split(",") if a]:
 # distance (mm) from each cell centre to the nearest blocked cell, minus half a cell (raster error), minus clearance
 dist = distance_transform_edt(~blocked) * G - G * 0.75
 WFIT = np.clip(2 * (dist - CLR - TOL), 0, None)
+# --narrow=U403:0.7:1.5: within that margin round a part's pads the trunk is at most that wide (it may pass under the
+# part, but takes fewer of its pin-escape via spots than a full-width trunk)
+for nv in [a for a in O.get("narrow", "").split(",") if a]:
+    ref, mm_, wcap = nv.split(":")
+    ag = [poly(r) for p in D["pads"] if p["ref"] == ref and p["net"] != NET for L in ("F.Cu", "B.Cu") for r in p["shapes"].get(L, [])]
+    if ag:
+        m = raster(unary_union(ag).convex_hull.buffer(float(mm_) + float(wcap) / 2))
+        WFIT[m] = np.minimum(WFIT[m], float(wcap))
 FREE = WFIT >= WMIN
 WEFF = np.minimum(WFIT, W)
 mult = np.ones((NY, NX))
