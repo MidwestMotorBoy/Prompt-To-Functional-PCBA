@@ -1,0 +1,42 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 369 (0 on long nets)
+fan-out stubs: 144
+phase 1: 24 open connections tried again with every route free to move
+phase 2: 17 open connections tried again with every route free to move
+phase 3: 18 open connections tried again with every route free to move
+routes pulled and re-laid: 909
+fan-out stubs unused (removed) 65, trimmed 22
+unconnected after fill: 39
+routed 353 edges, 16 failed, items added 6492
+  FAILED /USB Port 1/LODRV2 112.09,108.84 (Pad 21  of U403 ) -> 112.17,103.26 (Pad 1  of R447 ) starts 73 goals 134 seen 95 | no way even with every other route gone
+  FAILED /USB Port 2/HIDRV1 86.06,108.84 (Pad 27  of U503 ) -> 88.16,103.21 (Pad 1  of R544 ) starts 68 goals 135 seen 125 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 72 goals 122 seen 99 | no way even with every other route gone
+  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 170 goals 41 seen 45 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 106.45,85.30 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 207 | ghost path found no blocker
+  FAILED /USB Port 1/CHG_INT 108.40,85.08 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 59 goals 47 seen 115 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 72 seen 99 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 207 seen 19 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/SBU_FLT 107.50,82.92 (Pad 19  of U401 ) -> 102.90,73.70 (Pad 9  of U405 ) starts 234 goals 52 seen 61 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 385 seen 619 | no way even with every other route gone
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 128 goals 3 seen 539587 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 59 seen 115 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 112.00,85.01 (Pad 1  of R433 ) -> 112.00,85.01 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 82 goals 0 seen 219 | no way even with every other route gone
+  FAILED /P1_LDO_3V3 108.40,87.42 (Pad 1  of R441 ) -> 108.40,85.72 (Pad 1  of R404 ) starts 62 goals 221 seen 153 | no way even with every other route gone
+  FAILED /USB Port 1/HG1 106.33,98.82 (Pad 1  of Q401 ) -> 111.19,102.19 (Pad 2  of R444 ) starts 30 goals 120 seen 150992 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2667 goals 250 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV2
+FAILKEY /USB Port 2/HIDRV1
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 1/CC1
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY SCL
+FAILKEY /Cells and Gauge/TS1
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/PP5V
+FAILKEY /P1_LDO_3V3
+FAILKEY /USB Port 1/HG1
+FAILKEY /Cells and Gauge/CELL3
