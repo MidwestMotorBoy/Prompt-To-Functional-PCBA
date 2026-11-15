@@ -62,7 +62,8 @@ board, real DRC), `tools/stage_route.sh` (router tiers with `--only`), `ROUTING-
 |---|---|---|---|---|
 | 1 | Kelvin + router tiers + 2 workers | 12 connections | 0 | 1.29 W, 7 of 7 at 7.27 nH, **PACK_P open at J113 and R427** |
 | 2 | pours kept, PACK_P strap, Kelvin, router tiers, 3 workers | 25 connections | 0 | 1.114 W, 7 of 7 at 6.20 nH, **PACK_P open at U504** |
-| 3 | second PACK_P strap, Kelvin, router tiers only (no worker tier yet) | 49 connections | 4 (router tracks beside CELL_1N) | 1.157 W, 7 of 7 at 6.31 nH, **no open power path** |
+| 3 | second PACK_P strap, Kelvin, router tiers | 49 connections | 4 (router tracks beside CELL_1N) | 1.157 W, 7 of 7 at 6.31 nH, no open power path |
+| 3 + workers | three Opus workers by region on pass 3 | **18 connections** | **0** | **1.187 W, 7 of 7 at 6.30 nH, no open power path** |
 
 **Findings from scoring routed boards with their own copper (nobody had done this):**
 - `write_copper.py` writes zones with several outlines; KiCad keeps only the first outline when the board is saved
@@ -81,10 +82,17 @@ I2CC_SDA at U403 south pins (under the PACK_P strap), FB at U403.12 (walled by a
 R110/R118, CELL3 at J111, IRQ_N and EN_5V2 long runs, both thermistor lines, Net-(C313-Pad2).
 Most of these are consequences of earlier copper (straps, Kelvin tracks, router vias), not of placement.
 
-Pass 3 is the routed board to continue from (`routed/pass3.kicad_pcb`): every power path is joined after routing,
-378 of 427 connections are closed, and it still needs one worker tier for the 49 open connections and 4 DRC errors.
-Pass 2 (`routed/pass2.kicad_pcb`) has more connections closed (402 of 427, 0 DRC) but the Port 2 5 V buck input open.
-Neither routed board is finished; the placement in `best_placement.json` is the deliverable that meets every hard limit.
+`routed/final.kicad_pcb` is pass 3 with the worker tier: 409 of 427 connections closed by real copper (96 %), 0 DRC
+errors, every power path joined after routing (only the allowed 3V3 at L201), 7 of 7 hot loops at 6.30 nH, 1.187 W.
+It is the first Monolith board scored after routing with its pours intact; the hand board's 1.36 W and the plain
+router counts are pre-route / pour-less numbers and are not like for like.
+
+The 18 still open: the north 3V3 In3 island (U401.38, C403) and the R314 3V3 group, SDA / IRQ_N / CHG_INT long runs
+from the Port 1 side to the MCU (blocked by the In2 PACK_P strap and the busy In3 south of it), I2CC_SDA at U401.16
+and U503.2, CHG_INT at U501.18, CELL_P taps at R110.2 / R118.1, SCL at the Tag-Connect pad J302.6, FB at U403.12
+(walled by the SRN_F Kelvin track), CE_N, Net-(C313-Pad2), both thermistor lines. Several are caused by the lead's
+own straps and Kelvin tracks: the next plan should leave a crossing lane through the strap for the I2C bus and
+keep Kelvin tracks off chip pins.
 
 ## Cost
 Placement: 8 room workers + 2 fixers. Routing: 2 + 3 region workers (170 to 290 k tokens each). A quick score takes

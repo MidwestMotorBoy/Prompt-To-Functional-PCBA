@@ -16,7 +16,7 @@ Write a script `docs/layout-teams/D/routes/<your name>.py`:
 ```python
 import sys; sys.path.insert(0, '/home/claude/prompt-to-functional-pcba/docs/layout-teams/D/tools')
 from obst import HR
-h = HR('/home/claude/runs/r2_route', 'g2')            # the routed board you build on; loads every obstacle
+h = HR('/home/claude/runs/r2_route', 'p2')            # the routed board you build on; loads every obstacle
 h.near(x, y, 0.5)                                     # what copper is within 0.5 mm of a point, per layer
 h.free_vias(net, x, y, 1.5)                           # nearest spots where a via of this net is legal: [(dist, x, y), ...]
 h.via(net, x, y)                                      # add a via (prints PROBLEM if not legal)
@@ -35,7 +35,7 @@ Everything you add becomes an obstacle for what you add next. A pad point is the
 its net: pad centre, via centre, or an existing track end.
 
 Apply and check with the real DRC (about 1 minute):
-`python3 tools/hr2.py /home/claude/runs/r2_route g2 <out name> routes/<your name>.json`
+`python3 tools/hr2.py /home/claude/runs/r2_route p2 <out name> routes/<your name>.json`
 It prints every DRC error on the board, the connections of your nets that are still open, and the totals. Use your
 own out name (start it with your name). Pictures: `python3 /home/claude/prompt-to-functional-pcba/tools/copper/render.py
 <board>.kicad_pcb <board>.json /tmp/x.png F.Cu x0,y0,x1,y1 60` (also In2.Cu, In3.Cu, B.Cu); look before you guess.
@@ -69,3 +69,10 @@ is left and why.
 - Tracks are allowed inside the J301/J302 no-via areas even though the checker flags them; confirm with hr2.
 - F.Cu power pours (VBUS, PPHV, PP5V, AC_SNS_N, BAT_SNS_P, SW, CELL_P) are hard: a track through one cuts the power
   path. Go under them on an inner layer.
+- A second PACK_P power track (1 mm, In2) runs down the left edge from (79.85, 65.6) to (79.45, 84.0). Same rule:
+  never drop or cut it, cross it on In3, B.Cu or F.Cu.
+- `h.drop(net, layer, box)` removes the net's VIAS in the box on every layer, whatever layer you give: re-add a via
+  you still need. `h.near` does not list pours at radius 0; use 0.3.
+- When a pad sits on a cut-off scrap of the 3V3 pour (In3) or has no legal via, a second hop helps: via A near the
+  pad, `auto` on one layer to a stepping-stone via B (any legal spot, `h.free_vias(net, x, y, 3)`), then another
+  layer from B to the net's copper.
