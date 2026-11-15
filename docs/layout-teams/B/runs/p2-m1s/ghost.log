@@ -1,0 +1,4 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 367 (0 on long nets)
+fan-out stubs: 136
+GHOST noway 0 of 367 edges, 156 s
