@@ -155,6 +155,33 @@
     "/Cells and Gauge/CELL_P"
    ],
    "why": "GND pad of the NRST capacitor wrapped by the CELL_P pour: a via in a notch north of it (west cut 0.76 mm2 cost 5.8 mW of CELL_P loss, north 0.37 mm2 costs 0.9 mW)"
+  },
+  {
+   "ref": "U401",
+   "pad": "37",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 2.4,
+   "cut": [
+    "/USB Port 1/PP5V"
+   ],
+   "keep": [
+    "U401.38:W:0.7"
+   ],
+   "why": "Port 1 DRV9_OFF (to R455 on the bottom): its via first, north of the row, so that the via of the 3V3 corner pin 38 does not close it in (as at U501.37)"
+  },
+  {
+   "ref": "U401",
+   "pad": "38",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 1/PP5V"
+   ],
+   "why": "Port 1 3V3 corner pin: the full routes with the protected 3V3 pours fail it (no goal cell); a via west of it, as at U501.38"
   }
  ]
 }

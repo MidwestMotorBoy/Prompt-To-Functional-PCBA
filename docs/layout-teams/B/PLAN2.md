@@ -145,3 +145,22 @@ kept as the shared-scorecard result of the placement.
   does), and the copper board after it has 0 DRC errors.
 - Real numbers only, each with its run dir; say when a route timed out. No model names in files or commits.
 - Never order PCBs, never call a JLCPCB endpoint. Logan is reviewer only.
+
+## 7. After round 1 (2026-11-15): where we are, round 2 tasks
+
+`best_routed/` = `runs/p2-m1` (r4, merged filters, 5 mm trunk, pins, finishing pass). Met on the routed board: power
+open none, loose none, DRC 0, 7 of 7 hot loops, 5.56 nH (5.54 before), loss 1.186 W, J113 2.11 and R427 2.23 mohm.
+Not met: 26 unconnected items, 21 router items in hot-loop pours, PACK_P and 3V3 pieces on KiCad's list, the report.
+`LOG.md` (entry 2026-11-15 23:35) has the 26 by cause and the lead's findings at Port 1 VBUS and EN_5V1.
+
+**Task A, plan copper and pins.** Owns `plan/p2-pins.json`, `tools/pins.py`, `tools/pinlib.py`, `tools/links.py`,
+`tools/trunk.py`, `tools/straps.py`, `tools/ruleareas.py`, `candidates/r5*.json`, run dirs `runs/p2a-*`. Every
+connection that no route makes gets its copper before routing; placement changes as `candidates/r5.json` with a new
+source run (shared scorecard, hot loops on).
+
+**Task B, finishing pass.** Owns `tools/finish.sh`, `tools/router_b.py`, `tools/fin_*.py`, `tools/handroute.py`, run
+dirs `runs/p2b-*`. Works on the routed board `runs/p2-m1/routed.kicad_pcb` (and `cu.kicad_pcb` beside it).
+
+The lead owns `tools/final_route.sh`, `tools/final_json.py`, `tools/hot_tracks.py`, `best_routed/`,
+`best_placement.json`, `PLAN2.md`. Round 3 (lead): r5 with task A's filters, one local route, task B's finishing pass,
+the gates again.

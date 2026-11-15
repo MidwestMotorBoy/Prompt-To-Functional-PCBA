@@ -1,0 +1,133 @@
+{
+ "board": "monolith_routed.kicad_pcb (= runs/p2-m1/finished.kicad_pcb, the routed board after the finishing pass: stub trim and dangling ends; the continuation route was dropped)",
+ "date": "2026-11-15",
+ "placement": "best_placement.json (r4, unchanged)",
+ "run": "runs/p2-m1 (local, route not timed out, 66 min; finishing pass and routed-board check by --resume)",
+ "rebuild": "cd docs/layout-teams/B && bash tools/final_route.sh runs/r4chg-hot runs/<new> --straps=\"--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5\" --filters=\"links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8;ruleareas.py --protect=3V3:F.Cu,PACK_P:F.Cu;trunk.py --w=5 --narrow=U403:0.8:2.0;straps.py --net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V --across=15;pins.py\" --route=80 --post=\"finish.sh --min=40 --riptime=400 --phases=3\"   (with plan/p2-pins.json as of commit b3ae731; a new route differs by a few connections)",
+ "route": {
+  "routed": 356,
+  "failed": 12,
+  "edges": 368,
+  "timed_out": false,
+  "unconnected_after_fill": 26,
+  "text": "356 of 368 routed, 12 failed"
+ },
+ "blocked_edges_before_routing": "0 of 368",
+ "copper_board_drc_errors": 0,
+ "loss_W": {
+  "before_routing": 1.008,
+  "routed": 1.186,
+  "limit": 1.25
+ },
+ "pack_p_mohm_routed": {
+  "J113": 2.11,
+  "R427": 2.23,
+  "R527": 1.57
+ },
+ "pack_p_mohm_limit": 3.0,
+ "power_open_routed": {},
+ "loose_routed": [],
+ "drc_errors_routed": 0,
+ "unconnected_items_routed": 26,
+ "unconnected_nets": [
+  "/Cells and Gauge/CELL_P",
+  "/Cells and Gauge/CHG_G",
+  "/Cells and Gauge/WAKE",
+  "/USB Port 1/BTST2",
+  "/USB Port 1/CC2",
+  "/USB Port 1/FSW",
+  "/USB Port 1/ILIM",
+  "/USB Port 1/VBUS",
+  "/USB Port 2/AC_SNS_N",
+  "/USB Port 2/LDO_3V3",
+  "/USB Port 2/TS",
+  "/USB Port 2/VBUS",
+  "3V3",
+  "EN_5V1",
+  "EN_5V2",
+  "Net-(C313-Pad2)",
+  "Net-(U101-VC1)",
+  "Net-(U102-V4)",
+  "Net-(U403-ACUV)",
+  "Net-(U403-ICHG)",
+  "PACK_P",
+  "SCL"
+ ],
+ "unconnected_power": [
+  "Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10 | Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10",
+  "Track [3V3] on In3.Cu (signal H + 5V), length 0.5000 mm | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
+  "Zone 'pc_3V3' [3V3] on F.Cu, priority 20 | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
+  "Pad 38 [3V3] of U401 on F.Cu | Track [3V3] on In3.Cu (signal H + 5V), length 1.3000 mm",
+  "Track [3V3] on F.Cu, length 0.5865 mm | Track [3V3] on F.Cu, length 0.0000 mm"
+ ],
+ "hot_loops_routed": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.56,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.02,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.7,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.78,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.75,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 0.76,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.8,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.75,
+    "tier1": "pass"
+   }
+  }
+ },
+ "hot_loops_before_routing": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.54
+ },
+ "hot_loop_change_nH": {
+  "HL_3V3": 0.0,
+  "USB Port 1/HL_5V": 0.0,
+  "USB Port 1/HL_IN": 0.0,
+  "USB Port 1/HL_OUT": 0.01,
+  "USB Port 2/HL_5V": 0.0,
+  "USB Port 2/HL_IN": 0.0,
+  "USB Port 2/HL_OUT": 0.01
+ },
+ "hot_pour_items": {
+  "tracks": 14,
+  "vias": 7,
+  "nets": [
+   "/Cells and Gauge/CELL1",
+   "/Cells and Gauge/CELL3",
+   "/USB Port 1/SS_5V",
+   "/USB Port 2/I2CC_SDA",
+   "IRQ_N",
+   "Net-(D511-A)",
+   "Net-(U404-FB)"
+  ]
+ },
+ "gates": {
+  "1 unconnected 0": "NOT MET: 26 (Port 1 and Port 2 VBUS pin pairs, PACK_P In2 island, 3V3 x4, EN_5V1 x2, EN_5V2, 15 signal connections)",
+  "2 power paths": "power_open empty and loose empty: met; PACK_P In2 sheet and 3V3 bus one piece: NOT MET (1 PACK_P and 4 3V3 items on KiCad's list)",
+  "3 DRC": "met: 0 errors routed, 0 on the copper board",
+  "4 hot loops": "met: 7 of 7 tier 1",
+  "5 ringing": "met: sum 5.56 nH against 5.54 before routing (+0.02), no loop more than 0.01 up",
+  "6 loss": "met: 1.186 W (limit 1.25), J113 2.11 and R427 2.23 mohm (limit 3.0)",
+  "7 renders": "looked at (routed_F.Cu.png, routed_B.Cu.png, routed_In2.Cu.png, routed_In3.Cu.png): no sprawling power copper; NOT MET for hot-loop pours: 14 tracks and 7 vias of 7 signal nets lie in hot-loop GND pours; some In3 tracks wander",
+  "8 report": "REPORT.md and SKILL-NOTES.md not written yet"
+ }
+}

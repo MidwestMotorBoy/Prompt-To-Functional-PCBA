@@ -1,6 +1,6 @@
 #!/bin/bash
 # final_route.sh <screened whole-board run dir> <out dir> [--route=MIN] [--no-straps] [--no-hot] [--straps="<straps.py options>;..."]
-#                 [--filters="<script> <options>;..."] [--post="<script> <options>"]
+#                 [--filters="<script> <options>;..."] [--post="<script> <options>"] [--resume]
 #   The routed-board check for the final scorecard. Takes a run of the shared scorecard (it needs the run's
 #   bare.kicad_pcb, spec.json and cu.json) and:
 #   1. adds hard PACK_P strap tracks on In2.Cu to the copper plan (tools/straps.py), so the router cannot cut the
@@ -10,7 +10,8 @@
 #   3. runs the shared scorecard on that board with --keep-copper --no-hot --route=MIN (default 45; 0 = screen only):
 #      DRC of the copper board, DC loss and power open before routing, blocked edges, full trial route;
 #   4. on the routed board (routed.kicad_pcb): cu_dump.py + dc_score.py (loss, power open), tools/loose.py, KiCad DRC
-#      (errors and unconnected items of the power nets), and the seven hot loops with hot_score.py + power_gate.py the
+#      (errors and unconnected items of the power nets), tools/hot_tracks.py (router tracks and vias of other nets in
+#      hot-loop pours: final.json routed.hot_pour_items), and the seven hot loops with hot_score.py + power_gate.py the
 #      way score_board.sh step 4 calls them (PCB=routed board); --no-hot skips the loops;
 #   5. writes <out dir>/final.json and prints it.
 #   Phase 2 hooks (both optional, nothing changes without them):
@@ -22,19 +23,27 @@
 #      It reads <out dir>/routed.kicad_pcb (also there: cu.kicad_pcb = the board before routing, drc.json, route.log) and
 #      writes <out dir>/finished.kicad_pcb. When that file exists, step 4 scores it instead of routed.kicad_pcb and
 #      final.json says so ("scored_board"). Log: post.log.
+#   --resume  skip steps 1 to 3 and use the <out dir> of an earlier run as it stands (its routed.kicad_pcb, cu.kicad_pcb,
+#      score.json, split/): only the finishing pass (--post), the routed-board check and final.json are run again. For a
+#      second finishing pass with other options, or when a long run was cut after the route. Pass the same --route,
+#      --straps and --filters as the first run (they are only recorded).
 #   Works unchanged on the hand board (runs/hand_screen). ONE router or hot-loop job at a time: this script runs a
 #   full route and seven loop solves in a row (about 25 + 10 min on a loaded 4-core box).
 set -o pipefail
 TOOLS=$(cd "$(dirname "$0")" && pwd); R=$(cd "$TOOLS/../../../.." && pwd); T=$R/tools; S=$T/score; E=$T/floorplan/example/monolith; C=$E/constraints.json
 [ $# -ge 2 ] || { sed -n 2,27p "$0"; exit 2; }
 SRC=$(cd "$1" && pwd); OUT=$(mkdir -p "$2" && cd "$2" && pwd); shift 2
-RMIN=45; STRAPS=1; HOT=1; SOPT="--net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V"; FILT=""; POST=""
-for a in "$@"; do case $a in --route=*) RMIN=${a#*=};; --no-straps) STRAPS=0;; --no-hot) HOT=0;; --straps=*) SOPT=${a#*=};; --filters=*) FILT=${a#*=};; --post=*) POST=${a#*=};; *) echo "unknown option $a"; exit 2;; esac; done
-rm -f $OUT/finished.kicad_pcb $OUT/post.log
+RMIN=45; STRAPS=1; HOT=1; RESUME=0; SOPT="--net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V"; FILT=""; POST=""
+for a in "$@"; do case $a in --route=*) RMIN=${a#*=};; --no-straps) STRAPS=0;; --no-hot) HOT=0;; --straps=*) SOPT=${a#*=};; --filters=*) FILT=${a#*=};; --post=*) POST=${a#*=};; --resume) RESUME=1;; *) echo "unknown option $a"; exit 2;; esac; done
+[ $RESUME = 1 ] && [ -z "$POST" ] || rm -f $OUT/finished.kicad_pcb $OUT/post.log     # --resume without --post keeps the finished board of the earlier run
 for f in bare.kicad_pcb spec.json cu.json; do [ -f $SRC/$f ] || { echo "$SRC has no $f (run the shared scorecard on it first)"; exit 1; }; done
 log() { echo "[final] $(date -u +%H:%M:%S) $*" >&2; }
 K="docker run --rm -u 0 -v $OUT:/w -w /w kicad/kicad:10.0"
 
+if [ $RESUME = 1 ]; then
+  [ -f $OUT/routed.kicad_pcb ] && [ -f $OUT/score.json ] || { echo "--resume: $OUT has no routed.kicad_pcb or score.json"; exit 1; }
+  log "resume: steps 1 to 3 skipped, using $OUT/routed.kicad_pcb"
+else
 # 1. plan + straps
 mkdir -p $OUT/split; cd $OUT/split
 cp $SRC/bare.kicad_pcb bare.kicad_pcb; cp $SRC/spec.json spec_plain.json; cp $TOOLS/write_copper_split.py .
@@ -66,6 +75,7 @@ log "$(grep -v swig write.log | tail -1)"
 log "scorecard (--keep-copper --no-hot --route=$RMIN)"
 bash $S/score_board.sh $OUT $OUT/split/cu_split.kicad_pcb --keep-copper --route=$RMIN --no-hot | tail -1
 grep -E "^ *(FAILED|routed |unconnected after fill|edges to route)" $OUT/route.log | sed "s/^ *//" > $OUT/route_failed.txt 2>/dev/null
+fi
 # 3b. finishing pass on the routed board
 BOARD=$OUT/routed.kicad_pcb
 if [ -n "$POST" ] && [ "$RMIN" != 0 ] && [ -f $OUT/routed.kicad_pcb ]; then
@@ -73,8 +83,8 @@ if [ -n "$POST" ] && [ "$RMIN" != 0 ] && [ -f $OUT/routed.kicad_pcb ]; then
   case $f in *.py) run=python3;; *) run=bash;; esac
   log "finishing pass: $POST"
   $run $f $OUT "$@" > $OUT/post.log 2>&1 || log "finishing pass ended with an error (see post.log); scoring what it left"
-  [ -f $OUT/finished.kicad_pcb ] && BOARD=$OUT/finished.kicad_pcb
 fi
+[ "$RMIN" != 0 ] && [ -f $OUT/finished.kicad_pcb ] && BOARD=$OUT/finished.kicad_pcb
 # 4. the routed board
 mkdir -p $OUT/routed
 if [ "$RMIN" != 0 ] && [ -f $OUT/routed.kicad_pcb ]; then
@@ -84,6 +94,7 @@ if [ "$RMIN" != 0 ] && [ -f $OUT/routed.kicad_pcb ]; then
   docker run --rm -u 0 -v $OUT/routed:/w -w /w kicad/kicad:10.0 sh -c "kicad-cli pcb drc --severity-all --format json -o drc.json cu.kicad_pcb >/dev/null 2>&1; python3 cu_dump.py cu.kicad_pcb cu.json 2>&1 | grep -v swig"
   python3 $T/copper/dc_score.py cu.kicad_pcb cu.json $C dc.json > dc.log 2>&1
   python3 $TOOLS/loose.py $OUT/routed > loose.log 2>&1
+  python3 $TOOLS/hot_tracks.py $OUT/cu.kicad_pcb $OUT/routed/cu.json cu.kicad_pcb hot_tracks.json > hot_tracks.log 2>&1   # routed copper of other nets in hot-loop pours (gate 7)
   if [ $HOT = 1 ]; then
     log "routed board: seven hot loops"
     rm -f hot_parts.log

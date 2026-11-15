@@ -1,0 +1,10 @@
+straps 3V3 on In3.Cu: 5 groups, 5 tied to C303 (1 vias, at 114.5,117.1), untied 0; 40 segments, 112.1 mm (56.4 mm across the lanes, 0 mm at 0.5 mm); clearance faults 0; 1 s
+[final] 21:23:38 filter 1: links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8: links: 2 tracks, 0 vias added, 0 faults
+[final] 21:23:40 filter 2: ruleareas.py --protect=3V3:F.Cu,PACK_P:F.Cu: rule areas: 13 added (protect 3V3, protect PACK_P), 119.4 mm2
+[final] 21:23:42 filter 3: trunk.py --w=5 --narrow=U403:0.8:2.0: trunk PACK_P on B.Cu: Q102 -> J113,R427; missed []; 50 tracks, 33.6 mm, 11.3 squares (track only, about 2.8 mohm at 2 oz), widths {5.0: 0.2, 4.75: 3.0, 4.5: 1.2, 4.25: 0.9, 4.0: 1.3, 3.75: 2.7, 3.5: 5.6, 3.25: 6.2, 3.0: 3.0, 2.75: 0.8, 2.5: 0.1, 2.25: 0.9, 2.0: 6.2, 1.75: 1.3}; stitch vias 0; clearance faults 0; 1 s
+[final] 21:23:44 filter 4: straps.py --net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V --across=15:   tied C546 (1 vias, at 83.6,65.3)
+[final] 21:24:04 filter 5: pins.py: pins: ep 49, gate 2, table 16, rail 6; 98 tracks (66.6 mm), 18 vias, 9 pour cuts (3.080 mm2); exact-check faults 0; 19 s
+[final] 21:24:14 cu_split.kicad_pcb: 91 zones (from 43 planned, one per outline), 416 vias, 587 tracks, 13 rule areas, filled
+[final] 21:24:14 scorecard (--keep-copper --no-hot --route=80)
+SCORE {"loss_W": 1.008, "power_open": {}, "drc_errors": 0, "unrouted_signal_items": 361, "blocked_edges": "0 of 368", "route": "356 of 368 routed, 12 failed"}
+[final] 22:33:33 finishing pass: finish.sh --min=40 --riptime=400 --phases=3

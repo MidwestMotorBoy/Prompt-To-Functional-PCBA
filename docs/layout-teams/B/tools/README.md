@@ -294,3 +294,39 @@ Add `;ruleareas.py --hot` (no tracks) or `;ruleareas.py --hot --hot_mode=vias` a
   receptacle's two VBUS pin pairs, Port 2 BAT_SNS_P at R528.1) stays open on the routed board whatever the route
   does: it must be joined in the copper plan (`links.py`, `trunk.py` for the net) or by a hand track.
 - The local route of a trunk board is slow (60 min for `p2a-n1`): use `--route=80`, and say when it times out.
+
+## Phase 2: the merged command, `--resume`, `hot_tracks.py` (lead, after round 1)
+
+The merged flow of round 1 (placement r4 from `runs/r4chg-hot`; `F1`/`F2` are written out in `LOG.md`, entry of
+2026-11-15 23:35, and in `best_routed/summary.json`):
+```
+bash tools/final_route.sh runs/r4chg-hot runs/<new> --straps="$ST" --filters="$F2" --route=80 --post="finish.sh ..."
+```
+Filter order matters: links and protect areas, then the trunk, then the PACK_P straps (they tie what the trunk left),
+then `pins.py`, then the links that need the pins' vias (the In3 link of U401.38). A merged route takes 65 to 70 min
+on this box (0 blocked edges means the router has more to argue about), so use `--route=80`.
+
+- `final_route.sh ... --resume [--post=...]` runs only the finishing pass and the routed-board check on an out dir that
+  already holds `routed.kicad_pcb` (same `--straps`, `--filters`, `--route` as the first call; they are only recorded).
+  Without `--post` an existing `finished.kicad_pcb` is kept and scored. Use it to try finishing options on one routed
+  board, or when a job had to be cut after the route. A background job of a session ends after 2 h at most: start the
+  route and the finishing pass as two jobs when the two together may pass that.
+- `tools/hot_tracks.py <board before routing> <cu.json> <routed board> [out.json]` lists every track and via the router
+  added inside a hot-loop pour of another net (the hot pours of `pinlib.hot_polys`, read from the board before
+  routing), per net with its window. `final_route.sh` calls it; `final.json` has `routed.hot_pour_items`
+  (`tracks`, `vias`, `nets`), next to the new `routed.unconnected_nets` and `routed.pack_p_mohm` (J113, R427, R527).
+- Layer pictures of a routed board, whole board: `python3 tools/zoom.py <run>/routed <out.png> 78,62.4,122,137.6 In2.Cu 20`
+  (any copper layer; `<run>/routed` holds `cu.kicad_pcb` and `cu.json` of the scored board).
+- `best_routed/` holds the best routed board so far with its `final.json`, `summary.json` (numbers, the gates met and
+  not met, the rebuild command) and the four layer pictures.
+
+Traps met in the merge:
+- The ghost screen passes connections that the full route then reports as "no way even with every other route gone"
+  (U102.2 to C112.1, C413.1 to U403.20, C402.1 to U405.11, TP113.1 to R118.2, Q101.4 to R110.1 on `runs/p2-m1`, in the
+  local and in the PC route alike). A connection that fails that way in two routes needs copper before routing
+  (a `pins.py` table entry), not more router time.
+- A table track can close its neighbours: EN_5V2 under the U504 body closed SS_5V and both FB edges (4 blocked), an
+  F.Cu track from U401.38 closed U401.37. Screen after every table change; lay the neighbour's escape first.
+- A 3V3 or PACK_P track of the table may not cross a `ruleareas.py --protect` area (KiCad: "items not allowed").
+- The continuation route of `finish.sh` can end worse than it started (810 pulls for 24 open connections on
+  `runs/p2-m1`); the pass rule drops it, so nothing is lost, but nothing is closed either.

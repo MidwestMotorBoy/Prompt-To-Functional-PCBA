@@ -1,0 +1,3 @@
+  link /USB Port 2/BAT_SNS_P F.Cu 0.25 mm (95.2, 104.9) -> (95.2, 104.3): clearance 0.431 mm, edge 16.67 mm, takes 0.00 mm2 of other nets' pours
+  link /USB Port 2/BAT_SNS_P F.Cu 0.25 mm (95.2, 104.3) -> (95.7, 103.8): clearance 0.431 mm, edge 16.67 mm, takes 0.00 mm2 of other nets' pours
+links: 2 tracks, 0 vias added, 0 faults

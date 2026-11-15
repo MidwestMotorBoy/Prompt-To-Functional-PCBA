@@ -1298,3 +1298,107 @@ Commit and push of this session's files were refused by the session's permission
 Files: `tools/pins.py` (`at`), `tools/fin_trim.py` (new), `tools/finish.sh` (trim, deadline), `tools/router_b.py`
 (`--deadline`), `tools/README.md`, `plan/p2-pins.json`; runs `p2b-pins2`, `p2b-full2`, `p2b-full2h`, `p2r1_full1fin`,
 `p2b-r4final2`, `p2r1_pins`, `p2r1_trim` (boards local).
+
+## 2026-11-15 23:35 UTC, lead: phase 2 round 1 merge (runs/p2-m1 = best_routed/), next two tasks
+
+Placement r4 unchanged. Worker B's files (uncommitted at its end) are committed as b3ae731.
+
+**Merge of the two workers' filters, one command** (worker A's copper with the 5 mm trunk, then worker B's pins, then
+the finishing pass):
+```
+ST="--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"
+F1="links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8;ruleareas.py --protect=3V3:F.Cu,PACK_P:F.Cu;trunk.py --w=5 --narrow=U403:0.8:2.0;straps.py --net=PACK_P --layer=In2.Cu --source=Q102 --lanes=V --across=15;pins.py"
+bash tools/final_route.sh runs/r4chg-hot runs/p2-m1 --straps="$ST" --filters="$F1" --route=80 --post="finish.sh --min=40 --riptime=400 --phases=3"
+```
+Trunk width: `--w=5` with the 2 mm neck at U403. Logan's PC returned 394 of 422 for `p2a-w5n20` (52.6 min, done), the same
+as the 3 mm trunk (396 PC, 394 local), and it has n1's squares (11.3).
+
+| Run | What | Blocked | Route | Loss before / routed | J113 / R427 routed | Power open, loose (routed) | Unconnected (routed) | DRC routed | Hot loops routed | Copper in hot pours |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `runs/p2-m1s` | merged copper plan, screen only | 0 of 367 | - | 1.008 W / - | 1.26 / 1.31 mohm before routing | none | - | copper board 0 | - | - |
+| **`runs/p2-m1`** | the same, full route + finishing pass + hot loops | 0 of 368 | **356 of 368, 12 failed, 66 min, not timed out** (PC `p2-m1`: 355 of 368, 67.4 min, done) | 1.008 / **1.186 W** | **2.11 / 2.23 mohm** | **none, none** | **26** | **0** (5 before the stub trim) | **7 of 7, 5.56 nH** (5.54 before; Port 1 and Port 2 HL_OUT +0.01 each) | 14 tracks, 7 vias on 7 nets |
+| `runs/p2-m2s` | + Port 2 VBUS join, U401.37/38 (see below), screen only | 0 of 365 | - | 1.005 W / - | - | none | - | copper board 0 | - | - |
+
+The first job was cut after the route (the background limit of this session would have ended it inside the hot
+loops); the finishing pass and the routed-board check ran again with the new `final_route.sh --resume` on the same
+routed board (`runs/p2-m1.route.log`, `runs/p2-m1.resume.log`). Nothing timed out.
+
+**Against the definition of done** (`runs/p2-m1/final.json`, copy in `best_routed/`):
+1. Unconnected 0: **not met, 26.** By cause:
+   - plan copper, no router edge exists: Port 1 VBUS (J401.A9/B4 pad island at 104.0,69.7), Port 2 VBUS (two pours);
+   - EN_5V1 x2 (U404.2, R432.1), EN_5V2 (U504.2 to R532.1): fail in every route;
+   - failed in both routes of this copper board (local and PC), "no way even with every other route gone" although
+     the ghost screen passes them: Net-(U102-V4) U102.2 to C112.1, Port 1 BTST2 C413.1 to U403.20, Port 1 CC2 C402.1
+     to U405.11, WAKE TP113.1 to R118.2, CHG_G Q101.4 to R110.1, 3V3 at U401.38;
+   - U403 pocket, different pins in each route (local FSW, ICHG, ILIM, ACUV; PC CE_N, FBG, REGN): the B.Cu trunk
+     passes under U403's south-east corner and takes the via sites there (3 to 4 connections per route);
+   - congestion, one each: Port 2 LDO_3V3, Port 2 TS, Port 2 AC_SNS_N, CELL_P C110.1, Net-(U101-VC1), SCL at U501.9,
+     Net-(C313-Pad2);
+   - power pieces: one PACK_P In2 island (83.45,63.31), 3V3 x3 besides U401.38 (In3 strap end 87.03,114.82; F.Cu pour
+     piece 87.69,120.80; F.Cu track ends 115.72,119.33 and 117.97,127.10).
+2. Power paths: `power_open` empty, `loose` empty: **met** (3V3 reaches L201, GND at J301/J302, PACK_P at every
+   terminal). "One piece": not met (the PACK_P and 3V3 items above).
+3. DRC: **met**, 0 routed (the stub trim cured the 5 CELL_1N errors), 0 on the copper board.
+4. Hot loops: **met**, 7 of 7 tier 1.
+5. Ringing: **met**, 5.56 nH against 5.54, no loop more than 0.01 up.
+6. Loss: **met**, 1.186 W (limit 1.25); J113 2.11, R427 2.23 mohm (limit 3.0). One PACK_P via (104.05,111.28) carries
+   2.11 A on the routed board (`routed/dc.json` top_vias): reported, not gated.
+7. Renders (`best_routed/routed_F.Cu.png`, `_B.Cu.png`, `_In2.Cu.png`, `_In3.Cu.png`, looked at): power stages compact,
+   the trunk is one strip on the bottom from Q102 past TH104 to J113 and R427, no sprawl. **Not met** for the hot-loop
+   pours: new `tools/hot_tracks.py` finds 14 tracks and 7 vias of 7 signal nets in hot-loop GND pours (Net-(D511-A)
+   9 tracks 3 vias at 83.2..84.3, 90.3..95.0; IRQ_N 2 tracks at 96.6..97.2, 92.7..94.2; Port 1 SS_5V 3 tracks under
+   U404; one via each of CELL1, CELL3, Port 2 I2CC_SDA, Net-(U404-FB)). Some In3 tracks wander (pair round L201).
+8. Report: `REPORT.md` and `SKILL-NOTES.md` are still owed (last round).
+
+**The finishing pass on this board.** Stub trim: DRC 5 to 0. Continuation (`--min=40 --riptime=400 --phases=3`): pulled
+810 routes for 24 open connections, ended with 21 to 23 failing, dropped by the pass rule. So the pass as it stands
+closes nothing on a merged board; it needs accept-or-revert per connection (task B).
+
+**Lead's own additions after the route (screened, `runs/p2-m2s`: 0 of 365 blocked, DRC 0, 1.005 W, power open none;
+not routed locally; queued on Logan's PC as `p2-m2`, result at `origin/route-results:B/p2-m2-<sha>.json`):**
+- Port 2 VBUS: the two pours joined at the receptacle by a 0.6 mm B.Cu link at y 69.25 with two vias in each pour
+  (91.1,70.35 / 91.1,71.0 and 95.9,70.35 / 95.9,71.0), `links.py --clr=0.25`. The zone-to-zone item is gone on the
+  copper board; Port 2 VBUS loss 28.9 to 26.1 mW.
+- U401.38 (3V3): table via west of the pin in a PP5V notch (102.85,78.375) plus an In3 link to the 3V3 via of C403
+  (`--link=3V3|In3.Cu|0.3|102.85,78.375/101.15,76.675/101.15,76.275`); U401.37 (DRV9_OFF) gets its via north first
+  (103.6,77.85), else pin 38's via closes it in (1 blocked edge without it).
+- Tried and dropped: U401.38 as an F.Cu track to C403.1 (runs through a protect rule area: 1 DRC error, and it closes
+  U401.37); EN_5V2 as a table track under the U504 body (closes SS_5V and both FB edges: 4 blocked). The three nets at
+  U504 (EN pad 2, SS pad 7, FB pad 8) cross on F.Cu; one of them needs a via under the body.
+- The merged filter string of round 2 (`F2`) is `F1` followed by
+  `;links.py --clr=0.25 --via=/USB~Port~2/VBUS|91.1,70.35 --via=/USB~Port~2/VBUS|91.1,71.0 --via=/USB~Port~2/VBUS|95.9,70.35 --via=/USB~Port~2/VBUS|95.9,71.0 --link=/USB~Port~2/VBUS|B.Cu|0.6|91.1,71.0/91.1,69.25/95.9,69.25/95.9,71.0 --link=3V3|In3.Cu|0.3|102.85,78.375/101.15,76.675/101.15,76.275`.
+
+**What the lead found at the open plan items (for task A; pictures `runs/p2-look/*.png`):**
+- Port 1 VBUS. J401.A9/B4 (104.1,69.17) is a pad-sized island; the planner never joins it. Between the pad row (bottom
+  y 69.67) and U405's north pins (top y 70.6) there is 0.93 mm, and the row already holds the vias of C_CC1
+  (103.75,70.2), VBIAS (104.53,70.2), C_CC2 (105.3,70.2) and, on r5, the GND via of C451.2 (103.35,70.37). Via pitch is
+  0.75 mm between nets, VBUS needs 0.25 mm to the signals. A fourth via does not fit with U405 where it is. With
+  `candidates/r5_pins.json` (U405 0.4 mm south, source `runs/p2b-r5pins`, no hot loops in it) a one-row design fits on
+  paper: VBUS via 103.85,70.1 with a stub to the pad, VBIAS via 104.6,70.15, C_CC2 via 105.35,70.15, C_CC1 from pin 4
+  north into the channel y 70.7 and west over pin 5's tip to a via near 103.0,70.2; that last spot is taken by C451.2's
+  GND via and track, and C451's bottom pads (y 70.64 to 71.26) stop a second via row, so C451 (or its GND via) has to
+  move. The link itself: B.Cu at y 69.25 to two vias at 108.9,70.35 and 108.9,71.0 in the main pour (exact check clean).
+- EN_5V1. No via spot for EN_5V1 exists anywhere in 113..118.2, 67..70.2 (exact scan). R432.1 (114.37,68.2) sits in a
+  notch of the HL_5V PACK_P pour above J111 (through-hole) with no way out; U404.2 can only leave under the U404 body,
+  where the planner laid a hot GND strip from pin 1 to pin 4 and a PACK_P stub east of pin 3, plus pin 1's GND stub
+  and via (117.2,68.15) and an In2 PACK_P strap. Lead's decision: R432 may move (it is a pull-down; the free F.Cu
+  area south of U404, x 115.5..117.5, y 70.5..71.2, as R532 sits at U504), and a hot-loop pour may be trimmed where it
+  is not on the loop's path (under an IC body beyond the pad, a stub past the last pad), if the loop solved again is
+  not more than 0.01 nH up.
+
+**Tool changes (lead's files).** `tools/final_route.sh --resume` (skip plan, copper and route; finishing pass and
+routed-board check again on the out dir; without `--post` the finished board of the earlier run is kept);
+`tools/hot_tracks.py` (router copper of other nets in hot-loop pours, called in step 4); `tools/final_json.py` adds
+`routed.unconnected_nets`, `routed.hot_pour_items`, `routed.pack_p_mohm`. Layer pictures of a routed board:
+`python3 tools/zoom.py <run>/routed <out.png> 78,62.4,122,137.6 In2.Cu 20`.
+
+**Next round (two tasks).** A: plan copper and pins (Port 1 VBUS with placement r5, EN_5V1 with R432 moved, the U504
+knot, the connections that fail in every route, U403's pins under the trunk). B: finishing pass (accept-or-revert,
+hot-pour copper lifted and laid again, power islands and dead strap ends, last connections by hand tracks).
+
+Files: `best_routed/` (monolith_routed.kicad_pcb, .kicad_pro, .kicad_dru, summary.json, final.json, four renders),
+`tools/final_route.sh`, `tools/final_json.py`, `tools/hot_tracks.py`, `plan/p2-pins.json` (U401.37, U401.38),
+`route_queue/p2-m1.*`, `route_queue/p2-m2.*`, `runs/p2-m1/` (final.json, score.json, dc.json, ghost.log,
+route_failed.txt, post.log, routed/dc.json, routed/hot.json, routed/hot_gate.json, routed/hot_tracks.json,
+routed/loose.log, split/*.log), `runs/p2-m1s/`, `runs/p2-m2s/`, `runs/p2-look/*.png`. The routed board of the run is
+also kept locally at `runs/p2-m1/routed.kicad_pcb` (before the finishing pass) and `finished.kicad_pcb`.

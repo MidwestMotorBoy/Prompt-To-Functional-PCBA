@@ -8,6 +8,8 @@ Fields (all from files of this run; null when a step did not run):
   pre_route         loss_W and power_open of the copper board (dc_score.py on cu.kicad_pcb)
   routed            loss_W, power_open, loose pads and KiCad DRC (errors, unconnected items, those of PACK_P/3V3/GND)
                     of the routed board
+                    unconnected_nets (every net on KiCad's unconnected list), hot_pour_items (tools/hot_tracks.py: router
+                    tracks / vias of other nets in hot-loop pours), pack_p_mohm (PACK_P from Q102 to J113, R427, R527)
   hot_routed        hot loops of the routed board: pass count, sum, each loop's total nH and tier 1
   hot_pre_source    the same from the source run (before routing, without straps), when it has hot_gate.json
 """
@@ -58,6 +60,11 @@ if F["routed"] is not None:
         F["routed"]["drc_error_types"] = sorted({v["type"] for v in d["violations"] if v["severity"] == "error"})
         F["routed"]["unconnected_items"] = len(d.get("unconnected_items", []))
         F["routed"]["unconnected_power"] = pw
+        F["routed"]["unconnected_nets"] = sorted({m.group(1) for u in d.get("unconnected_items", []) for m in [re.search(r"\[(.*?)\]", u["items"][0]["description"])] if m})
+    ht = J(out, "routed", "hot_tracks.json")
+    F["routed"]["hot_pour_items"] = dict(tracks=ht["tracks"], vias=ht["vias"], nets=ht["nets"]) if ht else None
+    t = (J(out, "routed", "dc.json") or {}); t = t.get("nets", t).get("PACK_P", {})
+    F["routed"]["pack_p_mohm"] = {x["ref"]: round(x["R_mohm"], 2) for x in t.get("terminals", []) if x["ref"] in ("J113", "R427", "R527")}
 F["hot_routed"] = gate(os.path.join(out, "routed", "hot_gate.json"))
 F["hot_pre_source"] = gate(os.path.join(src, "hot_gate.json"))
 json.dump(F, open(os.path.join(out, "final.json"), "w"), indent=1)
