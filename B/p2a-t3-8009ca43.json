@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2a-t3.kicad_pcb",
+ "sha": "8009ca43ab9324ac54f5474ef1e674a253deb5e5",
+ "routed": 390,
+ "failed": 32,
+ "edges": 422,
+ "minutes": 60.8,
+ "status": "done",
+ "tail": [
+  "FAILKEY GND@Pad 26 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad 2 [GND] of C304 on F.Cu",
+  "FAILKEY /USB Port 1/HG2",
+  "FAILKEY /USB Port 2/HG2",
+  "FAILKEY /USB Port 1/DRV_SUP"
+ ]
+}
