@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r4_port1-v5q.kicad_pcb",
+ "sha": "e37dc6591ae8d2c931253ef9af082815ba762410",
+ "routed": 352,
+ "failed": 12,
+ "edges": 364,
+ "minutes": 121.0,
+ "status": "done",
+ "tail": [
+  "FAILKEY Net-(U403-ACUV)",
+  "FAILKEY Net-(U101-SMBD)",
+  "FAILKEY Net-(U101-SMBC)",
+  "FAILKEY SCL",
+  "FAILKEY /USB Port 1/I2CC_SCL"
+ ]
+}
