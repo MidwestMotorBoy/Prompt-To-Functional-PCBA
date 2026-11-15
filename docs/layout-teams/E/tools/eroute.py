@@ -7,7 +7,8 @@
   --rips=N          rip-up budget (default 400)         --maxrip=K   times one net may be pulled (default 4)
   --w=0.2 --neck=0.15   track width and the width used where 0.2 does not fit
   --layers=0,2,3,5  routing layers (0 F, 1 In1, 2 In2, 3 In3, 4 In4, 5 B)
-  --pin             earlier routes are fixed"""
+  --pin             earlier routes are fixed
+  --power[=terms.json]  first join the power pieces (pads that carry current) with wide tracks; these stay pinned"""
 import sys, os, re, json, time, subprocess, math
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -68,6 +69,103 @@ def route_net(W, n, opt, stats, log):
             tried_fail += 1
             if tried_fail > 3: return False, ripped
 
+def join(W, n, opt):
+    """Join the pieces of net n without touching other routes. True when it is one piece."""
+    while True:
+        win, lab, k, cu, thr = W.pieces(n)
+        if k < 2: return True
+        sizes = np.bincount(lab.ravel(), minlength=k + 1); order = [int(i) for i in np.argsort(sizes) if i > 0 and sizes[i] > 0]
+        for sp in order[:max(1, k - 1)]:
+            res = W.connect(n, src_piece=sp, w=opt["w"], neck=opt["neck"], layers=opt["layers"], win=win)
+            if res and res.get("items"):
+                W.add_route(n, res["items"], dict(t=time.time())); break
+        else:
+            return False
+
+def swap(W, n, opt, depth=0, locked=frozenset(), log=print):
+    """Net n cannot be finished. Pull the routes in its way, route n, route them again; keep the result only when
+    every net involved ends up whole (otherwise everything is put back). Tries a few different crossings."""
+    win, lab, k, cu, thr = W.pieces(n)
+    if k < 2: return True
+    sizes = np.bincount(lab.ravel(), minlength=k + 1); order = [int(i) for i in np.argsort(sizes) if i > 0 and sizes[i] > 0]
+    seen = set(); opts = []
+    for sp in order[:3]:
+        extra = None
+        for alt in range(opt.get("alts", 2)):
+            res = W.connect(n, src_piece=sp, w=opt["w"], neck=opt["neck"], layers=opt["layers"], win=win, ghost=True, extra_pen=extra)
+            if not res or not res.get("blockers"): break
+            bl = frozenset(res["blockers"])
+            if any(W.dyn[b]["net"] in locked or W.dyn[b]["meta"].get("pin") for b in bl): bl = None
+            elif bl not in seen: seen.add(bl); opts.append(bl)
+            # next alternative: make this crossing dear
+            if extra is None: extra = np.zeros((er.NL, W.NY, W.NX), np.float32)
+            for (L, cy, cx) in res["cells"]: extra[L, max(cy - 3, 0):cy + 4, max(cx - 3, 0):cx + 4] += 15.0
+    opts.sort(key=len)
+    for bl in opts:
+        if any(b not in W.dyn for b in bl): continue
+        snap = W.snapshot(); nets = sorted({W.dyn[b]["net"] for b in bl})
+        W.rip(bl)
+        ok = join(W, n, opt)
+        if ok:
+            for m in nets:
+                if join(W, m, opt): continue
+                if depth < opt.get("depth", 1) and swap(W, m, opt, depth + 1, locked | {n}, log): continue
+                ok = False; break
+        if ok and W.pieces(n)[2] < 2:
+            return True
+        W.restore(snap)
+    return False
+
+def power_pass(W, terms, opt, log=print):
+    """Power paths the copper plan left open: join the pieces that hold current-carrying pads (terms.json from go.sh:
+    the scorecard's terminals) with wide tracks, widest first, before any signal. These routes are pinned."""
+    pads = {}
+    for p in W.D["pads"]:
+        ls = [er.LAYERS.index(l) for l in p["shapes"]] or [0]
+        pads[(p["ref"], p["num"])] = (ls, p["x"], p["y"])
+    done = 0; failed = []
+    order = sorted(terms.items(), key=lambda kv: -max([g["current_a"] for g in kv[1]] or [0]))
+    for net, T in order:
+        n = W.netid.get(net)
+        if n is None or W.net_window(n) is None: continue
+        bad = set()
+        while True:
+            win, lab, k, cu, thr = W.pieces(n)
+            if k < 2: break
+            x0, y0, x1, y1 = win; cur = {}; ser = set()
+            for g in T:
+                for num in g["pads"]:
+                    if (g["ref"], num) not in pads: continue
+                    ls, px, py = pads[(g["ref"], num)]; cx, cy = W.cell(px, py)
+                    for L in ls:
+                        pc = int(lab[L, cy - y0, cx - x0])
+                        if pc:
+                            cur[pc] = max(cur.get(pc, 0.0), g["current_a"])
+                            if g["kind"] == "series": ser.add(pc)
+                            break
+            if len(cur) < 2: break
+            sizes = np.bincount(lab.ravel(), minlength=k + 1)
+            cand = sorted([p for p in cur if p not in bad and p != max(cur, key=lambda q: sizes[q])], key=lambda p: (-cur[p], sizes[p]))
+            # pieces are renumbered after every route, so 'bad' holds piece sizes instead of labels
+            cand = [p for p in cand if (int(sizes[p]), round(cur[p], 2)) not in bad]
+            if not cand: break
+            sp = cand[0]; I = cur[sp]
+            w = 0.4 if I <= 1.0 else 0.8 if I <= 2.0 else 1.2
+            res = None
+            for neck in ([0.25] if w <= 0.4 else [0.4, 0.25, 0.2]):
+                res = W.connect(n, src_piece=sp, w=w, neck=neck, layers=opt["layers"], win=win, only_target=[p for p in cur if p != sp],
+                                lcost=(1.0, 9, 2.2, 2.2, 9, 1.0), via_cost=120.0, narrow_pen=4.0, pref=(0, 0, 0, 0, 0, 0))
+                if res and res.get("items"): break
+            ln = sum(math.hypot(it[4] - it[2], it[5] - it[3]) for it in res["items"] if it[0] == "T") if res and res.get("items") else 0
+            if sp not in ser and ln > 4.0:
+                bad.add((int(sizes[sp]), round(I, 2))); log("  power %s: a capacitor %.1f mm from its net's copper is left to the signal pass" % (net, ln)); continue
+            if res and res.get("items"):
+                W.add_route(n, res["items"], dict(pin=True, power=I)); done += 1
+                log("  power %s: %.1f A piece joined, %.1f mm, %d vias, widths %s" % (net, I, ln, sum(1 for it in res["items"] if it[0] == "V"), sorted({it[6] for it in res["items"] if it[0] == "T"})))
+            else:
+                bad.add((int(sizes[sp]), round(I, 2))); failed.append((net, I)); log("  power %s: NO PATH for a %.1f A piece" % (net, I))
+    return done, failed
+
 def route_all(W, nets, opt, log=print):
     stats = dict(routed=0, rips=0, ripcount={})
     queue = list(nets); failed = []; t0 = time.time(); it = 0
@@ -88,6 +186,9 @@ def route_all(W, nets, opt, log=print):
         for m in ripped:
             ok2, _ = route_net(W, m, opt, stats, log)
             if not ok2 and m not in failed: failed.append(m)
+    for rnd in range(2):
+        for n in list(failed):
+            if swap(W, n, opt, log=log): failed.remove(n); log("  swap closed %s" % W.netname[n])
     return failed, stats
 
 if __name__ == "__main__":
@@ -120,6 +221,11 @@ if __name__ == "__main__":
         rank = 0 if "Kelvin" in c else 1 if "GateDrive" in c else 3 if W.netname[n] in er.SOFTNETS else 2
         return (rank, net_span(W, n))
     nets.sort(key=key)
+    if "power" in O:
+        T = json.load(open(O["power"] if O["power"] != "1" else d + "/terms.json"))
+        dn, fl = power_pass(W, T, opt, lambda s: print(s, flush=True))
+        print("power pass: %d joins, %d failed" % (dn, len(fl)), flush=True)
+        nets = [n for n in nets if W.pieces(n)[2] > 1]
     need = sum(W.pieces(n)[2] - 1 for n in nets)
     print("nets to route: %d, connections: %d" % (len(nets), need), flush=True)
     t0 = time.time()

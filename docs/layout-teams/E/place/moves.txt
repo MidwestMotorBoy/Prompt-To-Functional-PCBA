@@ -1,0 +1,17 @@
+# Team E placement: moves on the hand board (tools/eplace.py). Reasons beside each move.
+# --- input shunts: turned and dropped into the gap below the PD chip, PPHV pad up (short pour from the PD chip's PPHV
+#     pin), AC_SNS_N pad down into the corridor to the input capacitor column. The hand board has the AC_SNS_N pad on
+#     the far side of the shunt (power path open with planner P, 0.23 W with the stock planner).
+R424 109.45 84.2 r90
+C449 111.5 81.0
+R524 89.65 84.25 r90
+C549 91.8 81.05
+# --- R454 out of the lane that carries the input current down between the inductor pads
+R454 113.5 87.28
+# --- PD chips, top pin row: the capacitor row sat 0.4 mm off the pins (VBUS pin 32 and the CC pins had no way out).
+#     Row moved 0.45 mm away: room for a via between the VBUS capacitor and pin 32 (down to a B.Cu strip) and for
+#     the CC tracks to leave sideways under their capacitors. Port 1 needs the port protector moved up for it.
+U405 +0 -0.45
+C451 107.55 71.0
+C450,C402,C401 +0 -0.45
+C550,C502,C501 +0 -0.45

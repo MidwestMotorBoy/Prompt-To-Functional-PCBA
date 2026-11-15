@@ -4,6 +4,7 @@
 #   one zone per outline (KiCad drops the other outlines on re-save), an optional planner (env PLANNER, default
 #   planner P in tools/planner), optional PACK_P bus on In4 / GND fill on B (env BUS4, BUS4B) and extra spec steps
 #   (env SPEC_STEPS: commands run as "python3 <cmd> spec.json bare.json").
+#   env PLAN_C: a constraints file for the planner only (terminal overrides); scoring always uses the shared one.
 #   options: --keep-copper  --route=MIN (default 0)  --hot (default off)  --no-ghost  --plan="..."
 set -o pipefail
 HERE=$(cd "$(dirname "$0")" && pwd); R=$(cd "$HERE/../../../.." && pwd); T=$R/tools; S=$T/score; E=$T/floorplan/example/monolith; C=$E/constraints.json
@@ -17,7 +18,7 @@ elif [[ $IN == *.json ]]; then cp $S/template/board.kicad_pcb in.kicad_pcb; cp $
 else cp $IN in.kicad_pcb; if [ $KEEP = 1 ]; then cp in.kicad_pcb cu.kicad_pcb; else $K python3 apply_placement.py in.kicad_pcb bare.kicad_pcb --strip >/dev/null 2>&1; fi; fi
 if [ $KEEP = 0 ]; then
   $K python3 cu_dump.py bare.kicad_pcb bare.json 2>&1 | grep -v swig
-  python3 ${PLANNER:-$HERE/planner/plan_copper_p.py} bare.json $C spec.json $PLAN > plan.log 2>&1
+  python3 ${PLANNER:-$HERE/planner/plan_copper_p.py} bare.json ${PLAN_C:-$C} spec.json $PLAN > plan.log 2>&1
   python3 $HERE/planner/split_spec.py spec.json >> plan.log 2>&1
   [ -n "$BUS4" ] && python3 $HERE/planner/bus4.py spec.json bare.json $BUS4 >> plan.log 2>&1
   [ -n "$BUS4B" ] && python3 $HERE/planner/bus4.py spec.json bare.json $BUS4B >> plan.log 2>&1

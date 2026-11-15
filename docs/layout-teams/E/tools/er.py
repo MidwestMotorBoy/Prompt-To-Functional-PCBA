@@ -29,6 +29,7 @@ NL = 6
 DMAX = 0.8
 BIG = 9.0
 CLR = 0.15
+ZCLR = 0.2                           # what a pour keeps from other copper
 HC_CLR = 0.25
 EDGE_CLR = 0.25
 VIA_D, VIA_DRILL = 0.45, 0.3
@@ -308,7 +309,7 @@ class DS:
 
 
 class World:
-    def __init__(self, dump, pro=None, soft_inner=True, verbose=True):
+    def __init__(self, dump, pro=None, soft_inner=True, verbose=True, all_soft=False, hard_pours=False):
         t0 = time.time()
         D = json.load(open(dump)) if isinstance(dump, str) else dump
         self.D = D
@@ -343,6 +344,10 @@ class World:
         self.fill_override = None
         self._nonet = 100000
         self.pad_cells = {}
+        self.znet = np.full((NL, NY, NX), -1, np.int32)                       # hard pour at this cell: its net (pours give way to tracks)
+        self.zdepth = np.zeros((NL, NY, NX), np.float32)                      # how deep inside that pour (mm from its edge)
+        self.padnet = np.full((NL, NY, NX), -1, np.int32)                     # pad copper at this cell: its net
+        self.hard_nets = set()                                                # nets whose pours may not be crossed at all
         # ---- board edge and outside (as copper of net EDGE_NET, grown so the 0.15 test gives 0.25)
         im = Image.new("1", (NX, NY), 1)
         dr = ImageDraw.Draw(im)
@@ -383,6 +388,11 @@ class World:
                     ys_ = np.array([q[1] for q in rec["ring"]], dtype=np.float64)
                     if len(xs_) >= 3:
                         ins_poly(self.As.d1, self.As.n1, self.As.d2, L, xs_, ys_, n, self.X0, self.Y0, 0.0)
+                        bx0, by0 = self.cell(xs_.min(), ys_.min()); bx1, by1 = self.cell(xs_.max(), ys_.max())
+                        bx0 = max(bx0 - 1, 0); by0 = max(by0 - 1, 0); bx1 = min(bx1 + 2, NX); by1 = min(by1 + 2, NY)
+                        if bx1 > bx0 and by1 > by0:
+                            pm = self._fill_mask([dict(ring=list(zip(xs_, ys_)), holes=[])], bx0, by0, bx1 - bx0, by1 - by0)
+                            self.padnet[L, by0:by1, bx0:bx1][pm] = n
                         self.net_items.setdefault(n, []).append(("P", L, xs_, ys_, p["ref"], p["num"]))
             if drill > 0:
                 ins_min_disc(self.hole_s, p["x"], p["y"], drill / 2 + (0.25 if drill >= 0.5 else 0.0), self.X0, self.Y0)
@@ -401,13 +411,24 @@ class World:
             L = LAYERS.index(z["layer"])
             soft = z["net"] in SOFTNETS and ((soft_inner and 0 < L < NL - 1) or z["prio"] == 0 or z["name"].startswith("plane_"))
             z["_soft"] = soft
-            if soft:
+            if soft or all_soft:
                 self.soft_fill.setdefault(n, []).append((L, z["fill"]))
                 continue
             self.net_items.setdefault(n, []).append(("Z", L, z["fill"]))
-            self._ins_fill(self.As, L, z["fill"], n)
-            if n in self.hc:
-                self._ins_fill(self.Hs, L, z["fill"], n)
+            if hard_pours:
+                self._ins_fill(self.As, L, z["fill"], n)
+                if n in self.hc:
+                    self._ins_fill(self.Hs, L, z["fill"], n)
+            else:
+                bb = self._poly_bbox(z["fill"], 0.1)
+                if bb is not None:
+                    zx0, zy0, zx1, zy1 = bb
+                    m = self._fill_mask(z["fill"], zx0, zy0, zx1 - zx0, zy1 - zy0)
+                    if m.any():
+                        dep = ndimage.distance_transform_edt(m).astype(np.float32) * G
+                        self.znet[L, zy0:zy1, zx0:zx1][m] = n
+                        zd = self.zdepth[L, zy0:zy1, zx0:zx1]
+                        zd[m] = dep[m]
         # ---- keep-outs
         for k in D["keepouts"]:
             if not (k["no_tracks"] or k["no_vias"]):
@@ -514,6 +535,21 @@ class World:
         self.dyn[self.rid] = dict(net=n, items=list(items), meta=meta or {})
         return self.rid
 
+    def snapshot(self):
+        return dict(self.dyn)
+
+    def restore(self, snap):
+        """Put the routed copper back to a snapshot."""
+        self.rip([r for r in self.dyn if r not in snap or self.dyn[r] is not snap[r]])
+        for r, rec in snap.items():
+            if r not in self.dyn:
+                for it in rec["items"]:
+                    if it[0] == "T":
+                        self._ins_track(rec["net"], it[1], (it[2], it[3]), (it[4], it[5]), it[6])
+                    else:
+                        self._ins_via(rec["net"], it[2], it[3], it[4], it[5])
+                self.dyn[r] = rec
+
     def _items_bbox(self, items, margin):
         xs, ys = [], []
         for it in items:
@@ -581,6 +617,7 @@ class World:
         x0, y0, x1, y1 = win
         w, h = x1 - x0, y1 - y0
         cu = np.zeros((NL, h, w), np.uint8)
+        zcu = np.zeros((NL, h, w), np.uint8)
         thr = []
         X0w, Y0w = self.X0 + x0 * G, self.Y0 + y0 * G
         for it in self.all_items(n):
@@ -597,8 +634,21 @@ class World:
             elif it[0] == "H":
                 thr.append((it[2], it[3]))
             elif it[0] == "Z":
-                cu[it[1]] |= self._fill_mask(it[2], x0, y0, w, h).astype(np.uint8)
+                zm = self._fill_mask(it[2], x0, y0, w, h)
+                zm &= self.zone_ok(n, it[1], win)
+                zcu[it[1]] |= zm.astype(np.uint8)
+        self._zonly = zcu & ~cu                       # cells that are copper only by a pour
+        self._zall = zcu
+        cu |= zcu
         return cu, thr
+
+    def zone_ok(self, n, L, win):
+        """Cells of layer L where a pour of net n survives next to the routed copper of other nets."""
+        x0, y0, x1, y1 = win
+        ok = np.where(self.Ad.n1[L, y0:y1, x0:x1] == n, self.Ad.d2[L, y0:y1, x0:x1], self.Ad.d1[L, y0:y1, x0:x1]) >= ZCLR + 0.02
+        if n in self.hc:
+            ok &= np.where(self.Sd.n1[L, y0:y1, x0:x1] == n, self.Sd.d2[L, y0:y1, x0:x1], self.Sd.d1[L, y0:y1, x0:x1]) >= HC_CLR + 0.02
+        return ok
 
     def pieces(self, n, win=None):
         """Label the connected pieces of net n. Returns (win, lab[NL, h, w] int32 (0 none), number of pieces, cu, thr)."""
@@ -638,7 +688,20 @@ class World:
                 roots[r] = len(roots) + 1
             remap[a] = roots[r]
         lab = remap[lab]
-        return win, lab, len(roots), cu, thr
+        # a piece made of pour alone is an island the fill drops: not a piece
+        k = len(roots)
+        real = np.zeros(k + 1, bool)
+        real[np.unique(lab[(cu > 0) & (self._zonly == 0)])] = True
+        real[0] = True
+        if not real.all():
+            newid = np.cumsum(real) - 1
+            newid[~real] = 0
+            lab = newid.astype(np.int32)[lab]
+            cu = cu * (lab > 0)
+            self._zonly = self._zonly * (lab > 0)
+            self._zall = self._zall * (lab > 0)
+            k = int(real.sum()) - 1
+        return win, lab, k, cu, thr
 
     # ---------------------------------------------------------------- legality masks
     def masks(self, n, win, hw, ghost=False):
@@ -673,7 +736,7 @@ class World:
     # ---------------------------------------------------------------- one connection
     def connect(self, n, src_piece=None, w=0.2, layers=(0, 2, 3, 5), ghost=False, margin=4.0, via_cost=60.0, bend=3.0,
                 lcost=(1.25, 9, 1.0, 1.0, 9, 1.35), pref=(0, 0, 1, 2, 0, 0), hist=None, win=None, maxn=6000000, neck=0.15,
-                only_target=None, allow_padvia=False, extra_pen=None):
+                only_target=None, allow_padvia=False, extra_pen=None, zcost=(0.5, 12.0), narrow_pen=0.6):
         """Join piece src_piece of net n (default: its smallest piece) to any other piece. Returns dict(items, cells, ...)
         or None. With ghost=True routed copper of other nets may be crossed at a price; the result lists the crossed
         route ids in 'blockers' and nothing is added."""
@@ -682,10 +745,16 @@ class World:
             return None
         win = win or win0
         win, lab, k, cu, thr = self.pieces(n, win)
+        zonly = self._zonly
         if k < 2:
             return dict(done=True)
         x0, y0, x1, y1 = win
         h, wd = y1 - y0, x1 - x0
+        # a track must end inside a pour, not on its rim: pour-only cells within 0.1 mm of the pour's edge are no ends
+        zrim = np.zeros(zonly.shape, bool)
+        for L in range(NL):
+            if zonly[L].any():
+                zrim[L] = zonly[L].astype(bool) & ~ndimage.binary_erosion(self._zall[L].astype(bool) | (cu[L] > 0), iterations=3)
         sizes = np.bincount(lab.ravel(), minlength=k + 1)
         if src_piece is None:
             src_piece = int(np.argmin(np.where(np.arange(k + 1) == 0, 10 ** 12, sizes)))
@@ -703,9 +772,9 @@ class World:
                 own &= ~((self.Ad.other(n, y0, y1, x0, x1).min(axis=0) < vneed) | (self.hole_d[y0:y1, x0:x1] < 0.2 + VIA_DRILL / 2 + TOL_O))
             vs = vs | own
         src_mask = (lab == src_piece)
-        tgt = ((lab > 0) & ~src_mask)
+        tgt = ((lab > 0) & ~src_mask) & ~zrim
         if only_target is not None:
-            tgt &= (lab == only_target)
+            tgt &= np.isin(lab, list(only_target) if hasattr(only_target, "__iter__") else [only_target])
         # a track must end well inside a pour: targets on pours are trimmed by the raster (they are cell centres inside copper)
         routable = np.zeros(NL, np.uint8)
         for L in layers:
@@ -717,7 +786,7 @@ class World:
             if 0 <= cx - x0 < wd and 0 <= cy - y0 < h:
                 through[cy - y0, cx - x0] = 1
         pen = np.zeros((NL, h, wd), np.float32)
-        pen += np.where(f2, 0.0, 0.6).astype(np.float32)             # prefer room for the full width
+        pen += np.where(f2, 0.0, narrow_pen).astype(np.float32)      # prefer room for the full width
         vpen = np.zeros((h, wd), np.float32)
         if hist is not None:
             pen += hist[:, y0:y1, x0:x1]
@@ -726,20 +795,42 @@ class World:
         if ghost:
             pen += np.where(bd, 25.0, 0.0).astype(np.float32)
             vpen += np.where(vbd, 150.0, 0.0).astype(np.float32)
+        # other nets' pours give way to a track, at a price that grows with the depth into the pour
+        zn = self.znet[:, y0:y1, x0:x1]
+        zo = (zn >= 0) & (zn != n)
+        zd = np.minimum(self.zdepth[:, y0:y1, x0:x1], 1.2)
+        zp = np.where(zo, zcost[0] + zcost[1] * zd * zd, 0.0).astype(np.float32)
+        if self.hard_nets:
+            zp[np.isin(zn, list(self.hard_nets)) & zo] = 5000.0
+        pen += zp
+        vpen += 4.0 * zp.sum(axis=0)
         free = fs.astype(np.uint8)
         freed = fsd.astype(np.uint8)
-        # source cells: the piece's copper where a track centre is legal (or any cell of it for a via start)
-        sidx = np.flatnonzero(src_mask.ravel())
+        sidx = np.flatnonzero((src_mask & ~zrim).ravel())
         if len(sidx) == 0:
             return None
-        # plane targets on non-routable layers: only reachable by via; trim targets on soft pours by 0.25 mm so a via lands inside
         tg = tgt.astype(np.uint8)
-        path = dijkstra(free, freed, vs.astype(np.uint8), tg, through, pen, vpen, sidx.astype(np.int64), routable,
-                        np.array(pref, np.int64), np.array(lcost, np.float64), via_cost, bend, 16, maxn)
-        if len(path) == 0:
-            return None
         A = h * wd
-        cells = [(int(p // A), int((p % A) // wd) + y0, int((p % A) % wd) + x0) for p in path]
+        for attempt in range(5):
+            path = dijkstra(free, freed, vs.astype(np.uint8), tg, through, pen, vpen, sidx.astype(np.int64), routable,
+                            np.array(pref, np.int64), np.array(lcost, np.float64), via_cost, bend, 16, maxn)
+            if len(path) == 0:
+                return None
+            cells = [(int(p // A), int((p % A) // wd) + y0, int((p % A) % wd) + x0) for p in path]
+            if ghost:
+                break
+            items = self.emit(n, cells, w, neck, f2, win, through)
+            cut = self.cuts_pour(n, items)
+            if cut is None:
+                break
+            M, Lc, (bx0, by0, bx1, by1) = cut
+            # that pour may not be crossed here: price it out around the cut and look again
+            sub = pen[Lc, max(by0 - y0, 0):by1 - y0, max(bx0 - x0, 0):bx1 - x0]
+            sub[zn[Lc, max(by0 - y0, 0):by1 - y0, max(bx0 - x0, 0):bx1 - x0] == M] += 800.0
+            vsub = vpen[max(by0 - y0, 0):by1 - y0, max(bx0 - x0, 0):bx1 - x0]
+            vsub[zn[Lc, max(by0 - y0, 0):by1 - y0, max(bx0 - x0, 0):bx1 - x0] == M] += 3000.0
+        else:
+            return None
         res = dict(cells=cells, src_piece=src_piece, pieces=k)
         if ghost:
             hit = set()
@@ -749,9 +840,50 @@ class World:
             vias = [(cells[i][1], cells[i][2]) for i in range(1, len(cells)) if cells[i][0] != cells[i - 1][0]]
             res["blockers"] = self.routes_near(n, cells, vias, hw_n)
             return res
-        items = self.emit(n, cells, w, neck, f2, win, through)
         res["items"] = items
         return res
+
+    def cuts_pour(self, n, items, margin=2.0, min_cells=150):
+        """Would this route split a hard pour of another net (or cut one of that net's pads off its pour)?
+        Looks at each crossed pour layer by layer in a window round the route. Returns (net, layer, window) or None."""
+        x0, y0, x1, y1 = self._items_bbox(items, margin)
+        h, w = y1 - y0, x1 - x0
+        X0w, Y0w = self.X0 + x0 * G, self.Y0 + y0 * G
+        zn = self.znet[:, y0:y1, x0:x1]
+        halo = np.zeros((NL, h, w), np.uint8)
+        halo2 = np.zeros((NL, h, w), np.uint8)
+        for it in items:
+            if it[0] == "T":
+                paint_seg(halo[it[1]], it[2], it[3], it[4], it[5], it[6] / 2 + ZCLR + 0.03, X0w, Y0w, 1)
+                paint_seg(halo2[it[1]], it[2], it[3], it[4], it[5], it[6] / 2 + HC_CLR + 0.03, X0w, Y0w, 1)
+            else:
+                for L in range(NL):
+                    paint_seg(halo[L], it[2], it[3], it[2], it[3], it[4] / 2 + ZCLR + 0.03, X0w, Y0w, 1)
+                    paint_seg(halo2[L], it[2], it[3], it[2], it[3], it[4] / 2 + HC_CLR + 0.03, X0w, Y0w, 1)
+        st = np.ones((3, 3), int)
+        for L in range(NL):
+            hit = zn[L][(halo2[L] > 0) & (zn[L] >= 0) & (zn[L] != n)]
+            if len(hit) == 0:
+                continue
+            for M in np.unique(hit):
+                M = int(M)
+                hl = halo2[L] if (M in self.hc and n in self.small) else halo[L]
+                if not ((zn[L] == M) & (hl > 0)).any():
+                    continue
+                pads = self.padnet[L, y0:y1, x0:x1] == M
+                base = ((zn[L] == M) & self.zone_ok(M, L, (x0, y0, x1, y1))) | pads
+
+                def count(mask):
+                    lab, k = ndimage.label(mask, structure=st)
+                    if k == 0:
+                        return 0
+                    sz = np.bincount(lab.ravel(), minlength=k + 1)
+                    hasp = np.zeros(k + 1, bool)
+                    hasp[np.unique(lab[pads])] = True
+                    return int(((sz >= min_cells) | hasp)[1:].sum())
+                if count(base & ~((hl > 0) & ~pads)) > count(base):
+                    return M, L, (x0, y0, x1, y1)
+        return None
 
     def routes_near(self, n, cells, vias, hw):
         """Route ids of other nets whose copper is closer than the clearance to this path."""

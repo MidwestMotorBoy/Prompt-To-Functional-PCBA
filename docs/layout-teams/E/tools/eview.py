@@ -6,10 +6,16 @@ import sys, json, zlib, colorsys, re
 from PIL import Image, ImageDraw, ImageFont
 a = [x for x in sys.argv[1:] if not x.startswith("--")]; O = dict(x[2:].split("=", 1) if "=" in x else (x[2:], "1") for x in sys.argv[1:] if x.startswith("--"))
 D = json.load(open(a[0])); out = a[1]
+if "routes" in O:                 # --routes=file.routes.json: draw the router's routes on top (no KiCad needed)
+    LN = ["F.Cu", "In1.Cu", "In2.Cu", "In3.Cu", "In4.Cu", "B.Cu"]
+    for r in json.load(open(O["routes"]))["routes"]:
+        for it in r["items"]:
+            if it[0] == "T": D["tracks"].append(dict(net=r["net"], layer=LN[it[1]], a=[it[2], it[3]], b=[it[4], it[5]], w=it[6]))
+            else: D["vias"].append(dict(net=r["net"], x=it[2], y=it[3], size=it[4], drill=it[5]))
 xs = [p[0] for o in D["outline"] for p in o["ring"]]; ys = [p[1] for o in D["outline"] for p in o["ring"]]
 x0, y0, x1, y1 = [float(v) for v in a[2].split(",")] if len(a) > 2 and a[2] != "-" else (min(xs) - 0.5, min(ys) - 0.5, max(xs) + 0.5, max(ys) + 0.5)
 S = float(a[3]) if len(a) > 3 else 14.0
-show = O.get("layers", "F,In2,In3,B").split(",")
+show = O.get("layers", "F,In2,In3,B").split(","); FL = O.get("fill", "F")     # --fill=B: fill the pours of that layer instead of F's
 W, H = int((x1 - x0) * S) + 1, int((y1 - y0) * S) + 1
 im = Image.new("RGB", (W, H), (255, 255, 255)); d = ImageDraw.Draw(im, "RGBA")
 P = lambda x, y: ((x - x0) * S, (y - y0) * S)
@@ -29,11 +35,14 @@ for o in D["outline"]: d.line([P(*q) for q in o["ring"] + o["ring"][:1]], fill=(
 # pours
 for z in D["zones"]:
     L = z["layer"].split(".")[0]
-    if L not in show or (z["net"] in ("GND", "PACK_P", "3V3") and L not in ("F", "B")): continue
+    if L not in show or (z["net"] in ("GND", "PACK_P", "3V3") and L not in ("F", "B") and L != FL): continue
     if z["net"] == "GND" and z["prio"] == 0: continue
     for pl in z["fill"]:
         if len(pl["ring"]) > 2:
-            if L == "F": d.polygon([P(*q) for q in pl["ring"]], fill=ncol(z["net"], 70))
+            if L == FL:
+                d.polygon([P(*q) for q in pl["ring"]], fill=ncol(z["net"], 70))
+                for hh in pl["holes"]:
+                    if len(hh) > 2: d.polygon([P(*q) for q in hh], fill=(255, 255, 255, 255))
             else: d.line([P(*q) for q in pl["ring"] + pl["ring"][:1]], fill=LC[z["layer"]] + (110,), width=1)
 # part outlines
 for f in D["fps"]:
@@ -47,9 +56,12 @@ for p in D["pads"]:
     if not inwin(p["box"]): continue
     for ln, recs in p["shapes"].items():
         L = ln.split(".")[0]
-        if L == "B" and "B" in show and max(p["drill"]) == 0:
+        if L == "B" and "B" in show and max(p["drill"]) == 0 and FL != "B":
             for r in recs: d.polygon([P(*q) for q in r["ring"]], outline=(150, 40, 190, 200))
-        if L != "F": continue
+        if L == "F" and FL != "F" and max(p["drill"]) == 0:
+            for r in recs: d.polygon([P(*q) for q in r["ring"]], outline=(0, 0, 0, 120))
+            continue
+        if L != FL: continue
         for r in recs:
             cl = (150, 150, 150, 230) if p["net"] not in D["netclass"] or D["netclass"].get(p["net"], "") in ("Default", "Kelvin", "GateDrive") else ncol(p["net"], 230, 0.5, 0.75)
             if p["net"] == "GND": cl = (90, 90, 90, 230)

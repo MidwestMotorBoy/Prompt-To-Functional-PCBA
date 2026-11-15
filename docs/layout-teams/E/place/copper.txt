@@ -1,0 +1,30 @@
+# Team E hand copper (tools/ecopper.py), on top of planner P. Coordinates belong to place/moves.txt.
+# The planner joins neither the shunt nor the left bulk capacitor column to the input FET's drain (the drain pads sit
+# in the middle of the package, below the gap between the inductor pads). Input path, both ports: from the shunt's
+# AC_SNS_N pad straight down the gap between the inductor pads to the close capacitor and the drain, on F.Cu and
+# again on B.Cu; a B.Cu bar joins the bulk capacitor columns left and right of the inductor (the planner's vias in
+# their pads); the two switch nodes keep their B.Cu links from inductor pad to FET pad either side of the lane.
+# --- stage copper, port 1 (port 2 is the same stage 23.0258 mm to the left)
+dropz SW1@1 B.Cu 107.0,91.0,113.1,101.3
+dropz SW2@1 B.Cu 110.5,91.0,117.1,101.3
+dropz AC_SNS_N@1 B.Cu 106.9,91.0,116.0,101.3
+zone AC_SNS_N@1 F.Cu 40  110.62,88.3 113.0,88.3 113.0,96.6 110.85,96.6 110.85,98.5 109.76,98.5 109.76,96.45 110.62,96.45
+zone AC_SNS_N@1 B.Cu 40  110.5,88.0 113.0,88.0 113.0,91.5 119.8,91.5 119.8,93.7 113.0,93.7 113.0,97.2 111.7,97.2 111.7,100.9 109.95,100.9 109.95,97.2 110.5,97.2 110.5,93.1 103.3,93.1 103.3,91.5 110.5,91.5
+zone SW1@1 B.Cu 40  107.6,93.4 110.25,93.4 110.25,97.0 109.6,97.0 109.6,101.2 107.6,101.2
+zone SW2@1 B.Cu 40  113.3,94.0 116.0,94.0 116.0,97.0 114.2,97.0 114.2,101.2 113.0,101.2 113.0,97.4 113.3,97.0
+shift -23.0258 0.0064
+dropz SW1@2 B.Cu 107.0,91.0,113.1,101.3
+dropz SW2@2 B.Cu 110.5,91.0,117.1,101.3
+dropz AC_SNS_N@2 B.Cu 106.9,91.0,116.0,101.3
+zone AC_SNS_N@2 F.Cu 40  110.62,88.3 113.0,88.3 113.0,96.6 110.85,96.6 110.85,98.5 109.76,98.5 109.76,96.45 110.62,96.45
+zone AC_SNS_N@2 B.Cu 40  110.5,88.0 113.0,88.0 113.0,91.5 119.8,91.5 119.8,93.7 113.0,93.7 113.0,97.2 111.7,97.2 111.7,100.9 109.95,100.9 109.95,97.2 110.5,97.2 110.5,93.1 103.3,93.1 103.3,91.5 110.5,91.5
+zone SW1@2 B.Cu 40  107.6,93.4 110.25,93.4 110.25,97.0 109.6,97.0 109.6,101.2 107.6,101.2
+zone SW2@2 B.Cu 40  113.3,94.0 116.0,94.0 116.0,97.0 114.2,97.0 114.2,101.2 113.0,101.2 113.0,97.4 113.3,97.0
+shift 0 0
+# --- entries from the shunts
+zone AC_SNS_N@1 F.Cu 41  108.75,84.6 110.15,84.6 110.15,86.9 113.0,86.9 113.0,88.6 108.75,88.6
+zone AC_SNS_N@1 B.Cu 41  108.75,84.6 110.15,84.6 110.15,86.9 113.0,86.9 113.0,88.6 108.75,88.6
+via AC_SNS_N@1 109.1,87.4 109.9,87.4 110.7,87.4 111.5,87.4 112.3,87.4
+zone AC_SNS_N@2 F.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
+zone AC_SNS_N@2 B.Cu 41  87.6,84.65 90.4,84.65 90.4,88.6 87.6,88.6
+via AC_SNS_N@2 88.0,86.4 88.8,86.4 89.6,86.4 88.4,87.2 89.2,87.2
