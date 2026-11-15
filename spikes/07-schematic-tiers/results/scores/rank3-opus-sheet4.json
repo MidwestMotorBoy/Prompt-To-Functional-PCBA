@@ -1,0 +1,17 @@
+{"grader": "opus", "sheet": "sheet4",
+ "ranking": ["E08","E19","E13","E29","E18","E16","E22","E14","E24","E28","E03","E27","E06"],
+ "notes": {
+  "E08": "Clean boxed blocks, decoupling and pull-ups wired in line, pi match textbook and wired to pins, numbered notes; balanced page.",
+  "E19": "Boxed module/antenna/debug blocks with good notes; pi match drawn textbook but joined only by RFIO/ANT_IN labels.",
+  "E13": "Wired pi match and reset network, pull-ups in line, rich notes; long RF wire runs and empty lower right.",
+  "E29": "Compact and fully wired, pull-ups grouped, notes; pi match loop wraps back under itself.",
+  "E18": "Tidy, pull-ups at pins, separate textbook pi block; antenna joined by labels, large empty lower half.",
+  "E16": "Similar to E18 with labelled pi block; pull-up supplies as boxed 3V3 labels, debug connectors spread out.",
+  "E22": "Fully wired, tall U301 with RF pins at bottom; rotated cap labels and pi match drawn as a loop.",
+  "E14": "Pull-ups on a shared 3V3 bus read well; pi match routed as a long loop, bottom half sparse.",
+  "E24": "Pi match parts squeezed between pins with labels near wires; debug box mostly empty.",
+  "E28": "Good pull-ups on right, but pi match tangled around ANT_IN/RFIO; small notes text.",
+  "E03": "Decoupling fine, but pi match wraps a long wire around C314; pull-up 3V3 flags cramped near labels.",
+  "E27": "Pi match tangled beside the IC, R302 3V3 flag collides with C303 value, stray junction on NRST.",
+  "E06": "Pi match split with auto Net-(C313-Pad2) labels and floating C314, sparse wide page, debug crammed at edge."
+ }}

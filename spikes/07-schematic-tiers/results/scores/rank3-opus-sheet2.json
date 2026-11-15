@@ -1,0 +1,17 @@
+{"grader": "opus", "sheet": "sheet2",
+ "ranking": ["E19","E08","E13","E29","E28","E18","E24","E14","E03","E16","E27","E22","E06"],
+ "notes": {
+  "E19": "Boxed buck and bulk blocks with titles, C206 at VIN, clean left-to-right path, numbered notes, balanced page.",
+  "E08": "Boxed blocks with descriptive titles and full notes, clean buck path; slightly sparse buck box.",
+  "E13": "Clear buck path and separate bulk block with titled sections and notes; right half of page empty.",
+  "E29": "Compact, well-titled two-block drawing with C206 at VIN; bulk caps on a shared ground bus is slightly unusual.",
+  "E28": "Two titled boxes, notes inside, clean buck; bulk block reached via a label with a ladder layout, wide sparse page.",
+  "E18": "Good grouping, titles and notes, but drawing is small and floats mid-page with large empty areas.",
+  "E24": "Single boxed row with C206 next to VIN and good notes; bulk caps mixed into the input row.",
+  "E14": "Single row with good notes, but hot-loop C206 sits among the bulk far from VIN; FB to sideways ground symbol.",
+  "E03": "Clean compact row, but bulk and C206 mixed, VOS shown only as a power flag, sideways FB symbol, empty lower half.",
+  "E16": "Single row, bulk mixed with C206, huge empty space and a stray note far from the circuit.",
+  "E27": "Good blocks and notes, but the 3V3_SLEEP label sits on top of C206's ground symbol.",
+  "E22": "Tall IC with VOS far from output, rotated cap labels hard to pair with parts, bulk mixed with C206.",
+  "E06": "Everything crammed in a top strip of an empty A4 page, EN fed by a separate PACK_P label, ground symbols jammed under each pin, no notes."
+ }}

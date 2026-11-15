@@ -143,7 +143,9 @@ Findings:
 
 Fable at high effort (fh-1, same single-agent prompt as fable-1/2, no review rounds): rubric 3.91,
 $30.68, 77 min wall. That is inside the spread of the two default-effort Fable runs (3.66, 4.16) at about
-twice their cost. Not in the per-sheet ranking.
+twice their cost. Re-ranked per sheet with 13 finalists (`harness/RANKER3.md`, `results/scores/rank3-*`),
+mean rank: mx-2 1.5, fable-2 1.75, fh-1 5.25, opus-1 5.75, gh-2 5.75, gh-1 7.0, hi-2 7.25, hi-1 8.25, sb-2 8.25,
+mx-1 8.75, fable-1 9.25, opus-2 9.25, baseline 13. USB PD sheet top 3: fable-2, mx-2, gh-1.
 
 PDFs of every run (cover page with score and cost, then the sheets) are in project files
 `schematic-tiers/sonnet-followup/`.

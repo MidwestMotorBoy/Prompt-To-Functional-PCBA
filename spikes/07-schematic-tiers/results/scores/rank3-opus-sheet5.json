@@ -1,0 +1,17 @@
+{"grader": "opus", "sheet": "sheet5",
+ "ranking": ["E08","E19","E27","E28","E13","E29","E22","E24","E16","E14","E03","E18","E06"],
+ "notes": {
+  "E08": "Boxed blocks, power stage reads PPHV->RAC->bridge->L->bridge->RBAT->PACK_P with Kelvin filters in line; set points annotated at controller pins; good notes",
+  "E19": "Clean boxed blocks, textbook four-switch stage with MOSFET symbols, bootstrap diodes/caps in place, helpful notes; charger pins tidy",
+  "E27": "Clear blocks with notes; PD controller wired directly to connector/protection; Kelvin RC filters drawn at charger pins; minor pin-text overlap on U405",
+  "E28": "Very legible and spacious, Kelvin filters at pins, sheet-interface note; tall page with some empty areas and long controller column",
+  "E13": "Dense but complete; power stage textbook with bootstraps; some crowding (R444 text on wire, cap values touching), long label-free runs in controller",
+  "E29": "Clean titled sections and good power stage; some empty space and PD/EEPROM pull-ups via long bus wires",
+  "E22": "Compact wide layout, clear power stage, good notes; small text at full view, rotated cap labels, charger crammed in right column",
+  "E24": "Boxed blocks with notes, but power stage bootstraps moved into controller box with long wires; small text, scattered annotations",
+  "E16": "Logical sections and readable, but sense filters split from stage, large empty bottom area, labels for most links",
+  "E14": "Readable sections with notes, but charger block has many long wires to gate resistors; empty regions, small text",
+  "E03": "Sections titled, but charger wires wander long distances, parts scattered with big gaps; cluttered PD pin area",
+  "E18": "Drawing crammed into small portion of A2 page; tiny text, overlapping labels around U401 and bootstrap",
+  "E06": "Very sparse tall page; parts float alone tied only by labels (decoupling far from ICs), long wandering charger wires"
+ }}

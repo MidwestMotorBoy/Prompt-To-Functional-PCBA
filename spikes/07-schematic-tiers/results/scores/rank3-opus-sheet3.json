@@ -1,0 +1,17 @@
+{"grader": "opus", "sheet": "sheet3",
+ "ranking": ["E19","E27","E08","E28","E24","E03","E29","E16","E22","E18","E14","E13","E06"],
+ "notes": {
+  "E19": "Boxed blocks; PACK+ path and PACK- return with shunt drawn as textbook rails; gauge taps wired, notes explain each block.",
+  "E27": "Textbook back-to-back FET path with gate drive below; tall gauge with cell taps and NTCs wired right at their pins; clear boxes.",
+  "E08": "Boxed blocks with descriptive titles, power path left to right including fuse ignition, wired cell filters, numbered notes; text small and dense.",
+  "E28": "Compact gauge with taps, shunt and NTCs wired at their pins; clean power path; small text and empty lower right.",
+  "E24": "Good blocks, power path with return and sense; gauge cell wiring takes jogs; many short notes.",
+  "E03": "Full pack path including sense in one block, clear; gauge VC routing loops around, cell wires as a label-only list.",
+  "E29": "Clean power path and sections; current sense split from path; cell/NTC wires partly label-only, some long gauge runs.",
+  "E16": "Textbook MOSFET power path, but gauge pins tied by labels to separate filter/NTC groups; large empty areas.",
+  "E22": "Gauge block neat, but fuse F102 and shunt are pulled out of the power path, so the pack path no longer reads as one path.",
+  "E18": "Vertical FETs with awkward gate wiring; NTCs and sense scattered at bottom; large empty lower half.",
+  "E14": "Gauge fed by a long fan of wires; fuse floats alone tied by labels; sparse and fragmented.",
+  "E13": "Everything crammed into a strip with overlapping labels (R105/R106, NTCs) and a wall of notes; hard to read.",
+  "E06": "Parts scattered and tied by labels with auto Net-(...) names; FETs, fuse and Q104 isolated; mostly empty page."
+ }}
