@@ -1,6 +1,7 @@
 from hand_lib import *
-T = '/USB Port 2/TS'
-print(via_sites(T, (87.6, 96.6, 89.0, 98.2)))
-g = Point(88.29, 97.31).buffer(0.225)
-for l in SIG: print(l, viol(T, g, l))
-print([k.bounds for k in m.ko_v if k.buffer(0.3).contains(Point(88.29, 97.31))])
+import json
+P = json.load(open('/home/claude/runs/r2_route/e1.kicad_pro'))
+print('min track', P['board']['design_settings']['rules'].get('min_track_width'), 'min clearance', P['board']['design_settings']['rules'].get('min_clearance'))
+bx = sbox(106.5, 116.6, 110.8, 118.6)
+for g, n, k, nm in m.items['F.Cu']:
+    if g.intersects(bx) and k != 'pour': print(n.split('/')[-1], k, nm, [round(v, 3) for v in g.bounds])

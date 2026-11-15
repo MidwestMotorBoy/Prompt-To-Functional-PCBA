@@ -1,6 +1,6 @@
 import sys, time; sys.path.insert(0, '../tools')
 from mroute import MR
-t=time.time(); m = MR('/home/claude/runs/r2_route', 'r2'); print('load %.0f s' % (time.time()-t))
+t=time.time(); import os; m = MR(os.environ.get('HD', '/home/claude/runs/r2_route'), os.environ.get('HB', 'r2')); print('load %.0f s' % (time.time()-t))
 nets = sorted({n for L in m.items for _, n, kind, _ in m.items[L] if n and n not in ("GND", "<keepout>")})
 def why(net, w=0.15, margin=6.0):
     cs = m.clusters(net)
@@ -117,3 +117,84 @@ def escape_try(net, pad, victims, box, sites_box, margin=9.0, maxtry=40, first=(
         print('  site', sx, 'open:', bad, flush=True)
         if not bad: return True
     restore(s0); print('  undone'); return False
+def rip_hit(net, geom, layers=('In2.Cu',), clr=0.3):
+    """pull the board tracks of a net on the given layers that come within clr of a shape, and its vias there"""
+    z = geom.buffer(clr); n_t = n_v = 0
+    for L in SIG:
+        keep = []
+        for it in m.items[L]:
+            geo, n, kind, name = it
+            if n == net and kind == 'track' and L in layers and geo.intersects(z):
+                P, A = geo.length, geo.area; w = (P / 2 - math.sqrt(max(P * P / 4 - math.pi * A, 0))) / (math.pi / 2); b = geo.bounds
+                m.J['drop'].append({'net': net, 'layer': L, 'box': [b[0] + w / 2 - 0.01, b[1] + w / 2 - 0.01, b[2] - w / 2 + 0.01, b[3] - w / 2 + 0.01], 'tracks_only': True}); n_t += 1; continue
+            if n == net and kind == 'via' and geo.intersects(z):
+                c = geo.centroid
+                if L == SIG[0]: m.J['drop'].append({'net': net, 'layer': 'none', 'box': [c.x - 0.01, c.y - 0.01, c.x + 0.01, c.y + 0.01]}); n_v += 1
+                continue
+            keep.append(it)
+        m.items[L] = keep; m.tree[L] = STRtree([i[0] for i in keep])
+    m.vias = [v for v in m.vias if not (v[3] == net and Point(v[0], v[1]).buffer(0.225).intersects(z))]
+    print('  pulled %d tracks, %d vias of %s' % (n_t, n_v, net))
+ELIG = {n for n in nets if m.cls(n) in ('Default', 'Kelvin', 'GateDrive')}
+def cross(stuck, margin=12.0, r=1.0, extra=(), w=0.15):
+    """local rip-up: ask which lines the cheapest path of a stuck net crosses and where, pull each only round its crossing
+    point (radius r), lay the stuck net, re-lay the pulled lines; everything undone if a line stays open"""
+    s = snap(); cs = m.clusters(stuck)
+    if len(cs) < 2: return True
+    wh = {}
+    for small in cs[1:]:
+        g = m.join(stuck, small, cs[0], w=w, margin=margin, quiet=True, ghost=(ELIG | set(extra)) - {stuck})
+        if g and len(g) > 2: wh.update(g[2])
+    print('cross', stuck, wh, flush=True)
+    for v, (L, x, y) in wh.items(): rip_hit(v, Point(x, y).buffer(r), layers=SIG, clr=0.0)
+    joinall(stuck, margin=margin)
+    for v in wh: joinall(v, margin=margin)
+    bad = [v for v in [stuck] + list(wh) if not one(v)]
+    if not bad: return True
+    for v in bad: why(v, margin=margin)
+    restore(s); print('  undone'); return False
+def cross2(stuck, depth=2, chain=frozenset(), margin=12.0, r=1.0, w=0.15, ind=''):
+    """cross() with depth: a pulled line that cannot be re-laid may itself pull others locally (never a line of its own chain)"""
+    import io, contextlib
+    s = snap()
+    with contextlib.redirect_stdout(io.StringIO()): joinall(stuck, margin=margin, w=w)
+    if one(stuck): return True
+    restore(s); cs = m.clusters(stuck); wh = {}
+    for small in cs[1:]:
+        g = m.join(stuck, small, cs[0], w=w, margin=margin, quiet=True, ghost=ELIG - chain - {stuck})
+        if g and len(g) > 2: wh.update(g[2])
+    print('%scross %s %s' % (ind, stuck.split('/')[-1], {k.split('/')[-1]: v for k, v in wh.items()}), flush=True)
+    if not wh: return False
+    with contextlib.redirect_stdout(io.StringIO()):
+        for v, (L, x, y) in wh.items(): rip_hit(v, Point(x, y).buffer(r), layers=SIG, clr=0.0)
+        joinall(stuck, margin=margin, w=w)
+    if not one(stuck): restore(s); print('%s  %s still open, undone' % (ind, stuck.split('/')[-1])); return False
+    for v in wh:
+        if not cross2(v, depth - 1, chain | {stuck} | set(wh), margin, r, w, ind + '    ') if depth > 0 else not _j(v, margin, w):
+            restore(s); print('%s  could not re-lay %s, undone' % (ind, v.split('/')[-1])); return False
+    print('%s  %s closed' % (ind, stuck.split('/')[-1])); return True
+def _j(v, margin, w):
+    import io, contextlib
+    with contextlib.redirect_stdout(io.StringIO()): joinall(v, margin=margin, w=w)
+    return one(v)
+
+from shapely.ops import unary_union
+import io, contextlib
+def piecewise(net, w=0.2, margin=9.0, r=1.0):
+    """close a net piece by piece; each piece on its own may pull lines locally, undone per piece if they do not come back"""
+    done = set()
+    for k in range(8):
+        cs = m.clusters(net); todo = [c for c in cs[1:] if tuple(round(v, 1) for v in unary_union([g for gs in c.values() for g in gs]).bounds) not in done]
+        if not todo: break
+        c = todo[-1]; key = tuple(round(v, 1) for v in unary_union([g for gs in c.values() for g in gs]).bounds); done.add(key); s0 = snap(); n0 = len(cs)
+        if m.join(net, c, cs[0], w=w, margin=margin, quiet=True) is not None and len(m.clusters(net)) < n0: print('  piece', key, 'joined'); continue
+        restore(s0); g = m.join(net, c, cs[0], w=w, margin=margin, quiet=True, ghost=ELIG - {net})
+        if not g or len(g) < 3 or not g[2]: print('  piece', key, 'walled'); continue
+        with contextlib.redirect_stdout(io.StringIO()):
+            for v, (L, x, y) in g[2].items(): rip_hit(v, Point(x, y).buffer(r), layers=SIG, clr=0.0)
+            cs2 = m.clusters(net); c2 = min(cs2[1:], key=lambda q: unary_union([g_ for gs in q.values() for g_ in gs]).distance(unary_union([g_ for gs in c.values() for g_ in gs])))
+            ok = m.join(net, c2, cs2[0], w=w, margin=margin, quiet=True) is not None and len(m.clusters(net)) < n0
+            if ok:
+                for v in g[2]: joinall(v, margin=margin)
+        if ok and all(one(v) for v in g[2]): print('  piece', key, 'joined after re-laying', list(g[2])); continue
+        restore(s0); print('  piece', key, 'not joined; in the way:', g[2])
