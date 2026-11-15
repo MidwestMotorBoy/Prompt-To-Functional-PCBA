@@ -5,7 +5,8 @@ Hand placement as a list of moves on the hand board. One move per line ('#' star
     REF1,REF2,... +dx +dy   shift a group
     REF @OTHER +dx +dy [rN]  put it at OTHER's (final) origin plus an offset
 Writes the placement file for apply_placement.py (only the moved parts) and prints every courtyard box overlap among
-parts on the same side, plus parts whose courtyard leaves the board box."""
+parts on the same side (over 0.06 mm: the boxes include the 0.05 mm courtyard line), plus parts whose courtyard
+leaves the board box."""
 import sys, json, re
 D = json.load(open(sys.argv[1])); F = {f["ref"]: f for f in D["fps"]}
 pos = {r: [f["x"], f["y"], 0] for r, f in F.items()}
@@ -42,5 +43,5 @@ for i, a in enumerate(refs):
         if a not in P and b not in P: continue
         if F[a]["layer"] != F[b]["layer"]: continue
         cb = C[b]; ox = min(ca[2], cb[2]) - max(ca[0], cb[0]); oy = min(ca[3], cb[3]) - max(ca[1], cb[1])
-        if ox > 0.06 and oy > 0.06:      # courtyard boxes include the 0.05 mm line print("OVERLAP %s %s by %.2f x %.2f mm" % (a, b, ox, oy)); bad += 1
+        if ox > 0.06 and oy > 0.06: print("OVERLAP %s %s by %.2f x %.2f mm" % (a, b, ox, oy)); bad += 1
 print("%d parts moved, %d problems" % (len(P), bad))
