@@ -1,0 +1,28 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 150
+phase 1: 17 open connections tried again with every route free to move
+phase 2: 11 open connections tried again with every route free to move
+phase 3: 9 open connections tried again with every route free to move
+routes pulled and re-laid: 525
+fan-out stubs unused (removed) 56, trimmed 26
+unconnected after fill: 29
+routed 355 edges, 9 failed, items added 4936
+  FAILED /USB Port 2/LODRV2 89.06,108.84 (Pad 21  of U503 ) -> 89.14,103.27 (Pad 1  of R547 ) starts 84 goals 133 seen 143 | no way even with every other route gone
+  FAILED /USB Port 2/LODRV1 87.06,108.84 (Pad 25  of U503 ) -> 87.86,99.81 (Pad 1  of R545 ) starts 83 goals 136 seen 116 | no way even with every other route gone
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 70 goals 106 seen 256 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 177 goals 45 seen 115325 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 70 seen 60928 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 84 seen 488666 | no way even with every other route gone
+  FAILED CHG_INH 86.67,120.72 (Pad 1  of R535 ) -> 106.68,131.14 (Pad 2  of J302 ) starts 61 goals 381 seen 600671 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL1 86.10,69.48 (PTH pad 1  of J109) -> 89.99,121.20 (Pad 1  of R101 ) starts 2658 goals 556 seen -12000001 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 194 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 2/LODRV2
+FAILKEY /USB Port 2/LODRV1
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 2/REGN
+FAILKEY CHG_INH
+FAILKEY /Cells and Gauge/CELL1
+FAILKEY /Cells and Gauge/CELL3

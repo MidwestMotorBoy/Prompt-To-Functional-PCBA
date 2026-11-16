@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_gauge-g8-rep.kicad_pcb",
+ "sha": "2e8669d7e6ddd87eff991c011b0e1fdc99664d43",
+ "routed": 355,
+ "failed": 9,
+ "edges": 364,
+ "minutes": 114.6,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/BTST1",
+  "FAILKEY /USB Port 2/REGN",
+  "FAILKEY CHG_INH",
+  "FAILKEY /Cells and Gauge/CELL1",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
