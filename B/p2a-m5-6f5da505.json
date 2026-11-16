@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2a-m5.kicad_pcb",
+ "sha": "6f5da5053539cda632c887157de76f6f01ee9f7c",
+ "routed": 340,
+ "failed": 1,
+ "edges": 341,
+ "minutes": 46.8,
+ "status": "done",
+ "tail": [
+  "fan-out stubs unused (removed) 49, trimmed 10",
+  "unconnected after fill: 8",
+  "routed 340 edges, 1 failed, items added 3836",
+  "  FAILED /USB Port 2/SW1 85.87,103.38 (Pad 2  of C512 ) -> 85.87,103.38 (Zone 'pc_USB Port 2_SW1'  on F.Cu,) starts 743 goals 0 seen 49178 | ghost path found no blocker",
+  "FAILKEY /USB Port 2/SW1"
+ ]
+}

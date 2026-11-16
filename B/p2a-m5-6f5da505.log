@@ -1,0 +1,12 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 341 (0 on long nets)
+fan-out stubs: 115
+phase 1: 6 open connections tried again with every route free to move
+phase 2: 2 open connections tried again with every route free to move
+phase 3: 2 open connections tried again with every route free to move
+routes pulled and re-laid: 308
+fan-out stubs unused (removed) 49, trimmed 10
+unconnected after fill: 8
+routed 340 edges, 1 failed, items added 3836
+  FAILED /USB Port 2/SW1 85.87,103.38 (Pad 2  of C512 ) -> 85.87,103.38 (Zone 'pc_USB Port 2_SW1'  on F.Cu,) starts 743 goals 0 seen 49178 | ghost path found no blocker
+FAILKEY /USB Port 2/SW1
