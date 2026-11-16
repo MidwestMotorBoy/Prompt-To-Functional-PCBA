@@ -1,0 +1,38 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 150
+phase 1: 18 open connections tried again with every route free to move
+phase 2: 15 open connections tried again with every route free to move
+phase 3: 12 open connections tried again with every route free to move
+routes pulled and re-laid: 1030
+fan-out stubs unused (removed) 70, trimmed 20
+unconnected after fill: 36
+routed 350 edges, 14 failed, items added 6553
+  FAILED /USB Port 2/LODRV2 89.06,108.84 (Pad 21  of U503 ) -> 89.14,103.27 (Pad 1  of R547 ) starts 83 goals 133 seen 120 | no way even with every other route gone
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 72 goals 106 seen 242 | blocked by routes that have been pulled too often
+  FAILED /MCU/RFIO 116.28,117.96 (Pad 1  of C313 ) -> 117.72,119.33 (Pad 4  of U301 ) starts 121 goals 209 seen 287 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 184 goals 47 seen 101105 | pulled 1
+  FAILED /USB Port 2/REGN 87.10,106.03 (Pad 1  of C510 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 97 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 72 seen 125427 | no way even with every other route gone
+  FAILED Net-(U101-SMBD) 98.80,122.00 (Pad 18  of U101 ) -> 106.78,122.85 (Pad 1  of R116 ) starts 2 goals 62 seen 5 | no way even with every other route gone
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 48 goals 62 seen 73166 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 433244 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 500 seen 621 | no way even with every other route gone
+  FAILED Net-(U102-OUT) 100.15,130.75 (Pad 8  of U102 ) -> 118.04,127.85 (Pad 1  of R124 ) starts 36 goals 117 seen 105 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/GAUGE_FUSE 98.30,119.10 (Pad 25  of U101 ) -> 115.65,134.69 (Pad 2  of R126 ) starts 43 goals 126 seen 54 | no way even with every other route gone
+  FAILED /USB Port 2/LDO_3V3 86.50,86.22 (Pad 1  of R504 ) -> 86.60,84.57 (Pad 1  of R541 ) starts 34 goals 248 seen 73 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_P 99.98,127.60 (Pad 1  of C110 ) -> 95.11,128.80 (Pad 1  of R118 ) starts 179 goals 126 seen 54128 | no way even with every other route gone
+FAILKEY /USB Port 2/LODRV2
+FAILKEY /USB Port 1/BTST1
+FAILKEY /MCU/RFIO
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 2/REGN
+FAILKEY /USB Port 1/BTST1
+FAILKEY Net-(U101-SMBD)
+FAILKEY Net-(U101-SMBC)
+FAILKEY /USB Port 2/REGN
+FAILKEY SCL
+FAILKEY Net-(U102-OUT)
+FAILKEY /Cells and Gauge/GAUGE_FUSE
+FAILKEY /USB Port 2/LDO_3V3
+FAILKEY /Cells and Gauge/CELL_P

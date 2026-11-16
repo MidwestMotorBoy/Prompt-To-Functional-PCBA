@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_gauge-g6.kicad_pcb",
+ "sha": "d2882a08f663540146df7beef77a4e5997e8d67c",
+ "routed": 350,
+ "failed": 14,
+ "edges": 364,
+ "minutes": 137.7,
+ "status": "done",
+ "tail": [
+  "FAILKEY SCL",
+  "FAILKEY Net-(U102-OUT)",
+  "FAILKEY /Cells and Gauge/GAUGE_FUSE",
+  "FAILKEY /USB Port 2/LDO_3V3",
+  "FAILKEY /Cells and Gauge/CELL_P"
+ ]
+}
