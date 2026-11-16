@@ -1,0 +1,30 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 150
+phase 1: 18 open connections tried again with every route free to move
+phase 2: 9 open connections tried again with every route free to move
+phase 3: 13 open connections tried again with every route free to move
+routes pulled and re-laid: 470
+fan-out stubs unused (removed) 59, trimmed 28
+unconnected after fill: 30
+routed 354 edges, 10 failed, items added 4248
+  FAILED /USB Port 2/LODRV2 89.06,108.84 (Pad 21  of U503 ) -> 89.14,103.27 (Pad 1  of R547 ) starts 84 goals 133 seen 122 | no way even with every other route gone
+  FAILED /USB Port 1/LODRV1 110.09,108.84 (Pad 25  of U403 ) -> 110.89,99.81 (Pad 1  of R445 ) starts 73 goals 134 seen 100 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 249 goals 47 seen 113889 | pulled 1
+  FAILED /USB Port 2/I2CC_SCL 84.65,85.20 (Pad 6  of U502 ) -> 85.70,82.92 (Pad 17  of U501 ) starts 164 goals 41 seen 102827 | pulled 1
+  FAILED /USB Port 2/REGN 87.10,106.03 (Pad 1  of C510 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 172 goals 81 seen 97 | blocked by routes that have been pulled too often
+  FAILED CHG_INH 109.70,120.72 (Pad 1  of R435 ) -> 106.68,131.14 (Pad 2  of J302 ) starts 136 goals 191 seen 546 | no way even with every other route gone
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 478663 | no way even with every other route gone
+  FAILED CHG_INH 86.67,120.72 (Pad 1  of R535 ) -> 106.68,131.14 (Pad 2  of J302 ) starts 60 goals 191 seen 511450 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SCL 102.30,86.48 (Pad 2  of R403 ) -> 108.59,113.64 (Pad 1  of U403 ) starts 152 goals 77 seen 915030 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2667 goals 723 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 2/LODRV2
+FAILKEY /USB Port 1/LODRV1
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY /USB Port 2/REGN
+FAILKEY CHG_INH
+FAILKEY /USB Port 2/REGN
+FAILKEY CHG_INH
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /Cells and Gauge/CELL3
