@@ -1990,3 +1990,33 @@ Files: `tools/handroute2.py` (`--soft`), `tools/README.md` (section "the lead's 
 final_screen.json, post.log, dc.json, routed/*.json, look/*.png), `runs/p2-m7.out`, `.screen.log`, `.resume.log`,
 `runs/p2-m7v/` (final.json, final_screen.json, post.log), `runs/p2-m7v.out`, `.screen.log`, `.resume.log`. Boards local
 only: `runs/p2-m7hand/hand.kicad_pcb`, `runs/p2-m7/finished.kicad_pcb` (= `best_routed/monolith_routed.kicad_pcb`).
+
+## 2026-11-16 11:10 UTC, lead: closing documents (REPORT.md and SKILL-NOTES.md written anew), no board change
+
+No run, no route, no board or tool change in this entry; nothing timed out. `best_routed/` and `best_placement.json`
+are as the 11:00 entry left them (`cmp`: the kept board equals `runs/p2-m7/finished.kicad_pcb` and
+`runs/p2-m7v/finished.kicad_pcb`). The four layer pictures in `best_routed/` were looked at again.
+
+**`REPORT.md` written anew** for a reader who starts here: the result with its limits, two comparison tables, phase 1
+(method, rounds r1 to r4, group results, what worked and what did not), phase 2 (every run in one table, what worked
+and what did not, what is left). Numbers checked against the run files while writing:
+- Placement and trial route, shared scorecard: hand 391 of 448 (charter bar; scorecard re-run 394 of 452), skeleton
+  q7s2 299 of 442, round 3 w1_c 346 of 442 (all charter), team B r2 401 of 446, r4 411 of 437 (19 of 437 blocked,
+  1.125 W, 7 of 7 hot loops 5.54 nH); r5 21 of 436 blocked, no plain full route.
+- Routed board, same check: hand 73 unconnected, DRC 3, 2.413 W (`runs/hand-final`); r4 with straps 37, DRC 3, 2.854 W
+  (`runs/r4-final`); kept board 0, DRC 0, 1.167 W, J113 2.14 / R427 2.21 mohm, 7 of 7 hot loops 5.56 nH, hot-pour
+  items 0 / 0 (`runs/p2-m7`).
+- **One number corrected.** The earlier REPORT.md gave J113 / R427 of `runs/p2b-full2` as 11.6 / 11.4 mohm. That pair
+  belongs to `runs/p2b-full2aor` (2.364 W). `runs/p2b-full2/routed/dc.json` has 15.9 / 15.6 mohm at 2.903 W.
+- Stated plainly in the report: the kept copper is not one automatic run from the placement (one route, passes, a
+  carry-over, two hand files), `rebuild_best.sh` was never run end to end, no fab-rule check or fab files were made,
+  18 movable parts are on the bottom side.
+
+**`SKILL-NOTES.md` written anew**, by method instead of by round: ground rules and pass marks; before placing;
+placement chip by chip (the six steps per section, Port 1 stage, charger, 5 V buck, PD controller, protection, 9 V
+supply, Port 2 as twin with its own front end, pack side, the stitch and fix loop, traps); the copper plan (filter
+order with the reason for each, pin table rows, trunk check, traps); routing to completion (route, finishing pass, a
+table from symptom to cure, carry-over, last connection, hand copper by measurement, final check, when to stop,
+traps); tools by step.
+
+Files: `REPORT.md`, `SKILL-NOTES.md`, `LOG.md`.
