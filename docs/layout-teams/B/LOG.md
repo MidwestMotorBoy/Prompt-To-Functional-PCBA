@@ -1827,3 +1827,48 @@ Files: `tools/transplant.py`, `tools/rebuild_m6.sh`, `tools/zoom4.py`, `tools/bo
 `runs/p2-m6v*` (the one command), `runs/p2-m5/` (cmd1.sh, final.json), `runs/p2-m5h1.log`, `runs/p2-m5hand/*.json`,
 `runs/p2-m5look/*.png`, `runs/p2-m6look/*.png`, `runs/p2-m6a.log`. Boards local only: `runs/p2-m6/routed.kicad_pcb`
 (the transplant), `runs/p2-m6/finished.kicad_pcb` (= `best_routed/monolith_routed.kicad_pcb`), `runs/p2-m5h1/finished.kicad_pcb`.
+
+## 2026-11-16 10:05 UTC, worker B (phase 2 round 4): Port 2 I2CC_SCL / SDA crossover out of the hot GND pour
+
+**Hand file `runs/p2r4_b/hand3.json`** (valid on `best_routed/monolith_routed.kicad_pcb` = `runs/p2-m6/finished.kicad_pcb`),
+laid with the new `tools/handroute_soft.py` (`--soft=/USB Port 2/PPHV`, `--keep=runs/p2-m6/cu.kicad_pcb`): exact check
+0 faults, KiCad DRC 0, unconnected 0, `hot_tracks.py` 0 tracks / 0 vias. Board local only: `runs/p2r4_b/h3.kicad_pcb`.
+- SDA changes B.Cu -> In3 at its own B.Cu corner 85.625,85.85 (was 83.275,90.8245 in the GND pour) and runs In3
+  diagonally inside the IRQ_N corner (x 85.6 to 89.7) to its old y 91.6745 line east of x 90.1: the 8 mm south-west
+  and 12 mm back east detour is gone (SDA 125.3 -> 118.7 mm, vias 15 -> 15).
+- I2CC_SCL leaves its B.Cu diagonal at 87.9,87.2995, runs B.Cu west along y 87.2995 to a via at 84.125,87.2995, then
+  In3 straight south at x 84.125 to its y 92.5745 line with a T to its west branch: no hop (59.9 -> 54.8 mm, vias 5 -> 4).
+- Removed: 30 tracks and the three vias 83.925,90.2745, 84.275,92.5245 (I2CC_SCL), 83.275,90.8245 (SDA); added 10
+  segments and 2 vias. Only these two nets, all copper inside x 82.2 to 95.8, y 84.6 to 92.6. No In2 copper added; the
+  PACK_P sheet loses 3 via holes inside the corner and gains 2 at its north edge.
+- Both new vias sit in the Port 2 PPHV F.Cu pour, which is not a hot-loop pour (hot pours there: GND and AC_SNS_N on
+  F.Cu only, `runs/p2r4_b/hotmap.py`). Every F.Cu spot of the corner south of y 85 is under a pour (PPHV, SW1, GND, AC_SNS_N);
+  PPHV is DC, SW1 would put switch-node noise on the signal. The new In3 room also lets the 3V3 In3 fill flow into the
+  IRQ_N corner (it was an island before); the 3V3 bus stays one piece.
+
+**Check `runs/p2r4b-1`** (`bash tools/rebuild_m6.sh runs/p2r4b-1 --src=runs/p2a-r5src --board=runs/p2r4_b/h3.kicad_pcb`,
+about 10 min, no new route, pass had nothing to lay, not timed out; the dangling-end step removed the same two items
+as on `runs/p2-m6v`, a GND F.Cu stub at 113.55..114.25,70.5745 and a Port 1 CC1 via at 104.15,74.75, not from this file):
+
+| final.json | `runs/p2-m6` (before) | **`runs/p2r4b-1`** |
+|---|---|---|
+| unconnected / routed DRC / copper DRC | 0 / 0 / 0 | **0 / 0 / 0** |
+| power_open / loose / unconnected_power | none / none / none | **none / none / none** |
+| loss | 1.1990 W | **1.1979 W** |
+| PACK_P J113 / R427 / R527 mohm | 2.38 / 2.44 / 1.65 | **2.38 / 2.44 / 1.65** |
+| hot loops | 7 of 7, 5.56 nH, Port 2 HL_IN 0.80, HL_OUT 0.75 | **7 of 7, 5.56 nH, HL_IN 0.80, HL_OUT 0.75** (others 1.02, 0.70, 0.78, 0.75, 0.76 unchanged) |
+| hot-pour items | 0 tracks, 3 vias | **0 tracks, 0 vias** |
+
+All DONE gates of the task met. Renders of the corner looked at (F.Cu, B.Cu, In2, In3: `runs/p2r4_b/before_wide.png`,
+`runs/p2r4b-1/corner_finished.png`): no signal via left in the C523 / C520 GND pour, SCL B.Cu one straight run, SDA
+In3 one diagonal, the PACK_P sheet in the corner whole.
+
+**Tool faults found** (fixed in the wrapper `tools/handroute_soft.py`, `handroute.py` unchanged on disk, README section
+"Phase 2 round 4"): handroute.py could not remove In2 / In3 items on this board (KiCad user layer names: "removed 19
+of 32 items"), its writer fails in kicad/kicad:10.0 at `GetEnabledLayers().CuStack()`, and `grep -v swig` could drop
+the "written" marker. The EN_5V1 hand file (In2 / In3 removals) needs the wrapper too.
+
+Files: `tools/handroute_soft.py`, `tools/README.md` (new section), `runs/p2r4_b/` (hand1..3.json, h3.log, h3.drc.json,
+h3.hot_tracks.json, hotmap.py, probe.py, before_wide.png, after_wide.png), `runs/p2r4b-1/` (final.json,
+final_screen.json, post.log, routed/*.json, corner_finished.png), `runs/p2r4b-1.out`, `.screen.log`, `.resume.log`.
+Boards local only: `runs/p2r4_b/h3.kicad_pcb`, `runs/p2r4b-1/finished.kicad_pcb`.

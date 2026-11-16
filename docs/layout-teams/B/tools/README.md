@@ -577,3 +577,33 @@ board B (works only where both boards kept the same lanes; it failed between two
 `handroute.py`: a via may carry `"inpad": true` (inside a small pad of its own net). `router_b.py`: a ghost search
 whose far end is itself a rip-able piece now takes that end from the real board (it had no goal, "no way even with
 every rip-able route gone").
+
+## Phase 2 round 4: Port 2 I2CC_SCL / SDA crossover out of the hot GND pour (worker B)
+
+**`handroute_soft.py <handroute.py arguments> [--soft=<net>[,<net>...]]`**: runs `handroute.py` unchanged on disk, with
+three things changed for that one run:
+- `--soft=`: the filled copper of the named nets may be crossed, as GND / PACK_P / 3V3 (`pinlib.SOFTNETS`): the refill
+  carves round the new via or track. For quiet power pours that are NOT hot-loop pours (here the Port 2 PPHV F.Cu pour,
+  which covers all F.Cu south of y 85 in the corner that is not GND / SW1 / AC_SNS_N). Hot-loop pours stay closed.
+- **Inner-layer removals now work.** handroute.py matches "remove" / "lift" items in KiCad by `GetLayerName`, which on
+  this board is the USER name ("In3.Cu (signal H + 5V)", "In2.Cu (signal V + 3V3)"): every In2 / In3 removal missed and
+  the write stopped with "removed 19 of 32 items". The wrapper matches by `GetStandardLayerName`.
+- **The writer runs in kicad/kicad:10.0.** `b.GetEnabledLayers().CuStack()` fails there ("'SwigPyObject' object has no
+  attribute 'CuStack'"); the layer table is built from the pcbnew constants. And the writer's output is no longer
+  filtered by `grep -v swig`: KiCad's swig leak messages go to stdout, the "written" marker landed inside one of them
+  ("VECTOR2<written"), the filter dropped it, and handroute.py stopped with exit 1 although the board had been saved.
+Use it instead of handroute.py for any hand file with inner-layer removals or new tracks, with or without `--soft`.
+```
+python3 tools/handroute_soft.py best_routed/monolith_routed.kicad_pcb runs/p2r4_b/h3.kicad_pcb runs/p2r4_b/hand3.json \
+    --cu=runs/p2-m6/routed/cu.json --keep=runs/p2-m6/cu.kicad_pcb "--soft=/USB Port 2/PPHV"          # add --check first
+python3 tools/hot_tracks.py runs/p2-m6/cu.kicad_pcb runs/p2-m6/cu.json runs/p2r4_b/h3.kicad_pcb    # hot-pour items
+```
+**How the corner was solved** (`runs/p2r4_b/hand3.json`, valid on `best_routed/monolith_routed.kicad_pcb`): find which
+pours are hot first (`runs/p2r4_b/hotmap.py x,y ...`: hot pours near a spot, from the plan board; here only GND and
+AC_SNS_N on F.Cu, NOT PPHV or SW1), then which pour a candidate via spot sits in (`runs/p2r4_b/probe.py <board> x,y`).
+A layer change must sit where every F.Cu and B.Cu pour is either free or soft; a signal via in SW1 is legal but puts
+switch-node noise on the signal, so PPHV (DC) was used. Then look for In3 room: In3 inside the IRQ_N corner (x 84 to
+90.6, y 85 to 91.5) was empty, so SDA turns to In3 at its own B.Cu corner (85.625,85.85) and runs In3 diagonally to its
+old east line, which leaves In3 west of it free for I2CC_SCL to run straight south with no hop.
+Trap: removing a signal track can let a pour flow into the room it held: here 3V3 on In3 filled the IRQ_N corner
+(the old SDA In3 line had cut it off as an island). Harmless here (3V3 bus), but check the In3 render.

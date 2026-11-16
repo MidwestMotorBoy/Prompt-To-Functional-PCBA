@@ -1,0 +1,5 @@
+handroute_soft: pours of ['/USB Port 2/PPHV'] may be crossed (refill carves round), hot-loop pours stay closed
+handroute: 22 hot-loop pours of the plan board are obstacles
+handroute: removing 30 tracks, 3 vias first (lift [])
+handroute: 10 segments, 2 vias checked, 0 faults (coordinates for best_routed/monolith_routed.kicad_pcb (= runs/p2-m6/finished.kicad_pcb))
+handroute: wrote /home/claude/repo/docs/layout-teams/B/runs/p2r4_b/h3.kicad_pcb; DRC errors 0 {}; unconnected items 0

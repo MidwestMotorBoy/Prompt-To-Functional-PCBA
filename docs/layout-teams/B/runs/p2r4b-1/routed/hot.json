@@ -1,0 +1,75 @@
+{
+ "HL_3V3": {
+  "per_cap_nH": {
+   "C206": 0.317
+  },
+  "all_parallel_with_esl_nH": 0.817,
+  "branches": 5516,
+  "vias": 55,
+  "cell_mm": 0.2
+ },
+ "USB Port 1/HL_5V": {
+  "per_cap_nH": {
+   "C446": 0.306,
+   "C444": 0.741
+  },
+  "all_parallel_with_esl_nH": 0.501,
+  "branches": 6068,
+  "vias": 70,
+  "cell_mm": 0.2
+ },
+ "USB Port 1/HL_IN": {
+  "per_cap_nH": {
+   "C430": 0.333,
+   "C420": 3.059,
+   "C423": 3.53
+  },
+  "all_parallel_with_esl_nH": 0.583,
+  "branches": 7363,
+  "vias": 135,
+  "cell_mm": 0.3
+ },
+ "USB Port 1/HL_OUT": {
+  "per_cap_nH": {
+   "C438": 0.408,
+   "C431": 0.954,
+   "C434": 0.986
+  },
+  "all_parallel_with_esl_nH": 0.551,
+  "branches": 4765,
+  "vias": 80,
+  "cell_mm": 0.3
+ },
+ "USB Port 2/HL_5V": {
+  "per_cap_nH": {
+   "C546": 0.368,
+   "C544": 0.801
+  },
+  "all_parallel_with_esl_nH": 0.559,
+  "branches": 6112,
+  "vias": 65,
+  "cell_mm": 0.2
+ },
+ "USB Port 2/HL_IN": {
+  "per_cap_nH": {
+   "C530": 0.35,
+   "C520": 3.466,
+   "C523": 3.922
+  },
+  "all_parallel_with_esl_nH": 0.604,
+  "branches": 7217,
+  "vias": 140,
+  "cell_mm": 0.3
+ },
+ "USB Port 2/HL_OUT": {
+  "per_cap_nH": {
+   "C538": 0.408,
+   "C531": 0.954,
+   "C534": 1.004
+  },
+  "all_parallel_with_esl_nH": 0.552,
+  "branches": 4685,
+  "vias": 85,
+  "cell_mm": 0.3
+ }
+}
