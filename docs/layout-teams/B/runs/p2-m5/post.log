@@ -1,0 +1,58 @@
+[finish] 06:57:56 1. DRC of the routed board and of the plan
+[finish] 06:58:04 routed: unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 3 {'clearance': 3}
+r0.cu.json: 289 parts, 1176 pads, 47 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 06:58:06 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      /Cells and Gauge/CELL_1N F.Cu end 102.900,128.800 -> 102.970,128.618 (pad U101.16)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+    trimmed 3 stub ends (3 errors looked at)
+[finish] 06:58:23 trimmed: unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 0 {}
+    PACK_P: 3 pieces
+      piece 1 pads: pads ['C107.1', 'C111.2']; fills ['In2.Cu 1.407 mm2 @[93.63, 121.17]']; tracks 7 ['F.Cu [95.025, 121.8745]-[94.775, 121.6245] w0.20', 'F.Cu [94.775, 121.6245]-[94.775, 121.4245] w0.20', 'F.Cu [92.025, 122.5745]-[92.025, 122.8245] w0.20', 'F.Cu [95.28, 122.15]-[95.025, 121.8745] w0.20', 'F.Cu [92.0, 122.27]-[92.025, 122.5745] w0.20', 'In2.Cu [94.775, 121.4245]-[94.775, 121.3245] w0.20']; vias ['94.78,121.42', '92.03,122.82']
+      piece 2 pads: pads ['R112.2']; fills ['In2.Cu 4.923 mm2 @[92.92, 120.33]']; tracks 1 ['F.Cu [92.0, 120.33]-[91.775, 120.0745] w0.20']; vias ['91.78,120.07']
+    3V3: 2 pieces
+      piece 1 pads: pads ['R314.1']; fills []; tracks 1 ['F.Cu [117.97, 127.1]-[117.97, 127.1] w0.20']; vias []
+    GND: 1 pieces
+    == PACK_P: 271 items, 3 groups (largest 255)
+    == 3V3: 120 items, 2 groups (largest 118)
+    fin_report: 6 unconnected items kept, 3 power items replaced by 3 piece edges
+[finish] 06:58:28 2. accept-or-revert pass 1 from t0 (deadline 40 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 0)
+    aor power check: start 0.7420 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.568, 'R427': 2.644, 'R527': 2.236, 'D103': 0.178, 'U404': 6.964, 'U504': 8.41, 'U204': 2.524}, open [] (7 s)
+      aor   24 s sweep 1 open 3V3                            ACCEPTED (pulls 1, 3 s, KiCad unconnected 9 -> 8, power 0.7420 -> 0.7420 W)
+      aor   82 s sweep 1 open PACK_P                         reverted (power: PACK_P to U504 8.69 mohm (start 8.41))
+      aor   88 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 8 -> 7, power 0.7420 -> 0.7420 W)
+      aor  101 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 1, 6 s, KiCad unconnected 7 -> 6, power 0.7420 -> 0.7429 W)
+      aor  108 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 6 -> 5, power 0.7429 -> 0.7429 W)
+      aor  123 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (Net-(D511-A): blocked by Kelvin copper)
+      aor  126 s sweep 1 open /USB Port 1/TS                 reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+      aor  167 s sweep 1 open /Cells and Gauge/TS1           reverted (/Cells and Gauge/TS1: blocked by Kelvin copper)
+      aor  184 s sweep 1 open SCL                            reverted (SCL: no way even with every rip-able route gone)
+      aor  275 s sweep 2 open PACK_P                         reverted (/Cells and Gauge/CELL1 failed (pulls 16))
+      aor  304 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (/USB Port 2/LDO_3V3 failed (pulls 15))
+      aor  307 s sweep 2 open /USB Port 1/TS                 reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+      aor  348 s sweep 2 open /Cells and Gauge/TS1           reverted (/Cells and Gauge/TS1: blocked by Kelvin copper)
+      aor  365 s sweep 2 open SCL                            reverted (SCL: no way even with every rip-able route gone)
+    aor: 14 tasks, 4 accepted, 10 reverted, 38 pulls; open connections left 5, lifts left 0
+    unconnected after fill: 5
+[finish] 07:04:50 pass 1: unconnected 5 {'PACK_P': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 0 {} ; hot-pour items 0
+    == PACK_P: 273 items, 2 groups (largest 269)
+    == 3V3: 134 items, 1 groups (largest 134)
+    fin_report: 4 unconnected items kept, 1 power items replaced by 1 piece edges
+[finish] 07:04:54 2. accept-or-revert pass 2 from r1 (deadline 40 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 0)
+    aor power check: start 0.7429 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.593, 'R427': 2.67, 'R527': 2.168, 'D103': 0.178, 'U404': 7.009, 'U504': 7.935, 'U204': 2.52}, open [] (6 s)
+      aor   50 s sweep 1 open PACK_P                         reverted (power: loss 0.7597 W (now 0.7429, start 0.7429; PACK_P +16.0 mW, 3V3 -0.1 mW, GND +0.9 mW))
+      aor  141 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (/Cells and Gauge/CELL1: no way even with every rip-able route gone)
+      aor  141 s sweep 1 open /USB Port 1/TS                 reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+      aor  336 s sweep 1 open /Cells and Gauge/TS1           reverted (/Cells and Gauge/BTP_INT failed (pulls 42))
+      aor  348 s sweep 1 open SCL                            reverted (SCL: no way even with every rip-able route gone)
+    aor: 5 tasks, 0 accepted, 5 reverted, 51 pulls; open connections left 5, lifts left 0
+    unconnected after fill: 5
+[finish] 07:10:59 pass 2: unconnected 5 {'PACK_P': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 0 {} ; hot-pour items 0
+[finish] 07:10:59 pass 2 not better (score 5 vs 5, hot 0 vs 0), dropped
+[finish] 07:10:59 4. dangling ends of r1
+    removed 7
+[finish] 07:11:14 cleaned: unconnected 5 {'PACK_P': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 0 {}
+[finish] 07:11:14 5. power guard
+[finish] 07:11:44 c: guard ok: 87 new tracks, 9 new vias; loss 1.2518 -> 1.2529 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 3 {'clearance': 3} ; loss 1.2518 W, power open 0
+finish: finished (c) unconnected 5 {'PACK_P': 1, '/USB Port 1/TS': 1, '/USB Port 2/I2CC_SCL': 1, 'SCL': 1, '/Cells and Gauge/TS1': 1} ; DRC errors 0 {} ; loss 1.2529 W, power open 0

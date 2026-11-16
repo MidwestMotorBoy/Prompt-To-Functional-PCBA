@@ -96,15 +96,8 @@
  ],
  "route_minutes": 80,
  "drc_errors": 0,
- "blocked_edges": "0 of 342",
- "route": {
-  "routed": 341,
-  "failed": 1,
-  "edges": 342,
-  "timed_out": false,
-  "unconnected_after_fill": 9,
-  "text": "341 of 342 routed, 1 failed"
- },
+ "blocked_edges": "0 of 341",
+ "route": null,
  "scored_board": "finished.kicad_pcb (after --post)",
  "filters": [
   "filter_1.log",
@@ -121,32 +114,26 @@
   "power_open": {}
  },
  "routed": {
-  "loss_W": 1.25,
+  "loss_W": 1.199,
   "power_open": {},
   "loose": [],
   "drc_errors": 0,
   "drc_error_types": [],
-  "unconnected_items": 4,
+  "unconnected_items": 0,
   "unconnected_power": [],
-  "unconnected_nets": [
-   "/USB Port 1/SRP_F",
-   "/USB Port 2/LDO_3V3",
-   "EN_5V1",
-   "Net-(C313-Pad2)"
-  ],
+  "unconnected_nets": [],
   "hot_pour_items": {
-   "tracks": 1,
+   "tracks": 0,
    "vias": 3,
    "nets": [
     "/USB Port 2/I2CC_SCL",
-    "Net-(U404-FB)",
     "SDA"
    ]
   },
   "pack_p_mohm": {
-   "J113": 2.61,
-   "R427": 2.68,
-   "R527": 2.2
+   "J113": 2.38,
+   "R427": 2.44,
+   "R527": 1.65
   }
  },
  "hot_routed": {

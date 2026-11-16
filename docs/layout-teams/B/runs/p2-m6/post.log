@@ -1,0 +1,28 @@
+[finish] 09:09:56 1. DRC of the routed board and of the plan
+[finish] 09:10:03 routed: unconnected 2 {'Net-(U404-FB)': 1, 'EN_5V1': 1} ; DRC errors 0 {}
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+    PACK_P: 1 pieces
+    3V3: 1 pieces
+    GND: 1 pieces
+    == PACK_P: 280 items, 1 groups (largest 280)
+    == 3V3: 155 items, 1 groups (largest 155)
+    fin_report: 2 unconnected items kept, 0 power items replaced by 0 piece edges
+[finish] 09:10:09 2. accept-or-revert pass 1 from r0 (deadline 30 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 3)
+    aor: 3 hot-pour items in 2 rip-able pieces to lift
+    aor power check: start 0.6571 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.081, 'R427': 2.148, 'R527': 1.639, 'D103': 0.177, 'U404': 5.72, 'U504': 5.705, 'U204': 2.975}, open [] (7 s)
+      aor   19 s sweep 1 open Net-(U404-FB)                  ACCEPTED (pulls 0, 0 s, KiCad unconnected 2 -> 1, power 0.6571 -> 0.6571 W)
+      aor   27 s sweep 1 open EN_5V1                         ACCEPTED (pulls 0, 2 s, KiCad unconnected 1 -> 0, power 0.6571 -> 0.6951 W)
+      aor   80 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (power: loss 0.7101 W (now 0.6951, start 0.6571; PACK_P +16.0 mW, 3V3 +0.0 mW, GND -1.0 mW))
+      aor   83 s sweep 1 lift lift SDA                       reverted (SDA: no way even with every rip-able route gone)
+      aor  156 s sweep 2 lift lift /USB Port 2/I2CC_SCL      reverted (power: loss 0.7110 W (now 0.6951, start 0.6571; PACK_P +16.8 mW, 3V3 +0.0 mW, GND -0.9 mW))
+      aor  158 s sweep 2 lift lift SDA                       reverted (SDA: no way even with every rip-able route gone)
+    aor: 6 tasks, 2 accepted, 4 reverted, 2 pulls; open connections left 0, lifts left 2
+    unconnected after fill: 0
+[finish] 09:13:07 pass 1: unconnected 0 {} ; DRC errors 0 {} ; hot-pour items 3
+[finish] 09:13:07 4. dangling ends of r1
+    removed 0
+[finish] 09:13:25 cleaned: unconnected 0 {} ; DRC errors 0 {}
+[finish] 09:13:25 5. power guard
+[finish] 09:13:56 c: guard ok: 33 new tracks, 2 new vias; loss 1.1612 -> 1.1990 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 2 {'Net-(U404-FB)': 1, 'EN_5V1': 1} ; DRC errors 0 {} ; loss 1.1612 W, power open 0
+finish: finished (c) unconnected 0 {} ; DRC errors 0 {} ; loss 1.1990 W, power open 0

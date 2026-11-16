@@ -1,127 +1,51 @@
 {
- "board": "monolith_routed.kicad_pcb (= runs/p2-m4/finished.kicad_pcb: full route, stub trim, accept-or-revert pass 1; pass 2 dropped as not better)",
+ "board": "monolith_routed.kicad_pcb (= runs/p2-m6/finished.kicad_pcb)",
  "date": "2026-11-16",
- "placement": "best_placement.json = candidates/r5.json (r4 with U405, C451, R432 moved; source run runs/p2a-r5src, 7 of 7 hot loops 5.54 nH)",
- "run": "runs/p2-m4 (local; route 341 of 342 in about 40 min, not timed out; finishing pass 1 12.5 min, pass 2 6.7 min, neither timed out; scoring with hot loops 2 min)",
- "rebuild": "cd docs/layout-teams/B && bash tools/rebuild_best.sh runs/<new> --src=runs/p2a-r5src   (or without --src: builds the source run from best_placement.json first; plan tables plan/p2-pins-u403b.json and plan/p2-pins-r6.json; a new route differs by a few connections)",
+ "placement": "best_placement.json = candidates/r5.json (unchanged; source run runs/p2a-r5src, 7 of 7 hot loops 5.54 nH before routing)",
+ "plan": "p2-m6 (tools/rebuild_m6.sh): plan p2-m4 (plan/p2-pins-u403b.json before the trunk) with plan/p2-pins-r8.json = r6 + the Net-(U404-FB) path with the HL_5V pour corner trimmed. Screen runs/p2-m6nvs: 0 of 341 blocked, copper board DRC 0, 1.012 W before routing",
+ "how_made": [
+  "1. local full route of plan p2-m4: runs/p2-m4, 341 of 342 routed, 1 failed (EN_5V1), about 40 min, not timed out (round 2)",
+  "2. worker B's passes on that routed board: runs/p2b-r3fin (aor 25.6 min, aork 8.1 min dropped, loss 24.0 min, hand tracks runs/p2b-r3hand/hand.json) and runs/p2b-r3en (aork 0.8 min, loss 18.4 min): 1 unconnected (EN_5V1), 1.161 W; no pass timed out",
+  "3. tools/transplant.py: that board's routed copper onto the plan board of p2-m6 (plan/p2-m6-drop.json leaves the routed Net-(U404-FB) track behind): DRC 0, 2 unconnected (Net-(U404-FB) R434.1 to R433.2, EN_5V1), 1.161 W",
+  "4. tools/final_route.sh --resume --post=\"finish.sh --modes=aor --min=30 --tol=0.06 --long=30 --longx=--longptol=0.05 --aorx=--prtol=1.0\" (runs/p2-m6/cmd.sh): accept-or-revert pass 3 min, not timed out: Net-(U404-FB) and EN_5V1 laid (EN_5V1 +38 mW in the pass's power check, allowed by --longptol), two hot-via lifts refused"
+ ],
+ "rebuild": "cd docs/layout-teams/B && bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb   (plan + screen, this board as routed.kicad_pcb, final_route.sh --resume with the finishing pass and the seven hot loops: about 15 min; run as runs/p2-m6v). From worker B's board: --transplant=runs/p2b-r3en instead of --board (needs that run's local boards).",
  "route": {
   "routed": 341,
   "failed": 1,
   "edges": 342,
   "timed_out": false,
-  "unconnected_after_fill": 9,
-  "text": "341 of 342 routed, 1 failed"
+  "note": "the route whose copper this is: plan p2-m4, runs/p2-m4 (local, about 40 min). No route of plan p2-m6 itself was run; its screen has 341 edges, 0 blocked"
  },
- "blocked_edges_before_routing": "0 of 342",
+ "blocked_edges_before_routing": "0 of 341",
  "copper_board_drc_errors": 0,
  "loss_W": {
   "before_routing": 1.012,
-  "routed": 1.25,
-  "routed_unrounded": 1.2499,
-  "limit": 1.25
+  "routed": 1.199,
+  "limit": 1.25,
+  "note": "1.161 W before EN_5V1 was laid; EN_5V1 runs 54 mm north-south on In2 at x 113 to 114 and costs 38 mW"
  },
  "pack_p_mohm_routed": {
-  "J113": 2.61,
-  "R427": 2.68,
-  "R527": 2.2
+  "J113": 2.38,
+  "R427": 2.44,
+  "R527": 1.65
  },
  "pack_p_mohm_limit": 3.0,
  "power_open_routed": {},
  "loose_routed": [],
  "unconnected_power_routed": [],
  "drc_errors_routed": 0,
- "unconnected_items_routed": 4,
- "unconnected_nets": [
-  "/USB Port 1/SRP_F",
-  "/USB Port 2/LDO_3V3",
-  "EN_5V1",
-  "Net-(C313-Pad2)"
- ],
- "unconnected_detail": [
-  [
-   "Track [/USB Port 2/LDO_3V3] on F.Cu, length 1.0600 mm @ 90.02,85.90",
-   "Pad 1 [/USB Port 2/LDO_3V3] of R504 on F.Cu @ 93.42,85.90"
-  ],
-  [
-   "Track [EN_5V1] on F.Cu, length 3.3978 mm @ 116.92,70.37",
-   "Pad 12 [EN_5V1] of U301 on F.Cu @ 111.57,122.08"
-  ],
-  [
-   "Pad 2 [/USB Port 1/SRP_F] of R428 on F.Cu @ 117.21,105.30",
-   "Track [/USB Port 1/SRP_F] on F.Cu, length 0.4098 mm @ 115.47,107.74"
-  ],
-  [
-   "Track [Net-(C313-Pad2)] on F.Cu, length 0.9600 mm @ 117.69,118.01",
-   "Pad 1 [Net-(C313-Pad2)] of C314 on F.Cu @ 114.78,118.00"
-  ]
- ],
+ "unconnected_items_routed": 0,
+ "unconnected_nets": [],
  "hot_pour_items": {
-  "tracks": 1,
+  "tracks": 0,
   "vias": 3,
   "nets": [
    "/USB Port 2/I2CC_SCL",
-   "Net-(U404-FB)",
    "SDA"
-  ]
+  ],
+  "detail": "three crossover vias in the Port 2 input GND return pour on F.Cu: /USB Port 2/I2CC_SCL 83.925,90.2745 and 84.275,92.5245, SDA 83.275,90.8245; no track"
  },
- "hot_pour_detail": [
-  {
-   "kind": "track",
-   "net": "Net-(U404-FB)",
-   "layer": "F.Cu",
-   "a": [
-    117.99,
-    68.15
-   ],
-   "b": [
-    119.14,
-    66.7
-   ],
-   "pour": "GND"
-  },
-  {
-   "kind": "via",
-   "net": "/USB Port 2/I2CC_SCL",
-   "layer": "F.Cu",
-   "a": [
-    83.925,
-    90.2745
-   ],
-   "b": [
-    83.925,
-    90.2745
-   ],
-   "pour": "GND"
-  },
-  {
-   "kind": "via",
-   "net": "/USB Port 2/I2CC_SCL",
-   "layer": "F.Cu",
-   "a": [
-    84.275,
-    92.5245
-   ],
-   "b": [
-    84.275,
-    92.5245
-   ],
-   "pour": "GND"
-  },
-  {
-   "kind": "via",
-   "net": "SDA",
-   "layer": "F.Cu",
-   "a": [
-    83.275,
-    90.8245
-   ],
-   "b": [
-    83.275,
-    90.8245
-   ],
-   "pour": "GND"
-  }
- ],
  "hot_loops_routed": {
   "pass_count": "7 of 7",
   "sum_nH": 5.56,
@@ -156,19 +80,54 @@
    }
   }
  },
- "hot_loops_before_routing_sum_nH": 5.54,
- "gates": {
-  "1 unconnected 0": "NOT met: 4 (Port 1 SRP_F R428.2; Port 2 LDO_3V3 R504.1; EN_5V1 to U301.12; Net-(C313-Pad2) C314.1)",
-  "2 power paths": "met: power_open empty, loose empty, no unconnected power item (PACK_P In2 sheet and 3V3 In3 bus one piece each)",
-  "3 DRC": "met: 0 routed, 0 on the copper board",
-  "4 hot loops": "met: 7 of 7 tier 1",
-  "5 ringing": "met: 5.56 nH against 5.54 before routing; Port 1 and Port 2 HL_OUT +0.01 each",
-  "6 loss": "met at the limit: 1.2499 W (limit 1.25; 1.012 W before routing); J113 2.61, R427 2.68 mohm (limit 3.0). No margin: the In2 PACK_P sheet is cut by long north-south signal tracks",
-  "7 renders": "looked at (routed_F.Cu.png, _B.Cu.png, _In2.Cu.png, _In3.Cu.png): power stages compact, trunk one strip on the bottom, no sprawl. NOT met for hot-loop pours: 1 track and 3 vias of 3 signal nets in hot-loop GND pours",
-  "8 report": "REPORT.md and SKILL-NOTES.md for phase 2 still owed"
+ "hot_loops_before_routing": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.54,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.02,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.7,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.78,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 0.76,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.8,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   }
+  }
  },
- "compared": {
-  "runs/p2b-m1fin (r4, round 1 plan + accept-or-revert pass)": "16 unconnected, loss 1.183 W, J113 2.11 / R427 2.22 mohm, hot-pour items 3 tracks 3 vias",
-  "runs/p2-m3 (r5, worker A's plan FR5 + accept-or-revert pass)": "7 unconnected, loss 1.254 W, J113 2.65 / R427 2.71 mohm, hot-pour items 1 track 2 vias, one 3V3 In3 island"
+ "renders": [
+  "routed_F.Cu.png",
+  "routed_B.Cu.png",
+  "routed_In2.Cu.png",
+  "routed_In3.Cu.png"
+ ],
+ "gates": {
+  "1_unconnected_0": true,
+  "2_power_paths": true,
+  "3_drc_0": true,
+  "4_hot_7_of_7": true,
+  "5_ringing": "5.56 nH against 5.54; largest rise 0.01 nH",
+  "6_loss": "1.199 W (limit 1.25); J113 2.38, R427 2.44 mohm (limit 3.0)",
+  "7_renders": "looked at; no sprawl, no signal track in a hot-loop pour, three signal vias left in one (above)",
+  "8_documents": "REPORT.md, SKILL-NOTES.md, LOG.md, tools/README.md"
  }
 }

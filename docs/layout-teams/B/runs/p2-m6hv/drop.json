@@ -1,0 +1,2 @@
+{"about": "runs/p2b-r3en/finished.kicad_pcb (route of plan p2-m4 + passes) onto plan p2-m6: the plan now lays Net-(U404-FB), so its routed copper is left behind. The three crossover vias in hot GND pours (now no-via areas: Port 2 I2CC_SCL 83.925,90.2745 and 84.275,92.5245, SDA 83.275,90.8245) are carried over on purpose: they show as 3 keep-out DRC errors and 3 hot-pour items at the start, and the pass lifts their pieces whole (dropping only the vias left end-on-end opens that the router counted as laid).",
+ "nets": ["Net-(U404-FB)"]}

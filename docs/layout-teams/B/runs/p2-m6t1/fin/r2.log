@@ -1,0 +1,90 @@
+08:41:03: Debug: Adding duplicate image handler for 'PNG file'
+08:41:03: Debug: Adding duplicate image handler for 'JPEG file'
+08:41:03: Debug: Adding duplicate image handler for 'TIFF file'
+08:41:03: Debug: Adding duplicate image handler for 'GIF file'
+08:41:03: Debug: Adding duplicate image handler for 'PNM file'
+08:41:03: Debug: Adding duplicate image handler for 'PCX file'
+08:41:03: Debug: Adding duplicate image handler for 'IFF file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows icon file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows cursor file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+08:41:03: Debug: Adding duplicate image handler for 'TGA file'
+08:41:03: Debug: Adding duplicate image handler for 'XPM file'
+08:41:03: Debug: Adding duplicate image handler for 'PNG file'
+08:41:03: Debug: Adding duplicate image handler for 'JPEG file'
+08:41:03: Debug: Adding duplicate image handler for 'TIFF file'
+08:41:03: Debug: Adding duplicate image handler for 'GIF file'
+08:41:03: Debug: Adding duplicate image handler for 'PNM file'
+08:41:03: Debug: Adding duplicate image handler for 'PCX file'
+08:41:03: Debug: Adding duplicate image handler for 'IFF file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows icon file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows cursor file'
+08:41:03: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+08:41:03: Debug: Adding duplicate image handler for 'TGA file'
+08:41:03: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 3 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+main PACK_P layer 0: 3 cells dropped, 44792 kept
+main PACK_P layer 1: 35 cells dropped, 609508 kept
+main PACK_P layer 2: 0 cells dropped, 0 kept
+main PACK_P layer 3: 8 cells dropped, 20221 kept
+main 3V3 layer 0: 3 cells dropped, 16793 kept
+main 3V3 layer 1: 0 cells dropped, 0 kept
+main 3V3 layer 2: 674 cells dropped, 244619 kept
+main 3V3 layer 3: 0 cells dropped, 0 kept
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 5 (0 on long nets)
+split: 1 via-in-pad of EN_5V2 kept
+split: 2 via-in-pad of Net-(U403-ACUV) kept
+split: 2 via-in-pad of /P1_LDO_3V3 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SCL kept
+split: 1 via-in-pad of /Cells and Gauge/CELL3 kept
+split: 1 via-in-pad of /USB Port 2/LDO_3V3 kept
+split: 1 via-in-pad of Net-(U503-ACUV) kept
+split: 1 via-in-pad of /Cells and Gauge/CELL1 kept
+split: 2 via-in-pad of Net-(U102-V1) kept
+split: 1 via-in-pad of /USB Port 1/DRV_SUP kept
+split: 1 via-in-pad of /USB Port 1/REGN kept
+split: 1 via-in-pad of /USB Port 2/REGN kept
+split: 1 via-in-pad of /USB Port 2/TS kept
+split: 1 via-in-pad of IRQ_N kept
+split: 1 via-in-pad of Net-(U504-FB) kept
+split: 1 via-in-pad of /USB Port 1/TS kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_4P kept
+split: 1 via-in-pad of /USB Port 2/SW2 kept
+split: 1 via-in-pad of /USB Port 2/SBU_FLT kept
+split: 1 via-in-pad of /USB Port 1/SW2 kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_1N kept
+split: 1 via-in-pad of Net-(U503-ICHG) kept
+split: 1 via-in-pad of /USB Port 1/BTST1 kept
+split: 1 via-in-pad of /USB Port 1/SW1 kept
+split: 2 via-in-pad of SCL kept
+split: 2 via-in-pad of SDA kept
+split: 1 via-in-pad of CHG_INH kept
+split: 1 via-in-pad of Net-(U102-VDD) kept
+split: 1 via-in-pad of /USB Port 1/HIDRV1 kept
+split: 1 via-in-pad of /USB Port 2/BTST1 kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 2/CHG_INT kept
+split: 2 via-in-pad of /USB Port 2/CE_N kept
+split: 1 via-in-pad of /USB Port 2/ILIM kept
+split: 1 via-in-pad of /USB Port 2/LODRV1 kept
+split: 1 via-in-pad of /USB Port 2/SW1 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 1/HIDRV2 kept
+split: 1 via-in-pad of /MCU/SWCLK kept
+split: 1 via-in-pad of /MCU/RFIO kept
+split: 1 via-in-pad of Net-(U101-VC2) kept
+split: 1 via-in-pad of /USB Port 1/LODRV1 kept
+split: 1 via-in-pad of /Cells and Gauge/GAUGE_FUSE kept
+fan-out stubs: 2
+aor power check: start 0.7029 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.295, 'R427': 2.364, 'R527': 1.562, 'D103': 0.177, 'U404': 6.125, 'U504': 6.745, 'U204': 3.01}, open [] (6 s)
+  aor   17 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 5 -> 4, power 0.7029 -> 0.7029 W)
+  aor   28 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7095 W (now 0.7029, start 0.7029; PACK_P +6.5 mW, 3V3 +0.0 mW, GND +0.1 mW))
+  aor   34 s sweep 1 open SDA                            reverted (SDA: ghost path found no blocker)
+  aor   49 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7181 W (now 0.7029, start 0.7029; PACK_P +14.9 mW, 3V3 +0.0 mW, GND +0.3 mW))
+    long edge EN_5V1 52.0 mm: search found, seen 22116770 (cap 30000000)
+  aor  235 s sweep 1 open EN_5V1                         reverted (power: loss 0.7719 W (now 0.7029, start 0.7029; PACK_P +68.5 mW, 3V3 +0.0 mW, GND +0.5 mW))
+  aor  246 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7095 W (now 0.7029, start 0.7029; PACK_P +6.5 mW, 3V3 +0.0 mW, GND +0.1 mW))
+  aor  250 s sweep 2 open SDA                            reverted (SDA: ghost path found no blocker)
+  aor  265 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7181 W (now 0.7029, start 0.7029; PACK_P +14.9 mW, 3V3 +0.0 mW, GND +0.3 mW))

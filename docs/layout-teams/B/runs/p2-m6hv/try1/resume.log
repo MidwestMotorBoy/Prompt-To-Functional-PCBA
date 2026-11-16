@@ -1,0 +1,2 @@
+[final] 08:26:28 resume: steps 1 to 3 skipped, using /home/claude/repo/docs/layout-teams/B/runs/p2-m6/routed.kicad_pcb
+[final] 08:26:28 finishing pass: finish.sh --modes=aor,aork,loss --min=30 --tol=0.05 --long=30 --longx=--longptol=0.05 --aorx=--prtol=0.5 --ptol=0.004 --pbudget=0.012

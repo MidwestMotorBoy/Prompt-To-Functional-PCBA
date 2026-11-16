@@ -1,0 +1,2 @@
+{"about": "runs/p2b-r3en/finished.kicad_pcb (route of plan p2-m4 + worker B's passes) onto plan p2-m6 (rebuild_m6.sh --no-hotvia): the plan now lays Net-(U404-FB), so its routed copper is left behind",
+ "nets": ["Net-(U404-FB)"]}

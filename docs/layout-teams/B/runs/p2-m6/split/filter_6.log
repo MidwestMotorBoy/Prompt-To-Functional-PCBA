@@ -1,0 +1,7 @@
+  via /USB Port 1/VBUS at 103.95,70.1: clearance 0.254 mm, hole to hole 0.404 mm
+  via /USB Port 1/VBUS at 108.9,70.35: clearance 0.616 mm, hole to hole 0.994 mm
+  via /USB Port 1/VBUS at 108.9,71.0: clearance 1.069 mm, hole to hole 1.244 mm
+  link /USB Port 1/VBUS B.Cu 0.4 mm (103.95, 70.1) -> (103.95, 69.25): clearance 0.279 mm, edge 0.58 mm, takes 0.00 mm2 of other nets' pours
+  link /USB Port 1/VBUS B.Cu 0.6 mm (103.95, 69.25) -> (108.9, 69.25): clearance 0.335 mm, edge 0.48 mm, takes 0.00 mm2 of other nets' pours
+  link /USB Port 1/VBUS B.Cu 0.6 mm (108.9, 69.25) -> (108.9, 71.0): clearance 0.325 mm, edge 0.48 mm, takes 0.00 mm2 of other nets' pours
+links: 3 tracks, 3 vias added, 0 faults

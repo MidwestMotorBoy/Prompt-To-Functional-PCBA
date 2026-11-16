@@ -1,0 +1,11 @@
+  via /USB Port 2/VBUS at 91.1,70.35: clearance 0.616 mm, hole to hole 1.134 mm
+  via /USB Port 2/VBUS at 91.1,71.0: clearance 0.909 mm, hole to hole 1.244 mm
+  via /USB Port 2/VBUS at 95.9,70.35: clearance 0.616 mm, hole to hole 0.994 mm
+  via /USB Port 2/VBUS at 95.9,71.0: clearance 0.252 mm, hole to hole 0.496 mm
+  link /USB Port 2/VBUS B.Cu 0.6 mm (91.1, 71.0) -> (91.1, 69.25): clearance 0.525 mm, edge 0.48 mm, takes 0.00 mm2 of other nets' pours
+  link /USB Port 2/VBUS B.Cu 0.6 mm (91.1, 69.25) -> (95.9, 69.25): clearance 0.299 mm, edge 0.48 mm, takes 0.00 mm2 of other nets' pours
+  link /USB Port 2/VBUS B.Cu 0.6 mm (95.9, 69.25) -> (95.9, 71.0): clearance 0.271 mm, edge 0.48 mm, takes 0.00 mm2 of other nets' pours
+  link 3V3 In3.Cu 0.3 mm (102.85, 78.375) -> (101.15, 76.675): clearance 0.474 mm, edge 8.05 mm, takes 0.00 mm2 of other nets' pours
+  link 3V3 In3.Cu 0.3 mm (101.15, 76.675) -> (101.15, 76.275): clearance 1.125 mm, edge 7.65 mm, takes 0.00 mm2 of other nets' pours
+  link 3V3 In3.Cu 0.3 mm (86.12, 117.52) -> (90.14, 117.52): clearance 2.303 mm, edge 7.57 mm, takes 0.00 mm2 of other nets' pours
+links: 6 tracks, 4 vias added, 0 faults

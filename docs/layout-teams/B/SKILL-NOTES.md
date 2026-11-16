@@ -17,6 +17,8 @@ agent on a 4-core box. Read `tools/README.md` for the call form of every tool.
 ## Phase 2: from the placement to a routed, finished board
 
 ### Step 0: the one command
+For the kept board (after round 3) see "After round 3 (lead)" at the end: `tools/rebuild_m6.sh ... --board=...`. For a new
+route from the placement:
 `bash tools/rebuild_best.sh runs/<new> --src=runs/p2a-r5src` runs steps 1 to 6 below (4 h limit, or its two printed
 commands as two background jobs of 2 h each). Do the steps by hand when something changes.
 
@@ -89,3 +91,20 @@ renders: `python3 tools/zoom.py <run>/routed <out.png> 78,62.4,122,137.6 <layer>
   (nothing is written) and finish.sh drops the step.
 - Loss in the per-task power check (PACK_P + 3V3 + GND at 0.1 / 0.2 mm) is not the board's dc_score sum; finish.sh
   judges the pass with the full `dc_score.py` on the host.
+
+### After round 3 (lead): from "one connection left" to 0, and the one command
+- The kept board: `bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb`
+  (plan p2-m6 + screen, the board as routed.kicad_pcb, `final_route.sh --resume` with the pass and the hot loops).
+- **A plan change after a good route: do not route again.** Diff the plan copper (tracks and vias of the two
+  `cu.kicad_pcb`), check the routed copper against the new plan (`handroute.py --check`), cut the change down to what
+  the board does not hold yet, then `transplant.py` and one `aor` pass. Two routes of nearly one plan fail different
+  connections; one copper board (p2-m4) gave 341 of 342 locally and 333 of 342 on Logan's PC.
+- **The last open connection: tolerances from the gates.** Read the refusal reason in `fin/r*.log`. "power: ..." with a
+  few mW or a terminal 0.1 mohm up is the pass protecting itself, not a gate: `--long=30 --longx=--longptol=0.05
+  --aorx=--prtol=1.0`, and check the gates on final.json afterwards (loss 1.25 W, J113 / R427 3.0 mohm).
+- Then look where that connection runs (`zoom4.py`): a long north-south In2 run inside the PACK_P sheet is loss; the
+  router prefers In2 for north-south even where In3 has room nearby. That is a hand job (`handroute.py` with
+  `"lift": [net]`), not a loss-pass job.
+- Traps: vias written by a script need the router's pad options (`SetRemoveUnconnected(True)`,
+  `SetKeepStartEnd(True)`) or every plane loses copper; dropping only the vias of a layer change leaves an open that
+  the router cannot see; `--longptol` applies to every long open edge.

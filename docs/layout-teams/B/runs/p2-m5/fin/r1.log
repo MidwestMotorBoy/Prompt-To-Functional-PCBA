@@ -1,0 +1,1565 @@
+06:58:30: Debug: Adding duplicate image handler for 'PNG file'
+06:58:30: Debug: Adding duplicate image handler for 'JPEG file'
+06:58:30: Debug: Adding duplicate image handler for 'TIFF file'
+06:58:30: Debug: Adding duplicate image handler for 'GIF file'
+06:58:30: Debug: Adding duplicate image handler for 'PNM file'
+06:58:30: Debug: Adding duplicate image handler for 'PCX file'
+06:58:30: Debug: Adding duplicate image handler for 'IFF file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows icon file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows cursor file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+06:58:30: Debug: Adding duplicate image handler for 'TGA file'
+06:58:30: Debug: Adding duplicate image handler for 'XPM file'
+06:58:30: Debug: Adding duplicate image handler for 'PNG file'
+06:58:30: Debug: Adding duplicate image handler for 'JPEG file'
+06:58:30: Debug: Adding duplicate image handler for 'TIFF file'
+06:58:30: Debug: Adding duplicate image handler for 'GIF file'
+06:58:30: Debug: Adding duplicate image handler for 'PNM file'
+06:58:30: Debug: Adding duplicate image handler for 'PCX file'
+06:58:30: Debug: Adding duplicate image handler for 'IFF file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows icon file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows cursor file'
+06:58:30: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+06:58:30: Debug: Adding duplicate image handler for 'TGA file'
+06:58:30: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 6 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+main PACK_P layer 0: 5 cells dropped, 44795 kept
+main PACK_P layer 1: 2647 cells dropped, 537280 kept
+main PACK_P layer 2: 0 cells dropped, 0 kept
+main PACK_P layer 3: 8 cells dropped, 20091 kept
+main 3V3 layer 0: 3 cells dropped, 16796 kept
+main 3V3 layer 1: 0 cells dropped, 0 kept
+main 3V3 layer 2: 21 cells dropped, 254125 kept
+main 3V3 layer 3: 0 cells dropped, 0 kept
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 9 (0 on long nets)
+split: 3 via-in-pad of Net-(U102-V2) kept
+split: 1 via-in-pad of EN_5V2 kept
+split: 4 via-in-pad of /P1_LDO_3V3 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SCL kept
+split: 1 via-in-pad of /Cells and Gauge/CELL3 kept
+split: 2 via-in-pad of /USB Port 2/LDO_3V3 kept
+split: 1 via-in-pad of Net-(U503-ACUV) kept
+split: 2 via-in-pad of Net-(U102-V1) kept
+split: 2 via-in-pad of /USB Port 1/DRV_SUP kept
+split: 1 via-in-pad of /USB Port 1/REGN kept
+split: 2 via-in-pad of /USB Port 2/REGN kept
+split: 3 via-in-pad of /USB Port 2/TS kept
+split: 1 via-in-pad of IRQ_N kept
+split: 1 via-in-pad of Net-(U504-FB) kept
+split: 1 via-in-pad of /Cells and Gauge/CELL_4P kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SCL kept
+split: 1 via-in-pad of /USB Port 2/SW2 kept
+split: 1 via-in-pad of Net-(C110-Pad2) kept
+split: 1 via-in-pad of /USB Port 1/SW2 kept
+split: 1 via-in-pad of /MCU/NRST kept
+split: 1 via-in-pad of Net-(Q104-G) kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_1N kept
+split: 3 via-in-pad of SCL kept
+split: 4 via-in-pad of SDA kept
+split: 1 via-in-pad of Net-(U102-VDD) kept
+split: 1 via-in-pad of /USB Port 2/BTST1 kept
+split: 2 via-in-pad of /USB Port 2/DRV_SUP kept
+split: 1 via-in-pad of Net-(U403-ICHG) kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 2/CHG_INT kept
+split: 1 via-in-pad of /USB Port 2/CE_N kept
+split: 1 via-in-pad of /USB Port 2/LODRV1 kept
+split: 1 via-in-pad of /USB Port 2/HIDRV1 kept
+split: 2 via-in-pad of /USB Port 2/SW1 kept
+split: 2 via-in-pad of /USB Port 1/I2CC_SDA kept
+split: 1 via-in-pad of Net-(U101-SMBD) kept
+split: 1 via-in-pad of EN_5V1 kept
+split: 1 via-in-pad of /MCU/SWDIO kept
+split: 1 via-in-pad of /MCU/SWCLK kept
+split: 1 via-in-pad of /MCU/RFIO kept
+split: 1 via-in-pad of Net-(U101-VC2) kept
+split: 1 via-in-pad of /USB Port 1/LODRV1 kept
+split: 1 via-in-pad of /USB Port 1/CHG_INT kept
+split: 1 via-in-pad of /Cells and Gauge/TS4 kept
+split: 1 via-in-pad of /Cells and Gauge/GAUGE_FUSE kept
+fan-out stubs: 2
+aor power check: start 0.7420 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.568, 'R427': 2.644, 'R527': 2.236, 'D103': 0.178, 'U404': 6.964, 'U504': 8.41, 'U204': 2.524}, open [] (7 s)
+  aor   24 s sweep 1 open 3V3                            ACCEPTED (pulls 1, 3 s, KiCad unconnected 9 -> 8, power 0.7420 -> 0.7420 W)
+    long edge SDA 36.2 mm: search found, seen 4896120 (cap 30000000)
+  aor   82 s sweep 1 open PACK_P                         reverted (power: PACK_P to U504 8.69 mohm (start 8.41))
+  aor   88 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 8 -> 7, power 0.7420 -> 0.7420 W)
+    long edge /USB Port 1/I2CC_SCL 25.9 mm: search found, seen 644152 (cap 30000000)
+  aor  101 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 1, 6 s, KiCad unconnected 7 -> 6, power 0.7420 -> 0.7429 W)
+  aor  108 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 6 -> 5, power 0.7429 -> 0.7429 W)
+    long edge /USB Port 2/REGN 22.1 mm: search found, seen 178064 (cap 30000000)
+    long edge /USB Port 2/I2CC_SDA 24.7 mm: search found, seen 540663 (cap 30000000)
+    long edge Net-(D511-A) 22.3 mm: search none, seen 6357 (cap 30000000)
+    long edge Net-(D511-A) 22.3 mm: search found, seen 145424 (cap 30000000)
+  aor  123 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (Net-(D511-A): blocked by Kelvin copper)
+  aor  126 s sweep 1 open /USB Port 1/TS                 reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+    legs via spot 87.22,123.37: leg 1 204 cells (seen 12513), leg 2 none (seen 404071)
+    legs via spot 86.12,120.92: leg 1 155 cells (seen 7910), leg 2 none (seen 437956)
+    legs via spot 85.08,123.42: leg 1 218 cells (seen 19013), leg 2 none (seen 443750)
+    legs via spot 85.83,125.52: leg 1 247 cells (seen 20882), leg 2 none (seen 386027)
+    legs via spot 85.47,128.02: leg 1 306 cells (seen 20290), leg 2 none (seen 352238)
+    legs via spot 84.03,126.57: leg 1 299 cells (seen 26194), leg 2 none (seen 435330)
+    long edge /Cells and Gauge/TS1 22.5 mm: search found, seen 829397 (cap 30000000)
+  aor  167 s sweep 1 open /Cells and Gauge/TS1           reverted (/Cells and Gauge/TS1: blocked by Kelvin copper)
+    long edge SCL 27.2 mm: search none, seen 70463 (cap 30000000)
+    legs via spot 105.67,105.52: leg 1 none (seen 70435)
+    long edge SCL 27.2 mm: search none, seen 70435 (cap 30000000)
+    legs via spot 105.67,105.52: leg 1 300 cells (seen 174733), leg 2 none (seen 174733)
+    legs via spot 110.47,103.52: leg 1 376 cells (seen 181248), leg 2 none (seen 181248)
+    legs via spot 112.83,104.82: leg 1 308 cells (seen 99744), leg 2 none (seen 99744)
+    legs via spot 94.28,108.97: leg 1 564 cells (seen 511138), leg 2 none (seen 511138)
+    legs via spot 93.42,107.12: leg 1 553 cells (seen 434834), leg 2 none (seen 434834)
+    legs via spot 114.93,105.07: leg 1 399 cells (seen 151047), leg 2 none (seen 151047)
+  aor  184 s sweep 1 open SCL                            reverted (SCL: no way even with every rip-able route gone)
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 2129521 (cap 30000000)
+    long edge 3V3_SLEEP 26.4 mm: search found, seen 288758 (cap 30000000)
+    long edge /Cells and Gauge/CELL1 61.9 mm: search found, seen 1469587 (cap 30000000)
+    long edge SDA 36.2 mm: search found, seen 1657304 (cap 30000000)
+    long edge /Cells and Gauge/CELL1 61.9 mm: search none, seen -1294336 (cap 30000000)
+    legs via spot 98.72,99.87: leg 1 none (seen -4096)
+    legs via spot 84.22,104.57: leg 1 none (seen -4096)
+    legs via spot 90.92,84.87: leg 1 none (seen -4096)
+    legs via spot 97.33,94.02: leg 1 none (seen -4096)
+    legs via spot 98.62,95.87: leg 1 none (seen -4096)
+    legs via spot 95.33,90.77: leg 1 none (seen -4096)
+  aor  275 s sweep 2 open PACK_P                         reverted (/Cells and Gauge/CELL1 failed (pulls 16))
+    long edge /USB Port 2/REGN 22.1 mm: search found, seen 185194 (cap 30000000)
+    long edge /USB Port 2/I2CC_SDA 24.7 mm: search found, seen 645635 (cap 30000000)
+    long edge Net-(D511-A) 22.3 mm: search none, seen 244553 (cap 30000000)
+    long edge Net-(D511-A) 22.3 mm: search found, seen 448268 (cap 30000000)
+    long edge Net-(D511-A) 22.3 mm: search found, seen 214456 (cap 30000000)
+  aor  304 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (/USB Port 2/LDO_3V3 failed (pulls 15))
+  aor  307 s sweep 2 open /USB Port 1/TS                 reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+    legs via spot 87.22,123.37: leg 1 204 cells (seen 12334), leg 2 none (seen 406987)
+    legs via spot 86.12,120.92: leg 1 155 cells (seen 7593), leg 2 none (seen 438345)
+    legs via spot 85.08,123.42: leg 1 219 cells (seen 22566), leg 2 none (seen 437530)
+    legs via spot 85.83,125.52: leg 1 247 cells (seen 20817), leg 2 none (seen 384065)
+    legs via spot 85.47,128.02: leg 1 311 cells (seen 27329), leg 2 none (seen 351014)
+    legs via spot 84.03,126.57: leg 1 291 cells (seen 24555), leg 2 none (seen 435741)
+    long edge /Cells and Gauge/TS1 22.5 mm: search found, seen 798824 (cap 30000000)
+  aor  348 s sweep 2 open /Cells and Gauge/TS1           reverted (/Cells and Gauge/TS1: blocked by Kelvin copper)
+    long edge SCL 27.2 mm: search none, seen 70463 (cap 30000000)
+    legs via spot 105.67,105.52: leg 1 none (seen 70435)
+    long edge SCL 27.2 mm: search none, seen 70435 (cap 30000000)
+    legs via spot 105.67,105.52: leg 1 300 cells (seen 170237), leg 2 none (seen 170237)
+    legs via spot 110.47,103.52: leg 1 376 cells (seen 175934), leg 2 none (seen 175934)
+    legs via spot 112.83,104.82: leg 1 308 cells (seen 93164), leg 2 none (seen 93164)
+    legs via spot 94.28,108.97: leg 1 564 cells (seen 487767), leg 2 none (seen 487767)
+    legs via spot 93.42,107.12: leg 1 553 cells (seen 415319), leg 2 none (seen 415319)
+    legs via spot 114.93,105.07: leg 1 399 cells (seen 144723), leg 2 none (seen 144723)
+  aor  365 s sweep 2 open SCL                            reverted (SCL: no way even with every rip-able route gone)
+aor: 14 tasks, 4 accepted, 10 reverted, 38 pulls; open connections left 5, lifts left 0
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 1, trimmed 0
+unconnected after fill: 5
+routed 372 edges, 5 failed, items added 95
+  FAILED /USB Port 2/I2CC_SCL | aor: /USB Port 2/LDO_3V3 failed (pulls 15)
+  FAILED /USB Port 1/TS | aor: /USB Port 1/TS: no way even with every rip-able route gone
+  FAILED /Cells and Gauge/TS1 | aor: /Cells and Gauge/TS1: blocked by Kelvin copper
+  FAILED PACK_P | aor: /Cells and Gauge/CELL1 failed (pulls 16)
+  FAILED SCL | aor: SCL: no way even with every rip-able route gone
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY /USB Port 1/TS
+FAILKEY /Cells and Gauge/TS1
+FAILKEY PACK_P@PlanePiece In2 #2 [PACK_P]
+FAILKEY SCL
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'BOX2< VECTOR2< int > > *', no destructor found.
+swig/python detected a memory leak of type 'BOX2< VECTOR2< int > > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'std::shared_ptr< SHAPE_POLY_SET > *', no destructor found.
+swig/python detected a memory leak of type 'std::shared_ptr< SHAPE_POLY_SET > *', no destructor found.
+swig/python detected a memory leak of type 'std::shared_ptr< SHAPE_POLY_SET > *', no destructor found.
+swig/python detected a memory leak of type 'std::shared_ptr< SHAPE_POLY_SET > *', no destructor found.
+swig/python detected a memory leak of type 'std::shared_ptr< SHAPE_POLY_SET > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'BOX2< VECTOR2< int > > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.

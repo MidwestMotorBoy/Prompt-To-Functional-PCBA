@@ -1,0 +1,131 @@
+08:55:27: Debug: Adding duplicate image handler for 'PNG file'
+08:55:27: Debug: Adding duplicate image handler for 'JPEG file'
+08:55:27: Debug: Adding duplicate image handler for 'TIFF file'
+08:55:27: Debug: Adding duplicate image handler for 'GIF file'
+08:55:27: Debug: Adding duplicate image handler for 'PNM file'
+08:55:27: Debug: Adding duplicate image handler for 'PCX file'
+08:55:27: Debug: Adding duplicate image handler for 'IFF file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows icon file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows cursor file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+08:55:27: Debug: Adding duplicate image handler for 'TGA file'
+08:55:27: Debug: Adding duplicate image handler for 'XPM file'
+08:55:27: Debug: Adding duplicate image handler for 'PNG file'
+08:55:27: Debug: Adding duplicate image handler for 'JPEG file'
+08:55:27: Debug: Adding duplicate image handler for 'TIFF file'
+08:55:27: Debug: Adding duplicate image handler for 'GIF file'
+08:55:27: Debug: Adding duplicate image handler for 'PNM file'
+08:55:27: Debug: Adding duplicate image handler for 'PCX file'
+08:55:27: Debug: Adding duplicate image handler for 'IFF file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows icon file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows cursor file'
+08:55:27: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+08:55:27: Debug: Adding duplicate image handler for 'TGA file'
+08:55:27: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 0 nets routed afresh (0 items lifted), 151 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 0 (0 on long nets)
+split: 1 via-in-pad of EN_5V2 kept
+split: 2 via-in-pad of Net-(U403-ACUV) kept
+split: 2 via-in-pad of /P1_LDO_3V3 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SCL kept
+split: 1 via-in-pad of /Cells and Gauge/CELL3 kept
+split: 1 via-in-pad of /USB Port 2/LDO_3V3 kept
+split: 1 via-in-pad of Net-(U503-ACUV) kept
+split: 1 via-in-pad of /Cells and Gauge/CELL1 kept
+split: 2 via-in-pad of Net-(U102-V1) kept
+split: 1 via-in-pad of /USB Port 1/DRV_SUP kept
+split: 1 via-in-pad of /USB Port 1/REGN kept
+split: 1 via-in-pad of /USB Port 2/REGN kept
+split: 1 via-in-pad of /USB Port 2/TS kept
+split: 1 via-in-pad of IRQ_N kept
+split: 1 via-in-pad of Net-(U504-FB) kept
+split: 1 via-in-pad of /USB Port 1/TS kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_4P kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SCL kept
+split: 1 via-in-pad of /USB Port 2/SW2 kept
+split: 1 via-in-pad of /USB Port 2/SBU_FLT kept
+split: 1 via-in-pad of /USB Port 1/SW2 kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_1N kept
+split: 1 via-in-pad of Net-(U503-ICHG) kept
+split: 1 via-in-pad of /USB Port 1/BTST1 kept
+split: 1 via-in-pad of /USB Port 1/SW1 kept
+split: 2 via-in-pad of SCL kept
+split: 1 via-in-pad of CHG_INH kept
+split: 1 via-in-pad of Net-(U102-VDD) kept
+split: 1 via-in-pad of /USB Port 1/HIDRV1 kept
+split: 1 via-in-pad of /USB Port 2/BTST1 kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 2/CHG_INT kept
+split: 2 via-in-pad of /USB Port 2/CE_N kept
+split: 1 via-in-pad of /USB Port 2/ILIM kept
+split: 1 via-in-pad of /USB Port 2/LODRV1 kept
+split: 1 via-in-pad of /USB Port 2/SW1 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 1/HIDRV2 kept
+split: 1 via-in-pad of EN_5V1 kept
+split: 1 via-in-pad of /MCU/SWCLK kept
+split: 1 via-in-pad of /MCU/RFIO kept
+split: 1 via-in-pad of Net-(U101-VC2) kept
+split: 1 via-in-pad of /USB Port 1/LODRV1 kept
+split: 1 via-in-pad of /Cells and Gauge/GAUGE_FUSE kept
+fan-out stubs: 0
+aor power check: start 0.7239 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.408, 'R427': 2.477, 'R527': 1.703, 'D103': 0.177, 'U404': 6.75, 'U504': 7.208, 'U204': 3.028}, open [] (6 s)
+aor loss: PACK_P sheet on layer 1: 1 outlines, 2121 mm2
+aor loss: PACK_P 0.3602 W on the board; 59 pieces on the sheet ranked in 182 s; best: EN_5V1 (923 cells) 37.6 mW, /Cells and Gauge/CELL3 (411 cells) 10.3 mW, SDA (786 cells) 10.2 mW, /Cells and Gauge/CHG (232 cells) 8.5 mW, /USB Port 1/CHG_INT (658 cells) 7.1 mW, /USB Port 1/REGN (905 cells) 4.6 mW, /USB Port 1/SBU_FLT (340 cells) 4.5 mW, /USB Port 1/I2CC_SDA (129 cells) 4.3 mW, /P1_LDO_3V3 (114 cells) 4.0 mW, /USB Port 2/CHG_INT x2 3.8 mW
+    long edge EN_5V1 50.3 mm: search found, seen 1387970 (cap 30000000)
+  aor  212 s sweep 1 loss loss EN_5V1 (923 cells) [full] ranked 37.6 mW reverted (power: loss 0.7275 W (now 0.7239, start 0.7239; PACK_P +3.5 mW, 3V3 +0.0 mW, GND +0.1 mW))
+    long edge EN_5V1 50.3 mm: search none, seen -10641408 (cap 30000000)
+    legs via spot 117.12,86.52: leg 1 none (seen -4096)
+    legs via spot 118.53,88.12: leg 1 none (seen -4096)
+    legs via spot 101.12,96.32: leg 1 none (seen -4096)
+    legs via spot 120.97,90.22: leg 1 none (seen -4096)
+    legs via spot 121.03,88.22: leg 1 none (seen -4096)
+    legs via spot 100.72,94.27: leg 1 none (seen -4096)
+    long edge EN_5V1 50.3 mm: search none, seen -4096 (cap 30000000)
+    legs via spot 112.78,104.37: leg 1 none (seen -4096)
+    legs via spot 110.83,103.27: leg 1 none (seen -4096)
+    legs via spot 108.22,105.17: leg 1 none (seen -4096)
+    legs via spot 117.12,86.52: leg 1 none (seen -4096)
+    legs via spot 106.28,104.57: leg 1 none (seen -4096)
+    legs via spot 118.53,88.12: leg 1 none (seen -4096)
+  aor  303 s sweep 1 loss loss EN_5V1 (923 cells) [box:3] ranked 37.6 mW reverted (EN_5V1: no way even with every rip-able route gone)
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 5776638 (cap 30000000)
+  aor  365 s sweep 1 loss loss /Cells and Gauge/CELL3 (411 cells) [full] ranked 10.3 m reverted (loss 0.7239 -> 0.7250 W, not 1.0 mW lower (new copper on the sheet 352 cells))
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 4296621 (cap 30000000)
+  aor  414 s sweep 1 loss loss /Cells and Gauge/CELL3 (411 cells) [box:3] ranked 10.3  reverted (loss 0.7239 -> 0.7250 W, not 1.0 mW lower (new copper on the sheet 352 cells))
+    long edge SDA 36.4 mm: search none, seen 144 (cap 30000000)
+    legs via spot 100.78,97.62: leg 1 none (seen 144)
+    legs via spot 100.92,95.57: leg 1 none (seen 144)
+    legs via spot 101.08,93.52: leg 1 none (seen 144)
+    legs via spot 97.62,94.12: leg 1 none (seen 144)
+    long edge SDA 36.4 mm: search none, seen 144 (cap 30000000)
+    legs via spot 107.58,104.57: leg 1 none (seen 144)
+    legs via spot 100.78,97.62: leg 1 none (seen 144)
+    legs via spot 99.33,100.97: leg 1 none (seen 144)
+    legs via spot 100.92,95.57: leg 1 none (seen 144)
+    legs via spot 101.08,93.52: leg 1 none (seen 144)
+    legs via spot 98.97,98.97: leg 1 none (seen 144)
+  aor  417 s sweep 1 loss loss SDA (786 cells) [full] ranked 10.2 mW reverted (SDA: no way even with every rip-able route gone)
+    long edge SDA 36.4 mm: search none, seen 144 (cap 30000000)
+    legs via spot 100.78,97.62: leg 1 none (seen 144)
+    legs via spot 100.92,95.57: leg 1 none (seen 144)
+    legs via spot 101.08,93.52: leg 1 none (seen 144)
+    legs via spot 97.62,94.12: leg 1 none (seen 144)
+    long edge SDA 36.4 mm: search none, seen 144 (cap 30000000)
+    legs via spot 107.58,104.57: leg 1 none (seen 144)
+    legs via spot 100.78,97.62: leg 1 none (seen 144)
+    legs via spot 99.33,100.97: leg 1 none (seen 144)
+    legs via spot 100.92,95.57: leg 1 none (seen 144)
+    legs via spot 101.08,93.52: leg 1 none (seen 144)
+    legs via spot 98.97,98.97: leg 1 none (seen 144)
+  aor  419 s sweep 1 loss loss SDA (786 cells) [box:3] ranked 10.2 mW reverted (SDA: no way even with every rip-able route gone)
+  aor  429 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [full] ranked 8.5 mW reverted (power: loss 0.7268 W (now 0.7239, start 0.7239; PACK_P +2.9 mW, 3V3 +0.0 mW, GND +0.0 mW))
+  aor  438 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [box:3] ranked 8.5 mW reverted (power: loss 0.7341 W (now 0.7239, start 0.7239; PACK_P +10.2 mW, 3V3 +0.0 mW, GND +0.0 mW))
+  aor  449 s sweep 1 loss loss /USB Port 1/CHG_INT (658 cells) [full] ranked 7.1 mW reverted (loss 0.7239 -> 0.7239 W, not 1.0 mW lower (new copper on the sheet 585 cells))
+  aor  462 s sweep 1 loss loss /USB Port 1/CHG_INT (658 cells) [box:3] ranked 7.1 mW reverted (power: loss 0.7326 W (now 0.7239, start 0.7239; PACK_P +8.5 mW, 3V3 +0.1 mW, GND +0.1 mW))
+  aor  474 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [full] ranked 4.6 mW reverted (power: loss 0.7291 W (now 0.7239, start 0.7239; PACK_P +5.4 mW, 3V3 +0.0 mW, GND -0.2 mW))
+  aor  486 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [box:3] ranked 4.6 mW reverted (power: loss 0.7365 W (now 0.7239, start 0.7239; PACK_P +12.8 mW, 3V3 +0.0 mW, GND -0.2 mW))
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 5933802 (cap 30000000)
+    long edge SCL 38.3 mm: search found, seen 575005 (cap 30000000)

@@ -1,0 +1,12 @@
+straps PACK_P on In2.Cu: 12 groups, 12 tied to C208+C209+C210+D103+J113+Q102+R427+R429+R518 (19 vias, at 112.5,110.7), untied 0; 74 segments, 141.4 mm (36.3 mm across the lanes, 15.1 mm at 0.5 mm); clearance faults 0; 2 s
+  tied Q102 (1 vias, at 94.5,119.2)
+  tied R527+R529 (5 vias, at 96.9,105.7)
+  tied C211 (1 vias, at 98.3,103.7)
+  tied C212 (1 vias, at 100.8,103.7)
+  tied C213 (1 vias, at 103.3,103.7)
+  tied C457 (1 vias, at 118.7,85.6)
+  tied C206+U204 (4 vias, at 82.4,118.8)
+  tied C444+C446 (8 vias, at 115.2,67.1)
+  tied C557 (1 vias, at 85.1,82.0)
+  tied C544 (5 vias, at 81.2,67.7)
+  tied C546 (1 vias, at 83.6,65.3)

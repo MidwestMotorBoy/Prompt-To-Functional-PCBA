@@ -1722,3 +1722,108 @@ fin/*.aor.json, look/finished_*.png), `runs/p2b-r3fin.resume.log`, `runs/p2b-r3e
 `runs/p2b-r3en.resume.log`, `runs/p2b-r3dev/` (fin/k0.log, k1.log, e1..e3.log, ts.log, ts2.log, k1.drc.json,
 k1.dc.json, k1.hot.json, look/*.png), `runs/p2b-r3en2/` (cmd.sh, fin/en_c.log, look/en5v1_In2.png). Boards local only:
 `runs/p2b-r3fin/finished.kicad_pcb`, `runs/p2b-r3en/finished.kicad_pcb`, `runs/p2b-r3dev/fin/k1.kicad_pcb`.
+
+## 2026-11-16 09:30 UTC, lead: phase 2 round 3 merge (runs/p2-m6 = best_routed/: 0 unconnected, DRC 0), next two tasks
+
+**State at the start.** Worker A's plan p2-m5 and route were pushed (53b0405, 79ffd95); worker B's pass, REPORT.md and
+SKILL-NOTES.md were committed (b4ace59). An earlier lead session of this round had been cut by a container restart;
+its work was in the tree (`runs/p2-m5`, `runs/p2-m5h1`, `runs/p2-m5hand/h1.json`, `tools/zoom4.py`, `tools/borrow.py`,
+`router_b.py --prtol` and a ghost-goal fix, `handroute.py` `"inpad"` vias) and is kept.
+
+**The two boards of the round, and the choice.**
+- Worker A's line (plan p2-m5, everything in the plan, new route): `runs/p2-m5` = worker A's routed board with worker
+  B's round 3 router: 6 to 5 unconnected; with the hand tracks of `runs/p2-m5hand/h1.json` (PACK_P at R112.2 by an F.Cu
+  track to C107.1, via-in-pad at TH401.1) `runs/p2-m5h1`: 4 unconnected (Port 1 TS, Port 2 I2CC_SCL, SCL, TS1), DRC 0,
+  1.253 W, hot-pour items 0 / 0. Two more passes closed nothing (TS refused by the power check at R527 +0.20 mohm, the
+  other three by Kelvin copper or pulled neighbours that do not go back; `runs/p2-m5h1.log`, `runs/p2-m6a.log`).
+  Borrowing the copper of those nets from worker B's board (`tools/borrow.py`) fails the exact check (17 faults for
+  I2CC_SCL): two routes of nearly one plan do not share lanes.
+- Worker B's line (route of plan p2-m4 + loss passes, `runs/p2b-r3en`): 1 unconnected (EN_5V1), 1.161 W, but
+  hot-pour items 1 track + 3 vias, and SRP_F / C313-Pad2 only as hand tracks on that route.
+- **Kept: worker B's routed copper on a plan that holds worker A's Net-(U404-FB) path.** The plans p2-m4 and p2-m5
+  differ in 32 tracks and 5 vias only, so the routed copper can be carried over instead of routed again.
+
+**What the lead did.**
+1. `tools/transplant.py <routed board A> <A's plan board> <plan board B> <out>`: adds every track and via of A that is
+   not in A's plan to plan board B, refills, KiCad DRC as the arbiter; `--drop=<json>` leaves nets or single items
+   behind. First check with `handroute.py --check` on all 2583 segments and 297 vias against plan p2-m5: 111 faults,
+   of which 79 are the checker's own strictness (router vias in pads, via pitch 0.752 against 0.75) and about 20 real
+   (EN_5V2 waypoint islands against CELL3 / SDA / Port 1 I2CC_SDA, the SRN_F via against DRV_SUP and the routed SRN_F,
+   the C313-Pad2 path against RFIO, the LDO_3V3 via against CHG_INT, the three hot vias, U404-FB). So the full p2-m5
+   plan would cost seven or more connections again.
+2. **Plan p2-m6** (`tools/rebuild_m6.sh`, `plan/p2-pins-r8.json` = r6 + worker A's U404-FB entry with `cut_hot`): the
+   only p2-m5 item whose copper is not already on worker B's board. Screens: `runs/p2-m6s` (with worker A's no-via
+   areas) and `runs/p2-m6nvs` (without): both 0 of 341 blocked, copper board DRC 0, 1.012 W before routing.
+3. Transplant of `runs/p2b-r3en/finished.kicad_pcb` onto `runs/p2-m6nvs/cu.kicad_pcb` (`plan/p2-m6-drop.json`: the
+   routed U404-FB track stays behind): DRC 0, 2 unconnected (U404-FB R434.1 to R433.2, EN_5V1), 1.1612 W.
+4. Accept-or-revert pass with the tolerances that the gates allow, not the pass defaults
+   (`runs/p2-m6/cmd.sh`: `final_route.sh --resume --post="finish.sh --modes=aor --min=30 --tol=0.06 --long=30
+   --longx=--longptol=0.05 --aorx=--prtol=1.0"`): U404-FB laid, **EN_5V1 laid at the first search, no pulls** (the
+   power check had refused it three times in worker B's runs for +4.7 to +37.8 mW against 2 mW, and here in a first
+   try for U404 +0.58 mohm against 0.1; none of these is a gate). Pass 3 min, not timed out; scoring with the seven
+   hot loops 5 min.
+5. Renders of F.Cu, B.Cu, In2.Cu, In3.Cu looked at (`best_routed/routed_*.png`): power stages compact, trunk one
+   strip on the bottom, PACK_P sheet and 3V3 bus one piece each, no sprawl, no signal track in a hot-loop pour.
+
+| Run | What | Unconnected | DRC routed | Power open / loose / power pieces | Loss routed | J113 / R427 / R527 mohm | Hot loops routed | Hot-pour items |
+|---|---|---|---|---|---|---|---|---|
+| `runs/p2-m4` (round 2) | route of plan p2-m4 + pass | 4 | 0 | none | 1.250 W | 2.61 / 2.68 / 2.20 | 7 of 7, 5.56 nH | 1 track, 3 vias |
+| `runs/p2b-r3en` (worker B) | + loss passes, hand tracks | 1 (EN_5V1) | 0 | none | 1.161 W | 2.08 / 2.15 / 1.64 | 7 of 7, 5.56 nH | 1 track, 3 vias |
+| `runs/p2a-m5` (worker A) | plan p2-m5, new route + pass | 6 | 0 | none, none, 1 | 1.252 W | 2.57 / 2.64 / 2.24 | 7 of 7, 5.56 nH | 0, 0 |
+| `runs/p2-m5h1` (lead) | the same + round 3 router + hand tracks | 4 | 0 | none | 1.253 W | 2.59 / 2.67 / 2.17 | not run | 0, 0 |
+| **`runs/p2-m6`** (lead) | worker B's copper on plan p2-m6 + pass | **0** | **0** | **none / none / none** | **1.199 W** | **2.38 / 2.44 / 1.65** | **7 of 7, 5.56 nH** (1.02, 0.70, 0.78, 0.75, 0.76, 0.80, 0.75; before routing 5.54, largest rise 0.01) | **0 tracks**, 3 vias |
+
+Routes: the copper of `runs/p2-m6` comes from the local route of plan p2-m4 in `runs/p2-m4` (341 of 342 routed, about
+40 min, not timed out). No route of plan p2-m6 was run. Logan's PC this round: `p2a-m5` 340 of 341 (46.8 min, done),
+`p2a-m5nv` (without the no-via areas) 337 of 341 (44.1 min, done), `p2-m4` 333 of 342 (78.9 min, done).
+
+**Tries that were dropped** (all on worker B's copper, logs kept):
+- `runs/p2-m6hv/try1`: plan with the no-via areas, the three hot vias left behind by the transplant: the In3 and
+  B.Cu ends then lie on top of each other, the router counts the edge as laid and KiCad does not ("unconnected 4 -> 4").
+- `runs/p2-m6t1`: the same plan with the vias carried over (3 keep-out DRC errors at the start): the pass lifts their
+  pieces whole, lays five edges again and leaves 5 unconnected (I2CC_SCL x2, SDA, EN_5V1, a 3V3 piece), with one SDA
+  edge accepted at +32 mW because `--longptol` covers every edge of 30 mm or more, not only EN_5V1. Stopped by hand.
+- `runs/p2-m6/try2`: the first transplant made plain vias; the router's vias have "remove unconnected inner pads",
+  so the plane fills got wider antipads (GND In1 / In4 2622.6 to 2570.8 mm2 each, PACK_P In2 1591.0 to 1576.5):
+  1.190 W instead of 1.161 before the pass, 1.228 W after it, Port 2 HL_IN / HL_OUT 0.81 / 0.76. `transplant.py` now
+  copies the via pad options from board A; the areas match to 0.1 mm2. The loss pass on that board (9 min, stopped by
+  hand in sweep 1) accepted nothing: EN_5V1 laid again with the sheet closed cost 3.5 mW MORE.
+
+**Against the definition of done (`runs/p2-m6/final.json`, copy in `best_routed/`):**
+1. Unconnected 0: **met** (first board).
+2. Power paths: **met** (`power_open` empty, `loose` empty, no unconnected power item).
+3. DRC: **met**, 0 routed, 0 on the copper board (`runs/p2-m6nvs`).
+4. Hot loops: **met**, 7 of 7 tier 1.
+5. Ringing: **met**, 5.56 against 5.54 nH, largest rise 0.01 (Port 1 and Port 2 HL_OUT 0.74 to 0.75).
+6. Loss: **met**, 1.199 W (limit 1.25), J113 2.38 and R427 2.44 mohm (limit 3.0). Not near 1.12: EN_5V1 alone is
+   38 mW of it (1.161 W before it was laid). It runs F.Cu R432.1 south to a via at 113.92,76.17, then 54 mm on In2:
+   x 113.6 from y 77 to 97, x 114.2 to y 105, x 113.07 to y 113, west along y 113.02 to x 110.07, south to the
+   via-in-pad at U301.12. The part from y 98 to 113 lies across the In2 feed of J113 / R427 (each +0.30 mohm).
+7. Renders: looked at, no sprawl, **no signal track in a hot-loop pour**. Left: **three signal vias** in the Port 2
+   input GND return pour on F.Cu (I2CC_SCL 83.925,90.2745 and 84.275,92.5245, SDA 83.275,90.8245): SDA comes down on
+   B.Cu and changes to In3 there, I2CC_SCL hops over that In3 track on B.Cu. Lift tasks: I2CC_SCL +16 mW (refused),
+   SDA "no way". Port 2 HL_IN 0.80 before and after, so the ringing does not show them; the lead still counts them.
+8. Documents: REPORT.md and SKILL-NOTES.md now have the lead's round 3 part; the one command is
+   `bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb`
+   (plan + screen, the kept board as routed.kicad_pcb, `final_route.sh --resume` with the pass and the hot loops).
+   Run end to end as `runs/p2-m6v` (10 min: screen 0 of 341 blocked, copper DRC 0, 1.011 W; pass 2 min, nothing to lay, the two hot-via lifts refused again, board unchanged; not timed out): unconnected 0, DRC 0, power open / loose none, 1.199 W, J113 2.38 / R427 2.44 / R527 1.65 mohm, 7 of 7 hot loops 5.56 nH, hot-pour items 0 tracks 3 vias.
+
+**Not done yet** (done = false): gate 7's three vias, and the loss that EN_5V1 costs. Both are hand-copper jobs on
+the kept board in two separate regions, so two workers can do them side by side and the lead applies both files.
+
+**Kept.** `best_routed/` = `runs/p2-m6` (board, .kicad_pro, .kicad_dru, final.json, summary.json, four pictures).
+`best_placement.json` unchanged (r5).
+
+**Next round (two tasks).** A: EN_5V1 on a lane that does not cross the J113 / R427 feed on In2 (In3 is nearly empty
+east of x 117 between y 70 and 84 and north of y 91 east of x 116.5; EN_5V1 also has copper at U404's pin
+116.92,70.37), as a hand file for `handroute.py`, then a loss pass. B: the Port 2 I2CC_SCL / SDA crossover without
+vias in the hot GND pour, as a hand file.
+
+Files: `tools/transplant.py`, `tools/rebuild_m6.sh`, `tools/zoom4.py`, `tools/borrow.py`, `tools/router_b.py`
+(`--prtol`, ghost goals), `tools/handroute.py` (`"inpad"`), `plan/p2-pins-r8.json`, `plan/p2-m6-drop.json`,
+`tools/README.md` (section "the lead's merge of round 3"), `REPORT.md`, `SKILL-NOTES.md`, `best_routed/*`,
+`runs/p2-m6/` (cmd.sh, drop.json, final.json, post.log, routed/*.json, fin/r1.log, look/routed_*.png, try2/),
+`runs/p2-m6.resume.log`, `runs/p2-m6s/`, `runs/p2-m6nvs/`, `runs/p2-m6hv/` (try1), `runs/p2-m6t1.log`,
+`runs/p2-m6v*` (the one command), `runs/p2-m5/` (cmd1.sh, final.json), `runs/p2-m5h1.log`, `runs/p2-m5hand/*.json`,
+`runs/p2-m5look/*.png`, `runs/p2-m6look/*.png`, `runs/p2-m6a.log`. Boards local only: `runs/p2-m6/routed.kicad_pcb`
+(the transplant), `runs/p2-m6/finished.kicad_pcb` (= `best_routed/monolith_routed.kicad_pcb`), `runs/p2-m5h1/finished.kicad_pcb`.

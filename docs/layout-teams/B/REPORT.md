@@ -112,3 +112,37 @@ loops at 5.56 nH, loss 1.161 W, J113 2.08 and R427 2.15 mohm. Left:
   go back within 12 pulls.
 - Logan's PC route of the p2-m4 copper board: 333 of 342, 9 failed, 78.9 min, done (stock router; local route 341 of
   342): the spread of one plan is larger than on earlier boards.
+
+### Round 3, the lead's merge: the first board with 0 unconnected (`runs/p2-m6` = `best_routed/`)
+
+| Run | What | Unconnected | DRC routed | Loss routed | J113 / R427 mohm | Hot loops routed | Hot-pour items |
+|---|---|---|---|---|---|---|---|
+| `runs/p2a-m5` (worker A) | plan p2-m5 (everything in the plan), new route 338 of 341, 55 min + pass | 6 | 0 | 1.252 W | 2.57 / 2.64 | 7 of 7, 5.56 nH | 0, 0 |
+| `runs/p2-m5h1` | the same + round 3 router + two hand tracks | 4 | 0 | 1.253 W | 2.59 / 2.67 | not run | 0, 0 |
+| `runs/p2-m6` | worker B's routed copper (`runs/p2b-r3en`) carried onto plan p2-m6 (= p2-m4 + U404-FB path) + aor pass | **0** | **0** | **1.199 W** | **2.38 / 2.44** | **7 of 7, 5.56 nH** | **0 tracks**, 3 vias |
+
+No route or pass here timed out; the copper of `runs/p2-m6` is the route of `runs/p2-m4` (341 of 342, 40 min).
+
+What worked:
+- **Carrying routed copper onto a changed plan** (`tools/transplant.py`) instead of routing the changed plan again.
+  Plans p2-m4 and p2-m5 differ in 32 tracks and 5 vias, yet their two routes failed different connections (EN_5V1
+  alone on p2-m4; TS, I2CC_SCL, SCL, TS1, ACUV and a PACK_P piece on p2-m5), and the finishing pass could close
+  neither set fully. With the plan change cut down to the one item not yet on the board (the U404-FB path), the
+  transplant had 0 DRC errors and only the two expected open connections.
+- **Setting the pass tolerances from the gates for the last connection.** EN_5V1 lays at the first search; it was
+  refused four times by per-task limits (2 mW, 0.1 mohm) that are no gate. With `--longptol=0.05` and `--prtol=1.0`
+  it was accepted at +38 mW: 1.199 W against the 1.25 W limit.
+
+What did not work:
+- Worker A's full plan on worker B's copper: about 20 real conflicts (EN_5V2 waypoints against CELL3 / SDA, the
+  SRN_F via against DRV_SUP, the C313-Pad2 path against RFIO, the LDO_3V3 via against CHG_INT).
+- No-via areas over the hot pours on a board that already has vias there: the pass lifts the pieces and cannot lay
+  them all again (5 unconnected on `runs/p2-m6t1`).
+- The loss pass on EN_5V1: laid again with the sheet closed it cost 3.5 mW more. The router's layer costs put a long
+  north-south run on In2 although In3 has room east of x 117.
+- A transplant with plain vias: +29 mW from wider plane antipads (see tools/README.md).
+
+Still open after the lead's merge:
+- Three signal vias in the Port 2 input GND return pour (I2CC_SCL 83.925,90.2745 / 84.275,92.5245, SDA
+  83.275,90.8245). Ringing unchanged (Port 2 HL_IN 0.80 nH before and after routing).
+- EN_5V1's 54 mm on In2 across the J113 / R427 feed: 38 mW, J113 2.08 to 2.38 mohm.

@@ -1,0 +1,10 @@
+table U403.1 /USB Port 1/I2CC_SCL: via at 108.450,110.400, 0.70 mm in 2 pieces, w 0.15  (Port 1 I2CC_SCL to R403.2 (26 mm north, inner layer): west o)
+table R435.2 /USB Port 1/CE_N: via at 108.750,111.100, 0.83 mm in 2 pieces, w 0.15  (Port 1 CE_N at its pull-up R435.2: a via straight north at 1)
+table U403.2 /USB Port 1/I2CC_SDA: via at 109.500,111.200, 0.83 mm in 2 pieces, w 0.15  (Port 1 I2CC_SDA: a via south at 109.5,111.2, 0.75 mm pitch w)
+table U403.3 /USB Port 1/CHG_INT: via at 110.300,111.200, 0.83 mm in 2 pieces, w 0.15  (Port 1 CHG_INT: a via south at 110.3,111.2)
+table U403.7 /USB Port 1/CE_N: via at 111.100,111.300, 1.56 mm in 2 pieces, w 0.15  (Port 1 CE_N: south out of the pin and west under the unconne)
+table R415.1 /USB Port 1/REGN: via at 109.640,112.780, 0.73 mm in 2 pieces, w 0.15  (Port 1 REGN at R415.1: every site north of the pad is taken )
+table U403.10 /USB Port 1/ILIM: via at 114.750,110.450, 1.10 mm in 2 pieces, w 0.15  (Port 1 ILIM to R414.1 (6.5 mm east): east out of the last pi)
+table U403.9 Net-(U403-ICHG): via at 114.450,111.150, 1.82 mm in 2 pieces, w 0.15  (Port 1 ICHG to R413.1: south out of the pin, east along y 11)
+table U403.18 /USB Port 1/SW2: via at 115.100,106.300, 0.80 mm in 2 pieces, w 0.15  (Port 1 SW2 to C413.2: pin 19's via (HIDRV2, table of round 2)
+pins: table 9; 18 tracks (9.2 mm), 9 vias, 0 pour cuts (0.000 mm2); exact-check faults 0; 2 s

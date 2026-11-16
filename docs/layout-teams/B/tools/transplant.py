@@ -38,12 +38,18 @@ for v in V:
 print("transplant: %d tracks, %d vias of %s onto %s; left behind %s" % (len(J["tracks"]), len(J["vias"]), A[0], A[2], dict(nd)))
 tmp = tempfile.mkdtemp(prefix="tp_", dir=os.path.dirname(out))
 try:
-    shutil.copy(kb, tmp + "/in.kicad_pcb")
+    shutil.copy(kb, tmp + "/in.kicad_pcb"); shutil.copy(ba, tmp + "/a.kicad_pcb")
     for e in ("kicad_pro", "kicad_dru"): shutil.copy(os.path.join(R, "tools/score/template/board." + e), tmp + "/in." + e)
     json.dump(J, open(tmp + "/items.json", "w"))
     open(tmp + "/tw.py", "w").write('''
 import pcbnew, json
-b = pcbnew.LoadBoard("in.kicad_pcb"); J = json.load(open("items.json")); FM = pcbnew.FromMM
+b = pcbnew.LoadBoard("in.kicad_pcb"); J = json.load(open("items.json")); FM = pcbnew.FromMM; MM = pcbnew.ToMM
+# the via pad options of board A (the router sets "remove unconnected inner pads, keep start and end": without them the
+# plane fills get wider antipads, 52 mm2 less GND on In1 and In4 each and +29 mW on this board)
+VA = {}
+for t in pcbnew.LoadBoard("a.kicad_pcb").GetTracks():
+    if t.GetClass() == "PCB_VIA":
+        c = t.GetPosition(); VA[(t.GetNetname(), round(MM(c.x), 3), round(MM(c.y), 3))] = (t.GetRemoveUnconnected(), t.GetKeepStartEnd())
 lid = {pcbnew.BOARD.GetStandardLayerName(l): l for l in b.GetEnabledLayers().CuStack()}
 def net(nm):
     c = b.FindNet(nm)
@@ -52,18 +58,23 @@ def net(nm):
 for t in J["tracks"]:
     s = pcbnew.PCB_TRACK(b); s.SetStart(pcbnew.VECTOR2I(FM(t["a"][0]), FM(t["a"][1]))); s.SetEnd(pcbnew.VECTOR2I(FM(t["b"][0]), FM(t["b"][1])))
     s.SetWidth(FM(t["w"])); s.SetLayer(lid[t["layer"]]); s.SetNet(net(t["net"])); b.Add(s)
+nru = 0
 for v in J["vias"]:
     s = pcbnew.PCB_VIA(b); s.SetPosition(pcbnew.VECTOR2I(FM(v["x"]), FM(v["y"]))); s.SetViaType(pcbnew.VIATYPE_THROUGH)
     s.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu); s.SetDrill(FM(v["drill"])); s.SetNet(net(v["net"]))
     try: s.SetWidth(pcbnew.F_Cu, FM(v["size"]))
     except TypeError: s.SetWidth(FM(v["size"]))
+    ru, ks = VA.get((v["net"], round(v["x"], 3), round(v["y"], 3)), (False, False))
+    s.SetRemoveUnconnected(ru); s.SetKeepStartEnd(ks); nru += int(bool(ru))
     b.Add(s)
+print("vias with unconnected inner pads removed: %d of %d" % (nru, len(J["vias"])))
 b.BuildConnectivity(); pcbnew.ZONE_FILLER(b).Fill(b.Zones()); b.BuildConnectivity()
 b.Save("out.kicad_pcb"); print("written")
 ''')
     K = ["docker", "run", "--rm", "-u", "0", "-v", tmp + ":/w", "-w", "/w", "kicad/kicad:10.0", "sh", "-c"]
     p = subprocess.run(K + ["python3 tw.py 2>&1 | grep -v swig"], capture_output=True, text=True)
     if "written" not in p.stdout: print(p.stdout, p.stderr); sys.exit(1)
+    print("transplant: " + " ".join(l for l in p.stdout.splitlines() if l.startswith("vias with")))
     if "no-drc" not in O:
         shutil.copy(tmp + "/in.kicad_pro", tmp + "/out.kicad_pro"); shutil.copy(tmp + "/in.kicad_dru", tmp + "/out.kicad_dru")
         subprocess.run(K + ["kicad-cli pcb drc --severity-all --format json -o out.drc.json out.kicad_pcb >/dev/null 2>&1"])

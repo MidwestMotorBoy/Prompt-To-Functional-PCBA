@@ -1,0 +1,37 @@
+[finish] 08:31:43 1. DRC of the routed board and of the plan
+[finish] 08:31:50 routed: unconnected 2 {'Net-(U404-FB)': 1, 'EN_5V1': 1} ; DRC errors 3 {'items_not_allowed': 3}
+r0.cu.json: 289 parts, 1176 pads, 47 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 08:31:51 stub ends in the clearance errors of r0 (fin_trim.py)
+    trimmed 0 stub ends (0 errors looked at)
+[finish] 08:32:08 trimmed: unconnected 2 {'Net-(U404-FB)': 1, 'EN_5V1': 1} ; DRC errors 3 {'items_not_allowed': 3}
+[finish] 08:32:08 trim not better, dropped
+    PACK_P: 1 pieces
+    3V3: 1 pieces
+    GND: 1 pieces
+    == PACK_P: 280 items, 1 groups (largest 280)
+    == 3V3: 155 items, 1 groups (largest 155)
+    fin_report: 2 unconnected items kept, 0 power items replaced by 0 piece edges
+[finish] 08:32:13 2. accept-or-revert pass 1 from r0 (deadline 20 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 3)
+    aor: 3 hot-pour items in 0 rip-able pieces to lift
+    aor power check: start 0.6702 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.046, 'R427': 2.115, 'R527': 1.531, 'D103': 0.177, 'U404': 5.929, 'U504': 6.625, 'U204': 3.003}, open [] (6 s)
+      aor   17 s sweep 1 open Net-(U404-FB)                  ACCEPTED (pulls 0, 0 s, KiCad unconnected 10 -> 9, power 0.6702 -> 0.6702 W)
+      aor   23 s sweep 1 open SDA                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 9 -> 8, power 0.6702 -> 0.6703 W)
+      aor   29 s sweep 1 open /USB Port 2/I2CC_SCL           ACCEPTED (pulls 0, 0 s, KiCad unconnected 8 -> 7, power 0.6703 -> 0.6703 W)
+      aor   35 s sweep 1 open SDA                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 7 -> 6, power 0.6703 -> 0.6703 W)
+      aor   45 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.6748 W (now 0.6703, start 0.6702; PACK_P +4.3 mW, 3V3 +0.0 mW, GND +0.2 mW))
+      aor   52 s sweep 1 open SDA                            ACCEPTED (pulls 0, 1 s, KiCad unconnected 6 -> 5, power 0.6703 -> 0.6707 W)
+      aor   71 s sweep 1 open SDA                            reverted (SDA: ghost path found no blocker)
+      aor   84 s sweep 1 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.6836 W (now 0.6707, start 0.6702; PACK_P +12.6 mW, 3V3 +0.0 mW, GND +0.3 mW))
+      aor   95 s sweep 1 open SDA                            ACCEPTED (pulls 0, 5 s, KiCad unconnected 5 -> 4, power 0.6707 -> 0.7029 W)
+      aor  276 s sweep 1 open EN_5V1                         reverted (power: loss 0.7719 W (now 0.7029, start 0.6702; PACK_P +68.5 mW, 3V3 +0.0 mW, GND +0.5 mW))
+      aor  286 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7095 W (now 0.7029, start 0.6702; PACK_P +6.5 mW, 3V3 +0.0 mW, GND +0.1 mW))
+      aor  306 s sweep 2 open SDA                            reverted (SDA: ghost path found no blocker)
+      aor  320 s sweep 2 open /USB Port 2/I2CC_SCL           reverted (power: loss 0.7181 W (now 0.7029, start 0.6702; PACK_P +14.9 mW, 3V3 +0.0 mW, GND +0.3 mW))
+      aor  508 s sweep 2 open EN_5V1                         reverted (power: loss 0.7719 W (now 0.7029, start 0.6702; PACK_P +68.5 mW, 3V3 +0.0 mW, GND +0.5 mW))
+    aor: 14 tasks, 6 accepted, 8 reverted, 6 pulls; open connections left 4, lifts left 0
+    unconnected after fill: 5
+[finish] 08:40:58 pass 1: unconnected 5 {'3V3': 1, '/USB Port 2/I2CC_SCL': 2, 'SDA': 1, 'EN_5V1': 1} ; DRC errors 0 {} ; hot-pour items 0
+    == PACK_P: 280 items, 1 groups (largest 280)
+    == 3V3: 156 items, 2 groups (largest 124)
+    fin_report: 4 unconnected items kept, 1 power items replaced by 1 piece edges
+[finish] 08:41:02 2. accept-or-revert pass 2 from r1 (deadline 20 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 0)

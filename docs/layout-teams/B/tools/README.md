@@ -539,3 +539,41 @@ Traps met:
   free cell or via site on the real grid (`boxed`, 5000-node back search), the 3V3 F.Cu pour on its west and the
   escape vias of pins 11, 13 and 14 round it (`runs/p2b-r3dev/look/en5v1_u301.png`). With pulls the edge itself lays
   (42 k nodes), but the pulled pins (TS, NRST, SDA, CHG_INH, SWDIO, SWCLK, UART_TX) do not all go back.
+
+## Phase 2 round 3: the lead's merge of round 3 (transplant, plan p2-m6, the one command)
+
+**The one command for the board in `best_routed/`** (about 15 min; background job with a 2 h limit, cwd = team folder):
+`bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb`
+= plan p2-m6 and its screen, the kept board as `routed.kicad_pcb`, then `final_route.sh --resume` with the same straps
+and filters, the finishing pass (`finish.sh --modes=aor --min=30 --tol=0.06 --long=30 --longx=--longptol=0.05
+--aorx=--prtol=1.0`), the routed-board check and the seven hot loops: `<new>/final.json`, `finished.kicad_pcb`.
+`--transplant=runs/p2b-r3en` instead of `--board` makes the routed board from worker B's run first (how
+`runs/p2-m6` was made). Without either it is a NEW route of the plan (as `rebuild_best.sh`), which differs.
+
+**`transplant.py <routed board A> <A's plan board> <plan board B> <out.kicad_pcb> [--drop=<json>]`**: carries the routed
+copper of A (every track and via not in A's plan board) onto another plan board of the same placement, refills and
+prints KiCad's DRC (errors by type, each open connection). For a small plan change after a good route: a new route
+of the changed plan costs 40 to 55 min and fails other connections (p2-m4 341 of 342, p2-m5 338 of 341 locally).
+- Check first what the new plan's copper hits: export A's routed copper (`borrow.py` does one net; all nets is a few
+  lines) and run `handroute.py <plan board B> x.kicad_pcb all.json --check --keep=<plan board B>`. Faults that are the
+  checker's strictness, not real: "on pad" (router via-in-pad), "via spacing 0.752 / 0.75", "board edge 0.25 / 0.25".
+- `--drop`: `{"nets": [...]}` for nets the new plan lays itself, `"vias"` / `"tracks"` for single items. Do NOT drop
+  only the vias of a layer change: the two track ends then lie on one spot, the router counts the edge as laid and
+  KiCad does not. Carry the piece over and let the pass lift it, or drop the whole piece.
+- The router's vias have `SetRemoveUnconnected(True)` + `SetKeepStartEnd(True)`; a via written without them gets a
+  wider antipad in every plane (52 mm2 less GND on In1 and on In4, +29 mW on this board). transplant.py copies the
+  options from board A; `handroute.py` vias are plain (full pads).
+
+**Tolerances of the accept-or-revert pass are not the gates.** `--ptol` (2 mW a task), `--pbudget` (5 mW a pass) and the
+0.1 mohm rise per PACK_P terminal protect a board that still has many open connections. For the LAST open
+connection, set them from the gates: `--long=30 --longx=--longptol=0.05` (one long open task may cost 50 mW) and
+`--aorx=--prtol=1.0` (new router option: mohm a PACK_P terminal may rise against the start of the pass). EN_5V1 was
+found at the first search with no pulls and had been refused for U404 +0.58 mohm. `--longptol` covers EVERY open
+edge of 30 mm or more: use it only when the long edge is the one you mean (on `runs/p2-m6t1` an SDA edge took 32 mW).
+
+**Other tools of the round.** `zoom4.py <board> <cu.json> out.png x0,y0,x1,y1 [px/mm] [layers]`: four layers of one
+window side by side with a mm grid (any board). `borrow.py`: one net's routed copper of board A as a hand file for
+board B (works only where both boards kept the same lanes; it failed between two routes of one plan).
+`handroute.py`: a via may carry `"inpad": true` (inside a small pad of its own net). `router_b.py`: a ghost search
+whose far end is itself a rip-able piece now takes that end from the real board (it had no goal, "no way even with
+every rip-able route gone").
