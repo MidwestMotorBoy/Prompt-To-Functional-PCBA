@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_gauge-g0-rep.kicad_pcb",
+ "sha": "8efa7c01b222c274354ccbbd1d5dd04a1cae4231",
+ "routed": 356,
+ "failed": 8,
+ "edges": 364,
+ "minutes": 113.2,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 2/I2CC_SDA",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/BTST1",
+  "FAILKEY SCL",
+  "FAILKEY IRQ_N"
+ ]
+}

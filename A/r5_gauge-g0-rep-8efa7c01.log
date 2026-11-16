@@ -1,0 +1,26 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 148
+phase 1: 21 open connections tried again with every route free to move
+phase 2: 21 open connections tried again with every route free to move
+phase 3: 12 open connections tried again with every route free to move
+routes pulled and re-laid: 694
+fan-out stubs unused (removed) 61, trimmed 21
+unconnected after fill: 29
+routed 356 edges, 8 failed, items added 5305
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 67 goals 133 seen 136 | no way even with every other route gone
+  FAILED /USB Port 2/HIDRV1 86.06,108.84 (Pad 27  of U503 ) -> 88.16,103.21 (Pad 1  of R544 ) starts 73 goals 135 seen 134 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 72 goals 122 seen 111 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 147 goals 41 seen 47 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 231 goals 47 seen 106379 | pulled 1
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 72 seen 111 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 492 seen 619 | no way even with every other route gone
+  FAILED IRQ_N 103.90,82.92 (Pad 10  of U401 ) -> 82.90,82.92 (Pad 10  of U501 ) starts 47 goals 47 seen 61 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 2/HIDRV1
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/BTST1
+FAILKEY SCL
+FAILKEY IRQ_N
