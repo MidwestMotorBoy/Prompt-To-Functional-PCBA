@@ -1,0 +1,4 @@
+edges to route: 342 (0 on long nets)
+unconnected after fill: 9
+routed 341 edges, 1 failed, items added 2780
+FAILED EN_5V1 116.92,70.37 (Track  on F.Cu,) -> 111.57,122.08 (Pad 12  of U301 ) starts 226 goals 259 seen -12000001 | no way even with every other route gone

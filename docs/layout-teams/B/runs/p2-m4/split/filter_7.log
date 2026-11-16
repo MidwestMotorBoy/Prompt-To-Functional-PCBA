@@ -1,0 +1,132 @@
+ep    U204.1 GND: straight stub 0.73 mm, w 0.20, into pad 11
+ep    U204.4 GND: straight stub 0.73 mm, w 0.20, into pad 11
+ep    U204.5 GND: straight stub 0.73 mm, w 0.20, into pad 11
+ep    U204.6 GND: straight stub 0.73 mm, w 0.20, into pad 11
+ep    U401.11 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.12 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.13 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.14 GND: stub 0.82 mm in 1 pieces, w 0.20, into pad 39
+ep    U401.3 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.31 GND: stub 0.84 mm in 2 pieces, w 0.15, into pad 39
+ep    U401.36 GND: stub 0.72 mm in 1 pieces, w 0.15, into pad 39
+ep    U401.5 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.6 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U401.7 GND: stub 0.86 mm in 2 pieces, w 0.20, into pad 39
+ep    U402.1 GND: stub 1.02 mm in 2 pieces, w 0.20, into pad 4
+ep    U402.2 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U402.3 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U402.4 GND: stub 0.90 mm in 1 pieces, w 0.20, into pad 4
+ep    U402.7 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U403.17 GND: straight stub 0.76 mm, w 0.20, into pad 37
+ep    U403.22 GND: straight stub 0.76 mm, w 0.20, into pad 37
+ep    U405.13 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U405.16 GND: stub 0.73 mm in 1 pieces, w 0.20, into pad 21
+ep    U405.17 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U405.18 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U405.8 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U501.11 GND: straight stub 0.76 mm, w 0.20, into pad 39
+ep    U501.12 GND: straight stub 0.76 mm, w 0.20, into pad 39
+ep    U501.13 GND: straight stub 0.76 mm, w 0.20, into pad 39
+ep    U501.14 GND: stub 0.82 mm in 1 pieces, w 0.20, into pad 39
+ep    U501.2 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U501.3 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U501.31 GND: stub 0.84 mm in 2 pieces, w 0.15, into pad 39
+ep    U501.36 GND: stub 0.73 mm in 1 pieces, w 0.15, into pad 39
+ep    U501.5 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U501.6 GND: straight stub 0.75 mm, w 0.20, into pad 39
+ep    U501.7 GND: stub 0.86 mm in 2 pieces, w 0.20, into pad 39
+ep    U502.1 GND: stub 0.91 mm in 1 pieces, w 0.20, into pad 4
+ep    U502.2 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U502.3 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U502.4 GND: stub 0.90 mm in 1 pieces, w 0.20, into pad 4
+ep    U502.7 GND: straight stub 0.86 mm, w 0.20, into pad 4
+ep    U503.17 GND: straight stub 0.76 mm, w 0.20, into pad 37
+ep    U503.22 GND: straight stub 0.76 mm, w 0.20, into pad 37
+ep    U505.13 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U505.16 GND: stub 0.73 mm in 1 pieces, w 0.20, into pad 21
+ep    U505.17 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U505.18 GND: straight stub 0.71 mm, w 0.20, into pad 21
+ep    U505.8 GND: straight stub 0.71 mm, w 0.20, into pad 21
+    cut /USB Port 2/BAT_SNS_P on F.Cu: 0.421 mm2, pieces 1 -> 1
+gate  Q502.1-R546.2 /USB Port 2/HG2: track 1.51 mm, w 0.30, pours cut back: /USB Port 2/BAT_SNS_P F.Cu 0.421 mm2
+    cut /USB Port 1/BAT_SNS_P on F.Cu: 0.421 mm2, pieces 1 -> 1
+gate  Q402.1-R446.2 /USB Port 1/HG2: track 1.51 mm, w 0.30, pours cut back: /USB Port 1/BAT_SNS_P F.Cu 0.421 mm2
+    cut /USB Port 2/VBUS on F.Cu: 0.448 mm2, pieces 2 -> 2
+table J501.B5 /USB Port 2/C_CC2: to U505.6, 5.58 mm in 2 pieces, w 0.15, cut /USB Port 2/VBUS  (Port 2 C_CC2: B5 is wrapped by the connector's own VBUS pour)
+table U405.6 /USB Port 1/C_CC2: to U405.5, 0.85 mm in 1 pieces, w 0.15  (Port 1 C_CC2: pins 5 and 6 joined round the corner (pin 5 ha)
+    cut /USB Port 1/VBUS on F.Cu: 0.132 mm2, pieces 3 -> 3
+table J401.B5 /USB Port 1/C_CC2: via at 104.750,70.150, 0.98 mm in 2 pieces, w 0.15, cut /USB Port 1/VBUS  (Port 1 C_CC2 at the connector (r5): a via straight south of )
+table U405.3 /USB Port 1/VBIAS: via at 105.520,70.200, 1.63 mm in 2 pieces, w 0.15  (Port 1 VBIAS (r5): out north, then north-east in front of th)
+    cut /USB Port 1/VBUS on F.Cu: 0.001 mm2, pieces 3 -> 3
+table U405.4 /USB Port 1/C_CC1: via at 102.600,70.600, 2.02 mm in 3 pieces, w 0.15, cut /USB Port 1/VBUS  (Port 1 C_CC1 pass-through (r5): out north and west over the )
+table U505.4 /USB Port 2/C_CC1: via at 94.670,72.950, 0.85 mm in 2 pieces, w 0.15  (C_CC1 pass-through: pins 4 and 7 are split by the C_CC2 pins)
+table U505.9 /USB Port 2/SBU_FLT: via at 93.320,76.300, 1.31 mm in 3 pieces, w 0.15  (Port 2 SBU_FLT runs south to U501.19, but LDO_3V3 copper wal)
+table U405.7 /USB Port 1/C_CC1: via at 102.550,72.350, 0.60 mm in 2 pieces, w 0.15  (C_CC1 pass-through, the other end: a via west of pin 7; the )
+table U505.7 /USB Port 2/C_CC1: via at 93.320,74.700, 0.60 mm in 2 pieces, w 0.15  (C_CC1 pass-through, the other end: a via west of pin 7; the )
+table J401.A5 /USB Port 1/C_CC1: via at 107.000,70.074, 1.44 mm in 3 pieces, w 0.15  (C_CC1 at the connector: its only way out is south, into the )
+table J501.A5 /USB Port 2/C_CC1: via at 94.050,70.074, 1.39 mm in 2 pieces, w 0.15  (C_CC1 at the connector: its only way out is south, into the )
+    cut /USB Port 2/PP5V on F.Cu: 1.001 mm2, pieces 1 -> 2
+table U501.37 /USB Port 2/DRV9_OFF: via at 87.600,79.250, 2.34 mm in 3 pieces, w 0.15, cut /USB Port 2/PP5V  (DRV9_OFF between the 3V3 pin and a GND pin, the exposed pad )
+    cut /USB Port 2/PP5V on F.Cu: 0.216 mm2, pieces 2 -> 2
+table U501.38 3V3: via at 88.750,79.775, 0.35 mm in 2 pieces, w 0.15, cut /USB Port 2/PP5V  (3V3 corner pin: the PP5V pour wraps pins 36-38 at its cleara)
+    cut /USB Port 1/VBUS on F.Cu: 0.052 mm2, pieces 3 -> 3
+table U401.27 GND: to C401.2, 1.18 mm in 1 pieces, w 0.20, cut /USB Port 1/VBUS  (GND pin beside the PD_DRAIN exposed pad (not its own): a sho)
+table U401.26 GND: to U401.27, 0.40 mm in 1 pieces, w 0.15  (GND corner pin: tied to its GND neighbour pin 27)
+    cut /Cells and Gauge/CELL_P on F.Cu: 0.225 mm2, pieces 1 -> 1
+    cut /Cells and Gauge/CELL_P on B.Cu: 0.142 mm2, pieces 1 -> 1
+table C304.2 GND: via at 109.635,123.630, 0.45 mm in 2 pieces, w 0.20, cut /Cells and Gauge/CELL_P  (GND pad of the NRST capacitor wrapped by the CELL_P pour: a )
+    cut /USB Port 1/PP5V on F.Cu: 0.040 mm2, pieces 2 -> 2
+    cut /USB Port 1/PP5V on B.Cu: 0.594 mm2, pieces 1 -> 1
+table U401.37 /USB Port 1/DRV9_OFF: via at 103.600,77.850, 0.53 mm in 2 pieces, w 0.15, cut /USB Port 1/PP5V  (Port 1 DRV9_OFF (to R455 on the bottom): its via first, nort)
+    cut /USB Port 1/PP5V on F.Cu: 0.088 mm2, pieces 2 -> 2
+    cut /USB Port 1/PP5V on B.Cu: 0.149 mm2, pieces 1 -> 1
+table U401.38 3V3: via at 102.850,78.375, 0.35 mm in 2 pieces, w 0.15, cut /USB Port 1/PP5V  (Port 1 3V3 corner pin: the full routes with the protected 3V)
+table U404.7 /USB Port 1/SS_5V: to C439.1, 1.51 mm in 2 pieces, w 0.15  (Port 1 SS_5V: east of the pin row to C439.1, laid before the)
+    HOT cut PACK_P on F.Cu inside the box: 0.148 mm2, pieces 6 -> 6
+    HOT cut GND on F.Cu inside the box: 0.227 mm2, pieces 12 -> 13
+table U404.2 EN_5V1: to R432.1, 5.76 mm in 6 pieces, w 0.15  (EN_5V1 (r5): U404.2 is wrapped by the HL_5V PACK_P pour on t)
+table U504.2 EN_5V2: via at 84.150,67.200, 0.74 mm in 2 pieces, w 0.15  (Port 2 EN_5V2, the U504 knot (EN pad 2, SS pad 7, FB pad 8 c)
+table U504.8 Net-(U504-FB): via at 85.020,67.220, 0.88 mm in 2 pieces, w 0.15  (Port 2 FB: north into the channel east of the EN via and to )
+table U504.7 /USB Port 2/SS_5V: to C539.1, 2.21 mm in 4 pieces, w 0.15  (Port 2 SS_5V: south of the bottom pin row, east under pin 8 )
+table U102.1 Net-(U102-VDD): via at 94.700,129.800, 0.55 mm in 2 pieces, w 0.15  (Net-(U102-VDD) to C116 (west, on another layer): a via east )
+table U102.3 Net-(U102-V3): to C112.2, 1.35 mm in 2 pieces, w 0.15  (Net-(U102-V3): straight north to C112.2 (laid so pin 2's way)
+table U102.2 Net-(U102-V4): to C112.1, 2.58 mm in 6 pieces, w 0.15  (Net-(U102-V4): C112.2 sits between pin 2 and C112.1; failed )
+table U403.20 /USB Port 1/BTST2: to C413.1, 2.33 mm in 3 pieces, w 0.15  (Port 1 BTST2: the only way is the 0.5 mm strip between the t)
+table U403.19 /USB Port 1/HIDRV2: via at 114.250,105.550, 0.60 mm in 2 pieces, w 0.15  (Port 1 HIDRV2: BTST2 now holds the strip north of the pin ro)
+    cut /USB Port 1/PP5V on F.Cu: 0.037 mm2, pieces 2 -> 2
+    cut /USB Port 1/PP5V on B.Cu: 0.052 mm2, pieces 1 -> 1
+table U405.12 /USB Port 1/CC1: via at 104.150,74.750, 0.60 mm in 2 pieces, w 0.15, cut /USB Port 1/PP5V  (Port 1 CC1 (r5): a via just south of pin 12 (as the router d)
+table C402.2 GND: dropped the plan via at 106.450,75.775 and 1 track(s) ending on it
+    cut /USB Port 1/PP5V on B.Cu: 0.509 mm2, pieces 1 -> 1
+table C402.2 GND: via at 107.050,75.550, 0.92 mm in 2 pieces, w 0.20, cut /USB Port 1/PP5V  (GND of the CC2 capacitor: the planner's via (106.45,75.775) )
+    cut /USB Port 1/PP5V on F.Cu: 0.710 mm2, pieces 2 -> 2
+    cut /USB Port 1/VBUS on F.Cu: 0.042 mm2, pieces 3 -> 3
+table U405.11 /USB Port 1/CC2: to C402.1, 5.90 mm in 7 pieces, w 0.15, cut /USB Port 1/PP5V,/USB Port 1/VBUS  (Port 1 CC2: from pin 11 west of the CC1 via, east under U405)
+table TP113.1 /Cells and Gauge/WAKE: to R118.2, 3.22 mm in 3 pieces, w 0.15  (WAKE: north of R118 to its pad 2 (TP113 centre -> 109.3,114.)
+    cut /Cells and Gauge/FET_MID on F.Cu: 0.495 mm2, pieces 1 -> 1
+table R110.2 /Cells and Gauge/CELL_P: to R118.1, 3.79 mm in 3 pieces, w 0.20, cut /Cells and Gauge/FET_MID  (CELL_P: the two signal-size CELL_P pads (R110.2, R118.1) joi)
+table R118.1 /Cells and Gauge/CELL_P: to zone, 1.69 mm in 1 pieces, w 0.20  (CELL_P: R118.1 (and R110.2 with it) south-west into the CELL)
+    cut /Cells and Gauge/FET_MID on F.Cu: 0.305 mm2, pieces 1 -> 1
+table R110.1 /Cells and Gauge/CHG_G: to Q101.4, 2.74 mm in 1 pieces, w 0.15, cut /Cells and Gauge/FET_MID  (CHG_G at its 10M pull-down (lead, round 2): with the trunk b)
+table U403.11 Net-(U403-FBG): to R419.2, 2.93 mm in 3 pieces, w 0.15  (Port 1 FBG: east of the ILIM via (114.75,110.45), then south)
+table U403.12 Net-(U403-FB): to R419.1, 3.89 mm in 3 pieces, w 0.15  (Port 1 FB: east under C417.2, south at x 115.56 between the )
+table C417.2 /USB Port 1/SRN_F: to C419.1, 2.36 mm in 3 pieces, w 0.15  (Port 1 SRN_F (Kelvin): out of C417.2 east, south at x 115.95)
+table U403.36 /USB Port 1/FSW: to R412.1, 2.99 mm in 3 pieces, w 0.15  (Port 1 FSW (2.5 mm): west out of pin 36, south at x 107.92 b)
+table U403.35 Net-(U403-ACOV): to R410.2, 1.34 mm in 3 pieces, w 0.15  (Port 1 ACOV: pin 35 south-west into R410.2, north of the FSW)
+table U403.8 /USB Port 1/TS: to R416.1, 1.65 mm in 1 pieces, w 0.15  (Port 1 TS: pin 8 straight south into R416.1, between the CE_)
+table R415.2 /USB Port 1/TS: to R416.1, 3.20 mm in 3 pieces, w 0.15  (Port 1 TS divider: R415.2 to R416.1 south of R416.2 (the CE_)
+table R417.1 /USB Port 1/CE_N: via at 114.850,112.450, 1.42 mm in 2 pieces, w 0.15  (Port 1 CE_N at R417.1: the ICHG track closes the north; a vi)
+table U405.9 /USB Port 1/SBU_FLT: to R441.2, 1.92 mm in 4 pieces, w 0.15  (Port 1 SBU_FLT (r5): west out of pin 9, north-west between t)
+    cut /Cells and Gauge/FET_MID on F.Cu: 0.313 mm2, pieces 1 -> 1
+table C110.1 /Cells and Gauge/CELL_P: via at 96.270,121.590, 0.56 mm in 2 pieces, w 0.20, cut /Cells and Gauge/FET_MID  (CELL_P at C110.1 (10 mm west of the CELL_P pours): the pad i)
+table TP301.1 3V3: to zone, 2.85 mm in 1 pieces, w 0.20  (3V3 test pad: an F.Cu track north into the 3V3 pour at C207.)
+    rule area ra_protect_3V3 cut back by 0.066 mm2
+table R313.1 3V3: to zone, 2.28 mm in 1 pieces, w 0.20  (3V3 at the pull-up R313.1: an F.Cu track east into the 3V3 p)
+table U204.10 3V3: via at 86.120,117.520, 0.64 mm in 2 pieces, w 0.15  (3V3 sense pin of the 3V3 buck: a via east of the pin at 86.1)
+rail  C516.2 GND: via at 82.844,105.611, stub 0.61 mm, w 0.20
+rail  J301.5 GND: via at 118.778,116.579, stub 0.64 mm, w 0.20
+rail  J302.5 GND: via at 108.770,132.860, stub 0.64 mm, w 0.20
+rail  U301.1 GND: via at 120.920,118.532, stub 0.92 mm, w 0.20
+rail  U301.2 GND: via at 120.120,118.582, stub 1.10 mm, w 0.20
+rail  U301.23 GND: via at 119.420,126.632, stub 1.02 mm, w 0.20
+pins: ep 49, gate 2, table 48, rail 6; 184 tracks (134.5 mm), 29 vias, 24 pour cuts (6.768 mm2); exact-check faults 0; 33 s

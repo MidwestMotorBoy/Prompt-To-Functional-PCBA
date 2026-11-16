@@ -1,0 +1,101 @@
+02:14:39: Debug: Adding duplicate image handler for 'PNG file'
+02:14:39: Debug: Adding duplicate image handler for 'JPEG file'
+02:14:39: Debug: Adding duplicate image handler for 'TIFF file'
+02:14:39: Debug: Adding duplicate image handler for 'GIF file'
+02:14:39: Debug: Adding duplicate image handler for 'PNM file'
+02:14:39: Debug: Adding duplicate image handler for 'PCX file'
+02:14:39: Debug: Adding duplicate image handler for 'IFF file'
+02:14:39: Debug: Adding duplicate image handler for 'Windows icon file'
+02:14:39: Debug: Adding duplicate image handler for 'Windows cursor file'
+02:14:39: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+02:14:39: Debug: Adding duplicate image handler for 'TGA file'
+02:14:39: Debug: Adding duplicate image handler for 'XPM file'
+02:14:40: Debug: Adding duplicate image handler for 'PNG file'
+02:14:40: Debug: Adding duplicate image handler for 'JPEG file'
+02:14:40: Debug: Adding duplicate image handler for 'TIFF file'
+02:14:40: Debug: Adding duplicate image handler for 'GIF file'
+02:14:40: Debug: Adding duplicate image handler for 'PNM file'
+02:14:40: Debug: Adding duplicate image handler for 'PCX file'
+02:14:40: Debug: Adding duplicate image handler for 'IFF file'
+02:14:40: Debug: Adding duplicate image handler for 'Windows icon file'
+02:14:40: Debug: Adding duplicate image handler for 'Windows cursor file'
+02:14:40: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+02:14:40: Debug: Adding duplicate image handler for 'TGA file'
+02:14:40: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 10 nets routed afresh (0 items lifted), 152 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+main PACK_P layer 0: 3 cells dropped, 44784 kept
+main PACK_P layer 1: 51 cells dropped, 572922 kept
+main PACK_P layer 2: 0 cells dropped, 0 kept
+main PACK_P layer 3: 8 cells dropped, 19950 kept
+main 3V3 layer 0: 3 cells dropped, 16793 kept
+main 3V3 layer 1: 0 cells dropped, 0 kept
+main 3V3 layer 2: 12449 cells dropped, 260509 kept
+main 3V3 layer 3: 0 cells dropped, 0 kept
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 15 (0 on long nets)
+fan-out stubs: 3
+aor: 9 hot-pour items in 8 rip-able pieces to lift
+aor power check: start 0.7523 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.649, 'R427': 2.71, 'R527': 2.291, 'D103': 0.177, 'U404': 7.7, 'U504': 10.631, 'U204': 2.339}, open [] (7 s)
+  aor   23 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 15 -> 14, power 0.7523 -> 0.7525 W)
+  aor   31 s sweep 1 open 3V3                            reverted (power: PACK_P to U204 2.76 mohm (start 2.34))
+  aor   39 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 1 s, KiCad unconnected 14 -> 13, power 0.7525 -> 0.7525 W)
+  aor   47 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 13 -> 12, power 0.7525 -> 0.7525 W)
+  aor   47 s sweep 1 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor   54 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 0, 0 s, KiCad unconnected 12 -> 11, power 0.7525 -> 0.7525 W)
+  aor  144 s sweep 1 open Net-(C313-Pad2)                reverted (SDA failed (pulls 18))
+  aor  145 s sweep 1 open /USB Port 1/SW2                reverted (/USB Port 1/SW2: blocked by Kelvin copper)
+  aor  156 s sweep 1 open /USB Port 1/CE_N               ACCEPTED (pulls 3, 4 s, KiCad unconnected 11 -> 10, power 0.7525 -> 0.7524 W)
+  aor  162 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 10 -> 9, power 0.7524 -> 0.7524 W)
+  aor  168 s sweep 1 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor  259 s sweep 1 open /Cells and Gauge/CELL_P        reverted (IRQ_N: no way even with every rip-able route gone)
+  aor  269 s sweep 1 open /USB Port 1/I2CC_SCL           ACCEPTED (pulls 0, 3 s, KiCad unconnected 9 -> 8, power 0.7524 -> 0.7529 W)
+  aor  295 s sweep 1 open /USB Port 1/CHG_INT            reverted (/USB Port 1/CHG_INT: blocked by Kelvin copper)
+  aor  317 s sweep 1 open /USB Port 1/I2CC_SDA           reverted (/USB Port 1/I2CC_SDA: blocked by Kelvin copper)
+  aor  324 s sweep 1 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+  aor  332 s sweep 1 lift lift /P1_LDO_3V3               ACCEPTED (pulls 0, 1 s, KiCad unconnected 8 -> 8, power 0.7529 -> 0.7527 W)
+  aor  359 s sweep 1 lift lift /USB Port 1/REGN          reverted (power: PACK_P to U404 7.89 mohm (start 7.70))
+  aor  450 s sweep 1 lift lift IRQ_N                     reverted (IRQ_N: no way even with every rip-able route gone)
+  aor  528 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (IRQ_N failed (pulls 16))
+  aor  535 s sweep 1 lift lift /USB Port 1/SW1           ACCEPTED (pulls 0, 1 s, KiCad unconnected 8 -> 8, power 0.7527 -> 0.7524 W)
+  aor  615 s sweep 1 lift lift SCL                       ACCEPTED (pulls 0, 73 s, KiCad unconnected 8 -> 8, power 0.7524 -> 0.7529 W)
+  aor  623 s sweep 1 lift lift Net-(D511-A)              ACCEPTED (pulls 0, 1 s, KiCad unconnected 8 -> 8, power 0.7529 -> 0.7530 W)
+  aor  632 s sweep 2 open 3V3                            reverted (power: PACK_P to U404 7.80 mohm (start 7.70))
+  aor  632 s sweep 2 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor  653 s sweep 2 open Net-(C313-Pad2)                ACCEPTED (pulls 5, 14 s, KiCad unconnected 8 -> 7, power 0.7530 -> 0.7530 W)
+  aor  655 s sweep 2 open /USB Port 1/SW2                reverted (/USB Port 1/SW2: blocked by Kelvin copper)
+  aor  659 s sweep 2 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor  749 s sweep 2 open /Cells and Gauge/CELL_P        reverted (/Cells and Gauge/CELL1: no way even with every rip-able route gone)
+  aor  768 s sweep 2 open /USB Port 1/CHG_INT            reverted (/USB Port 1/CHG_INT: blocked by Kelvin copper)
+  aor  787 s sweep 2 open /USB Port 1/I2CC_SDA           reverted (/USB Port 1/I2CC_SDA: blocked by Kelvin copper)
+  aor  794 s sweep 2 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+  aor  812 s sweep 2 lift lift /USB Port 1/REGN          ACCEPTED (pulls 0, 12 s, KiCad unconnected 7 -> 7, power 0.7530 -> 0.7510 W)
+  aor  903 s sweep 2 lift lift IRQ_N                     reverted (IRQ_N: no way even with every rip-able route gone)
+  aor  983 s sweep 2 lift lift /USB Port 2/I2CC_SCL      reverted (/USB Port 2/CHG_INT failed (pulls 18))
+  aor  992 s sweep 3 open 3V3                            reverted (power: PACK_P to U204 2.76 mohm (start 2.34))
+  aor  992 s sweep 3 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor  993 s sweep 3 open /USB Port 1/SW2                reverted (/USB Port 1/SW2: blocked by Kelvin copper)
+  aor  998 s sweep 3 open /USB Port 1/SBU_FLT            reverted (/USB Port 1/SBU_FLT: ghost path found no blocker)
+  aor 1045 s sweep 3 open /Cells and Gauge/CELL_P        reverted (/Cells and Gauge/CHG failed (pulls 12))
+  aor 1061 s sweep 3 open /USB Port 1/CHG_INT            reverted (/USB Port 1/CHG_INT: blocked by Kelvin copper)
+  aor 1078 s sweep 3 open /USB Port 1/I2CC_SDA           reverted (/USB Port 1/I2CC_SDA: blocked by Kelvin copper)
+  aor 1087 s sweep 3 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+aor: 43 tasks, 13 accepted, 30 reverted, 102 pulls; open connections left 7, lifts left 3
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 3, trimmed 0
+unconnected after fill: 7
+routed 378 edges, 7 failed, items added 576
+  FAILED /USB Port 1/SBU_FLT | aor: /USB Port 1/SBU_FLT: ghost path found no blocker
+  FAILED /USB Port 1/SW2 | aor: /USB Port 1/SW2: blocked by Kelvin copper
+  FAILED /USB Port 1/SBU_FLT | aor: /USB Port 1/SBU_FLT: ghost path found no blocker
+  FAILED /USB Port 1/CHG_INT | aor: /USB Port 1/CHG_INT: blocked by Kelvin copper
+  FAILED /USB Port 1/I2CC_SDA | aor: /USB Port 1/I2CC_SDA: blocked by Kelvin copper
+  FAILED 3V3 | aor: power: PACK_P to U204 2.76 mohm (start 2.34)
+  FAILED /Cells and Gauge/CELL_P | aor: /Cells and Gauge/CHG failed (pulls 12)
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/SW2
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY 3V3@PlanePiece In3 #1 [3V3]
+FAILKEY /Cells and Gauge/CELL_P

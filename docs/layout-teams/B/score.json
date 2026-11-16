@@ -1,19 +1,9 @@
 {
- "board": "r4 (best_placement.json = candidates/r4.json)",
- "date": "2026-11-15",
- "note": "Shared scorecard (tools/score/score_board.sh) results for r4, merged from two existing runs of the same placement and the same planned copper. Nothing was rerun for this file. The full route finished in about 17 min, it did not time out.",
- "sources": {
-  "loss_W": "runs/r4chg-hot/score.json (runs/r4-route/score.json has the same value)",
-  "power_open": "runs/r4chg-hot/score.json (same in runs/r4-route)",
-  "drc_errors": "runs/r4chg-hot/score.json (same in runs/r4-route); copper board before routing",
-  "blocked_edges": "runs/r4chg-hot/score.json (same in runs/r4-route)",
-  "hot_loops": "runs/r4chg-hot/score.json, runs/r4chg-hot/hot_gate.json (--hot=all)",
-  "route": "runs/r4-route/score.json (--keep-copper --route=45 --no-hot on the copper of runs/r4chg-hot)",
-  "thermal": "runs/r4chg-hot/thermal.json",
-  "routed_board_check": "runs/r4-final/final.json (tools/final_route.sh: PACK_P straps, one zone per outline, another full route; not the shared scorecard)",
-  "unrouted_signal_items": "runs/r4chg-hot/score.json: KiCad's unconnected signal items on the copper board BEFORE routing (not the routed count; it equals 411 by chance)"
- },
- "loss_W": 1.125,
+ "board": "r5 (best_placement.json = candidates/r5.json): r4 with U405 0.4 mm south, C451 0.5 mm south, R432 moved to 113.8,71.4 (phase 2 round 2, worker A)",
+ "date": "2026-11-16",
+ "note": "Shared scorecard on r5 via tools/screen.sh --hot=all (runs/p2a-r5src): copper plan, DRC, DC loss, seven hot loops, blocked edges. No full trial route of the plain scorecard was run for r5; r4's phase-1 scorecard (blocked 19 of 437, full route 411 of 437) is kept in score_r4.json, F_r4.png, B_r4.png. The routed-board numbers of r5 with the phase-2 copper plan are in best_routed/summary.json.",
+ "source_run": "runs/p2a-r5src",
+ "loss_W": 1.124,
  "power_open": {
   "GND": [
    "J302",
@@ -21,119 +11,7 @@
   ]
  },
  "drc_errors": 0,
- "unrouted_signal_items": 411,
+ "unrouted_signal_items": 410,
  "hot_loops": "7 of 7 pass, 5.54 nH",
- "hot_loops_detail": [
-  {
-   "loop": "HL_3V3",
-   "switch": "U204",
-   "tier1": "pass",
-   "loop_total_nH": 1.02,
-   "first_cap_nH": 0.32,
-   "limit_total_nH": 27.5,
-   "reference_total_nH": 1.95
-  },
-  {
-   "loop": "USB Port 1/HL_5V",
-   "switch": "U404",
-   "tier1": "pass",
-   "loop_total_nH": 0.7,
-   "first_cap_nH": 0.3,
-   "limit_total_nH": 6.98,
-   "reference_total_nH": 1.08
-  },
-  {
-   "loop": "USB Port 1/HL_IN",
-   "switch": "Q401",
-   "tier1": "pass",
-   "loop_total_nH": 0.78,
-   "first_cap_nH": 0.33,
-   "limit_total_nH": 1.3,
-   "reference_total_nH": 1.02
-  },
-  {
-   "loop": "USB Port 1/HL_OUT",
-   "switch": "Q402",
-   "tier1": "pass",
-   "loop_total_nH": 0.74,
-   "first_cap_nH": 0.4,
-   "limit_total_nH": 2.17,
-   "reference_total_nH": 1.03
-  },
-  {
-   "loop": "USB Port 2/HL_5V",
-   "switch": "U504",
-   "tier1": "pass",
-   "loop_total_nH": 0.76,
-   "first_cap_nH": 0.37,
-   "limit_total_nH": 6.98,
-   "reference_total_nH": 1.08
-  },
-  {
-   "loop": "USB Port 2/HL_IN",
-   "switch": "Q501",
-   "tier1": "pass",
-   "loop_total_nH": 0.8,
-   "first_cap_nH": 0.35,
-   "limit_total_nH": 1.3,
-   "reference_total_nH": 0.99
-  },
-  {
-   "loop": "USB Port 2/HL_OUT",
-   "switch": "Q502",
-   "tier1": "pass",
-   "loop_total_nH": 0.74,
-   "first_cap_nH": 0.4,
-   "limit_total_nH": 2.17,
-   "reference_total_nH": 1.0
-  }
- ],
- "blocked_edges": "19 of 437",
- "route": "411 of 437 routed, 26 failed",
- "route_timed_out": false,
- "thermal": {
-  "copper_loss_W": 0.98,
-  "max_rise_K": 295.5,
-  "mean_rise_K": 259.1,
-  "h_W_per_m2K": 10.0,
-  "heat_W": 15.83
- },
- "routed_board_check": {
-  "blocked_edges": "16 of 416",
-  "route": {
-   "routed": 391,
-   "failed": 25,
-   "edges": 416,
-   "timed_out": false,
-   "unconnected_after_fill": 37,
-   "text": "391 of 416 routed, 25 failed"
-  },
-  "pre_route": {
-   "loss_W": 1.124,
-   "power_open": {
-    "GND": [
-     "J302",
-     "J301"
-    ]
-   }
-  },
-  "routed": {
-   "loss_W": 2.854,
-   "power_open": {
-    "3V3": [
-     "L201"
-    ]
-   },
-   "loose": [],
-   "drc_errors": 3,
-   "drc_error_types": [
-    "clearance"
-   ],
-   "unconnected_items": 37
-  },
-  "hot_routed": {
-   "pass_count": "7 of 7",
-   "sum_nH": 5.56
-  }
- }
+ "blocked_edges": "21 of 436"
 }

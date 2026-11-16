@@ -1,0 +1,24 @@
+[finish] 01:31:44 1. DRC of the routed board and of the plan
+[finish] 01:31:52 routed: unconnected 15 {'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 1/I2CC_SCL': 1, '3V3': 3, '/USB Port 2/AC_SNS_N': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/SW2': 1, '/USB Port 1/SBU_FLT': 2, '/USB Port 1/I2CC_SDA': 1, 'Net-(C313-Pad2)': 1, '/USB Port 1/CE_N': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 4 {'clearance': 4}
+[finish] 01:31:52 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.521,128.530 (pad U101.10)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.670,128.312 (pad U101.17)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+    trimmed 4 stub ends (4 errors looked at)
+[finish] 01:32:10 trimmed: unconnected 15 {'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 1/I2CC_SCL': 1, '3V3': 3, '/USB Port 2/AC_SNS_N': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/SW2': 1, '/USB Port 1/SBU_FLT': 2, '/USB Port 1/I2CC_SDA': 1, 'Net-(C313-Pad2)': 1, '/USB Port 1/CE_N': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 0 {}
+    PACK_P: 2 pieces
+      piece 1 pads: pads ['R113.1']; fills []; tracks 10 ['F.Cu [104.69, 122.85]-[104.425, 123.1745] w0.20', 'F.Cu [104.325, 123.2245]-[104.225, 123.3245] w0.20', 'F.Cu [104.075, 123.5745]-[104.125, 123.6245] w0.20', 'F.Cu [104.375, 123.2245]-[104.325, 123.2245] w0.20', 'F.Cu [104.075, 123.5245]-[104.075, 123.5745] w0.20', 'F.Cu [104.225, 123.3245]-[104.225, 123.3745] w0.20']; vias ['104.12,123.62']
+    3V3: 4 pieces
+      piece 1 pads: pads ['R313.1', 'TP301.1']; fills ['In3.Cu 24.828 mm2 @[98.75, 121.52]']; tracks 8 ['F.Cu [85.5, 121.52]-[85.675, 121.7745] w0.20', 'F.Cu [85.675, 121.7745]-[86.175, 122.2745] w0.20', 'F.Cu [88.525, 125.3745]-[88.525, 123.7245] w0.20', 'F.Cu [88.3412, 125.8316]-[88.525, 125.3745] w0.20', 'F.Cu [88.525, 123.7245]-[88.775, 123.4745] w0.20', 'In3.Cu [88.775, 123.4745]-[88.775, 123.0745] w0.20']; vias ['88.78,123.47', '86.17,122.27']
+      piece 2 pads: pads ['U204.10']; fills ['In3.Cu 5.585 mm2 @[88.2, 118.2]']; tracks 3 ['F.Cu [85.5, 117.6]-[85.875, 117.5245] w0.20', 'F.Cu [85.875, 117.5245]-[86.125, 117.5245] w0.20', 'In3.Cu [86.125, 117.5245]-[87.675, 117.5245] w0.20']; vias ['86.12,117.52']
+      piece 3 pads: pads ['R314.1']; fills []; tracks 1 ['F.Cu [117.97, 127.1]-[117.97, 127.1] w0.20']; vias []
+    GND: 1 pieces
+[finish] 01:32:11 4. dangling ends of t0
+    removed 4
+[finish] 01:32:29 cleaned: unconnected 15 {'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 1/I2CC_SCL': 1, '3V3': 3, '/USB Port 2/AC_SNS_N': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/SW2': 1, '/USB Port 1/SBU_FLT': 2, '/USB Port 1/I2CC_SDA': 1, 'Net-(C313-Pad2)': 1, '/USB Port 1/CE_N': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 0 {}
+[finish] 01:32:29 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 01:33:01 c: guard ok: 4 new tracks, 0 new vias; loss 1.2570 -> 1.2570 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 15 {'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 1/I2CC_SCL': 1, '3V3': 3, '/USB Port 2/AC_SNS_N': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/SW2': 1, '/USB Port 1/SBU_FLT': 2, '/USB Port 1/I2CC_SDA': 1, 'Net-(C313-Pad2)': 1, '/USB Port 1/CE_N': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 4 {'clearance': 4} ; loss 1.2570 W, power open 0
+finish: finished (c) unconnected 15 {'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 1/I2CC_SCL': 1, '3V3': 3, '/USB Port 2/AC_SNS_N': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/SW2': 1, '/USB Port 1/SBU_FLT': 2, '/USB Port 1/I2CC_SDA': 1, 'Net-(C313-Pad2)': 1, '/USB Port 1/CE_N': 1, '/USB Port 1/CHG_INT': 1} ; DRC errors 0 {} ; loss 1.2570 W, power open 0

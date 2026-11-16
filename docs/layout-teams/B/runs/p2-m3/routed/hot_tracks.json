@@ -1,0 +1,53 @@
+{
+ "items": [
+  {
+   "kind": "track",
+   "net": "Net-(U404-FB)",
+   "layer": "F.Cu",
+   "a": [
+    117.99,
+    68.15
+   ],
+   "b": [
+    119.14,
+    66.7
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "IRQ_N",
+   "layer": "F.Cu",
+   "a": [
+    95.475,
+    95.4745
+   ],
+   "b": [
+    95.475,
+    95.4745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.275,
+    92.5745
+   ],
+   "b": [
+    84.275,
+    92.5745
+   ],
+   "pour": "GND"
+  }
+ ],
+ "tracks": 1,
+ "vias": 2,
+ "nets": [
+  "/USB Port 2/I2CC_SCL",
+  "IRQ_N",
+  "Net-(U404-FB)"
+ ]
+}

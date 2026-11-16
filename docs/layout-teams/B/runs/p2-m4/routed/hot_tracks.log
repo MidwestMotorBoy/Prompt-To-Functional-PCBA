@@ -1,0 +1,4 @@
+  /USB Port 2/I2CC_SCL         0 tracks, 2 vias in the hot pour of GND, x 83.9 to 84.3, y 90.3 to 92.5
+  Net-(U404-FB)                1 tracks, 0 vias in the hot pour of GND, x 118.0 to 119.1, y 66.7 to 68.2
+  SDA                          0 tracks, 1 vias in the hot pour of GND, x 83.3 to 83.3, y 90.8 to 90.8
+hot-pour items: 1 tracks, 3 vias on 3 nets

@@ -1,5 +1,5 @@
 {
- "source_run": "/home/claude/repo/docs/layout-teams/B/runs/r4chg-hot",
+ "source_run": "/home/claude/repo/docs/layout-teams/B/runs/p2a-r5src",
  "straps": [
   {
    "net": "3V3",
@@ -41,8 +41,8 @@
    "tied": 12,
    "untied": [],
    "segments": 74,
-   "length_mm": 141.6,
-   "across_lanes_mm": 36.5,
+   "length_mm": 141.4,
+   "across_lanes_mm": 36.3,
    "narrow_mm": 15.1,
    "clearance_faults": [],
    "paths": [
@@ -75,8 +75,8 @@
      "cells": 133
     },
     {
-     "to": "C444+C446 (6 vias, at 115.2,66.9)",
-     "cells": 232
+     "to": "C444+C446 (8 vias, at 115.2,67.1)",
+     "cells": 230
     },
     {
      "to": "C557 (1 vias, at 85.1,82.0)",
@@ -96,14 +96,14 @@
  ],
  "route_minutes": 80,
  "drc_errors": 0,
- "blocked_edges": "0 of 368",
+ "blocked_edges": "0 of 342",
  "route": {
-  "routed": 356,
-  "failed": 12,
-  "edges": 368,
+  "routed": 341,
+  "failed": 1,
+  "edges": 342,
   "timed_out": false,
-  "unconnected_after_fill": 26,
-  "text": "356 of 368 routed, 12 failed"
+  "unconnected_after_fill": 9,
+  "text": "341 of 342 routed, 1 failed"
  },
  "scored_board": "finished.kicad_pcb (after --post)",
  "filters": [
@@ -111,67 +111,42 @@
   "filter_2.log",
   "filter_3.log",
   "filter_4.log",
-  "filter_5.log"
+  "filter_5.log",
+  "filter_6.log",
+  "filter_7.log",
+  "filter_8.log"
  ],
  "pre_route": {
-  "loss_W": 1.008,
+  "loss_W": 1.012,
   "power_open": {}
  },
  "routed": {
-  "loss_W": 1.186,
+  "loss_W": 1.25,
   "power_open": {},
   "loose": [],
   "drc_errors": 0,
   "drc_error_types": [],
-  "unconnected_items": 26,
-  "unconnected_power": [
-   "Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10 | Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10",
-   "Track [3V3] on In3.Cu (signal H + 5V), length 0.5000 mm | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
-   "Zone 'pc_3V3' [3V3] on F.Cu, priority 20 | Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10",
-   "Pad 38 [3V3] of U401 on F.Cu | Track [3V3] on In3.Cu (signal H + 5V), length 1.3000 mm",
-   "Track [3V3] on F.Cu, length 0.5865 mm | Track [3V3] on F.Cu, length 0.0000 mm"
-  ],
+  "unconnected_items": 4,
+  "unconnected_power": [],
   "unconnected_nets": [
-   "/Cells and Gauge/CELL_P",
-   "/Cells and Gauge/CHG_G",
-   "/Cells and Gauge/WAKE",
-   "/USB Port 1/BTST2",
-   "/USB Port 1/CC2",
-   "/USB Port 1/FSW",
-   "/USB Port 1/ILIM",
-   "/USB Port 1/VBUS",
-   "/USB Port 2/AC_SNS_N",
+   "/USB Port 1/SRP_F",
    "/USB Port 2/LDO_3V3",
-   "/USB Port 2/TS",
-   "/USB Port 2/VBUS",
-   "3V3",
    "EN_5V1",
-   "EN_5V2",
-   "Net-(C313-Pad2)",
-   "Net-(U101-VC1)",
-   "Net-(U102-V4)",
-   "Net-(U403-ACUV)",
-   "Net-(U403-ICHG)",
-   "PACK_P",
-   "SCL"
+   "Net-(C313-Pad2)"
   ],
   "hot_pour_items": {
-   "tracks": 14,
-   "vias": 7,
+   "tracks": 1,
+   "vias": 3,
    "nets": [
-    "/Cells and Gauge/CELL1",
-    "/Cells and Gauge/CELL3",
-    "/USB Port 1/SS_5V",
-    "/USB Port 2/I2CC_SDA",
-    "IRQ_N",
-    "Net-(D511-A)",
-    "Net-(U404-FB)"
+    "/USB Port 2/I2CC_SCL",
+    "Net-(U404-FB)",
+    "SDA"
    ]
   },
   "pack_p_mohm": {
-   "J113": 2.11,
-   "R427": 2.23,
-   "R527": 1.57
+   "J113": 2.61,
+   "R427": 2.68,
+   "R527": 2.2
   }
  },
  "hot_routed": {

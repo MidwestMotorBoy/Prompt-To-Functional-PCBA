@@ -1,0 +1,75 @@
+03:41:15: Debug: Adding duplicate image handler for 'PNG file'
+03:41:15: Debug: Adding duplicate image handler for 'JPEG file'
+03:41:15: Debug: Adding duplicate image handler for 'TIFF file'
+03:41:15: Debug: Adding duplicate image handler for 'GIF file'
+03:41:15: Debug: Adding duplicate image handler for 'PNM file'
+03:41:15: Debug: Adding duplicate image handler for 'PCX file'
+03:41:15: Debug: Adding duplicate image handler for 'IFF file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows icon file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows cursor file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+03:41:15: Debug: Adding duplicate image handler for 'TGA file'
+03:41:15: Debug: Adding duplicate image handler for 'XPM file'
+03:41:15: Debug: Adding duplicate image handler for 'PNG file'
+03:41:15: Debug: Adding duplicate image handler for 'JPEG file'
+03:41:15: Debug: Adding duplicate image handler for 'TIFF file'
+03:41:15: Debug: Adding duplicate image handler for 'GIF file'
+03:41:15: Debug: Adding duplicate image handler for 'PNM file'
+03:41:15: Debug: Adding duplicate image handler for 'PCX file'
+03:41:15: Debug: Adding duplicate image handler for 'IFF file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows icon file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows cursor file'
+03:41:15: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+03:41:15: Debug: Adding duplicate image handler for 'TGA file'
+03:41:15: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 6 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+main PACK_P layer 0: 3 cells dropped, 44792 kept
+main PACK_P layer 1: 3638 cells dropped, 547699 kept
+main PACK_P layer 2: 0 cells dropped, 0 kept
+main PACK_P layer 3: 8 cells dropped, 20376 kept
+main 3V3 layer 0: 3 cells dropped, 16790 kept
+main 3V3 layer 1: 0 cells dropped, 0 kept
+main 3V3 layer 2: 12 cells dropped, 304971 kept
+main 3V3 layer 3: 0 cells dropped, 0 kept
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 9 (0 on long nets)
+fan-out stubs: 0
+aor: 10 hot-pour items in 7 rip-able pieces to lift
+aor power check: start 0.7480 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.625, 'R427': 2.693, 'R527': 2.206, 'D103': 0.177, 'U404': 8.846, 'U504': 11.283, 'U204': 3.204}, open [] (6 s)
+  aor   18 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 9 -> 8, power 0.7480 -> 0.7480 W)
+  aor   24 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 8 -> 7, power 0.7480 -> 0.7480 W)
+  aor   33 s sweep 1 open PACK_P                         ACCEPTED (pulls 1, 2 s, KiCad unconnected 7 -> 6, power 0.7480 -> 0.7467 W)
+  aor   40 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 0, 0 s, KiCad unconnected 6 -> 5, power 0.7467 -> 0.7467 W)
+  aor   86 s sweep 1 open Net-(C313-Pad2)                reverted (IRQ_N failed (pulls 13))
+  aor   87 s sweep 1 open /USB Port 1/SRP_F              reverted (/USB Port 1/SRP_F: blocked by Kelvin copper)
+  aor  120 s sweep 1 open /USB Port 2/LDO_3V3            reverted (/USB Port 2/I2CC_SCL failed (pulls 12))
+  aor  127 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 5 -> 4, power 0.7467 -> 0.7467 W)
+  aor  217 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+  aor  225 s sweep 1 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+  aor  315 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (SDA: no way even with every rip-able route gone)
+  aor  321 s sweep 1 lift lift /USB Port 1/SW1           ACCEPTED (pulls 0, 0 s, KiCad unconnected 4 -> 4, power 0.7467 -> 0.7464 W)
+  aor  368 s sweep 1 lift lift SCL                       ACCEPTED (pulls 0, 40 s, KiCad unconnected 4 -> 4, power 0.7464 -> 0.7457 W)
+  aor  459 s sweep 1 lift lift SDA                       reverted (EN_5V2: no way even with every rip-able route gone)
+  aor  466 s sweep 1 lift lift /USB Port 1/I2CC_SDA      ACCEPTED (pulls 0, 1 s, KiCad unconnected 4 -> 4, power 0.7457 -> 0.7457 W)
+  aor  486 s sweep 1 lift lift Net-(D511-A)              ACCEPTED (pulls 1, 14 s, KiCad unconnected 4 -> 4, power 0.7457 -> 0.7456 W)
+  aor  500 s sweep 2 open Net-(C313-Pad2)                reverted (/MCU/RFIO failed (pulls 15))
+  aor  500 s sweep 2 open /USB Port 1/SRP_F              reverted (/USB Port 1/SRP_F: blocked by Kelvin copper)
+  aor  544 s sweep 2 open /USB Port 2/LDO_3V3            reverted (/USB Port 2/I2CC_SCL failed (pulls 12))
+  aor  623 s sweep 2 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+  aor  630 s sweep 2 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+  aor  698 s sweep 2 lift lift /USB Port 2/I2CC_SCL      reverted (/Cells and Gauge/CELL1 failed (pulls 14))
+  aor  728 s sweep 2 lift lift SDA                       reverted (SDA: ghost path found no blocker)
+aor: 23 tasks, 9 accepted, 14 reverted, 98 pulls; open connections left 4, lifts left 3
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 0, trimmed 0
+unconnected after fill: 4
+routed 359 edges, 4 failed, items added 304
+  FAILED /USB Port 1/SRP_F | aor: /USB Port 1/SRP_F: blocked by Kelvin copper
+  FAILED EN_5V1 | aor: EN_5V1: no way even with every rip-able route gone
+  FAILED Net-(C313-Pad2) | aor: /MCU/RFIO failed (pulls 15)
+  FAILED /USB Port 2/LDO_3V3 | aor: /USB Port 2/I2CC_SCL failed (pulls 12)
+FAILKEY /USB Port 1/SRP_F
+FAILKEY EN_5V1
+FAILKEY Net-(C313-Pad2)
+FAILKEY /USB Port 2/LDO_3V3

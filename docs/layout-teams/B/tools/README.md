@@ -418,3 +418,40 @@ Traps met:
   strap end at 90.05,118.17; tying it back by route costs 12.6 mW (refused by the check) and no legal 3V3 via exists in
   the island (no-via area, In2 BTP_INT / TS1): it needs a plan fix (an In3 corridor there), not the finishing pass.
 - A background job started with the default timeout is stopped after 30 min: give the resume run `timeout` 2 h.
+
+## Phase 2 round 2: the lead's merge (plan p2-m4, one rebuild command)
+
+`bash tools/rebuild_best.sh runs/<new> [--src=runs/p2a-r5src] [--route=80] [--fin=20]` is the one command from
+`best_placement.json` to the routed, finished and scored board: source run (`screen.sh --hot=all`, skipped when
+`--src` holds one), `final_route.sh` (straps, filters, full route, stub trim), then `final_route.sh --resume` with the
+accept-or-revert pass and the seven hot loops. The straps and the filter string live in that script and nowhere else
+(the same string as `FR6` in `runs/p2-m4plan/strings.sh`). Give the job a 4 h limit, or run its two printed commands
+as two background jobs of 2 h each.
+
+What the merged plan changed against worker A's `FR5`:
+- **The trunk is back on the path of `runs/p2-m1`** (along the south of U403, north in a neck under pins 8 to 10).
+  The two vias of `plan/p2-pins-u403.json` (pins 7 and 9 straight south) had pushed it onto a diagonal under pins 1
+  to 6: I2CC_SCL, I2CC_SDA and CHG_INT lost every via site ("no way even with every other route gone" in the local
+  and the PC route of `p2a-r5f`), SW2 lost its via site east of pin 18, and J113 went from 2.11 to 2.65 mohm.
+  `plan/p2-pins-u403b.json` (before `trunk.py`) now lays the whole via row south of U403 first: pins 1, 2, 3, CE_N
+  (pin 7 and R435.2), REGN (R415.1), and ICHG / ILIM (pins 9 / 10) EAST of the neck, north of TH104's B.Cu pads, plus
+  the SW2 via. The row closes the diagonal, so the trunk can only take the old path; `trunk.py --g=0.05` (0.1 put the
+  neck 0.1 mm off centre and lost a width step: 12.2 squares, 11.9 with 0.05).
+- `plan/p2-pins-r6.json` = worker A's `p2-pins-r5.json` plus: CHG_G on F.Cu (R110.1 to Q101.4, the via of r5 is under
+  the trunk again), the FBG / FB / SRN_F fan as three explicit paths east of the ILIM via, FSW (pin 36 west and south
+  at x 107.92), ACOV (pin 35 to R410.2), TS (pin 8 to R416.1, R415.2 to R416.1), CE_N at R417.1 (via), SBU_FLT
+  (U405.9 to R441.2), CELL_P at C110.1 (via in a notch of the FET_MID pour), and the 3V3 ties that the router used
+  to make through the soft In3 pour: TP301.1 and R313.1 by F.Cu tracks into the 3V3 pour at C207.1, U204.10 by a via
+  and a hard In3 link to the strap (`links.py --link=3V3|In3.Cu|0.3|86.12,117.52/90.14,117.52`, last filter).
+
+Traps met:
+- A via laid before `trunk.py` moves the whole trunk, not only its edge: look at the B.Cu picture after every change
+  of the pre-trunk table (`pinlib.py look <spec> <cu.json> out.png "112.5,110.5@GND" --layer=B.Cu --r=6.5`), and
+  read the trunk's "squares" in the filter log (11.3 on p2-m1, 12.0 on the diagonal, 11.9 now).
+- Close the unwanted path with the vias the pins need anyway (the row south of U403) instead of an avoid box.
+- Via pitch 0.75 mm exactly is refused (0.75 < 0.75 within EPS): use 0.76 or more.
+- A table entry on a pad that already has a planner via says "already has copper, skipped"; `"force": true` runs it,
+  but a via inside the pad is refused, so a planner via in a pad cannot be nudged with `drop` + `at`.
+- A 3V3 or PACK_P pad tied by the router through a via into a SOFT inner pour is cut off again by later tracks (the
+  In3 island of TP301.1 / R313.1 on both finished boards): tie such pads in the plan on F.Cu (`"to": "zone"`) or by a
+  hard link.

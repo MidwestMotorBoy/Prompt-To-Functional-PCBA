@@ -1,0 +1,3 @@
+table U403.7 /USB Port 1/CE_N: via at 112.150,111.020, 0.62 mm in 2 pieces, w 0.15  (Port 1 CE_N: R417.1 lies east past the TS and ICHG escapes, )
+table U403.9 Net-(U403-ICHG): via at 113.150,111.020, 0.62 mm in 2 pieces, w 0.15  (Port 1 ICHG to R413.1 (6 mm east): a via just south of the p)
+pins: table 2; 4 tracks (1.2 mm), 2 vias, 0 pour cuts (0.000 mm2); exact-check faults 0; 1 s

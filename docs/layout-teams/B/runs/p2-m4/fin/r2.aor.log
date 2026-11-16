@@ -1,0 +1,59 @@
+03:53:46: Debug: Adding duplicate image handler for 'PNG file'
+03:53:46: Debug: Adding duplicate image handler for 'JPEG file'
+03:53:46: Debug: Adding duplicate image handler for 'TIFF file'
+03:53:46: Debug: Adding duplicate image handler for 'GIF file'
+03:53:46: Debug: Adding duplicate image handler for 'PNM file'
+03:53:46: Debug: Adding duplicate image handler for 'PCX file'
+03:53:46: Debug: Adding duplicate image handler for 'IFF file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows icon file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows cursor file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+03:53:46: Debug: Adding duplicate image handler for 'TGA file'
+03:53:46: Debug: Adding duplicate image handler for 'XPM file'
+03:53:46: Debug: Adding duplicate image handler for 'PNG file'
+03:53:46: Debug: Adding duplicate image handler for 'JPEG file'
+03:53:46: Debug: Adding duplicate image handler for 'TIFF file'
+03:53:46: Debug: Adding duplicate image handler for 'GIF file'
+03:53:46: Debug: Adding duplicate image handler for 'PNM file'
+03:53:46: Debug: Adding duplicate image handler for 'PCX file'
+03:53:46: Debug: Adding duplicate image handler for 'IFF file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows icon file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows cursor file'
+03:53:46: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+03:53:46: Debug: Adding duplicate image handler for 'TGA file'
+03:53:46: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 4 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+main PACK_P layer 0: 3 cells dropped, 44792 kept
+main PACK_P layer 1: 48 cells dropped, 537791 kept
+main PACK_P layer 2: 0 cells dropped, 0 kept
+main PACK_P layer 3: 8 cells dropped, 20376 kept
+main 3V3 layer 0: 3 cells dropped, 16790 kept
+main 3V3 layer 1: 0 cells dropped, 0 kept
+main 3V3 layer 2: 16 cells dropped, 290521 kept
+main 3V3 layer 3: 0 cells dropped, 0 kept
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 4 (0 on long nets)
+fan-out stubs: 0
+aor: 4 hot-pour items in 3 rip-able pieces to lift
+aor power check: start 0.7456 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.611, 'R427': 2.679, 'R527': 2.201, 'D103': 0.177, 'U404': 8.645, 'U504': 11.224, 'U204': 3.207}, open [] (6 s)
+  aor   62 s sweep 1 open Net-(C313-Pad2)                reverted (SCL failed (pulls 12))
+  aor   65 s sweep 1 open /USB Port 1/SRP_F              reverted (/USB Port 1/SRN_F: no way even with every rip-able route gone)
+  aor  104 s sweep 1 open /USB Port 2/LDO_3V3            reverted (/USB Port 2/I2CC_SCL failed (pulls 13))
+  aor  194 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+  aor  201 s sweep 1 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+  aor  291 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (IRQ_N: no way even with every rip-able route gone)
+  aor  382 s sweep 1 lift lift SDA                       reverted (/Cells and Gauge/CELL3: no way even with every rip-able route gone)
+aor: 7 tasks, 0 accepted, 7 reverted, 45 pulls; open connections left 4, lifts left 3
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 0, trimmed 0
+unconnected after fill: 4
+routed 360 edges, 4 failed, items added 0
+  FAILED /USB Port 1/SRP_F | aor: /USB Port 1/SRN_F: no way even with every rip-able route gone
+  FAILED EN_5V1 | aor: EN_5V1: no way even with every rip-able route gone
+  FAILED Net-(C313-Pad2) | aor: SCL failed (pulls 12)
+  FAILED /USB Port 2/LDO_3V3 | aor: /USB Port 2/I2CC_SCL failed (pulls 13)
+FAILKEY /USB Port 1/SRP_F
+FAILKEY EN_5V1
+FAILKEY Net-(C313-Pad2)
+FAILKEY /USB Port 2/LDO_3V3

@@ -1,0 +1,142 @@
+{
+ "items": [
+  {
+   "kind": "track",
+   "net": "Net-(U404-FB)",
+   "layer": "F.Cu",
+   "a": [
+    117.99,
+    68.15
+   ],
+   "b": [
+    119.14,
+    66.7
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/P1_LDO_3V3",
+   "layer": "F.Cu",
+   "a": [
+    104.825,
+    90.0245
+   ],
+   "b": [
+    104.825,
+    90.0245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/USB Port 1/REGN",
+   "layer": "F.Cu",
+   "a": [
+    106.925,
+    90.7745
+   ],
+   "b": [
+    106.925,
+    90.7745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "IRQ_N",
+   "layer": "F.Cu",
+   "a": [
+    95.475,
+    95.4745
+   ],
+   "b": [
+    95.475,
+    95.4745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.275,
+    92.5745
+   ],
+   "b": [
+    84.275,
+    92.5745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/USB Port 1/SW1",
+   "layer": "F.Cu",
+   "a": [
+    107.325,
+    97.7745
+   ],
+   "b": [
+    107.325,
+    97.7745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "SCL",
+   "layer": "F.Cu",
+   "a": [
+    94.325,
+    95.2745
+   ],
+   "b": [
+    94.325,
+    95.2745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "SCL",
+   "layer": "F.Cu",
+   "a": [
+    82.225,
+    90.8245
+   ],
+   "b": [
+    82.225,
+    90.8245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    81.525,
+    90.4745
+   ],
+   "b": [
+    81.525,
+    90.4745
+   ],
+   "pour": "GND"
+  }
+ ],
+ "tracks": 1,
+ "vias": 8,
+ "nets": [
+  "/P1_LDO_3V3",
+  "/USB Port 1/REGN",
+  "/USB Port 1/SW1",
+  "/USB Port 2/I2CC_SCL",
+  "IRQ_N",
+  "Net-(D511-A)",
+  "Net-(U404-FB)",
+  "SCL"
+ ]
+}

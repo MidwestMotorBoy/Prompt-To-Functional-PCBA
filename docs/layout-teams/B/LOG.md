@@ -1474,3 +1474,99 @@ from / to search). README section "Phase 2 round 2: accept-or-revert finishing p
 Files: `runs/p2b-full2aor/` (final.json, post.log, fin/r1.log, fin/r2.log), `runs/p2b-m1fin/` (final.json, post_pass.log = the pass, post.log, routed/*.json, fin/r1.log, fin/r2.log,
 fin/*.hot.log), `runs/p2b-hand/hand.json` and pictures, `runs/p2b-aor1/` (development runs a1..a5, logs).
 Boards local only: `runs/p2b-m1fin/finished.kicad_pcb`, `runs/p2b-full2aor/finished.kicad_pcb`.
+
+## 2026-11-16 04:15 UTC, lead: phase 2 round 2 merge (runs/p2-m4 = best_routed/, placement r5), next two tasks
+
+**State at the start.** Worker B's pass was committed (683cb33). Worker A had committed its plan (1f39468: placement
+r5, `plan/p2-pins-r5.json`, `plan/p2-pins-u403.json`, queue `p2a-r5f` / `p2a-r5fw4`) but wrote no log entry; its local
+route `runs/p2a-r5f` had finished and both PC results were on `route-results`. Its numbers are in the table below and
+its run files are committed with this entry.
+
+**What the lead did.**
+1. Worker B's accept-or-revert pass on worker A's routed board: `runs/p2-m3` (copy of `runs/p2a-r5f`,
+   `final_route.sh --resume --post="finish.sh --modes=aor,aork --min=20 --tol=0.01"`).
+2. Read the failures of `p2a-r5f` (local and PC alike): U403 pins 1, 2, 3 (I2CC_SCL, I2CC_SDA, CHG_INT), SW2,
+   SBU_FLT x2, "no way even with every other route gone". Cause, seen in the B.Cu picture
+   (`runs/p2-look3/u403_B.Cu.png` against `m1fin_u403_B.png`): the two vias of `p2-pins-u403.json` (pins 7 and 9
+   straight south, laid before the trunk) pushed the 5 mm trunk off the path of `runs/p2-m1` onto a diagonal under
+   U403's pins 1 to 6. That took every via site of the south row and the SW2 site, and J113 went from 2.11 to 2.65 mohm.
+3. New plan **p2-m4** (strings in `runs/p2-m4plan/strings.sh`, `FR6`; the same string is in `tools/rebuild_best.sh`):
+   - `plan/p2-pins-u403b.json` before `trunk.py` (replaces `p2-pins-u403.json`): the whole via row south of U403
+     (pin 1 at 108.45,110.4; CE_N of R435.2 at 108.75,111.1; pin 2 at 109.5,111.2; pin 3 at 110.3,111.2; CE_N of pin 7
+     at 111.1,111.3; REGN of R415.1 at 109.64,112.78), ILIM and ICHG EAST of the trunk neck (pin 10 at 114.75,110.45,
+     pin 9 at 114.45,111.15, north of TH104's B.Cu pads) and SW2 (pin 18 at 115.1,106.3). The row closes the diagonal,
+     so the trunk is back on the p2-m1 path; `trunk.py --g=0.05` (11.9 squares; 11.3 on p2-m1, 12.0 on the diagonal).
+   - `plan/p2-pins-r6.json` = worker A's r5 table plus: CHG_G on F.Cu (R110.1 to Q101.4; the r5 via 111.1,114.1 is
+     under the trunk again, the Q101.4 via is gone), FBG / FB / SRN_F as three explicit paths east of the ILIM via, FSW
+     (pin 36 west, south at x 107.92 to R412.1), ACOV (pin 35 to R410.2), TS (pin 8 to R416.1, R415.2 to R416.1), CE_N
+     at R417.1 (via 114.85,112.45), SBU_FLT (U405.9 to R441.2), CELL_P at C110.1 (via 96.27,121.59 in a notch of the
+     FET_MID pour), 3V3 at TP301.1 and R313.1 by F.Cu tracks into the 3V3 pour at C207.1 (`"to": "zone"`), 3V3 at
+     U204.10 by a via at 86.12,117.52 and a hard In3 link to the strap (last `links.py` call).
+   - Screen `runs/p2-m4s`: **0 of 342 blocked**, copper board DRC 0, 1.012 W before routing, power open none.
+4. Full local route + stub trim (`runs/p2-m4`, `p2-m4.route.log`), then the accept-or-revert pass and the hot loops
+   by `--resume` (`p2-m4.resume.log`). Looked at the four layer pictures. `tools/rebuild_best.sh` written (the one
+   command; it was not run end to end, its two `final_route.sh` calls are the ones that made `runs/p2-m4`).
+
+| Run | What | Blocked | Route | Loss before / routed | J113 / R427 / R527 mohm | Power open, loose, power pieces | Unconnected | DRC routed | Hot loops routed | Copper in hot pours |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `runs/p2b-m1fin` (worker B) | r4, round 1 plan + pass | 0 of 368 | 356 of 368, not timed out | 1.008 / 1.183 W | 2.11 / 2.22 / 1.55 | none, none, 1 (3V3 In3 island) | 16 | 0 | 7 of 7, 5.56 nH | 3 tracks, 3 vias |
+| `runs/p2a-r5f` (worker A) | r5, plan FR5, stub trim only | 0 of 353 | 346 of 353, 7 failed, about 39 min, not timed out (PC `p2a-r5f`: 347 of 354, 53.5 min, done; PC `p2a-r5fw4`, 4 mm trunk: 345 of 354, 54.2 min, done) | 1.008 / 1.257 W | 2.65 / 2.71 / 2.29 | none, none, 4 | 15 | 0 (4 before the trim) | 7 of 7, 5.56 nH | 1 track, 8 vias |
+| `runs/p2-m3` (lead) | the same routed board + pass | - | - | - / 1.254 W | 2.65 / 2.71 / 2.26 | none, none, 1 (3V3 In3 island) | 7 | 0 | 7 of 7, 5.56 nH | 1 track, 2 vias |
+| `runs/p2-m4s` (lead) | r5, plan FR6, screen | 0 of 342 | - | 1.012 W / - | - | none | - | copper board 0 | - | - |
+| **`runs/p2-m4`** (lead) | the same, full route + pass + hot loops | 0 of 342 | **341 of 342, 1 failed (EN_5V1), about 40 min, not timed out** | 1.012 / **1.250 W** (1.2499; 1.251 before the pass) | **2.61 / 2.68 / 2.20** | **none, none, none** | **4** (9 before the pass) | **0** (3 before the stub trim) | **7 of 7, 5.56 nH** | 1 track, 3 vias (10 items before the pass) |
+
+Passes: `p2-m3` pass 1 19 min (13 accepted of 43 tasks), pass 2 14 min (kept: 2 hot lifts); `p2-m4` pass 1 12.5 min
+(closed 3V3 R314.1, two PACK_P pieces, ACUV, Port 2 AC_SNS_N; lifted SW1, SCL, Port 1 I2CC_SDA, D511-A), pass 2
+6.7 min, not better, dropped. No pass timed out. The PC route of `p2-m4` (queued 02:56 UTC) had not come back when
+this entry was written.
+
+**Against the definition of done (`runs/p2-m4/final.json`, copy in `best_routed/`):**
+1. Unconnected 0: **not met, 4.**
+   - Port 1 SRP_F, R428.2 (117.21,105.30) to C417.1: the SRN_F track of R429.2 runs north-west to the router's via at
+     115.9,105.65, and with the SW2 via at 115.1,106.3 (lead's table) only 0.35 mm is left between the two vias. Both
+     Kelvin lines need plan copper: SRN_F via nearer R429.2 (about 116.35,105.95), SRP_F from R428.2 west along
+     y 105.3, south at x 115.6 into C417.1 (clear of both vias on paper).
+   - Net-(C313-Pad2), C314.1 (114.78,118.00) to C313.2 / R321.1: the only F.Cu way is the 0.45 mm strip y 118.32 to
+     118.77 between the cap row and U301's pads, and the router's via of C313.1 (116.02,118.15) stands in it. A table
+     path laid first (C314.1 down 0.55, east 1.93, up into C313.2) leaves C313.1's via to go elsewhere.
+   - Port 2 LDO_3V3, R502.1 / R503.1 to R504.1 (93.42,85.90): R503.2 and R504.2 stand between, a power track runs
+     along y 86.48 south of the row, the tracks of U501 pins 16 to 19 come down north of it. Needs two vias or a table
+     path with the pin 17 escape laid first.
+   - EN_5V1, the 53 mm edge from the U404 / R432 copper to U301.12: the router's search ends at its 12 million node
+     cap ("seen -12000001"), which it reports as "no way even with every other route gone"; the pass has the same
+     cap and a 90 s task limit. It routed in `p2a-r5f` (local and PC) and failed on `p2a-r5fw4` (PC) and here: 2 of 4.
+     Cure: copper in the plan for the long run (a hard inner-layer path or waypoint vias in the free band
+     x 98.5 to 101.5, y 82 to 101, and under U301 at 112.5 to 117, 121 to 123), so every edge is under 30 mm.
+2. Power paths: **met.** `power_open` empty, `loose` empty, no unconnected power item: the PACK_P In2 sheet and the
+   3V3 In3 bus are one piece each (first board where this holds; the F.Cu ties of TP301.1 / R313.1 and the U204.10
+   link ended the In3 island).
+3. DRC: **met**, 0 routed and 0 on the copper board.
+4. Hot loops: **met**, 7 of 7 tier 1.
+5. Ringing: **met**, 5.56 nH against 5.54; Port 1 and Port 2 HL_OUT 0.74 to 0.75, the others unchanged.
+6. Loss: **met with no margin**, 1.2499 W (limit 1.25); J113 2.61, R427 2.68 mohm (limit 3.0). PACK_P is 0.406 W of it
+   (0.197 before routing; 0.323 on p2b-m1fin): the trunk alone is about 3.0 mohm and the In2 sheet beside it is cut by
+   long north-south signal tracks (`best_routed/routed_In2.Cu.png`; on p2b-m1fin the sheet's middle stayed whole,
+   J113 2.11). A wider cap at U403 does not help (`--narrow=U403:0.8:3.0`: 11.5 squares against 11.9).
+7. Renders looked at (`best_routed/routed_F.Cu.png`, `_B.Cu.png`, `_In2.Cu.png`, `_In3.Cu.png`): power stages
+   compact, the trunk is one strip on the bottom along the south of U403 and north through the neck to J113 and R427,
+   no sprawl, 3V3 bus and straps whole. **Not met** for the hot-loop pours: Net-(U404-FB) one F.Cu track 117.99,68.15
+   to 119.14,66.7 (the router's straight pad-to-pad track through the HL_5V GND pour), Port 2 I2CC_SCL two vias
+   (83.93,90.27 and 84.28,92.52), SDA one via (83.28,90.82).
+8. `REPORT.md` and `SKILL-NOTES.md` for phase 2 are still owed.
+
+**Kept.** `best_routed/` = `runs/p2-m4` (board, .kicad_pro, .kicad_dru, final.json, summary.json, four pictures).
+`best_placement.json` = `candidates/r5.json` (r4 with U405 0.4 mm south, C451 0.5 mm south, R432 at 113.8,71.4);
+`score.json`, `F.png`, `B.png` at the team root are now r5's scorecard files from `runs/p2a-r5src` (no plain full
+route was run for r5); r4's are `score_r4.json`, `F_r4.png`, `B_r4.png` and `candidates/r4.json`.
+
+**Next round (two tasks).** A: plan copper for the last four connections (SRP_F / SRN_F pair, C314.1, Port 2
+LDO_3V3, EN_5V1 long run), the three hot-pour nets, and a route of the new plan with the pass. B: a loss pass in the
+finishing pass (re-lay the In2 tracks that cut the PACK_P sheet most, accept by loss), long edges in the pass, and
+the two documents.
+
+Files: `plan/p2-pins-u403b.json`, `plan/p2-pins-r6.json`, `tools/rebuild_best.sh`, `tools/README.md` (section "the
+lead's merge"), `route_queue/p2-m4.*`, `runs/p2-m4plan/strings.sh` and pictures, `runs/p2-m4s/`, `runs/p2-m4/`
+(final.json, final_after_route.json, score.json, dc.json, ghost.log, route_failed.txt, post.log, post_route.log,
+routed/*.json, fin/r1.aor.log, fin/r2.aor.log, look/*.png), `runs/p2-m3/` (the same set), `runs/p2a-r5f/`,
+`runs/p2a-r5src/`, `runs/p2a-s2/`, `runs/p2a-s2w4/` (worker A's numbers), `runs/p2-look3/*.png`. Boards local only:
+`runs/p2-m4/routed.kicad_pcb`, `finished.kicad_pcb`, `runs/p2-m3/finished.kicad_pcb`.
