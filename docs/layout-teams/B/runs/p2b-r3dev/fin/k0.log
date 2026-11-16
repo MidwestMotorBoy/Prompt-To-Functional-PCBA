@@ -1,0 +1,45 @@
+04:12:44: Debug: Adding duplicate image handler for 'PNG file'
+04:12:44: Debug: Adding duplicate image handler for 'JPEG file'
+04:12:44: Debug: Adding duplicate image handler for 'TIFF file'
+04:12:44: Debug: Adding duplicate image handler for 'GIF file'
+04:12:44: Debug: Adding duplicate image handler for 'PNM file'
+04:12:44: Debug: Adding duplicate image handler for 'PCX file'
+04:12:44: Debug: Adding duplicate image handler for 'IFF file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows icon file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows cursor file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+04:12:44: Debug: Adding duplicate image handler for 'TGA file'
+04:12:44: Debug: Adding duplicate image handler for 'XPM file'
+04:12:44: Debug: Adding duplicate image handler for 'PNG file'
+04:12:44: Debug: Adding duplicate image handler for 'JPEG file'
+04:12:44: Debug: Adding duplicate image handler for 'TIFF file'
+04:12:44: Debug: Adding duplicate image handler for 'GIF file'
+04:12:44: Debug: Adding duplicate image handler for 'PNM file'
+04:12:44: Debug: Adding duplicate image handler for 'PCX file'
+04:12:44: Debug: Adding duplicate image handler for 'IFF file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows icon file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows cursor file'
+04:12:44: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+04:12:44: Debug: Adding duplicate image handler for 'TGA file'
+04:12:44: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 4 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 4 (0 on long nets)
+fan-out stubs: 0
+aor power check: start 0.7456 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.611, 'R427': 2.679, 'R527': 2.201, 'D103': 0.177, 'U404': 8.645, 'U504': 11.224, 'U204': 3.207}, open [] (6 s)
+aor loss: PACK_P sheet on layer 1: 1 outlines, 2121 mm2
+aor loss: PACK_P 0.4039 W on the board; 59 pieces on the sheet ranked in 172 s; best: /Cells and Gauge/CELL3 (1228 cells) 32.8 mW, EN_5V2 (925 cells) 31.8 mW, SDA (786 cells) 12.2 mW, /USB Port 1/REGN (909 cells) 4.1 mW, /USB Port 1/SBU_FLT (340 cells) 3.9 mW, SCL (1286 cells) 3.6 mW, /USB Port 2/BTST1 (367 cells) 3.5 mW, /USB Port 1/TS (463 cells) 3.2 mW, /USB Port 2/REGN x2 3.1 mW, /Cells and Gauge/CHG (232 cells) 2.6 mW
+aor: 0 tasks, 0 accepted, 0 reverted, 0 pulls; open connections left 4, lifts left 0
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 0, trimmed 0
+unconnected after fill: 4
+routed 360 edges, 4 failed, items added 0
+  FAILED /USB Port 1/SRP_F | not tried with rip-up
+  FAILED EN_5V1 | not tried with rip-up
+  FAILED Net-(C313-Pad2) | not tried with rip-up
+  FAILED /USB Port 2/LDO_3V3 | not tried with rip-up
+FAILKEY /USB Port 1/SRP_F
+FAILKEY EN_5V1
+FAILKEY Net-(C313-Pad2)
+FAILKEY /USB Port 2/LDO_3V3

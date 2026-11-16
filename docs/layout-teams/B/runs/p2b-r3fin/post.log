@@ -1,0 +1,124 @@
+[finish] 05:10:55 1. DRC of the routed board and of the plan
+[finish] 05:11:03 routed: unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, 'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3}
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 05:11:05 stub ends in the clearance errors of r0 (fin_trim.py)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.670,128.312 (pad U101.17)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.479,128.530 (pad U101.10)
+      /Cells and Gauge/CELL_1N F.Cu start 102.900,128.800 -> 102.911,129.070 (pad U101.16)
+      /Cells and Gauge/CELL_1N F.Cu start 100.100,128.800 -> 100.089,129.070 (pad U101.9)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+    trimmed 6 stub ends (3 errors looked at)
+[finish] 05:11:23 trimmed: unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, 'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {}
+    PACK_P: 3 pieces
+      piece 1 pads: pads ['R113.1']; fills ['In2.Cu 8.628 mm2 @[107.47, 115.29]']; tracks 5 ['F.Cu [104.69, 122.85]-[104.725, 122.8745] w0.20', 'In2.Cu [104.725, 122.8745]-[104.725, 120.4745] w0.20', 'In2.Cu [104.725, 120.4745]-[105.875, 120.4745] w0.20', 'In2.Cu [105.875, 116.8745]-[105.675, 116.8745] w0.20', 'In2.Cu [105.875, 120.4745]-[105.875, 116.8745] w0.20']; vias ['104.72,122.87']
+      piece 2 pads: pads ['C107.1']; fills ['In2.Cu 0.223 mm2 @[92.28, 121.23]']; tracks 3 ['F.Cu [92.0, 122.27]-[92.025, 122.5745] w0.20', 'F.Cu [92.025, 122.5745]-[92.025, 122.8245] w0.20', 'In2.Cu [92.025, 122.8245]-[92.025, 121.3245] w0.20']; vias ['92.03,122.82']
+    3V3: 2 pieces
+      piece 1 pads: pads ['R314.1']; fills []; tracks 1 ['F.Cu [117.97, 127.1]-[117.97, 127.1] w0.20']; vias []
+    GND: 1 pieces
+    == PACK_P: 275 items, 3 groups (largest 261)
+    == 3V3: 145 items, 2 groups (largest 143)
+    fin_report: 6 unconnected items kept, 3 power items replaced by 3 piece edges
+[finish] 05:11:28 2. accept-or-revert pass 1 from t0 (deadline 35 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 10)
+    aor: 10 hot-pour items in 7 rip-able pieces to lift
+    aor power check: start 0.7480 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.625, 'R427': 2.693, 'R527': 2.206, 'D103': 0.177, 'U404': 8.846, 'U504': 11.283, 'U204': 3.204}, open [] (6 s)
+      aor   18 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 9 -> 8, power 0.7480 -> 0.7480 W)
+      aor   24 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 8 -> 7, power 0.7480 -> 0.7480 W)
+      aor   33 s sweep 1 open PACK_P                         ACCEPTED (pulls 1, 2 s, KiCad unconnected 7 -> 6, power 0.7480 -> 0.7467 W)
+      aor   40 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 0, 0 s, KiCad unconnected 6 -> 5, power 0.7467 -> 0.7467 W)
+      aor  121 s sweep 1 open Net-(C313-Pad2)                reverted (/MCU/SWCLK failed (pulls 16))
+      aor  121 s sweep 1 open /USB Port 1/SRP_F              reverted (/USB Port 1/SRP_F: blocked by Kelvin copper)
+      aor  147 s sweep 1 open /USB Port 2/LDO_3V3            ACCEPTED (pulls 3, 19 s, KiCad unconnected 5 -> 4, power 0.7467 -> 0.7472 W)
+      aor  154 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 4 -> 3, power 0.7472 -> 0.7472 W)
+      aor  971 s sweep 1 open EN_5V1                         reverted (/USB Port 1/ILIM failed (pulls 46))
+      aor  978 s sweep 1 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+      aor  992 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (power: PACK_P to U504 12.00 mohm (start 11.28))
+      aor  998 s sweep 1 lift lift /USB Port 1/SW1           ACCEPTED (pulls 0, 0 s, KiCad unconnected 3 -> 3, power 0.7472 -> 0.7471 W)
+      aor 1037 s sweep 1 lift lift SCL                       ACCEPTED (pulls 0, 32 s, KiCad unconnected 3 -> 3, power 0.7471 -> 0.7446 W)
+      aor 1127 s sweep 1 lift lift SDA                       reverted (SCL failed (pulls 13))
+      aor 1134 s sweep 1 lift lift /USB Port 1/I2CC_SDA      ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.7446 -> 0.7452 W)
+      aor 1141 s sweep 1 lift lift Net-(D511-A)              ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.7452 -> 0.7453 W)
+      aor 1154 s sweep 2 open Net-(C313-Pad2)                reverted (CHG_INH failed (pulls 15))
+      aor 1155 s sweep 2 open /USB Port 1/SRP_F              reverted (/USB Port 1/SRP_F: blocked by Kelvin copper)
+      aor 1468 s sweep 2 open EN_5V1                         reverted (power: loss 0.7612 W (now 0.7453, start 0.7480))
+      aor 1476 s sweep 2 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+      aor 1493 s sweep 2 lift lift /USB Port 2/I2CC_SCL      reverted (power: PACK_P to U504 11.66 mohm (start 11.28))
+      aor 1513 s sweep 2 lift lift SDA                       reverted (SDA: ghost path found no blocker)
+    aor: 22 tasks, 10 accepted, 12 reverted, 113 pulls; open connections left 3, lifts left 3
+    unconnected after fill: 3
+[finish] 05:37:03 pass 1: unconnected 3 {'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; hot-pour items 4
+    == PACK_P: 282 items, 1 groups (largest 282)
+    == 3V3: 154 items, 1 groups (largest 154)
+    fin_report: 3 unconnected items kept, 0 power items replaced by 0 piece edges
+[finish] 05:37:07 2. accept-or-revert pass 2 from r1 (deadline 35 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 4)
+    aor: 4 hot-pour items in 3 rip-able pieces to lift
+    aor power check: start 0.7453 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.606, 'R427': 2.674, 'R527': 2.194, 'D103': 0.177, 'U404': 8.357, 'U504': 11.25, 'U204': 3.207}, open [] (7 s)
+      aor  102 s sweep 1 open Net-(C313-Pad2)                reverted (IRQ_N: no way even with every rip-able route gone)
+      aor  110 s sweep 1 open /USB Port 1/SRP_F              reverted (Kelvin /USB Port 1/SRN_F laid again 9.0 mm long (was 6.1))
+      aor  429 s sweep 1 open EN_5V1                         reverted (power: loss 0.7500 W (now 0.7453, start 0.7453))
+      aor  436 s sweep 1 lift lift Net-(U404-FB)             reverted (lift: hot-pour items of the net 1 -> 1, loss not lower)
+      aor  450 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (power: PACK_P to U504 11.60 mohm (start 11.25))
+      aor  466 s sweep 1 lift lift SDA                       reverted (SDA: ghost path found no blocker)
+    aor: 6 tasks, 0 accepted, 6 reverted, 26 pulls; open connections left 3, lifts left 3
+    unconnected after fill: 3
+[finish] 05:45:13 pass 2: unconnected 3 {'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; hot-pour items 4
+[finish] 05:45:13 pass 2 not better (score 3 vs 3, hot 4 vs 4), dropped
+[finish] 05:45:29 2. loss pass 3 from r1 (deadline 35 min; task 90 s / 12 pulls; loss 1.24930 W; hot-pour items 4)
+    aor power check: start 0.7453 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.606, 'R427': 2.674, 'R527': 2.194, 'D103': 0.177, 'U404': 8.357, 'U504': 11.25, 'U204': 3.207}, open [] (6 s)
+    aor loss: PACK_P sheet on layer 1: 1 outlines, 2121 mm2
+    aor loss: PACK_P 0.4030 W on the board; 60 pieces on the sheet ranked in 180 s; best: /Cells and Gauge/CELL3 (1228 cells) 32.8 mW, EN_5V2 (921 cells) 32.0 mW, SDA (786 cells) 10.9 mW, /USB Port 1/SBU_FLT (340 cells) 4.5 mW, /USB Port 1/REGN (905 cells) 4.2 mW, /USB Port 2/TS (331 cells) 3.9 mW, /USB Port 2/BTST1 (363 cells) 3.6 mW, /USB Port 2/REGN x2 3.4 mW, /USB Port 1/TS (459 cells) 3.1 mW, /Cells and Gauge/CHG (232 cells) 2.8 mW
+      aor  232 s sweep 1 loss loss /Cells and Gauge/CELL3 (1228 cells) [full] ranked 32.8  ACCEPTED (pulls 0, 35 s, KiCad unconnected 3 -> 3, power 0.7453 -> 0.7199 W, PACK_P {'J113': 2.501, 'R427': 2.568, 'R527': 1.81, 'D103': 0.177, 'U404': 8.206, 'U504': 9.048, 'U204': 3.138}, new copper on the sheet 412 cells)
+      aor  256 s sweep 1 loss loss EN_5V2 (921 cells) [full] ranked 32.0 mW ACCEPTED (pulls 0, 18 s, KiCad unconnected 3 -> 3, power 0.7199 -> 0.6881 W, PACK_P {'J113': 2.254, 'R427': 2.328, 'R527': 1.806, 'D103': 0.177, 'U404': 7.416, 'U504': 8.695, 'U204': 3.134}, new copper on the sheet 12 cells)
+      aor  323 s sweep 1 loss loss SDA (786 cells) [full] ranked 10.9 mW reverted (/USB Port 2/I2CC_SDA failed (pulls 15))
+      aor  413 s sweep 1 loss loss SDA (786 cells) [box:3] ranked 10.9 mW reverted (SCL failed (pulls 16))
+      aor  483 s sweep 1 loss loss /USB Port 1/SBU_FLT (340 cells) [full] ranked 4.5 mW reverted (/USB Port 1/SBU_FLT failed (pulls 13))
+      aor  573 s sweep 1 loss loss /USB Port 1/SBU_FLT (340 cells) [box:3] ranked 4.5 mW reverted (SCL failed (pulls 20))
+      aor  584 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [full] ranked 4.2 mW reverted (/USB Port 1/DRV_SUP failed (pulls 13))
+      aor  595 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [box:3] ranked 4.2 mW reverted (/USB Port 1/DRV_SUP failed (pulls 13))
+      aor  603 s sweep 1 loss loss /USB Port 2/TS (331 cells) [full] ranked 3.9 mW ACCEPTED (pulls 0, 2 s, KiCad unconnected 3 -> 3, power 0.6881 -> 0.6853 W, PACK_P {'J113': 2.245, 'R427': 2.318, 'R527': 1.8, 'D103': 0.177, 'U404': 7.241, 'U504': 7.355, 'U204': 3.14}, new copper on the sheet 8 cells)
+      aor  613 s sweep 1 loss loss /USB Port 2/BTST1 (363 cells) [full] ranked 3.6 mW reverted (loss 0.6853 -> 0.6845 W, not 1.0 mW lower (new copper on the sheet 8 cells))
+      aor  622 s sweep 1 loss loss /USB Port 2/BTST1 (363 cells) [box:3] ranked 3.6 mW reverted (loss 0.6853 -> 0.6845 W, not 1.0 mW lower (new copper on the sheet 8 cells))
+      aor  634 s sweep 1 loss loss /USB Port 2/REGN x2 [full] ranked 3.4 mW reverted (loss 0.6853 -> 0.6860 W, not 1.0 mW lower (new copper on the sheet 620 cells))
+      aor  647 s sweep 1 loss loss /USB Port 2/REGN x2 [box:3] ranked 3.4 mW reverted (loss 0.6853 -> 0.6860 W, not 1.0 mW lower (new copper on the sheet 758 cells))
+      aor  655 s sweep 1 loss loss /USB Port 1/TS (459 cells) [full] ranked 3.1 mW ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.6853 -> 0.6762 W, PACK_P {'J113': 2.182, 'R427': 2.254, 'R527': 1.783, 'D103': 0.177, 'U404': 6.611, 'U504': 7.125, 'U204': 3.135}, new copper on the sheet 352 cells)
+      aor  666 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [full] ranked 2.8 mW reverted (power: loss 0.6793 W (now 0.6762, start 0.7453))
+      aor  676 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [box:3] ranked 2.8 mW reverted (power: loss 0.6882 W (now 0.6762, start 0.7453))
+      aor  702 s sweep 1 loss loss IRQ_N (600 cells) [full] ranked 2.5 mW reverted (loss 0.6762 -> 0.6756 W, not 1.0 mW lower (new copper on the sheet 20 cells))
+      aor  733 s sweep 1 loss loss IRQ_N (600 cells) [box:3] ranked 2.5 mW reverted (loss 0.6762 -> 0.6756 W, not 1.0 mW lower (new copper on the sheet 20 cells))
+      aor  745 s sweep 1 loss loss /USB Port 2/REGN (264 cells) [full] ranked 2.4 mW reverted (loss 0.6762 -> 0.6771 W, not 1.0 mW lower (new copper on the sheet 608 cells))
+      aor  757 s sweep 1 loss loss /USB Port 2/REGN (264 cells) [box:3] ranked 2.4 mW reverted (loss 0.6762 -> 0.6771 W, not 1.0 mW lower (new copper on the sheet 905 cells))
+    aor loss: PACK_P 0.3339 W on the board; 60 pieces on the sheet ranked in 186 s; best: SDA (786 cells) 15.2 mW, /Cells and Gauge/CHG (232 cells) 10.0 mW, /USB Port 1/REGN (905 cells) 9.9 mW, /Cells and Gauge/CELL3 (412 cells) 7.5 mW, /USB Port 1/TS (352 cells) 6.1 mW, /USB Port 1/SBU_FLT (340 cells) 3.6 mW, SCL (769 cells) 3.5 mW, /USB Port 1/HIDRV2 (66 cells) 2.2 mW, /Cells and Gauge/TS4 (34 cells) 1.9 mW, /USB Port 1/C_CC1 (142 cells) 1.8 mW
+      aor 1003 s sweep 2 loss loss /Cells and Gauge/CELL3 (412 cells) [full] ranked 7.5 mW reverted (power: loss 0.6819 W (now 0.6762, start 0.7453))
+      aor 1046 s sweep 2 loss loss /Cells and Gauge/CELL3 (412 cells) [box:3] ranked 7.5 m reverted (power: loss 0.6819 W (now 0.6762, start 0.7453))
+      aor 1055 s sweep 2 loss loss /USB Port 1/TS (352 cells) [full] ranked 6.1 mW reverted (loss 0.6762 -> 0.6762 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+      aor 1065 s sweep 2 loss loss /USB Port 1/TS (352 cells) [box:3] ranked 6.1 mW reverted (loss 0.6762 -> 0.6762 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+      aor 1082 s sweep 2 loss loss SCL (769 cells) [full] ranked 3.5 mW ACCEPTED (pulls 0, 10 s, KiCad unconnected 3 -> 3, power 0.6762 -> 0.6739 W, PACK_P {'J113': 2.168, 'R427': 2.24, 'R527': 1.785, 'D103': 0.177, 'U404': 6.518, 'U504': 6.698, 'U204': 3.124}, new copper on the sheet 215 cells)
+      aor 1089 s sweep 2 loss loss /USB Port 1/HIDRV2 (66 cells) [full] ranked 2.2 mW ACCEPTED (pulls 0, 0 s, KiCad unconnected 3 -> 3, power 0.6739 -> 0.6718 W, PACK_P {'J113': 2.152, 'R427': 2.222, 'R527': 1.785, 'D103': 0.177, 'U404': 6.466, 'U504': 6.681, 'U204': 3.124}, new copper on the sheet 4 cells)
+      aor 1090 s sweep 2 loss loss /Cells and Gauge/TS4 (34 cells) [full] ranked 1.9 mW reverted (KiCad connectivity: unconnected 3 -> 4)
+      aor 1090 s sweep 2 loss loss /Cells and Gauge/TS4 (34 cells) [box:3] ranked 1.9 mW reverted (KiCad connectivity: unconnected 3 -> 4)
+      aor 1097 s sweep 2 loss loss /USB Port 1/C_CC1 (142 cells) [full] ranked 1.8 mW ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.6718 -> 0.6697 W, PACK_P {'J113': 2.139, 'R427': 2.208, 'R527': 1.785, 'D103': 0.177, 'U404': 6.223, 'U504': 6.489, 'U204': 3.117}, new copper on the sheet 0 cells)
+      aor 1113 s sweep 2 loss loss /P1_LDO_3V3 x3 [full] ranked 1.6 mW reverted (loss 0.6697 -> 0.6716 W, not 1.0 mW lower (new copper on the sheet 548 cells))
+      aor 1129 s sweep 2 loss loss /P1_LDO_3V3 x3 [box:3] ranked 1.6 mW reverted (power: loss 0.7074 W (now 0.6697, start 0.7453))
+      aor 1141 s sweep 2 loss loss /USB Port 1/I2CC_SDA (659 cells) [full] ranked 1.4 mW reverted (loss 0.6697 -> 0.6700 W, not 1.0 mW lower (new copper on the sheet 510 cells))
+      aor 1155 s sweep 2 loss loss /USB Port 1/I2CC_SDA (659 cells) [box:3] ranked 1.4 mW reverted (power: loss 0.7073 W (now 0.6697, start 0.7453))
+    aor loss: PACK_P 0.3274 W on the board; 60 pieces on the sheet ranked in 194 s; best: SDA (786 cells) 15.4 mW, /Cells and Gauge/CHG (232 cells) 9.7 mW, /Cells and Gauge/CELL3 (412 cells) 9.0 mW, /USB Port 1/REGN (905 cells) 8.1 mW, /USB Port 1/TS (352 cells) 7.1 mW, IRQ_N (600 cells) 6.0 mW, /USB Port 2/CHG_INT (569 cells) 4.3 mW, /USB Port 2/SBU_FLT (219 cells) 3.0 mW, /USB Port 1/I2CC_SCL (244 cells) 2.9 mW, /USB Port 2/TS (8 cells) 2.1 mW
+      aor 1359 s sweep 3 loss loss /USB Port 2/CHG_INT (569 cells) [full] ranked 4.3 mW ACCEPTED (pulls 0, 4 s, KiCad unconnected 3 -> 3, power 0.6697 -> 0.6674 W, PACK_P {'J113': 2.12, 'R427': 2.188, 'R527': 1.779, 'D103': 0.177, 'U404': 6.064, 'U504': 6.738, 'U204': 3.103}, new copper on the sheet 458 cells)
+      aor 1367 s sweep 3 loss loss /USB Port 2/SBU_FLT (219 cells) [full] ranked 3.0 mW reverted (loss 0.6674 -> 0.6673 W, not 1.0 mW lower (new copper on the sheet 178 cells))
+      aor 1376 s sweep 3 loss loss /USB Port 2/SBU_FLT (219 cells) [box:3] ranked 3.0 mW reverted (power: loss 0.6738 W (now 0.6674, start 0.7453))
+      aor 1385 s sweep 3 loss loss /USB Port 1/I2CC_SCL (244 cells) [full] ranked 2.9 mW ACCEPTED (pulls 0, 2 s, KiCad unconnected 3 -> 3, power 0.6674 -> 0.6647 W, PACK_P {'J113': 2.115, 'R427': 2.183, 'R527': 1.721, 'D103': 0.177, 'U404': 5.97, 'U504': 6.242, 'U204': 3.064}, new copper on the sheet 8 cells)
+      aor 1395 s sweep 3 loss loss /USB Port 2/TS (8 cells) [full] ranked 2.1 mW reverted (loss 0.6647 -> 0.6645 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+      aor 1407 s sweep 3 loss loss /USB Port 2/TS (8 cells) [box:3] ranked 2.1 mW reverted (loss 0.6647 -> 0.6645 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+    aor: 39 tasks, 9 accepted, 30 reverted, 92 pulls; open connections left 3, lifts left 0
+    unconnected after fill: 3
+[finish] 06:09:30 pass 3: unconnected 3 {'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 0 {} ; hot-pour items 4 ; loss 1.16780 W
+[finish] 06:09:30 3. hand tracks /home/claude/repo/docs/layout-teams/B/runs/p2b-r3hand/hand.json on r3
+    handroute: 22 hot-loop pours of the plan board are obstacles
+    handroute: 12 segments, 0 vias checked, 0 faults (coordinates for runs/p2-m4/finished.kicad_pcb (valid on boards made from it: runs/p2b-r3*))
+[finish] 06:09:50 hand: unconnected 1 {'EN_5V1': 1} ; DRC errors 0 {}
+[finish] 06:09:50 4. dangling ends of h
+    removed 4
+[finish] 06:10:08 cleaned: unconnected 1 {'EN_5V1': 1} ; DRC errors 0 {}
+[finish] 06:10:08 5. power guard
+[finish] 06:10:39 c: guard ok: 647 new tracks, 58 new vias; loss 1.2512 -> 1.1677 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 9 {'PACK_P': 2, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '3V3': 1, '/USB Port 2/AC_SNS_N': 1, 'EN_5V1': 1, '/USB Port 1/SRP_F': 1, 'Net-(C313-Pad2)': 1} ; DRC errors 3 {'clearance': 3} ; loss 1.2512 W, power open 0
+finish: finished (c) unconnected 1 {'EN_5V1': 1} ; DRC errors 0 {} ; loss 1.1677 W, power open 0

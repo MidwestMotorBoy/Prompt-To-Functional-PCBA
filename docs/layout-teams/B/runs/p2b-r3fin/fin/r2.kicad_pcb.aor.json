@@ -1,0 +1,62 @@
+{
+ "stats": {
+  "pulls": 26,
+  "tasks": 6,
+  "accepted": 0,
+  "reverted": 6
+ },
+ "log": [
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "Net-(C313-Pad2)",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "/USB Port 1/SRP_F",
+   "ok": false,
+   "why": "Kelvin /USB Port 1/SRN_F laid again 9.0 mm long (was 6.1)"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "power: loss 0.7500 W (now 0.7453, start 0.7453)"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift Net-(U404-FB)",
+   "ok": false,
+   "why": "lift: hot-pour items of the net 1 -> 1, loss not lower"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /USB Port 2/I2CC_SCL",
+   "ok": false,
+   "why": "power: PACK_P to U504 11.60 mohm (start 11.25)"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift SDA",
+   "ok": false,
+   "why": "SDA: ghost path found no blocker"
+  }
+ ],
+ "open_left": [
+  "Net-(C313-Pad2) Track [Net-(C313-Pad2)] on F.Cu, length 0.9600 mm",
+  "/USB Port 1/SRP_F Pad 2 [/USB Port 1/SRP_F] of R428 on F.Cu",
+  "EN_5V1 Track [EN_5V1] on F.Cu, length 3.3978 mm"
+ ],
+ "lifts_left": [
+  "Net-(U404-FB)",
+  "/USB Port 2/I2CC_SCL",
+  "SDA"
+ ]
+}

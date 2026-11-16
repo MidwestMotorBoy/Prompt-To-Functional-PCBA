@@ -1,0 +1,3 @@
+{"board": "runs/p2-m4/finished.kicad_pcb",
+ "tracks": [{"net": "/USB Port 2/LDO_3V3", "layer": "F.Cu", "w": 0.15, "from": "R502.1", "to": "R504.1"}],
+ "vias": []}

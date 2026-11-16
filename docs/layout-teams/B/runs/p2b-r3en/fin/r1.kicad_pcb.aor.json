@@ -1,0 +1,21 @@
+{
+ "stats": {
+  "pulls": 0,
+  "tasks": 1,
+  "accepted": 0,
+  "reverted": 1
+ },
+ "log": [
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "power: loss 0.7023 W (now 0.6645, start 0.6645)"
+  }
+ ],
+ "open_left": [
+  "EN_5V1 Track [EN_5V1] on F.Cu, length 3.3978 mm"
+ ],
+ "lifts_left": []
+}

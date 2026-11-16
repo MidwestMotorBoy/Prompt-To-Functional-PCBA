@@ -1645,3 +1645,80 @@ score.json, dc.json, ghost.log, route_failed.txt, post.log, routed/*.json and lo
 `runs/p2a-m5.*.out`, `runs/p2a-m5.route.log`, `runs/p2a-m5.resume.log`, `runs/p2r3_s1/`, `runs/p2r3_s2/`,
 `runs/p2r3_s3nv/` (final.json, ghost.log, score.json), `runs/p2r3_work/*.png`, `runs/p2r3_viatest/addvia.py`.
 Boards local only: `runs/p2a-m5/routed.kicad_pcb`, `runs/p2a-m5/finished.kicad_pcb`, `runs/p2r3_s2/cu.kicad_pcb`.
+
+## 2026-11-16 06:55 UTC, worker B (phase 2 round 3): loss pass, long edges, REPORT.md and SKILL-NOTES.md
+
+**--post string used** (`runs/p2b-r3fin`, `final_route.sh runs/p2a-r5src runs/p2b-r3fin --straps="$ST" --filters="$FR6" --route=80 --resume`,
+copy of `runs/p2-m4` with its routed board; command in `runs/p2b-r3fin/cmd.sh`):
+`--post="finish.sh --modes=aor,aork,loss --min=35 --tol=0.01 --long=30 --hand=/home/claude/repo/docs/layout-teams/B/runs/p2b-r3hand/hand.json"`.
+Pass 1 aor 25.6 min (about 14 min of it on EN_5V1), pass 2 aork 8.1 min (not better, dropped), pass 3 loss 24.0 min,
+hand tracks + clean + guard 1.2 min, scoring with the seven hot loops 1.5 min; nothing timed out. Then
+`runs/p2b-r3en` (its routed board = the finished board of p2b-r3fin):
+`--post="finish.sh --modes=aork,loss --min=30 --tol=0.01 --long=30 --longx=--longptol=0.02 --no-lift"`: aork 0.8 min
+(EN_5V1 refused by power), loss 18.4 min, scoring 1 min; nothing timed out.
+
+| final.json, routed board | p2-m4 (before) | p2b-r3fin | **p2b-r3en** |
+|---|---|---|---|
+| unconnected | 4 (SRP_F, Port 2 LDO_3V3, EN_5V1, C313-Pad2) | 1 (EN_5V1) | **1 (EN_5V1)** |
+| DRC errors | 0 | 0 | **0** |
+| power_open / loose / unconnected_power | none / none / none | none / none / none | **none / none / none** |
+| loss | 1.250 W | 1.168 W | **1.161 W** |
+| PACK_P J113 / R427 / R527 mohm | 2.61 / 2.68 / 2.20 | 2.12 / 2.18 / 1.72 | **2.08 / 2.15 / 1.64** |
+| hot loops | 7 of 7, 5.56 nH | 7 of 7, 5.56 nH | **7 of 7, 5.56 nH** (each loop as p2-m4: 1.02, 0.70, 0.78, 0.75, 0.76, 0.80, 0.75) |
+| hot_pour_items | 1 track, 3 vias | 1 track, 3 vias | 1 track, 3 vias (U404-FB, Port 2 I2CC_SCL, SDA) |
+
+Item 1 target (loss 1.21 W or less, J113 and R427 2.4 or less, unconnected 4 or fewer, DRC 0, hot loops within 0.02
+nH per loop): **met** on both boards. Renders of p2b-r3fin looked at (`runs/p2b-r3fin/look/finished_*.png`): power
+stages compact, trunk one strip, the In2 sheet has far fewer north-south cuts (the long SDA track at x about 101 is
+the largest left), moved pieces run mostly east-west on In3, the 3V3 bus is whole.
+
+**1. Loss pass** (`finish.sh --modes=...,loss`, `router_b.py --aororder=loss`, README section "Phase 2 round 3"):
+ranks every rip-able piece with In2 copper inside the PACK_P In2 outline by the PACK_P loss drop with the piece off
+and the sheet refilled (60 pieces in 3 min), pulls the worst one at a time and lays it again with In2 inside the
+outline shut for other nets (then only the piece's box + 3 mm), accepts only when KiCad's unconnected count does not
+rise, the power check passes and PACK_P + 3V3 + GND drops by 1 mW or more. Dev run on the p2-m4 finished board
+(`runs/p2b-r3dev/fin/k1.log`, 38 min, the deadline ended sweep 3): 7 of 47 tasks accepted, power check 0.7456 to
+0.6770 W, board 1.2499 to 1.1811 W, J113 2.20, R427 2.27, unconnected 4, DRC 0, hot items unchanged. Biggest:
+CELL3 -23.7 mW, EN_5V2 -32.0 mW (one task each). Refused pulls, with reasons (r3fin `fin/r3.log`, r3en `fin/r2.log`):
+SDA (I2CC_SDA / SCL / CELL1 / EN_5V2 fail to go back), Port 1 REGN (TS / DRV_SUP fail), Port 1 SBU_FLT (SCL, I2CC_SDA,
+I2CC_SCL fail), Port 2 REGN x2 (CELL1 blocked by Kelvin copper), Port 2 I2CC_SDA (D511-A fails), CHG (power: 3V3 / GND
+cost more than the PACK_P gain), CELL3 second piece and Port 2 SBU_FLT (gain under 1 mW), Port 1 TS on k1 (power;
+accepted on r3fin after the via-in-pad fix, -9.1 mW).
+
+**2. Long edges** (`--long=30`: 30 M nodes, 900 s, 40 pulls for an open connection of 30 mm or more, then two legs
+through a free via spot). EN_5V1 on the p2-m4 board: the router's "no way" was not the node cap: U301.12 was boxed in
+(3V3 F.Cu pour west, escape vias of pins 11, 13, 14; `runs/p2b-r3dev/look/en5v1_u301.png`); with pulls the edge lays
+(42 k nodes) but the pulled pins did not all go back (`runs/p2b-r3dev/fin/e1..e3.log`: TS, then UART_TX). After the
+via-in-pad fix the full pass laid EN_5V1 with every pull back three times, and the power check refused it each time:
++16 mW (aor), +4.7 mW (aork), +37.8 mW on r3en (`--longptol=0.02` allowed 20). Laid with the In2 sheet made dear
+(`--longclose`, `runs/p2b-r3en2/fin/en_c.log`) it still runs north-south on In2 at x 113 to 118 from y 76 to 121, between
+the sheet and J113 / R427 (J113 2.08 to 2.41 mohm): **barrier named, picture `runs/p2b-r3en2/look/en5v1_In2.png`**:
+every way from R432 to U301.12 crosses the feed of J113 / R427 on In2; F.Cu and B.Cu are closed there (parts, trunk),
+In3 holds the 3V3 bus. Needs plan copper (worker A / lead). `runs/p2b-r3en2` was stopped after this diagnosis (its
+finished board was not made).
+
+**3. Short opens**: SRP_F (R428.2 to C417.1 through the 1.03 mm gap between the SRN_F and SW2 vias, then south at
+x 115.75) and Net-(C313-Pad2) (over the north side of C313.1) by `handroute.py`, exact check 0 faults,
+`runs/p2b-r3hand/hand.json` (coordinates valid on boards made from p2-m4's route only); Port 2 LDO_3V3 has no
+single-layer path but closed in the aor pass of r3fin (3 pulls) after the via-in-pad fix. Hot-pour items: unchanged
+(U404-FB lift lays the same copper; Port 2 I2CC_SCL lift raises PACK_P to U504 11.25 to 11.60 mohm; SDA: "ghost path
+found no blocker").
+
+**Router fixes found on the way** (`tools/router_b.py`): a via inside a pad of its own net stays fixed under `--split`
+(before, lifting Port 1 TS lost its via-in-pad at TH401.1 and the pad was boxed, "no way" at once); an edge whose ends
+share copper counts as laid (a 0.05 mm Prim edge between two fixed tracks of TS never ended); a refused loss task is
+not tried again in a later sweep; `_power_ok` names the per-net change in a refusal.
+
+**4. Documents**: `REPORT.md` and `SKILL-NOTES.md` (phase 1 short, phase 2 in full; neither existed before).
+**Commit**: the session's permission check refused `git commit` (as for worker B in round 1); every file is left in the
+working tree for the lead (list below).
+
+Logan's PC: `p2-m4` came back, 333 of 342 routed, 9 failed, 78.9 min, done (local 341 of 342).
+
+Files: `tools/router_b.py`, `tools/finish.sh`, `tools/README.md` (section "Phase 2 round 3"), `REPORT.md`,
+`SKILL-NOTES.md`, `runs/p2b-r3hand/hand.json` and `srp.json` / `c313.json` / `ldo.json` / `ldo_inner.png`,
+`runs/p2b-r3fin/` (cmd.sh, final.json, final_p2m4_before.json, post.log, routed/*.json, fin/r1.log, r2.log, r3.log,
+fin/*.aor.json, look/finished_*.png), `runs/p2b-r3fin.resume.log`, `runs/p2b-r3en/` (the same set, look/*_after.png),
+`runs/p2b-r3en.resume.log`, `runs/p2b-r3dev/` (fin/k0.log, k1.log, e1..e3.log, ts.log, ts2.log, k1.drc.json,
+k1.dc.json, k1.hot.json, look/*.png), `runs/p2b-r3en2/` (cmd.sh, fin/en_c.log, look/en5v1_In2.png). Boards local only:
+`runs/p2b-r3fin/finished.kicad_pcb`, `runs/p2b-r3en/finished.kicad_pcb`, `runs/p2b-r3dev/fin/k1.kicad_pcb`.

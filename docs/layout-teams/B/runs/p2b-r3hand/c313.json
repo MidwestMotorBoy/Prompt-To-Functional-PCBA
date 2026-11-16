@@ -1,0 +1,3 @@
+{"board": "runs/p2-m4/finished.kicad_pcb",
+ "tracks": [{"net": "Net-(C313-Pad2)", "layer": "F.Cu", "w": 0.15, "from": "C314.1", "to": "C313.2"}],
+ "vias": []}

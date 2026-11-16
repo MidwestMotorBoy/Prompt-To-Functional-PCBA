@@ -1,7 +1,8 @@
 #!/bin/bash
-# finish.sh <out dir> [--min=30] [--modes=keepre|aor] [--rips=900] [--riptime=900] [--maxrip=6] [--phases=4] [--capx=2]
+# finish.sh <out dir> [--min=30] [--modes=keepre|aor|aork|loss,...] [--rips=900] [--riptime=900] [--maxrip=6] [--phases=4] [--capx=2]
 #           [--hcx=0.16] [--viacost=4] [--hand=<tracks.json>] [--no-route] [--tol=0.001]
 #           [--tasktime=90] [--taskrips=12] [--sweeps=3] [--no-lift] [--no-pieces] [--no-pcheck] [--kelvin] [--closefill=NET]
+#           [--lossx="<router_b.py loss options>"] [--lossmin=0.001] [--long=<mm>] [--longx="<router_b.py options>"]
 #   Team B finishing pass (final_route.sh --post="finish.sh ..."): reads <out>/routed.kicad_pcb and <out>/cu.kicad_pcb
 #   (the copper plan the router started from) and writes <out>/finished.kicad_pcb. Work files in <out>/fin/.
 #   1. KiCad DRC of the routed board.
@@ -35,6 +36,15 @@
 #      --closefill=NET closes NET's fills to new channels; mode aork is an aor pass with --kelvin (a Kelvin piece laid
 #      again may be at most 1.3 x + 1 mm as long as before). Dead power copper (fin_islands.py, no pad) is removed first
 #      (fin_dead.py). The pass is kept when unconnected + DRC errors drop, or hold with fewer hot-pour items.
+#   Round 3 (phase 2): --modes=...,loss, the loss pass (router_b.py --aor --aororder=loss): the routed pieces on In2 inside
+#      the PACK_P sheet's outline are ranked by what they cost PACK_P (piece off, sheet refilled, dc_score), the worst
+#      (--lossn=12, gain >= 0.5 mW) are pulled one task at a time and laid again with the sheet closed (In2 inside the
+#      outline shut for other nets, vias there dear; whole outline first, then only the piece's box + 3 mm); a task stays
+#      only when everything is laid again, KiCad's unconnected count does not rise, the power check passes and the
+#      PACK_P + 3V3 + GND loss drops by 1 mW or more. The pass is kept when unconnected + DRC errors and hot-pour items
+#      do not rise and the board's dc_score loss drops by --lossmin (1 mW) or more. Options for it: --lossx="...".
+#      --long=<mm>: aor / loss passes give an open connection at least <mm> long its own budget (router_b.py --longmm
+#      --longlegs: 30 M nodes, 900 s, then two legs through a free via spot); --longx="..." adds router options.
 #   Last two lines: 'finish: routed unconnected N {net: n} ; DRC errors M {type: n} ; loss ..., power open ...' and the
 #   same for the finished board ('finish: finished (<candidate>) ...').
 set -o pipefail
@@ -43,8 +53,10 @@ C=$R/tools/floorplan/example/monolith/constraints.json
 OUT=$(cd "$1" && pwd); shift
 MIN=30; MODES="keepre"; RIPS=900; RIPTIME=900; MAXRIP=6; PHASES=4; CAPX=2; HCX=0.16; VIAC=4; HAND=""; ROUTE=1; TOL=0.001
 TASKT=90; TASKR=12; SWEEPS=3; LIFT=1; PIECES=1; AOREX=""; CLOSE=none; KELV=""; PCHK=1; PTOL=0.002; PBUD=0.005
+LOSSX=""; LOSSMIN=0.001; LONGX=""
 for a in "$@"; do case $a in --min=*) MIN=${a#*=};; --modes=*) MODES=${a#*=};; --rips=*) RIPS=${a#*=};; --riptime=*) RIPTIME=${a#*=};;
   --tasktime=*) TASKT=${a#*=};; --taskrips=*) TASKR=${a#*=};; --sweeps=*) SWEEPS=${a#*=};; --no-lift) LIFT=0;; --no-pieces) PIECES=0;; --aorx=*) AOREX="$AOREX ${a#*=}";;
+  --lossx=*) LOSSX="$LOSSX ${a#*=}";; --lossmin=*) LOSSMIN=${a#*=};; --long=*) LONGX="$LONGX --longmm=${a#*=} --longlegs";; --longx=*) LONGX="$LONGX ${a#*=}";;
   --closefill=*) CLOSE=${a#*=};; --kelvin) KELV="--aorkelvin";; --no-pcheck) PCHK=0;; --ptol=*) PTOL=${a#*=};; --pbudget=*) PBUD=${a#*=};;
   --maxrip=*) MAXRIP=${a#*=};; --phases=*) PHASES=${a#*=};; --capx=*) CAPX=${a#*=};; --hcx=*) HCX=${a#*=};; --viacost=*) VIAC=${a#*=};;
   --hand=*) HAND=$(readlink -f ${a#*=});; --no-route) ROUTE=0;; --tol=*) TOL=${a#*=};; *) echo "unknown option $a"; exit 2;; esac; done
@@ -84,12 +96,16 @@ e = Counter(v["type"] for v in d["violations"] if v["severity"] == "error")
 print("unconnected %d %s ; DRC errors %d %s" % (sum(u.values()), dict(u), sum(e.values()), dict(e)))
 P
 }
+# lossw <board>: dc_score loss (W, every scored net) of <board> on the host (pads of r0.cu.json), cached in <board>.dc.json
+lossw() { [ -f $1.dc.json ] || python3 $R/tools/copper/dc_score.py $1.kicad_pcb r0.cu.json $C $1.dc.json > $1.dc.log 2>&1
+  python3 -c "import json; d=json.load(open('$1.dc.json')); d=d.get('nets',d); print('%.5f' % sum(v.get('loss_W',0) for v in d.values()))"; }
 HOT=$(python3 -c "
 import json; h = json.load(open('$C'))['hot_loops']
 print(','.join(sorted({r for v in h.values() for r in v['caps']} | {s.split('.')[0] for v in h.values() for s in v['switch_pins']})))")
 
 log "1. DRC of the routed board and of the plan"
 drc r0; drc keep; log "routed: $(summ r0)"
+$K sh -c "python3 cu_dump.py r0.kicad_pcb r0.cu.json 2>&1 | grep -v swig"      # pads for the host-side loss of every candidate
 BEST=r0; CANDS="r0"
 # 1b. stub trim first, so that the continuation does not lift (and maybe lose) a net only for a stub clearance error
 trim r0 t0 && { BEST=t0; CANDS="t0 $CANDS"; }
@@ -106,9 +122,26 @@ p=0
 for MODE in ${MODES//,/ }; do
   [ $ROUTE = 1 ] || break
   HB=$(hot $BEST)
-  [ "$(score $BEST)" != 0 ] || [ ${MODE:0:3} = aor -a $LIFT = 1 -a "$HB" != 0 ] || break
+  [ "$(score $BEST)" != 0 ] || [ ${MODE:0:3} = aor -a $LIFT = 1 -a "$HB" != 0 ] || [ $MODE = loss ] || break
   p=$((p+1)); N=r$p; KR=""; [ $MODE = keepre ] && KR="--keepre"
   KP="$KELV"; [ $MODE = aork ] && { KP="--aorkelvin"; MODE=aor; }     # aork: an aor pass that may pull Kelvin pieces
+  if [ $MODE = loss ]; then
+    # loss pass (router_b.py --aor --aororder=loss): the In2 pieces that cut the PACK_P sheet most, laid again with the
+    # sheet closed; a task stays only when the power check's loss drops >= 1 mW (see the head of this file)
+    [ $PCHK = 1 ] || { log "loss pass needs the power check (shapely), skipped"; continue; }
+    L0=$(lossw $BEST)
+    log "2. loss pass $p from $BEST (deadline ${MIN} min; task ${TASKT} s / ${TASKR} pulls; loss $L0 W; hot-pour items $HB)"
+    $K sh -c "PYTHONPATH=/w/pylib timeout $((MIN+5))m python3 -u router_b.py $BEST.kicad_pcb $BEST.drc.json $N.kicad_pcb --cont --keep=keep.kicad_pcb --orig=keep.drc.json --softnets=GND,PACK_P,3V3 --hcx=$HCX --viacost=$VIAC --hotko=$HOT --deadline=$((MIN*60-120)) --capx=$CAPX --keepre --split --aor --aororder=loss --tasktime=$TASKT --taskrips=$TASKR --sweeps=$SWEEPS --pcheck=pc_cu.json:cons.json:$PTOL:$PBUD $LONGX $LOSSX" > $N.log 2>&1
+    rc=$?; [ $rc = 124 ] && log "pass $p timed out after $((MIN+5)) min (no board written)"
+    [ -f $N.kicad_pcb ] || { log "pass $p wrote no board (exit $rc)"; break; }
+    grep -E "^ *(aor|unconnected after fill)" $N.log | sed 's/^/    /'
+    drc $N; HN=$(hot $N); L1=$(lossw $N); log "pass $p: $(summ $N) ; hot-pour items $HN ; loss $L1 W"
+    trim $N t$p && { N=t$p; HN=$(hot $N); L1=$(lossw $N); }
+    if [ "$(score $N)" -le "$(score $BEST)" ] && [ "$HN" -le "$HB" ] && python3 -c "import sys; sys.exit(0 if $L1 <= $L0 - $LOSSMIN else 1)"; then
+      BEST=$N; CANDS="$N $CANDS"
+    else log "pass $p not kept (score $(score $N) vs $(score $BEST), hot $HN vs $HB, loss $L1 vs $L0 W)"; fi
+    continue
+  fi
   if [ $MODE = aor ]; then
     # accept-or-revert (router_b.py --aor): one open connection (shortest first) or one hot-pour piece at a time, the
     # board put back as it was unless the task lays everything it pulled; the power pieces as isl.py edges (--pieces)
@@ -119,7 +152,7 @@ for MODE in ${MODES//,/ }; do
     fi
     [ $LIFT = 1 ] && [ "$HB" != 0 ] && { cp $BEST.hot.json lift$p.json; LX="--lift=lift$p.json"; }
     log "2. accept-or-revert pass $p from $BEST (deadline ${MIN} min; task ${TASKT} s / ${TASKR} pulls, sweeps $SWEEPS; hot-pour items $HB)"
-    $K sh -c "PYTHONPATH=/w/pylib timeout $((MIN+5))m python3 -u router_b.py $BEST.kicad_pcb $RPT $N.kicad_pcb --cont --keep=keep.kicad_pcb --orig=keep.drc.json --softnets=GND,PACK_P,3V3 --hcx=$HCX --viacost=$VIAC --hotko=$HOT --deadline=$((MIN*60-120)) --capx=$CAPX --keepre --split --aor --tasktime=$TASKT --taskrips=$TASKR --sweeps=$SWEEPS $PX $LX $KP $([ "$CLOSE" != none ] && echo --closefill=$CLOSE) $([ $PCHK = 1 ] && echo --pcheck=pc_cu.json:cons.json:$PTOL:$PBUD) $AOREX" > $N.log 2>&1
+    $K sh -c "PYTHONPATH=/w/pylib timeout $((MIN+5))m python3 -u router_b.py $BEST.kicad_pcb $RPT $N.kicad_pcb --cont --keep=keep.kicad_pcb --orig=keep.drc.json --softnets=GND,PACK_P,3V3 --hcx=$HCX --viacost=$VIAC --hotko=$HOT --deadline=$((MIN*60-120)) --capx=$CAPX --keepre --split --aor --tasktime=$TASKT --taskrips=$TASKR --sweeps=$SWEEPS $PX $LX $KP $([ "$CLOSE" != none ] && echo --closefill=$CLOSE) $([ $PCHK = 1 ] && echo --pcheck=pc_cu.json:cons.json:$PTOL:$PBUD) $LONGX $AOREX" > $N.log 2>&1
     rc=$?; [ $rc = 124 ] && log "pass $p timed out after $((MIN+5)) min (no board written)"
     [ -f $N.kicad_pcb ] || { log "pass $p wrote no board (exit $rc)"; break; }
     grep -E "^ *(aor|unconnected after fill)" $N.log | sed 's/^/    /'
@@ -156,12 +189,11 @@ if [ -f c.kicad_pcb ]; then drc c; log "cleaned: $(summ c)"
 fi
 # 5. power guard, best candidate first
 log "5. power guard"
-$K sh -c "python3 cu_dump.py r0.kicad_pcb r0.cu.json 2>&1 | grep -v swig"
-python3 $R/tools/copper/dc_score.py r0.kicad_pcb r0.cu.json $C r0.dc.json > r0.dc.log 2>&1
+[ -f r0.dc.json ] || python3 $R/tools/copper/dc_score.py r0.kicad_pcb r0.cu.json $C r0.dc.json > r0.dc.log 2>&1
 PICK=r0
 for c in $CANDS; do
   [ $c = r0 ] && break
-  python3 $R/tools/copper/dc_score.py $c.kicad_pcb r0.cu.json $C $c.dc.json > $c.dc.log 2>&1
+  [ -f $c.dc.json ] || python3 $R/tools/copper/dc_score.py $c.kicad_pcb r0.cu.json $C $c.dc.json > $c.dc.log 2>&1
   python3 $TOOLS/fin_guard.py r0.kicad_pcb r0.cu.json $c.kicad_pcb r0.dc.json $c.dc.json --tol=$TOL > $c.guard.log 2>&1; rc=$?
   log "$c: $(head -1 $c.guard.log)"
   [ $rc = 0 ] && { PICK=$c; break; }

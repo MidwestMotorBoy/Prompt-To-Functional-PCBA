@@ -1,0 +1,7 @@
+{"board": "runs/p2-m4/finished.kicad_pcb (valid on boards made from it: runs/p2b-r3*)",
+ "note": "phase 2 round 3, worker B: the two short opens of p2-m4 that a single-layer path closes. SRP_F threads the 1.03 mm gap between the SRN_F via (115.9,105.65) and the SW2 via (115.1,106.3) and runs south at x 115.75 into C417.1; Net-(C313-Pad2) goes over the north side of C313.1 instead of the strip its via stands in. Both checked exactly with handroute.py --check (0 faults). Port 2 LDO_3V3 (R503.1 to R504.1) has no single-layer path: not laid.",
+ "tracks": [
+  {"net": "/USB Port 1/SRP_F", "layer": "F.Cu", "w": 0.15, "points": [[117.21, 105.3], [116.19, 105.28], [115.93, 105.2], [115.63, 105.25], [115.3, 105.3], [115.5, 105.975], [115.75, 106.4], [115.75, 107.5], [115.47, 107.74]]},
+  {"net": "Net-(C313-Pad2)", "layer": "F.Cu", "w": 0.15, "points": [[114.785, 118.0], [115.525, 117.44], [116.165, 117.46], [116.465, 117.76], [116.725, 118.0]]}
+ ],
+ "vias": []}

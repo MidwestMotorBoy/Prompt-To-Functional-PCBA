@@ -697,16 +697,25 @@ for _fp in board.GetFootprints():
         padv[max(_cy0, 0):_cy1 + 1, max(_cx0, 0):_cx1 + 1] = 1
 
 
+CAPMAX = [12000000]                       # team B: node cap ceiling of one A* search
+# team B --longmm=<mm>: an edge at least this long gets --longcap nodes (default 30 M) and, as an --aor open task,
+# --longtime seconds (default 900) and --longrips pulls (default 40); with --longlegs a failed search is tried again in two legs through a free via spot
+# near the middle (each leg its own window, the second starts where the first ended, via spacing kept)
+LONGMM = float(OPT.get("longmm", 0)); LONGCAP = int(OPT.get("longcap", 30000000)); LONGTIME = float(OPT.get("longtime", 900))
+LONGRIPS = int(OPT.get("longrips", 40))                  # pulls one long open task may make
+# --longclose: a long open task is laid with the In2 PACK_P sheet closed, as the loss pass lays its pieces
+LONGPTOL = float(OPT.get("longptol", 0.0))               # W the power check lets one long open task cost (a later loss pass wins it back)
+VAV, VAVC = None, 0.0                     # team B loss mode: per-cell via cost (uint8 mask x VAVC) for nets not in AVN
 TDEAD = [0.0]                             # team B --aor: wall-clock end of the current task (0: none)
 import time
 _DIRS = ((1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0), (1, 1, 1.414), (1, -1, 1.414), (-1, 1, 1.414), (-1, -1, 1.414))
 
 
-def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, ghost=False):
+def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, ghost=False, sv0=None):
     """A* over (layer, x, y) inside the window. Free cells, via sites and goals are precomputed as byte masks, the
     open set is keyed by one integer per cell (memory stays bounded by cap). The bend cost uses the direction the
     best path arrived by; a via needs VIA_GAP_PATH steps since the last one."""
-    cap = min(cap or NODE_CAP, 12000000)
+    cap = min(cap or NODE_CAP, CAPMAX[0])                # team B: CAPMAX[0] is raised for long edges (--longmm)
     x0, y0, x1, y1 = win
     ww, hh = x1 - x0, y1 - y0
     if ww <= 0 or hh <= 0 or not starts or (not goals and gmask is None and not gndvia):
@@ -736,6 +745,7 @@ def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, g
         fa = [m.tobytes() for m in fa_]
         va = va_.tobytes()
     pvb = np.ascontiguousarray(padv[y0:y1, x0:x1]).tobytes()
+    vab = np.ascontiguousarray(VAV[y0:y1, x0:x1]).tobytes() if (VAV is not None and net not in AVN) else None   # team B loss mode
     gp = (viam & GNDPLANE[y0:y1, x0:x1]).tobytes() if gndvia else None
     hbox = None
     if gmask is not None:
@@ -767,7 +777,7 @@ def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, g
         x, y = s[1] - x0, s[2] - y0
         if 0 <= x < ww and 0 <= y < hh:
             idx = s[0] * A + y * ww + x
-            info[idx] = (0.0, -1, -1, VIA_GAP_PATH)
+            info[idx] = (0.0, -1, -1, VIA_GAP_PATH if sv0 is None else sv0)
             heapq.heappush(openq, (wh * h(x, y), 0.0, idx))
     seen, goal_idx = 0, None
     push, pop = heapq.heappush, heapq.heappop
@@ -816,6 +826,8 @@ def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, g
                 push(openq, (nc + wh * h(X, Y), nc, ni))
         if sv >= VIA_GAP_PATH and vm[r] and via_spacing_ok(X0 + (x + x0) * G, Y0 + (y + y0) * G, net):
             nc = gc + VIA_COST + PADVIA * pvb[r]
+            if vab is not None:
+                nc += VAVC * vab[r]
             if hb is not None:
                 nc += 4.0 * lnb[r]
             if ghost and not va[r]:
@@ -1404,6 +1416,11 @@ def route_edge(eid, ghost=False):
         globals()["grid"], globals()["copper"] = keep
     CUR[0] = []
     STUBS = []
+    if not ghost and starts and goals and name != "GND" and not bd.startswith("Zone") and not set(starts).isdisjoint(goals):
+        # team B: both ends already lie on one piece of copper (two anchors of a --split piece joined by fixed copper):
+        # nothing to lay (A* would never stop on a goal that is also a start)
+        ROUTES[eid] = dict(net=n, items=[], rips=0); CUR[0] = None
+        return True
     ma, mb = re.match(r"(?:PTH )?[Pp]ad \S+ \[.*?\] of (\S+)", ad), re.match(r"(?:PTH )?[Pp]ad \S+ \[.*?\] of (\S+)", bd)
     onF = lambda d_: (" on F.Cu" in d_ or "PTH" in d_)
     if not ghost and ma and mb and dist < 2.2 and onF(ad) and onF(bd) and (ma.group(1), "x") not in SEALED_PADS \
@@ -1440,6 +1457,63 @@ def route_edge(eid, ghost=False):
     CAP = int(CAP * float(OPT.get("capx", 1)))
     if ghost and dist < 30:
         CAP = CAP // 2
+    LONG = LONGMM > 0 and dist >= LONGMM
+    if LONG:                                              # team B --longmm: its own node budget
+        CAP = max(CAP, LONGCAP); CAPMAX[0] = max(12000000, LONGCAP)
+    try:
+        return _route_edge2(eid, ghost, rank, dist, name, net_obj, n, A, B, ad, bd, win, starts, goals, gmask, gndvia, WH, CAP, LONG)
+    finally:
+        CAPMAX[0] = 12000000
+
+
+def _two_legs(n, A, B, starts, goals, gmask, gndvia, WH, CAP, ghost):
+    """Team B --longlegs: the search in two legs through a free via spot near the middle of A-B. Returns a path or None."""
+    gsrc, vsrc = (FIX["grid"], FIX["gridv"]) if ghost else (grid, gridv)
+    mx, my = (A[0] + B[0]) / 2, (A[1] + B[1]) / 2
+    L = math.hypot(B[0] - A[0], B[1] - A[1]) or 1.0
+    ux, uy = (B[0] - A[0]) / L, (B[1] - A[1]) / L
+    band = float(OPT.get("legband", 12.0))
+    cands = []
+    for i_ in range(-int(band / 0.5), int(band / 0.5) + 1):          # across the line
+        for j_ in range(-int(0.25 * L / 0.5), int(0.25 * L / 0.5) + 1):   # along it (middle half)
+            x_, y_ = mx + i_ * 0.5 * (-uy) + j_ * 0.5 * ux, my + i_ * 0.5 * ux + j_ * 0.5 * uy
+            cx_, cy_ = cell(x_, y_)
+            if not (0 <= cx_ < NX and 0 <= cy_ < NY):
+                continue
+            if all(vsrc[li][cy_, cx_] in (EMPTY, n) for li in range(len(LAYERS))) and \
+               all(gsrc[li][cy_, cx_] in (EMPTY, n) for li in range(len(LAYERS))) and via_spacing_ok(X0 + cx_ * G, Y0 + cy_ * G, n):
+                cands.append((abs(i_) + 0.5 * abs(j_), cx_, cy_))
+    cands.sort(); picked = []
+    for c_ in cands:
+        if all(math.hypot(c_[1] - p_[1], c_[2] - p_[2]) * G >= 2.0 for p_ in picked):
+            picked.append(c_)
+        if len(picked) >= int(OPT.get("legtries", 6)):
+            break
+    for _sc, wx, wy in picked:
+        wmm = (X0 + wx * G, Y0 + wy * G)
+        def win_(P, Q, pad=12.0):
+            (a0, b0), (a1, b1) = cell(min(P[0], Q[0]) - pad, min(P[1], Q[1]) - pad), cell(max(P[0], Q[0]) + pad, max(P[1], Q[1]) + pad)
+            return (max(a0, 0), max(b0, 0), min(a1, NX), min(b1, NY))
+        p1 = astar(n, starts, [(li, wx, wy) for li in range(len(LAYERS))], win_(A, wmm), WH, CAP, None, False, ghost)
+        s1 = STAT[0]
+        if p1 is None:
+            print("    legs via spot %.2f,%.2f: leg 1 none (seen %d)" % (wmm[0], wmm[1], s1), flush=True)
+            continue
+        k = 0                                             # steps since the last layer change of leg 1
+        while k + 1 < len(p1) and p1[-1 - k][0] == p1[-2 - k][0]:
+            k += 1
+        sv0 = min(k, VIA_GAP_PATH) if k + 1 < len(p1) else VIA_GAP_PATH
+        li1 = p1[-1][0]
+        p2 = astar(n, [(li1, wx, wy)], [] if gmask is not None else goals, win_(wmm, B), WH, CAP, gmask, gndvia, ghost, sv0=sv0)
+        print("    legs via spot %.2f,%.2f: leg 1 %d cells (seen %d), leg 2 %s (seen %d)" % (wmm[0], wmm[1], len(p1), s1, "none" if p2 is None else "%d cells" % len(p2), STAT[0]), flush=True)
+        if p2 is None:
+            continue
+        return p1 + p2[1:]
+    return None
+
+
+def _route_edge2(eid, ghost, rank, dist, name, net_obj, n, A, B, ad, bd, win, starts, goals, gmask, gndvia, WH, CAP, LONG):
+    global STUBS
     path, boxed = None, False
     if goals and gmask is None and not gndvia and starts:  # short look from the far end first: finds a boxed-in end at once
         back = astar(n, goals, starts, win, WH, 5000, None, False, ghost)
@@ -1449,6 +1523,10 @@ def route_edge(eid, ghost=False):
             boxed = True
     if path is None and not boxed:
         path = astar(n, starts, goals, win, WH, CAP, gmask, gndvia, ghost)
+        if LONG:
+            print("    long edge %s %.1f mm: search %s, seen %d (cap %d)" % (name, dist, "found" if path is not None else "none", STAT[0], CAP), flush=True)
+    if path is None and LONG and "longlegs" in OPT and starts:
+        path = _two_legs(n, A, B, starts, goals, gmask, gndvia, WH, CAP, ghost)
     if ghost:
         CUR[0] = None
         if path is None and "gdebug" in OPT:
@@ -1591,6 +1669,19 @@ if CONT:
             elif _t.GetLayer() in LAYERS:
                 _a, _b = _t.GetStart(), _t.GetEnd()
                 _items.append((_t, "T", LAYERS.index(_t.GetLayer()), (MM(_a.x), MM(_a.y)), (MM(_b.x), MM(_b.y)), MM(_t.GetWidth()) / 2))
+        if "split" in OPT and "novip" not in OPT:         # team B: a via inside a pad of its own net (a via-in-pad escape)
+            _vip = [it_ for it_ in _items if it_[1] == "V" and _pad_at(_n, it_[3], -1) is not None]
+            for it_ in _vip:                              # stays: baked into the fixed world, the pieces end on it
+                _items.remove(it_); LAIDU.discard(it_[0].m_Uuid.AsString())
+                _a, _h = it_[3], it_[5]
+                for lj in range(len(LAYERS)):
+                    xseg(FIX["grid"], lj, _n, _a, _a, _h + grow(_n)); xseg(FIX["gridv"], lj, _n, _a, _a, _h + grow(_n) + VGROW)
+                    if _n in SMALL:
+                        xseg(FIX["gridh"], lj, _n, _a, _a, _h + grow(_n) + HCX); xseg(FIX["gridvh"], lj, _n, _a, _a, _h + grow(_n) + VGROW + HCX)
+                    FIX["copper"][lj][cell(*_a)[1], cell(*_a)[0]] = _n
+                remark([it_], _n)
+            if _vip:
+                print("split: %d via-in-pad of %s kept" % (len(_vip), board.FindNet(_n).GetNetname()), flush=True)
         if "split" in OPT:                                # team B --split: one rip-able route per piece, re-laid pad to pad
             for _grp, _pe in split_pieces(_n, _items):
                 _id = 10 ** 6 + len(PSEUDO)
@@ -1691,6 +1782,8 @@ def _aor_task(first, lift=None):
     """Run one task on the live state; True when every edge in its queue got laid within the budget."""
     t0 = time.time(); pulls = 0
     tmax, pmax = float(OPT.get("tasktime", 90)), int(OPT.get("taskrips", 12))
+    if LONGMM > 0 and any(edges[e_][1] >= LONGMM for e_ in first):   # team B --longmm: a long open connection
+        tmax, pmax = max(tmax, LONGTIME), max(pmax, LONGRIPS)
     TDEAD[0] = t0 + tmax if DEADLINE_A <= 0 else min(t0 + tmax, _T_START + DEADLINE_A)
     try:
         return _aor_run(first, lift, t0, tmax, pmax)
@@ -1704,7 +1797,9 @@ def _aor_run(first, lift, t0, tmax, pmax):
     q = deque(first)
     if lift is not None:                                  # lift the piece (and what hangs on it), lay it again
         pl = []
-        unroute(lift, pl)
+        for _lb in (lift if isinstance(lift, (list, tuple)) else [lift]):   # team B loss mode: several pieces of one net
+            if _lb in ROUTES:
+                unroute(_lb, pl)
         for b in pl:
             q.extend(_aor_requeue(b))
     tries = {}
@@ -1807,20 +1902,21 @@ def _power():
     pcbnew.ZONE_FILLER(board).Fill(zs)
     board.Save(OUT + ".pc.kicad_pcb")
     Z_, S_, V_ = _dcs.load_copper(OUT + ".pc.kicad_pcb")
-    loss, R, op = 0.0, {}, []
+    loss, R, op, N = 0.0, {}, [], {}
     for net_, res_ in (("PACK_P", 0.1), ("3V3", 0.1), ("GND", 0.2)):
         r_ = _dcs.score_net(_PD, Z_, S_, V_, net_, res_, _pl, _prs, _pz, None)
         if r_ is None:
             continue
-        loss += r_.get("loss_W", 0.0); op += ["%s:%s" % (net_, o_) for o_ in r_.get("open", [])]
+        loss += r_.get("loss_W", 0.0); op += ["%s:%s" % (net_, o_) for o_ in r_.get("open", [])]; N[net_] = r_.get("loss_W", 0.0)
         if net_ == "PACK_P":
             R = {t_["ref"]: t_.get("R_mohm") for t_ in r_["terminals"] if t_.get("R_mohm") is not None}
-    return dict(loss=round(loss, 5), R=R, open=sorted(op))
+    return dict(loss=round(loss, 5), R=R, open=sorted(op), N=N)
 
 
-def _power_ok(P, P0, Pc):
-    if P["loss"] > Pc["loss"] + PC_TOL or P["loss"] > P0["loss"] + PC_BUD:
-        return "loss %.4f W (now %.4f, start %.4f)" % (P["loss"], Pc["loss"], P0["loss"])
+def _power_ok(P, P0, Pc, xtol=0.0):
+    if P["loss"] > Pc["loss"] + max(PC_TOL, xtol) or P["loss"] > P0["loss"] + PC_BUD + xtol:
+        return "loss %.4f W (now %.4f, start %.4f; %s)" % (P["loss"], Pc["loss"], P0["loss"], ", ".join(
+            "%s %+.1f mW" % (k_, 1000 * (v_ - Pc.get("N", {}).get(k_, v_))) for k_, v_ in P.get("N", {}).items()))
     if not set(P["open"]) <= set(P0["open"]):
         return "power open %s" % P["open"]
     for k_, v_ in P["R"].items():
@@ -1828,6 +1924,202 @@ def _power_ok(P, P0, Pc):
         if (r0_ <= 3.0 < v_) or v_ > r0_ + 0.1:
             return "PACK_P to %s %.2f mohm (start %.2f)" % (k_, v_, r0_)
     return None
+# team B loss mode (--aororder=...,loss): the routed pieces with tracks (or vias) on the LOSS layer (In2) inside the
+# outline of the LOSS net's pours there (the PACK_P sheet) are ranked by what they cost that net: the piece is taken off
+# the board, the net's pours refilled and dc_score solves the net (0.1 mm); gain = loss now - loss without the piece.
+# Pieces of one net that each gain are also tried together. The worst ones (gain >= --lossrank W, at most --lossn tasks)
+# are pulled one task at a time and laid again with the sheet closed: In2 cells inside the outline cost --losscost per
+# cell (A* history units, 250 = shut) for every net but the LOSS net, vias there --lossvia steps each; --lossclose=
+# full,box:3 tries the whole outline first, then only the piece's own box (+3 mm). Accepted only when every pulled piece
+# is laid again, KiCad's unconnected count does not rise, the power check passes and the PACK_P + 3V3 + GND loss drops
+# by --lossmin W (1 mW) or more; otherwise everything is put back. Hot-loop pours stay closed (--hotko).
+LOSSNET = OPT.get("lossnet", "PACK_P")
+LOSSLI = int(OPT.get("losslayer", 1))
+LOSSN = int(OPT.get("lossn", 12))
+LOSSRANK = float(OPT.get("lossrank", 0.0005))
+LOSSMIN = float(OPT.get("lossmin", 0.001))
+LOSSCOST = int(OPT.get("losscost", 250))
+LOSSVIA = float(OPT.get("lossvia", 20))
+LOSSCAND = int(OPT.get("losscand", 60))
+LOSSCLOSE = [m_ for m_ in OPT.get("lossclose", "full,box:3").split(",") if m_]
+SHEET = [None]
+_LSAVE = []
+LOSS_DONE = set()                                         # task labels refused in every mode in an earlier sweep
+
+
+def _loss_sheet():
+    """Cells (NY x NX bool) inside the outlines of the LOSS net's pours on the LOSS layer."""
+    if SHEET[0] is None:
+        im_ = Image.new("1", (NX, NY), 0); d_ = ImageDraw.Draw(im_); nz = 0
+        for z in board.Zones():
+            if z.GetIsRuleArea() or z.GetNetname() != LOSSNET or not z.IsOnLayer(LAYERS[LOSSLI]):
+                continue
+            ol = z.Outline()
+            for i_ in range(ol.OutlineCount()):
+                o_ = ol.Outline(i_)
+                pts = [((MM(o_.CPoint(j_).x) - X0) / G, (MM(o_.CPoint(j_).y) - Y0) / G) for j_ in range(o_.PointCount())]
+                if len(pts) >= 3:
+                    d_.polygon(pts, fill=1); nz += 1
+        SHEET[0] = np.array(im_, dtype=bool)
+        print("aor loss: %s sheet on layer %d: %d outlines, %.0f mm2" % (LOSSNET, LOSSLI, nz, SHEET[0].sum() * G * G), flush=True)
+    return SHEET[0]
+
+
+def _loss_hits(items):
+    """Cells of In2 track (and vias) of these items inside the sheet."""
+    sh = _loss_sheet(); n = 0
+    for _o, k, li, a, b, h in items:
+        if k == "V":
+            cx, cy = cell(*a)
+            n += 4 * bool(0 <= cx < NX and 0 <= cy < NY and sh[cy, cx])
+        elif li == LOSSLI:
+            L = math.hypot(b[0] - a[0], b[1] - a[1]); m = max(1, int(L / G))
+            for t in range(m + 1):
+                cx, cy = cell(a[0] + (b[0] - a[0]) * t / m, a[1] + (b[1] - a[1]) * t / m)
+                n += bool(0 <= cx < NX and 0 <= cy < NY and sh[cy, cx])
+    return n
+
+
+def _loss_pnet():
+    zs = [z for z in board.Zones() if not z.GetIsRuleArea() and z.GetNetname() == LOSSNET]
+    pcbnew.ZONE_FILLER(board).Fill(zs)
+    board.Save(OUT + ".pc.kicad_pcb")
+    Z_, S_, V_ = _dcs.load_copper(OUT + ".pc.kicad_pcb")
+    r_ = _dcs.score_net(_PD, Z_, S_, V_, LOSSNET, 0.1, _pl, _prs, _pz, None)
+    return r_.get("loss_W", 0.0) if r_ else 0.0
+
+
+def _loss_rank():
+    """Tasks (gain W, [route ids], label), best first."""
+    t0 = time.time()
+    cand = []
+    for b, R in ROUTES.items():
+        if _aor_frozen(b) or (b in PSEUDO and PSEUDO[b] == LOSSNET):
+            continue
+        if "lossonly" in OPT and not re.search(OPT["lossonly"], PSEUDO.get(b) or ""):
+            continue
+        hh = _loss_hits(R["items"])
+        if hh:
+            cand.append((hh, b))
+    cand.sort(reverse=True); cand = cand[:LOSSCAND]
+    base = _loss_pnet(); out = []; bynet = {}
+    for hh, b in cand:
+        objs = [it[0] for it in ROUTES[b]["items"]]
+        for o in objs:
+            board.Remove(o)
+        try:
+            g = base - _loss_pnet()
+        finally:
+            for o in objs:
+                board.Add(o)
+        nm_ = PSEUDO.get(b) or (edges[b][2] if b < len(edges) else str(b))
+        out.append((g, [b], "%s (%d cells)" % (nm_, hh)))
+        if g > 0.0001:
+            bynet.setdefault(ROUTES[b]["net"], []).append((g, b, nm_))
+    for n_, lst in bynet.items():                         # pieces of one net that each gain: also all together
+        if len(lst) < 2:
+            continue
+        ids = [b for g, b, nm_ in lst]; objs = [it[0] for b in ids for it in ROUTES[b]["items"]]
+        for o in objs:
+            board.Remove(o)
+        try:
+            g = base - _loss_pnet()
+        finally:
+            for o in objs:
+                board.Add(o)
+        out.append((g, ids, "%s x%d" % (lst[0][2], len(ids))))
+    _loss_pnet()                                          # the fills as the board stands
+    out.sort(key=lambda x: -x[0])
+    print("aor loss: %s %.4f W on the board; %d pieces on the sheet ranked in %.0f s; best: %s" % (
+        LOSSNET, base, len(cand), time.time() - t0, ", ".join("%s %.1f mW" % (l_, 1000 * g_) for g_, i_, l_ in out[:10])), flush=True)
+    return [t for t in out if t[0] >= LOSSRANK][:LOSSN]
+
+
+def _loss_close(ids, mode):
+    """Close the sheet for the re-lay: dear In2 cells (and vias) inside the outline, whole (full) or the pieces' box."""
+    global AVD, AVN, VAV, VAVC
+    _LSAVE[:] = [AVD, AVN, VAV, VAVC]
+    m = _loss_sheet()
+    if mode.startswith("box"):
+        mg = float(mode.split(":")[1]) if ":" in mode else 3.0
+        its = [it for b in ids if b in ROUTES for it in ROUTES[b]["items"]]
+        xs = [p_[0] for it in its for p_ in (it[3], it[4])]; ys = [p_[1] for it in its for p_ in (it[3], it[4])]
+        (cx0, cy0), (cx1, cy1) = cell(min(xs) - mg, min(ys) - mg), cell(max(xs) + mg, max(ys) + mg)
+        bm = np.zeros_like(m); bm[max(cy0, 0):max(cy1 + 1, 0), max(cx0, 0):max(cx1 + 1, 0)] = True
+        m = m & bm
+    nA = [(a.copy() if AVD is not None else np.zeros((NY, NX), dtype=np.uint16)) for a in (AVD or [None] * len(LAYERS))]
+    nA[LOSSLI] = np.maximum(nA[LOSSLI], m.astype(np.uint16) * LOSSCOST)
+    AVD = nA
+    AVN = set(AVN) | {board.FindNet(LOSSNET).GetNetCode()}
+    if LOSSVIA > 0:
+        VAV, VAVC = m.astype(np.uint8), LOSSVIA / G
+
+
+def _loss_open():
+    global AVD, AVN, VAV, VAVC
+    AVD, AVN, VAV, VAVC = _LSAVE
+
+
+def _loss_phase(sweep):
+    """One loss phase of a sweep: rank, then the tasks; returns the number accepted."""
+    global PCUR
+    if not PCHK:
+        print("aor loss: needs --pcheck, skipped", flush=True)
+        return 0
+    acc = 0
+    for g, ids, label in _loss_rank():
+        if _aor_late():
+            break
+        if not all(i in ROUTES for i in ids):
+            print("  aor loss %s: pieces went with an earlier task, skipped" % label, flush=True)
+            continue
+        if label in LOSS_DONE:                            # the same piece was refused before: not tried again
+            continue
+        for mode in LOSSCLOSE:
+            S = _aor_save(); hsave = [h_.copy() for h_ in hist]; AOR_STATS["tasks"] += 1
+            u0 = _kopen() if KCHECK else 0
+            _loss_close(ids, mode)
+            try:
+                ok, why = _aor_task([], list(ids))
+            finally:
+                _loss_open()
+            filled = False
+            if ok and KCHECK:
+                u1 = _kopen()
+                if u1 > u0:
+                    ok, why = False, "KiCad connectivity: unconnected %d -> %d" % (u0, u1)
+                else:
+                    why += ", KiCad unconnected %d -> %d" % (u0, u1)
+            if ok:
+                left = sum(_loss_hits(ROUTES[i]["items"]) for i in ROUTES if i not in S["routes"])
+                P = _power(); filled = True; bad = _power_ok(P, P0, PCUR)
+                if bad:
+                    ok, why = False, "power: " + bad
+                elif P["loss"] > PCUR["loss"] - LOSSMIN:
+                    ok, why = False, "loss %.4f -> %.4f W, not %.1f mW lower (new copper on the sheet %d cells)" % (PCUR["loss"], P["loss"], 1000 * LOSSMIN, left)
+                else:
+                    why += ", power %.4f -> %.4f W, PACK_P %s, new copper on the sheet %d cells" % (PCUR["loss"], P["loss"], P["R"], left); PCUR = P
+            name = "loss %s [%s] ranked %.1f mW" % (label, mode, 1000 * g)
+            if ok:
+                acc += 1; AOR_STATS["accepted"] += 1
+                _now = {t.m_Uuid.AsString() for t in board.GetTracks()}
+                AOR_LOG.append(dict(sweep=sweep, kind="loss", name=name, ok=True, why=why,
+                                    added=[u for u in _now if u not in S["board"]], removed=[u for u in S["board"] if u not in _now]))
+            else:
+                _aor_restore(S); AOR_STATS["reverted"] += 1
+                for h_, s_ in zip(hist, hsave):
+                    np.copyto(h_, s_)
+                if filled:
+                    pcbnew.ZONE_FILLER(board).Fill([z for z in board.Zones() if not z.GetIsRuleArea() and z.GetNetname() in ("PACK_P", "GND", "3V3")])
+                AOR_LOG.append(dict(sweep=sweep, kind="loss", name=name, ok=False, why=why))
+            print("  aor %4.0f s sweep %d loss %-40s %s (%s)" % (time.time() - _T_START, sweep, name[:60], "ACCEPTED" if ok else "reverted", why), flush=True)
+            if ok:
+                break
+        else:
+            LOSS_DONE.add(label)
+    return acc
+
+
 if "aor" in OPT and CONT:
     snapshot_done = bool(FIX)
     targets = sorted(range(len(edges)), key=lambda e: (edges[e][1], e))
@@ -1871,11 +2163,16 @@ if "aor" in OPT and CONT:
         _t = time.time(); P0 = _power(); PCUR = dict(P0)
         print("aor power check: start %.4f W (PACK_P + 3V3 + GND@0.2), PACK_P %s, open %s (%.0f s)" % (P0["loss"], P0["R"], P0["open"], time.time() - _t), flush=True)
     open_left = list(targets)
+    LOSS_ACC = [0]
     lift_left = list(LIFTS)
     sweep = 0
     while True:
         sweep += 1; acc = 0
         for kind in order.split(","):
+            if kind == "loss":                            # team B loss mode: rank the sheet's cuts, re-lay the worst
+                if not _aor_late():
+                    _la = _loss_phase(sweep); acc += _la; LOSS_ACC[0] += _la
+                continue
             todo = open_left if kind == "open" else lift_left
             for tk in list(todo):
                 if _aor_late():
@@ -1889,7 +2186,14 @@ if "aor" in OPT and CONT:
                 if kind == "lift":
                     _ni = board.GetNetInfo().GetNetItem(ROUTES[tk]["net"])
                     _lnet = _ni.GetNetname() if _ni else None; h0 = _hot_left(_lnet) if _lnet else 0
-                ok, why = _aor_task([tk] if kind == "open" else [], tk if kind == "lift" else None)
+                _lc = kind == "open" and "longclose" in OPT and LONGMM > 0 and edges[tk][1] >= LONGMM
+                if _lc:                                   # --longclose: a long open task is laid with the PACK_P sheet closed
+                    _loss_close([], "full")
+                try:
+                    ok, why = _aor_task([tk] if kind == "open" else [], tk if kind == "lift" else None)
+                finally:
+                    if _lc:
+                        _loss_open()
                 hstay = None
                 if ok and kind == "lift" and _lnet:       # a lift must take hot-pour copper out (or lower the loss below)
                     h1 = _hot_left(_lnet)
@@ -1903,7 +2207,8 @@ if "aor" in OPT and CONT:
                         why += ", KiCad unconnected %d -> %d" % (u0, u1)
                 filled = False
                 if ok and PCHK:
-                    P = _power(); filled = True; bad = _power_ok(P, P0, PCUR)
+                    _xt = LONGPTOL if (kind == "open" and LONGMM > 0 and edges[tk][1] >= LONGMM) else 0.0
+                    P = _power(); filled = True; bad = _power_ok(P, P0, PCUR, _xt)   # --longptol: a long open task may cost more
                     if bad:
                         ok, why = False, "power: " + bad
                     elif hstay and P["loss"] > PCUR["loss"] - 0.001:
@@ -1927,7 +2232,7 @@ if "aor" in OPT and CONT:
                         FAILINFO[tk] = FAILINFO.get(tk, edges[tk][2]); WHYFAIL[tk] = "aor: " + why
                     AOR_LOG.append(dict(sweep=sweep, kind=kind, name=name, ok=False, why=why))
                 print("  aor %4.0f s sweep %d %s %-30s %s (%s)" % (time.time() - _T_START, sweep, kind, name[:30], "ACCEPTED" if ok else "reverted", why), flush=True)
-        if not acc or _aor_late() or sweep >= int(OPT.get("sweeps", 3)) or not (open_left or lift_left):
+        if not acc or _aor_late() or sweep >= int(OPT.get("sweeps", 3)) or not (open_left or lift_left or "loss" in order.split(",")):
             break
     for tk in open_left:
         if tk not in ROUTES and tk not in FAILINFO:

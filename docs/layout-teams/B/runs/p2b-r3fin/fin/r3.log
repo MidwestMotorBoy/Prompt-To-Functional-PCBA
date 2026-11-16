@@ -1,0 +1,187 @@
+05:45:30: Debug: Adding duplicate image handler for 'PNG file'
+05:45:30: Debug: Adding duplicate image handler for 'JPEG file'
+05:45:30: Debug: Adding duplicate image handler for 'TIFF file'
+05:45:30: Debug: Adding duplicate image handler for 'GIF file'
+05:45:30: Debug: Adding duplicate image handler for 'PNM file'
+05:45:30: Debug: Adding duplicate image handler for 'PCX file'
+05:45:30: Debug: Adding duplicate image handler for 'IFF file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows icon file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows cursor file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+05:45:30: Debug: Adding duplicate image handler for 'TGA file'
+05:45:30: Debug: Adding duplicate image handler for 'XPM file'
+05:45:30: Debug: Adding duplicate image handler for 'PNG file'
+05:45:30: Debug: Adding duplicate image handler for 'JPEG file'
+05:45:30: Debug: Adding duplicate image handler for 'TIFF file'
+05:45:30: Debug: Adding duplicate image handler for 'GIF file'
+05:45:30: Debug: Adding duplicate image handler for 'PNM file'
+05:45:30: Debug: Adding duplicate image handler for 'PCX file'
+05:45:30: Debug: Adding duplicate image handler for 'IFF file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows icon file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows cursor file'
+05:45:30: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+05:45:30: Debug: Adding duplicate image handler for 'TGA file'
+05:45:30: Debug: Adding duplicate image handler for 'XPM file'
+continuation: 3 nets routed afresh (0 items lifted), 150 nets keep their copper but may be pulled
+net classes: 22 high-current nets, 146 small-signal nets; hcx 0.16
+hot-loop pours closed to other nets (--hotko): 15
+edges to route: 3 (0 on long nets)
+split: 1 via-in-pad of EN_5V2 kept
+split: 2 via-in-pad of Net-(U403-ACUV) kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SCL kept
+split: 1 via-in-pad of /Cells and Gauge/CELL3 kept
+split: 1 via-in-pad of /USB Port 2/LDO_3V3 kept
+split: 1 via-in-pad of Net-(U503-ACUV) kept
+split: 1 via-in-pad of /Cells and Gauge/CELL1 kept
+split: 2 via-in-pad of Net-(U102-V1) kept
+split: 1 via-in-pad of /USB Port 1/DRV_SUP kept
+split: 1 via-in-pad of /USB Port 1/REGN kept
+split: 1 via-in-pad of /USB Port 2/REGN kept
+split: 1 via-in-pad of /USB Port 2/TS kept
+split: 1 via-in-pad of IRQ_N kept
+split: 1 via-in-pad of Net-(U504-FB) kept
+split: 1 via-in-pad of /USB Port 1/TS kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_4P kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SCL kept
+split: 1 via-in-pad of /USB Port 2/SW2 kept
+split: 1 via-in-pad of /USB Port 2/SBU_FLT kept
+split: 1 via-in-pad of /USB Port 1/SW2 kept
+split: 2 via-in-pad of /Cells and Gauge/CELL_1N kept
+split: 1 via-in-pad of Net-(U503-ICHG) kept
+split: 1 via-in-pad of /USB Port 1/BTST1 kept
+split: 2 via-in-pad of /USB Port 1/SW1 kept
+split: 2 via-in-pad of SCL kept
+split: 1 via-in-pad of CHG_INH kept
+split: 1 via-in-pad of Net-(U102-VDD) kept
+split: 1 via-in-pad of /USB Port 1/HIDRV1 kept
+split: 1 via-in-pad of /USB Port 2/BTST1 kept
+split: 1 via-in-pad of /USB Port 2/I2CC_SDA kept
+split: 1 via-in-pad of /USB Port 2/CHG_INT kept
+split: 2 via-in-pad of /USB Port 2/CE_N kept
+split: 1 via-in-pad of /USB Port 2/ILIM kept
+split: 1 via-in-pad of /USB Port 2/LODRV1 kept
+split: 1 via-in-pad of /USB Port 2/SW1 kept
+split: 1 via-in-pad of /USB Port 1/I2CC_SDA kept
+split: 1 via-in-pad of /MCU/SWCLK kept
+split: 1 via-in-pad of /MCU/RFIO kept
+split: 1 via-in-pad of Net-(U101-VC2) kept
+split: 1 via-in-pad of /USB Port 1/LODRV1 kept
+split: 1 via-in-pad of /Cells and Gauge/GAUGE_FUSE kept
+fan-out stubs: 0
+aor power check: start 0.7453 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.606, 'R427': 2.674, 'R527': 2.194, 'D103': 0.177, 'U404': 8.357, 'U504': 11.25, 'U204': 3.207}, open [] (6 s)
+aor loss: PACK_P sheet on layer 1: 1 outlines, 2121 mm2
+aor loss: PACK_P 0.4030 W on the board; 60 pieces on the sheet ranked in 180 s; best: /Cells and Gauge/CELL3 (1228 cells) 32.8 mW, EN_5V2 (921 cells) 32.0 mW, SDA (786 cells) 10.9 mW, /USB Port 1/SBU_FLT (340 cells) 4.5 mW, /USB Port 1/REGN (905 cells) 4.2 mW, /USB Port 2/TS (331 cells) 3.9 mW, /USB Port 2/BTST1 (363 cells) 3.6 mW, /USB Port 2/REGN x2 3.4 mW, /USB Port 1/TS (459 cells) 3.1 mW, /Cells and Gauge/CHG (232 cells) 2.8 mW
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 3845966 (cap 30000000)
+  aor  232 s sweep 1 loss loss /Cells and Gauge/CELL3 (1228 cells) [full] ranked 32.8  ACCEPTED (pulls 0, 35 s, KiCad unconnected 3 -> 3, power 0.7453 -> 0.7199 W, PACK_P {'J113': 2.501, 'R427': 2.568, 'R527': 1.81, 'D103': 0.177, 'U404': 8.206, 'U504': 9.048, 'U204': 3.138}, new copper on the sheet 412 cells)
+    long edge EN_5V2 60.5 mm: search found, seen 1749280 (cap 30000000)
+  aor  256 s sweep 1 loss loss EN_5V2 (921 cells) [full] ranked 32.0 mW ACCEPTED (pulls 0, 18 s, KiCad unconnected 3 -> 3, power 0.7199 -> 0.6881 W, PACK_P {'J113': 2.254, 'R427': 2.328, 'R527': 1.806, 'D103': 0.177, 'U404': 7.416, 'U504': 8.695, 'U204': 3.134}, new copper on the sheet 12 cells)
+    long edge SDA 36.4 mm: search found, seen 1878985 (cap 30000000)
+    long edge IRQ_N 43.5 mm: search found, seen 431326 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 864373 (cap 30000000)
+    long edge SCL 36.5 mm: search found, seen 687101 (cap 30000000)
+  aor  323 s sweep 1 loss loss SDA (786 cells) [full] ranked 10.9 mW reverted (/USB Port 2/I2CC_SDA failed (pulls 15))
+    long edge SDA 36.4 mm: search found, seen 2323087 (cap 30000000)
+    long edge IRQ_N 43.5 mm: search found, seen 2455120 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 516737 (cap 30000000)
+    long edge SCL 36.5 mm: search none, seen -798720 (cap 30000000)
+    legs via spot 100.88,97.37: leg 1 308 cells (seen 3909), leg 2 none (seen -4096)
+    legs via spot 99.47,100.67: leg 1 none (seen -4096)
+    legs via spot 100.97,95.27: leg 1 266 cells (seen 3872), leg 2 none (seen -4096)
+    legs via spot 101.08,93.22: leg 1 225 cells (seen 3852), leg 2 none (seen -4096)
+    legs via spot 98.97,98.22: leg 1 none (seen -4096)
+    legs via spot 99.08,96.17: leg 1 none (seen -4096)
+  aor  413 s sweep 1 loss loss SDA (786 cells) [box:3] ranked 10.9 mW reverted (SCL failed (pulls 16))
+    long edge IRQ_N 43.5 mm: search found, seen 165738 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 829694 (cap 30000000)
+    long edge SDA 36.4 mm: search found, seen 2075332 (cap 30000000)
+  aor  483 s sweep 1 loss loss /USB Port 1/SBU_FLT (340 cells) [full] ranked 4.5 mW reverted (/USB Port 1/SBU_FLT failed (pulls 13))
+    long edge IRQ_N 43.5 mm: search found, seen 446463 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 596703 (cap 30000000)
+    long edge SDA 36.4 mm: search found, seen 3160595 (cap 30000000)
+  aor  573 s sweep 1 loss loss /USB Port 1/SBU_FLT (340 cells) [box:3] ranked 4.5 mW reverted (SCL failed (pulls 20))
+  aor  584 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [full] ranked 4.2 mW reverted (/USB Port 1/DRV_SUP failed (pulls 13))
+  aor  595 s sweep 1 loss loss /USB Port 1/REGN (905 cells) [box:3] ranked 4.2 mW reverted (/USB Port 1/DRV_SUP failed (pulls 13))
+  aor  603 s sweep 1 loss loss /USB Port 2/TS (331 cells) [full] ranked 3.9 mW ACCEPTED (pulls 0, 2 s, KiCad unconnected 3 -> 3, power 0.6881 -> 0.6853 W, PACK_P {'J113': 2.245, 'R427': 2.318, 'R527': 1.8, 'D103': 0.177, 'U404': 7.241, 'U504': 7.355, 'U204': 3.14}, new copper on the sheet 8 cells)
+  aor  613 s sweep 1 loss loss /USB Port 2/BTST1 (363 cells) [full] ranked 3.6 mW reverted (loss 0.6853 -> 0.6845 W, not 1.0 mW lower (new copper on the sheet 8 cells))
+  aor  622 s sweep 1 loss loss /USB Port 2/BTST1 (363 cells) [box:3] ranked 3.6 mW reverted (loss 0.6853 -> 0.6845 W, not 1.0 mW lower (new copper on the sheet 8 cells))
+  aor  634 s sweep 1 loss loss /USB Port 2/REGN x2 [full] ranked 3.4 mW reverted (loss 0.6853 -> 0.6860 W, not 1.0 mW lower (new copper on the sheet 620 cells))
+  aor  647 s sweep 1 loss loss /USB Port 2/REGN x2 [box:3] ranked 3.4 mW reverted (loss 0.6853 -> 0.6860 W, not 1.0 mW lower (new copper on the sheet 758 cells))
+  aor  655 s sweep 1 loss loss /USB Port 1/TS (459 cells) [full] ranked 3.1 mW ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.6853 -> 0.6762 W, PACK_P {'J113': 2.182, 'R427': 2.254, 'R527': 1.783, 'D103': 0.177, 'U404': 6.611, 'U504': 7.125, 'U204': 3.135}, new copper on the sheet 352 cells)
+  aor  666 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [full] ranked 2.8 mW reverted (power: loss 0.6793 W (now 0.6762, start 0.7453))
+  aor  676 s sweep 1 loss loss /Cells and Gauge/CHG (232 cells) [box:3] ranked 2.8 mW reverted (power: loss 0.6882 W (now 0.6762, start 0.7453))
+    long edge IRQ_N 43.5 mm: search found, seen 808580 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 827842 (cap 30000000)
+  aor  702 s sweep 1 loss loss IRQ_N (600 cells) [full] ranked 2.5 mW reverted (loss 0.6762 -> 0.6756 W, not 1.0 mW lower (new copper on the sheet 20 cells))
+    long edge IRQ_N 43.5 mm: search found, seen 1041192 (cap 30000000)
+    long edge IRQ_N 31.7 mm: search found, seen 841268 (cap 30000000)
+  aor  733 s sweep 1 loss loss IRQ_N (600 cells) [box:3] ranked 2.5 mW reverted (loss 0.6762 -> 0.6756 W, not 1.0 mW lower (new copper on the sheet 20 cells))
+  aor  745 s sweep 1 loss loss /USB Port 2/REGN (264 cells) [full] ranked 2.4 mW reverted (loss 0.6762 -> 0.6771 W, not 1.0 mW lower (new copper on the sheet 608 cells))
+  aor  757 s sweep 1 loss loss /USB Port 2/REGN (264 cells) [box:3] ranked 2.4 mW reverted (loss 0.6762 -> 0.6771 W, not 1.0 mW lower (new copper on the sheet 905 cells))
+aor loss: PACK_P 0.3339 W on the board; 60 pieces on the sheet ranked in 186 s; best: SDA (786 cells) 15.2 mW, /Cells and Gauge/CHG (232 cells) 10.0 mW, /USB Port 1/REGN (905 cells) 9.9 mW, /Cells and Gauge/CELL3 (412 cells) 7.5 mW, /USB Port 1/TS (352 cells) 6.1 mW, /USB Port 1/SBU_FLT (340 cells) 3.6 mW, SCL (769 cells) 3.5 mW, /USB Port 1/HIDRV2 (66 cells) 2.2 mW, /Cells and Gauge/TS4 (34 cells) 1.9 mW, /USB Port 1/C_CC1 (142 cells) 1.8 mW
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 5646051 (cap 30000000)
+  aor 1003 s sweep 2 loss loss /Cells and Gauge/CELL3 (412 cells) [full] ranked 7.5 mW reverted (power: loss 0.6819 W (now 0.6762, start 0.7453))
+    long edge /Cells and Gauge/CELL3 60.3 mm: search found, seen 4148697 (cap 30000000)
+  aor 1046 s sweep 2 loss loss /Cells and Gauge/CELL3 (412 cells) [box:3] ranked 7.5 m reverted (power: loss 0.6819 W (now 0.6762, start 0.7453))
+  aor 1055 s sweep 2 loss loss /USB Port 1/TS (352 cells) [full] ranked 6.1 mW reverted (loss 0.6762 -> 0.6762 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+  aor 1065 s sweep 2 loss loss /USB Port 1/TS (352 cells) [box:3] ranked 6.1 mW reverted (loss 0.6762 -> 0.6762 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+    long edge SCL 36.5 mm: search found, seen 705565 (cap 30000000)
+  aor 1082 s sweep 2 loss loss SCL (769 cells) [full] ranked 3.5 mW ACCEPTED (pulls 0, 10 s, KiCad unconnected 3 -> 3, power 0.6762 -> 0.6739 W, PACK_P {'J113': 2.168, 'R427': 2.24, 'R527': 1.785, 'D103': 0.177, 'U404': 6.518, 'U504': 6.698, 'U204': 3.124}, new copper on the sheet 215 cells)
+  aor 1089 s sweep 2 loss loss /USB Port 1/HIDRV2 (66 cells) [full] ranked 2.2 mW ACCEPTED (pulls 0, 0 s, KiCad unconnected 3 -> 3, power 0.6739 -> 0.6718 W, PACK_P {'J113': 2.152, 'R427': 2.222, 'R527': 1.785, 'D103': 0.177, 'U404': 6.466, 'U504': 6.681, 'U204': 3.124}, new copper on the sheet 4 cells)
+  aor 1090 s sweep 2 loss loss /Cells and Gauge/TS4 (34 cells) [full] ranked 1.9 mW reverted (KiCad connectivity: unconnected 3 -> 4)
+  aor 1090 s sweep 2 loss loss /Cells and Gauge/TS4 (34 cells) [box:3] ranked 1.9 mW reverted (KiCad connectivity: unconnected 3 -> 4)
+  aor 1097 s sweep 2 loss loss /USB Port 1/C_CC1 (142 cells) [full] ranked 1.8 mW ACCEPTED (pulls 0, 1 s, KiCad unconnected 3 -> 3, power 0.6718 -> 0.6697 W, PACK_P {'J113': 2.139, 'R427': 2.208, 'R527': 1.785, 'D103': 0.177, 'U404': 6.223, 'U504': 6.489, 'U204': 3.117}, new copper on the sheet 0 cells)
+  aor 1113 s sweep 2 loss loss /P1_LDO_3V3 x3 [full] ranked 1.6 mW reverted (loss 0.6697 -> 0.6716 W, not 1.0 mW lower (new copper on the sheet 548 cells))
+  aor 1129 s sweep 2 loss loss /P1_LDO_3V3 x3 [box:3] ranked 1.6 mW reverted (power: loss 0.7074 W (now 0.6697, start 0.7453))
+  aor 1141 s sweep 2 loss loss /USB Port 1/I2CC_SDA (659 cells) [full] ranked 1.4 mW reverted (loss 0.6697 -> 0.6700 W, not 1.0 mW lower (new copper on the sheet 510 cells))
+  aor 1155 s sweep 2 loss loss /USB Port 1/I2CC_SDA (659 cells) [box:3] ranked 1.4 mW reverted (power: loss 0.7073 W (now 0.6697, start 0.7453))
+aor loss: PACK_P 0.3274 W on the board; 60 pieces on the sheet ranked in 194 s; best: SDA (786 cells) 15.4 mW, /Cells and Gauge/CHG (232 cells) 9.7 mW, /Cells and Gauge/CELL3 (412 cells) 9.0 mW, /USB Port 1/REGN (905 cells) 8.1 mW, /USB Port 1/TS (352 cells) 7.1 mW, IRQ_N (600 cells) 6.0 mW, /USB Port 2/CHG_INT (569 cells) 4.3 mW, /USB Port 2/SBU_FLT (219 cells) 3.0 mW, /USB Port 1/I2CC_SCL (244 cells) 2.9 mW, /USB Port 2/TS (8 cells) 2.1 mW
+  aor 1359 s sweep 3 loss loss /USB Port 2/CHG_INT (569 cells) [full] ranked 4.3 mW ACCEPTED (pulls 0, 4 s, KiCad unconnected 3 -> 3, power 0.6697 -> 0.6674 W, PACK_P {'J113': 2.12, 'R427': 2.188, 'R527': 1.779, 'D103': 0.177, 'U404': 6.064, 'U504': 6.738, 'U204': 3.103}, new copper on the sheet 458 cells)
+  aor 1367 s sweep 3 loss loss /USB Port 2/SBU_FLT (219 cells) [full] ranked 3.0 mW reverted (loss 0.6674 -> 0.6673 W, not 1.0 mW lower (new copper on the sheet 178 cells))
+  aor 1376 s sweep 3 loss loss /USB Port 2/SBU_FLT (219 cells) [box:3] ranked 3.0 mW reverted (power: loss 0.6738 W (now 0.6674, start 0.7453))
+  aor 1385 s sweep 3 loss loss /USB Port 1/I2CC_SCL (244 cells) [full] ranked 2.9 mW ACCEPTED (pulls 0, 2 s, KiCad unconnected 3 -> 3, power 0.6674 -> 0.6647 W, PACK_P {'J113': 2.115, 'R427': 2.183, 'R527': 1.721, 'D103': 0.177, 'U404': 5.97, 'U504': 6.242, 'U204': 3.064}, new copper on the sheet 8 cells)
+  aor 1395 s sweep 3 loss loss /USB Port 2/TS (8 cells) [full] ranked 2.1 mW reverted (loss 0.6647 -> 0.6645 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+  aor 1407 s sweep 3 loss loss /USB Port 2/TS (8 cells) [box:3] ranked 2.1 mW reverted (loss 0.6647 -> 0.6645 W, not 1.0 mW lower (new copper on the sheet 0 cells))
+aor: 39 tasks, 9 accepted, 30 reverted, 92 pulls; open connections left 3, lifts left 0
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 0, trimmed 0
+unconnected after fill: 3
+routed 373 edges, 3 failed, items added 363
+  FAILED /USB Port 1/SRP_F | not tried with rip-up
+  FAILED EN_5V1 | not tried with rip-up
+  FAILED Net-(C313-Pad2) | not tried with rip-up
+FAILKEY /USB Port 1/SRP_F
+FAILKEY EN_5V1
+FAILKEY Net-(C313-Pad2)
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'BOX2< VECTOR2< int > > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'VECTOR2< int > *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_VIA *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.
+swig/python detected a memory leak of type 'PCB_TRACK *', no destructor found.

@@ -490,3 +490,52 @@ Traps:
   beside it instead of using the first: give `at` and `force` when an entry must join an existing via.
 - `links.py` checks vias at 0.2 mm against inner-layer tracks (the In3 3V3 strap): a spot that `pinlib.check_via`
   passes at 0.15 may still fail there.
+
+## Phase 2 round 3: loss pass, long edges, via-in-pad anchors (worker B)
+
+The lead's call (same straps and filters as the route, `--resume` on an out dir with `routed.kicad_pcb`):
+`final_route.sh ... --route=80 --resume --post="finish.sh --modes=aor,aork,loss --min=35 --tol=0.01 --long=30 --hand=<hand.json>"`
+(start it as a background job with a 2 h limit). Mode `loss` is a third pass after the two accept-or-revert passes.
+
+**Loss pass** (`finish.sh --modes=...,loss`, `router_b.py --aor --aororder=loss`):
+- Rank: every rip-able piece with track cells (or vias) on In2 inside the outline of the PACK_P In2 pour is taken off the
+  board, the PACK_P pours are refilled and `dc_score.score_net` solves PACK_P (0.1 mm); gain = PACK_P loss now minus
+  loss without the piece (about 3 s a piece, 60 pieces in 3 min). Pieces of one net that each gain are also ranked
+  together. Log line `aor loss: PACK_P ... best: <piece> <gain> mW, ...`.
+- Task (best first, gain >= `--lossrank` 0.5 mW, at most `--lossn` 12 per sweep): the piece is pulled and laid again
+  with the sheet closed: In2 cells inside the outline cost `--losscost` (250 history units, shut in practice) for every
+  net but PACK_P, vias there `--lossvia` (20 mm-equivalent steps, i.e. dear). `--lossclose=full,box:3`: the whole
+  outline first, then only the piece's box + 3 mm. Hot-loop pours stay closed (`--hotko`).
+- Accepted only when every pulled piece is laid again, KiCad's unconnected count does not rise, the power check passes
+  (no power open, no PACK_P terminal past 3.0 mohm or > 0.1 mohm up) and PACK_P + 3V3 + GND loss drops by `--lossmin`
+  (1 mW) or more; otherwise grids, routes, history costs and board are put back. A piece refused in every mode is not
+  tried again in a later sweep. finish.sh keeps the pass only when unconnected + DRC errors and hot-pour items do not
+  rise and the board's dc_score loss drops by 1 mW or more (host-side `dc_score.py` on every candidate, cached as
+  `fin/<board>.dc.json`). Options to the router: `--lossx="--lossn=20 --lossclose=full"`.
+- `--lossonly=<regex>` (router) restricts the ranking to matching pieces, for a quick look at one net.
+
+**Long edges** (`finish.sh --long=30` = `router_b.py --longmm=30 --longlegs`): an open connection at least 30 mm long
+gets its own budget in an aor task: node cap `--longcap` (30 M, above the 12 M ceiling of every other search),
+`--longtime` 900 s and `--longrips` 40 pulls; a failed search is tried again in two legs through a free via spot near
+the middle (`--legband` 12 mm across the line, `--legtries` 6 spots, the second leg starts where the first ended and
+keeps the via spacing, `astar(..., sv0=)`). Each long search prints `long edge <net> <mm>: search found|none, seen N`.
+`--longx=--longptol=0.02` lets the power check of one long open task cost up to 20 mW (a later loss pass wins it
+back); `--longx=--longclose` lays a long open task with the In2 PACK_P sheet closed, as the loss pass does.
+
+**Via-in-pad anchors** (`--split`, on unless `--novip`): a routed via inside a pad of its own net (the router's
+via-in-pad escapes, about 35 on p2-m4) is kept in the fixed world and the pieces end on it. Before, lifting such a
+piece lost the via, and the pad (boxed in on F.Cu, e.g. TH401.1 of Port 1 TS inside the Port 1 pour) could not be
+reached again ("no way even with every rip-able route gone" at once). Also: an edge whose two ends already share copper
+(two anchors joined by fixed copper, 0.05 mm apart) counts as laid (A* never stops on a goal that is also a start).
+
+Traps met:
+- The two biggest cuts of the sheet were long Kelvin-free signal pieces (CELL3 32.8 mW, EN_5V2 31.8 mW on p2-m4): one
+  task each, laid again off the sheet in 44 s and 27 s. Re-ranking after each sweep matters: Port 1 TS rose from
+  3.2 to 15.4 mW once the other cuts were gone.
+- Closing only the piece's box (box:3) seldom wins where the whole outline failed; most refusals are cascades
+  (a pulled neighbour cannot be laid again within 12 pulls) or the power check (CHG laid again cost 3V3 / GND more
+  than it saved on PACK_P).
+- EN_5V1 (R432.1 to U301.12, 50 mm) is not a node-cap problem once the far end is known to be boxed: U301.12 has no
+  free cell or via site on the real grid (`boxed`, 5000-node back search), the 3V3 F.Cu pour on its west and the
+  escape vias of pins 11, 13 and 14 round it (`runs/p2b-r3dev/look/en5v1_u301.png`). With pulls the edge itself lays
+  (42 k nodes), but the pulled pins (TS, NRST, SDA, CHG_INH, SWDIO, SWCLK, UART_TX) do not all go back.
