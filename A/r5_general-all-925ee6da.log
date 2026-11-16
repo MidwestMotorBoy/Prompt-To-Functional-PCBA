@@ -1,0 +1,26 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 149
+phase 1: 17 open connections tried again with every route free to move
+phase 2: 10 open connections tried again with every route free to move
+phase 3: 8 open connections tried again with every route free to move
+routes pulled and re-laid: 625
+fan-out stubs unused (removed) 58, trimmed 28
+unconnected after fill: 22
+routed 356 edges, 8 failed, items added 5175
+  FAILED /USB Port 1/LODRV1 110.09,108.84 (Pad 25  of U403 ) -> 110.89,99.81 (Pad 1  of R445 ) starts 72 goals 134 seen 89 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 59 goals 47 seen 127 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 87.10,106.03 (Pad 1  of C510 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 97 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 447411 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 467 seen 619 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 119 goals 71 seen 100 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 59 seen 128 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 105.82,102.35 (Pad 2  of R454 ) -> 110.15,106.03 (Pad 1  of C410 ) starts 14 goals 367 seen 42 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV1
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 2/REGN
+FAILKEY /USB Port 2/REGN
+FAILKEY SCL
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/REGN
