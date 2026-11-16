@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2-m2.kicad_pcb",
+ "sha": "beba38958d24646db83d62d0e9b1960b881920c2",
+ "routed": 353,
+ "failed": 13,
+ "edges": 366,
+ "minutes": 45.6,
+ "status": "done",
+ "tail": [
+  "FAILKEY Net-(U403-ICHG)",
+  "FAILKEY EN_5V1",
+  "FAILKEY 3V3@Pad 2 [3V3] of R417 on F.Cu",
+  "FAILKEY /Cells and Gauge/WAKE",
+  "FAILKEY /Cells and Gauge/CHG_G"
+ ]
+}
