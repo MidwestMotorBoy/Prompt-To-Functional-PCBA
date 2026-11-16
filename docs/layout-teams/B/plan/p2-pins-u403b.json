@@ -1,0 +1,104 @@
+{
+ "about": "Pin escapes laid BEFORE trunk.py (phase 2 round 2, lead; replaces p2-pins-u403.json). The 5 mm PACK_P B.Cu trunk keeps the path of runs/p2-m1 (along the south of U403, then north in a 2 mm neck under pins 8 to 10, x 112.3..114.3): the vias of round 2's first table (pins 7 and 9 straight south) pushed the trunk onto a diagonal under pins 1 to 6, which closed I2CC_SCL, I2CC_SDA and CHG_INT and raised J113 from 2.11 to 2.65 mohm (runs/p2a-r5f). Here pins 1, 2, 3 and 7, CE_N at R435.2 and REGN at R415.1 get their vias in the row south of the pins, which closes the diagonal to the trunk, and the vias of pins 9 and 10 sit EAST of the neck (north of TH104's B.Cu pads), so the trunk only gets a notch. Call: pins.py --rules=table --table=plan/p2-pins-u403b.json, before trunk.py.",
+ "escapes": [
+  {
+   "ref": "U403",
+   "pad": "1",
+   "dir": "W",
+   "lead": 0.05,
+   "via": true,
+   "at": "-0.7,0",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 1 I2CC_SCL to R403.2 (26 mm north, inner layer): west out of the pin to a via at 108.45,110.4, under pin 36 and east of the FSW track (x 107.92); laid before the trunk so the trunk cannot take the row under pins 1 to 6"
+  },
+  {
+   "ref": "R435",
+   "pad": "2",
+   "dir": "N",
+   "lead": 0.05,
+   "via": true,
+   "at": "0,-0.83",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 1 CE_N at its pull-up R435.2: a via straight north at 108.75,111.1 (no other site: FSW runs west of the pad, R415.1 stands east, the trunk is south); the router joins it to the CE_N via of pin 7 on an inner layer"
+  },
+  {
+   "ref": "U403",
+   "pad": "2",
+   "dir": "S",
+   "lead": 0.1,
+   "via": true,
+   "at": "-0.15,0.8",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "Port 1 I2CC_SDA: a via south at 109.5,111.2, 0.75 mm pitch with the vias of pins 1 and 3"
+  },
+  {
+   "ref": "U403",
+   "pad": "3",
+   "dir": "S",
+   "lead": 0.1,
+   "via": true,
+   "at": "0.15,0.8",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 1 CHG_INT: a via south at 110.3,111.2"
+  },
+  {
+   "ref": "U403",
+   "pad": "7",
+   "dir": "S",
+   "lead": 0.1,
+   "via": true,
+   "at": "-1.05,0.9",
+   "w": 0.15,
+   "max": 1.9,
+   "why": "Port 1 CE_N: south out of the pin and west under the unconnected pins 5 and 6 to a via at 111.1,111.3, so the trunk neck keeps the room between the GND via of R416.2 and the ICHG via"
+  },
+  {
+   "ref": "R415",
+   "pad": "1",
+   "dir": "S",
+   "lead": 0.05,
+   "via": true,
+   "at": "0,0.73",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 1 REGN at R415.1: every site north of the pad is taken by the vias of pins 1 to 3 and CE_N; a via straight south at 109.64,112.78 (between the pad and the In3 3V3 strap at y 113.44), laid before the trunk, which then keeps 0.25 mm south of it"
+  },
+  {
+   "ref": "U403",
+   "pad": "10",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "1.1,0.05",
+   "w": 0.15,
+   "max": 1.6,
+   "why": "Port 1 ILIM to R414.1 (6.5 mm east): east out of the last pin of the south row, under pin 11, to a via at 114.75,110.45 east of the trunk neck"
+  },
+  {
+   "ref": "U403",
+   "pad": "9",
+   "dir": "S",
+   "lead": 0.2,
+   "via": true,
+   "at": "1.3,0.75",
+   "w": 0.15,
+   "max": 2.2,
+   "why": "Port 1 ICHG to R413.1: south out of the pin, east along y 111.15 under pin 10 to a via at 114.45,111.15 (north-west of R419.2, north of TH104.2 on B.Cu)"
+  },
+  {
+   "ref": "U403",
+   "pad": "18",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.8,0.05",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 1 SW2 to C413.2: pin 19's via (HIDRV2, table of round 2) closes the north; a via east of the pin, laid before the trunk passes there (as the router did on runs/p2-m1)"
+  }
+ ]
+}
