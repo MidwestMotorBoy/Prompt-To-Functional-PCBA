@@ -1414,6 +1414,14 @@ def route_edge(eid, ghost=False):
     goals = item_cells(bd, B[0], B[1], n)
     if ghost:
         globals()["grid"], globals()["copper"] = keep
+        # team B (lead, round 3): an end that is itself a rip-able piece of this net (--split: the far part of a
+        # net in two halves) has no cell in the fixed world; the ghost search then had no goal and every such edge
+        # read "no way even with every rip-able route gone" (SCL on runs/p2-m5: starts 138 goals 0). Take the end
+        # from the real world: its cells are free for this net in the fixed one.
+        if not goals and not bd.startswith("Zone") and name != "GND" and name not in PLANE_NETS:
+            goals = item_cells(bd, B[0], B[1], n)
+        if not starts and not ad.startswith("PlanePiece"):
+            starts = item_cells(ad, A[0], A[1], n)
     CUR[0] = []
     STUBS = []
     if not ghost and starts and goals and name != "GND" and not bd.startswith("Zone") and not set(starts).isdisjoint(goals):
@@ -1885,6 +1893,7 @@ def _kopen():
 # stands and budget above the start, no power terminal opens, and no PACK_P terminal resistance passes 3.0 mohm (when it
 # started below) or rises more than 0.1 mohm.
 PCHK = OPT.get("pcheck")
+PC_RTOL = float(OPT.get("prtol", 0.1))                   # team B (lead, round 3): mohm one PACK_P terminal may rise against the start of the pass
 if PCHK and "aor" in OPT:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import dc_score as _dcs
@@ -1921,7 +1930,7 @@ def _power_ok(P, P0, Pc, xtol=0.0):
         return "power open %s" % P["open"]
     for k_, v_ in P["R"].items():
         r0_ = P0["R"].get(k_, v_)
-        if (r0_ <= 3.0 < v_) or v_ > r0_ + 0.1:
+        if (r0_ <= 3.0 < v_) or v_ > r0_ + PC_RTOL:
             return "PACK_P to %s %.2f mohm (start %.2f)" % (k_, v_, r0_)
     return None
 # team B loss mode (--aororder=...,loss): the routed pieces with tracks (or vias) on the LOSS layer (In2) inside the

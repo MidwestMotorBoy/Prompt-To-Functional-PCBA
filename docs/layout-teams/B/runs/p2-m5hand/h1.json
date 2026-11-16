@@ -1,0 +1,56 @@
+{
+ "board": "runs/p2-m5/finished.kicad_pcb as stage 1 left it (runs/p2-m5/stage1_finished.kicad_pcb)",
+ "note": "lead, phase 2 round 3. (1) PACK_P at R112.2: its In2 piece is cut off by two signal tracks; an F.Cu track to C107.1 (joined to the sheet by its via and the B.Cu track of C111.2) joins it; R112 is the gauge's series resistor, no current. (2) Port 1 TS: TH401.1 is boxed in on F.Cu (C430.1, TH401.2, the AC_SNS_N pour); the first route lost its via-in-pad stub, and the search cannot make one. The via is put back in the pad; the accept-or-revert pass then lays the connection from it.",
+ "tracks": [
+  {
+   "net": "PACK_P",
+   "layer": "F.Cu",
+   "w": 0.2,
+   "points": [
+    [
+     92.0,
+     120.33
+    ],
+    [
+     91.42,
+     121.05
+    ],
+    [
+     91.44,
+     121.75
+    ],
+    [
+     91.72,
+     122.03
+    ],
+    [
+     92.0,
+     122.27
+    ]
+   ]
+  },
+  {
+   "net": "/USB Port 1/TS",
+   "layer": "F.Cu",
+   "w": 0.2,
+   "points": [
+    [
+     111.43,
+     97.3074
+    ],
+    [
+     111.3128,
+     97.3074
+    ]
+   ]
+  }
+ ],
+ "vias": [
+  {
+   "net": "/USB Port 1/TS",
+   "x": 111.43,
+   "y": 97.3074,
+   "inpad": true
+  }
+ ]
+}

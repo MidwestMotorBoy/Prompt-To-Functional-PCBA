@@ -7,6 +7,7 @@ tracks.json:
   {"board": "<which board the coordinates belong to, e.g. runs/p2b-r1/routed.kicad_pcb>",
    "tracks": [{"net": "/USB Port 1/C_CC2", "layer": "F.Cu", "w": 0.15, "points": [[104.75, 69.17], [104.9, 69.9]]}, ...],
    "vias":   [{"net": "/USB Port 1/C_CC2", "x": 105.85, "y": 70.9}]}          (vias 0.45 / 0.3, through)
+      a via may carry "inpad": true (lead, round 3): allowed in a small pad of its own net, as the router's via-in-pad
   "lift": ["/USB Port 1/SS_5V", ...]   (round 2) nets whose ROUTED copper (every track and via not in the --keep board,
                                        i.e. not plan copper) is removed first; the new tracks then lay that net again
   "remove": [{"net": n, "layer": L, "a": [x, y], "b": [x, y]} | {"net": n, "via": [x, y]}]   single items removed first
@@ -121,7 +122,7 @@ try:
             if f: faults.append(("track", t["net"], t["layer"], a, b, f[:3]))
             G.add_track(t["net"], t["layer"], a, b, t["w"]); n += 1
     for v in J.get("vias", []):
-        f = G.check_via(v["net"], v["x"], v["y"], soft_ok=True, self_ok=False)
+        f = G.check_via(v["net"], v["x"], v["y"], soft_ok=True, self_ok=False, inpad=bool(v.get("inpad")))
         if f: faults.append(("via", v["net"], v["x"], v["y"], f[:3]))
         G.add_via(v["net"], v["x"], v["y"])
     # ends that touch nothing of their net (a warning: the agent may mean a T on a track drawn in the same file)
