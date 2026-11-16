@@ -1,0 +1,9 @@
+{
+ "about": "Pin escapes laid BEFORE trunk.py (phase 2 round 2, worker A): via escapes of the Port 1 charger U403 whose via sites the 5 mm PACK_P B.Cu trunk takes when it is laid first (its 2 mm neck passes under U403's south-east corner). With the vias in the plan first, the trunk routes round them. Call: pins.py --rules=table --table=plan/p2-pins-u403.json, before trunk.py.",
+ "escapes": [
+  {"ref": "U403", "pad": "7", "dir": "S", "lead": 0.1, "via": true, "at": "0,0.62", "w": 0.15, "max": 1.0,
+   "why": "Port 1 CE_N: R417.1 lies east past the TS and ICHG escapes, R435.2 west past four pins; a via just south of the pin (as the router did without the trunk, runs/p2b-full2)"},
+  {"ref": "U403", "pad": "9", "dir": "S", "lead": 0.1, "via": true, "at": "0,0.62", "w": 0.15, "max": 1.0,
+   "why": "Port 1 ICHG to R413.1 (6 mm east): a via just south of the pin (as on runs/p2b-full2); TS (pin 8) runs south between the two vias to R416.1"}
+ ]
+}

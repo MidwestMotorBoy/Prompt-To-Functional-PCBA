@@ -21,9 +21,20 @@ Rules, in this order:
              a via escape: a lead straight out of the pad in dir (N/S/E/W, or "out" = away from the part centre),
              then the shortest exact way to a free via spot within max mm; "cut": nets whose (non-hot) pours may be cut.
            {"ref": "J501", "pad": "B5", "to": "U505.5", "w": 0.15, "cut": ["/USB Port 2/VBUS"]}
+             ("to": "zone": into the net's own planned pour on the pad's layer, e.g. a signal-size CELL_P pad;
+              "path": ["dx,dy", ...]: the way itself, offsets from the pad centre, then the target pad's centre: no
+              search, every segment checked exactly, for a side the search would not take)
              a whole short connection on one layer from pad to pad (the second pad of the same part family is given
              as REF.PAD; with "ref": "A|B" use "to": "C|D" in the same order).
          Keys: layer (default the pad's copper layer), lead (mm beyond the pad edge, default 0.15), via_dir_only.
+         "cut_hot": ["PACK_P", "GND"] with "cut_box": "dx0,dy0,dx1,dy1" (mm, board axes, from the centre of the
+           entry's part; both keys required): the HOT-LOOP pours of those nets may be cut, but only inside that box
+           (phase 2 round 2: EN_5V1 under the U404 body, where the hot GND strip and the PACK_P stub beyond the pads
+           are not on the loop's path). A narrow, explicit option, never a licence to cut hot pours elsewhere: the cut
+           is clipped to the box, logged per net in mm2, and refused when it leaves a held pour piece without a via
+           of its net. Solve the loop again after it (hot_score.py on the copper board): the lead's limit is +0.01 nH.
+         "drop": ["dx,dy", ...]: before the entry, plan vias of the pad's net at those offsets from the pad centre
+           (0.05 mm) are removed with the plan tracks that end on them (a planner tie in the way of an escape).
 Options: --rules=ep,rail,gate,table  --table=<file>  --only=REF.PAD,...  --gate_mm=2.5 --gate_w=0.3  --png=<dir>
          --rail_r=1.6 (search radius of the rail rule)  --dry (report only)
 Exit 1 only on a clearance fault in the final exact check (nothing then is written). Prints one line per item and a
@@ -42,6 +53,7 @@ if len(A) < 3: print(__doc__); sys.exit(2)
 HERE = os.path.dirname(os.path.abspath(__file__)); TEAM = os.path.dirname(HERE)
 RULES = O.get("rules", "ep,rail,gate,table").split(",")
 TABLE = O.get("table", os.path.join(TEAM, "plan/p2-pins.json"))
+if not os.path.isabs(TABLE) and not os.path.exists(TABLE): TABLE = os.path.join(TEAM, TABLE)   # relative to the team folder (final_route.sh runs filters in <out>/split)
 ONLY = set(O["only"].split(",")) if "only" in O else None
 GATE_MM, GATE_W = float(O.get("gate_mm", 2.5)), float(O.get("gate_w", 0.3))
 RAIL_R = float(O.get("rail_r", 1.6))
@@ -54,7 +66,8 @@ PADS = {}
 for p in D["pads"]:
     if p["shapes"] and p["num"]:
         PADS.setdefault((p["ref"], p["num"]), []).append(p)
-LOG, ADDED_T, ADDED_V, CUTS = [], [], [], []      # report lines; tracks, vias added; (zone, layer, geom) cuts
+LOG, ADDED_T, ADDED_V, CUTS = [], [], [], []
+HOT = {}                                          # table entry with cut_hot: {"nets": set, "box": Polygon}
 if PNG: os.makedirs(PNG, exist_ok=True)
 
 
@@ -264,13 +277,91 @@ def rebuild():
     G = pinlib.Geo(D["pads"], S["tracks"], S["vias"], S["zones"], D.get("keepouts", []), D["outline"])
 
 
+def hot_index():
+    """(zone index in S["zones"], poly index) of the hot-loop pours of the plan as it stands."""
+    zl = [dict(net=z["net"], layer=z["layer"], geoms=[pinlib.poly(q) for q in z["polys"]]) for z in S["zones"]]
+    return pinlib.hot_polys(zl, D["pads"])
+
+
+def hot_geo():
+    """A Geo where the hot pours of HOT['nets'] are taken as already cut away inside HOT['box'] (search and checks of
+    a cut_hot entry); the real cut, clipped to the box, follows in lay()."""
+    hp = hot_index(); BX = HOT["box"]; zs = []
+    for zi, z in enumerate(S["zones"]):
+        gs = []
+        for pi, q in enumerate(z["polys"]):
+            g = pinlib.poly(q)
+            gs.append(g.difference(BX) if (zi, pi) in hp and z["net"] in HOT["nets"] else g)
+        zs.append(dict(net=z["net"], layer=z["layer"], geoms=gs))
+    return pinlib.Geo(D["pads"], S["tracks"], S["vias"], zs, D.get("keepouts", []), D["outline"])
+
+
+def hot_cuts(net, geoms_by_layer, commit):
+    """Cut the hot pours of HOT['nets'] round the new copper, clipped to HOT['box']. Refused (returns why) when a
+    piece of a cut pour that holds a pad or via of its net is left without a via of that net (it would hang off the
+    planes). commit=False only checks."""
+    hp = hot_index(); BX = HOT["box"]; why = None; plan = []
+    for zi, z in enumerate(S["zones"]):
+        if z["net"] not in HOT["nets"]: continue
+        new = [g for g, Lg in geoms_by_layer if Lg == z["layer"]]
+        if not new: continue
+        hcpair = (G.K.hc(z["net"]) and G.K.small(net)) or (G.K.small(z["net"]) and G.K.hc(net))
+        c = (pinlib.HCCLR if hcpair else pinlib.ZCLR) + 0.01
+        hole = unary_union([g.buffer(c, 16) for g in new]).intersection(BX)
+        if hole.is_empty: continue
+        vias = [Point(v["x"], v["y"]).buffer(v["size"] / 2) for v in S["vias"] if v["net"] == z["net"]]
+        items = [shp(p, z["layer"]) for p in D["pads"] if p["net"] == z["net"] and p["shapes"].get(z["layer"])] + vias
+        polys = []; changed = 0.0
+        for pi, pr in enumerate(z["polys"]):
+            g = pinlib.poly(pr)
+            if (zi, pi) not in hp or not g.intersects(hole): polys.append(pr); continue
+            d = g.difference(hole); changed += g.area - d.area
+            parts = [q for q in ([d] if isinstance(d, Polygon) else list(getattr(d, "geoms", []))) if isinstance(q, Polygon) and q.area > 0.05]
+            held = [q for q in parts if any(q.intersects(it) for it in items)]
+            if len(held) > 1 and not all(any(q.intersects(v) for v in vias) for q in held):
+                why = "hot cut splits the %s pour on %s into %d held pieces, not every one with a via" % (z["net"], z["layer"], len(held))
+            for q in parts:
+                polys.append(dict(ring=[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords],
+                                  holes=[[[round(x, 4), round(y, 4)] for x, y in h.coords] for h in q.interiors]))
+        if changed > 0: plan.append((z, polys, changed))
+    if why or not commit: return why
+    for z, polys, changed in plan:
+        before = len(z["polys"]); z["polys"] = polys
+        CUTS.append(dict(net=z["net"], layer=z["layer"], mm2=round(changed, 3), pieces=[before, len(polys)], hot=True))
+        say("    HOT cut %s on %s inside the box: %.3f mm2, pieces %d -> %d" % (z["net"], z["layer"], changed, before, len(polys)))
+    return None
+
+
+def cut_rule_areas(geoms_by_layer, gap=0.05):
+    """Rule areas of the plan (ruleareas.py, spec["rule_areas"]) are cut back from the new copper by gap, as ruleareas.py
+    cuts them back from the plan's tracks and vias (KiCad flags any track inside a no-tracks area); pieces under 0.3 mm2
+    are dropped."""
+    for ra in S.get("rule_areas", []):
+        new = [g for g, Lg in geoms_by_layer if Lg in ra["layers"]]
+        if not new: continue
+        hole = unary_union([g.buffer(gap, 12) for g in new]); polys = []; ch = 0.0
+        for pr in ra["polys"]:
+            g = pinlib.poly(pr)
+            if not g.intersects(hole): polys.append(pr); continue
+            d = g.difference(hole); ch += g.area - d.area
+            for q in ([d] if isinstance(d, Polygon) else list(getattr(d, "geoms", []))):
+                if isinstance(q, Polygon) and q.area >= 0.3:
+                    polys.append(dict(ring=[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords[:-1]],
+                                      holes=[[[round(x, 4), round(y, 4)] for x, y in h.coords[:-1]] for h in q.interiors]))
+        if ch > 0:
+            ra["polys"] = polys; say("    rule area %s cut back by %.3f mm2" % (ra.get("name"), ch))
+    S["rule_areas"] = [ra for ra in S.get("rule_areas", []) if ra["polys"]]
+
+
 def lay(net, L, pts, w, via=None, cut=(), tag=""):
     segs = [dict(net=net, layer=L, a=[a[0], a[1]], b=[b[0], b[1]], w=w, pins=tag) for a, b in zip(pts, pts[1:]) if a != b]
     geoms = [(LineString([s["a"], s["b"]]).buffer(w / 2, 16), L) for s in segs]
     if via is not None:
         geoms += [(Point(via).buffer(VIA_D / 2, 24), Lx) for Lx in CU]
     if cut: apply_cuts(net, L, geoms, cut)
+    if HOT: hot_cuts(net, geoms, True)
     if "dry" in O: return segs
+    cut_rule_areas(geoms)
     S["tracks"] += segs; ADDED_T.extend(segs)
     if via is not None:
         v = dict(net=net, x=round(via[0], 4), y=round(via[1], 4), size=VIA_D, drill=VIA_DRILL, pins=tag, gap=VGAP[0])
@@ -536,6 +627,7 @@ def lay_hot(net, L, pts, w, cut, tag):
 
 # ---- table --------------------------------------------------------------------------------------------------------
 def rule_table():
+    global G
     if not os.path.exists(TABLE): say("table %s: not found" % TABLE); return 0
     T = json.load(open(TABLE)); n = 0
     for e in (T if isinstance(T, list) else T.get("escapes", [])):
@@ -554,11 +646,38 @@ def rule_table():
             elif e.get("dir") in DIRS: d = DIRS[e["dir"]]
             if touches_own(p, L) and not e.get("force"):
                 say("table %s %s: already has copper, skipped" % (nm, net)); continue
+            SAVED = (list(S["tracks"]), list(S["vias"])) if e.get("drop") else None
+            for dxy in e.get("drop", []):                       # planner ties in the way: removed first
+                ddx, ddy = (float(v) for v in dxy.split(",")); qx, qy = p["x"] + ddx, p["y"] + ddy
+                gone = [v for v in S["vias"] if v["net"] == net and abs(v["x"] - qx) < 0.05 and abs(v["y"] - qy) < 0.05]
+                for v in gone:
+                    S["vias"].remove(v)
+                    tr = [t for t in S["tracks"] if t["net"] == net and any(math.hypot(t[k][0] - v["x"], t[k][1] - v["y"]) < 0.01 for k in ("a", "b"))]
+                    for t in tr: S["tracks"].remove(t)
+                    say("table %s %s: dropped the plan via at %.3f,%.3f and %d track(s) ending on it" % (nm, net, v["x"], v["y"], len(tr)))
+                if not gone: say("table %s %s: no plan via to drop at %.3f,%.3f" % (nm, net, qx, qy))
+                rebuild()
+            HOT.clear()
+            if e.get("cut_hot"):
+                if not e.get("cut_box"): say("table %s %s: FAILED (cut_hot needs cut_box)" % (nm, net)); continue
+                f_ = FPS[ref]; b_ = [float(v) for v in e["cut_box"].split(",")]
+                HOT.update(nets=set(e["cut_hot"]), box=sbox(f_["x"] + b_[0], f_["y"] + b_[1], f_["x"] + b_[2], f_["y"] + b_[3]))
+                G = hot_geo()
             res, why = None, ""
             vg_ = str(e.get("via_gap", pinlib.VIA_MIN_OTHER)); VGAP[0] = float(vg_.split("|")[k_] if "|" in vg_ else vg_)
             ws = [e["w"]] if "w" in e else [0.2, 0.15]
             for w in ws:
-                if to:
+                if to == "zone":                                # into the net's own planned pour on the layer
+                    zg = unary_union([pinlib.poly(q).buffer(-0.1) for z in S["zones"] if z["net"] == net and z["layer"] == L for q in z["polys"]])
+                    res, why = via_escape(p, L, net, w=w, R=e.get("max", 4.0), d=d, lead=e.get("lead", 0.15), cut=cut,
+                                          avoid_lanes=False, via=False, goal_geom=zg, tag="table " + nm)
+                elif to and e.get("path"):                       # an explicit polyline, offsets from the pad centre
+                    tr, tn = to.split(".", 1); q = PADS.get((tr, tn), [None])[0]
+                    if q is None: why = "no pad " + to; break
+                    pl_ = [(p["x"], p["y"])] + [(round(p["x"] + float(a.split(",")[0]), 4), round(p["y"] + float(a.split(",")[1]), 4)) for a in e["path"]] + [(q["x"], q["y"])]
+                    bad = [(a, b, check_seg(net, L, a, b, w, cut)) for a, b in zip(pl_, pl_[1:]) if check_seg(net, L, a, b, w, cut)]
+                    res, why = (None, "path fails the exact check: %s" % str(bad[0])[:160]) if bad else ((pl_, None), "ok")
+                elif to:
                     tr, tn = to.split(".", 1); q = PADS.get((tr, tn), [None])[0]
                     if q is None: why = "no pad " + to; break
                     res, why = via_escape(p, L, net, w=w, R=e.get("max", 4.0), d=d, lead=e.get("lead", 0.15), cut=cut,
@@ -570,12 +689,22 @@ def rule_table():
                                           avoid_lanes=e.get("avoid_lanes", True) and at_ is None, tag="table " + nm, keep=keep_strips([c.split("|")[k_] if "|" in c else c for c in e.get("keep", []) if (c.split("|")[k_] if "|" in c else c)]))
                 if res: break
             if res is None:
-                say("table %s %s: FAILED (%s)" % (nm, net, why)); continue
+                if SAVED: S["tracks"], S["vias"] = SAVED; say("table %s %s: dropped ties put back" % (nm, net))
+                say("table %s %s: FAILED (%s)" % (nm, net, why)); HOT.clear(); rebuild(); continue
             pl, v = res
-            if to and pl:
+            if to and to != "zone" and pl:
                 q = PADS[tuple(to.split(".", 1))][0]
                 if not check_seg(net, L, pl[-2], (q["x"], q["y"]), w, cut): pl[-1] = (q["x"], q["y"])
+            if HOT:
+                gl = [(LineString([a, b]).buffer(w / 2, 16), L) for a, b in zip(pl, pl[1:]) if a != b]
+                if v is not None: gl += [(Point(v).buffer(VIA_D / 2, 24), Lx) for Lx in CU]
+                why = hot_cuts(net, gl, False)
+                if why: say("table %s %s: FAILED (%s)" % (nm, net, why)); HOT.clear(); rebuild(); continue
             lay(net, L, pl, w, via=v, cut=cut, tag="table " + nm); n += 1
+            if HOT:
+                HOT.clear(); rebuild()
+                hf = [x for a, b in zip(pl, pl[1:]) if a != b for x in G.check_track(net, L, a, b, w)]
+                if hf: say("table %s %s: exact check after the hot cut: %s" % (nm, net, hf[:3]))
             ln = sum(math.dist(a, b) for a, b in zip(pl, pl[1:]))
             say("table %s %s: %s, %.2f mm in %d pieces, w %.2f%s  (%s)" % (nm, net, ("via at %.3f,%.3f" % v) if v else ("to " + to if to else "to an existing via"), ln, len(pl) - 1, w,
                                                                     (", cut " + ",".join(cut)) if cut else "", e.get("why", "")[:60]))
