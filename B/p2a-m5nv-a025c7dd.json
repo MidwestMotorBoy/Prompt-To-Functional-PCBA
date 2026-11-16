@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2a-m5nv.kicad_pcb",
+ "sha": "a025c7dd21e4ee2f406f9996b26cd28eb620c8f6",
+ "routed": 337,
+ "failed": 4,
+ "edges": 341,
+ "minutes": 44.1,
+ "status": "done",
+ "tail": [
+  "  FAILED /MCU/NRST 110.92,116.50 (Pad 2  of R302 ) -> 110.28,124.08 (Pad 1  of C304 ) starts 173 goals 136 seen 3574 | no way even with every other route gone",
+  "FAILKEY /USB Port 2/LODRV1",
+  "FAILKEY Net-(D511-A)",
+  "FAILKEY /USB Port 2/I2CC_SDA",
+  "FAILKEY /MCU/NRST"
+ ]
+}

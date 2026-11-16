@@ -1,0 +1,18 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 341 (0 on long nets)
+fan-out stubs: 113
+phase 1: 7 open connections tried again with every route free to move
+phase 2: 6 open connections tried again with every route free to move
+phase 3: 6 open connections tried again with every route free to move
+routes pulled and re-laid: 428
+fan-out stubs unused (removed) 48, trimmed 15
+unconnected after fill: 11
+routed 337 edges, 4 failed, items added 4505
+  FAILED /USB Port 2/LODRV1 85.68,102.34 (Pad 1  of R545 ) -> 87.62,105.61 (Pad 25  of U503 ) starts 135 goals 84 seen 128563 | pulled 2
+  FAILED Net-(D511-A) 79.75,84.24 (Pad 1  of R552 ) -> 83.08,85.25 (Pad 1  of U506 ) starts 111 goals 201 seen 73067 | pulled 1
+  FAILED /USB Port 2/I2CC_SDA 89.38,85.90 (Pad 2  of R502 ) -> 92.70,83.62 (Pad 16  of U501 ) starts 498 goals 43 seen 143653 | pulled 1
+  FAILED /MCU/NRST 110.92,116.50 (Pad 2  of R302 ) -> 110.28,124.08 (Pad 1  of C304 ) starts 173 goals 136 seen 3574 | no way even with every other route gone
+FAILKEY /USB Port 2/LODRV1
+FAILKEY Net-(D511-A)
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /MCU/NRST
