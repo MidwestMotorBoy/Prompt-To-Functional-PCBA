@@ -1,0 +1,12 @@
+10_stagefix_s3.json
+20_pdfix_a3.json
+30_ports_b1.json
+40_stagepwr_v1.json
+51_50_r4_port1.json
+52_80_r5_gauge.json
+  evict D404 from C423;   evict D410 from C423;   evict D504 from C523;   evict D510 from C523;   evict C410 from R447;   evict C510 from R547;   evict R416 from R429;   evict R516 from R529; 0 placement errors; 
+245 parts differ from the template, of 289
+  placed 289/289, missing 0: 
+CHECK clean
+9 differ of 289
+[build_r4] 9 entries differ from best_placement.json: ['C101', 'C106', 'C408', 'R403', 'R404', 'R425', 'R433', 'R441', 'U402']

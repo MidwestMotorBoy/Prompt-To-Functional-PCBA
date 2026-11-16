@@ -1,0 +1,20 @@
+02:28 k1 p1 SUB routed 33 failed 4 of 37 in 8 min FAILS: P1 HIDRV1 U403.27->R444.1 pulled; P1 LODRV2 U403.21->R447.1 noway; P1 I2CC_SDA R402.2->U403.2 noway; P1 HG2 R446.2->Q402.1 noway
+02:35 v1g p1 SUB routed 36 failed 1 of 37 in 6 min  box=103.5,96.5,118.5,109.3   FAILS: P1 BTST1 U403.26 -> C412.1 | no way even with every other route gone;
+02:42 v0g p1 SUB routed 34 failed 3 of 37 in 7 min  box=103.5,96.5,118.5,109.3   FAILS: P1 HIDRV1 U403.27 -> R444.1 | no way even with every other route gone;P1 REGN C410.1 -> U403.24 | blocked by routes that have been pulled too often;P1 REGN U403.24 -> R415.1 | no way even with every other route gone;
+02:47 k1 p2 SUB routed 33 failed 1 of 34 in 5 min  box=80.474,96.5,95.474,109.3   FAILS: P2 HIDRV1 U503.27 -> R544.1 | blocked by routes that have been pulled too often;
+02:51 v1g p2 SUB routed 33 failed 1 of 34 in 3 min  box=80.474,96.5,95.474,109.3   FAILS: P2 HIDRV1 U503.27 -> R544.1 | no way even with every other route gone;
+03:05 v2g p1 SUB routed 35 failed 2 of 37 in 8 min  box=103.5,96.5,118.5,109.3   FAILS: P1 LODRV1 U403.25 -> R445.1 | blocked by routes that have been pulled too often;P1 I2CC_SCL R403.2 -> U403.1 | no way even with every other route gone;
+03:09 v2g p2 SUB routed 32 failed 2 of 34 in 4 min  box=80.474,96.5,95.474,109.3   FAILS: P2 LODRV2 U503.21 -> R547.1 | no way even with every other route gone;P2 BTST1 U503.26 -> C512.1 | ghost path found no blocker;
+03:17 v3g p1 SUB routed 36 failed 1 of 37 in 2 min  box=103.5,96.5,118.5,109.3   FAILS: P1 BTST2 C413.1 -> D405.1 | no way even with every other route gone;
+03:17 v3g p2 SUB routed 34 failed 0 of 34 in 0 min  box=80.474,96.5,95.474,109.3   FAILS: 
+03:54 v3bg p1 SUB routed 35 failed 2 of 37 in 6 min  box=103.5,96.5,118.5,109.3   FAILS: P1 CHG_INT U403.3 -> R404.2 | no way even with every other route gone;P1 BTST2 C413.1 -> D405.1 | no way even with every other route gone;
+03:55 v3bg p2 SUB routed 34 failed 0 of 34 in 0 min  box=80.474,96.5,95.474,109.3   FAILS: 
+04:10 v4g p1 SUB routed 36 failed 1 of 37 in 2 min  box=103.5,96.5,118.5,109.3   FAILS: P1 BTST2 U403.20 -> C413.1 | no way even with every other route gone;
+04:20 v5g p1 SUB routed 36 failed 1 of 37 in 3 min  box=103.5,96.5,118.5,109.3   FAILS: P1 LODRV1 U403.25 -> R445.1 | no way even with every other route gone;
+04:21 v5g p2 SUB routed 34 failed 0 of 34 in 0 min  box=80.474,96.5,95.474,109.3   FAILS: 
+04:30 k1r p1 SUB routed 33 failed 4 of 37 in 8 min  box=103.5,96.5,118.5,109.3   FAILS: P1 HIDRV1 U403.27 -> R444.1 | blocked by routes that have been pulled too often;P1 LODRV2 U403.21 -> R447.1 | no way even with every other route gone;P1 I2CC_SDA R402.2 -> U403.2 | no way even with every other route gone;P1 HG2 R446.2 -> Q402.1 | no way even with every other route gone;
+04:33 v5gr p1 SUB routed 36 failed 1 of 37 in 3 min  box=103.5,96.5,118.5,109.3   FAILS: P1 LODRV1 U403.25 -> R445.1 | no way even with every other route gone;
+04:40 v3bgr2 p1 SUB routed 35 failed 2 of 37 in 6 min  box=103.5,96.5,118.5,109.3   FAILS: P1 CHG_INT U403.3 -> R404.2 | no way even with every other route gone;P1 BTST2 C413.1 -> D405.1 | no way even with every other route gone;
+04:45 k1r p2 SUB routed 33 failed 1 of 34 in 5 min  box=80.474,96.5,95.474,109.3   FAILS: P2 HIDRV1 U503.27 -> R544.1 | blocked by routes that have been pulled too often;
+05:00 v6g p1 SUB routed 37 failed 0 of 37 in 1 min  box=103.5,96.5,118.5,109.3   FAILS: 
+05:02 v6g p2 SUB routed 34 failed 0 of 34 in 1 min  box=80.474,96.5,95.474,109.3   FAILS: 

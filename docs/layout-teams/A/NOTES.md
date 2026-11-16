@@ -20,3 +20,19 @@
   worker tools/NOTES listed in REPORT.md.
 - queue_route.sh puts a model name in its commit trailer; CHARTER.md says no model names in commits. Not changed
   here (shared team script, commits already pushed); the thread owner should drop that line.
+
+# Lead round 5 (2026-11-16)
+- Stack S = round-3 build + overrides 50 r4_port1, 60 r4_bcu, 70 r5_north, 80 r5_gauge (copies in best_overrides/,
+  byte-identical to the workers' files), planner M with $BEST_PLAN_R5. Build: placed 289/289, CHECK clean.
+  rebuild_best.sh re-run 2026-11-16: 121 s, "0 of 245 entries differ from best_placement.json".
+- Scorecard lead_r5/sc_S (score_board_r5.sh, --route=0, hot on): 0.801 W, power_open 3V3@L201 + GND@J301/J302,
+  DRC 0, 7 of 7 at 6.27 nH, blocked 4 of 364 (SCL J302.6, CHG_INH R535->J302.2, GAUGE_FUSE U101.25->R126,
+  P2 DRV9_OFF), pad_unjoined C409.1, C509.1.
+- Package check: r5_general plan_only.sh with monolith_r5.rules.json on sc_S/bare.json -> spec IDENTICAL to
+  sc_S/spec.json (78 zones / 356 tracks / 288 vias).
+- PC routes queued 13:01 UTC: lead5-S 356 / 8 of 364, 95.1 min, done; lead5-S-rep (same sha) 356 / 8, 95.3 min,
+  done, identical FAILED list. Results seen 14:39-14:41 UTC (past the 75-min mark).
+- Local route (route_local_r5.sh lead_r5/sc_S 150, started 13:07 at queue time for the routed checks, finished
+  13:44, not timed out): 357 / 7 of 364; routed power_open 3V3@L201 only, routed DRC 0, routed loss 1.070 W;
+  routed_pad_unjoined 3V3 C207.1/C403.1/C503.1, PACK_P C213.1, PPHV C409.1/C509.1. routed.kicad_pcb deleted (6 MB).
+- Cleanup: 16 cu/routed boards over 5 MB deleted from old outdirs (none tracked by git).

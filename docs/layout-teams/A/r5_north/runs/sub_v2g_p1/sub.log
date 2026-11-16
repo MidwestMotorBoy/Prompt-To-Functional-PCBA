@@ -1,0 +1,18 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 37 of 368 edges kept by --box=103.5,96.5,118.5,109.3 (cross)
+edges to route: 37 (0 on long nets)
+fan-out stubs: 17
+  progress: step 40, queue 12, routed 22, failing 2, pulled 15
+phase 1: 2 open connections tried again with every route free to move
+  progress: step 80, queue 2, routed 33, failing 2, pulled 43
+phase 2: 2 open connections tried again with every route free to move
+  progress: step 120, queue 0, routed 34, failing 3, pulled 79
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 110
+fan-out stubs unused (removed) 5, trimmed 5
+unconnected after fill: 334
+routed 35 edges, 2 failed, items added 497
+  FAILED /USB Port 1/LODRV1 110.09,108.84 (Pad 25  of U403 ) -> 110.89,99.81 (Pad 1  of R445 ) starts 70 goals 120 seen 92 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 104.10,86.48 (Pad 2  of R403 ) -> 108.59,113.64 (Pad 1  of U403 ) starts 62 goals 82 seen -2400001 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV1
+FAILKEY /USB Port 1/I2CC_SCL

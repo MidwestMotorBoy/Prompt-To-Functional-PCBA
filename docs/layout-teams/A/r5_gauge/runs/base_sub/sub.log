@@ -1,0 +1,13 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 203 of 365 edges kept by --box=86,110,121.6,137.2 (cross)
+edges to route: 203 (0 on long nets)
+fan-out stubs: 58
+  progress: step 40, queue 163, routed 39, failing 0, pulled 0
+  progress: step 80, queue 132, routed 70, failing 0, pulled 9
+  progress: step 120, queue 106, routed 94, failing 2, pulled 23
+  progress: step 160, queue 86, routed 110, failing 6, pulled 43
+  progress: step 200, queue 51, routed 145, failing 6, pulled 48
+  progress: step 240, queue 21, routed 175, failing 6, pulled 58
+  progress: step 280, queue 1, routed 195, failing 6, pulled 78
+phase 1: 6 open connections tried again with every route free to move
+phase 2: 5 open connections tried again with every route free to move

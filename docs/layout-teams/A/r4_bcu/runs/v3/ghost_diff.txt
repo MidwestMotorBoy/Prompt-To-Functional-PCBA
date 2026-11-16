@@ -1,0 +1,4 @@
+2a3
+> GHOSTFAIL /USB Port 1/LODRV1 Pad 25 [/USB Port 1/LODRV1] of U403 on F.Cu -> Pad 1 [/USB Port 1/LODRV1] of R445 on F.Cu
+3a5
+> GHOSTFAIL /USB Port 2/LODRV1 Pad 25 [/USB Port 2/LODRV1] of U503 on F.Cu -> Pad 1 [/USB Port 2/LODRV1] of R545 on F.Cu

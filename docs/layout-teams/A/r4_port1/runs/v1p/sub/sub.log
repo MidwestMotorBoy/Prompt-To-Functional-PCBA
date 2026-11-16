@@ -1,0 +1,30 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 131 of 367 edges kept by --box=99,66,121.6,116 (cross)
+edges to route: 131 (0 on long nets)
+fan-out stubs: 68
+  progress: step 40, queue 91, routed 39, failing 0, pulled 0
+  progress: step 80, queue 65, routed 61, failing 4, pulled 14
+  progress: step 120, queue 38, routed 87, failing 5, pulled 27
+  progress: step 160, queue 1, routed 120, failing 9, pulled 30
+phase 1: 9 open connections tried again with every route free to move
+  progress: step 200, queue 0, routed 122, failing 9, pulled 60
+phase 2: 9 open connections tried again with every route free to move
+  progress: step 240, queue 15, routed 115, failing 7, pulled 106
+phase 3: 8 open connections tried again with every route free to move
+  progress: step 280, queue 12, routed 118, failing 7, pulled 135
+routes pulled and re-laid: 146
+fan-out stubs unused (removed) 27, trimmed 7
+unconnected after fill: 248
+routed 125 edges, 6 failed, items added 1337
+  FAILED /USB Port 1/LODRV1 110.09,108.84 (Pad 25  of U403 ) -> 110.89,99.81 (Pad 1  of R445 ) starts 72 goals 134 seen 117 | blocked by routes that have been pulled too often
+  FAILED Net-(U404-FB) 114.25,83.26 (Pad 8  of U404 ) -> 112.00,83.99 (Pad 2  of R433 ) starts 91 goals 126 seen 138059 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 1100 goals 47 seen 57 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 227 goals 65 seen 190 | no way even with every other route gone
+  FAILED GND 105.50,79.08 (Track  on F.Cu,) -> 105.50,79.08 (Zone planeZone plan) starts 0 goals 0 seen -1200001 | no way even with every other route gone
+  FAILED GND 107.50,79.08 (Track  on F.Cu,) -> 107.50,79.08 (Zone planeZone plan) starts 14 goals 0 seen 150 | no way even with every other route gone
+FAILKEY /USB Port 1/LODRV1
+FAILKEY Net-(U404-FB)
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY GND@Track [GND] on F.Cu, length 0.3500 mm
+FAILKEY GND@Track [GND] on F.Cu, length 0.4000 mm

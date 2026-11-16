@@ -1,0 +1,24 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 128 of 364 edges kept by --box=99,66,121.6,116 (cross)
+edges to route: 128 (0 on long nets)
+fan-out stubs: 68
+  progress: step 40, queue 88, routed 39, failing 0, pulled 0
+  progress: step 80, queue 70, routed 55, failing 2, pulled 22
+  progress: step 120, queue 41, routed 83, failing 3, pulled 33
+  progress: step 160, queue 13, routed 109, failing 5, pulled 45
+phase 1: 7 open connections tried again with every route free to move
+  progress: step 200, queue 7, routed 119, failing 6, pulled 72
+phase 2: 3 open connections tried again with every route free to move
+  progress: step 240, queue 8, routed 119, failing 2, pulled 110
+phase 3: 5 open connections tried again with every route free to move
+  progress: step 280, queue 7, routed 120, failing 4, pulled 144
+routes pulled and re-laid: 161
+fan-out stubs unused (removed) 26, trimmed 14
+unconnected after fill: 246
+routed 125 edges, 3 failed, items added 1359
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 70 goals 133 seen 125 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 123924 | blocked by routes that have been pulled too often
+  FAILED SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 458 goals 61 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY SDA

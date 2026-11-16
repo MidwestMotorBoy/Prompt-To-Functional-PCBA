@@ -1,0 +1,36 @@
+pinesc walled (first pass without pinesc): {"U501": ["U501.28", "U501.29"]}
+rules on ["gate_escape", "sealed", "pinesc", "connesc", "gndpair", "epstrip", "joinfix", "directjoin", "gndesc", "nogrow_dead", "taps", "power_first"]
+/USB Port 1/SW1: 6.0 A, 2 terminals, span 7.2 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/SW2: 6.0 A, 2 terminals, span 7.3 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/SW1: 6.0 A, 2 terminals, span 7.2 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/SW2: 6.0 A, 2 terminals, span 7.3 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/CELL_P: 10.0 A, 2 terminals, span 11.7 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/CELL_P_RAW: 10.0 A, 2 terminals, span 2.7 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/FET_MID: 10.0 A, 2 terminals, span 7.3 mm, layer F.Cu, vias 0, left to router []
+CELL_N: 10.0 A, 2 terminals, span 2.7 mm, layer F.Cu, vias 0, left to router []
+PACK_P: 10.0 A, 21 terminals, span 57.9 mm, layer F.Cu + In2.Cu, vias 34, left to router ['U404 (no room for a via)', 'U504 (no room for a via)', 'U204 (no room for a via)']
+/USB Port 1/AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router []
+/USB Port 1/BAT_SNS_P: 5.0 A, 5 terminals, span 7.6 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/PPHV: 5.0 A, 4 terminals, span 34.1 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/VBUS: 5.0 A, 5 terminals, span 16.6 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/AC_SNS_N: 5.0 A, 9 terminals, span 23.2 mm, layer F.Cu, vias 2, left to router ['C521 (via array path winds)']
+/USB Port 2/BAT_SNS_P: 5.0 A, 5 terminals, span 7.6 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/PPHV: 5.0 A, 4 terminals, span 34.2 mm, layer F.Cu, vias 0, left to router ['C509 (path winds)']
+/USB Port 2/VBUS: 5.0 A, 5 terminals, span 16.4 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/PP5V: 1.5 A, 6 terminals, span 15.0 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/PP5V: 1.5 A, 6 terminals, span 15.6 mm, layer F.Cu, vias 0, left to router []
+3V3: 0.5 A, 8 terminals, span 64.9 mm, layer F.Cu + In3.Cu, vias 6, left to router ['J301 (no room for a via)']
+hot loops {"HL_3V3": {"shape": "hull, supply first, closes ['C206'], 1 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 5.8, "return_mm2": 4.1, "return_vias": 3}, "USB Port 1/HL_5V": {"shape": "thin pairs, return first, closes ['C446'], 2 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 6.3, "return_mm2": 6.5, "return_vias": 4}, "USB Port 1/HL_IN": {"shape": "hull, supply first, closes ['C430'], 1 supply and 3 return pieces", "layer": "F.Cu", "supply_mm2": 25.6, "return_mm2": 15.1, "return_vias": 7}, "USB Port 1/HL_OUT": {"shape": "thin pairs, supply first, closes ['C438', 'C434'], 1 supply and 2 return pieces", "layer": "F.Cu", "supply_mm2": 13.8, "return_mm2": 15.0, "return_vias": 8}, "USB Port 2/HL_5V": {"shape": "hull, supply first, closes ['C546', 'C544'], 1 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 9.8, "return_mm2": 8.4, "return_vias": 4}, "USB Port 2/HL_IN": {"shape": "hull, supply first, closes ['C530'], 1 supply and 3 return pieces", "layer": "F.Cu", "supply_mm2": 28.3, "return_mm2": 15.9, "return_vias": 7}, "USB Port 2/HL_OUT": {"shape": "thin pairs, supply first, closes ['C538', 'C534'], 1 supply and 2 return pieces", "layer": "F.Cu", "supply_mm2": 13.8, "return_mm2": 15.0, "return_vias": 8}}
+return pads {"vias": 157, "pads": 191, "left_to_router": ["C302.2", "C315.2", "C415.2", "J301.5", "J302.5", "J401.B12", "U301.1", "U301.2", "U301.24", "U401.27", "U402.7", "U501.27"], "anchored": 26, "served_by_rules": ["U401.11", "U401.12", "U401.13", "U401.14", "U401.3", "U401.31", "U401.36", "U401.5", "U401.6", "U401.7", "U403.17", "U403.22"]}
+gate escapes [{"loop": "USB Port 1/HL_IN", "pad": "Q401.1", "net": "/USB Port 1/HG1", "dir": [0, -1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 1/HL_IN", "pad": "R454.1", "net": "Net-(Q409-D)", "dir": [-1, 0], "len_mm": 0.9, "free_mm": 2.03}, {"loop": "USB Port 1/HL_IN", "pad": "R454.2", "net": "/USB Port 1/REGN", "dir": [0, -1], "len_mm": 0.57, "free_mm": 1.17}, {"loop": "USB Port 1/HL_OUT", "pad": "Q402.1", "net": "/USB Port 1/HG2", "dir": [1, 0], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 2/HL_IN", "pad": "Q501.1", "net": "/USB Port 2/HG1", "dir": [0, -1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 2/HL_OUT", "pad": "Q502.1", "net": "/USB Port 2/HG2", "dir": [1, 0], "len_mm": 0.9, "free_mm": 3.0}]
+taps [{"pad": "C412.2", "net": "/USB Port 1/SW1", "drawn": true}, {"pad": "C413.2", "net": "/USB Port 1/SW2", "drawn": true}, {"pad": "C512.2", "net": "/USB Port 2/SW1", "drawn": true}, {"pad": "C513.2", "net": "/USB Port 2/SW2", "drawn": true}]
+rules {"pinesc": {"pins": ["U501.1", "U501.17", "U501.18", "U501.19", "U501.28", "U501.29", "U501.30", "U501.37"], "select": "walled", "walled": {"U501": ["U501.28", "U501.29"]}}, "connesc": {"pads": ["J401.A5", "J401.A6", "J401.A7", "J401.A8", "J401.B5", "J401.B6", "J401.B7", "J401.B8", "J501.A5", "J501.A6", "J501.A7", "J501.A8", "J501.B5", "J501.B6", "J501.B7", "J501.B8"]}, "gndpair": {"tracks": 22}, "epstrip": {"served": ["U401.11", "U401.12", "U401.13", "U401.14", "U401.3", "U401.31", "U401.36", "U401.5", "U401.6", "U401.7", "U403.17", "U403.22", "U405.13", "U405.16", "U405.17", "U405.18", "U405.8", "U501.11", "U501.12", "U501.13", "U501.14", "U501.2", "U501.3", "U501.31", "U501.36", "U501.5", "U501.6", "U501.7", "U503.17", "U503.22", "U505.13", "U505.16", "U505.17", "U505.18", "U505.8"]}, "gndesc": {"pads": 39}, "nogrow_dead": {"dead_pieces": {"/USB Port 1/VBUS F.Cu": [[104.1, 69.22, 0.54]], "/USB Port 2/VBUS F.Cu": [[95.9, 69.22, 0.54]]}}}
+44 zones, 379 vias, 380 tracks, 71.8 s; notes: []
+split_spec: 44 zones -> 91 single-outline zones
+bus_layer: auto net -> ['PACK_P'] (plan buses ['PACK_P', '3V3'], >= 3.0 A)
+bus_layer: router layers ['F.Cu', 'In2.Cu', 'In3.Cu', 'B.Cu']; layers it never routes ['In1.Cu', 'In4.Cu']; hot-loop parts on F.Cu -> In4.Cu
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "box": "96,100,122,140", "zones": 1, "area_mm2": 658.7}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 3.0, "box": "auto", "zones": 2, "area_mm2": 2272.8}
+a: spec_final.json: zones/tracks/vias (94, 380, 379); b: ../../../lead_final/sc_Z/spec.json: (94, 380, 379)
+IDENTICAL: 0 differing (net, layer) entries
+DONE

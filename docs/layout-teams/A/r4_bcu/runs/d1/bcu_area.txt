@@ -1,0 +1,5 @@
+SWNODE B.Cu 14.3 mm2
+SWNODE F.Cu 151.8 mm2
+SWNODE vias 8
+BCU_NONGND 325.5 mm2
+BCU_JSON {"swnode": {"B.Cu": 14.3, "F.Cu": 151.8}, "swnode_vias": 8, "bcu_nongnd": 325.5, "bcu_by_net": {"/Cells and Gauge/CELL_P": 13.0, "/Cells and Gauge/CELL_P_RAW": 12.2, "/Cells and Gauge/FET_MID": 51.6, "/USB Port 1/AC_SNS_N": 52.5, "/USB Port 1/PP5V": 27.8, "/USB Port 1/PPHV": 4.5, "/USB Port 1/SW1": 3.2, "/USB Port 1/SW2": 3.9, "/USB Port 1/VBUS": 9.1, "/USB Port 2/AC_SNS_N": 53.2, "/USB Port 2/PP5V": 27.0, "/USB Port 2/PPHV": 3.3, "/USB Port 2/SW1": 3.3, "/USB Port 2/SW2": 3.9, "/USB Port 2/VBUS": 2.8, "CELL_N": 13.1, "PACK_P": 41.1}, "swnode_bcu": 14.3}

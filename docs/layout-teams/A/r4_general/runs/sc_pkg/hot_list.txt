@@ -1,0 +1,7 @@
+HL_3V3
+USB Port 1/HL_5V
+USB Port 1/HL_IN
+USB Port 1/HL_OUT
+USB Port 2/HL_5V
+USB Port 2/HL_IN
+USB Port 2/HL_OUT

@@ -1,0 +1,2 @@
+/USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 60 seen -2400001 | no way even with every other route gone
+/USB Port 1/BTST2 113.29,107.73 (Pad 1  of C413 ) -> 113.40,105.70 (Pad 1  of D405 ) starts 187 goals 164 seen 124061 | no way even with every other route gone

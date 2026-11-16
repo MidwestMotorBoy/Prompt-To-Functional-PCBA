@@ -1,0 +1,4 @@
+SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 434 seen 569 | blocked by routes that have been pulled too often
+SCL 103.50,82.92 (Pad 9  of U401 ) -> 112.06,117.65 (Pad 2  of R304 ) starts 47 goals 214 seen -12000001 | no way even with every other route gone
+SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 47 goals 193 seen -12000001 | no way even with every other route gone
+EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 62 goals 260 seen -12000001 | no way even with every other route gone

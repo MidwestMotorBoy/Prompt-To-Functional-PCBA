@@ -1,0 +1,27 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 128 of 364 edges kept by --box=99,66,121.6,116 (cross)
+edges to route: 128 (0 on long nets)
+fan-out stubs: 65
+  progress: step 40, queue 88, routed 39, failing 0, pulled 0
+  progress: step 80, queue 71, routed 53, failing 3, pulled 23
+  progress: step 120, queue 49, routed 74, failing 4, pulled 41
+  progress: step 160, queue 19, routed 99, failing 9, pulled 51
+phase 1: 10 open connections tried again with every route free to move
+  progress: step 200, queue 14, routed 112, failing 8, pulled 76
+  progress: step 240, queue 3, routed 120, failing 6, pulled 105
+phase 2: 6 open connections tried again with every route free to move
+  progress: step 280, queue 4, routed 119, failing 6, pulled 140
+phase 3: 6 open connections tried again with every route free to move
+  progress: step 320, queue 4, routed 123, failing 4, pulled 174
+routes pulled and re-laid: 196
+fan-out stubs unused (removed) 25, trimmed 12
+unconnected after fill: 248
+routed 124 edges, 4 failed, items added 1531
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 70 goals 123 seen 81 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 237 goals 47 seen 111911 | pulled 1
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 70 seen 101856 | no way even with every other route gone
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 207 seen 19 | blocked by routes that have been pulled too often
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 1/CC1

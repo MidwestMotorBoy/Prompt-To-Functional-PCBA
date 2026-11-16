@@ -1,0 +1,27 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 128 of 364 edges kept by --box=88,113,101.5,127;104,115,121.6,134 (cross)
+edges to route: 128 (0 on long nets)
+fan-out stubs: 40
+  progress: step 40, queue 90, routed 37, failing 0, pulled 2
+  progress: step 80, queue 59, routed 66, failing 2, pulled 11
+  progress: step 120, queue 28, routed 97, failing 2, pulled 20
+  progress: step 160, queue 14, routed 110, failing 3, pulled 46
+phase 1: 4 open connections tried again with every route free to move
+  progress: step 200, queue 2, routed 125, failing 1, pulled 70
+phase 2: 3 open connections tried again with every route free to move
+  progress: step 240, queue 5, routed 120, failing 2, pulled 110
+  progress: step 280, queue 1, routed 122, failing 4, pulled 146
+phase 3: 6 open connections tried again with every route free to move
+  progress: step 320, queue 12, routed 115, failing 5, pulled 191
+routes pulled and re-laid: 200
+fan-out stubs unused (removed) 10, trimmed 9
+unconnected after fill: 248
+routed 124 edges, 4 failed, items added 2005
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 434 seen 569 | blocked by routes that have been pulled too often
+  FAILED SCL 103.50,82.92 (Pad 9  of U401 ) -> 112.06,117.65 (Pad 2  of R304 ) starts 47 goals 214 seen -12000001 | no way even with every other route gone
+  FAILED SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 47 goals 193 seen -12000001 | no way even with every other route gone
+  FAILED EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 62 goals 260 seen -12000001 | no way even with every other route gone
+FAILKEY SCL
+FAILKEY SCL
+FAILKEY SDA
+FAILKEY EN_5V1

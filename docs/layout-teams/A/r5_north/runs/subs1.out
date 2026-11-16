@@ -1,0 +1,4 @@
+02:35 v1g p1 SUB routed 36 failed 1 of 37 in 6 min  box=103.5,96.5,118.5,109.3   FAILS: P1 BTST1 U403.26 -> C412.1 | no way even with every other route gone;
+02:42 v0g p1 SUB routed 34 failed 3 of 37 in 7 min  box=103.5,96.5,118.5,109.3   FAILS: P1 HIDRV1 U403.27 -> R444.1 | no way even with every other route gone;P1 REGN C410.1 -> U403.24 | blocked by routes that have been pulled too often;P1 REGN U403.24 -> R415.1 | no way even with every other route gone;
+02:47 k1 p2 SUB routed 33 failed 1 of 34 in 5 min  box=80.474,96.5,95.474,109.3   FAILS: P2 HIDRV1 U503.27 -> R544.1 | blocked by routes that have been pulled too often;
+02:51 v1g p2 SUB routed 33 failed 1 of 34 in 3 min  box=80.474,96.5,95.474,109.3   FAILS: P2 HIDRV1 U503.27 -> R544.1 | no way even with every other route gone;

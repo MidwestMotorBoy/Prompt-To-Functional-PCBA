@@ -1,0 +1,33 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 128 of 364 edges kept by --box=99,66,121.6,116 (cross)
+edges to route: 128 (0 on long nets)
+fan-out stubs: 68
+  progress: step 40, queue 88, routed 39, failing 0, pulled 0
+  progress: step 80, queue 80, routed 46, failing 1, pulled 32
+  progress: step 120, queue 51, routed 73, failing 3, pulled 43
+  progress: step 160, queue 37, routed 86, failing 4, pulled 69
+  progress: step 200, queue 7, routed 115, failing 5, pulled 79
+phase 1: 5 open connections tried again with every route free to move
+  progress: step 240, queue 10, routed 116, failing 5, pulled 117
+  progress: step 280, queue 4, routed 118, failing 6, pulled 151
+phase 2: 6 open connections tried again with every route free to move
+  progress: step 320, queue 7, routed 119, failing 5, pulled 188
+phase 3: 4 open connections tried again with every route free to move
+  progress: step 360, queue 8, routed 119, failing 3, pulled 225
+  progress: step 400, queue 7, routed 119, failing 4, pulled 264
+routes pulled and re-laid: 265
+fan-out stubs unused (removed) 25, trimmed 9
+unconnected after fill: 249
+routed 122 edges, 6 failed, items added 1602
+  FAILED /USB Port 1/HIDRV2 113.09,108.84 (Pad 19  of U403 ) -> 115.44,103.26 (Pad 1  of R446 ) starts 38 goals 133 seen 46 | no way even with every other route gone
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 72 goals 106 seen 147 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 227 goals 47 seen 121476 | pulled 1
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 72 seen 125024 | blocked by routes that have been pulled too often
+  FAILED SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 45 goals 60 seen 242 | no way even with every other route gone
+  FAILED /USB Port 1/TS 109.50,103.81 (Pad 1  of TH401) -> 104.80,110.36 (Pad 1  of R416 ) starts 97 goals 317 seen 283 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV2
+FAILKEY /USB Port 1/BTST1
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/BTST1
+FAILKEY SDA
+FAILKEY /USB Port 1/TS

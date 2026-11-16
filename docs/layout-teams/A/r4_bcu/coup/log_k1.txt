@@ -1,0 +1,5 @@
+P1 SW1 (VBUS leg): box (103.2, 114.4, 87.0, 110.6) N=1.0M it=17 build 2s total 13s  C_self 11.6 pF
+   GND 10061, PACK_P 908, AC_SNS_N 339, 3V3 200, SW2 97, LG1 15, LODRV1 9, REGN 6, DRV_SUP 4, ACN_F 3, P1_LDO_3V3 1, TS 1, ACP_F 1, BTST2 0 fF
+P1 SW2 (pack leg): box (109.3, 120.8, 87.2, 111.3) N=1.0M it=16 build 2s total 13s  C_self 9.9 pF
+   GND 8547, PACK_P 876, SW1 134, BAT_SNS_P 121, AC_SNS_N 117, 3V3 95, LG2 13, LODRV2 9, DRV_SUP 8, SRN_F 6, Net-(U403-FB) 1, SS_5V 1, REGN 0, unconnected-(U403-NC-Pad16) 0, SRP_F 0 fF
+secs 27

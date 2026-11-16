@@ -1,0 +1,43 @@
+{
+ "_about": "Board data for the Monolith board (team A best copper). Rule code is in copper_rules/; this file holds only what is specific to this board or this scorecard. Every rule not listed runs with its default (copper_rules/plan_rules.py --list=1).",
+ "board": {
+  "constraints": "tools/floorplan/example/monolith/constraints.json",
+  "template": "tools/score/template/board.kicad_pcb",
+  "netlist": "tools/floorplan/example/monolith/netlist.json",
+  "power_gate": [
+   "spikes/02-seeded-faults/limits",
+   "spikes/02-seeded-faults/limitsmap.json"
+  ],
+  "hand_hot": "tools/score/template/hand_hot.json"
+ },
+ "planner": {
+  "escape": 0.4,
+  "grow": 1.5,
+  "mirror": 3
+ },
+ "rules": {
+  "pinesc": {
+   "on": 1,
+   "select": "walled"
+  }
+ },
+ "bus_layer": [
+  {
+   "_why": "Protected copy of the high-current bus on a layer the router never routes; net/from/layer are derived (auto). The copy box is the only tuned board value: strapfix (round 3) picked it on routed loss. Derived box (auto) on the best placement: same screen (5 of 369, 0.834 W) but routed loss 1.201 W against 1.127 W with this box (r4_general/NOTES.md).",
+   "net": "auto",
+   "from": "auto",
+   "layer": "auto",
+   "mode": "strip+copy",
+   "w": 3,
+   "box": "96,100,122,140"
+  },
+  {
+   "_why": "soft fill of the return net on the outer layer away from the hot loops (gives GND back the In4 area)",
+   "net": "auto:return",
+   "layer": "auto:far_outer",
+   "mode": "fill",
+   "prio": 0,
+   "soft": 1
+  }
+ ]
+}

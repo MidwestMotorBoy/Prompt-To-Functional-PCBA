@@ -1,0 +1,1 @@
+02:06 v1g [--gatevia=1] --no-hot {"loss_W":0.816,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":4,"unrouted_signal_items":366,"blocked_edges":"5of366"} ghostdiff=0

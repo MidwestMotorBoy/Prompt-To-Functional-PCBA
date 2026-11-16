@@ -17,7 +17,7 @@ F.Cu is unchanged: the dead pair stays an ungrown pad, U405/U505 CC pins and the
 | reference lead_final/sc_Z | 5 of 369 | - | allowed only | VBUS J401.A9/B4, J501.A4/B9; C409.1, C509.1 (PPHV); C521.1 (P2 AC_SNS_N) | 0 | 7 of 7, 6.24 nH | 0.835 W |
 | **v2s (best)** | **5 of 369** | **identical** | allowed only | C409.1, C509.1, C521.1 (VBUS gap gone) | **0** | **7 of 7, 6.24 nH** (v2sh) | **0.833 W** |
 
-PC full route (split copper, Logan's PC): see the table under "Full routes".
+PC full route (split copper, Logan's PC): **v2s 353 routed / 16 failed of 369, 84.2 min, done** (reference lead-Z 352 / 17 of 369). Details under "Full routes".
 
 ## Screens (all `--route=0 --no-hot` unless noted; outdirs under `runs/`)
 
@@ -99,6 +99,30 @@ on their net's main piece on this board.
 
 On the new board (v2s) the two VBUS gaps are gone; C521.1, C409.1, C509.1 remain (not this task's rule; see "Left").
 
+## Full routes (Logan's PC, split-zone copper from score_board_r4v.sh outdirs)
+
+| name | board | routed | failed | edges | minutes | status |
+|---|---|---|---|---|---|---|
+| lead-Z (reference, lead_final/sc_Z) | old best | 352 | 17 | 369 | - | done |
+| r4_vbus-v2 | runs/v2 | 351 | 18 | 369 | 75.6 | done |
+| **r4_vbus-v2s** | runs/v2s (best) | **353** | **16** | 369 | 84.2 | done |
+
+Failed-edge lists (FAILKEY from the PC logs) vs lead-Z: same edge total (369). The connector-area failures CC1 (P1) and
+SBU_FLT (P1) were already in lead-Z and stay; no new D+/D-/CC/SBU, U405/U505 C_CC1/C_CC2/VBIAS or VBUS-area edge fails.
+The rest is reshuffling between router runs: v2s loses CELL3, CELL_1N, BTST1(P1), LODRV2(P1), LODRV1(P2), U101-SMBC,
+I2CC_SCL, one P1_LDO_3V3, and gains REGN(P1), REGN x2(P2), BTST1(P2), HG1(P2), U101-SMBD, I2CC_SDA, all far from the
+connectors, so this is router-order noise. The PC returns only logs, not the routed board, so routed_pad_unjoined /
+routed power_open could not be run on these routes (no local 150-min route was started because the PC results came back).
+
+## What the renders show (v2s; F.png, B.png, img/v2s_p1_*.png, img/v2s_p2_*.png)
+- F.Cu at both connectors looks the same as the old best: the live VBUS pair (A4/B9 at J401, the mirror pair at J501)
+  feeds the VBUS stem strip down to the TVS/C459 and the PD chip; the dead pair is still a bare pad with a via in it,
+  with no grown blob. U405/U505 CC pins and the CC/SBU/D+/D- exit strips are clear.
+- B.Cu: a straight 0.8 mm VBUS strap runs under the connector pad row from the dead pair's in-pad via to the live pair's
+  in-pad via, inside the GND pour's clearance; port 2 is the mirror copy of port 1. Nothing else on B.Cu moved.
+- Whole board: the power parts are not spread out more than before. The PD chips, protectors and TVS stay next to their
+  connectors.
+
 ## Files
 - `tools/pad_join_check.py`: the check. `allow.json`: expected findings, with the reason.
 - `tools/score_board_r4v.sh`: scorecard copy with the check (pad_unjoined / routed_pad_unjoined in score.json).
@@ -110,7 +134,7 @@ On the new board (v2s) the two VBUS gaps are gone; C521.1, C409.1, C509.1 remain
 - `best_plan_opts.txt`: env and --plan string of the best variant.
 - `score.json`, `F.png`, `B.png`: of v2sh (best variant, hot loops on). `img/`: zooms (old_p1_*, v2_p*, v2s_p*;
   50 px/mm, port 1 window 100-113 x 67-80, port 2 87-100 x 67-80).
-- `runs/`: base, v2, v2h, v2s, v2sh outdirs (logs, score.json, ghost.log, pad_join.json, pair_share.json, renders).
+- `runs/`: base, v2, v2h, v2s, v2sh outdirs (cu.kicad_pcb deleted in v2 and v2s, >5 MB; kept in v2sh; the queued boards are in ../route_queue/) (logs, score.json, ghost.log, pad_join.json, pair_share.json, renders).
 
 ## Left / for the lead
 - C521 (port 2 input bulk 68 uF, B.Cu) is not joined to AC_SNS_N power copper: a real power-copper gap on a 5 A net

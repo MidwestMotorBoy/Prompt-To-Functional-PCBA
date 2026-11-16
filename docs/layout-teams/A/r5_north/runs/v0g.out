@@ -1,0 +1,4 @@
+Terminated
+grep: /home/claude/repo/docs/layout-teams/A/r5_north/runs/v0g/ghost.log: No such file or directory
+cat: /home/claude/repo/docs/layout-teams/A/r5_north/runs/v0g/score.json: No such file or directory
+02:07 v0g [--gatevia=1] --no-hot  ghostdiff=5

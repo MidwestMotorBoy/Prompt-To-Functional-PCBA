@@ -1,5 +1,5 @@
 {
- "loss_W": 0.835,
+ "loss_W": 0.801,
  "power_open": {
   "3V3": [
    "L201"
@@ -10,31 +10,97 @@
   ]
  },
  "drc_errors": 0,
- "unrouted_signal_items": 369,
- "hot_loops": "7 of 7 pass, 6.24 nH",
- "blocked_edges": "5 of 369",
- "route": "351 of 369 routed, 18 failed",
- "routed_loss_W": 1.127,
+ "unrouted_signal_items": 361,
+ "hot_loops": "7 of 7 pass, 6.27 nH",
+ "blocked_edges": "4 of 364",
+ "route": "357 of 364 routed, 7 failed (local, 150 min cap, finished in about 37 min, not timed out)",
+ "routed_loss_W": 1.07,
  "routed_power_open": {
   "3V3": [
    "L201"
   ]
  },
  "routed_drc_errors": 0,
- "routed_unconnected": 43,
+ "routed_unconnected": 24,
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "pad_unjoined_all": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 1/VBUS": [
+   "U401.32"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "/USB Port 2/VBUS": [
+   "U501.32"
+  ],
+  "3V3": [
+   "J301.1"
+  ],
+  "GND": [
+   "J301.5",
+   "J302.5"
+  ]
+ },
+ "routed_pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "3V3": [
+   "C207.1",
+   "C403.1",
+   "C503.1"
+  ],
+  "PACK_P": [
+   "C213.1"
+  ]
+ },
  "full_route_pc": {
-  "name": "lead-Z",
-  "result": "A/lead-Z-bd03cd0e.json",
-  "routed": 352,
-  "failed": 17,
-  "edges": 369,
-  "minutes": 92.2,
-  "status": "done"
+  "name": "lead5-S",
+  "result": "A/lead5-S-9b16c316.json",
+  "routed": 356,
+  "failed": 8,
+  "edges": 364,
+  "minutes": 95.1,
+  "status": "done",
+  "repeat": {
+   "name": "lead5-S-rep",
+   "result": "A/lead5-S-rep-9b16c316.json",
+   "routed": 356,
+   "failed": 8,
+   "edges": 364,
+   "minutes": 95.3,
+   "status": "done",
+   "same_failed_list": true
+  }
  },
  "notes": {
-  "scorecard": "docs/layout-teams/A/tools/score_board_best.sh (split-zone scorecard copy) with tools/best_env.sh: planner portcu/tools/plan_copper_p.py, PACK_P bus on In4, soft GND fill on B.Cu; --route=0 with hot loops, then tools/route_local.sh (same router line, 150 min cap; finished in about 70 min, not timed out)",
-  "route": "local full route in this container",
-  "routed_*": "DRC, power_open and loss measured on the locally routed board",
-  "outdir": "docs/layout-teams/A/lead_final/sc_Z"
+  "placement": "best_placement.json = stack S: round-3 build + best_overrides 50_r4_port1, 60_r4_bcu, 70_r5_north, 80_r5_gauge (rebuild_best.sh)",
+  "scorecard": "r5_merge/tools/score_board_r5.sh (split zones + per-pad join check) with r5_merge/tools/best_env_r5.sh, --plan=$BEST_PLAN_R5 (planner M), --route=0, hot loops on; then r5_merge/tools/route_local_r5.sh lead_r5/sc_S 150",
+  "routed_*": "DRC, power_open, loss and pad joins measured on the locally routed board (routed.kicad_pcb deleted after the check, 6 MB)",
+  "routed_pad_unjoined": "3V3 C207/C403/C503 and PACK_P C213 are cut off by routing (soft In3 3V3 pour cut); dc_score does not see it; fix before fab",
+  "outdir": "docs/layout-teams/A/lead_r5/sc_S",
+  "pc_failed_edges": [
+   "P1 I2CC_SDA U402.5->U401.16",
+   "P1 I2CC_SDA R402->U402.5",
+   "P1 I2CC_SDA R402->U403.2",
+   "P1 I2CC_SCL R403->U403.1",
+   "P1_LDO_3V3 R441->U402.8",
+   "P1_LDO_3V3 R404->R441",
+   "SMBC U101.19->R115",
+   "SCL J302.6->U301.9"
+  ]
  }
 }

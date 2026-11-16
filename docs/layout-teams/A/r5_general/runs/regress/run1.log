@@ -1,0 +1,15 @@
+== B vs ../r4_bcu/runs/k1
+a: ../r4_bcu/runs/k1/spec.json: zones/tracks/vias (78, 344, 281); b: runs/regress/B.json: (78, 344, 281)
+IDENTICAL: 0 differing (net, layer) entries
+== Q vs ../r4_port1/runs/v5p/hot
+TRACK GND F.Cu: n 128 vs 126, length 79.21 vs 79.35 mm; only in a [(((99.85, 80.975), (100.2176, 80.8731)), 0.3), (((107.1595, 78.9239), (107.45, 78.674)), 0.2), (((107.5444, 78.9007), (107.95, 78.075)), 0.2)]; only in b [(((107.5321, 78.8984), (107.55, 77.075)), 0.3)]
+VIA /USB Port 1/VBUS: n 6 vs 7; only in a [(108.25, 79.075, 0.45, 0.3), (109.25, 77.674, 0.45, 0.3), (110.05, 77.674, 0.45, 0.3)]; only in b [(108.85, 78.874, 0.45, 0.3), (109.65, 78.874, 0.45, 0.3), (109.95, 77.174, 0.45, 0.3), (110.75, 77.174, 0.45, 0.3)]
+VIA GND: n 199 vs 198; only in a [(99.85, 80.975, 0.45, 0.3), (107.45, 78.674, 0.45, 0.3), (107.95, 78.075, 0.45, 0.3)]; only in b [(100.65, 80.775, 0.45, 0.3), (107.55, 77.075, 0.45, 0.3)]
+DIFFERENT: 10 differing (net, layer) entries
+== V vs ../r4_vbus/runs/v2sh
+a: ../r4_vbus/runs/v2sh/spec.json: zones/tracks/vias (94, 382, 383); b: runs/regress/V.json: (94, 382, 383)
+IDENTICAL: 0 differing (net, layer) entries
+== Z vs ../lead_final/sc_Z
+a: ../lead_final/sc_Z/spec.json: zones/tracks/vias (94, 380, 379); b: runs/regress/Z.json: (94, 380, 379)
+IDENTICAL: 0 differing (net, layer) entries
+REGRESS_DONE

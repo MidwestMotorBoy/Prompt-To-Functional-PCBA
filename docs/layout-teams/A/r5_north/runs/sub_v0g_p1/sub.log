@@ -1,0 +1,20 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 37 of 368 edges kept by --box=103.5,96.5,118.5,109.3 (cross)
+edges to route: 37 (0 on long nets)
+fan-out stubs: 17
+  progress: step 40, queue 11, routed 21, failing 4, pulled 14
+phase 1: 4 open connections tried again with every route free to move
+  progress: step 80, queue 3, routed 32, failing 2, pulled 42
+phase 2: 3 open connections tried again with every route free to move
+  progress: step 120, queue 3, routed 33, failing 2, pulled 79
+phase 3: 2 open connections tried again with every route free to move
+routes pulled and re-laid: 107
+fan-out stubs unused (removed) 6, trimmed 3
+unconnected after fill: 334
+routed 34 edges, 3 failed, items added 522
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 62 goals 133 seen 133 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 110.15,106.03 (Pad 1  of C410 ) -> 110.59,108.84 (Pad 24  of U403 ) starts 190 goals 73 seen 127 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/REGN 110.59,108.84 (Pad 24  of U403 ) -> 107.59,120.60 (Pad 1  of R415 ) starts 73 goals 126 seen 127 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 1/REGN
+FAILKEY /USB Port 1/REGN

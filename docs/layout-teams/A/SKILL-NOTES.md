@@ -20,24 +20,36 @@ start with `tools/` (the shared tools, never edited in place).
    then failed route edges, then tier-2 nH, then loss. Look at F.png and B.png before calling anything good.
 6. Compare **failed edges and the edge total**, never routed counts alone: the total changes with the copper
    (369-448), because pours that reach a pad remove its edge.
+7. Since round 5 the scorecard of the best board is `r5_merge/tools/score_board_r5.sh` (score_board_best.sh +
+   per-pad join check `pad_unjoined`, routed checks in `route_local_r5.sh`); source `r5_merge/tools/best_env_r5.sh`
+   and pass `--plan="$BEST_PLAN_R5"`.
 
 ## 1. Rebuild the best placement from the bare template (one command)
-1. `docs/layout-teams/A/rebuild_best.sh <workdir>` (about 2 min). It runs `final/build.sh` (dump -> groundup placer
-   with the v5 port scripts -> stage template B4 on both ports -> `final/overrides/*.json` in name order ->
-   scorecard format -> courtyard/edge/peg check) and then compares with `best_placement.json`.
+1. `docs/layout-teams/A/rebuild_best.sh <workdir>` (about 2 min). It runs `final/build.sh --overrides=best_overrides`
+   (dump -> groundup placer with the v5 port scripts -> stage template B4 on both ports -> `best_overrides/*.json`
+   in name order -> scorecard format -> courtyard/edge/peg check) and then compares with `best_placement.json`.
    Expect `CHECK clean`, `placed 289/289` and `0 of 245 entries differ from best_placement.json`.
-   (The "6 differ of 289" lines above it are the diff against stagepwr's v1 and are expected: the 6 ports-b1 parts.)
-2. Add `--score` for the scorecard with the best copper recipe (`--route=0`, hot loops on, about 8-13 min), or
-   `--score="--route=150"` for a local full route with routed-board power check (1.5-2.5 h).
-3. To add an improvement, drop a `{ref: [x, y, absolute rot]}` file into `final/overrides/` with a name that sorts
-   last. Refs of different files should not overlap; later names win.
+   (The "44 differ of 289" lines above it are the diff against the round-3 reference and are expected.)
+2. `best_overrides/` holds 10 stagefix s3, 20 pdfix a3, 30 ports b1, 40 stagepwr v1 (round 3) and 50 r4_port1
+   (port-1 PD cluster), 60 r4_bcu (stage FET turn), 70 r5_north (charger north row), 80 r5_gauge (gauge caps).
+   Each is a copy of the worker's override file; refs do not overlap between 50-80.
+3. Add `--score` for the scorecard with the best copper recipe (`r5_merge/tools/score_board_r5.sh` with
+   `r5_merge/tools/best_env_r5.sh`, `--route=0`, hot loops on, about 10 min), or `--score="--route=150"` for a local
+   full route with routed-board checks (about 1-1.5 h). The copper recipe is planner M
+   (`r5_merge/tools/plan_copper_m.py`) with `$BEST_PLAN_R5`; the general package `r5_general/copper_rules/` with
+   `r5_general/monolith_r5.rules.json` gives the identical spec (section 5).
+4. To add an improvement, drop a `{ref: [x, y, absolute rot]}` file into `best_overrides/` with a name that sorts
+   last. Refs of different files should not overlap; later names win. Build a candidate stack in your own folder
+   with `final/build.sh <wd> --overrides=<your dir>` first; never edit best_overrides before the stack is scored.
+5. The round-3 board is `lead_final/best_placement_r3.json`, rebuilt by `tools/rebuild_best_r3.sh`.
 
 Traps:
 - Run `apply_stage.py` with GAP/RING **unset** (build.sh does). With them set, D410 finds no spot and overlaps.
 - `keep_vias.json` (56 via spots) is a real input of the groundup placer. Without it place_bot.py fails at Q103.
 - `rebuild.sh --exact` must not be combined with a variant that places C549 itself.
-- groundup's placement format is `{ref: [x, y, absolute rot]}`; the scorecard wants
-  `{ref: [x, y, quarter turns relative to the template]}`. Convert with `tools/gu_to_score.py`.
+- groundup's placement format is `{ref: [x, y, absolute rot]}` (absolute KiCad rotation); the scorecard wants
+  `{ref: [x, y, quarter turns relative to the template]}`. Convert with `tools/gu_to_score.py`. Check pad positions
+  after a rotation.
 
 ## 2. Charger stage: the template rule
 1. The stage is a "classic" bridge, mirrored by rotation:
@@ -82,6 +94,27 @@ Traps:
    - Stage bulk caps are corridor ends, which keeps the AC column free.
    - Corridor end boxes go only on an IC's largest pad of a net.
 
+## 3b. Placement fixes of rounds 4-5 (each one an override file)
+1. **Diff twin blocks first** (`r4_port1/tools/portdiff.py`): pose of every 4xx/5xx part relative to its anchor.
+   Port 2 had the round-2 PD cluster fix and port 1 never did; copying port 2's relative poses to port 1 (+21.0 mm)
+   was the biggest single routing win (override 50). Copy the twin's copper rules too (pinesc on both PD chips).
+2. **A resistor boxed behind another 0402 will not route a 2-3 mm stub.** Swap slots with a neighbour that does not
+   care (R433 <-> R425, override 50).
+3. **Switch FET: the SW pad's only F.Cu exit decides where the FET hangs.** On a SiZ240-type dual FET the SW pad
+   leaves only through the gate edge (the HF cap closes the cap edge), so the gate edge must face the inductor pad:
+   Q402/Q502 at rot 90 beside L401/L501 pad 2, not under it (override 60). Then SW2 is F.Cu only and the B.Cu
+   switch-node pour disappears (84.9 -> 14.3 mm2). Place every stage part with an explicit pose
+   (`r4_bcu/place/mk_place.py`) plus a keep box over the new power path, or the greedy placer drops parts into it.
+4. **Fine-pitch charger pin row: build a pin table** (pin, partner pad, which escape it must cross). Put two-pad parts
+   with their pads straight over their own pins (C412 over pins 28/26, no half-pitch offset), the bootstrap diode
+   straight above the cap's BTST pad and never across the gate-drive escapes (override 70). Tune the DRV_SUP cap in
+   0.15 mm steps: it sets the lanes on both sides. After a move next to the input HF cap re-solve HL_IN (a
+   thermistor's GND pad was C430's return).
+5. **A lane of 0.6 mm is a track, 0.5 mm is a wall.** Moving two gauge filter caps 0.1 and 0.3 mm (override 80)
+   opened VC2 at U101 pin 4; VC2, SMBC and CELL_1N routed on 7 of 8 finished routes afterwards.
+6. Iterate with `r5_north/tools/ov.py` (writes the port-2 copy, dx -23.026, runs the placelib check, renders) or
+   `r4_port1/tools/build_r4.sh`; require `CHECK clean` (courtyard tolerance 0.08 mm, keep 0.005 mm margin).
+
 ## 4. Screening a change (5 min loop)
 1. `tools/score_board_split.sh <out> <placement.json> --route=0 --no-hot` (or `score_board_best.sh` with the env of
    `tools/best_env.sh` and `--plan="$BEST_PLAN"` when you work on the best board). Read score.json: power_open
@@ -102,74 +135,141 @@ Traps:
 5. After every part move check power_open again, not just the blocked count: a cap near a fine-pitch power pin can
    be that pin's only copper (moving C507 0.5 mm opened PP5V at U501).
 
-## 5. Copper rules that worked (planner options, all in `portcu/tools/plan_copper_p.py`)
-Apply one option per screen, in this order; numbers are blocked edges on the best placement.
-| option | rule | blocked |
-|---|---|---|
-| (stock planner) | | 29 of 400 |
-| `--sealed=1 --taps=1` | escape strip + via site for gate / small-part pads sealed inside a hot-loop hull; thin tap from a bootstrap cap's SW pad to the SW pour when it is > 3 mm away (draw taps AFTER the grow step) | 24 of 396 |
-| `--joinfix=1` | QFN GND return joins keep escape room (tight=False) instead of running under the neighbour pins | 19 of 398 |
-| `--epstrip=1` | each QFN GND pin gets a straight or L strip into its own exposed pad | 15 of 374 |
-| `--directjoin=1` | small power pin joined to its own cap by a 0.3 mm track (PP5V pin 34) | 15 of 373 |
-| `--nogrow_dead=1` | the grow step skips pad-only pieces (the connector's unused VBUS pin pair) | 10 of 373 |
-| `--gndesc=1` | GND pins of connectors and fine-pitch ICs get escape room | 9 of 371 |
-| `--connesc=1` | each connector signal pad keeps a straight exit strip (0.2 mm + 2 x 0.25 mm) | 7 of 371 |
-| `--pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1` | via-site reservation for PD-chip signal pins within 1 mm of a power pad; pin-to-pin link between neighbouring GND pins | 5 of 369 |
+## 5-7 preface: which planner
+The best board is planned by `r5_merge/tools/plan_copper_m.py` (class PlannerM(PlannerB, PlannerV, PlannerQ) on
+portcu's PlannerP) with `$BEST_PLAN_R5` from `r5_merge/tools/best_env_r5.sh`. The general package
+`r5_general/copper_rules/plan_rules.py` reproduces planners V, Q, B and M spec-identically and is the version to use
+on a new board; the sections below describe its rules (written by r5_general, checked by the lead). Planner-chain
+history: stagepwr A -> final F -> portcu P -> r4 V/Q/B -> r5 M (and N = B + gatevia, G = Q + gauge lane rules).
 
-Rejected: `--nogrow_detour`, `--mirror_minw=0.5`, `--grow_viaroom=1.0`, pinesc on U401 or on all pins (worse).
-Always confirm 7 of 7 hot loops after a planner change.
+## 5. Copper rules (`r5_general/copper_rules/plan_rules.py`, one class each, run in this order)
+`plan_rules.py --list=1` prints each rule with default, status, parameters and statement. Options:
+`--<rule>=0|1`, `--<rule>_<param>=V`, `--stock=1` (all off), `--rules=<file>`.
+
+### 5a. Base rules (on by default; blocked edges on the best placement, each on top of the rows above)
+| order | rule | trigger -> effect | blocked |
+|---|---|---|---|
+| | (none: `--stock=1`) | stock planner | 29 of 400 |
+| setup | `gate_escape`, `sealed` | signal pad inside a hot-loop pad hull (switch gate pins, any small part's pad) -> escape strip + via site | 24 of 396 (with taps) |
+| setup | `pinesc` (select=walled) | signal pin within 1 mm of a foreign power pad, on an IC whose pin a first plan leaves in a closed pocket -> strip + via site on both layers | 5 of 369 (with gndpair) |
+| setup | `connesc` | fine-pitch connector signal pad -> 0.4 mm exit strip 1 mm | 7 of 371 |
+| before loops | `gndpair`, `epstrip` | neighbouring return pins joined pin to pin; return pin within 0.8 mm of the IC's exposed pad -> track into the EP | 15 of 374 (epstrip) |
+| return | `joinfix` | return join under a fine-pitch IC keeps the signal escape room (hot-loop pads fall back to the stock join) | 19 of 398 |
+| net | `directjoin` | power terminal "no path", copper <= 2 mm -> straight track | 15 of 373 |
+| room/clip | `gndesc` | return pads of connectors / fine-pitch ICs -> signal escape room | 9 of 371 |
+| grow | `nogrow_dead` | pad-only connector piece -> not grown | 10 of 373 |
+| after grow | `taps` | small part's switch-node pad > 3 mm from its pour -> thin tap after the grow | (with gate_escape) |
+| re-plan | `power_first` | a reservation cost a series power terminal its path -> withheld, plan again | best: no change; hand: AC_SNS_N kept |
+
+### 5b. Round-4 rules (default off; turn on per board from the measurements in 5c)
+| order | rule | trigger (roles and geometry) -> effect | measured (round 4, own board) |
+|---|---|---|---|
+| setup (after reservations) | `gatevia` (chk=1) | gate_escape site of a discrete switch -> track + through via drawn there; chk slides the via out (<= 0.8 mm) or drops it if it is within clearance of another net's pad on either outer layer | HG gate routes on every route; without chk 4 DRC errors on the merged board |
+| after loops | `ret_band` (mm 1.6, vias 4) | discrete-switch loop with < 4 return vias at its return-pin row -> return band out of the row + vias | HL_OUT 0.98 -> 0.83 nH, -0.07 W |
+| net | `sw_detour` (untested) | switch-node detour width / via count | not screened |
+| after return | `gndtie` | IC return pin left floating by pinesc's via sites -> via with pinesc's raster margin relaxed | blocked 7 -> 5 |
+| grow | `pw_nogrow` | non-switching detour corridor not grown | +0.010 W, 27.8 -> 3.3 mm2 per port |
+| grow | `stub_nogrow` | other-side via stub not grown | part of k1 |
+| grow | `sw_nogrow` (off on Monolith) | switch-node detour not grown | +0.028 W when the switch node must detour |
+| mirror | `mirror_skip_supply` | no mirror copy for discrete-switch loop supply nets | +0.031 W, B.Cu -56 mm2 |
+| mirror | `mirror_maxa` (10 mm2) | added mirror patches < 10 mm2 dropped with vias | bus loss unchanged |
+| after grow | `tap_max` (16 mm) | taps allowed up to 16 mm (stock detour limit 10) | blocked tap edge gone |
+| after grow | `padjoin` (4 mm) | 2-pad part's power pad off its pour, pour <= 4 mm -> thin straight / L track | FB stub stops failing |
+| after grow | `padpair` (mode 2, live 1) | source terminal with several pad groups of which the plan feeds only some -> in-pad vias + strap on the other outer layer | VBUS dead pair joined, PC 17 -> 16 failed |
+| after grow | `capjoin` | shunt cap pad off its net's main piece -> link from its island via / same-layer link / new vias + link | bulk cap joined, blocked unchanged |
+| setup option | `pinesc twins=1` | IC that is a translated copy of a selected IC with its whole signal neighbourhood -> same reservations | picks port 1's PD chip only where its cluster is a copy (r4_port1 / merged placement) |
+
+The after-grow order taps -> padjoin -> padpair -> capjoin is fixed: each later join sees the earlier ones as
+obstacles, and nothing drawn after the grow is ever grown. It is the order of the round-5 merged planner M, and the
+package reproduces planners V, Q, B and M spec-identically (r5_general/NOTES.md).
+
+Rejected (kept, default off): `nogrow_detour` (15 -> 15, +0.05 W), `mirror_minw=0.5` (10 -> 10), `grow_viaroom=1.0`
+(5 -> 5), `pinesc_select=all` (worse), **`connesc_big`** (r4_port1 v1q: the TC2030 pad strips cut the only strip of
+the 10 A CELL_P pour from its fuse: power open), **`mirror_minw2=1.5`** (r4_bcu d2: dropped the cell-path mirror,
++0.05 W, blocked unchanged). Always confirm 7 of 7 hot loops after a planner change.
+
+### 5c. How to pick options from the measurements
+1. Score the base recipe (`score_rules.sh <out> <placement> --rules=monolith.rules.json --route=0 --no-hot`).
+2. `pad_unjoined` in score.json (checks/pad_join_check.py; allow list = rules file "pad_join"."allow"):
+   - a series terminal's pad group listed (connector pin pair) -> `padpair` mode 2, `live=1` if twin ports should get
+     the same bridge;
+   - a cap pad listed -> `capjoin` (C409/C509-type small VAC caps 30 mm from their pour stay router work);
+   - a 2-pad part's rail pad that fails on routes ("no way" stub) -> `padjoin`.
+3. `r4_bcu/tools/bcu_area.py <outdir> --nets` lists every other-side piece with its zone kinds:
+   `detour` on a switch node -> fix the placement (switch gate edge toward the inductor), `sw_nogrow` only as a
+   stopgap; `detour` on a low-current rail -> `pw_nogrow`; `mirror` on a loop supply net -> `mirror_skip_supply`;
+   small `mirror` patches -> `mirror_maxa`; `via stub` blobs once mirrors are gone -> `stub_nogrow`.
+4. Hot loops: a discrete-switch loop with one return via at its row (hot_gate.log, plan.log ret_band report) ->
+   `ret_band`. A bootstrap tap "left to router" with a long distance -> `tap_max`.
+5. Routing failures at a FET gate that had a reserved site -> `gatevia` (keep chk=1). Failing CC / I2C pins at a
+   PD chip whose twin has pinesc -> make the cluster a copy, then `pinesc twins=1` + `gndtie`.
+6. Port-1 column effects show only on routes: use the sub-route screen (`r4_port1/tools/route_sub.sh <outdir> <work>
+   [box]`, 16-35 min, one core) for differences of 3+ edges, and the PC full route (2-3 routes of one board: the
+   spread of one route is about +-3 edges) for the rest.
 
 ## 6. Planner traps (they decide many blocked edges)
-1. A pin within NEAR_TERM_MM (1 mm) of a power terminal's pad gets no escape room from that pour. Plan its exit on
-   the side away from the pour, or put a pull-up in front of it.
-2. GND pins of a 0.4 mm QFN rarely get their own via. return_join runs a `tight` track (up to 6 mm) to the nearest
-   GND zone piece with a via, often straight under the I2C pins (ports: freeing it gave -5 edges).
-3. The planner's `--grow 1.5` turns any free pocket within 1.5 mm of power copper into power copper. More room next to
-   a pour does not help (v6).
-4. Lanes from intent.json are not honoured by the hot-loop pours (stage B6/B7).
-5. Loss is not comparable between boards with different power opens: an open terminal carries no current.
-6. Hot-loop pours are convex hulls of all loop pads and keep clearance only. A gate pin inside the hull (HG1 beside
-   the big D1 pad) is sealed: use `--sealed=1`.
-7. The router searches a 6 mm window round a DRC end point. A pad more than 6 mm from its pour (bootstrap cap to SW)
-   is "blocked" although free: use `--taps=1`.
-8. A thin track drawn before the grow step grows into a blob. A via site only 0.05 mm over the via size still blocks.
+1. A pin within NEAR_TERM_MM (1 mm) of a power terminal's pad gets no escape room from that pour. `pinesc` gives it
+   a via site, but only on ICs where a first plan leaves such a pin sealed (or a twin of one). Reserving on every IC
+   costs edges: the reservations take return pins' via sites (use `gndpair`, and `gndtie` when pinesc is on 2 chips).
+2. GND pins of a 0.4 mm QFN rarely get their own via; the stock return_join runs a tight track under the I2C pins.
+   `joinfix` and `epstrip` fix it.
+3. `--grow 1.5` turns any free pocket within 1.5 mm of power copper into power copper, and a pad-only piece grows
+   too (`nogrow_dead`). Anything that must stay thin is drawn after the grow (taps, padjoin, padpair, capjoin) or
+   frozen by zone kind (sw/pw/stub_nogrow).
+4. Lanes from intent.json are not honoured by the hot-loop pours.
+5. Loss is not comparable between boards with different power opens.
+6. Hot-loop pours are convex hulls of all loop pads with clearance only: gate pins inside are sealed
+   (`gate_escape` / `sealed`), and a reserved site is only free on the planner's layers: draw it (`gatevia`).
+7. A reserved via site is checked against the switch's own layer only. A part turned 90 degrees can put it over an
+   other-side pad: keep `gatevia chk=1` (merged board: 4 DRC errors without it).
+8. The router searches a 6 mm window round a DRC end point: a pad > 6 mm from its pour is "blocked" although free
+   (`taps`, `tap_max` past 10 mm).
 9. A `GHOSTFAIL GND Track ... -> Zone plane` line means a planner GND track was left floating: a regression.
+10. Check `dir(pc.Planner)` before naming a new planner method or attribute (`reserve`, `keep` already exist).
+11. The r4_vbus grid link appended the router path goal-to-start, so its length check rejected every grid path;
+    `link_to(grid_fix=1)` (capjoin) is the corrected form, padpair keeps the old form for spec identity.
+12. Removing a power net from `d.power` (mirror_skip_supply) re-orders the dict on restore: iterate nets sorted.
 
 ## 7. Power must survive routing (do not trust a route count alone)
-1. router.py routes on F, In2 (vertical), In3 (horizontal) and B. It may cut the "soft" nets GND, PACK_P, 3V3.
-   On the no-strap board the In2 PACK_P pour went from 1 piece to 3 after routing: PACK_P open at D103/U204, loss
-   1.03 -> 1.74 W.
-2. In1 and In4 are never routed on. Put a second copy of the cut bus on In4:
-   `BUS4="--mode=strip+copy --w=3 --box=96,100,122,140"` (strapfix/tools/bus4.py: 3 mm bands along a spanning tree
-   over the PACK_P via groups, plus the pour copy in the 10 A box), and give GND back its area with a soft fill on
-   B.Cu: `BUS4B="--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1"`. Costs the router nothing.
-3. Do NOT use In2 strap tracks (`STRAPS=`, stagepwr/tools/straps.py) unless In4 is unavailable: they keep PACK_P
-   joined but cost 2-6 routed edges and a 1.5 mm strap carries 10 A (routed loss 1.36-1.50 W).
-4. A "no tracks" keep-out is closed to vias too in the router; it costs as much as a strap.
-5. Check: `tools/route_local.sh <outdir> 150` (adds the full route to a `--route=0` outdir and writes
-   `routed_power_open`, `routed_loss_W`, `routed_drc_errors` into score.json), or
-   `stagepwr/tools/routed_dc.sh <outdir>` on an outdir that holds routed.kicad_pcb.
-   `strapfix/tools/cutmap.py cu.kicad_pcb routed.kicad_pcb cu.json <out> PACK_P In2.Cu` draws where a pour was cut.
-6. Fast copper loop (1-2 min): `strapfix/tools/fastcu.sh` injects new zones into an already routed board and gives
-   the routed loss without re-routing (exact for In1/In4 zones, an estimate for outer-layer fills).
-7. Compare routed loss only with routed loss.
+1. router.py routes on F, In2 (vertical), In3 (horizontal) and B and may cut the soft nets (return net + the plan's
+   bus nets: `--softnets=GND,PACK_P,3V3`). Without the bus copy the In2 PACK_P pour went 1 -> 3 pieces (PACK_P open).
+2. The bus layer step (rules file "bus_layer") copies every >= 3 A bus net onto the unrouted plane away from the hot
+   loops (In4) + a soft return fill on the far outer layer. The box "96,100,122,140" is the one tuned value; "auto"
+   for a new board.
+3. r5_merge found the same cut on **3V3 In3** after routing (1 piece -> 7, C207/C403/C503 off the main piece in
+   routed_pad_unjoined) although dc_score saw nothing: it solves only J301 -> L201 and caps are shunt terminals.
+   Run `pad_join_check` on routed boards (score_rules.sh does it when a route saves routed.kicad_pcb) and fix with a
+   3V3 copy on a non-routing layer or 3V3 out of the softnets before fab.
+4. Do NOT use In2 strap tracks unless no unrouted layer exists (cost 2-6 routed edges).
+5. A "no tracks" keep-out is closed to vias too in the router.
+6. Check: `tools/route_local.sh <outdir> 150` or `score_rules.sh ... --route=150` writes routed_power_open,
+   routed_loss_W, routed_drc_errors and (round 5) routed_pad_unjoined. The PC route returns only logs: no routed
+   board, so no routed power check for PC numbers.
+7. Compare routed loss only with routed loss; compare failed edges and the edge total, not routed counts.
 
 ## 8. Candidates: hot loops, renders, full route
-1. Candidate = better than the best screen by 4 or more edges, hard limits met. Run the scorecard with hot loops
-   (`--route=0`, no `--no-hot`). Require "7 of 7 pass"; note the nH sum (tier 2).
+1. Candidate = better than the best screen, hard limits met, `pad_unjoined` no worse. Run the scorecard with hot
+   loops (`--route=0`, no `--no-hot`). Require "7 of 7 pass"; note the nH sum (tier 2).
 2. Read F.png and B.png (the Read tool on the image). Check:
    - each PD chip just below its USB-C connector, the protector between, 5 V buck beside it;
    - stages compact under their inductors, port 2 a copy of port 1, SW1 straight into the inductor;
    - nothing stranded (diodes, LDOs, TVS far from their IC; gauge parts mid-board);
    - B.Cu: long power detours (AC_SNS_N round the stage, PP5V crossing the VBUS stem), switch-node copper.
    Logan rejects sprawl on sight even when the numbers pass.
-3. Queue the full route on Logan's PC: `queue_route.sh <outdir> <taskkey>-<name>` (new name per changed board; it
-   commits only the route_queue files). Poll `route_result.sh <name>` from a background until-loop with a bounded
-   timeout. PC routes took 45-107 min here, usually past the nominal 75. Queue several at once.
-4. For the deliverable also run one local full route for the routed-board power check (`tools/route_local.sh`).
-   The scorecard's default 45-min cap kills the router before it saves a board; use 150 min. Start long jobs with
-   `setsid nohup ... &`; background tasks of the agent harness are killed after 2 h.
-5. Report routed / failed / edges / minutes / status, and say when a route timed out.
+3. Routing differences that the ghost screen cannot see (congestion): use a sub-route over a box
+   (`r4_port1/tools/route_sub.sh`, `r5_gauge/tools/route_sub.sh`; at most about 130 edges, 1-35 min, one core).
+   Its run time is a hint too: 1 min means clean. It ranks changes of 3+ edges, not 1-2.
+4. Queue the full route on Logan's PC: `queue_route.sh <outdir> <taskkey>-<name>` (new name per changed board; it
+   commits only the route_queue files). **Queue every candidate twice** (`name` and `name-rep`): one route of the
+   same board spreads by about +-3 failed edges (r5_merge m1: 9 / 14 / 13 / 8 on identical copper; r4_port1 v6p:
+   PC 19 against local 10). Compare means and per-region FAILKEY lists
+   (`git show origin/route-results:A/<name>-<sha>.log | grep -E 'FAILED|FAILKEY'`), never one number.
+   PC routes took 44-150 min in rounds 4-5, usually past the nominal 75; one timed out at 150 min (r5_gauge g0).
+5. For the deliverable also run one local full route for the routed-board power check
+   (`r5_merge/tools/route_local_r5.sh <outdir> 150`: adds routed_power_open, routed_loss_W, routed_drc_errors and
+   routed_pad_unjoined to score.json). The PC returns only logs, so it cannot check routed power.
+   Start it with `setsid nohup ... &`; if you stop it by hand its summary says "TIMED OUT", which is wrong: fix it.
+6. Report routed / failed / edges / minutes / status, and say when a route timed out.
 
 ## 9. Generic (rule) placer, for reference
 `onecmd/generic/run_rules.sh <workdir> [--score]` (1 min): placement from rules with 16 typed poses instead of
@@ -179,12 +279,19 @@ generic/NOTES.md (corridor boxes only at the largest pad of a net; caps at their
 TVS/LDO placed by netlist alone sprawl; legalise anchors that land on fixed TPs).
 
 ## 10. Other traps
-- Never edit a bash script while a loop that calls it is running.
+- Never edit a bash script while a loop that calls it is running (bash reads it as it goes). Python is safe.
 - `cd x && nohup cmd &` backgrounds the whole list; the cd does not apply to later lines.
 - Planning the same board twice gives the same copper but a different file sha; a PC result is keyed by the queued
-  file's sha.
+  file's sha. The same sha can be re-queued under a new name for a repeat.
 - Never `rm` with a variable in the path; use literal paths or `find ... -delete`.
 - Loss is not comparable between boards with different power opens: an open terminal carries no current.
 - The blocked count of one board varies by 1-2 between planner variants that should be equal; treat +-2 as noise.
-- The connector's second VBUS pin pair (J401 A9/B4, J501 A4/B9) is not joined to the VBUS pour by any planner
-  variant; dc_score does not flag it. It needs a fix before fab.
+- dc_score treats all pads of a terminal as one node and does not solve shunt caps: run `pad_join_check`
+  (score_board_r5.sh puts `pad_unjoined` in score.json). The dead VBUS pin pair was found only this way.
+- Merging planner subclasses: cooperative multiple inheritance, every override calls super() exactly once; the class
+  listed later runs its after-grow step first. Prove a no-op first (merged planner with one worker's options on
+  that worker's bare.json must give an IDENTICAL spec with `r5_merge/tools/spec_diff.py`).
+- Merged options collide geometrically even when refs are disjoint (a gate via on a bottom-side cap pad): run the
+  DRC screen after every merge.
+- Foreground sleep is blocked: wait with background until-loops. Stop containers with `docker stop <id>`, never
+  dockerd. Delete routed/sub/ghost boards over 5 MB when done.

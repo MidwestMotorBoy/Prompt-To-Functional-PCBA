@@ -1,0 +1,4 @@
+[score_r4] planner /home/claude/repo/docs/layout-teams/A/r5_gauge/tools/plan_copper_g.py  plan: --sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1 --padjoin=4 --gatevia=1 --pinesc_refs=U401,U501 --gndtie=1 --fcut_path=109.22,130.9/109.78,129.55/110.75,128.3/110.75,126.4 --fcut_w=1.1 --fcut_vias=10 --pinvia=U101.19:1.0 --bfill=CELL_P@104.8,128.8,109.7,131.75
+bare.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+SCORE {"loss_W": 0.888, "power_open": {"3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0, "unrouted_signal_items": 364, "blocked_edges": "5 of 364"}

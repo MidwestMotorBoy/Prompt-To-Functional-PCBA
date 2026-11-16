@@ -1,0 +1,23 @@
+{
+ "loss_W": 0.815,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 368,
+ "hot_loops": "7 of 7 pass, 6.27 nH",
+ "blocked_edges": "5 of 368",
+ "route": "PC route (r5_north-v6g-5f9fee54): 362 routed, 6 failed of 368 in 93.6 min, done; repeat (r5_north-v6g-rep-f959e6bf, same copper): 359 routed, 9 failed of 368 in 83.2 min, done; local route_local.sh (fallback, started 75 min after queueing): 361 of 368 routed, 7 failed (base r4_bcu-k1: 356 / 12 failed of 368)",
+ "routed_loss_W": 1.093,
+ "routed_power_open": {},
+ "routed_drc_errors": 0,
+ "routed_unconnected": 28,
+ "routed": "362 of 368 (PC)",
+ "routed_note": "routed_* fields are from the local route (routed.kicad_pcb, deleted: over 5 MB)"
+}

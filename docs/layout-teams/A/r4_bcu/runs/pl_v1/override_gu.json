@@ -1,0 +1,75 @@
+{
+"C431": [
+119.31,
+100.375,
+-90.0
+],
+"C434": [
+115.4,
+100.6,
+-90.0
+],
+"C438": [
+120.31,
+95.8,
+90.0
+],
+"C531": [
+96.284,
+100.382,
+-90.0
+],
+"C534": [
+92.374,
+100.607,
+-90.0
+],
+"C538": [
+97.284,
+95.807,
+90.0
+],
+"Q402": [
+117.86,
+95.8,
+90.0
+],
+"Q502": [
+94.834,
+95.807,
+90.0
+],
+"R446": [
+114.9,
+97.65,
+0.0
+],
+"R447": [
+116.9,
+92.6,
+-90.0
+],
+"R546": [
+91.874,
+97.657,
+0.0
+],
+"R547": [
+93.874,
+92.607,
+-90.0
+],
+"R554": [
+93.45,
+105.1,
+180
+],
+"_rules": {
+"Q402": "output switch hung from the RIGHT side of the fixed inductor's pad 2: rot 90 puts the gate edge (SW pad exit between the gate pins) facing L401.2, so SW2 joins the inductor on F.Cu over ~1 mm; courtyard abuts L401's courtyard; D1 (BAT) column at the bottom, S2 (GND) at the top, cap edge toward the board edge",
+"C438": "HF output cap centred on Q402's cap edge (offset courtyard half 1.945 + cap half 0.505), pad 1 (BAT) over D1 (bottom), pad 2 (GND) over S2 (top)",
+"C431": "first BAT bulk: vertical 1210 under Q402's D1 side (courtyards abut), BAT pad on top, GND pad at the bottom with vias",
+"C434": "second BAT bulk: vertical 1210 left of C431 under L401's pad 2 (where Q402 was), BAT pad on top; a ~1 mm channel between the two bulks takes BAT down to R427",
+"R447": "LG2 gate resistor straight above Q402's LG2 pin (top-left), LG2 pad toward the pin",
+"R446": "HG2 gate resistor left of Q402's HG2 pin (bottom-left), under the inductor's pad 2 corner, HG2 pad toward the pin"
+}
+}

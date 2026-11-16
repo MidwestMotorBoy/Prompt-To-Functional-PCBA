@@ -1,0 +1,2 @@
+/USB Port 2/LODRV2 89.06,108.84 (Pad 21  of U503 ) -> 93.87,91.20 (Pad 1  of R547 ) starts 82 goals 126 seen 128 | no way even with every other route gone
+/USB Port 2/BTST1 86.56,108.84 (Pad 26  of U503 ) -> 87.04,107.00 (Pad 1  of C512 ) starts 82 goals 163 seen 98 | ghost path found no blocker

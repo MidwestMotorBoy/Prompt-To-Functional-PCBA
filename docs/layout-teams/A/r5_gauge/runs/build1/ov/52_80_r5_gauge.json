@@ -1,0 +1,6 @@
+{
+"_why": "r5_gauge: C101 (VC4-VC3 filter) up 0.1 mm and C106 (SRP-SRN filter) down 0.3 mm open a 0.9 mm lane at y 120.8 for VC2 U101.4 -> C102.2 (was 0.5 mm, a track needs 0.6); both stay at their gauge pins. R126 (fuse-FET gate resistor, Q104-G / GAUGE_FUSE) from the board-edge pocket beside the J112 CELL_P_RAW pour (pad sealed on F, no via room: blocked on the ghost screen) to beside Q104's gate, GAUGE_FUSE pad north toward open board",
+"C101": [93.25, 119.85, 270],
+"C106": [93.25, 122.3, 90],
+"R126": [120.66, 130.9, 90]
+}

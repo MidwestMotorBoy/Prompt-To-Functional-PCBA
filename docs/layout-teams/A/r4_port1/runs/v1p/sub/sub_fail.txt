@@ -1,0 +1,6 @@
+/USB Port 1/LODRV1 110.09,108.84 (Pad 25  of U403 ) -> 110.89,99.81 (Pad 1  of R445 ) starts 72 goals 134 seen 117 | blocked by routes that have been pulled too often
+Net-(U404-FB) 114.25,83.26 (Pad 8  of U404 ) -> 112.00,83.99 (Pad 2  of R433 ) starts 91 goals 126 seen 138059 | no way even with every other route gone
+/USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 1100 goals 47 seen 57 | no way even with every other route gone
+/USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 227 goals 65 seen 190 | no way even with every other route gone
+GND 105.50,79.08 (Track  on F.Cu,) -> 105.50,79.08 (Zone planeZone plan) starts 0 goals 0 seen -1200001 | no way even with every other route gone
+GND 107.50,79.08 (Track  on F.Cu,) -> 107.50,79.08 (Zone planeZone plan) starts 14 goals 0 seen 150 | no way even with every other route gone

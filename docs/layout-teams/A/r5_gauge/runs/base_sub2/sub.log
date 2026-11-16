@@ -1,0 +1,17 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 128 of 365 edges kept by --box=88,113,101.5,127;104,115,121.6,134 (cross)
+edges to route: 128 (0 on long nets)
+fan-out stubs: 38
+  progress: step 40, queue 89, routed 38, failing 0, pulled 1
+  progress: step 80, queue 64, routed 61, failing 2, pulled 16
+  progress: step 120, queue 43, routed 81, failing 3, pulled 35
+  progress: step 160, queue 14, routed 110, failing 3, pulled 46
+phase 1: 3 open connections tried again with every route free to move
+phase 2: 2 open connections tried again with every route free to move
+phase 3: 1 open connections tried again with every route free to move
+routes pulled and re-laid: 64
+fan-out stubs unused (removed) 11, trimmed 13
+unconnected after fill: 245
+routed 127 edges, 1 failed, items added 1444
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 477 seen 622 | no way even with every other route gone
+FAILKEY SCL

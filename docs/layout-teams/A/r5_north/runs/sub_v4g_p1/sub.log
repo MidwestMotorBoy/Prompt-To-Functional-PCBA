@@ -1,0 +1,14 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 37 of 368 edges kept by --box=103.5,96.5,118.5,109.3 (cross)
+edges to route: 37 (0 on long nets)
+fan-out stubs: 16
+  progress: step 40, queue 6, routed 29, failing 1, pulled 9
+phase 1: 1 open connections tried again with every route free to move
+phase 2: 1 open connections tried again with every route free to move
+phase 3: 1 open connections tried again with every route free to move
+routes pulled and re-laid: 9
+fan-out stubs unused (removed) 7, trimmed 2
+unconnected after fill: 334
+routed 36 edges, 1 failed, items added 410
+  FAILED /USB Port 1/BTST2 112.59,108.84 (Pad 20  of U403 ) -> 113.29,106.77 (Pad 1  of C413 ) starts 48 goals 160 seen 89 | no way even with every other route gone
+FAILKEY /USB Port 1/BTST2

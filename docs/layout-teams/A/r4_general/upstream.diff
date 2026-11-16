@@ -1,0 +1,93 @@
+--- a/tools/copper/write_copper.py	2026-11-15 23:33:12.034971645 +0000
++++ b/tools/copper/write_copper.py	2026-11-15 23:33:12.049971720 +0000
+@@ -11,9 +11,10 @@
+     return c
+ clr = S.get("clearance_mm", 0.2)
+ for z in S["zones"]:
++  for p in z["polys"]:      # one ZONE per outline: KiCad keeps only the first outline of a zone when the board is saved again
+     zn = pcbnew.ZONE(b); zn.SetLayer(lid[z["layer"]]); zn.SetNetCode(net(z["net"])); zn.SetZoneName(("plane_" if "plane" in z["kinds"] else "pc_") + z["net"].strip("/").replace("/", "_"))
+     o = zn.Outline()
+-    for p in z["polys"]:
++    if True:
+         o.NewOutline(); k = o.OutlineCount() - 1
+         for x, y in p["ring"]: o.Append(FM(x), FM(y), k)
+         for h in p["holes"]:
+--- a/tools/copper/plan_copper.py	2026-11-15 23:33:12.034927368 +0000
++++ b/tools/copper/plan_copper.py	2026-11-15 23:33:12.050428766 +0000
+@@ -147,6 +147,9 @@
+         self.cu = {L: np.full((self.H, self.W), -1, np.int32) for L in self.layers}     # generated copper by net
+         self.drilled = [(p["x"], p["y"], p["drill"]) for p in D["pads"] if p.get("drill")]
+         self.viamap = np.full((self.H, self.W), -1, np.int32)
++        self.keep = {}           # layer -> [(net, shape)]: areas other nets' power copper keeps the clearance from (rule add-ons)
++        self.join_tight = True   # return_join searches with clearance only (False: keep the signal escape room)
++        self.return_served = set()   # return pads already joined by add-on copper: the return step skips them
+         self.signal = np.array([self.d.role(n) == "signal" for n in self.d.board_nets])
+         self.exits()
+ 
+@@ -198,7 +201,16 @@
+         if loose or self.escape <= 0: return dist
+         sig = (pn >= 0) & (pn != nid) & self.signal[np.maximum(pn, 0)]
+         ds = ndimage.distance_transform_edt(~sig) * RES - self.clr - self.escape
+-        return np.minimum(dist, ds)
++        return self.room_extra(net, L, np.minimum(dist, ds))
++
++    # hooks for rule add-ons (no-ops here)
++    def room_extra(self, net, L, r): return r
++    def clip_extra(self, net, L, g, loose_near): return g
++    def grow_frozen(self, net, L, z): return False
++    def grow_base(self, net, L, base): return base
++    def grow_cut(self, net, L, z, g): return g
++    def keep_clear(self, net, L, g):
++        self.keep.setdefault(L, []).append((net, g)); self.block[L] |= self.raster(g.buffer(self.clr)); self.blockgeom[L].append(g)
+ 
+     def disk(self, x, y, r):
+         m = np.zeros((self.H, self.W), bool); ci, cj = (y - self.y0) / RES - 0.5, (x - self.x0) / RES - 0.5; k = int(r / RES) + 2
+@@ -223,7 +235,10 @@
+             if L2 == L and n2 != net and not z["soft"]: cut.append(z["geom"].buffer(self.clr, 4))
+         for v in self.vias:
+             if v["net"] != net: cut.append(Point(v["x"], v["y"]).buffer(VIA_D / 2 + self.clr, 8))
+-        return g.difference(unary_union(cut)) if cut else g
++        g = g.difference(unary_union(cut)) if cut else g
++        kc = [k.buffer(self.clr, 4) for n, k in self.keep.get(L, []) if n != net]
++        if kc and not g.is_empty: g = g.difference(unary_union(kc))
++        return self.clip_extra(net, L, g, loose_near)
+ 
+     def place_vias(self, net, near, count, layers_ok=None, inside=None, toward=None, link=None, link_w=0.4):
+         """Up to count vias of net as close as possible to the shape near, legal on both outer layers (RAST_MM more
+@@ -569,7 +584,7 @@
+         for net in sorted(self.d.ret):
+             Tm = {g["ref"]: g for g in self.d.terminals(net)}
+             for ref, pads in sorted(self.d.by_ref.items()):
+-                gp = [p for p in pads if p["net"] == net and not p.get("drill")]
++                gp = [p for p in pads if p["net"] == net and not p.get("drill") and p["key"] not in self.return_served]
+                 for L in self.outer:
+                     pl = [p for p in gp if L in p["shapes"]]
+                     if not pl: continue
+@@ -638,13 +653,15 @@
+             for net in nets:
+                 for L in self.outer:
+                     z = self.zones.get((net, L))
+-                    if not z or z["soft"] or "mirror" in z["kinds"]: continue      # the copy stays a copy: the other side is for routing
+-                    g = z["geom"].buffer(d, 4).intersection(self.inside)
++                    if not z or z["soft"] or "mirror" in z["kinds"] or self.grow_frozen(net, L, z): continue      # the copy stays a copy: the other side is for routing
++                    base = self.grow_base(net, L, z["geom"])
++                    if base.is_empty: continue
++                    g = self.grow_cut(net, L, z, base.buffer(d, 4).intersection(self.inside))
+                     g = self.clip_others(net, L, g)
+                     tr = [LineString([t["a"], t["b"]]).buffer(t["w"] / 2 + self.clr, 4) for t in self.tracks if t["layer"] == L and t["net"] != net]
+                     bl = [b.buffer(self.clr, 4) for b in self.blockgeom[L]] + self.npth
+                     if tr or bl: g = g.difference(unary_union(tr + bl))
+-                    g = unary_union([q for q in getattr(g, "geoms", [g]) if q.intersects(z["geom"]) and q.intersection(z["geom"]).area > 0.05])
++                    g = unary_union([q for q in getattr(g, "geoms", [g]) if q.intersects(base) and q.intersection(base).area > 0.05])
+                     if g.is_empty: continue
+                     a0 = z["geom"].area; z["geom"] = unary_union([z["geom"], g]); self.cu[L][self.raster(g) & (self.cu[L] < 0)] = self.netid[net]
+                     rep[f"{net} {L}"] = round(rep.get(f"{net} {L}", 0) + z["geom"].area - a0, 1)
+@@ -669,7 +686,7 @@
+         ids -= {0} | set(np.unique(lab[start]).tolist())
+         if not ids: return False
+         goal = np.isin(lab, list(ids))
+-        pth, rr = self.path(net, L, start, goal, MIN_W, ndimage.binary_dilation(start | goal, iterations=int(NEAR_TERM_MM / RES)), tight=True)
++        pth, rr = self.path(net, L, start, goal, MIN_W, ndimage.binary_dilation(start | goal, iterations=int(NEAR_TERM_MM / RES)), tight=self.join_tight)
+         if pth is None or len(pth) > 6 / RES: return False
+         cor = self.clip_others(net, L, unary_union([self.corridor(pth, rr, MIN_W), sh]), loose_near=sh.buffer(NEAR_TERM_MM))
+         self.add_zone(net, L, cor, 22, kind="return join"); self.spine(net, L, pth); return True

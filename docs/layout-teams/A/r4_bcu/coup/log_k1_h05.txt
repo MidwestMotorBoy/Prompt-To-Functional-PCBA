@@ -1,0 +1,8 @@
+P1 SW1 (VBUS leg): box (103.2, 114.4, 87.0, 110.6) N=3.9M it=30 build 6s total 68s  C_self 12.0 pF
+   GND 10273, PACK_P 906, AC_SNS_N 437, 3V3 182, SW2 157, LG1 16, LODRV1 8, REGN 5, ACN_F 5, DRV_SUP 4, TS 1, P1_LDO_3V3 1, ACP_F 1, BTST2 0, unconnected-(U403-NC-Pad31) 0 fF
+P1 SW2 (pack leg): box (109.3, 120.8, 87.2, 111.3) N=4.2M it=31 build 7s total 72s  C_self 10.2 pF
+   GND 8756, PACK_P 892, SW1 156, BAT_SNS_P 148, AC_SNS_N 133, 3V3 89, LG2 18, LODRV2 13, DRV_SUP 9, SRN_F 6, Net-(U403-FB) 1, SS_5V 1, REGN 1, unconnected-(U403-NC-Pad16) 0, SRP_F 0, BTST1 0, unconnected-(U403-NC-Pad15) 0 fF
+P2 SW1 (VBUS leg): box (80.1, 91.3, 87.0, 110.6) N=4.0M it=32 build 6s total 68s  C_self 11.9 pF
+   GND 11033, AC_SNS_N 390, 3V3 209, SW2 175, PACK_P 90, LG1 14, LODRV1 8, ACN_F 8, REGN 6, DRV_SUP 5, TS 1, ACP_F 1, BTST2 0 fF
+P2 SW2 (pack leg): box (86.2, 97.7, 86.0, 111.3) N=4.3M it=31 build 7s total 80s  C_self 10.7 pF
+   GND 9988, PACK_P 186, 3V3 179, SW1 174, BAT_SNS_P 135, LG2 18, LODRV2 12, DRV_SUP 9, Net-(U504-FB) 9, SRN_F 6, EN_5V2 5, AC_SNS_N 4, ACN_F 4, SW_5V 1, SS_5V 1, ACP_F 1, PP5V 1, Net-(U503-FB) 1, REGN 1, BST_5V 0, unconnected-(U503-NC-Pad16) 0, SRP_F 0, unconnected-(U503-NC-Pad15) 0, BTST1 0 fF

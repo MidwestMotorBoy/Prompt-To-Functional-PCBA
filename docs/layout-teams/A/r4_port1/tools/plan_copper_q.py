@@ -16,7 +16,7 @@ import plan_copper as pc
 import plan_copper_a as pa
 import plan_copper_p as pp
 
-QOPT = dict(gatevia=0, padjoin=0.0, connesc_big=0.0, connesc_big_len=0.8, connesc_big_via=0.15)
+QOPT = dict(gndtie=0, gatevia=0, padjoin=0.0, connesc_big=0.0, connesc_big_len=0.8, connesc_big_via=0.15)
 pp.OPT.update(QOPT)
 
 
@@ -91,6 +91,50 @@ class PlannerQ(pp.PlannerP):
                             if ok: break
                     rep.append([p["key"], net[-12:], L, ok])
         self.report.setdefault("portcu", {})["pad_joins"] = rep
+
+    # ---- rule q4 (--gndtie=1): a return-net (GND) pin of an IC (8+ pads) that the return step left to the router
+    # (no via site within reach) gets one via placed with the --pinesc reservations of the same package relaxed:
+    # the via keeps VIA_PITCH from every reserved via site and the clearance from every reserved strip, but may sit
+    # in the reservations' raster margin. Found at U401.26/27 (GND pair next to CC1 pin 28): with --pinesc on U401
+    # the CC1/CC2/PD_DRAIN via sites took the only via room north of the pair, the pair was left floating and the
+    # router has no way to a GND plane from a track (2 blocked edges on the ghost screen).
+    def pin_escapes(self):
+        before = {L: self.block[L].copy() for L in self.outer}
+        nb = {L: len(self.blockgeom[L]) for L in self.outer}
+        super().pin_escapes()
+        self._pinesc_mask = {L: self.block[L] & ~before[L] for L in self.outer}
+        self._pinesc_geom = {L: self.blockgeom[L][nb[L]:] for L in self.outer}
+
+    def return_step(self):
+        super().return_step()
+        if not pp.OPT["gndtie"] or not hasattr(self, "_pinesc_mask"): return
+        rep = self.report["return_pads"]; done = []
+        for key in list(rep.get("left_to_router", [])):
+            ref, num = key.split(".", 1)
+            if not ref.startswith("U") or len(self.d.by_ref.get(ref, [])) < 8: continue
+            p = next((q for q in self.d.by_ref[ref] if q["num"] == num), None)
+            if p is None or p["net"] not in self.d.ret: continue
+            for L in self.outer:
+                if L not in p["shapes"]: continue
+                sh = self.d.pad_poly(p, L)
+                resv = unary_union([g for LL in self.outer for g in self._pinesc_geom[LL]] or [Polygon()])
+                keep = {LL: self.block[LL].copy() for LL in self.outer}
+                for LL in self.outer: self.block[LL] &= ~self._pinesc_mask[LL]
+                try:
+                    n0 = len(self.vias); vm = self.viamap.copy(); vs = self.place_vias(p["net"], sh, 6, link=(L, sh), link_w=0.2)
+                finally:
+                    for LL in self.outer: self.block[LL] = keep[LL]
+                good = None
+                for v in vs:      # place_vias appended all of them: keep the first that clears the reservations
+                    if good is None and Point(v["x"], v["y"]).distance(resv) >= pc.VIA_D / 2 + self.clr and \
+                       not (v.get("link") and LineString([v["link"][1:], (v["x"], v["y"])]).buffer(0.1).distance(resv) < self.clr):
+                        good = v
+                self.vias[:] = [v for v in self.vias[:n0]] + ([good] if good else []); self.viamap = vm
+                if good: self.viamap[self.disk(good["x"], good["y"], pc.VIA_D / 2) & (self.viamap < 0)] = self.netid[p["net"]]
+                if good is None: continue
+                if good.get("link"): self.tracks.append(dict(net=p["net"], layer=good["link"][0], a=good["link"][1:], b=(good["x"], good["y"]), w=0.2))
+                done.append([key, good["x"], good["y"]]); rep["left_to_router"].remove(key); break
+        self.report.setdefault("portcu", {})["gnd_ties"] = done
 
     def grow_step(self, step=0.5):
         super().grow_step(step)

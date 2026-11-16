@@ -1,0 +1,4 @@
+# r4_bcu best planner options (variant k1): PLANNER=docs/layout-teams/A/r4_bcu/tools/plan_copper_b.py
+# team BEST_PLAN, then the r4_bcu options; placement: r4_bcu/placement.json (= overrides/60_r4_bcu.json on final best_placement_gu)
+--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1 --tap_max=16 --ret_band=1.6 --pw_nogrow=1 --mirror_skip_supply=1 --stub_nogrow=1 --mirror_maxa=10
+# copper-only variant on the unchanged team placement (no stage move): drop --tap_max/--ret_band, add --sw_nogrow=1 (see NOTES p1)

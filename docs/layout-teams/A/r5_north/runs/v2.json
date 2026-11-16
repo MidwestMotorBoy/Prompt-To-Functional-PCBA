@@ -1,0 +1,7 @@
+{
+ "D404": [109.94, 105.25, 90.0],
+ "C410": [111.6, 104.17, 0.0],
+ "R444": [109.501, 102.9, 90.0],
+ "TH401": [111.19, 102.7, 90.0],
+ "_what": "v2: v1 (D404 north of C412.1, C410 horizontal north of C411) + HS gate resistor R444 and thermistor TH401 swapped, so HIDRV1 (pin 27) and LODRV1 (pin 25, to R445 east) no longer cross"
+}

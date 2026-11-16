@@ -1,0 +1,17 @@
+== V
+a: /home/claude/repo/docs/layout-teams/A/r4_vbus/runs/v2sh/spec.json: zones/tracks/vias (94, 382, 383); b: /home/claude/repo/docs/layout-teams/A/r5_merge/runs/regress/V.json: (94, 382, 383)
+IDENTICAL: 0 differing (net, layer) entries
+== Q
+a: /home/claude/repo/docs/layout-teams/A/r4_port1/runs/v5p/hot/spec.json: zones/tracks/vias (94, 396, 383); b: /home/claude/repo/docs/layout-teams/A/r5_merge/runs/regress/Q.json: (94, 396, 383)
+IDENTICAL: 0 differing (net, layer) entries
+== B
+Traceback (most recent call last):
+  File "/home/claude/repo/docs/layout-teams/A/r4_general/tools/spec_diff.py", line 56, in <module>
+    sd = ga.symmetric_difference(gb).area
+         ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/usr/local/lib/python3.13/site-packages/shapely/decorators.py", line 184, in wrapper
+    result = func(*args, **kwargs)
+  File "/usr/local/lib/python3.13/site-packages/shapely/geometry/base.py", line 729, in symmetric_difference
+    return shapely.lib.symmetric_difference_scalar(self, other)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+shapely.errors.GEOSException: TopologyException: side location conflict at 109.4572 84.242466812227079. This can occur if the input geometry is invalid.

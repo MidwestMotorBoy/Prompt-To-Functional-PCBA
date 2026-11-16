@@ -1,0 +1,7 @@
+s0_stock DCQ {"loss_W": 1.148, "power_open": {"/USB Port 1/PP5V": ["U401"], "3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0}
+s1_gate DCQ {"loss_W": 0.858, "power_open": {"/USB Port 1/AC_SNS_N": ["R424"], "/USB Port 1/PP5V": ["U401"], "/USB Port 2/AC_SNS_N": ["R524"], "3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0}
+s3_ep DCQ {"loss_W": 0.853, "power_open": {"/USB Port 1/AC_SNS_N": ["R424"], "/USB Port 1/PP5V": ["U401"], "/USB Port 2/AC_SNS_N": ["R524"], "3V3": ["L201"], "GND": ["J302", "U404", "J301"]}, "drc_errors": 0}
+s8_pair DCQ {"loss_W": 0.859, "power_open": {"/USB Port 1/AC_SNS_N": ["R424"], "/USB Port 1/PP5V": ["U401"], "/USB Port 2/AC_SNS_N": ["R524"], "3V3": ["L201"], "GND": ["J302", "U404", "J301"]}, "drc_errors": 0}
+DONE
+final DCQ {"loss_W": 1.154, "power_open": {"/USB Port 1/PP5V": ["U401"], "3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0}
+DONE2

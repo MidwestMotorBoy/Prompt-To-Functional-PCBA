@@ -1,0 +1,1 @@
+/USB Port 1/BTST2 112.59,108.84 (Pad 20  of U403 ) -> 113.29,106.77 (Pad 1  of C413 ) starts 48 goals 160 seen 89 | no way even with every other route gone

@@ -1,0 +1,2 @@
+SUB TIMED OUT at 60 min:   progress: step 80, queue 63, routed 63, failing 1, pulled 15  of 128  (/home/claude/repo/docs/layout-teams/A/r5_gauge/runs/g2/sub)
+killed by r5_gauge at ~8 min (superseded by g3), not a timeout

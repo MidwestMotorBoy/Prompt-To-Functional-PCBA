@@ -1,0 +1,6 @@
+02:56 v2g [--gatevia=1] --no-hot {"loss_W":0.818,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+03:05 v2g p1 SUB routed 35 failed 2 of 37 in 8 min  box=103.5,96.5,118.5,109.3   FAILS: P1 LODRV1 U403.25 -> R445.1 | blocked by routes that have been pulled too often;P1 I2CC_SCL R403.2 -> U403.1 | no way even with every other route gone;
+03:09 v2g p2 SUB routed 32 failed 2 of 34 in 4 min  box=80.474,96.5,95.474,109.3   FAILS: P2 LODRV2 U503.21 -> R547.1 | no way even with every other route gone;P2 BTST1 U503.26 -> C512.1 | ghost path found no blocker;
+03:15 v3g [--gatevia=1] --no-hot {"loss_W":0.817,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+03:17 v3g p1 SUB routed 36 failed 1 of 37 in 2 min  box=103.5,96.5,118.5,109.3   FAILS: P1 BTST2 C413.1 -> D405.1 | no way even with every other route gone;
+03:17 v3g p2 SUB routed 34 failed 0 of 34 in 0 min  box=80.474,96.5,95.474,109.3   FAILS: 

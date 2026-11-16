@@ -1,0 +1,13 @@
+02:06 v1g [--gatevia=1] --no-hot {"loss_W":0.816,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":4,"unrouted_signal_items":366,"blocked_edges":"5of366"} ghostdiff=0
+02:07 v0g [--gatevia=1] --no-hot  ghostdiff=5
+02:13 v1g [--gatevia=1] --no-hot {"loss_W":0.815,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+02:19 v0g [--gatevia=1] --no-hot {"loss_W":0.816,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+02:56 v2g [--gatevia=1] --no-hot {"loss_W":0.818,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+03:15 v3g [--gatevia=1] --no-hot {"loss_W":0.817,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+03:38 v3gh [--gatevia=1]  {"loss_W":0.818,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"hot_loops":"7of7pass,6.34nH","blocked_edges":"5of368"} ghostdiff=0
+03:47 v3bg [--gatevia=1] --no-hot {"loss_W":0.815,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+04:08 v4g [--gatevia=1] --no-hot {"loss_W":0.816,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+04:17 v5g [--gatevia=1] --no-hot {"loss_W":0.815,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+04:52 v5gh [--gatevia=1]  {"loss_W":0.816,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"hot_loops":"7of7pass,6.28nH","blocked_edges":"5of368"} ghostdiff=0
+04:58 v6g [--gatevia=1] --no-hot {"loss_W":0.815,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"blocked_edges":"5of368"} ghostdiff=0
+05:09 v6gh [--gatevia=1]  {"loss_W":0.815,"power_open":{"3V3":["L201"],"GND":["J302","J301"]},"drc_errors":0,"unrouted_signal_items":368,"hot_loops":"7of7pass,6.27nH","blocked_edges":"5of368"} ghostdiff=0

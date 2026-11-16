@@ -1,0 +1,3 @@
+/USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 121115 | blocked by routes that have been pulled too often
+/USB Port 1/I2CC_SCL 102.30,86.48 (Pad 2  of R403 ) -> 108.59,113.64 (Pad 1  of U403 ) starts 257 goals 72 seen 2151465 | no way even with every other route gone
+/USB Port 1/SW1 109.11,107.00 (Pad 2  of C412 ) -> 109.11,107.00 (Zone 'pc_USB Port 1_SW1'  on F.Cu,) starts 271 goals 0 seen 43695 | no way even with every other route gone

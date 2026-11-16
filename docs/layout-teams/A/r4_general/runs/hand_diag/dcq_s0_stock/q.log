@@ -1,0 +1,6 @@
+split_spec: 42 zones -> 85 single-outline zones
+bus_layer: auto net -> ['PACK_P'] (plan buses ['PACK_P', '3V3'], >= 3.0 A)
+bus_layer: router layers ['F.Cu', 'In2.Cu', 'In3.Cu', 'B.Cu']; layers it never routes ['In1.Cu', 'In4.Cu']; hot-loop parts on F.Cu -> In4.Cu
+bus_layer: auto box for PACK_P: terminals >= 0.5 x 10.0 A -> 90.85,95.11,123.51,122.8
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "box": "90.85,95.11,123.51,122.8", "zones": 1, "area_mm2": 820.9}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 3.0, "box": "auto", "zones": 4, "area_mm2": 2260.0}

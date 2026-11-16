@@ -1,0 +1,95 @@
+{
+ "loss_W": 1.161,
+ "power_open": {
+  "/USB Port 1/PP5V": [
+   "U401"
+  ],
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 363,
+ "blocked_edges": "44 of 372",
+ "pad_unjoined": {
+  "/USB Port 1/PP5V": [
+   "C407.1",
+   "U401.34"
+  ],
+  "GND": [
+   "C449.2",
+   "C549.2"
+  ]
+ },
+ "pad_unjoined_all": {
+  "/USB Port 1/PP5V": [
+   "C407.1",
+   "U401.34"
+  ],
+  "3V3": [
+   "J301.1"
+  ],
+  "GND": [
+   "C449.2",
+   "C549.2",
+   "J301.5",
+   "J302.5"
+  ]
+ },
+ "checks": {
+  "rules_on": [
+   "gate_escape",
+   "sealed",
+   "pinesc",
+   "connesc",
+   "gatevia",
+   "gndpair",
+   "epstrip",
+   "ret_band",
+   "joinfix",
+   "directjoin",
+   "gndesc",
+   "gndtie",
+   "nogrow_dead",
+   "pw_nogrow",
+   "stub_nogrow",
+   "mirror_skip_supply",
+   "mirror_maxa",
+   "taps",
+   "tap_max",
+   "padjoin",
+   "padpair",
+   "capjoin",
+   "power_first"
+  ],
+  "pinesc_select": "walled",
+  "pinesc_ics": [
+   "U404"
+  ],
+  "left_to_router": {
+   "PACK_P": [
+    "U404 (no room for a via)",
+    "U504 (no room for a via)"
+   ],
+   "/USB Port 1/AC_SNS_N": [
+    "C420 (path winds)"
+   ],
+   "/USB Port 2/AC_SNS_N": [
+    "C556 (via array path winds)",
+    "C523 (path winds)",
+    "C521 (via array path winds)"
+   ],
+   "/USB Port 1/PP5V": [
+    "C407 (no path on F.Cu)"
+   ],
+   "3V3": [
+    "C301 (no room for a via)",
+    "J301 (no room for a via)"
+   ]
+  }
+ }
+}

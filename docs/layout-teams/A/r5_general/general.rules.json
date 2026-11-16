@@ -1,0 +1,60 @@
+{
+ "_about": "Rules file with no board data: every field is a default or derived (auto). Board paths in 'board' only tell the scorecard where this board's inputs are.",
+ "board": {
+  "constraints": "tools/floorplan/example/monolith/constraints.json",
+  "template": "tools/score/template/board.kicad_pcb",
+  "netlist": "tools/floorplan/example/monolith/netlist.json",
+  "power_gate": [
+   "spikes/02-seeded-faults/limits",
+   "spikes/02-seeded-faults/limitsmap.json"
+  ],
+  "hand_hot": "tools/score/template/hand_hot.json"
+ },
+ "planner": {
+  "escape": 0.4,
+  "grow": 1.5,
+  "mirror": 3
+ },
+ "rules": {
+  "pinesc": {
+   "on": 1,
+   "select": "walled"
+  }
+ },
+ "bus_layer": [
+  {
+   "_why": "protected copy of the high-current bus; everything derived (auto box = pads of the series terminals carrying >= half the net current, grown by w)",
+   "net": "auto",
+   "from": "auto",
+   "layer": "auto",
+   "mode": "strip+copy",
+   "w": 3,
+   "box": "auto"
+  },
+  {
+   "_why": "soft fill of the return net on the outer layer away from the hot loops (gives GND back the In4 area)",
+   "net": "auto:return",
+   "layer": "auto:far_outer",
+   "mode": "fill",
+   "prio": 0,
+   "soft": 1
+  }
+ ],
+ "pad_join": {
+  "_why": "expected per-pad findings (board data, not tuning): the charter's allowed opens (3V3 at L201 = the J301 piece seen from the other side; J301/J302 test GND) and the PD chips' small VBUS_32 supply pin (IC supply, mA, router-finished; dc_score lists it as pads_not_joined). Same list as r4_vbus/allow.json.",
+  "allow": {
+   "3V3": [
+    "J301",
+    "L201"
+   ],
+   "GND": [
+    "J301",
+    "J302"
+   ],
+   "VBUS": [
+    "U401.32",
+    "U501.32"
+   ]
+  }
+ }
+}

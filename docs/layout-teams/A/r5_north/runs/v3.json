@@ -1,0 +1,9 @@
+{
+ "C412": [109.11, 107.0, 180.0],
+ "C416": [107.25, 107.05, 180.0],
+ "D404": [109.63, 105.25, 90.0],
+ "C410": [111.6, 104.17, 0.0],
+ "R444": [109.501, 102.9, 90.0],
+ "TH401": [111.19, 102.7, 90.0],
+ "_what": "v3: v2 + bootstrap cap C412 0.48 mm west so its pads sit straight over pins 28 (SW1) and 26 (BTST1), D404 straight above C412.1, ACN_F cap C416 0.2 mm west to make room"
+}

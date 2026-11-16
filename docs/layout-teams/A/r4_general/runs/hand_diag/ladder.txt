@@ -1,0 +1,10 @@
+== s0_stock: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C420 (path winds)'] | U404-ret: U404 
+== s1_gate: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C420 (no path on F.Cu)', 'C456 (via array has no path on F.Cu)', 'C423 (no path on F.Cu)', 'C421 (via array has no path | U404-ret: U404 
+== s2_join: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C420 (no path on F.Cu)', 'C456 (via array has no path on F.Cu)', 'C423 (no path on F.Cu)', 'C421 (via array has no path | U404-ret: U404 
+== s3_ep: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C420 (no path on F.Cu)', 'C456 (via array has no path on F.Cu)', 'C423 (no path on F.Cu)', 'C421 (via array has no path | U404-ret: U404 
+== s4_dj: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C456 (via array has no path on F.Cu)', 'C421 (via array has no path on F.Cu)', 'R424 (no path on F.Cu)'] | U404-ret: U404 
+== s5_dead: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C456 (via array has no path on F.Cu)', 'C421 (via array has no path on F.Cu)', 'R424 (no path on F.Cu)'] | U404-ret: U404 
+== s6_gesc: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C456 (via array has no path on F.Cu)', 'C421 (via array has no path on F.Cu)', 'R424 (no path on F.Cu)'] | U404-ret: U404 
+== s7_conn: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C456 (via array has no path on F.Cu)', 'C421 (via array has no path on F.Cu)', 'R424 (no path on F.Cu)'] | U404-ret: U404 
+== s8_pair: AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router ['C456 (via array has no path on F.Cu)', 'C421 (via array has no path on F.Cu)', 'R424 (no path on F.Cu)'] | U404-ret: U404 
+DONE

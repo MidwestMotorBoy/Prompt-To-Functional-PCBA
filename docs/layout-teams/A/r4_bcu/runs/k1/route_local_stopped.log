@@ -1,0 +1,22 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 368 (0 on long nets)
+fan-out stubs: 145
+  progress: step 40, queue 328, routed 39, failing 0, pulled 0
+  progress: step 80, queue 288, routed 79, failing 0, pulled 0
+  progress: step 120, queue 250, routed 117, failing 0, pulled 2
+  progress: step 160, queue 234, routed 129, failing 4, pulled 26
+  progress: step 200, queue 197, routed 164, failing 6, pulled 29
+  progress: step 240, queue 176, routed 184, failing 7, pulled 48
+  progress: step 280, queue 153, routed 205, failing 9, pulled 65
+  progress: step 320, queue 137, routed 220, failing 10, pulled 89
+  progress: step 360, queue 118, routed 235, failing 14, pulled 110
+  progress: step 400, queue 81, routed 272, failing 14, pulled 113
+  progress: step 440, queue 47, routed 306, failing 14, pulled 119
+  progress: step 480, queue 18, routed 332, failing 17, pulled 130
+phase 1: 20 open connections tried again with every route free to move
+  progress: step 520, queue 19, routed 348, failing 20, pulled 151
+  progress: step 560, queue 16, routed 350, failing 17, pulled 188
+  progress: step 600, queue 14, routed 347, failing 17, pulled 226
+phase 2: 13 open connections tried again with every route free to move
+  progress: step 640, queue 15, routed 352, failing 12, pulled 254
+  progress: step 680, queue 12, routed 351, failing 14, pulled 291

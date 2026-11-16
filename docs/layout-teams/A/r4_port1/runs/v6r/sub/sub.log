@@ -1,0 +1,22 @@
+net classes: 22 high-current nets, 146 small-signal nets
+sub-route: 129 of 366 edges kept by --box=99,66,121.6,116 (cross)
+edges to route: 129 (0 on long nets)
+fan-out stubs: 68
+  progress: step 40, queue 91, routed 37, failing 0, pulled 2
+  progress: step 80, queue 72, routed 55, failing 1, pulled 23
+  progress: step 120, queue 41, routed 86, failing 1, pulled 32
+  progress: step 160, queue 11, routed 114, failing 3, pulled 42
+phase 1: 3 open connections tried again with every route free to move
+phase 2: 3 open connections tried again with every route free to move
+  progress: step 200, queue 0, routed 126, failing 3, pulled 65
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 73
+fan-out stubs unused (removed) 26, trimmed 13
+unconnected after fill: 247
+routed 126 edges, 3 failed, items added 1176
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 121115 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 102.30,86.48 (Pad 2  of R403 ) -> 108.59,113.64 (Pad 1  of U403 ) starts 257 goals 72 seen 2151465 | no way even with every other route gone
+  FAILED /USB Port 1/SW1 109.11,107.00 (Pad 2  of C412 ) -> 109.11,107.00 (Zone 'pc_USB Port 1_SW1'  on F.Cu,) starts 271 goals 0 seen 43695 | no way even with every other route gone
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/SW1

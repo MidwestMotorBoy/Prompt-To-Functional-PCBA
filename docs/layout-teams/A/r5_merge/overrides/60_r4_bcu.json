@@ -1,0 +1,131 @@
+{
+ "C431": [
+  114.0,
+  98.795,
+  180.0
+ ],
+ "C434": [
+  114.0,
+  102.09,
+  180.0
+ ],
+ "C438": [
+  120.31,
+  94.9,
+  90.0
+ ],
+ "C531": [
+  90.974,
+  98.802,
+  180.0
+ ],
+ "C534": [
+  90.974,
+  102.097,
+  180.0
+ ],
+ "C538": [
+  97.284,
+  94.907,
+  90.0
+ ],
+ "D405": [
+  113.4,
+  105.0,
+  90.0
+ ],
+ "D410": [
+  115.44,
+  105.4,
+  0.0
+ ],
+ "D505": [
+  90.374,
+  105.007,
+  90.0
+ ],
+ "D510": [
+  92.414,
+  105.407,
+  0.0
+ ],
+ "Q402": [
+  117.86,
+  94.9,
+  90.0
+ ],
+ "Q502": [
+  94.834,
+  94.907,
+  90.0
+ ],
+ "R427": [
+  117.86,
+  105.0,
+  -90.0
+ ],
+ "R428": [
+  115.7,
+  104.2,
+  180.0
+ ],
+ "R429": [
+  115.7,
+  106.6,
+  180.0
+ ],
+ "R446": [
+  114.27,
+  107.2,
+  90.0
+ ],
+ "R447": [
+  116.9,
+  91.7,
+  -90.0
+ ],
+ "R527": [
+  94.834,
+  105.007,
+  -90.0
+ ],
+ "R528": [
+  92.674,
+  104.207,
+  180.0
+ ],
+ "R529": [
+  92.674,
+  106.607,
+  180.0
+ ],
+ "R546": [
+  91.244,
+  107.207,
+  90.0
+ ],
+ "R547": [
+  93.874,
+  91.707,
+  -90.0
+ ],
+ "R554": [
+  98.55,
+  94.15,
+  180
+ ],
+ "_rules": {
+  "Q402": "output switch hung from the RIGHT side of the fixed inductor's pad 2: rot 90 puts the gate edge (SW pad exit between the gate pins) facing L401.2, so SW2 joins the inductor on F.Cu over ~1 mm; courtyard abuts L401's courtyard; D1 (BAT) column at the bottom, S2 (GND) at the top, cap edge toward the board edge",
+  "C438": "HF output cap centred on Q402's cap edge (offset courtyard half 1.945 + cap half 0.505), pad 1 (BAT) over D1 (bottom), pad 2 (GND) over S2 (top)",
+  "R447": "LG2 gate resistor straight above Q402's LG2 pin (top-left), LG2 pad toward the pin",
+  "C431": "first BAT bulk: horizontal 1210 left of the BAT drop under Q402's D1 edge (courtyard abuts Q402's), BAT pad (1) on the right touching the drop, GND pad left with return vias",
+  "C434": "second BAT bulk: horizontal 1210 under C431, BAT pad on the right touching the drop, GND pad left with return vias",
+  "R427": "BAT sense resistor straight below Q402's D1 edge: BAT drops ~6 mm from D1 to its pad 1 (top); pad 2 (PACK_P) next to J113",
+  "R428": "Kelvin filter at R427 pad 1 (SRP), left of it",
+  "R429": "Kelvin filter at R427 pad 2 (SRN), left of it",
+  "D405": "BTST2/DRV_SUP diode under C434 between C411 (DRV_SUP) and the BTST2 cap C413",
+  "D410": "DRV_SUP/REGN diode between the two Kelvin filters, DRV_SUP pad toward C411/D405",
+  "R446": "HG2 gate resistor beside U403's HIDRV2 pin (HIDRV2 pad down); HG2 reaches Q402's gate through the gate escape via"
+ },
+ "_what": "r4_bcu: charger output switch Q402/Q502 hung right of the inductor's pad 2 (rot 90), BAT caps and sense resistor below it, gate resistors moved; groundup format {ref: [x, y, absolute rot]}, apply after final/overrides/*.json"
+}

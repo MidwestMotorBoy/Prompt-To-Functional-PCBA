@@ -1,0 +1,624 @@
+{
+ "/Cells and Gauge/CELL_P@B.Cu": {
+  "area_before": 13.0,
+  "area_after": 13.0,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/Cells and Gauge/CELL_P@F.Cu": {
+  "area_before": 33.0,
+  "area_after": 33.0,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/Cells and Gauge/CELL_P_RAW@B.Cu": {
+  "area_before": 12.2,
+  "area_after": 12.2,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/Cells and Gauge/CELL_P_RAW@F.Cu": {
+  "area_before": 17.1,
+  "area_after": 17.1,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/Cells and Gauge/FET_MID@B.Cu": {
+  "area_before": 51.6,
+  "area_after": 51.6,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/Cells and Gauge/FET_MID@F.Cu": {
+  "area_before": 74.9,
+  "area_after": 74.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/AC_SNS_N@B.Cu": {
+  "area_before": 12.4,
+  "area_after": 12.4,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 1/AC_SNS_N@F.Cu": {
+  "area_before": 88.0,
+  "area_after": 88.0,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/BAT_SNS_P@F.Cu": {
+  "area_before": 51.4,
+  "area_after": 51.4,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/PP5V@B.Cu": {
+  "area_before": 3.5,
+  "area_after": 3.5,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/PP5V@F.Cu": {
+  "area_before": 54.6,
+  "area_after": 54.6,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 1/PPHV@F.Cu": {
+  "area_before": 10.0,
+  "area_after": 10.0,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/SW1@B.Cu": {
+  "area_before": 3.2,
+  "area_after": 3.2,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/SW1@F.Cu": {
+  "area_before": 44.4,
+  "area_after": 44.4,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 1/SW2@B.Cu": {
+  "area_before": 3.9,
+  "area_after": 3.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 1/SW2@F.Cu": {
+  "area_before": 33.4,
+  "area_after": 33.4,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 1/VBUS@F.Cu": {
+  "area_before": 44.2,
+  "area_after": 44.2,
+  "pieces_before": 3,
+  "pieces_after": 3
+ },
+ "/USB Port 2/AC_SNS_N@B.Cu": {
+  "area_before": 12.7,
+  "area_after": 12.7,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 2/AC_SNS_N@F.Cu": {
+  "area_before": 70.8,
+  "area_after": 70.8,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/BAT_SNS_P@F.Cu": {
+  "area_before": 50.9,
+  "area_after": 50.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/PP5V@B.Cu": {
+  "area_before": 2.9,
+  "area_after": 2.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/PP5V@F.Cu": {
+  "area_before": 47.7,
+  "area_after": 47.7,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 2/PPHV@F.Cu": {
+  "area_before": 11.5,
+  "area_after": 11.5,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/SW1@B.Cu": {
+  "area_before": 3.3,
+  "area_after": 3.3,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/SW1@F.Cu": {
+  "area_before": 41.9,
+  "area_after": 41.9,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 2/SW2@B.Cu": {
+  "area_before": 3.9,
+  "area_after": 3.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "/USB Port 2/SW2@F.Cu": {
+  "area_before": 34.6,
+  "area_after": 34.6,
+  "pieces_before": 2,
+  "pieces_after": 2
+ },
+ "/USB Port 2/VBUS@F.Cu": {
+  "area_before": 32.2,
+  "area_after": 32.2,
+  "pieces_before": 3,
+  "pieces_after": 3
+ },
+ "3V3@F.Cu": {
+  "area_before": 49.9,
+  "area_after": 34.6,
+  "pieces_before": 4,
+  "pieces_after": 7
+ },
+ "3V3@In3.Cu": {
+  "area_before": 1435.7,
+  "area_after": 889.8,
+  "pieces_before": 1,
+  "pieces_after": 7
+ },
+ "CELL_N@B.Cu": {
+  "area_before": 13.1,
+  "area_after": 13.1,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "CELL_N@F.Cu": {
+  "area_before": 29.9,
+  "area_after": 29.9,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "GND@B.Cu": {
+  "area_before": 2500.6,
+  "area_after": 1862.4,
+  "pieces_before": 1,
+  "pieces_after": 7
+ },
+ "GND@F.Cu": {
+  "area_before": 106.1,
+  "area_after": 103.2,
+  "pieces_before": 13,
+  "pieces_after": 13
+ },
+ "GND@In1.Cu": {
+  "area_before": 2814.9,
+  "area_after": 2644.1,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "GND@In4.Cu": {
+  "area_before": 2153.0,
+  "area_after": 2039.0,
+  "pieces_before": 47,
+  "pieces_after": 47
+ },
+ "PACK_P@B.Cu": {
+  "area_before": 21.0,
+  "area_after": 20.0,
+  "pieces_before": 5,
+  "pieces_after": 5
+ },
+ "PACK_P@F.Cu": {
+  "area_before": 129.3,
+  "area_after": 110.7,
+  "pieces_before": 8,
+  "pieces_after": 9
+ },
+ "PACK_P@In2.Cu": {
+  "area_before": 1301.1,
+  "area_after": 798.9,
+  "pieces_before": 1,
+  "pieces_after": 5
+ },
+ "PACK_P@In4.Cu": {
+  "area_before": 625.7,
+  "area_after": 562.1,
+  "pieces_before": 1,
+  "pieces_after": 1
+ },
+ "cutters": {
+  "SCL": {
+   "segments": 44,
+   "mm_in_pour": 50.2
+  },
+  "SDA": {
+   "segments": 40,
+   "mm_in_pour": 31.6
+  },
+  "/USB Port 2/REGN": {
+   "segments": 25,
+   "mm_in_pour": 25.1
+  },
+  "/USB Port 2/DRV9_OFF": {
+   "segments": 6,
+   "mm_in_pour": 21.0
+  },
+  "/Cells and Gauge/TS4": {
+   "segments": 28,
+   "mm_in_pour": 18.6
+  },
+  "/Cells and Gauge/CHG_G": {
+   "segments": 15,
+   "mm_in_pour": 17.8
+  },
+  "/USB Port 2/I2CC_SDA": {
+   "segments": 14,
+   "mm_in_pour": 17.4
+  },
+  "3V3_SLEEP": {
+   "segments": 12,
+   "mm_in_pour": 16.9
+  },
+  "IRQ_N": {
+   "segments": 13,
+   "mm_in_pour": 15.7
+  },
+  "/Cells and Gauge/GAUGE_FUSE": {
+   "segments": 25,
+   "mm_in_pour": 14.8
+  },
+  "/Cells and Gauge/CELL1": {
+   "segments": 8,
+   "mm_in_pour": 14.4
+  },
+  "/USB Port 1/REGN": {
+   "segments": 3,
+   "mm_in_pour": 13.9
+  },
+  "/USB Port 1/CE_N": {
+   "segments": 29,
+   "mm_in_pour": 13.9
+  },
+  "/USB Port 2/CC2": {
+   "segments": 4,
+   "mm_in_pour": 12.6
+  },
+  "/USB Port 2/CC1": {
+   "segments": 2,
+   "mm_in_pour": 12.6
+  },
+  "EN_5V2": {
+   "segments": 5,
+   "mm_in_pour": 10.9
+  },
+  "Net-(U101-SMBC)": {
+   "segments": 3,
+   "mm_in_pour": 10.3
+  },
+  "/USB Port 2/HG1": {
+   "segments": 9,
+   "mm_in_pour": 10.3
+  },
+  "/USB Port 2/DRV_SUP": {
+   "segments": 17,
+   "mm_in_pour": 10.0
+  },
+  "/USB Port 2/TS": {
+   "segments": 13,
+   "mm_in_pour": 10.0
+  },
+  "Net-(U403-ICHG)": {
+   "segments": 22,
+   "mm_in_pour": 9.9
+  },
+  "Net-(U403-FB)": {
+   "segments": 20,
+   "mm_in_pour": 9.7
+  },
+  "/Cells and Gauge/TS2": {
+   "segments": 12,
+   "mm_in_pour": 8.9
+  },
+  "Net-(U101-SMBD)": {
+   "segments": 7,
+   "mm_in_pour": 8.9
+  },
+  "/USB Port 1/HG1": {
+   "segments": 17,
+   "mm_in_pour": 8.5
+  },
+  "/USB Port 1/LODRV1": {
+   "segments": 15,
+   "mm_in_pour": 8.2
+  },
+  "EN_5V1": {
+   "segments": 11,
+   "mm_in_pour": 7.8
+  },
+  "/USB Port 1/TS": {
+   "segments": 12,
+   "mm_in_pour": 7.7
+  },
+  "CHG_INH": {
+   "segments": 8,
+   "mm_in_pour": 7.2
+  },
+  "/USB Port 2/SBU_FLT": {
+   "segments": 1,
+   "mm_in_pour": 7.1
+  },
+  "Net-(U403-ACOV)": {
+   "segments": 11,
+   "mm_in_pour": 6.6
+  },
+  "/USB Port 2/HIDRV1": {
+   "segments": 8,
+   "mm_in_pour": 6.4
+  },
+  "/Cells and Gauge/CHG": {
+   "segments": 9,
+   "mm_in_pour": 5.9
+  },
+  "/Cells and Gauge/CELL3": {
+   "segments": 7,
+   "mm_in_pour": 5.9
+  },
+  "/USB Port 2/CHG_INT": {
+   "segments": 8,
+   "mm_in_pour": 5.0
+  },
+  "GND": {
+   "segments": 3,
+   "mm_in_pour": 4.7
+  },
+  "/USB Port 2/BTST2": {
+   "segments": 14,
+   "mm_in_pour": 4.6
+  },
+  "/USB Port 2/LODRV2": {
+   "segments": 6,
+   "mm_in_pour": 4.5
+  },
+  "/USB Port 2/CE_N": {
+   "segments": 1,
+   "mm_in_pour": 4.1
+  },
+  "/USB Port 1/SW1": {
+   "segments": 9,
+   "mm_in_pour": 4.1
+  },
+  "Net-(U101-VCC)": {
+   "segments": 4,
+   "mm_in_pour": 3.9
+  },
+  "/USB Port 1/PPHV": {
+   "segments": 5,
+   "mm_in_pour": 3.5
+  },
+  "Net-(D101-K)": {
+   "segments": 4,
+   "mm_in_pour": 3.4
+  },
+  "/USB Port 2/SS_5V": {
+   "segments": 4,
+   "mm_in_pour": 3.1
+  },
+  "/USB Port 2/FSW": {
+   "segments": 9,
+   "mm_in_pour": 2.4
+  },
+  "/Cells and Gauge/CELL_1N": {
+   "segments": 4,
+   "mm_in_pour": 2.2
+  },
+  "/Cells and Gauge/DSG_G": {
+   "segments": 1,
+   "mm_in_pour": 2.1
+  },
+  "/USB Port 1/FSW": {
+   "segments": 10,
+   "mm_in_pour": 2.1
+  },
+  "/USB Port 1/CC2": {
+   "segments": 1,
+   "mm_in_pour": 1.8
+  },
+  "Net-(U503-ACOV)": {
+   "segments": 2,
+   "mm_in_pour": 1.6
+  },
+  "/USB Port 2/LDO_3V3": {
+   "segments": 2,
+   "mm_in_pour": 1.5
+  },
+  "Net-(U101-VC3)": {
+   "segments": 2,
+   "mm_in_pour": 1.5
+  },
+  "Net-(C313-Pad2)": {
+   "segments": 2,
+   "mm_in_pour": 1.3
+  },
+  "Net-(C110-Pad2)": {
+   "segments": 1,
+   "mm_in_pour": 1.1
+  },
+  "/USB Port 2/I2CC_SCL": {
+   "segments": 1,
+   "mm_in_pour": 0.5
+  },
+  "/USB Port 2/PPHV": {
+   "segments": 2,
+   "mm_in_pour": 0.5
+  },
+  "/MCU/RFIO": {
+   "segments": 2,
+   "mm_in_pour": 0.2
+  }
+ },
+ "cut_vias": {
+  "/USB Port 2/LODRV2": 3,
+  "/USB Port 2/CC1": 2,
+  "GND": 6,
+  "EN_5V2": 4,
+  "/Cells and Gauge/DSG_G": 5,
+  "/USB Port 1/PPHV": 3,
+  "Net-(U403-ACUV)": 2,
+  "/P1_LDO_3V3": 3,
+  "/USB Port 1/I2CC_SCL": 4,
+  "/Cells and Gauge/SRN": 2,
+  "/Cells and Gauge/CELL3": 3,
+  "/USB Port 2/LDO_3V3": 8,
+  "/USB Port 2/PPHV": 3,
+  "Net-(U503-ACUV)": 1,
+  "/USB Port 2/SS_5V": 2,
+  "/USB Port 2/SRP_F": 2,
+  "/Cells and Gauge/CELL1": 4,
+  "/USB Port 1/DRV_SUP": 6,
+  "/USB Port 1/REGN": 7,
+  "/USB Port 2/REGN": 6,
+  "/USB Port 2/TS": 4,
+  "IRQ_N": 4,
+  "/USB Port 1/ACN_F": 1,
+  "Net-(U504-FB)": 3,
+  "/USB Port 1/TS": 8,
+  "Net-(D101-K)": 2,
+  "/Cells and Gauge/CELL_4P": 4,
+  "/USB Port 2/I2CC_SCL": 6,
+  "Net-(U101-BAT)": 2,
+  "/USB Port 2/HG2": 2,
+  "/USB Port 2/SW2": 1,
+  "/USB Port 2/ACP_F": 2,
+  "Net-(U506-FB)": 2,
+  "/Cells and Gauge/TS3": 2,
+  "/USB Port 2/SBU_FLT": 3,
+  "Net-(C110-Pad2)": 1,
+  "/USB Port 1/BTST2": 3,
+  "/USB Port 1/SW2": 1,
+  "/USB Port 1/CC2": 1,
+  "/Cells and Gauge/CELL_1N": 12,
+  "Net-(U503-ICHG)": 2,
+  "/USB Port 1/BTST1": 2,
+  "/USB Port 1/SW1": 2,
+  "Net-(U101-VC1)": 3,
+  "/USB Port 1/ACP_F": 1,
+  "Net-(U101-SMBC)": 2,
+  "SCL": 11,
+  "/Cells and Gauge/BTP_INT": 4,
+  "SDA": 9,
+  "CHG_INH": 2,
+  "3V3_SLEEP": 1,
+  "/USB Port 2/BTST2": 2,
+  "/USB Port 2/CC2": 2,
+  "/Cells and Gauge/CHG": 3,
+  "/Cells and Gauge/CHG_G": 5,
+  "Net-(U403-ACOV)": 4,
+  "/USB Port 1/FSW": 3,
+  "/USB Port 1/HG1": 1,
+  "/USB Port 2/BTST1": 1,
+  "/USB Port 2/DRV_SUP": 6,
+  "/Cells and Gauge/DSG": 2,
+  "Net-(U503-FB)": 2,
+  "Net-(U403-ICHG)": 2,
+  "/USB Port 2/I2CC_SDA": 3,
+  "/USB Port 1/ILIM": 2,
+  "/USB Port 2/CHG_INT": 2,
+  "/USB Port 2/ACN_F": 2,
+  "/USB Port 2/CE_N": 4,
+  "/USB Port 2/ILIM": 2,
+  "Net-(U503-FBG)": 2,
+  "/USB Port 2/HIDRV1": 4,
+  "/USB Port 2/SW1": 1,
+  "Net-(U503-ACOV)": 4,
+  "/USB Port 2/FSW": 2,
+  "/USB Port 1/I2CC_SDA": 1,
+  "/Cells and Gauge/CELL2": 2,
+  "Net-(U403-FB)": 3,
+  "/USB Port 2/DRV9_OFF": 3,
+  "Net-(U101-SMBD)": 1,
+  "/USB Port 1/HG2": 1,
+  "/USB Port 2/HG1": 1,
+  "/USB Port 1/DRV9_OFF": 2,
+  "Net-(U101-PACK)": 2,
+  "/USB Port 1/SRP_F": 1,
+  "/MCU/SWDIO": 1,
+  "/MCU/SWCLK": 1,
+  "/MCU/RFIO": 1,
+  "Net-(C313-Pad2)": 1,
+  "Net-(U101-VC2)": 3,
+  "/USB Port 1/CE_N": 3,
+  "Net-(U101-VC3)": 2,
+  "/USB Port 1/LODRV1": 2,
+  "Net-(U403-FBG)": 2,
+  "/Cells and Gauge/TS2": 2,
+  "Net-(Q509-D)": 2,
+  "/Cells and Gauge/TS1": 1,
+  "/Cells and Gauge/TS4": 2,
+  "/Cells and Gauge/GAUGE_FUSE": 2,
+  "Net-(U101-VCC)": 2
+ },
+ "pieces_after": [
+  {
+   "area": 818.2,
+   "centroid": [
+    95.5,
+    98.8
+   ]
+  },
+  {
+   "area": 26.1,
+   "centroid": [
+    100.6,
+    77.7
+   ]
+  },
+  {
+   "area": 24.6,
+   "centroid": [
+    88.8,
+    126.7
+   ]
+  },
+  {
+   "area": 17.1,
+   "centroid": [
+    115.0,
+    114.8
+   ]
+  },
+  {
+   "area": 2.6,
+   "centroid": [
+    112.0,
+    117.9
+   ]
+  },
+  {
+   "area": 1.1,
+   "centroid": [
+    115.6,
+    118.4
+   ]
+  },
+  {
+   "area": 0.1,
+   "centroid": [
+    108.0,
+    122.0
+   ]
+  }
+ ]
+}

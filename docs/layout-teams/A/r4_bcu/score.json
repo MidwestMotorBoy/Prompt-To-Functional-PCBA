@@ -1,0 +1,18 @@
+{
+ "loss_W": 0.815,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 368,
+ "hot_loops": "7 of 7 pass, 6.27 nH",
+ "blocked_edges": "5 of 368",
+ "route": "PC route (r4_bcu-k1-a415dce2): 356 routed, 12 failed of 368 in 88.8 min (ref lead-Z 17 failed of 369); local route_local.sh run stopped by hand at 54 min (351 routed, 14 failing, phase 2) once the PC result arrived",
+ "routed": "356 of 368 (PC)"
+}

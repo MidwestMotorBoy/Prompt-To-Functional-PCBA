@@ -1,0 +1,148 @@
+{
+"C431": [
+113.7,
+98.8,
+180.0
+],
+"C434": [
+113.7,
+102.1,
+180.0
+],
+"C438": [
+120.31,
+94.9,
+90.0
+],
+"C531": [
+90.674,
+98.807,
+180.0
+],
+"C534": [
+90.674,
+102.107,
+180.0
+],
+"C538": [
+97.284,
+94.907,
+90.0
+],
+"D405": [
+119.45,
+111.3,
+0
+],
+"D410": [
+113.4,
+105.0,
+90
+],
+"D505": [
+95.7,
+108.65,
+90
+],
+"D510": [
+90.35,
+105.0,
+90
+],
+"Q402": [
+117.86,
+94.9,
+90.0
+],
+"Q502": [
+94.834,
+94.907,
+90.0
+],
+"R427": [
+117.86,
+105.0,
+-90.0
+],
+"R428": [
+115.75,
+104.2,
+180.0
+],
+"R429": [
+115.75,
+106.6,
+180.0
+],
+"R444": [
+110.5,
+103.65,
+90
+],
+"R445": [
+110.6,
+99.298,
+90.0
+],
+"R446": [
+119.55,
+103.65,
+90
+],
+"R447": [
+116.9,
+91.7,
+-90.0
+],
+"R527": [
+94.834,
+105.007,
+-90.0
+],
+"R528": [
+92.724,
+104.207,
+180.0
+],
+"R529": [
+92.724,
+106.607,
+180.0
+],
+"R544": [
+83.05,
+102.25,
+180
+],
+"R545": [
+87.574,
+99.305,
+90.0
+],
+"R546": [
+94.45,
+108.3,
+90
+],
+"R547": [
+93.874,
+91.707,
+-90.0
+],
+"R554": [
+92.95,
+105.1,
+180
+],
+"_rules": {
+"Q402": "output switch hung from the RIGHT side of the fixed inductor's pad 2: rot 90 puts the gate edge (SW pad exit between the gate pins) facing L401.2, so SW2 joins the inductor on F.Cu over ~1 mm; courtyard abuts L401's courtyard; D1 (BAT) column at the bottom, S2 (GND) at the top, cap edge toward the board edge",
+"C438": "HF output cap centred on Q402's cap edge (offset courtyard half 1.945 + cap half 0.505), pad 1 (BAT) over D1 (bottom), pad 2 (GND) over S2 (top)",
+"C431": "first BAT bulk: horizontal 1210 left of the BAT drop under Q402's D1 edge, BAT pad (1) on the right touching the drop, GND pad left with vias",
+"C434": "second BAT bulk: horizontal 1210 under C431, BAT pad on the right touching the drop, GND left with vias",
+"R447": "LG2 gate resistor straight above Q402's LG2 pin (top-left), LG2 pad toward the pin",
+"R427": "BAT sense resistor straight below Q402's D1 edge: BAT drops ~6 mm from D1 to its pad 1; pad 2 (PACK_P) next to J113",
+"R428": "Kelvin filter at R427 pad 1 (SRP), left of it",
+"R429": "Kelvin filter at R427 pad 2 (SRN), left of it",
+"R445": "LG1 gate resistor beside Q401 pin 8 (FET gap now open on the right), pad 2 level with the pin, LODRV1 pad down"
+}
+}

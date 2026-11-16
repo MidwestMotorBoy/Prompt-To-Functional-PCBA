@@ -1,0 +1,43 @@
+{
+"_why": "port-2 b1 cluster (pdfix a3 + ports b1) copied to port 1: +21.0 mm (U401 - U501); R433 (5 V FB top, PP5V->FB) and R425 (ACP filter, PPHV->ACP_F) swap places: R433 takes R425's slot 1 mm from the PP5V pour with PP5V pad west and FB pad 1.4 mm from U404.8; R425 takes R433's slot, PPHV pad north toward R424.1, ACP_F pad south beside R426's ACN_F pad; CHG_INT pull-up R404 straight in front of U401 pin 18 (1 mm stub), SBU_FLT pull-up R441 staggered south-east of it (v3b, SKILL 3.6)",
+"C408": [
+103.3,
+84.7,
+0
+],
+"U402": [
+105.4,
+86.5,
+90
+],
+"R402": [
+103.2,
+86.8,
+90
+],
+"R403": [
+102.3,
+86.8,
+90
+],
+"R404": [
+107.1,
+84.45,
+90
+],
+"R441": [
+108.1,
+85.5,
+90
+],
+"R433": [
+112.3,
+83.0,
+0
+],
+"R425": [
+112.0,
+84.5,
+270
+]
+}

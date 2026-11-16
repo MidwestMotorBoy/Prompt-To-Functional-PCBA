@@ -1,0 +1,18 @@
+{
+ "loss_W": 0.702,
+ "power_open": {
+  "/Cells and Gauge/CELL_P": [
+   "F102"
+  ],
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 366,
+ "blocked_edges": "4 of 366"
+}

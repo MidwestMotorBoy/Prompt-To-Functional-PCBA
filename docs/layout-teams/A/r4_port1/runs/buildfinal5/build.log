@@ -1,0 +1,27 @@
+[build] 1 dump template
+289 16 214
+[build] 2 groundup placer + v5 port scripts
+  placed 289/289, missing 0: 
+[build] 3 stage template on both ports (GAP/RING unset: the stage worker re-placed evicted parts with gap 0)
+  evict D404 from C423;   evict D410 from C423;   evict D504 from C523;   evict D510 from C523;   evict C410 from R447;   evict C510 from R547;   evict R416 from R429;   evict R516 from R529; 0 placement errors; 
+[build] 4 overrides from /home/claude/repo/docs/layout-teams/A/r4_port1/runs/buildfinal5/ov
+override 10_stagefix_s3.json: 3 refs changed R432 R433 C420
+override 20_pdfix_a3.json: 11 refs changed C504 C503 C508 U502 R502 R503 R504 R541 U505 R455 R555
+override 30_ports_b1.json: 6 refs changed C508 U502 R502 R503 R504 R541
+override 40_stagepwr_v1.json: 8 refs changed R416 D404 D405 D410 R516 D504 D505 D510
+override 51_50_r4_port1.json: 7 refs changed C408 U402 R403 R404 R441 R433 R425
+[build] 5 scorecard format
+245 parts differ from the template, of 289
+[build] 6 check
+  placed 289/289, missing 0: 
+CHECK clean
+[build] diff against /home/claude/repo/docs/layout-teams/A/final/deliver/best_placement_gu.json
+C408: [104.0, 84.7, 0] vs [103.3, 84.7, 0]  d=(-0.700,+0.000)
+R403: [104.1, 86.8, 90] vs [102.3, 86.8, 90]  d=(-1.800,+0.000)
+R404: [108.4, 85.4, 90] vs [107.5, 85.9, 90]  d=(-0.900,+0.500)
+R425: [112.3, 83.0, 0] vs [112.0, 84.5, 270]  d=(-0.300,+1.500)
+R433: [112.0, 84.5, 90] vs [112.3, 83.0, 0]  d=(+0.300,-1.500)
+R441: [108.4, 87.1, 90] vs [107.6, 84.25, 90]  d=(-0.800,-2.850)
+U402: [106.2, 86.6, 90] vs [105.4, 86.5, 90]  d=(-0.800,-0.100)
+7 differ of 289
+[build] placement done in 117 s: /home/claude/repo/docs/layout-teams/A/r4_port1/runs/buildfinal5/b/placement_gu.json, /home/claude/repo/docs/layout-teams/A/r4_port1/runs/buildfinal5/b/placement.json

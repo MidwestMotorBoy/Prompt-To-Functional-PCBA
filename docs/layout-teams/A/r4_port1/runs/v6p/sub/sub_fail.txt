@@ -1,0 +1,3 @@
+/USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 70 goals 133 seen 125 | blocked by routes that have been pulled too often
+/USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 123924 | blocked by routes that have been pulled too often
+SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 458 goals 61 seen -12000001 | no way even with every other route gone

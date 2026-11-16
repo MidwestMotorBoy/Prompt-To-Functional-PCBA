@@ -1,0 +1,9 @@
+# r5_merge best (m1 / m1h): merged placement r5_merge/placement.json (= final build + overrides/50_r4_port1.json + overrides/60_r4_bcu.json)
+# planner M = r5_merge/tools/plan_copper_m.py (r4_bcu B + r4_vbus V + r4_port1 Q on portcu P, + M rules gatevia_chk, capjoin)
+# env: source docs/layout-teams/A/r5_merge/tools/best_env_r5.sh   (PLANNER, BUS4, BUS4B, BEST_PLAN_R5, R5_PLACEMENT)
+# score: docs/layout-teams/A/r5_merge/tools/score_board_r5.sh <outdir> $R5_PLACEMENT --route=0 --plan="$BEST_PLAN_R5"
+PLANNER=/home/claude/repo/docs/layout-teams/A/r5_merge/tools/plan_copper_m.py
+BUS4=--mode=strip+copy --w=3 --box=96,100,122,140
+BUS4B=--net=GND --layer=B.Cu --mode=fill --prio=0 --soft=1
+STRAPS=(unset)
+PLAN=--sealed=1 --taps=1 --joinfix=1 --epstrip=1 --directjoin=1 --nogrow_dead=1 --gndesc=1 --connesc=1 --pinesc=1 --pinesc_refs=U501 --pinesc_near=1 --gndpair=1 --padpair=2 --padpair_live=1 --padjoin=4 --gatevia=1 --pinesc_refs=U401,U501 --gndtie=1 --tap_max=16 --ret_band=1.6 --pw_nogrow=1 --mirror_skip_supply=1 --stub_nogrow=1 --mirror_maxa=10 --gatevia_chk=1 --capjoin=1

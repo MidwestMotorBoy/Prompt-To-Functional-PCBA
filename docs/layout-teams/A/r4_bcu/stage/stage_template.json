@@ -1,0 +1,152 @@
+{
+ "anchor": "Q401",
+ "anchor_from": {
+  "ref": "L401",
+  "dx": -3.84,
+  "dy": 7.19,
+  "drot": 0,
+  "rule": "Q401 hangs from the fixed inductor: SW pad 9 under L401 pad 1, courtyard 1.05 mm below L401's; port 2 uses L501 the same way (a pure -23.026 mm translation)."
+ },
+ "ports": {
+  "Port 1": {},
+  "Port 2": {
+   "map": [
+    "^([A-Z]+)4(\\d\\d)$",
+    "\\g<1>5\\2"
+   ]
+  }
+ },
+ "parts": {
+  "Q401": {
+   "dx": 0,
+   "dy": 0,
+   "drot": 0,
+   "rule": "anchor. Rot 0 in its own frame: gate pins 1/8 face L401 (+y up = -y), D1 column (pads 2,3,4 + big pad 2) on the -x side toward the AC caps, S2 (5,6,7) on +x toward the FET gap. SW pad 9 sits under L401 pad 1 so SW1 runs straight up on F.Cu (anchor_from L401: dx -3.84, dy +7.19 = courtyard 1.05 mm under L401's, SW pad 9 inside L401.1's x span)."
+  },
+  "Q402": {
+   "dx": 9.889,
+   "dy": -4.898,
+   "drot": 90,
+   "rule": "r4_bcu: output switch hung from the RIGHT side of the fixed inductor's pad 2: rot 90 puts the gate edge (SW pad exit between the gate pins) facing L401.2, so SW2 joins the inductor on F.Cu over ~1 mm; courtyard abuts L401's courtyard; D1 (BAT) column at the bottom, S2 (GND) at the top, cap edge toward the board edge"
+  },
+  "C430": {
+   "dx": 0,
+   "dy": 2.45,
+   "drot": 0,
+   "rule": "HF input cap (first cap of HL_IN): centred on Q401 at the pins-4/5 edge, offset = switch courtyard half (1.945) + cap courtyard half (0.505) = 2.45; pad 1 (AC) under the D1 side, pad 2 (GND) under the SW/S2 side, so supply and return pours each join in one piece around the SW pad end."
+  },
+  "C438": {
+   "dx": 12.339,
+   "dy": -4.898,
+   "drot": 90,
+   "rule": "r4_bcu: HF output cap centred on Q402's cap edge (offset courtyard half 1.945 + cap half 0.505), pad 1 (BAT) over D1 (bottom), pad 2 (GND) over S2 (top)"
+  },
+  "C420": {
+   "dx": -3.9,
+   "dy": -0.7,
+   "drot": 90,
+   "rule": "first AC bulk: vertical 1210 in the AC column against Q401's D1 side (courtyards abut), pad 1 (AC) at the bottom level with D1 pads 3/4, pad 2 (GND) at the top gets its own return vias. Column x is the leftmost the port-2 copy allows (port-2 courtyard >= 79.4)."
+  },
+  "C423": {
+   "dx": -1.37,
+   "dy": 4.6,
+   "drot": 180,
+   "rule": "second AC bulk: horizontal under C430 and Q401's D1 corner, pad 1 (AC) on the right touching C430.1's pour, pad 2 (GND) left with vias."
+  },
+  "C424": {
+   "dx": -3.01,
+   "dy": -6.26,
+   "drot": 180,
+   "rule": "non-loop AC bulk: groundup column slot above C420 (AC pad facing the stage)."
+  },
+  "C427": {
+   "dx": -3.01,
+   "dy": -9.54,
+   "drot": 180,
+   "rule": "non-loop AC bulk: groundup column slot above C424."
+  },
+  "C431": {
+   "dx": 6.029,
+   "dy": -1.003,
+   "drot": 180,
+   "rule": "r4_bcu: first BAT bulk: horizontal 1210 left of the BAT drop under Q402's D1 edge (courtyard abuts Q402's), BAT pad (1) on the right touching the drop, GND pad left with return vias"
+  },
+  "C434": {
+   "dx": 6.029,
+   "dy": 2.292,
+   "drot": 180,
+   "rule": "r4_bcu: second BAT bulk: horizontal 1210 under C431, BAT pad on the right touching the drop, GND pad left with return vias"
+  },
+  "TH401": {
+   "dx": 1.53,
+   "dy": 3.5,
+   "drot": 90,
+   "rule": "FET-temperature NTC: under Q401's S2 corner (+1.53, +3.5), GND pad up into the HL_IN return pour, TS pad down toward U403; out of the loop and off the S2 via sites."
+  },
+  "R446": {
+   "dx": 6.299,
+   "dy": 7.402,
+   "drot": 90,
+   "rule": "r4_bcu: HG2 gate resistor beside U403's HIDRV2 pin (HIDRV2 pad down); HG2 reaches Q402's gate through the gate escape via"
+  },
+  "R447": {
+   "dx": 8.929,
+   "dy": -8.098,
+   "drot": -90,
+   "rule": "r4_bcu: LG2 gate resistor straight above Q402's LG2 pin (top-left), LG2 pad toward the pin"
+  },
+  "R445": {
+   "dx": 2.915,
+   "dy": -0.5,
+   "drot": 90,
+   "rule": "LG1 gate resistor inside the FET gap (+2.915, -0.5): pad 2 level with Q401 pin 8 (LG1, top-right), pad 1 (LODRV1) leaves down the gap. Its pads also stop SW2 from wrapping round Q402 through the gap."
+  },
+  "R427": {
+   "dx": 9.889,
+   "dy": 5.202,
+   "drot": -90,
+   "rule": "r4_bcu: BAT sense resistor straight below Q402's D1 edge: BAT drops ~6 mm from D1 to its pad 1 (top); pad 2 (PACK_P) next to J113"
+  },
+  "R428": {
+   "dx": 7.729,
+   "dy": 4.402,
+   "drot": 180,
+   "rule": "r4_bcu: Kelvin filter at R427 pad 1 (SRP), left of it"
+  },
+  "R429": {
+   "dx": 7.729,
+   "dy": 6.802,
+   "drot": 180,
+   "rule": "r4_bcu: Kelvin filter at R427 pad 2 (SRN), left of it"
+  },
+  "D405": {
+   "dx": 5.429,
+   "dy": 5.202,
+   "drot": 90,
+   "rule": "r4_bcu: BTST2/DRV_SUP diode under C434 between C411 (DRV_SUP) and the BTST2 cap C413"
+  },
+  "D410": {
+   "dx": 7.469,
+   "dy": 5.602,
+   "drot": 0,
+   "rule": "r4_bcu: DRV_SUP/REGN diode between the two Kelvin filters, DRV_SUP pad toward C411/D405"
+  }
+ },
+ "keep": [
+  [
+   2.4,
+   -1.5,
+   3.4,
+   3.0
+  ],
+  [
+   8.328999999999994,
+   -2.647999999999996,
+   11.229,
+   2.872
+  ]
+ ],
+ "keep_rule": "keep boxes (switch frame) are no-go areas for re-placed neighbours: the FET gap lane for LODRV1/GND. r4_bcu: second box = the BAT drop from Q402 (hung right of L401.2) down to R427 pad 1.",
+ "frame": "dx, dy in mm in the anchor switch's frame (fpdb rotv, KiCad y down); drot added to the anchor's absolute rotation. Port 2 = refs 4xx->5xx anchored on Q501 (from L501).",
+ "r4_bcu_note": "Q402 rot 90 hung from the RIGHT side of L401 pad 2 (gate edge = SW exit faces the inductor pad): SW2 joins L401.2 on F.Cu over ~1 mm instead of a B.Cu via blob. Port-2 extra: R554 moved to (98.55, 94.15, 180) (abs, see overrides/60_r4_bcu.json)."
+}

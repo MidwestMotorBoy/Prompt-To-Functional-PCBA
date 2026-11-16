@@ -1,0 +1,17 @@
+  evict D404 from C423
+  auto D404 -> (119.4, 111.3, 0) cost 24.82
+  evict D410 from C423
+  auto D410 -> (119.0, 112.75, 180) cost 15.28
+  evict D504 from C523
+  auto D504 -> (82.75, 107.5, 90) cost 7.21
+  evict D510 from C523
+  auto D510 -> (81.3, 108.1, 270) cost 9.44
+  evict C410 from R447
+  auto C410 -> (110.15, 105.55, 90) cost 3.81
+  evict C510 from R547
+  auto C510 -> (87.1, 105.55, 90) cost 3.84
+  evict R416 from R429
+  auto R416 -> (106.0, 107.0, 270) cost 7.19
+  evict R516 from R529
+  auto R516 -> (83.05, 102.25, 180) cost 5.23
+0 placement errors
