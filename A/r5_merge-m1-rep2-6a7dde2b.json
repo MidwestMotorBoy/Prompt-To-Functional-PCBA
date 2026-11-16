@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_merge-m1-rep2.kicad_pcb",
+ "sha": "6a7dde2bcda0ed715acb36e370c61f9086bf90ba",
+ "routed": 351,
+ "failed": 13,
+ "edges": 364,
+ "minutes": 95.7,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /P1_LDO_3V3",
+  "FAILKEY /USB Port 1/REGN",
+  "FAILKEY /USB Port 1/REGN",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
