@@ -1,0 +1,28 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 149
+phase 1: 20 open connections tried again with every route free to move
+phase 2: 10 open connections tried again with every route free to move
+phase 3: 11 open connections tried again with every route free to move
+routes pulled and re-laid: 692
+fan-out stubs unused (removed) 62, trimmed 18
+unconnected after fill: 22
+routed 355 edges, 9 failed, items added 5460
+  FAILED /USB Port 1/HIDRV1 109.09,108.84 (Pad 27  of U403 ) -> 111.19,103.21 (Pad 1  of R444 ) starts 64 goals 133 seen 124 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/LODRV1 87.06,108.84 (Pad 25  of U503 ) -> 87.86,99.81 (Pad 1  of R545 ) starts 82 goals 136 seen 100 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SDA 106.15,85.20 (Pad 5  of U402 ) -> 106.30,82.92 (Pad 16  of U401 ) starts 177 goals 43 seen 54 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 191 goals 47 seen 152273 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 57 goals 47 seen 119 | no way even with every other route gone
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 21 goals 62 seen 27 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 332 seen 621 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 57 seen 292 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_P 99.98,127.60 (Pad 1  of C110 ) -> 95.11,128.80 (Pad 1  of R118 ) starts 109 goals 125 seen 57441 | no way even with every other route gone
+FAILKEY /USB Port 1/HIDRV1
+FAILKEY /USB Port 2/LODRV1
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY Net-(U101-SMBC)
+FAILKEY SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /Cells and Gauge/CELL_P
