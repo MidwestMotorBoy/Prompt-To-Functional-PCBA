@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead5-S-rep.kicad_pcb",
+ "sha": "9b16c31640442d55b280c2d09e0726663a22f094",
+ "routed": 356,
+ "failed": 8,
+ "edges": 364,
+ "minutes": 95.3,
+ "status": "done",
+ "tail": [
+  "FAILKEY Net-(U101-SMBC)",
+  "FAILKEY SCL",
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /P1_LDO_3V3"
+ ]
+}
