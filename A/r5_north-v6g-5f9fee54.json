@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_north-v6g.kicad_pcb",
+ "sha": "5f9fee5440d05806cfd62ebaaea506860a623047",
+ "routed": 362,
+ "failed": 6,
+ "edges": 368,
+ "minutes": 93.6,
+ "status": "done",
+ "tail": [
+  "FAILKEY SCL",
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /USB Port 1/PP5V",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}

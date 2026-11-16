@@ -1,0 +1,22 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 368 (0 on long nets)
+fan-out stubs: 145
+phase 1: 12 open connections tried again with every route free to move
+phase 2: 9 open connections tried again with every route free to move
+phase 3: 6 open connections tried again with every route free to move
+routes pulled and re-laid: 383
+fan-out stubs unused (removed) 56, trimmed 22
+unconnected after fill: 26
+routed 362 edges, 6 failed, items added 4499
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 53 seen 19 | blocked by routes that have been pulled too often
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 376 seen 619 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 316 goals 72 seen 1240274 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 139 seen 319 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 112.00,85.01 (Pad 1  of R433 ) -> 112.00,85.01 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 82 goals 0 seen 211 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 298 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 1/CC1
+FAILKEY SCL
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/PP5V
+FAILKEY /Cells and Gauge/CELL3
