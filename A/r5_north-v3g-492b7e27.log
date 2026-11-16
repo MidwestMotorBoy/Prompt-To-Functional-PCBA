@@ -1,0 +1,30 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 368 (0 on long nets)
+fan-out stubs: 145
+phase 1: 14 open connections tried again with every route free to move
+phase 2: 11 open connections tried again with every route free to move
+phase 3: 11 open connections tried again with every route free to move
+routes pulled and re-laid: 335
+fan-out stubs unused (removed) 62, trimmed 17
+unconnected after fill: 33
+routed 358 edges, 10 failed, items added 4402
+  FAILED /USB Port 1/CC1 106.70,79.08 (Pad 28  of U401 ) -> 103.90,74.70 (Pad 12  of U405 ) starts 19 goals 53 seen 19 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-SMBD) 98.80,122.00 (Pad 18  of U101 ) -> 106.78,122.85 (Pad 1  of R116 ) starts 12 goals 62 seen 20 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 486 seen 619 | no way even with every other route gone
+  FAILED /Cells and Gauge/TS4 97.10,122.90 (Pad 13  of U101 ) -> 115.50,112.99 (Pad 1  of TH104) starts 46 goals 128 seen 177 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 316 goals 72 seen 1469145 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 108.40,85.08 (Pad 2  of R404 ) starts 72 goals 139 seen 257 | no way even with every other route gone
+  FAILED IRQ_N 89.80,119.59 (Pad 3  of Q103 ) -> 117.72,125.83 (Pad 21  of U301 ) starts 1215 goals 369 seen 624534 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 112.00,85.01 (Pad 1  of R433 ) -> 112.00,85.01 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 81 goals 0 seen 181 | no way even with every other route gone
+  FAILED /USB Port 1/BTST2 113.29,107.73 (Pad 1  of C413 ) -> 113.40,105.70 (Pad 1  of D405 ) starts 187 goals 164 seen 438 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2667 goals 257 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 1/CC1
+FAILKEY Net-(U101-SMBD)
+FAILKEY SCL
+FAILKEY /Cells and Gauge/TS4
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY IRQ_N
+FAILKEY /USB Port 1/PP5V
+FAILKEY /USB Port 1/BTST2
+FAILKEY /Cells and Gauge/CELL3
