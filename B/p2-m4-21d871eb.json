@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2-m4.kicad_pcb",
+ "sha": "21d871ebdb8e1e31a99421396d13c62aca19295f",
+ "routed": 333,
+ "failed": 9,
+ "edges": 342,
+ "minutes": 78.9,
+ "status": "done",
+ "tail": [
+  "FAILKEY /Cells and Gauge/TS3",
+  "FAILKEY /Cells and Gauge/CHG",
+  "FAILKEY /Cells and Gauge/TS1",
+  "FAILKEY SDA",
+  "FAILKEY 3V3@Pad 2 [3V3] of R417 on F.Cu"
+ ]
+}

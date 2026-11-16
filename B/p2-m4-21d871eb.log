@@ -1,0 +1,28 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 342 (0 on long nets)
+fan-out stubs: 115
+phase 1: 7 open connections tried again with every route free to move
+phase 2: 1 open connections tried again with every route free to move
+phase 3: 2 open connections tried again with every route free to move
+routes pulled and re-laid: 466
+fan-out stubs unused (removed) 47, trimmed 15
+unconnected after fill: 18
+routed 333 edges, 9 failed, items added 4110
+  FAILED /Cells and Gauge/CELL_1N 101.50,126.90 (Pad 33  of U101 ) -> 100.10,128.80 (Pad 9  of U101 ) starts 1160 goals 56 seen 209 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-SMBD) 103.28,130.60 (Pad 1  of R116 ) -> 103.40,127.90 (Pad 18  of U101 ) starts 58 goals 2 seen 114 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/CELL_1N 97.75,132.13 (Pad 2  of C104 ) -> 100.10,128.80 (Pad 9  of U101 ) starts 113 goals 56 seen 209 | no way even with every other route gone
+  FAILED /MCU/NRST 117.96,116.13 (Pad 3  of J301 ) -> 110.92,116.50 (Pad 2  of R302 ) starts 189 goals 61 seen 1463 | no way even with every other route gone
+  FAILED /Cells and Gauge/TS3 101.30,128.80 (Pad 12  of U101 ) -> 103.63,136.14 (PTH pad 1  of J119) starts 46 goals 2586 seen 54 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/CHG 100.50,125.00 (Pad 31  of U101 ) -> 103.89,114.85 (Pad 1  of R109 ) starts 48 goals 126 seen 384578 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 100.50,128.80 (Pad 10  of U101 ) starts 126 goals 6 seen 904046 | no way even with every other route gone
+  FAILED SDA 103.60,82.22 (Pad 8  of U401 ) -> 110.00,118.02 (Pad 2  of R305 ) starts 42 goals 159 seen 4473 | no way even with every other route gone
+  FAILED 3V3 113.55,112.57 (Pad 2  of R417 ) -> 113.55,112.57 (Zone planeZone plan) starts 62 goals 0 seen 2067 | no way even with every other route gone
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY Net-(U101-SMBD)
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY /MCU/NRST
+FAILKEY /Cells and Gauge/TS3
+FAILKEY /Cells and Gauge/CHG
+FAILKEY /Cells and Gauge/TS1
+FAILKEY SDA
+FAILKEY 3V3@Pad 2 [3V3] of R417 on F.Cu
