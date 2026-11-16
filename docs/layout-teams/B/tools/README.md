@@ -642,3 +642,31 @@ carries little (`runs/p2r4_en/flow_e0.png`).
 (handroute2 + dc_score, 40 s): on the kept board the EN_5V1 cost (38 mW) was NOT the In2 stretch y 98 to 113 but its
 south end (y 113 to 121, west along y 113.02 and down x 110.07 through the sheet's south-east tip, where the
 current is densest: 26 mW alone, `runs/p2r4_en/h2c`); the 40 mm north-south In2 run cost the other 12 mW.
+
+## Phase 2 round 4: the lead's merge (both hand files in one, the one command on the final board)
+
+**The one command for the board in `best_routed/`** is unchanged (about 7 min, background job, cwd = team folder):
+`bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb`.
+Run as `runs/p2-m7v`: `finished.kicad_pcb` comes out byte for byte equal to the kept board (the pass has nothing to
+lay, the dangling-end step removes 0), `final.json` equal to `runs/p2-m7/final.json`.
+
+**How the board of round 4 was made from the board of round 3** (`runs/p2-m6/finished.kicad_pcb`):
+```
+python3 tools/handroute2.py runs/p2-m6/finished.kicad_pcb runs/p2-m7hand/hand.kicad_pcb runs/p2-m7hand/hand_m7.json \
+    --cu=runs/p2-m6/routed/cu.json --keep=runs/p2-m6/cu.kicad_pcb "--soft=/USB Port 2/PPHV"        # 19 s, 0 faults, DRC 0
+bash tools/rebuild_m6.sh runs/p2-m7 --src=runs/p2a-r5src --board=runs/p2-m7hand/hand.kicad_pcb     # 7 min, the check
+```
+- `runs/p2-m7hand/hand_m7.json` = `runs/p2r4_b/hand3.json` (Port 2 crossover) + `runs/p2r4_en/hand_en.json` (EN_5V1) in one
+  file: `"lift"` of one, `"remove"` of the other, the tracks and vias of both. Two hand files for one board can be
+  joined like this when their copper does not meet (here x 82 to 96 against x 109.7 and east); the exact check then
+  also tests the new items of both against each other.
+- **One hand tool: `handroute2.py`**, which now also takes `--soft=<net>[,<net>]` (what `handroute_soft.py` added to
+  `handroute.py`). `handroute.py` and `handroute_soft.py` stay for the hand files of earlier rounds, but
+  `handroute.py` cannot remove In2 / In3 copper on this board and fails in the KiCad 10 image once it writes tracks.
+- Give every new via `"rmun": true` (the router's pad options). The two Port 2 vias were plain in `hand3.json` and are
+  `rmun` in `hand_m7.json`. Loss merged 1.1675 W: the two gains add up (1.1990 before, EN_5V1 alone 1.1686,
+  crossover alone 1.1979), so the pad option of these two vias made no measurable difference here.
+- The first check run after a hand file may still clean the board (here the dangling-end step removed a GND F.Cu stub
+  and a Port 1 CC1 via that the round 3 board carried). Keep `finished.kicad_pcb` of that run, not the handroute
+  output, and run the one command once more on the kept board to see that it comes back unchanged.
+

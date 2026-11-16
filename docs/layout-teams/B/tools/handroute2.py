@@ -1,4 +1,4 @@
-"""handroute2.py <board in.kicad_pcb> <board out.kicad_pcb> <tracks.json> [--cu=<cu.json of board in>] [--no-drc] [--check]
+"""handroute2.py <board in.kicad_pcb> <board out.kicad_pcb> <tracks.json> [--cu=<cu.json of board in>] [--no-drc] [--check] [--soft=<net>,...]
              [--keep=<board before routing>]
 Lays the last few connections of a routed board by explicit coordinates (team B, phase 2 finishing pass), so that an
 agent can route them by looking at zoom pictures (tools/zoom.py on a dir holding the board as cu.kicad_pcb + cu.json).
@@ -34,6 +34,8 @@ handroute2.py (team B, phase 2 round 4, EN_5V1 worker): a copy of handroute.py w
   5. Every new or removed item's python wrapper is kept alive (list KEEP): in the KiCad 10 image a new track whose
      wrapper was collected (the loop variable reassigned) left a freed item in the board, and b.Zones() before the
      refill crashed (segmentation fault, nothing written). handroute.py has the same fault for files with tracks.
+  6. --soft=<net>[,<net>...] (lead, round 4 merge): as handroute_soft.py, the filled copper of the named nets may be
+     crossed like GND / PACK_P / 3V3; hot-loop pours stay closed. One tool for every hand file.
 Hand files for handroute.py work unchanged."""
 import sys, os, json, subprocess, tempfile, shutil, math
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +44,9 @@ import pinlib
 A = [a for a in sys.argv[1:] if not a.startswith("--")]
 O = dict(a[2:].split("=", 1) if "=" in a else (a[2:], "1") for a in sys.argv[1:] if a.startswith("--"))
 if len(A) < 3: print(__doc__); sys.exit(2)
+if O.get("soft"):                    # --soft=<net>[,<net>]: quiet pours that are NOT hot-loop pours may be crossed (as handroute_soft.py)
+    pinlib.SOFTNETS = tuple(pinlib.SOFTNETS) + tuple(n for n in O["soft"].split(",") if n)
+    print("handroute2: pours of %s may be crossed (the refill carves round), hot-loop pours stay closed" % (O["soft"],))
 bin_, bout, js = [os.path.abspath(x) for x in A[:3]]
 J = json.load(open(js))
 K = "kicad/kicad:10.0"

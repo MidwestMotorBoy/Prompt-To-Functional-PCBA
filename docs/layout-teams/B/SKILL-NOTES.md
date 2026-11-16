@@ -17,7 +17,7 @@ agent on a 4-core box. Read `tools/README.md` for the call form of every tool.
 ## Phase 2: from the placement to a routed, finished board
 
 ### Step 0: the one command
-For the kept board (after round 3) see "After round 3 (lead)" at the end: `tools/rebuild_m6.sh ... --board=...`. For a new
+For the kept board see "After round 3 (lead)" and "After round 4 (lead)" at the end: `tools/rebuild_m6.sh ... --board=...`. For a new
 route from the placement:
 `bash tools/rebuild_best.sh runs/<new> --src=runs/p2a-r5src` runs steps 1 to 6 below (4 h limit, or its two printed
 commands as two background jobs of 2 h each). Do the steps by hand when something changes.
@@ -108,3 +108,31 @@ renders: `python3 tools/zoom.py <run>/routed <out.png> 78,62.4,122,137.6 <layer>
 - Traps: vias written by a script need the router's pad options (`SetRemoveUnconnected(True)`,
   `SetKeepStartEnd(True)`) or every plane loses copper; dropping only the vias of a layer change leaves an open that
   the router cannot see; `--longptol` applies to every long open edge.
+
+### After round 4 (lead): the last items by hand copper, and when to stop
+The board of round 3 met every number gate but had three signal vias in a hot-loop pour and one signal (EN_5V1) that
+cost 38 mW. Both were closed by hand files on the kept board, not by a route or a pass:
+1. **Name the item and its cost first.** Hot-pour items: `hot_tracks.py <plan board> <cu.json> <board>`. Loss of one
+   signal: a hand file with only `"lift": [net]`, `handroute2.py`, then `dc_score.py` (40 s): the difference is what
+   that net costs. Do the same with parts of the net left in to find which part costs (on this board 26 of 38 mW were
+   the last 10 mm, not the 40 mm run).
+2. **Look at the current, not the sheet.** `sheet_flow.py` draws where the power net's current runs on the layer. A
+   signal may cross a sheet where little current flows; the expensive place is where the current is squeezed (here
+   the south edge of the In2 PACK_P sheet into J113 / R427).
+3. **Lay it again**: by hand coordinates when the room is plain to see in `zoom4.py` (the Port 2 corner: find which
+   pours are hot, put the layer change in a quiet DC pour with `--soft`, use the free inner layer), or with
+   `lane_search.py` when the path is long (EN_5V1: 100 s for a 14 x 57 mm box, cost per mm inside power pours).
+4. **Apply with `handroute2.py`** (`--keep=<plan board>` closes the hot-loop pours, `--soft=` opens a named quiet
+   pour, new vias with `"rmun": true`), several hand files joined into one when their copper does not meet.
+5. **Check with the one command** on the handroute output, keep `finished.kicad_pcb` of that run as the board, look at
+   the four layer pictures and a `zoom4.py` picture of each changed spot, then run the one command once more on the
+   kept board: it must come back unchanged (`cmp`), with the same `final.json`.
+6. **When to stop.** What is left of the loss is named, not hidden: routed against before routing is PACK_P +125 mW
+   and GND +32 mW on this board (`dc.json` against `routed/dc.json` of one run, per net). EN_5V1 still costs 7 mW
+   because every way to U301.12 passes the sheet's south edge. A next step would be the same method on the next
+   dearest In2 signal (step 1 for each net that crosses the sheet), not a new route: two routes of one plan differ by
+   more than these last steps gain.
+- Traps: `handroute.py` on a board with user layer names removes no inner-layer item. Run `git commit` as a command
+  of its own: a commit chained with other commands or with the push was refused by the session's permission check
+  three times in this round, a plain one went through each time. No model names in the message (charter).
+

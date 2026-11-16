@@ -1,0 +1,8 @@
+[rebuild] 10:45:21 source run runs/p2a-r5src kept
+[rebuild] 10:45:21 2. plan and screen: bash tools/final_route.sh runs/p2a-r5src runs/p2-m7 --straps=... --filters=... --route=0 --no-hot
+[rebuild] 10:49:32 4. bash tools/final_route.sh runs/p2a-r5src runs/p2-m7 (same straps and filters) --route=80 --resume  --post="finish.sh --modes=aor --min=30 --tol=0.06 --long=30 --longx=--longptol=0.05 --aorx=--prtol=1.0"
+FINAL route no new route (board given) (timed out: False); unconnected 0; DRC 0; power open none; loose none; loss 1.167 W; PACK_P mohm {'J113': 2.14, 'R427': 2.21, 'R527': 1.64}; hot-pour items {'tracks': 0, 'vias': 0, 'nets': []}; hot loops 7 of 7, 5.56 nH
+
+real	6m48.683s
+user	3m52.809s
+sys	0m35.132s

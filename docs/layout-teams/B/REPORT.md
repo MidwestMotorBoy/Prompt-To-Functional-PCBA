@@ -146,3 +146,51 @@ Still open after the lead's merge:
 - Three signal vias in the Port 2 input GND return pour (I2CC_SCL 83.925,90.2745 / 84.275,92.5245, SDA
   83.275,90.8245). Ringing unchanged (Port 2 HL_IN 0.80 nH before and after routing).
 - EN_5V1's 54 mm on In2 across the J113 / R427 feed: 38 mW, J113 2.08 to 2.38 mohm.
+
+### Round 4: the last hot-pour vias and EN_5V1 by hand copper (`runs/p2-m7` = `best_routed/`), phase 2 closed
+
+| Run | What | Unconnected | DRC routed | Loss routed | J113 / R427 mohm | Hot loops routed | Hot-pour items |
+|---|---|---|---|---|---|---|---|
+| `runs/p2-m6` (round 3) | kept board before the round | 0 | 0 | 1.199 W | 2.38 / 2.44 | 7 of 7, 5.56 nH | 0 tracks, 3 vias |
+| `runs/p2r4b-1` (worker B) | Port 2 SDA / I2CC_SCL crossover laid again (`runs/p2r4_b/hand3.json`) | 0 | 0 | 1.198 W | 2.38 / 2.44 | 7 of 7, 5.56 nH | **0, 0** |
+| `runs/p2r4a-1` (worker A) | EN_5V1 laid again (`runs/p2r4_en/hand_en.json`) | 0 | 0 | 1.169 W | 2.14 / 2.21 | 7 of 7, 5.56 nH | 0 tracks, 3 vias |
+| **`runs/p2-m7`** (lead) | both in one hand file (`runs/p2-m7hand/hand_m7.json`) | **0** | **0** | **1.167 W** | **2.14 / 2.21** | **7 of 7, 5.56 nH** | **0, 0** |
+| `runs/p2-m7v` (lead) | the one command on the kept board | 0 | 0 | 1.167 W | 2.14 / 2.21 | 7 of 7, 5.56 nH | 0, 0 |
+
+No route was run in this round and nothing timed out; each check run is the one command (about 7 to 10 min). The
+routed copper is still the local route of plan p2-m4 in `runs/p2-m4` (341 of 342, about 40 min, not timed out).
+
+What worked:
+- **Measuring parts of one net** (worker A): EN_5V1 lifted is 1.161 W; with only its old south end back, 1.187 W. So
+  26 of its 38 mW were the last 10 mm through the south-east tip of the In2 PACK_P sheet, where the current into
+  J113 / R427 is densest (`runs/p2r4_en/flow_e0.png`, `tools/sheet_flow.py`), and not the 40 mm north-south run.
+- **A search that knows the pours** (`tools/lane_search.py`): EN_5V1 now runs F.Cu, B.Cu, In3 down the east edge and
+  only its tail on In2 along the sheet's south edge: 1.169 W, J113 2.38 to 2.14 mohm.
+- **Finding which pours are hot before moving a via** (worker B): in the Port 2 corner only GND and AC_SNS_N on F.Cu
+  are hot-loop pours; the two new layer changes sit in the PPHV pour (DC, not a hot loop), SDA uses the empty In3
+  room inside the IRQ_N corner, I2CC_SCL runs straight south with no hop. Three vias in the hot GND pour to none.
+- **Joining the two hand files** and applying them with one tool (`handroute2.py --soft`): 0 faults, DRC 0.
+
+What did not work, or is left:
+- `handroute.py` on this board: no In2 / In3 item removed (user layer names), writer broken in KiCad 10. Both workers
+  found it and each made a fixed copy; the lead kept `handroute2.py` and gave it `--soft`.
+- EN_5V1 still costs 7 mW (1.1686 against 1.1612 W): every path to U301.12 east of x 108.2 passes the sheet's south
+  edge on In2 (worker A's named barrier, `runs/p2r4_en/h12_east.png`).
+- Routed against before routing (1.012 W on `runs/p2-m7`): PACK_P +125 mW (signal tracks and via holes in the In2
+  sheet), GND +32 mW, every other net under 1 mW. Not a gate (limit 1.25 W); the method of this round on the next
+  dearest In2 signal is the way to go further.
+
+**Gates on `runs/p2-m7/final.json` (copy in `best_routed/`), all met:**
+1. Unconnected items 0.
+2. `power_open` empty, `loose` empty, no unconnected power item; PACK_P, 3V3 and GND one piece each (`runs/p2-m7/post.log`).
+3. DRC 0 on the routed board and 0 on the copper board (screen 0 of 341 blocked).
+4. Hot loops 7 of 7 tier 1.
+5. Ringing 5.56 nH against 5.54 before routing (limit +0.05); largest rise 0.01 (Port 1 and Port 2 HL_OUT 0.74 to 0.75).
+6. Loss 1.167 W (limit 1.25; 1.012 before routing on this plan, 1.125 on r4 at the end of phase 1); J113 2.14 and
+   R427 2.21 mohm (limit 3.0).
+7. Renders of F, B, In2 and In3 looked at (`best_routed/routed_*.png`; zooms `runs/p2-m7/look/corner_p2.png`,
+   `en_tail.png`): power stages compact, trunk one strip on B.Cu, PACK_P sheet and 3V3 bus one piece each, no signal
+   track and no signal via in a hot-loop pour (`hot_tracks.py`: 0 / 0).
+8. One command: `bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb`
+   (`runs/p2-m7v`: the board comes back byte for byte, the same `final.json`).
+

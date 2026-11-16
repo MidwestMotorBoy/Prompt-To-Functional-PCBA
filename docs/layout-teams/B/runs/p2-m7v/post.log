@@ -1,0 +1,13 @@
+[finish] 10:57:18 1. DRC of the routed board and of the plan
+[finish] 10:57:25 routed: unconnected 0 {} ; DRC errors 0 {}
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+    PACK_P: 1 pieces
+    3V3: 1 pieces
+    GND: 1 pieces
+[finish] 10:57:30 4. dangling ends of r0
+    removed 0
+[finish] 10:57:46 cleaned: unconnected 0 {} ; DRC errors 0 {}
+[finish] 10:57:46 5. power guard
+[finish] 10:58:21 c: guard ok: 0 new tracks, 0 new vias; loss 1.1675 -> 1.1675 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 0 {} ; DRC errors 0 {} ; loss 1.1675 W, power open 0
+finish: finished (c) unconnected 0 {} ; DRC errors 0 {} ; loss 1.1675 W, power open 0

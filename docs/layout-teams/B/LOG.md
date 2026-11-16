@@ -1927,3 +1927,66 @@ final_screen.json, post.log, routed/*.json, fin/r1.log, look/*.png), `runs/p2r4a
 Boards local only: `runs/p2r4_en/hand_en.kicad_pcb`, `runs/p2r4a-1/finished.kicad_pcb`.
 **Commit**: the session's permission check refused `git commit` (and the push); the files above are staged in the
 working tree (118 files, 3.9 MB; the per-experiment `runs/p2r4_en/h*.drc.json` are left unstaged) for the lead.
+
+## 2026-11-16 11:00 UTC, lead: phase 2 round 4 merge (runs/p2-m7 = best_routed/: every gate met), phase 2 closed
+
+**State at the start.** Worker B's Port 2 file was pushed (e3b63dd). Worker A's EN_5V1 work was staged but not
+committed (its commit had been refused); the lead committed it unchanged as 24115ca.
+
+**What the lead did.**
+1. **One hand tool.** The two workers each fixed `handroute.py` in a copy (`handroute_soft.py`, `handroute2.py`).
+   `handroute2.py` has the larger set of fixes; it now also takes `--soft=<net>[,<net>]`, the one thing
+   `handroute_soft.py` had more.
+2. **Both hand files in one**: `runs/p2-m7hand/hand_m7.json` = `runs/p2r4_b/hand3.json` (its two new vias now with
+   `"rmun"`) + `runs/p2r4_en/hand_en.json`. The two do not meet (x 82 to 96 against x 109.7 and east).
+   `python3 tools/handroute2.py runs/p2-m6/finished.kicad_pcb runs/p2-m7hand/hand.kicad_pcb runs/p2-m7hand/hand_m7.json
+   --cu=runs/p2-m6/routed/cu.json --keep=runs/p2-m6/cu.kicad_pcb "--soft=/USB Port 2/PPHV"`: 60 tracks and 5 vias
+   removed, 48 segments and 6 vias checked, 0 faults, KiCad DRC 0, unconnected 0 (19 s).
+3. **Check** `bash tools/rebuild_m6.sh runs/p2-m7 --src=runs/p2a-r5src --board=runs/p2-m7hand/hand.kicad_pcb` (6.8 min,
+   no new route, not timed out): the pass had nothing to lay; its dangling-end step removed 2 items (the GND F.Cu stub
+   and the Port 1 CC1 via that both workers' check runs also removed). `runs/p2-m7/finished.kicad_pcb` is the kept board.
+4. **The one command on the kept board**: `bash tools/rebuild_m6.sh runs/p2-m7v --src=runs/p2a-r5src
+   --board=best_routed/monolith_routed.kicad_pcb` (6.9 min, not timed out): dangling ends removed 0,
+   `finished.kicad_pcb` byte for byte equal to the kept board, `final.json` routed part and hot loops equal to `runs/p2-m7`.
+5. **Renders looked at** (`runs/p2-m7/look/routed_{F,B,In2,In3}.Cu.png`, copies in `best_routed/`; zooms
+   `corner_p2.png`, `en_tail.png`): power stages compact, trunk one strip on B.Cu; the In2 PACK_P sheet is one piece
+   and the old EN_5V1 cut at x 113 to 114 is gone (EN_5V1 on In2 only along the south edge, y 112 to 113, east of
+   x 111); the 3V3 bus on In3 is one piece, EN_5V1 on In3 a single strip along the east edge; in the Port 2 corner the
+   C523 / C520 GND pour holds no signal via, the two new layer changes sit north of it in the PPHV pour.
+
+| final.json | `runs/p2-m6` (round 3) | `runs/p2r4b-1` (worker B) | `runs/p2r4a-1` (worker A) | **`runs/p2-m7`** (merged, kept) | `runs/p2-m7v` (one command) |
+|---|---|---|---|---|---|
+| unconnected / routed DRC / copper DRC | 0 / 0 / 0 | 0 / 0 / 0 | 0 / 0 / 0 | **0 / 0 / 0** | 0 / 0 / 0 |
+| blocked edges before routing | 0 of 341 | 0 of 341 | 0 of 341 | **0 of 341** | 0 of 341 |
+| power_open / loose / unconnected power | none | none | none | **none / none / none** | none |
+| PACK_P / 3V3 / GND pieces | 1 / 1 / 1 | 1 / 1 / 1 | 1 / 1 / 1 | **1 / 1 / 1** | 1 / 1 / 1 |
+| loss routed (before routing 1.012 W) | 1.199 W | 1.198 W | 1.169 W | **1.167 W** (1.1675) | 1.167 W |
+| PACK_P J113 / R427 / R527 mohm | 2.38 / 2.44 / 1.65 | 2.38 / 2.44 / 1.65 | 2.14 / 2.21 / 1.64 | **2.14 / 2.21 / 1.64** | 2.14 / 2.21 / 1.64 |
+| hot loops | 7 of 7, 5.56 nH | 7 of 7, 5.56 nH | 7 of 7, 5.56 nH | **7 of 7, 5.56 nH** (1.02, 0.70, 0.78, 0.75, 0.76, 0.80, 0.75) | the same |
+| hot-pour items | 0 tracks, 3 vias | 0, 0 | 0 tracks, 3 vias | **0 tracks, 0 vias** | 0, 0 |
+
+Routes: none in this round. The routed copper is the local route of plan p2-m4 in `runs/p2-m4` (341 of 342, about
+40 min, not timed out) with the passes and hand files of rounds 3 and 4. Nothing was queued on Logan's PC.
+
+**Against the definition of done (`runs/p2-m7/final.json`, copy in `best_routed/`): all eight met.**
+1. Unconnected 0. 2. Power paths joined, nothing loose, PACK_P sheet and 3V3 bus one piece each. 3. DRC 0 routed, 0
+copper board. 4. Hot loops 7 of 7 tier 1. 5. Ringing 5.56 against 5.54 nH (limit +0.05), largest rise 0.01 (Port 1
+and Port 2 HL_OUT 0.74 to 0.75; limit 0.02). 6. Loss 1.167 W (limit 1.25), J113 2.14 and R427 2.21 mohm (limit
+3.0). 7. Renders looked at; no sprawl, no signal track or via in a hot-loop pour. 8. One command (above), REPORT.md
+and SKILL-NOTES.md with the round 4 part, everything committed and pushed.
+
+**What is left of the loss, named** (`runs/p2-m7/dc.json` against `runs/p2-m7/routed/dc.json`): routed 1.1675 W against
+1.0115 W before routing: PACK_P +125 mW (0.197 to 0.323 W: signal tracks and via holes in the In2 sheet), GND
++32 mW, every other net under 1 mW. EN_5V1 itself still costs 7 mW (worker A's barrier at the sheet's south edge).
+Not measured: which other In2 signals cost how much. The method for it is in SKILL-NOTES.md ("After round 4").
+
+**done = true.** No next tasks.
+
+**Kept.** `best_routed/` = `runs/p2-m7` (board, .kicad_pro, .kicad_dru, final.json, summary.json, four pictures).
+`best_placement.json` unchanged (r5).
+
+Files: `tools/handroute2.py` (`--soft`), `tools/README.md` (section "the lead's merge" of round 4), `REPORT.md`,
+`SKILL-NOTES.md`, `best_routed/*`, `runs/p2-m7hand/` (hand_m7.json, hand.log), `runs/p2-m7/` (final.json,
+final_screen.json, post.log, dc.json, routed/*.json, look/*.png), `runs/p2-m7.out`, `.screen.log`, `.resume.log`,
+`runs/p2-m7v/` (final.json, final_screen.json, post.log), `runs/p2-m7v.out`, `.screen.log`, `.resume.log`. Boards local
+only: `runs/p2-m7hand/hand.kicad_pcb`, `runs/p2-m7/finished.kicad_pcb` (= `best_routed/monolith_routed.kicad_pcb`).

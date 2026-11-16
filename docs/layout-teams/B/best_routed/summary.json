@@ -1,5 +1,5 @@
 {
- "board": "monolith_routed.kicad_pcb (= runs/p2-m6/finished.kicad_pcb)",
+ "board": "monolith_routed.kicad_pcb (= runs/p2-m7/finished.kicad_pcb)",
  "date": "2026-11-16",
  "placement": "best_placement.json = candidates/r5.json (unchanged; source run runs/p2a-r5src, 7 of 7 hot loops 5.54 nH before routing)",
  "plan": "p2-m6 (tools/rebuild_m6.sh): plan p2-m4 (plan/p2-pins-u403b.json before the trunk) with plan/p2-pins-r8.json = r6 + the Net-(U404-FB) path with the HL_5V pour corner trimmed. Screen runs/p2-m6nvs: 0 of 341 blocked, copper board DRC 0, 1.012 W before routing",
@@ -7,44 +7,50 @@
   "1. local full route of plan p2-m4: runs/p2-m4, 341 of 342 routed, 1 failed (EN_5V1), about 40 min, not timed out (round 2)",
   "2. worker B's passes on that routed board: runs/p2b-r3fin (aor 25.6 min, aork 8.1 min dropped, loss 24.0 min, hand tracks runs/p2b-r3hand/hand.json) and runs/p2b-r3en (aork 0.8 min, loss 18.4 min): 1 unconnected (EN_5V1), 1.161 W; no pass timed out",
   "3. tools/transplant.py: that board's routed copper onto the plan board of p2-m6 (plan/p2-m6-drop.json leaves the routed Net-(U404-FB) track behind): DRC 0, 2 unconnected (Net-(U404-FB) R434.1 to R433.2, EN_5V1), 1.161 W",
-  "4. tools/final_route.sh --resume --post=\"finish.sh --modes=aor --min=30 --tol=0.06 --long=30 --longx=--longptol=0.05 --aorx=--prtol=1.0\" (runs/p2-m6/cmd.sh): accept-or-revert pass 3 min, not timed out: Net-(U404-FB) and EN_5V1 laid (EN_5V1 +38 mW in the pass's power check, allowed by --longptol), two hot-via lifts refused"
+  "4. tools/final_route.sh --resume --post=\"finish.sh --modes=aor --min=30 --tol=0.06 --long=30 --longx=--longptol=0.05 --aorx=--prtol=1.0\" (runs/p2-m6/cmd.sh): accept-or-revert pass 3 min, not timed out: Net-(U404-FB) and EN_5V1 laid (EN_5V1 +38 mW in the pass's power check, allowed by --longptol), two hot-via lifts refused",
+  "5. round 4 hand copper on that board (runs/p2-m6/finished.kicad_pcb), both workers' files in one: python3 tools/handroute2.py runs/p2-m6/finished.kicad_pcb runs/p2-m7hand/hand.kicad_pcb runs/p2-m7hand/hand_m7.json --cu=runs/p2-m6/routed/cu.json --keep=runs/p2-m6/cu.kicad_pcb \"--soft=/USB Port 2/PPHV\" (exact check 0 faults, KiCad DRC 0, unconnected 0, 19 s). hand_m7.json = runs/p2r4_b/hand3.json (Port 2 SDA / I2CC_SCL crossover moved out of the hot GND pour: 33 items removed, 10 segments and 2 vias added) + runs/p2r4_en/hand_en.json (EN_5V1 lifted and laid again: F.Cu, B.Cu, In3 down the east edge, In2 along the south edge of the PACK_P sheet; 4 vias)",
+  "6. bash tools/rebuild_m6.sh runs/p2-m7 --src=runs/p2a-r5src --board=runs/p2-m7hand/hand.kicad_pcb (6.8 min, not timed out): screen 0 of 341 blocked, copper DRC 0; the pass had nothing to lay; its dangling-end step removed 2 items (a GND F.Cu stub at 113.55..114.25,70.5745 and a Port 1 CC1 via at 104.15,74.75); finished.kicad_pcb = this board"
  ],
- "rebuild": "cd docs/layout-teams/B && bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb   (plan + screen, this board as routed.kicad_pcb, final_route.sh --resume with the finishing pass and the seven hot loops: about 15 min; run as runs/p2-m6v). From worker B's board: --transplant=runs/p2b-r3en instead of --board (needs that run's local boards).",
+ "rebuild": "cd docs/layout-teams/B && bash tools/rebuild_m6.sh runs/<new> --src=runs/p2a-r5src --board=best_routed/monolith_routed.kicad_pcb   (plan p2-m6 + screen, this board as routed.kicad_pcb, final_route.sh --resume with the same straps and filters, the finishing pass and the seven hot loops: about 7 min; run as runs/p2-m7v)",
  "route": {
   "routed": 341,
   "failed": 1,
   "edges": 342,
   "timed_out": false,
-  "note": "the route whose copper this is: plan p2-m4, runs/p2-m4 (local, about 40 min). No route of plan p2-m6 itself was run; its screen has 341 edges, 0 blocked"
+  "note": "the route whose copper this is: plan p2-m4, runs/p2-m4 (local, about 40 min, not timed out). No new route in rounds 3 and 4; the screen of plan p2-m6 has 341 edges, 0 blocked"
  },
  "blocked_edges_before_routing": "0 of 341",
  "copper_board_drc_errors": 0,
  "loss_W": {
   "before_routing": 1.012,
-  "routed": 1.199,
+  "routed": 1.167,
+  "routed_4_digits": 1.1675,
   "limit": 1.25,
-  "note": "1.161 W before EN_5V1 was laid; EN_5V1 runs 54 mm north-south on In2 at x 113 to 114 and costs 38 mW"
+  "note": "1.199 W on runs/p2-m6; EN_5V1 off the J113 / R427 feed took 30 mW, the Port 2 crossover 1 mW. Routed against before routing: PACK_P +125 mW (0.197 to 0.323 W: signal tracks and via holes in the In2 sheet), GND +32 mW, every other net under 1 mW (runs/p2-m7/dc.json, runs/p2-m7/routed/dc.json)"
  },
  "pack_p_mohm_routed": {
-  "J113": 2.38,
-  "R427": 2.44,
-  "R527": 1.65
+  "J113": 2.14,
+  "R427": 2.21,
+  "R527": 1.64
  },
  "pack_p_mohm_limit": 3.0,
  "power_open_routed": {},
  "loose_routed": [],
  "unconnected_power_routed": [],
+ "power_pieces_routed": {
+  "PACK_P": 1,
+  "3V3": 1,
+  "GND": 1,
+  "source": "runs/p2-m7/post.log"
+ },
  "drc_errors_routed": 0,
  "unconnected_items_routed": 0,
  "unconnected_nets": [],
  "hot_pour_items": {
   "tracks": 0,
-  "vias": 3,
-  "nets": [
-   "/USB Port 2/I2CC_SCL",
-   "SDA"
-  ],
-  "detail": "three crossover vias in the Port 2 input GND return pour on F.Cu: /USB Port 2/I2CC_SCL 83.925,90.2745 and 84.275,92.5245, SDA 83.275,90.8245; no track"
+  "vias": 0,
+  "nets": [],
+  "detail": "none: no signal track and no signal via in a hot-loop pour (runs/p2-m7/routed/hot_tracks.json)"
  },
  "hot_loops_routed": {
   "pass_count": "7 of 7",
@@ -125,9 +131,9 @@
   "2_power_paths": true,
   "3_drc_0": true,
   "4_hot_7_of_7": true,
-  "5_ringing": "5.56 nH against 5.54; largest rise 0.01 nH",
-  "6_loss": "1.199 W (limit 1.25); J113 2.38, R427 2.44 mohm (limit 3.0)",
-  "7_renders": "looked at; no sprawl, no signal track in a hot-loop pour, three signal vias left in one (above)",
+  "5_ringing": "5.56 nH against 5.54; largest rise 0.01 nH (Port 1 and Port 2 HL_OUT 0.74 to 0.75)",
+  "6_loss": "1.167 W (limit 1.25); J113 2.14, R427 2.21 mohm (limit 3.0)",
+  "7_renders": "looked at (F, B, In2, In3, the Port 2 corner and the EN_5V1 tail: runs/p2-m7/look/); no sprawl, no signal track and no signal via in a hot-loop pour",
   "8_documents": "REPORT.md, SKILL-NOTES.md, LOG.md, tools/README.md"
  }
 }
