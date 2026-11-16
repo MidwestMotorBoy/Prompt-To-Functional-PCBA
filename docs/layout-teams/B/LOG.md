@@ -1475,7 +1475,7 @@ Files: `runs/p2b-full2aor/` (final.json, post.log, fin/r1.log, fin/r2.log), `run
 fin/*.hot.log), `runs/p2b-hand/hand.json` and pictures, `runs/p2b-aor1/` (development runs a1..a5, logs).
 Boards local only: `runs/p2b-m1fin/finished.kicad_pcb`, `runs/p2b-full2aor/finished.kicad_pcb`.
 
-## 2026-11-16 04:15 UTC, lead: phase 2 round 2 merge (runs/p2-m4 = best_routed/, placement r5), next two tasks
+## 2026-11-16 04:05 UTC, lead: phase 2 round 2 merge (runs/p2-m4 = best_routed/, placement r5), next two tasks
 
 **State at the start.** Worker B's pass was committed (683cb33). Worker A had committed its plan (1f39468: placement
 r5, `plan/p2-pins-r5.json`, `plan/p2-pins-u403.json`, queue `p2a-r5f` / `p2a-r5fw4`) but wrote no log entry; its local
