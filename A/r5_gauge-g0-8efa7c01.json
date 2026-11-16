@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r5_gauge-g0.kicad_pcb",
+ "sha": "8efa7c01b222c274354ccbbd1d5dd04a1cae4231",
+ "routed": 350,
+ "failed": 14,
+ "edges": 364,
+ "minutes": 150.0,
+ "status": "timed out at 150 min",
+ "tail": [
+  "edges to route: 364 (0 on long nets)",
+  "fan-out stubs: 148",
+  "phase 1: 22 open connections tried again with every route free to move",
+  "phase 2: 18 open connections tried again with every route free to move",
+  "phase 3: 20 open connections tried again with every route free to move"
+ ]
+}
