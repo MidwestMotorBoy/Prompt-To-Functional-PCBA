@@ -1,0 +1,34 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 150
+phase 1: 19 open connections tried again with every route free to move
+phase 2: 13 open connections tried again with every route free to move
+phase 3: 11 open connections tried again with every route free to move
+routes pulled and re-laid: 425
+fan-out stubs unused (removed) 64, trimmed 23
+unconnected after fill: 32
+routed 352 edges, 12 failed, items added 3814
+  FAILED /USB Port 2/BTST1 86.56,108.84 (Pad 26  of U503 ) -> 87.04,107.00 (Pad 1  of C512 ) starts 84 goals 120 seen 128 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/I2CC_SCL 84.65,85.20 (Pad 6  of U502 ) -> 85.70,82.92 (Pad 17  of U501 ) starts 72 goals 41 seen 124041 | pulled 1
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 62 goals 45 seen 119473 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/REGN 110.15,106.03 (Pad 1  of C410 ) -> 110.59,108.84 (Pad 24  of U403 ) starts 128 goals 72 seen 92 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/BTST1 81.97,108.20 (Pad 1  of D504 ) -> 86.56,108.84 (Pad 26  of U503 ) starts 152 goals 83 seen 93489 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 107.59,120.60 (Pad 1  of R415 ) -> 110.59,108.84 (Pad 24  of U403 ) starts 125 goals 72 seen 92 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 682 seen 624 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 62 seen 281 | no way even with every other route gone
+  FAILED EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 175 goals 263 seen -12000001 | pulled 1
+  FAILED EN_5V2 111.57,123.08 (Pad 13  of U301 ) -> 94.64,86.85 (Pad 2  of U504 ) starts 263 goals 135 seen -12000001 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL1 86.10,69.48 (PTH pad 1  of J109) -> 89.99,121.20 (Pad 1  of R101 ) starts 2658 goals 985 seen -12000001 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2667 goals 868 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 2/BTST1
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/REGN
+FAILKEY /USB Port 2/BTST1
+FAILKEY /USB Port 1/REGN
+FAILKEY SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY EN_5V1
+FAILKEY EN_5V2
+FAILKEY /Cells and Gauge/CELL1
+FAILKEY /Cells and Gauge/CELL3
