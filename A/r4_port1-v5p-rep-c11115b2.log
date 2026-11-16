@@ -1,0 +1,30 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 148
+phase 1: 21 open connections tried again with every route free to move
+phase 2: 12 open connections tried again with every route free to move
+phase 3: 15 open connections tried again with every route free to move
+routes pulled and re-laid: 868
+fan-out stubs unused (removed) 60, trimmed 25
+unconnected after fill: 32
+routed 354 edges, 10 failed, items added 6688
+  FAILED /USB Port 1/BTST1 109.59,108.84 (Pad 26  of U403 ) -> 110.07,107.00 (Pad 1  of C412 ) starts 70 goals 106 seen 81 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_1N 96.90,121.00 (Pad 33  of U101 ) -> 98.30,122.90 (Pad 16  of U101 ) starts 1039 goals 65 seen 187 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 264 goals 47 seen 119983 | pulled 1
+  FAILED /USB Port 2/REGN 87.10,106.03 (Pad 1  of C510 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 97 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/BTST1 105.00,108.20 (Pad 1  of D404 ) -> 109.59,108.84 (Pad 26  of U403 ) starts 164 goals 70 seen 81 | no way even with every other route gone
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 24 goals 62 seen 32 | blocked by routes that have been pulled too often
+  FAILED /USB Port 2/REGN 84.56,120.60 (Pad 1  of R515 ) -> 87.56,108.84 (Pad 24  of U503 ) starts 128 goals 81 seen 425819 | no way even with every other route gone
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 378 seen 621 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 105.82,102.35 (Pad 2  of R454 ) -> 110.15,106.03 (Pad 1  of C410 ) starts 14 goals 171 seen 102 | no way even with every other route gone
+  FAILED /USB Port 2/HG1 83.31,98.83 (Pad 1  of Q501 ) -> 88.16,102.19 (Pad 2  of R544 ) starts 303 goals 130 seen 85514 | no way even with every other route gone
+FAILKEY /USB Port 1/BTST1
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 2/REGN
+FAILKEY /USB Port 1/BTST1
+FAILKEY Net-(U101-SMBC)
+FAILKEY /USB Port 2/REGN
+FAILKEY SCL
+FAILKEY /USB Port 1/REGN
+FAILKEY /USB Port 2/HG1
