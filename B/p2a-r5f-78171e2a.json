@@ -1,0 +1,17 @@
+{
+ "team": "B",
+ "board": "docs/layout-teams/B/route_queue/p2a-r5f.kicad_pcb",
+ "sha": "78171e2ad1d93b2107900383074de3c193f93692",
+ "routed": 347,
+ "failed": 7,
+ "edges": 354,
+ "minutes": 53.5,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/SBU_FLT",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /USB Port 1/I2CC_SDA"
+ ]
+}

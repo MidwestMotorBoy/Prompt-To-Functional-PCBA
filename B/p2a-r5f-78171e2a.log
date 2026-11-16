@@ -1,0 +1,24 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 354 (0 on long nets)
+fan-out stubs: 121
+phase 1: 16 open connections tried again with every route free to move
+phase 2: 12 open connections tried again with every route free to move
+phase 3: 9 open connections tried again with every route free to move
+routes pulled and re-laid: 295
+fan-out stubs unused (removed) 48, trimmed 17
+unconnected after fill: 18
+routed 347 edges, 7 failed, items added 3601
+  FAILED /USB Port 1/SBU_FLT 103.15,73.15 (Pad 9  of U405 ) -> 101.60,72.42 (Pad 2  of R441 ) starts 21 goals 62 seen 24 | ghost path found no blocker
+  FAILED /USB Port 1/SW2 114.30,106.25 (Pad 18  of U403 ) -> 115.00,103.40 (Pad 2  of C413 ) starts 72 goals 226 seen 578 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SCL 102.88,85.14 (Pad 6  of U402 ) -> 107.36,84.53 (Pad 2  of R403 ) starts 73 goals 117 seen 96 | pulled 2
+  FAILED /USB Port 1/SBU_FLT 108.00,82.22 (Pad 19  of U401 ) -> 103.15,73.15 (Pad 9  of U405 ) starts 33 goals 21 seen 24 | pulled 2
+  FAILED /USB Port 1/I2CC_SCL 109.15,110.40 (Pad 1  of U403 ) -> 107.36,84.53 (Pad 2  of R403 ) starts 84 goals 117 seen 627 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 110.15,110.40 (Pad 3  of U403 ) -> 108.20,84.53 (Pad 2  of R404 ) starts 74 goals 176 seen 517 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 109.65,110.40 (Pad 2  of U403 ) -> 106.52,84.53 (Pad 2  of R402 ) starts 74 goals 160 seen 501 | no way even with every other route gone
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/SW2
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/SBU_FLT
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /USB Port 1/I2CC_SDA
