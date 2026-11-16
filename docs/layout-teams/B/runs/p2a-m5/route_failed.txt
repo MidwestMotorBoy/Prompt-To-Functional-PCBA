@@ -1,0 +1,6 @@
+edges to route: 341 (0 on long nets)
+unconnected after fill: 9
+routed 338 edges, 3 failed, items added 4586
+FAILED /USB Port 2/I2CC_SCL 82.00,83.15 (Pad 6  of U502 ) -> 91.72,85.90 (Pad 2  of R503 ) starts 72 goals 407 seen 123 | pulled 8
+FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 100.50,128.80 (Pad 10  of U101 ) starts 128 goals 6 seen 947273 | no way even with every other route gone
+FAILED SCL 110.90,118.02 (Pad 2  of R304 ) -> 104.00,82.22 (Pad 9  of U401 ) starts 214 goals 110 seen 123852 | no way even with every other route gone

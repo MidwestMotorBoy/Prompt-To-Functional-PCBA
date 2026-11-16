@@ -1570,3 +1570,78 @@ lead's merge"), `route_queue/p2-m4.*`, `runs/p2-m4plan/strings.sh` and pictures,
 routed/*.json, fin/r1.aor.log, fin/r2.aor.log, look/*.png), `runs/p2-m3/` (the same set), `runs/p2a-r5f/`,
 `runs/p2a-r5src/`, `runs/p2a-s2/`, `runs/p2a-s2w4/` (worker A's numbers), `runs/p2-look3/*.png`. Boards local only:
 `runs/p2-m4/routed.kicad_pcb`, `finished.kicad_pcb`, `runs/p2-m3/finished.kicad_pcb`.
+
+## 2026-11-16 06:20 UTC, worker A (phase 2 round 3): plan p2-m5, route runs/p2a-m5
+
+**Plan** (`tools/rebuild_m5.sh`, tables `plan/p2-pins-u403c.json` and `plan/p2-pins-r7.json`, copies of round 2's;
+README section "Phase 2 round 3: plan p2-m5"). Copper before routing for:
+1. Port 1 SRN_F / SRP_F: SRN_F via of R429.2 at 116.35,105.95 in the pre-trunk table (the trunk covered the spot;
+   trunk still 11.9 squares), SRP_F path R428.2 west along y 105.3, south at x 115.65 into C417.1.
+2. Net-(C313-Pad2): path C314.1 to C313.2 at y 118.545 (window 118.538 to 118.552 for a 0.15 mm track).
+3. Port 2 LDO_3V3: path R504.1 to R541.1 with a via at 93.95,85.05.
+4. EN_5V1 / EN_5V2: waypoint islands (via + 0.4 mm In2 stub; a lone via is not a ratsnest end, tested in
+   `runs/p2r3_viatest`) at 101.0,95.5 (EN_5V1) and 99.0,84.0 / 99.2,100.8 (EN_5V2): ratsnest edges 27 / 28.6 mm and
+   20.8 / 16.8 / 25.5 mm instead of 53 and 60 mm.
+5. Net-(U404-FB): path pin 8 to R434.1 with `cut_hot` GND, 0.18 mm2 of the HL_5V pour corner east of C444.2 (Port 1
+   HL_5V solved again on the copper board: 0.501 nH, C446 0.306 / C444 0.741, the same as `runs/p2-m4s`).
+   Hot-pour vias: `ruleareas.py --hot --hot_mode=vias` as the last filter (14 no-via areas, 70.5 mm2, over the hot GND
+   F.Cu return pours) instead of single via escapes: the I2CC_SCL / SDA vias of p2-m4 were crossover hops, not pin escapes.
+
+| Run | What | Blocked | Copper DRC | Loss before routing |
+|---|---|---|---|---|
+| `runs/p2r3_s1` | items 1, 2 | 0 of 340 | 0 | 1.012 W |
+| `runs/p2r3_s2` | all five (= plan p2-m5, queued as `p2a-m5`) | 0 of 341 | 0 | 1.013 W |
+| `runs/p2r3_s3nv` | p2-m5 without the hot no-via areas (`--no-hotvia`, queued as `p2a-m5nv`) | 0 of 341 | 0 | 1.013 W |
+
+**Route `runs/p2a-m5`** (two steps of `rebuild_m5.sh`, `--step=2` then `--step=3`; the finishing step ran from a
+detached worktree of commit 53b0405 so that it used the committed `finish.sh` / `router_b.py`, not worker B's
+uncommitted edits; its first try had no container pylib in the worktree and the pass wrote no board, kept as
+`runs/p2a-m5.resume-nopylib.log`; the second try is the result):
+
+| | p2-m4 (before) | p2a-m5 routed (stub trim) | p2a-m5 finished |
+|---|---|---|---|
+| route | 341 of 342, 1 failed | **338 of 341, 3 failed, about 55 min, not timed out** | - |
+| unconnected (KiCad) | 4 | 9 | **6** |
+| DRC | 0 | 0 (3 before the trim) | **0** |
+| power_open, loose | none, none | none, none | **none, none** |
+| unconnected_power | none | 3 | **1** (PACK_P R112.2 In2 piece) |
+| loss | 1.250 W | 1.252 W | **1.252 W** (PACK_P 0.395 W) |
+| J113 / R427 / R527 mohm | 2.61 / 2.68 / 2.20 | 2.57 / 2.64 / 2.24 | **2.57 / 2.64 / 2.24** |
+| hot loops | 7 of 7, 5.56 nH | 7 of 7, 5.56 nH | **7 of 7, 5.56 nH** (HL_OUT 0.75 / 0.75, others as before routing) |
+| hot-pour items | 1 track, 3 vias | 0, 0 | **0 tracks, 0 vias** |
+
+Logan's PC: `p2a-m5` (blob 6f5da505) **340 of 341, 1 failed (Port 2 SW1 C512.2 to its own pour, "goals 0"), 46.8 min,
+done**. `p2-m4` came back too: 333 of 342, 9 failed (U101 cells area, CHG, TS1, TS3, SDA, NRST, R417.2 3V3), 78.9 min.
+`p2a-m5nv` queued with this entry.
+
+Pass (`finish.sh --modes=aor,aork --min=20 --tol=0.01`): pass 1 6 min, 15 tasks, 3 accepted (3V3 R314.1, a PACK_P
+piece, Port 2 AC_SNS_N), 9 -> 6; pass 2 4 min, 6 tasks, none accepted, dropped. Nothing timed out.
+
+**The four target connections are closed on the routed board** (SRP_F, Port 2 LDO_3V3, EN_5V1, Net-(C313-Pad2)), and
+the hot-pour items are 0 / 0. **Left (6), each with its cause from the pass log (`fin/r1.log`):**
+- PACK_P: R112.2 on an In2 piece (92.9,120.3) near Q102: the pull "PACK_P to U504 8.69 mohm (start 8.41)" was refused
+  by the power check, the second try blocked by Kelvin copper (U102-V2).
+- Net-(U403-ACUV) R409.2 to its track at 108.5,108.75 (2.6 mm): the only way found cost loss (0.7461 against 0.7420 W),
+  refused.
+- Port 1 TS, U403 pin 8 escape (112.65,110.4) to TH401.1 (13 mm): "no way even with every rip-able route gone".
+- Port 2 I2CC_SCL, U502.6 to R503.2 (10 mm): failed in the route; pass: blocked by Kelvin copper (D511-A), then SCL failed.
+- SCL, R304.2 to U401.9 (27 mm): failed in the route and the pass, "no way even with every rip-able route gone".
+- TS1, TH101.1 to U101.10 (22.5 mm): failed in the route (also on the PC route of p2-m4), pass: Kelvin copper / CELL_1N.
+The PC route of the same copper board made all of these but SW1, so at least Port 1 TS, I2CC_SCL, SCL and TS1 are
+route variance, not closed by the plan; the no-via areas (new this round) may have narrowed the I2CC_SCL and TS ways:
+`p2a-m5nv` gives the count without them.
+
+**DONE gates of the task:** screen 0 blocked, DRC 0: met. Finished board: unconnected 6 (limit 2) NOT met; hot-pour
+items 0 tracks / 0 vias: met; DRC 0: met; power open none: met (one PACK_P piece on KiCad's list); loss 1.252 W
+(limit 1.26): met; 7 of 7 hot loops 5.56 nH (within 0.05 of 5.54): met.
+
+**Renders** (`runs/p2a-m5/look/routed_*.png`, looked at): power stages compact, trunk one strip on B.Cu, no sprawl, no
+signal in a hot pour. EN_5V1 (121 mm, 10 vias) and EN_5V2 (122 mm, 18 vias) wander across B.Cu, In2 and In3: the
+waypoints made them routable, not direct; a hard inner-layer path would be tidier but closes lanes.
+
+Files: `plan/p2-pins-u403c.json`, `plan/p2-pins-r7.json`, `tools/rebuild_m5.sh`, `tools/README.md` (new section),
+`route_queue/p2a-m5.*`, `route_queue/p2a-m5nv.*`, `runs/p2a-m5/` (final.json, final_after_route.json, final_nopass.json,
+score.json, dc.json, ghost.log, route_failed.txt, post.log, routed/*.json and logs, fin/r1.log, fin/r2.log, look/*.png),
+`runs/p2a-m5.*.out`, `runs/p2a-m5.route.log`, `runs/p2a-m5.resume.log`, `runs/p2r3_s1/`, `runs/p2r3_s2/`,
+`runs/p2r3_s3nv/` (final.json, ghost.log, score.json), `runs/p2r3_work/*.png`, `runs/p2r3_viatest/addvia.py`.
+Boards local only: `runs/p2a-m5/routed.kicad_pcb`, `runs/p2a-m5/finished.kicad_pcb`, `runs/p2r3_s2/cu.kicad_pcb`.

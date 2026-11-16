@@ -1,9 +1,10 @@
 #!/bin/bash
-# rebuild_m5.sh <out dir> [--src=<source run dir>] [--route=MIN] [--fin=MIN] [--no-hot] [--chain=<spec out>] [--screen] [--step=2|3]
+# rebuild_m5.sh <out dir> [--src=<source run dir>] [--route=MIN] [--fin=MIN] [--no-hot] [--chain=<spec out>] [--screen] [--step=2|3] [--no-hotvia]
 #   Plan p2-m5 (phase 2 round 3, worker A): rebuild_best.sh with plan/p2-pins-u403c.json and plan/p2-pins-r7.json
 #   (copper before routing for the Port 1 SRP_F / SRN_F pair, Net-(C313-Pad2), Port 2 LDO_3V3, EN_5V1 / EN_5V2 long
 #   runs and the hot-pour nets). --chain=<spec out>: only the plan (tools/spec_chain.sh, about 1 min, no KiCad);
 #   --screen: final_route.sh --route=0 --no-hot (blocked edges, copper DRC, loss) into <out dir>, then stop.
+#   --no-hotvia: without the last filter (ruleareas.py --hot --hot_mode=vias), for comparison.
 #   --step=2 runs only the route step, --step=3 only the finishing step (two background jobs of 2 h each).
 #   ONE command from the placement to the routed, finished and scored board of team B (phase 2).
 #   1. the source run: tools/screen.sh <src> best_placement.json --hot=all (skipped when <src> already holds
@@ -20,8 +21,8 @@
 set -o pipefail
 TOOLS=$(cd "$(dirname "$0")" && pwd); TEAM=$(dirname "$TOOLS")
 [ $# -ge 1 ] || { sed -n 2,18p "$0"; exit 2; }
-OUT=$1; shift; SRC=""; RMIN=80; FMIN=20; HOT=""; CHAIN=""; SCREEN=""; STEP=""
-for a in "$@"; do case $a in --src=*) SRC=${a#*=};; --route=*) RMIN=${a#*=};; --fin=*) FMIN=${a#*=};; --no-hot) HOT="--no-hot";; --chain=*) CHAIN=${a#*=};; --screen) SCREEN=1;; --step=*) STEP=${a#*=};; *) echo "unknown option $a"; exit 2;; esac; done
+OUT=$1; shift; SRC=""; RMIN=80; FMIN=20; HOT=""; CHAIN=""; SCREEN=""; STEP=""; NOHV=""
+for a in "$@"; do case $a in --src=*) SRC=${a#*=};; --route=*) RMIN=${a#*=};; --fin=*) FMIN=${a#*=};; --no-hot) HOT="--no-hot";; --chain=*) CHAIN=${a#*=};; --screen) SCREEN=1;; --step=*) STEP=${a#*=};; --no-hotvia) NOHV=1;; *) echo "unknown option $a"; exit 2;; esac; done
 SRC=${SRC:-$OUT-src}
 ST="--net=3V3 --layer=In3.Cu --source=J301 --lanes=H --w=0.5 --wmin=0.5"
 F="links.py --link=/USB~Port~2/BAT_SNS_P|F.Cu|0.25|95.2,104.9/95.2,104.3/95.7,103.8"
@@ -33,7 +34,7 @@ F="$F;links.py --clr=0.25 --via=/USB~Port~1/VBUS|103.95,70.1 --via=/USB~Port~1/V
 F="$F;pins.py --table=plan/p2-pins-r7.json"
 F="$F;links.py --clr=0.25 --via=/USB~Port~2/VBUS|91.1,70.35 --via=/USB~Port~2/VBUS|91.1,71.0 --via=/USB~Port~2/VBUS|95.9,70.35 --via=/USB~Port~2/VBUS|95.9,71.0 --link=/USB~Port~2/VBUS|B.Cu|0.6|91.1,71.0/91.1,69.25/95.9,69.25/95.9,71.0 --link=3V3|In3.Cu|0.3|102.85,78.375/101.15,76.675/101.15,76.275 --link=3V3|In3.Cu|0.3|86.12,117.52/90.14,117.52"
 F="$F;links.py --via=EN_5V1|101.0,95.5 --link=EN_5V1|In2.Cu|0.15|101.0,95.5/101.0,95.9 --via=EN_5V2|99.0,84.0 --link=EN_5V2|In2.Cu|0.15|99.0,84.0/99.0,84.4 --via=EN_5V2|99.2,100.8 --link=EN_5V2|In2.Cu|0.15|99.2,100.8/99.2,101.2"
-F="$F;ruleareas.py --hot --hot_mode=vias"
+[ -z "$NOHV" ] && F="$F;ruleareas.py --hot --hot_mode=vias"
 log() { echo "[rebuild] $(date -u +%H:%M:%S) $*" >&2; }
 if [ -n "$CHAIN" ]; then bash $TOOLS/spec_chain.sh $SRC $CHAIN --straps="$ST" --filters="$F"; exit $?; fi
 if [ -n "$SCREEN" ]; then bash $TOOLS/final_route.sh $SRC $OUT --straps="$ST" --filters="$F" --route=0 --no-hot > $OUT.log 2>&1; r=$?; tail -1 $OUT.log; exit $r; fi

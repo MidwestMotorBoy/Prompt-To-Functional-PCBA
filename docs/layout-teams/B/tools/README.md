@@ -455,3 +455,38 @@ Traps met:
 - A 3V3 or PACK_P pad tied by the router through a via into a SOFT inner pour is cut off again by later tracks (the
   In3 island of TP301.1 / R313.1 on both finished boards): tie such pads in the plan on F.Cu (`"to": "zone"`) or by a
   hard link.
+
+## Phase 2 round 3: plan p2-m5, copper for the last four connections and the hot-pour nets (worker A)
+
+`bash tools/rebuild_m5.sh runs/<new> --src=runs/p2a-r5src [--chain=<spec out>] [--screen] [--step=2|3]` is
+`rebuild_best.sh` with the new tables `plan/p2-pins-u403c.json` (before `trunk.py`) and `plan/p2-pins-r7.json`, plus two
+filters at the end. `--chain` builds only the plan (`spec_chain.sh`, under 1 min, for `pinlib.py look` pictures);
+`--screen` is `final_route.sh --route=0 --no-hot`; `--step=2` / `--step=3` run the route step / the finishing step
+alone (each a background job of 2 h); `--no-hotvia` leaves out the last filter (no-via areas) for a comparison.
+`rebuild_best.sh` and the round 2 tables are unchanged.
+
+What the plan adds to p2-m4's (each item screened, pictures in `runs/p2r3_work/*.png`):
+- Port 1 SRN_F / SRP_F at R428 / R429: SRN_F via of R429.2 at 116.35,105.95 in the PRE-trunk table (the trunk covers
+  that spot when it is laid first; the trunk moves round it, still 11.9 squares), then SRP_F as a table path R428.2 west
+  along y 105.3 and south at x 115.65 into C417.1 (0.2 mm from the SW2 via, 0.4 mm from the SRN_F via).
+- Net-(C313-Pad2): path C314.1 down to y 118.545, east, up into C313.2, in the 0.47 mm strip between the cap row and
+  U301's pads (the window for a 0.15 mm track centre is 118.538 to 118.552). C313.1 (RFIO) must then leave north.
+- Port 2 LDO_3V3: the R504.1 / R541.1 piece is boxed (PPHV track and pour, R504.2, U501 pins 17 to 19): table path
+  R504.1 north to 93.95,85.05 and on to R541.1, with a via at that corner (`force` entry on R541.1).
+- EN_5V1 / EN_5V2 long runs: **waypoint islands** (`links.py --via=NET|x,y --link=NET|In2.Cu|0.15|x,y/x,y+0.4`).
+  KiCad lists a track island of a net as a ratsnest end, so the 53 mm edge becomes two edges under 30 mm (EN_5V1:
+  island at 101.0,95.5; 27 and 28.6 mm) and EN_5V2's 60 mm edge three (islands 99.0,84.0 and 99.2,100.8; 20.8, 16.8,
+  25.5 mm). A LONE via is not listed by KiCad (tested, `runs/p2r3_viatest`), so the island needs its stub track. The
+  router starts from an island through `item_cells` / `island_cells` like from any pre-laid copper.
+- Net-(U404-FB): table path pin 8 to R434.1 with `cut_hot` GND in a box east of C444.2 (0.18 mm2 of the HL_5V pour's
+  corner, not on the loop's path). Port 1 HL_5V solved again on the copper board: 0.501 nH, per cap C446 0.306 /
+  C444 0.741, the same as `runs/p2-m4s`.
+- `ruleareas.py --hot --hot_mode=vias` as the last filter: no-via areas over the 14 hot-loop GND F.Cu return pours
+  (70.5 mm2), so no router (the full route and the finishing pass both obey rule areas) drops a signal via into them
+  (the Port 2 I2CC_SCL / SDA crossover vias of p2-m4).
+
+Traps:
+- A via search (`dir` + `via` without `at`) next to a same-net via laid by the entry before may put a SECOND via
+  beside it instead of using the first: give `at` and `force` when an entry must join an existing via.
+- `links.py` checks vias at 0.2 mm against inner-layer tracks (the In3 3V3 strap): a spot that `pinlib.check_via`
+  passes at 0.15 may still fail there.

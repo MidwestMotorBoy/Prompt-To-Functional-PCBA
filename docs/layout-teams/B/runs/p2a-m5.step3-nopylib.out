@@ -1,0 +1,3 @@
+[rebuild] 05:32:24 source run /home/claude/repo/docs/layout-teams/B/runs/p2a-r5src kept
+[rebuild] 05:32:24 3. bash tools/final_route.sh /home/claude/repo/docs/layout-teams/B/runs/p2a-r5src /home/claude/repo/docs/layout-teams/B/runs/p2a-m5 (same straps and filters) --route=80 --resume  --post="finish.sh --modes=aor,aork --min=20 --tol=0.01"
+FINAL route 338 of 341 routed, 3 failed (timed out: False); unconnected 9; DRC 0; power open none; loose none; loss 1.252 W; PACK_P mohm {'J113': 2.57, 'R427': 2.64, 'R527': 2.24}; hot-pour items {'tracks': 0, 'vias': 0, 'nets': []}; hot loops 7 of 7, 5.56 nH

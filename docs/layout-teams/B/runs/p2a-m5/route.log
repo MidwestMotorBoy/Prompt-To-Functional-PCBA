@@ -1,0 +1,37 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 341 (0 on long nets)
+fan-out stubs: 115
+  progress: step 40, queue 301, routed 39, failing 0, pulled 0
+  progress: step 80, queue 261, routed 79, failing 0, pulled 0
+  progress: step 120, queue 231, routed 109, failing 0, pulled 10
+  progress: step 160, queue 201, routed 139, failing 0, pulled 20
+  progress: step 200, queue 174, routed 165, failing 1, pulled 33
+  progress: step 240, queue 149, routed 187, failing 4, pulled 48
+  progress: step 280, queue 137, routed 196, failing 7, pulled 76
+  progress: step 320, queue 121, routed 211, failing 8, pulled 100
+  progress: step 360, queue 81, routed 251, failing 8, pulled 100
+  progress: step 400, queue 45, routed 287, failing 8, pulled 104
+  progress: step 440, queue 26, routed 305, failing 9, pulled 125
+phase 1: 12 open connections tried again with every route free to move
+  progress: step 480, queue 11, routed 329, failing 12, pulled 138
+  progress: step 520, queue 6, routed 332, failing 6, pulled 173
+  progress: step 560, queue 10, routed 326, failing 6, pulled 217
+  progress: step 600, queue 4, routed 331, failing 7, pulled 251
+  progress: step 640, queue 6, routed 328, failing 6, pulled 293
+phase 2: 7 open connections tried again with every route free to move
+  progress: step 680, queue 5, routed 333, failing 6, pulled 325
+  progress: step 720, queue 8, routed 329, failing 5, pulled 368
+phase 3: 4 open connections tried again with every route free to move
+  progress: step 760, queue 4, routed 336, failing 2, pulled 400
+  progress: step 800, queue 16, routed 324, failing 2, pulled 452
+  progress: step 840, queue 9, routed 330, failing 3, pulled 485
+routes pulled and re-laid: 501
+fan-out stubs unused (removed) 45, trimmed 16
+unconnected after fill: 9
+routed 338 edges, 3 failed, items added 4586
+  FAILED /USB Port 2/I2CC_SCL 82.00,83.15 (Pad 6  of U502 ) -> 91.72,85.90 (Pad 2  of R503 ) starts 72 goals 407 seen 123 | pulled 8
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 100.50,128.80 (Pad 10  of U101 ) starts 128 goals 6 seen 947273 | no way even with every other route gone
+  FAILED SCL 110.90,118.02 (Pad 2  of R304 ) -> 104.00,82.22 (Pad 9  of U401 ) starts 214 goals 110 seen 123852 | no way even with every other route gone
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY /Cells and Gauge/TS1
+FAILKEY SCL
