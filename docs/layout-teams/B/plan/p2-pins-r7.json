@@ -1,0 +1,580 @@
+{
+ "about": "Pin escapes for tools/pins.py (team B, phase 2), relative to part and pad; 'A|B' applies an entry to both ports (and 'to' pairs in the same order). Entries run in this order, each checked exactly against everything laid before it. Written for placement r4 (best_placement.json). 'at': 'dx,dy' puts the via of a via escape at that offset (mm, board axes) from the pad centre instead of searching for a spot (phase 2 round 1, Port 1 corner of U405). r5 version (plan/p2-pins-r5.json, phase 2 round 2, worker A): for placement r5 (candidates/r5.json: U405 0.4 mm south, C451 0.5 mm south, R432 south-west of U404). The Port 1 corner of U405 is one via row between the J401 pad row and U405's north pins: VBUS via 103.95,70.1 (links.py, before this table), C_CC2 via of J401.B5 straight south 104.75,70.15, VBIAS via 105.52,70.2 (pin 3 out north-east in front of the unused pins 2/1), C_CC1 via of pin 4 west 102.6,70.6 (north over the tip of pin 5). r6 (lead, phase 2 round 2): r5's table for the trunk path of runs/p2-m1 (pre-trunk table p2-pins-u403b.json): CHG_G on F.Cu, the FBG / FB / SRN_F fan east of the ILIM and ICHG vias, FSW, SBU_FLT. r7 (phase 2 round 3, worker A): see the entries marked round 3.",
+ "escapes": [
+  {
+   "ref": "J501",
+   "pad": "B5",
+   "to": "U505.6",
+   "w": 0.15,
+   "max": 6.0,
+   "cut": [
+    "/USB Port 2/VBUS"
+   ],
+   "why": "Port 2 C_CC2: B5 is wrapped by the connector's own VBUS pour; the way south-east into the free lane west of U505 needs a small notch"
+  },
+  {
+   "ref": "U405",
+   "pad": "6",
+   "to": "U405.5",
+   "w": 0.15,
+   "max": 1.5,
+   "why": "Port 1 C_CC2: pins 5 and 6 joined round the corner (pin 5 has no way out of its own once the C_CC1 via sits over its tip)"
+  },
+  {
+   "ref": "J401",
+   "pad": "B5",
+   "dir": "S",
+   "lead": 0.05,
+   "via": true,
+   "at": "0,0.976",
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 1/VBUS"
+   ],
+   "why": "Port 1 C_CC2 at the connector (r5): a via straight south of B5 at 104.75,70.15, between the VBUS via (103.95,70.1) and the VBIAS via (105.5,70.2); the router joins it to pins 5/6 on an inner layer"
+  },
+  {
+   "ref": "U405",
+   "pad": "3",
+   "dir": "N",
+   "via": true,
+   "at": "0.97,-1.15",
+   "w": 0.15,
+   "max": 1.8,
+   "lead": 0.05,
+   "why": "Port 1 VBIAS (r5): out north, then north-east in front of the unused SBU pins 2/1 to a via at 105.52,70.2 (east of the C_CC2 via of B5); the router joins the via to C451.1 on B.Cu"
+  },
+  {
+   "ref": "U405",
+   "pad": "4",
+   "dir": "N",
+   "via": true,
+   "at": "-1.55,-0.75",
+   "w": 0.15,
+   "max": 1.9,
+   "lead": 0.05,
+   "cut": [
+    "/USB Port 1/VBUS"
+   ],
+   "why": "Port 1 C_CC1 pass-through (r5): out north and west over the tip of pin 5 (pins 5/6 are joined round the corner) to a via at 102.6,70.6, south-west of the VBUS via; the router joins it to the via of pin 7 on an inner layer"
+  },
+  {
+   "ref": "U505",
+   "pad": "4",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "why": "C_CC1 pass-through: pins 4 and 7 are split by the C_CC2 pins 5/6 at the corner; a via north of pin 4 (Port 1: in a notch of the VBUS pour of B4/A9, the only room left beside the VBIAS via)",
+   "via_gap": 0.75
+  },
+  {
+   "ref": "U505",
+   "pad": "9",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.4,
+   "why": "Port 2 SBU_FLT runs south to U501.19, but LDO_3V3 copper walls pin 9 in on the west and south-west: its via first, before the C_CC1 via of pin 7 takes the last spot north-west",
+   "keep": [
+    "U505.7:W:0.9"
+   ]
+  },
+  {
+   "ref": "U405|U505",
+   "pad": "7",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "why": "C_CC1 pass-through, the other end: a via west of pin 7; the router joins the vias on an inner layer"
+  },
+  {
+   "ref": "J401|J501",
+   "pad": "A5",
+   "dir": "S",
+   "via": true,
+   "w": 0.15,
+   "max": 1.4,
+   "why": "C_CC1 at the connector: its only way out is south, into the lane the CC escapes need; a via takes it off F.Cu"
+  },
+  {
+   "ref": "U501",
+   "pad": "37",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 2.4,
+   "cut": [
+    "/USB Port 2/PP5V"
+   ],
+   "why": "DRV9_OFF between the 3V3 pin and a GND pin, the exposed pad south, the PP5V pour, a PP5V track and C507 north: out north, west over pin 38 to a via in a notch of the PP5V pour, keeping the strip west of pin 38 free for it; laid before pin 38",
+   "keep": [
+    "U501.38:W:0.7"
+   ]
+  },
+  {
+   "ref": "U501",
+   "pad": "38",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 2/PP5V"
+   ],
+   "why": "3V3 corner pin: the PP5V pour wraps pins 36-38 at its clearance; a notch at the corner lets the pin out west to a via"
+  },
+  {
+   "ref": "U401",
+   "pad": "27",
+   "to": "C401.2",
+   "w": 0.2,
+   "max": 2.0,
+   "cut": [
+    "/USB Port 1/VBUS"
+   ],
+   "why": "GND pin beside the PD_DRAIN exposed pad (not its own): a short track north to the GND pad of C401, 0.8 mm away; the VBUS pour outline is 0.16 mm too close for a lead"
+  },
+  {
+   "ref": "U401",
+   "pad": "26",
+   "to": "U401.27",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "GND corner pin: tied to its GND neighbour pin 27"
+  },
+  {
+   "ref": "C304",
+   "pad": "2",
+   "dir": "N",
+   "via": true,
+   "w": 0.2,
+   "max": 1.6,
+   "cut": [
+    "/Cells and Gauge/CELL_P"
+   ],
+   "why": "GND pad of the NRST capacitor wrapped by the CELL_P pour: a via in a notch north of it (west cut 0.76 mm2 cost 5.8 mW of CELL_P loss, north 0.37 mm2 costs 0.9 mW)"
+  },
+  {
+   "ref": "U401",
+   "pad": "37",
+   "dir": "N",
+   "via": true,
+   "w": 0.15,
+   "max": 2.4,
+   "cut": [
+    "/USB Port 1/PP5V"
+   ],
+   "keep": [
+    "U401.38:W:0.7"
+   ],
+   "why": "Port 1 DRV9_OFF (to R455 on the bottom): its via first, north of the row, so that the via of the 3V3 corner pin 38 does not close it in (as at U501.37)"
+  },
+  {
+   "ref": "U401",
+   "pad": "38",
+   "dir": "W",
+   "via": true,
+   "w": 0.15,
+   "max": 1.6,
+   "cut": [
+    "/USB Port 1/PP5V"
+   ],
+   "why": "Port 1 3V3 corner pin: the full routes with the protected 3V3 pours fail it (no goal cell); a via west of it, as at U501.38"
+  },
+  {
+   "ref": "U404",
+   "pad": "7",
+   "to": "C439.1",
+   "w": 0.15,
+   "max": 2.5,
+   "why": "Port 1 SS_5V: east of the pin row to C439.1, laid before the EN_5V1 track takes the room under the U404 body (the router ran SS_5V under the body on r4; the ghost screen of r5 with EN_5V1 there found no way)"
+  },
+  {
+   "ref": "U404",
+   "pad": "8",
+   "to": "R434.1",
+   "w": 0.15,
+   "max": 3.0,
+   "lead": 0.05,
+   "cut_hot": [
+    "GND"
+   ],
+   "cut_box": "0.7,-2.1,1.5,-0.85",
+   "why": "Net-(U404-FB) (round 3): pin 8 north-east to R434.1 above the SS_5V track; the HL_5V GND pour's corner east of C444.2 (0.18 mm2, not on the loop's path from C444.2 to pins 1 / 4) is trimmed inside the box so the track keeps the zone clearance (on p2-m4 the router's straight track ran through that corner)."
+  },
+  {
+   "ref": "U404",
+   "pad": "2",
+   "to": "R432.1",
+   "w": 0.15,
+   "max": 7.0,
+   "cut_hot": [
+    "PACK_P",
+    "GND"
+   ],
+   "cut_box": "-0.42,-0.6,0.42,1.7",
+   "why": "EN_5V1 (r5): U404.2 is wrapped by the HL_5V PACK_P pour on the west; out east under the U404 body between the pin rows, south past pins 3/4 and 6/5 and on to R432.1 (moved south-west of U404 in r5). The hot GND strip and the PACK_P stub under the body beyond the pads (not on the loop's path) are cut inside the box only (lead's decision, round 2)"
+  },
+  {
+   "ref": "U504",
+   "pad": "2",
+   "dir": "S",
+   "lead": 0.1,
+   "via": true,
+   "at": "0,0.74",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 2 EN_5V2, the U504 knot (EN pad 2, SS pad 7, FB pad 8 cross on F.Cu): EN straight south to a via under the body between the pin rows (84.15,67.2, the only spot: the PACK_P stub under pin 3 holds the west end); the router joins it to R532.1 on another layer"
+  },
+  {
+   "ref": "U504",
+   "pad": "8",
+   "dir": "N",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.37,-0.72",
+   "w": 0.15,
+   "max": 1.2,
+   "why": "Port 2 FB: north into the channel east of the EN via and to a via at its east end (85.02,67.22); R534.1 and R533.2 join on another layer"
+  },
+  {
+   "ref": "U504",
+   "pad": "7",
+   "to": "C539.1",
+   "w": 0.15,
+   "max": 3.0,
+   "why": "Port 2 SS_5V: south of the bottom pin row, east under pin 8 (north of R532.1) and up into C539.1; the channel north of it holds the EN and FB vias"
+  },
+  {
+   "ref": "U102",
+   "pad": "1",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.55,0.05",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "Net-(U102-VDD) to C116 (west, on another layer): a via east of pin 1 first, so pin 2 can run north-east over it"
+  },
+  {
+   "ref": "U102",
+   "pad": "3",
+   "to": "C112.2",
+   "w": 0.15,
+   "max": 2.0,
+   "why": "Net-(U102-V3): straight north to C112.2 (laid so pin 2's way is known)"
+  },
+  {
+   "ref": "U102",
+   "pad": "2",
+   "to": "C112.1",
+   "w": 0.15,
+   "max": 3.0,
+   "why": "Net-(U102-V4): C112.2 sits between pin 2 and C112.1; failed in both routes of runs/p2-m1 ('no way'): pins 1 and 3 close it once routed"
+  },
+  {
+   "ref": "U403",
+   "pad": "20",
+   "to": "C413.1",
+   "w": 0.15,
+   "max": 3.0,
+   "why": "Port 1 BTST2: the only way is the 0.5 mm strip between the top pin row and C411 (pad 2 bottom 104.62), east to C413.1; failed in both routes of runs/p2-m1 ('no way') once pin 19's via took the strip"
+  },
+  {
+   "ref": "U403",
+   "pad": "19",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.6,-0.05",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "Port 1 HIDRV2: BTST2 now holds the strip north of the pin row; a via east of pin 19 (north-west of pin 18)"
+  },
+  {
+   "ref": "U405",
+   "pad": "12",
+   "dir": "S",
+   "lead": 0.1,
+   "via": true,
+   "w": 0.15,
+   "max": 1.2,
+   "cut": [
+    "/USB Port 1/PP5V"
+   ],
+   "why": "Port 1 CC1 (r5): a via just south of pin 12 (as the router did on runs/p2-m1), laid before the CC2 track of pin 11 so that CC2 runs round it; the router joins it to U401.28 on another layer"
+  },
+  {
+   "ref": "C402",
+   "pad": "2",
+   "force": true,
+   "drop": [
+    "-0.25,-0.545"
+   ],
+   "dir": "N",
+   "via": true,
+   "at": "0.35,-0.77",
+   "w": 0.2,
+   "max": 1.0,
+   "why": "GND of the CC2 capacitor: the planner's via (106.45,75.775) sits in the CC2 lane between C450 and C402; moved north-east (107.05,75.55), the B.Cu PP5V pour cut back round it",
+   "cut": [
+    "/USB Port 1/PP5V"
+   ]
+  },
+  {
+   "ref": "U405",
+   "pad": "11",
+   "to": "C402.1",
+   "path": [
+    "-0.15,0.45",
+    "-0.15,1.1",
+    "0.3,1.1",
+    "1.75,1.1",
+    "2.37,1.7",
+    "2.37,3.13"
+   ],
+   "w": 0.15,
+   "cut": [
+    "/USB Port 1/PP5V",
+    "/USB Port 1/VBUS"
+   ],
+   "why": "Port 1 CC2: from pin 11 west of the CC1 via, east under U405 (the PP5V pour of C407 and the VBUS pour at C450.1 cut back: U405 is 0.4 mm closer to it on r5), between the GND vias of C450 and C402, down between C450 and C402 and into C402.1 from the west, so C401.1 keeps its way to U401.28 (CC1); failed in both routes of runs/p2-m1 ('no way')"
+  },
+  {
+   "ref": "TP113",
+   "pad": "1",
+   "to": "R118.2",
+   "path": [
+    "0.84,-0.158",
+    "2.552,-0.158"
+   ],
+   "w": 0.15,
+   "max": 4.0,
+   "why": "WAKE: north of R118 to its pad 2 (TP113 centre -> 109.3,114.65 -> 111.01,114.65 -> R118.2); failed in both routes of runs/p2-m1 ('no way'): the B.Cu trunk takes every via site under TP113, R110 and R118, and the router's CELL_P track north of TP113 closed it"
+  },
+  {
+   "ref": "R110",
+   "pad": "2",
+   "to": "R118.1",
+   "path": [
+    "0.32,0.8",
+    "2.72,0.8"
+   ],
+   "w": 0.2,
+   "max": 4.0,
+   "cut": [
+    "/Cells and Gauge/FET_MID"
+   ],
+   "why": "CELL_P: the two signal-size CELL_P pads (R110.2, R118.1) joined on F.Cu SOUTH of TP113 (R110.2 -> 107.2,115.65 -> 109.6,115.65 -> R118.1), so WAKE keeps the north; the FET_MID pour's north tip is cut back for it"
+  },
+  {
+   "ref": "R118",
+   "pad": "1",
+   "to": "zone",
+   "force": true,
+   "w": 0.2,
+   "max": 2.0,
+   "why": "CELL_P: R118.1 (and R110.2 with it) south-west into the CELL_P pour of Q101 (the router counted the pour outline and failed the fill)"
+  },
+  {
+   "ref": "R110",
+   "pad": "1",
+   "to": "Q101.4",
+   "w": 0.15,
+   "max": 5.0,
+   "lead": 0.05,
+   "cut": [
+    "/Cells and Gauge/FET_MID"
+   ],
+   "why": "CHG_G at its 10M pull-down (lead, round 2): with the trunk back on the path of runs/p2-m1 the via site 111.1,114.1 is under the trunk; instead one F.Cu track from R110.1 south, west of the CELL_P track of R110.2, and east under it to the gate pad Q101.4 (the FET_MID pour's north tip is cut back for it)"
+  },
+  {
+   "ref": "U403",
+   "pad": "11",
+   "to": "R419.2",
+   "path": [
+    "0.95,0",
+    "0.95,1.2"
+   ],
+   "w": 0.15,
+   "why": "Port 1 FBG: east of the ILIM via (114.75,110.45), then south into R419.2; laid by hand because three tracks (FBG, FB, SRN_F) share the 0.77 mm between that via and C419.1"
+  },
+  {
+   "ref": "U403",
+   "pad": "12",
+   "to": "R419.1",
+   "path": [
+    "1.26,0",
+    "1.26,1.85"
+   ],
+   "w": 0.15,
+   "why": "Port 1 FB: east under C417.2, south at x 115.56 between the FBG track and C419.1, into R419.1"
+  },
+  {
+   "ref": "R428",
+   "pad": "2",
+   "to": "C417.1",
+   "path": [
+    "-0.33,0",
+    "-1.56,0",
+    "-1.56,2.44"
+   ],
+   "w": 0.15,
+   "why": "Port 1 SRP_F (round 3): R428.2 west along y 105.3, south at x 115.65 into C417.1, between the SRN_F via of R429.2 (116.35,105.95, pre-trunk table u403c) and the SW2 via (115.1,106.3)."
+  },
+  {
+   "ref": "C417",
+   "pad": "2",
+   "to": "C419.1",
+   "path": [
+    "0.48,0.1",
+    "0.48,1.3"
+   ],
+   "w": 0.15,
+   "why": "Port 1 SRN_F (Kelvin): out of C417.2 east, south at x 115.95 between the FB track and C418.2, into C419.1"
+  },
+  {
+   "ref": "U403",
+   "pad": "36",
+   "to": "R412.1",
+   "path": [
+    "-0.58,0",
+    "-0.58,1.75"
+   ],
+   "w": 0.15,
+   "why": "Port 1 FSW (2.5 mm): west out of pin 36, south at x 107.92 between R410.2 / R411.1 and the vias of the row south of U403, into R412.1; open on runs/p2-m1 after both passes (the tracks of pins 34 / 35 fenced it)"
+  },
+  {
+   "ref": "U403",
+   "pad": "35",
+   "to": "R410.2",
+   "path": [
+    "-0.5,0.05",
+    "-0.95,0.3"
+   ],
+   "w": 0.15,
+   "why": "Port 1 ACOV: pin 35 south-west into R410.2, north of the FSW corner at 107.92,109.75"
+  },
+  {
+   "ref": "U403",
+   "pad": "8",
+   "to": "R416.1",
+   "w": 0.15,
+   "max": 2.0,
+   "why": "Port 1 TS: pin 8 straight south into R416.1, between the CE_N track of pin 7 and the ICHG track of pin 9"
+  },
+  {
+   "ref": "R415",
+   "pad": "2",
+   "to": "R416.1",
+   "path": [
+    "0,0.6",
+    "2.0,0.6"
+   ],
+   "w": 0.15,
+   "why": "Port 1 TS divider: R415.2 to R416.1 south of R416.2 (the CE_N via closes the north)"
+  },
+  {
+   "ref": "R417",
+   "pad": "1",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "1.3,0.52",
+   "w": 0.15,
+   "max": 2.0,
+   "why": "Port 1 CE_N at R417.1: the ICHG track closes the north; a via south-east at 114.85,112.45, between R419.2 (F.Cu) and the two B.Cu pads of TH104, as the router did on runs/p2-m1"
+  },
+  {
+   "ref": "U405",
+   "pad": "9",
+   "to": "R441.2",
+   "path": [
+    "-0.45,0",
+    "-0.75,-0.3",
+    "-1.3,-0.3"
+   ],
+   "w": 0.15,
+   "why": "Port 1 SBU_FLT (r5): west out of pin 9, north-west between the C_CC1 via of pin 7 and the pads south-west of it, to R441.2; failed in both routes of runs/p2a-r5f"
+  },
+  {
+   "ref": "C110",
+   "pad": "1",
+   "dir": "N",
+   "lead": 0.05,
+   "via": true,
+   "w": 0.2,
+   "max": 1.8,
+   "cut": [
+    "/Cells and Gauge/FET_MID"
+   ],
+   "why": "CELL_P at C110.1 (10 mm west of the CELL_P pours): the pad is closed on F.Cu by C111.2, C110.2, the FET_MID pour north and the C111.1 to C110.2 track south; open on runs/p2-m1 and runs/p2-m3 after the finishing pass. A via north of the pad in a notch of the FET_MID pour; the router joins it to the CELL_P pour on B.Cu or an inner layer"
+  },
+  {
+   "ref": "TP301",
+   "pad": "1",
+   "to": "zone",
+   "w": 0.2,
+   "max": 4.0,
+   "lead": 0.05,
+   "why": "3V3 test pad: an F.Cu track north into the 3V3 pour at C207.1 / L201.2. On runs/p2-m1 and p2-m3 the router tied it by a via into the soft In3 3V3 pour, and the In3 tracks of 3V3_SLEEP and SCL then cut that piece of the pour off (the 3V3 In3 island both finishing passes could not join)"
+  },
+  {
+   "ref": "R313",
+   "pad": "1",
+   "to": "zone",
+   "w": 0.2,
+   "max": 5.0,
+   "lead": 0.05,
+   "why": "3V3 at the pull-up R313.1: an F.Cu track east into the 3V3 pour at C207.1, for the same reason as TP301.1 (no via into the In3 island)"
+  },
+  {
+   "ref": "U204",
+   "pad": "10",
+   "dir": "E",
+   "lead": 0.05,
+   "via": true,
+   "at": "0.62,-0.08",
+   "w": 0.15,
+   "max": 1.0,
+   "why": "3V3 sense pin of the 3V3 buck: a via east of the pin at 86.12,117.52 (where the router put it); the In3 link 86.12,117.52 to the strap at 90.14,117.52 (links.py, after this table) makes its tie hard, so no In3 track can cut it off (the U204.10 piece of runs/p2-m1 and p2a-r5f)"
+  },
+  {
+   "ref": "C314",
+   "pad": "1",
+   "to": "C313.2",
+   "path": [
+    "0,0.545",
+    "1.94,0.545"
+   ],
+   "w": 0.15,
+   "why": "Net-(C313-Pad2) (round 3): the only F.Cu way is the 0.47 mm strip between the cap row (bottom y 118.31) and U301's pads (top y 118.78); C314.1 down to y 118.545, east, up into C313.2. Laid first, so the router's RFIO via of C313.1 (116.02,118.22 on p2-m4) has to go north."
+  },
+  {
+   "ref": "R504",
+   "pad": "1",
+   "to": "R541.1",
+   "path": [
+    "0,-0.25",
+    "0.53,-0.85"
+   ],
+   "w": 0.15,
+   "why": "Port 2 LDO_3V3 (round 3): the R504.1 / R541.1 piece is boxed by the PPHV track (y 86.47) and pour, R504.2 and the escapes of U501 pins 17 to 19; R504.1 north to 93.95,85.05 and on to R541.1, with a via at the corner (next entry) so the router has an inner-layer way to the R502.1 / R503.1 piece (failed on p2-m4)."
+  },
+  {
+   "ref": "R541",
+   "pad": "1",
+   "force": true,
+   "dir": "W",
+   "lead": 0.05,
+   "via": true,
+   "at": "-0.63,-0.27",
+   "w": 0.15,
+   "max": 0.9,
+   "why": "Port 2 LDO_3V3 (round 3): the via at the corner of the R504.1 / R541.1 track, 93.95,85.05."
+  }
+ ]
+}
