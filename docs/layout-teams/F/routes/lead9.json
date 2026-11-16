@@ -1,0 +1,389 @@
+{
+"routes": [],
+"vias": [],
+"cuts": [],
+"pours": [],
+"drop": [
+{
+"net": "/USB Port 1/I2CC_SCL",
+"layer": "F.Cu",
+"box": [
+109.1719,
+112.839,
+109.19,
+113.3795
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/I2CC_SCL",
+"layer": "In2.Cu",
+"box": [
+84.471,
+84.7205,
+84.729,
+84.9785
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/I2CC_SCL",
+"layer": "In2.Cu",
+"box": [
+84.721,
+80.9705,
+84.729,
+84.7285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/I2CC_SCL",
+"layer": "In2.Cu",
+"box": [
+87.171,
+79.8205,
+90.579,
+79.8285
+],
+"tracks_only": true
+},
+{
+"net": "CHG_INH",
+"layer": "In2.Cu",
+"box": [
+111.271,
+120.8205,
+111.279,
+121.1285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/I2CC_SDA",
+"layer": "In2.Cu",
+"box": [
+93.121,
+83.5205,
+93.929,
+83.5285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/CHG_INT",
+"layer": "In2.Cu",
+"box": [
+86.621,
+85.8705,
+87.679,
+85.8785
+],
+"tracks_only": true
+},
+{
+"net": "Net-(C313-Pad2)",
+"layer": "In2.Cu",
+"box": [
+115.221,
+114.5705,
+115.879,
+114.5785
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/LDO_3V3",
+"layer": "In3.Cu",
+"box": [
+84.971,
+87.7705,
+84.979,
+88.5785
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/LDO_3V3",
+"layer": "In3.Cu",
+"box": [
+84.621,
+87.4205,
+84.979,
+87.7785
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "In3.Cu",
+"box": [
+110.521,
+118.3205,
+110.929,
+118.3285
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "In3.Cu",
+"box": [
+96.871,
+118.6705,
+103.079,
+118.6785
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "In3.Cu",
+"box": [
+96.471,
+118.6705,
+96.879,
+119.0785
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/SBU_FLT",
+"layer": "In3.Cu",
+"box": [
+85.646,
+85.221,
+85.854,
+85.229
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/DRV9_OFF",
+"layer": "In3.Cu",
+"box": [
+83.821,
+105.5705,
+84.879,
+106.6285
+],
+"tracks_only": true
+},
+{
+"net": "/Cells and Gauge/CELL_P",
+"layer": "B.Cu",
+"box": [
+107.471,
+122.6205,
+107.729,
+122.6285
+],
+"tracks_only": true
+},
+{
+"net": "/Cells and Gauge/CELL_P",
+"layer": "B.Cu",
+"box": [
+107.721,
+121.3705,
+108.979,
+122.6285
+],
+"tracks_only": true
+},
+{
+"net": "/Cells and Gauge/BTP_INT",
+"layer": "B.Cu",
+"box": [
+102.171,
+131.1205,
+103.279,
+131.1285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/LDO_3V3",
+"layer": "none",
+"box": [
+84.615,
+87.41449999999999,
+84.635,
+87.4345
+]
+},
+{
+"net": "SCL",
+"layer": "none",
+"box": [
+91.69,
+85.515,
+91.71000000000001,
+85.53500000000001
+]
+},
+{
+"net": "/USB Port 2/I2CC_SCL",
+"layer": "In2.Cu",
+"box": [
+87.171,
+79.1705,
+87.179,
+79.8285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/CHG_INT",
+"layer": "In2.Cu",
+"box": [
+86.621,
+85.8705,
+86.629,
+86.0285
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/CHG_INT",
+"layer": "In2.Cu",
+"box": [
+86.221,
+86.0205,
+86.629,
+86.4285
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "In3.Cu",
+"box": [
+96.121,
+119.0705,
+96.479,
+119.0785
+],
+"tracks_only": true
+},
+{
+"net": "/Cells and Gauge/CELL_P",
+"layer": "B.Cu",
+"box": [
+108.971,
+118.1705,
+108.979,
+121.3785
+],
+"tracks_only": true
+},
+{
+"net": "/Cells and Gauge/CELL_P",
+"layer": "B.Cu",
+"box": [
+108.971,
+117.4705,
+109.679,
+118.1785
+],
+"tracks_only": true
+},
+{
+"net": "SCL",
+"layer": "B.Cu",
+"box": [
+91.696,
+85.521,
+91.804,
+85.628
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "none",
+"box": [
+96.115,
+119.0645,
+96.135,
+119.0845
+]
+},
+{
+"net": "/Cells and Gauge/CELL_P",
+"layer": "none",
+"box": [
+109.66499999999999,
+117.4645,
+109.685,
+117.48450000000001
+]
+},
+{
+"net": "IRQ_N",
+"layer": "F.Cu",
+"box": [
+96.121,
+118.8205,
+96.129,
+119.0785
+],
+"tracks_only": true
+},
+{
+"net": "/USB Port 2/I2CC_SCL",
+"layer": "In2.Cu",
+"box": [
+86.371,
+79.1705,
+87.179,
+79.1785
+],
+"tracks_only": true
+},
+{
+"net": "SCL",
+"layer": "B.Cu",
+"box": [
+91.796,
+85.62,
+92.104,
+85.928
+],
+"tracks_only": true
+},
+{
+"net": "SCL",
+"layer": "B.Cu",
+"box": [
+92.096,
+85.92,
+92.654,
+85.928
+],
+"tracks_only": true
+},
+{
+"net": "SCL",
+"layer": "B.Cu",
+"box": [
+92.646,
+84.87,
+93.704,
+85.928
+],
+"tracks_only": true
+},
+{
+"net": "IRQ_N",
+"layer": "F.Cu",
+"box": [
+96.021,
+118.7205,
+96.129,
+118.8285
+],
+"tracks_only": true
+}
+]
+}

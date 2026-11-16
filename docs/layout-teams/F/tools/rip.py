@@ -55,6 +55,29 @@ class RML(ML):
         out = {}
         for i, (L, g, k) in enumerate(nodes): out.setdefault(f(i), {}).setdefault(L, []).append(g)
         return list(out.values())
+    def anchor(self, net, r):
+        """make both ends of a set-to-set route end ON an anchor point (via / pad centre, track centre line), so that
+        KiCad counts it connected; adds short stubs to the route in place"""
+        for end in (0, -1):
+            L, x, y = r[end]; P = Point(x, y); best = None
+            for i in self.tree[L].query(P.buffer(0.5)):
+                g, n, kind, _ = self.items[L][int(i)]
+                if n != net or kind not in ("via", "pad", "track") or g.distance(P) > 0.03: continue
+                if kind == "track":
+                    p, q, w = ends(g); c = LineString([p, q]).interpolate(LineString([p, q]).project(P)) if p != q else Point(p)
+                    if LineString([p, q]).buffer(w / 2 + 0.01, 8).equals(g.buffer(0.01)) is None: pass
+                else:
+                    c = g.centroid
+                    if kind == "pad" and g.area > 1.0: c = P
+                d = c.distance(P)
+                if d < 1e-3: best = None; break
+                if best is None or d < best[0]: best = (d, c)
+            if best is not None:
+                e = [L, round(best[1].x, 3), round(best[1].y, 3)]
+                if end == 0: r.insert(0, e)
+                else: r.append(e)
+                self._add(L, LineString([(x, y), (e[1], e[2])]).buffer(0.075, 8), net, "track")
+        return r
     def join(self, net, want=1, margin=30.0, quiet=True, **kw):
         """join the pieces of a net with free paths until `want` pieces are left; True if reached"""
         for _ in range(30):
@@ -67,7 +90,7 @@ class RML(ML):
             r = None
             for w in (kw.get("w", 0.2), 0.15):
                 r = self.route(net, (pa.x, pa.y), (pb.x, pb.y), w=w, margin=margin, start_geoms=A, goal_geoms=B, quiet=True)
-                if r: break
+                if r: self.anchor(net, r); break
             if not r:
                 if not quiet: print("  join %s: NO PATH from the piece at (%.2f, %.2f)" % (net, pa.x, pa.y))
                 return False
@@ -111,7 +134,7 @@ class RML(ML):
             self._reset()
             # the new route goes in first, then the victims come back round it
             for rt in newJ["routes"][len(s0[2]["routes"]):]:
-                self.J["routes"].append(rt); pts = rt["path"]
+                self.J["routes"].append(rt); pts = rt["path"]; self.anchor(net, pts)
                 for p, q in zip(pts, pts[1:]):
                     if p[0] != q[0]: self.via(net, p[1], p[2]); self.J["vias"].pop()
                     elif (p[1], p[2]) != (q[1], q[2]): self._add(q[0], LineString([(p[1], p[2]), (q[1], q[2])]).buffer(rt["w"] / 2, 8), net, "track")
@@ -155,3 +178,46 @@ class RML(ML):
         for p, q in zip(path, path[1:]):
             if p[0] != q[0]: self.via(net, p[1], p[2]); self.J["vias"].pop()
             elif (p[1], p[2]) != (q[1], q[2]): self._add(q[0], LineString([(p[1], p[2]), (q[1], q[2])]).buffer(w / 2, 8), net, "track")
+    def prune(self, skip=("GND", "3V3", "PACK_P")):
+        """remove dead-end track stubs (an end that touches no other copper of its net) and vias left with one layer; the
+        number of pieces of each net must not change. Returns the count removed."""
+        tot = 0
+        for _ in range(40):
+            n0 = 0
+            for L in SIG:
+                for it in list(self.items[L]):
+                    g, n, kind, _ = it
+                    if kind != "track" or n in skip or id(it) not in self._orig: continue
+                    p, q, w = ends(g); dead = False
+                    for e in (p, q):
+                        P = Point(e)
+                        if not any(self.items[L][int(i)] is not it and self.items[L][int(i)][1] == n and self.items[L][int(i)][2] in ("track", "pad", "via", "pour") and self.items[L][int(i)][0].distance(P) < 0.02 for i in self.tree[L].query(P.buffer(0.05))): dead = True
+                    if not dead: continue
+                    bx = [round(min(p[0], q[0]) - 0.004, 4), round(min(p[1], q[1]) - 0.004, 4), round(max(p[0], q[0]) + 0.004, 4), round(max(p[1], q[1]) + 0.004, 4)]
+                    c0 = len(self.comps(n)); s = self.snap_()
+                    self.J["drop"].append({"net": n, "layer": L, "box": bx, "tracks_only": True})
+                    keep = []
+                    for i2 in self.items[L]:
+                        if i2[1] == n and i2[2] == "track":
+                            p2, q2, _w = ends(i2[0])
+                            if all(bx[0] <= x <= bx[2] and bx[1] <= y <= bx[3] for x, y in (p2, q2)): continue
+                        keep.append(i2)
+                    self.items[L] = keep; self._reset()
+                    if len(self.comps(n)) != c0: self.back_(s); continue
+                    n0 += 1
+            for v in list(self.vias):                     # vias that now touch tracks / pads on fewer than two layers
+                x, y, sz, n = v
+                if n in skip: continue
+                P = Point(x, y); k = 0
+                for L in SIG:
+                    if any(self.items[L][int(i)][1] == n and self.items[L][int(i)][2] in ("track", "pad", "pour") and self.items[L][int(i)][0].distance(P) < 0.02 for i in self.tree[L].query(P.buffer(0.05))): k += 1
+                if k < 2:
+                    c0 = len(self.comps(n)); s = self.snap_()
+                    self.J["drop"].append({"net": n, "layer": "none", "box": [x - 0.01, y - 0.01, x + 0.01, y + 0.01]})
+                    for L in SIG: self.items[L] = [i2 for i2 in self.items[L] if not (i2[1] == n and i2[2] == "via" and i2[0].centroid.distance(P) < 0.01)]
+                    self.vias = [u for u in self.vias if u is not v]; self._reset()
+                    if len(self.comps(n)) > c0: self.back_(s); continue
+                    n0 += 1
+            tot += n0
+            if not n0: break
+        return tot
