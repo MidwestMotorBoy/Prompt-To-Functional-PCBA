@@ -1872,3 +1872,58 @@ Files: `tools/handroute_soft.py`, `tools/README.md` (new section), `runs/p2r4_b/
 h3.hot_tracks.json, hotmap.py, probe.py, before_wide.png, after_wide.png), `runs/p2r4b-1/` (final.json,
 final_screen.json, post.log, routed/*.json, corner_finished.png), `runs/p2r4b-1.out`, `.screen.log`, `.resume.log`.
 Boards local only: `runs/p2r4_b/h3.kicad_pcb`, `runs/p2r4b-1/finished.kicad_pcb`.
+
+## 2026-11-16 10:45 UTC, worker (phase 2 round 4, task A): EN_5V1 off the J113 / R427 feed, hand copper on the kept board
+
+**Result: DONE.** Hand file `runs/p2r4_en/hand_en.json` (valid on `best_routed/monolith_routed.kicad_pcb`, apply with
+`tools/handroute2.py ... --keep=runs/p2-m6/cu.kicad_pcb`; only EN_5V1 copper, nothing west of x 109.7). Check run
+`bash tools/rebuild_m6.sh runs/p2r4a-1 --src=runs/p2a-r5src --board=runs/p2r4_en/hand_en.kicad_pcb` (about 8 min, no new
+route, finishing pass 2 tasks both reverted = the two hot-via lifts as in p2-m6v, nothing timed out):
+
+| final.json, routed board | `runs/p2-m6` (kept, before) | **`runs/p2r4a-1`** |
+|---|---|---|
+| unconnected / routed DRC / copper DRC | 0 / 0 / 0 | **0 / 0 / 0** (screen 0 of 341 blocked, 1.012 W before routing) |
+| power_open / loose / unconnected power | none / none / none | **none / none / none** |
+| loss | 1.199 W | **1.169 W** (limit of the task 1.175) |
+| PACK_P J113 / R427 / R527 mohm | 2.38 / 2.44 / 1.65 | **2.14 / 2.21 / 1.64** (limits 2.15 / 2.22) |
+| hot loops | 7 of 7, 5.56 nH | **7 of 7, 5.56 nH**, every loop equal to p2-m6 (1.02, 0.70, 0.78, 0.75, 0.76, 0.80, 0.75) |
+| hot-pour items | 0 tracks, 3 vias | **0 tracks, 3 vias** (the Port 2 I2CC_SCL / SDA vias of task B) |
+
+**New EN_5V1** (54 mm on In2 before): F.Cu R432.1 south to a via at 115.9,79.6; B.Cu east / south to a via at
+118.8,88.3; **In3 down the east edge** (x 118.5 to 121.2, between the board edge and R427's vias / J113) to a via at
+120.9,112.3 just south of the PACK_P sheet; In2 west along the sheet's south edge, past the sheet tip at x 113 to the
+via-in-pad of U301.12 (111.475,121.97). 0.15 mm, 4 vias (router-style pads). The PACK_P In2 sheet now has no
+north-south signal cut east of x 108 (`runs/p2r4a-1/look/finished_In2.Cu.png`).
+
+**What the measurements showed** (each = handroute2 on the kept board + dc_score, 40 s; `runs/p2r4_en/<name>.dc.json`):
+- EN_5V1 lifted (`e0`): 1.1612 W, J113 2.081, R427 2.148: the floor.
+- Only the old south end (In2 along y 113.02 and down x 110.07 to U301.12, `h2c`): **1.1872 W**, i.e. 26 of the 38 mW
+  were the south end, not the y 98 to 113 stretch. `tools/sheet_flow.py` (`runs/p2r4_en/flow_e0.png`) shows why: the
+  PACK_P In2 current runs along the sheet's SOUTH edge (x 101 to 118, y 111 to 115) into J113 / R427, densest at the
+  sheet tip x 110 to 114, y 112 to 115.
+- **Barrier (named):** every EN_5V1 path on F / In2 / In3 / B east of x 108.2 has to pass that south edge on In2:
+  with PACK_P pours made all but closed (100000 per mm) the search still crosses 5.4 mm of pour band (`h8`). The way
+  in to U301.12 is the gap between the sheet tip and the In2 tracks TS4 (x 113.4) / TH104 / SCL; In3 is closed south of
+  y 112 by the 3V3 bus and the SCL / pink tracks, B.Cu by the trunk. Picture: `runs/p2r4_en/h12_east.png`,
+  `runs/p2r4_en/z_tail.png`. The remaining 7.4 mW (1.1686 against 1.1612 W) is that pass.
+- Searches: `h3`/`h4` (band cost) 1.1698 W, J113 2.150; `h6` (tip made dear) 1.1869; `h7` (hand: hug TS4 down x 112.925)
+  1.1716; graded edge cost + cost-aware straightening `h9`..`h12` 1.1687 / 1.1688 / 1.1688 / **1.1686 W, J113 2.141,
+  R427 2.206** (kept as `hand_en`). The north part (F, B, In3 and the three vias) costs 0.0 mW (`h4c`).
+
+**Tools** (README section "Phase 2 round 4: one signal laid again by a pour-aware search"): `tools/lane_search.py`
+(multi-layer grid search with pour costs, writes a hand file), `tools/handroute2.py` (copy of handroute.py: inner-layer
+lifts failed silently on the user layer names, `CuStack()` missing in KiCad 10, a segmentation fault / 100 % CPU hang
+after adding tracks; `"rmun"` vias), `tools/sheet_flow.py` (current density of one net on one layer). **The lead must
+apply hand_en.json with handroute2.py**: handroute.py cannot lift In2 copper on this board.
+
+Not done here: no loss or router pass was run on the delivered board (the rebuild's own aor pass only reverted its
+two hot-via tasks). Renders looked at: `runs/p2r4a-1/look/finished_{F,B,In2,In3}.Cu.png` (In2 sheet one piece without
+the old cut, In3 3V3 bus one piece, EN on In3 a single strip along the east edge, no item in a hot pour),
+`runs/p2r4_en/flow_before_after.png` (PACK_P In2 current density, p2-m6 left, p2r4a-1 right).
+
+Files: `tools/lane_search.py`, `tools/handroute2.py`, `tools/sheet_flow.py`, `tools/README.md`, `runs/p2r4_en/`
+(hand_en.json, e0.json, h*.json, s*.json, ev.sh, *.dc.json, *.hr.log, pictures), `runs/p2r4a-1/` (final.json,
+final_screen.json, post.log, routed/*.json, fin/r1.log, look/*.png), `runs/p2r4a-1.out`, `.screen.log`, `.resume.log`.
+Boards local only: `runs/p2r4_en/hand_en.kicad_pcb`, `runs/p2r4a-1/finished.kicad_pcb`.
+**Commit**: the session's permission check refused `git commit` (and the push); the files above are staged in the
+working tree (118 files, 3.9 MB; the per-experiment `runs/p2r4_en/h*.drc.json` are left unstaged) for the lead.

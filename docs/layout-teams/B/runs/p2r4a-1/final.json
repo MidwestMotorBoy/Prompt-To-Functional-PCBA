@@ -1,0 +1,207 @@
+{
+ "source_run": "/home/claude/repo/docs/layout-teams/B/runs/p2a-r5src",
+ "straps": [
+  {
+   "net": "3V3",
+   "layer": "In3.Cu",
+   "source": "C303 (1 vias, at 114.5,117.1)",
+   "groups": 5,
+   "tied": 5,
+   "untied": [],
+   "segments": 40,
+   "length_mm": 112.1,
+   "across_lanes_mm": 56.4,
+   "narrow_mm": 0,
+   "clearance_faults": [],
+   "paths": [
+    {
+     "to": "L201 (1 vias, at 90.0,118.2)",
+     "cells": 381
+    },
+    {
+     "to": "C301 (1 vias, at 111.8,118.0)",
+     "cells": 167
+    },
+    {
+     "to": "C403 (1 vias, at 101.1,76.3)",
+     "cells": 462
+    },
+    {
+     "to": "C503 (1 vias, at 87.5,77.9)",
+     "cells": 151
+    }
+   ],
+   "mains": []
+  },
+  {
+   "net": "PACK_P",
+   "layer": "In2.Cu",
+   "source": "C208+C209+C210+D103+J113+Q102+R427+R429+R518 (19 vias, at 112.5,110.7)",
+   "groups": 12,
+   "tied": 12,
+   "untied": [],
+   "segments": 74,
+   "length_mm": 141.4,
+   "across_lanes_mm": 36.3,
+   "narrow_mm": 15.1,
+   "clearance_faults": [],
+   "paths": [
+    {
+     "to": "Q102 (1 vias, at 94.5,119.2)",
+     "cells": 8
+    },
+    {
+     "to": "R527+R529 (5 vias, at 96.9,105.7)",
+     "cells": 64
+    },
+    {
+     "to": "C211 (1 vias, at 98.3,103.7)",
+     "cells": 37
+    },
+    {
+     "to": "C212 (1 vias, at 100.8,103.7)",
+     "cells": 26
+    },
+    {
+     "to": "C213 (1 vias, at 103.3,103.7)",
+     "cells": 26
+    },
+    {
+     "to": "C457 (1 vias, at 118.7,85.6)",
+     "cells": 224
+    },
+    {
+     "to": "C206+U204 (4 vias, at 82.4,118.8)",
+     "cells": 133
+    },
+    {
+     "to": "C444+C446 (8 vias, at 115.2,67.1)",
+     "cells": 230
+    },
+    {
+     "to": "C557 (1 vias, at 85.1,82.0)",
+     "cells": 484
+    },
+    {
+     "to": "C544 (5 vias, at 81.2,67.7)",
+     "cells": 160
+    },
+    {
+     "to": "C546 (1 vias, at 83.6,65.3)",
+     "cells": 71
+    }
+   ],
+   "mains": []
+  }
+ ],
+ "route_minutes": 80,
+ "drc_errors": 0,
+ "blocked_edges": "0 of 341",
+ "route": null,
+ "scored_board": "finished.kicad_pcb (after --post)",
+ "filters": [
+  "filter_1.log",
+  "filter_2.log",
+  "filter_3.log",
+  "filter_4.log",
+  "filter_5.log",
+  "filter_6.log",
+  "filter_7.log",
+  "filter_8.log"
+ ],
+ "pre_route": {
+  "loss_W": 1.012,
+  "power_open": {}
+ },
+ "routed": {
+  "loss_W": 1.169,
+  "power_open": {},
+  "loose": [],
+  "drc_errors": 0,
+  "drc_error_types": [],
+  "unconnected_items": 0,
+  "unconnected_power": [],
+  "unconnected_nets": [],
+  "hot_pour_items": {
+   "tracks": 0,
+   "vias": 3,
+   "nets": [
+    "/USB Port 2/I2CC_SCL",
+    "SDA"
+   ]
+  },
+  "pack_p_mohm": {
+   "J113": 2.14,
+   "R427": 2.21,
+   "R527": 1.64
+  }
+ },
+ "hot_routed": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.56,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.02,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.7,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.78,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.75,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 0.76,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.8,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.75,
+    "tier1": "pass"
+   }
+  }
+ },
+ "hot_pre_source": {
+  "pass_count": "7 of 7",
+  "sum_nH": 5.54,
+  "loops": {
+   "HL_3V3": {
+    "total_nH": 1.02,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_5V": {
+    "total_nH": 0.7,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_IN": {
+    "total_nH": 0.78,
+    "tier1": "pass"
+   },
+   "USB Port 1/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_5V": {
+    "total_nH": 0.76,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_IN": {
+    "total_nH": 0.8,
+    "tier1": "pass"
+   },
+   "USB Port 2/HL_OUT": {
+    "total_nH": 0.74,
+    "tier1": "pass"
+   }
+  }
+ }
+}

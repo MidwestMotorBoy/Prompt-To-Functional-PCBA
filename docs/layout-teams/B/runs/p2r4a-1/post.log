@@ -1,0 +1,25 @@
+[finish] 10:37:41 1. DRC of the routed board and of the plan
+[finish] 10:37:47 routed: unconnected 0 {} ; DRC errors 0 {}
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+    PACK_P: 1 pieces
+    3V3: 1 pieces
+    GND: 1 pieces
+    == PACK_P: 280 items, 1 groups (largest 280)
+    == 3V3: 155 items, 1 groups (largest 155)
+    fin_report: 0 unconnected items kept, 0 power items replaced by 0 piece edges
+[finish] 10:37:53 2. accept-or-revert pass 1 from r0 (deadline 30 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 3)
+    aor: 3 hot-pour items in 2 rip-able pieces to lift
+    aor power check: start 0.6647 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.141, 'R427': 2.206, 'R527': 1.639, 'D103': 0.177, 'U404': 5.743, 'U504': 5.708, 'U204': 2.975}, open [] (7 s)
+      aor   68 s sweep 1 lift lift /USB Port 2/I2CC_SCL      reverted (power: loss 0.6808 W (now 0.6647, start 0.6647; PACK_P +17.1 mW, 3V3 +0.0 mW, GND -1.0 mW))
+      aor   71 s sweep 1 lift lift SDA                       reverted (SDA: no way even with every rip-able route gone)
+    aor: 2 tasks, 0 accepted, 2 reverted, 1 pulls; open connections left 0, lifts left 2
+    unconnected after fill: 0
+[finish] 10:39:24 pass 1: unconnected 0 {} ; DRC errors 0 {} ; hot-pour items 3
+[finish] 10:39:24 pass 1 not better (score 0 vs 0, hot 3 vs 3), dropped
+[finish] 10:39:24 4. dangling ends of r0
+    removed 2
+[finish] 10:39:42 cleaned: unconnected 0 {} ; DRC errors 0 {}
+[finish] 10:39:42 5. power guard
+[finish] 10:40:17 c: guard ok: 0 new tracks, 0 new vias; loss 1.1686 -> 1.1686 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 0 {} ; DRC errors 0 {} ; loss 1.1686 W, power open 0
+finish: finished (c) unconnected 0 {} ; DRC errors 0 {} ; loss 1.1686 W, power open 0

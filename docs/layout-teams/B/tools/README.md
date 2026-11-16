@@ -607,3 +607,38 @@ switch-node noise on the signal, so PPHV (DC) was used. Then look for In3 room: 
 old east line, which leaves In3 west of it free for I2CC_SCL to run straight south with no hop.
 Trap: removing a signal track can let a pour flow into the room it held: here 3V3 on In3 filled the IRQ_N corner
 (the old SDA In3 line had cut it off as an island). Harmless here (3V3 bus), but check the In3 render.
+
+## Phase 2 round 4: one signal laid again by a pour-aware search (EN_5V1, task A)
+
+**`lane_search.py <board> <cu.json> <spec.json> <out hand.json> [--keep=<plan board>] [--png=out.png] [--for=<board name>]`**:
+lays ONE connection of a routed board again with a multi-layer grid search (0.05 mm, F / In2 / In3 / B) whose cost
+knows the power pours: per mm inside a soft pour of PACK_P / 3V3 / GND (+ clearance) costs extra (`"soft"`), and
+`"grade": {"PACK_P": [K, R]}` adds K per mm at the pour edge falling to 0 at R mm out (how deep the refill carves).
+Free areas are pinlib's exact ones at width + 0.016 (a centre line inside passes handroute's exact check), every via
+site is `pinlib.check_via` (lazy, cached, 0.1 mm lattice), hot-loop pours of the plan board are closed (`--keep`).
+Straightening keeps a shortcut only when it costs no more than the cells it replaces (+2 %), so a straight piece does
+not slide into a pour edge the search went round. Input: the board with the net already lifted (a handroute2 file
+with only `"lift"`), a start (own copper on one layer in a box), the goal (pads, and copper that stays). Output: a
+hand file with `"lift"`, the tracks per layer and the vias (`"rmun": true`). Spec of the EN_5V1 run:
+`runs/p2r4_en/s12.json`; about 100 s for a 14 x 57 mm box.
+
+**`handroute2.py`** = `handroute.py` with four fixes (use it for any hand file that removes or lifts inner-layer copper
+or adds tracks):
+1. removals on inner layers matched KiCad items by `GetLayerName()`, which returns the USER name ("In2.Cu (signal V +
+   3V3)"), so lifted In2 / In3 copper was never found ("removed 5 of 32 items", nothing written);
+2. the layer table used `LSET.CuStack()`, not wrapped in the KiCad 10 image (AttributeError);
+3. new and removed items' python wrappers are kept alive: a collected wrapper freed the item and `b.Zones()` crashed
+   (segmentation fault, nothing written; the first symptom was a python process spinning at 100 % for 13 min);
+4. a via may carry `"rmun": true` (remove unconnected inner pads, keep start / end, as the router's vias), so the planes
+   keep the narrow antipad. The KiCad step ends with `os._exit(0)` after the save.
+
+**`sheet_flow.py <board> <cu.json> <out.png> [--net=PACK_P] [--layer=In2.Cu] [--box=...] [--px=40] [--draw=hand.json]`**:
+current density of a power net on one layer (dc_score's own grid, every series terminal at its current), with a hand
+file's tracks drawn on top. Use it before choosing where a signal crosses a sheet: on the Monolith In2 PACK_P sheet
+the current runs along the SOUTH edge (x 101 to 118, y 111 to 115) into J113 / R427, and the north-south middle
+carries little (`runs/p2r4_en/flow_e0.png`).
+
+**Measure pieces, not the whole net.** A hand file that holds only part of a net's copper is a cheap experiment
+(handroute2 + dc_score, 40 s): on the kept board the EN_5V1 cost (38 mW) was NOT the In2 stretch y 98 to 113 but its
+south end (y 113 to 121, west along y 113.02 and down x 110.07 through the sheet's south-east tip, where the
+current is densest: 26 mW alone, `runs/p2r4_en/h2c`); the 40 mm north-south In2 run cost the other 12 mW.

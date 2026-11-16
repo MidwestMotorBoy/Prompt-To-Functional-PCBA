@@ -1,0 +1,4 @@
+handroute: 22 hot-loop pours of the plan board are obstacles
+handroute: removing 30 tracks, 2 vias first (lift ['EN_5V1'])
+handroute: 31 segments, 4 vias checked, 0 faults (coordinates for best_routed/monolith_routed.kicad_pcb)
+handroute: wrote /home/claude/repo/docs/layout-teams/B/runs/p2r4_en/h5.kicad_pcb; DRC errors 0 {}; unconnected items 0
