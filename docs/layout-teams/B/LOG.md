@@ -1402,3 +1402,75 @@ Files: `best_routed/` (monolith_routed.kicad_pcb, .kicad_pro, .kicad_dru, summar
 route_failed.txt, post.log, routed/dc.json, routed/hot.json, routed/hot_gate.json, routed/hot_tracks.json,
 routed/loose.log, split/*.log), `runs/p2-m1s/`, `runs/p2-m2s/`, `runs/p2-look/*.png`. The routed board of the run is
 also kept locally at `runs/p2-m1/routed.kicad_pcb` (before the finishing pass) and `finished.kicad_pcb`.
+
+## 2026-11-16 01:50 UTC, worker B (phase 2 round 2): accept-or-revert finishing pass
+
+**Command for the lead** (same straps / filters as the route; `--resume` on an out dir with `routed.kicad_pcb`):
+`--post="finish.sh --modes=aor,aork --min=20 --tol=0.01"`. Start the resume job with a 2 h background timeout
+(the default 30 min one stopped my first scoring run at the hot loops; the pass itself had finished).
+
+**Result on `runs/p2b-m1fin`** (copy of `runs/p2-m1`, final_route.sh --resume, hot loops on; pass 21.5 min, not
+timed out; scoring 11 min):
+
+| | p2-m1 routed / finished before | p2b-m1fin finished |
+|---|---|---|
+| unconnected (KiCad) | 26 | **16** |
+| DRC errors | 0 | 0 |
+| hot_pour_items | 14 tracks, 7 vias (7 nets) | **3 tracks, 3 vias** (CELL1, CELL3, SS_5V, U404-FB) |
+| unconnected_power | 5 (PACK_P In2 island, 3V3 x3, U401.38) | 1 (3V3 In3 island R313.1 / TP301.1) |
+| power_open, loose | none | none |
+| loss | 1.186 W | **1.183 W** |
+| PACK_P J113 / R427 / R527 | 2.11 / 2.23 / 1.57 mohm | 2.11 / 2.22 / 1.55 mohm |
+| hot loops | 7 of 7, 5.56 nH | 7 of 7, 5.56 nH |
+
+Pass 1 (aor): 47 tasks, 11 accepted, 159 pulls: U401.38 (In3 piece edge), R314.1, the U204.10 In3 piece, the PACK_P
+In2 island (C107.1 / R112.2), ACUV, BTST2, WAKE, C313-Pad2, Port 2 LDO_3V3, Port 2 AC_SNS_N; lift of D511-A (the IRQ_N
+and I2CC_SDA hot items went with pieces that other tasks pulled and laid again). Power check 0.6722 -> 0.6689 W (PACK_P + 3V3 + GND at 0.2 mm). Pass 2
+(aork, Kelvin pieces may be pulled): 18 tasks, 0 accepted, dropped by the pass rule. No dead power copper on this board
+(fin_islands.py: every cut-off piece held pads), so fin_dead.py removed nothing.
+
+**Left (16).** Worker A's (9): EN_5V2, Port 2 VBUS, CELL_P, Port 1 CC2, U102-V4, CHG_G, Port 1 VBUS, EN_5V1 x2.
+Not A's (7), each needs a plan / pins.py change rather than more router time (no hand path either: `handroute.py
+--check`, single layer, on the finished board; tries in `runs/p2b-hand/hand.json`):
+- U403.9 ICHG -> R413.1 and U403.10 ILIM -> R414.1: the pin-12 / 13 tracks to R419 / C419 fence R413 / R414; B.Cu
+  under U403 is a no-via area (x 107..116, y 106..114.5). pins.py rows: F.Cu "path" entries south of pins 9 / 10, then
+  east under y 113 past R417, or R413 / R414 moved west of R419 (placement).
+- U403.36 FSW -> R412.1 (2.5 mm): R410 / R411 tracks of U403.34 / 35 in the way; aork pulls fail on BTST1. pins.py
+  row: a via escape of R412.1 or a "path" entry.
+- U101.5 VC1: Kelvin CELL copper and the U101 pin row; aork fails on BTP_INT. pins.py row (via escape of U101.5).
+- SCL at U501.9: the pulls of I2CC_SDA / SDA fail (no other way for them); a pins.py via escape for U501.9.
+- Port 2 TS (TH501.1): boxed by the AC_SNS_N hot pour, no via spot within 1.5 mm: lead's decision (hot-pour trim).
+- 3V3 In3 island (R313.1, TP301.1, 43 mm2): cut off by the In3 tracks of 3V3_SLEEP and SCL across the strap end at
+  90.05,118.17; no legal 3V3 via anywhere in the island (no-via area, In2 BTP_INT / TS1, C207 / DSG_G); tying by route
+  costs 12.6 mW and is refused. Cure in the plan: an In3 no-signal corridor (`ruleareas.py --corridor`) from the strap
+  end 90.05,118.17 south to the island, or route those two nets off In3 there.
+Hot items left: SS_5V and U404-FB both need the 0.59 mm F.Cu strip west of C439.1 between the HL_5V hot pours and
+C439 (lead: trim the hot pour under U404 or move C439 / R434); CELL3 via 118.8,95.0 can be re-laid but costs PACK_P
+(R527 1.55 -> 2.02 mohm, loss +7 mW), refused; CELL1 via 82.2,90.7 is blocked by Kelvin copper (CELL_1N).
+So the DONE gates "unconnected <= 12, all A's", "hot 0 / 0" and "unconnected_power only U401.38" are NOT met (U401.38
+itself is closed); DRC 0, power, loss, J113 / R427 and hot loops are met.
+
+**Second PACK_P via beside 104.05,111.28** (2.11 A, In2 to B.Cu, sits on C209.1, a 2.7 x 1.15 mm B.Cu pad): every
+spot 0.6..1.5 mm away that is in both the In2 and the B.Cu PACK_P copper is on C209.1 (255 of 255), so it needs
+(1) a via-in-pad on C209.1 allowed (the check refuses vias on pads under 1.6 mm; filled / capped via for assembly),
+(2) the F.Cu PPHV pour (Port 1, not a hot pour) carved 0.15 mm round it, (3) clear of the CHG_INH F.Cu track
+south (y >= 111.9). 103.40,111.28 and 104.70,111.28 (0.65 mm W / E, via spacing ok) fail only on (1) and (2).
+
+**Second board, `runs/p2b-full2aor`** (copy of `runs/p2b-full2`: r4, pins only, no trunk; same --post; pass 38 min,
+not timed out, hot loops on): routed 18 unconnected / DRC 3 -> finished **9 unconnected, DRC 0**; loss 2.903 ->
+**2.364 W** (the CELL3 lift and the C313-Pad2 task freed PACK_P copper); power open 3V3 L201 as routed; hot items
+9 tracks 7 vias -> 9 tracks 6 vias (SCL lifted); hot loops 7 of 7, 5.56 nH; J113 / R427 11.6 / 11.4 mohm (this plan
+has no trunk). Left: EN_5V2, EN_5V1 x2, Port 1 / Port 2 VBUS, Port 1 CC2, U102-V4 (A's), Port 2 BAT_SNS_P (the
+`runs/p2b-full2h` hand track closes it) and the 3V3 In3 island at R313.1.
+Fix after this run: a lift task was accepted when it laid the same copper back (U404-FB, "pulls 0, 0 s"); now a lift
+must leave fewer of its net's hot-pour items, or lower the loss by 1 mW (tested on r1 of this run:
+`runs/p2b-hand/lifttest/t.log`, U404-FB now reverted).
+
+**Tools** (worker B): `tools/router_b.py` (`--split`, `--aor`, `--pcheck`, `--lift`, `--aorkelvin`, `--closefill`,
+`--tb`, plane-goal and escape-hit fixes), `tools/finish.sh` (modes aor / aork, fin_islands + fin_dead first),
+`tools/fin_islands.py`, `tools/fin_dead.py`, `tools/fin_report.py`, `tools/handroute.py` (`--keep`, `lift`, `remove`,
+from / to search). README section "Phase 2 round 2: accept-or-revert finishing pass".
+
+Files: `runs/p2b-full2aor/` (final.json, post.log, fin/r1.log, fin/r2.log), `runs/p2b-m1fin/` (final.json, post_pass.log = the pass, post.log, routed/*.json, fin/r1.log, fin/r2.log,
+fin/*.hot.log), `runs/p2b-hand/hand.json` and pictures, `runs/p2b-aor1/` (development runs a1..a5, logs).
+Boards local only: `runs/p2b-m1fin/finished.kicad_pcb`, `runs/p2b-full2aor/finished.kicad_pcb`.

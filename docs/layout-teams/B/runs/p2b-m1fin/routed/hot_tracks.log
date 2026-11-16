@@ -1,0 +1,5 @@
+  /Cells and Gauge/CELL1       0 tracks, 1 vias in the hot pour of GND, x 82.2 to 82.2, y 90.7 to 90.7
+  /Cells and Gauge/CELL3       0 tracks, 1 vias in the hot pour of GND, x 118.8 to 118.8, y 95.0 to 95.0
+  /USB Port 1/SS_5V            3 tracks, 0 vias in the hot pour of GND, x 117.4 to 117.6, y 68.7 to 69.9
+  Net-(U404-FB)                0 tracks, 1 vias in the hot pour of GND, x 118.8 to 118.8, y 65.1 to 65.1
+hot-pour items: 3 tracks, 3 vias on 4 nets

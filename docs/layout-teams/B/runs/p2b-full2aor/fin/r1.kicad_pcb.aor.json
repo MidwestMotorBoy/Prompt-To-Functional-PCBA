@@ -1,0 +1,328 @@
+{
+ "stats": {
+  "pulls": 45,
+  "tasks": 36,
+  "accepted": 6,
+  "reverted": 30
+ },
+ "log": [
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "3V3",
+   "ok": true,
+   "why": "pulls 0, 0 s, KiCad unconnected 18 -> 17, power 2.3979 -> 2.3979 W",
+   "added": [
+    "a8f11526-3d27-49df-9e9d-0e0254949324",
+    "7c6108b7-7471-4494-8812-a4385b1f64c3",
+    "45143efe-17b0-4a15-957c-f4b48fab9a50"
+   ],
+   "removed": []
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "3V3",
+   "ok": true,
+   "why": "pulls 0, 0 s, KiCad unconnected 17 -> 16, power 2.3979 -> 2.3983 W",
+   "added": [
+    "7e4210ef-c978-4f58-9400-85be0ee0fc69",
+    "4fc3d682-e37a-4612-87a4-ad651fc84db8"
+   ],
+   "removed": []
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "3V3",
+   "ok": true,
+   "why": "pulls 0, 0 s, KiCad unconnected 16 -> 15, power 2.3983 -> 2.3983 W",
+   "added": [
+    "3f255100-5073-4602-baf6-c7ea08bdc44d",
+    "70af1c0c-8fe6-4cf2-951a-331d582bcf5f",
+    "82409974-4d10-48e4-80f0-3e8154e5b0ee"
+   ],
+   "removed": []
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "3V3",
+   "ok": false,
+   "why": "power: loss 2.4011 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "3V3",
+   "ok": true,
+   "why": "pulls 0, 1 s, KiCad unconnected 15 -> 14, power 2.3983 -> 2.3983 W",
+   "added": [
+    "d11501c1-1caf-4894-8259-0cfb30547f87",
+    "d583a744-8a68-45f3-b1d1-f42e0a2d652e",
+    "2df6a309-9298-4693-b614-688699ed76e4",
+    "f02349e7-9374-4e19-b422-9263feb51c45",
+    "78c3c991-bfed-402c-b42d-b381020ab8cf",
+    "46e1f3d9-2982-47cb-aa4b-4bbb8d6a3bf7",
+    "f9237be2-349b-4772-9c9f-bf7a5989f38f",
+    "5a960f25-3805-4eaf-b0c7-bf1c97164a31",
+    "855cb1fb-a684-4d10-b1c8-d58db1b87230",
+    "7755d0f5-0364-46e1-b9a8-fb81fa39a024",
+    "f7fd75a3-de8c-4de0-93eb-b542178b7504"
+   ],
+   "removed": []
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "PACK_P",
+   "ok": false,
+   "why": "power: PACK_P to U204 2.76 mohm (start 2.45)"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "Net-(C313-Pad2)",
+   "ok": false,
+   "why": "power: PACK_P to U504 8.27 mohm (start 7.35)"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "Net-(U102-V4)",
+   "ok": false,
+   "why": "Net-(U102-VDD): blocked by Kelvin copper"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "EN_5V1: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "EN_5V2",
+   "ok": false,
+   "why": "EN_5V2: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "/USB Port 2/LDO_3V3",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "/USB Port 2/AC_SNS_N",
+   "ok": true,
+   "why": "pulls 0, 0 s, KiCad unconnected 14 -> 13, power 2.3983 -> 2.3983 W",
+   "added": [
+    "20dd8f5a-c398-4664-83ce-3532102ff475",
+    "4e84d1ca-c1f0-4c84-adb3-e82aa3c7c9d8",
+    "80656697-c53f-4f02-b4c3-63f45529ece8",
+    "64c3e8de-a0e2-4f40-a032-813c80a71a9b",
+    "e5c151a8-35a2-4d94-8286-5efe38d30170"
+   ],
+   "removed": []
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "/USB Port 1/CC2",
+   "ok": false,
+   "why": "/USB Port 1/CC2 failed (tries)"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "/Cells and Gauge/CELL_P",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "EN_5V1: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /USB Port 2/REGN",
+   "ok": false,
+   "why": "power: loss 2.4577 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /USB Port 1/SS_5V",
+   "ok": false,
+   "why": "/USB Port 1/SS_5V: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift Net-(U404-FB)",
+   "ok": true,
+   "why": "pulls 0, 0 s, KiCad unconnected 13 -> 13, power 2.3983 -> 2.3983 W",
+   "added": [
+    "d3826582-a6af-49ec-998d-ce43b2130140"
+   ],
+   "removed": [
+    "3c51cd22-91ae-4864-ab51-d72157803358"
+   ]
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /Cells and Gauge/CELL3",
+   "ok": false,
+   "why": "power: PACK_P to U204 2.76 mohm (start 2.45)"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift IRQ_N",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift SCL",
+   "ok": false,
+   "why": "SCL: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /USB Port 2/I2CC_SDA",
+   "ok": false,
+   "why": "power: loss 2.4129 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 1,
+   "kind": "lift",
+   "name": "lift /USB Port 1/CHG_INT",
+   "ok": false,
+   "why": "power: loss 2.5201 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "3V3",
+   "ok": false,
+   "why": "power: loss 2.4009 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "PACK_P",
+   "ok": false,
+   "why": "/Cells and Gauge/CELL3: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "Net-(C313-Pad2)",
+   "ok": false,
+   "why": "power: PACK_P to U504 8.33 mohm (start 7.35)"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "Net-(U102-V4)",
+   "ok": false,
+   "why": "Net-(U102-V2): blocked by Kelvin copper"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "EN_5V1: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "EN_5V2",
+   "ok": false,
+   "why": "EN_5V2: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "/USB Port 2/LDO_3V3",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "/USB Port 1/CC2",
+   "ok": false,
+   "why": "/USB Port 1/CC2 failed (tries)"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "/Cells and Gauge/CELL_P",
+   "ok": false,
+   "why": "IRQ_N: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "open",
+   "name": "EN_5V1",
+   "ok": false,
+   "why": "EN_5V1: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "lift",
+   "name": "lift /USB Port 2/REGN",
+   "ok": false,
+   "why": "power: loss 2.4578 W (now 2.3983, start 2.3979)"
+  },
+  {
+   "sweep": 2,
+   "kind": "lift",
+   "name": "lift /USB Port 1/SS_5V",
+   "ok": false,
+   "why": "/USB Port 1/SS_5V: no way even with every rip-able route gone"
+  },
+  {
+   "sweep": 2,
+   "kind": "lift",
+   "name": "lift /Cells and Gauge/CELL3",
+   "ok": false,
+   "why": "/Cells and Gauge/CELL3: no way even with every rip-able route gone"
+  }
+ ],
+ "open_left": [
+  "3V3 Pad 1 [3V3] of J301 on F.Cu",
+  "PACK_P PlanePiece In2 #1 [PACK_P]",
+  "Net-(C313-Pad2) Pad 2 [Net-(C313-Pad2)] of C313 on F.Cu",
+  "Net-(U102-V4) Pad 2 [Net-(U102-V4)] of U102 on F.Cu",
+  "EN_5V1 Pad 2 [EN_5V1] of U404 on F.Cu",
+  "EN_5V2 Pad 2 [EN_5V2] of U504 on F.Cu",
+  "/USB Port 2/LDO_3V3 Track [/USB Port 2/LDO_3V3] on F.Cu, length 1.0600 mm",
+  "/USB Port 1/CC2 Track [/USB Port 1/CC2] on F.Cu, length 1.0996 mm",
+  "/Cells and Gauge/CELL_P Via [/Cells and Gauge/CELL_P] on F.Cu - B.Cu",
+  "EN_5V1 Pad 12 [EN_5V1] of U301 on F.Cu"
+ ],
+ "lifts_left": [
+  "/USB Port 2/REGN",
+  "/USB Port 1/SS_5V",
+  "/Cells and Gauge/CELL3",
+  "IRQ_N",
+  "SCL",
+  "/USB Port 2/I2CC_SDA",
+  "/USB Port 1/CHG_INT"
+ ]
+}

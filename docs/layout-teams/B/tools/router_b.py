@@ -21,6 +21,9 @@ from PIL import Image, ImageDraw
 import json
 import time as _tm
 _T_START = _tm.time()                     # team B: wall clock at start (--deadline)
+if any(a.startswith("--tb=") for a in sys.argv):          # team B: Python stack of every thread every S seconds (where time goes)
+    import faulthandler
+    faulthandler.dump_traceback_later(float([a for a in sys.argv if a.startswith("--tb=")][0][5:]), repeat=True)
 PCB, RPT, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 OPT = dict(a[2:].split("=", 1) if "=" in a else (a[2:], "1") for a in sys.argv[4:] if a.startswith("--"))
 MAX_EDGES = int(OPT.get("max", 10 ** 6))
@@ -88,8 +91,10 @@ if CONT:
     _nrem = 0
     for _u, _t in _laid.items():
         _n = str(_t.GetNetname())
-        if _n in RENETS and "keepre" in OPT and _n in UNETS:
+        if _n in RENETS and "keepre" in OPT and _n in UNETS and not ("aor" in OPT and "split" in OPT and "aorfixopen" not in OPT):
             pass                                          # --keepre: the open nets keep what they have (fixed); only their open connections are routed
+        elif _n in RENETS and "keepre" in OPT and _n in UNETS:
+            LAIDU.add(_u); CONT_ITEMS.setdefault(_t.GetNetCode(), []).append(_t)   # team B --aor --split: rip-able pieces too
         elif _n in RENETS:
             board.Remove(_t); _nrem += 1
         elif _n not in ("GND", "PACK_P", "3V3"):
@@ -367,6 +372,8 @@ for _fp in board.GetFootprints():
             for li, lay in enumerate(LAYERS):
                 if z.IsOnLayer(lay):
                     mark_ko(li, z)
+CLOSEFILL = [n_ for n_ in OPT.get("closefill", "").split(",") if n_]   # team B: soft fills closed to new channels
+NCLOSE = [0]
 HOTREFS = [r_ for r_ in OPT.get("hotko", "").split(",") if r_]    # team B: parts of the hot loops (caps, FETs, regulators)
 NHOT = [0]
 for z in board.Zones():
@@ -386,11 +393,17 @@ for z in board.Zones():
                 mark_poly2(li, n, _fp_, growp(n))   # team B --hotko: a hot-loop pour stays closed to other nets
                 NHOT[0] += 1
                 continue
+        if soft(z) and z.GetNetname() in CLOSEFILL:      # team B --closefill: no NEW channel through this net's fill
+            mark_poly2(li, n, z.GetFilledPolysList(lay), 0.0)   # (old channels, where routes ran, stay open)
+            NCLOSE[0] += 1
+            continue
         if soft(z):
             continue                       # plane / ground fills: signals may cut them (refill carves around them)
         mark_poly2(li, n, z.GetFilledPolysList(lay), growp(n))
 if HOTREFS:
     print("hot-loop pours closed to other nets (--hotko):", NHOT[0], flush=True)
+if CLOSEFILL:
+    print("fills closed to new channels (--closefill=%s): %d" % (",".join(CLOSEFILL), NCLOSE[0]), flush=True)
 # room for the In2 GND fill's thermal spokes round GND through-hole pads (a signal hugging the pad starves them)
 for fp in board.GetFootprints():
     for q in fp.Pads():
@@ -684,6 +697,8 @@ for _fp in board.GetFootprints():
         padv[max(_cy0, 0):_cy1 + 1, max(_cx0, 0):_cx1 + 1] = 1
 
 
+TDEAD = [0.0]                             # team B --aor: wall-clock end of the current task (0: none)
+import time
 _DIRS = ((1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0), (1, 1, 1.414), (1, -1, 1.414), (-1, 1, 1.414), (-1, -1, 1.414))
 
 
@@ -770,7 +785,7 @@ def astar(net, starts, goals, win, wh=1.0, cap=None, gmask=None, gndvia=False, g
             goal_idx = idx
             break
         seen += 1
-        if seen > cap:
+        if seen > cap or (TDEAD[0] and not seen & 4095 and time.time() > TDEAD[0]):   # team B: --aor task deadline
             STAT[0] = -seen
             return None
         d0, sv, lc, f_li = rec[2], rec[3], LCOST[li], fm[li]
@@ -1318,6 +1333,7 @@ def unroute(eid, out=None):
     out = [] if out is None else out
     R = ROUTES.pop(eid)
     out.append(eid)
+    _PULLED_ITEMS[eid] = R["items"]                       # team B --aor: Kelvin length check
     add_hist(R["items"], R["net"])
     drop_items(R["items"], R["net"])
     for d in sorted(DEPS.pop(eid, ())):
@@ -1408,7 +1424,17 @@ def route_edge(eid, ghost=False):
         gm = [(zc[li] == n) & ((gsrc[li] == n) | (gsrc[li] == EMPTY)) for li in range(len(LAYERS))]
         if n in ISO:                                      # tracks, vias and pads already joined to the main body count too
             gm = [gm[li] | ((copper[li] == n) & (gsrc[li] == n) & ~ISO[n][li] & ~ZALL[n][li]) for li in range(len(LAYERS))]
-        if any(g[win[1]:win[3], win[0]:win[2]].any() for g in gm):
+        if "pieces" in OPT and (name in PLANE_NETS or name == "GND") and bd.startswith("Zone"):
+            # team B: with --pieces the goal is the main body only; never the piece's own copper (item_cells of a
+            # 'Zone' end are the copper round the START), so the window grows until it holds main-body cells
+            for _grow in (12.0, 30.0, 80.0):
+                if any(g[win[1]:win[3], win[0]:win[2]].any() for g in gm):
+                    break
+                wx0, wy0 = cell(min(A[0], B[0]) - _grow, min(A[1], B[1]) - _grow)
+                wx1, wy1 = cell(max(A[0], B[0]) + _grow, max(A[1], B[1]) + _grow)
+                win = (max(wx0, 0), max(wy0, 0), min(wx1, NX), min(wy1, NY))
+            goals, gmask = [], gm
+        elif any(g[win[1]:win[3], win[0]:win[2]].any() for g in gm):
             goals, gmask = [], gm
     WH, CAP = (1.15, NODE_CAP) if dist < 15 else ((1.5, NODE_CAP) if dist < 30 else (1.9, (5 if PHASE[0] else 2) * NODE_CAP))
     CAP = int(CAP * float(OPT.get("capx", 1)))
@@ -1430,6 +1456,14 @@ def route_edge(eid, ghost=False):
         return path
     if path is None:                                      # retry from / to escape stubs on fine-pitch pins
         ea = escape(ad, A[0], A[1], n, added)
+        if ea and ESC_HIT[0] and ("aor" in OPT or "strictesc" in OPT):
+            # team B: the stub end must land on the GOAL (its own start's copper also reads as 'net copper'), and a
+            # stub that is the connection is no fan-out stub (the clean-up at the end would cut it back)
+            _c = ea[0]
+            ESC_HIT[0] = bool(gmask[_c[0]][_c[2], _c[1]]) if gmask is not None else \
+                any(g[0] == _c[0] and abs(g[1] - _c[1]) <= 1 and abs(g[2] - _c[2]) <= 1 for g in goals)
+            if ESC_HIT[0] and STUBS:
+                ALLSTUBS[:] = [s_ for s_ in ALLSTUBS if s_[1] is not STUBS[-1]]
         if ea and ESC_HIT[0]:
             ROUTES[eid] = dict(net=n, items=CUR[0], rips=0)
             CUR[0] = None
@@ -1457,6 +1491,95 @@ def route_edge(eid, ghost=False):
 from collections import deque
 FAILINFO, RIPS, LASTPULL, WHYFAIL = {}, {}, {}, {}
 PSEUDO = {}                                               # route id -> net name, for the copper a continuation starts with
+PEDGES = {}                                               # team B --split: route id -> the edges that lay that piece again
+PADS_OF = {}
+for _fp in board.GetFootprints():
+    for _q in _fp.Pads():
+        PADS_OF.setdefault(_q.GetNetCode(), []).append(_q)
+
+
+def _pad_at(n, p, li):
+    """A pad of net n that holds point p (mm) on routing layer li (li -1: any layer), or None."""
+    v = pcbnew.VECTOR2I(mm(p[0]), mm(p[1]))
+    for q in PADS_OF.get(n, ()):
+        if (li < 0 or q.HasHole() or q.IsOnLayer(LAYERS[li])) and q.HitTest(v):
+            return q
+    return None
+
+
+def _touch(it, p, li, slack=0.01):
+    """True when point p on layer li (-1: a via, every layer) lies on item it (obj, kind, li, a, b, half)."""
+    _o, k, l2, a, b, h = it
+    if k == "V":
+        return math.hypot(a[0] - p[0], a[1] - p[1]) <= h + slack
+    if li >= 0 and l2 != li:
+        return False
+    return _seg_pt(a[0], a[1], b[0], b[1], p[0], p[1]) <= h + slack
+
+
+def _pad_desc(q):
+    ref, num, nm = q.GetParentFootprint().GetReference(), q.GetNumber(), q.GetNetname()
+    if q.HasHole():
+        return "PTH pad %s [%s] of %s" % (num, nm, ref)
+    return "Pad %s [%s] of %s on %s" % (num, nm, ref, "F.Cu" if q.IsOnLayer(pcbnew.F_Cu) else "B.Cu")
+
+
+def split_pieces(n, items):
+    """Team B --split: the routed copper of one net cut into pieces (items joined end to end or in a T, never through a
+    pad) and, per piece, the edges (a shortest tree over the pads / fixed copper / pour it ties) that lay it again."""
+    N = len(items); par = list(range(N))
+    def find(i):
+        while par[i] != i:
+            par[i] = par[par[i]]; i = par[i]
+        return i
+    def ends(it):
+        return [(it[3], -1)] if it[1] == "V" else [(it[3], it[2]), (it[4], it[2])]
+    for i in range(N):
+        for j in range(i + 1, N):
+            if any(_touch(it2, p, li) and _pad_at(n, p, li) is None
+                   for it1, it2 in ((items[i], items[j]), (items[j], items[i])) for p, li in ends(it1)):
+                par[find(i)] = find(j)
+    fixed = [(t, "V" if t.GetClass() == "PCB_VIA" else "T") for t in TRK_BY_NET.get(n, ()) if t.m_Uuid.AsString() not in LAIDU]
+    fixed_it = []
+    for t, k in fixed:
+        if k == "V":
+            c = t.GetPosition(); fixed_it.append((t, "V", -1, (MM(c.x), MM(c.y)), (MM(c.x), MM(c.y)), MM(t.GetWidth(pcbnew.F_Cu)) / 2))
+        elif t.GetLayer() in LAYERS:
+            a, b = t.GetStart(), t.GetEnd()
+            fixed_it.append((t, "T", LAYERS.index(t.GetLayer()), (MM(a.x), MM(a.y)), (MM(b.x), MM(b.y)), MM(t.GetWidth()) / 2))
+    nm = str(board.FindNet(n).GetNetname())
+    groups = {}
+    for i in range(N):
+        groups.setdefault(find(i), []).append(items[i])
+    out = []
+    for grp in groups.values():
+        anchors, zone = {}, None
+        for it in grp:
+            for p, li in ends(it):
+                q = _pad_at(n, p, li)
+                if q is not None:
+                    c = q.GetPosition(); anchors[("P", _pad_desc(q))] = (MM(c.x), MM(c.y), _pad_desc(q)); continue
+                f = next((fi for fi in fixed_it if _touch(fi, p, li)), None)
+                if f is not None:
+                    L = "F.Cu" if f[2] in (0, -1) else pcbnew.BOARD.GetStandardLayerName(LAYERS[f[2]])
+                    k_ = ("F", round(p[0], 2), round(p[1], 2))
+                    anchors[k_] = (p[0], p[1], ("Via [%s] on F.Cu - B.Cu" % nm) if f[1] == "V" else ("Track [%s] on %s" % (nm, L)))
+                    continue
+                cx, cy = cell(*p)
+                if 0 <= cx < NX and 0 <= cy < NY and any(zc[l][cy, cx] == n for l in ([li] if li >= 0 else range(len(LAYERS)))):
+                    zone = "Zone [%s]" % nm
+        A = list(anchors.values()); pe = []
+        if A:                                             # Prim over the anchors
+            inT = [A[0]]; rest = A[1:]
+            while rest:
+                d, a, b = min((math.hypot(a[0] - b[0], a[1] - b[1]), a, b) for a in inT for b in rest)
+                pe.append((4, d, nm, a, b)); inT.append(b); rest.remove(b)
+            if zone:
+                pe.append((4, 0.5, nm, A[0], (A[0][0], A[0][1], zone)))
+        out.append((grp, pe))
+    return out
+
+
 if CONT:
     snapshot()                                            # the fixed world: hand copper, pads, pours
     for _k, (_n, _ts) in enumerate(sorted(CONT_ITEMS.items())):
@@ -1468,6 +1591,16 @@ if CONT:
             elif _t.GetLayer() in LAYERS:
                 _a, _b = _t.GetStart(), _t.GetEnd()
                 _items.append((_t, "T", LAYERS.index(_t.GetLayer()), (MM(_a.x), MM(_a.y)), (MM(_b.x), MM(_b.y)), MM(_t.GetWidth()) / 2))
+        if "split" in OPT:                                # team B --split: one rip-able route per piece, re-laid pad to pad
+            for _grp, _pe in split_pieces(_n, _items):
+                _id = 10 ** 6 + len(PSEUDO)
+                ROUTES[_id] = dict(net=_n, items=_grp, rips=0)
+                PSEUDO[_id] = str(board.FindNet(_n).GetNetname())
+                PEDGES[_id] = _pe
+                remark(_grp, _n)
+                if OPT.get("piecedbg") and re.search(OPT["piecedbg"], PSEUDO[_id]):
+                    print("PIECE %d %s: %d items, re-laid by %s" % (_id, PSEUDO[_id], len(_grp), [(e[3][2], e[4][2], round(e[1], 2)) for e in _pe]), flush=True)
+            continue
         ROUTES[10 ** 6 + _k] = dict(net=_n, items=_items, rips=0)
         PSEUDO[10 ** 6 + _k] = str(board.FindNet(_n).GetNetname()) if board.FindNet(_n) else None
         remark(_items, _n)
@@ -1508,6 +1641,303 @@ if "ghostonly" in OPT:      # w3: placement check only: which edges have no path
                                 gridv=np.array([g[cy0:cy1, cx0:cx1] for g in FIX["gridv"]]), box=np.array([X0 + cx0 * G, Y0 + cy0 * G, G]),
                                 nets=np.array([[str(k), v.GetNetCode()] for k, v in board.GetNetsByName().items()]))
     sys.exit(0)
+# ---- team B --aor: accept-or-revert, one task at a time -------------------------------------------------------------
+# A task is one open connection (shortest first) or, with --lift=<hot_tracks.json>, one routed piece that lies in a
+# hot-loop pour (lifted and laid again with the pours closed). The router state and the board are saved before the task;
+# the task may pull rip-able routes (--taskrips, --tasktime) but must lay every pulled route again. If it does not (or
+# hits its budget), everything is put back as it was. Sweeps repeat while a sweep accepted something and time is left.
+def _aor_save():
+    return dict(
+        g=[[a.copy() for a in arr] for arr in (grid, gridv, gridh, gridvh, copper)],
+        routes=dict(ROUTES), deps={k: set(v) for k, v in DEPS.items()}, rips=dict(RIPS), lastpull=dict(LASTPULL),
+        fail=dict(FAILINFO), why=dict(WHYFAIL), nedges=len(edges), added=list(added), stubs=list(ALLSTUBS),
+        holes={k: list(v) for k, v in HOLES.items()}, trk={k: list(v) for k, v in TRK_BY_NET.items()},
+        board={t.m_Uuid.AsString(): t for t in board.GetTracks()})
+
+
+def _aor_restore(S):
+    for arr, sv in zip((grid, gridv, gridh, gridvh, copper), S["g"]):
+        for a, b in zip(arr, sv):
+            np.copyto(a, b)
+    ROUTES.clear(); ROUTES.update(S["routes"]); DEPS.clear(); DEPS.update(S["deps"])
+    RIPS.clear(); RIPS.update(S["rips"]); LASTPULL.clear(); LASTPULL.update(S["lastpull"])
+    FAILINFO.clear(); FAILINFO.update(S["fail"]); WHYFAIL.clear(); WHYFAIL.update(S["why"])
+    del edges[S["nedges"]:]
+    added[:] = S["added"]; ALLSTUBS[:] = S["stubs"]
+    HOLES.clear(); HOLES.update(S["holes"]); HOLE_CACHE.clear()
+    TRK_BY_NET.clear(); TRK_BY_NET.update(S["trk"])
+    cur = {t.m_Uuid.AsString(): t for t in board.GetTracks()}
+    for u, t in cur.items():
+        if u not in S["board"]:
+            board.Remove(t)
+    for u, t in S["board"].items():
+        if u not in cur:
+            board.Add(t)
+
+
+def _aor_frozen(b):
+    """Routes a task may not pull: Kelvin copper (unless --aorkelvin: then it is pulled and laid again like any other)."""
+    if "aorkelvin" in OPT:
+        return False
+    if b in PSEUDO:
+        return bool(PSEUDO[b] and KELV.search(PSEUDO[b]))
+    return b < len(edges) and edges[b][0] == 0
+
+
+AOR_STATS = dict(pulls=0, tasks=0, accepted=0, reverted=0)
+
+
+def _aor_task(first, lift=None):
+    """Run one task on the live state; True when every edge in its queue got laid within the budget."""
+    t0 = time.time(); pulls = 0
+    tmax, pmax = float(OPT.get("tasktime", 90)), int(OPT.get("taskrips", 12))
+    TDEAD[0] = t0 + tmax if DEADLINE_A <= 0 else min(t0 + tmax, _T_START + DEADLINE_A)
+    try:
+        return _aor_run(first, lift, t0, tmax, pmax)
+    finally:
+        TDEAD[0] = 0.0
+
+
+def _aor_run(first, lift, t0, tmax, pmax):
+    pulls = 0
+    KLEN.clear(); _PULLED_ITEMS.clear()
+    q = deque(first)
+    if lift is not None:                                  # lift the piece (and what hangs on it), lay it again
+        pl = []
+        unroute(lift, pl)
+        for b in pl:
+            q.extend(_aor_requeue(b))
+    tries = {}
+    while q:
+        if time.time() - t0 > tmax or _aor_late():
+            return False, "budget (%.0f s)" % (time.time() - t0)
+        e = q.popleft()
+        if "aordebug" in OPT:
+            print("    aor edge %s %s -> %s (%.0f s, queue %d)" % (edges[e][2], edges[e][3][2][:40], edges[e][4][2][:40], time.time() - t0, len(q)), flush=True)
+        if route_edge(e):
+            FAILINFO.pop(e, None); continue
+        tries[e] = tries.get(e, 0) + 1
+        if tries[e] > 3 or pulls >= pmax:
+            return False, "%s failed (%s)" % (edges[e][2], "pulls %d" % pulls if pulls >= pmax else "tries")
+        gp = route_edge(e, ghost=True)
+        if gp is None:
+            return False, "%s: no way even with every rip-able route gone" % edges[e][2]
+        bl = [b for b in blockers(gp, board.FindNet(edges[e][2]).GetNetCode()) if b in ROUTES]
+        if not bl:
+            return False, "%s: ghost path found no blocker" % edges[e][2]
+        if any(_aor_frozen(b) for b in bl):
+            return False, "%s: blocked by Kelvin copper" % edges[e][2]
+        pulled = []
+        for b in bl:
+            if b in ROUTES:
+                RIPS[b] = RIPS.get(b, 0) + 1
+                unroute(b, pulled)
+        pulls += len(pulled); AOR_STATS["pulls"] += len(pulled)
+        q.appendleft(e)
+        back = []
+        for b in pulled:
+            ids = _aor_requeue(b)
+            back += ids
+            if _kelvin(b):                                # --aorkelvin: remember how long the Kelvin copper was
+                KLEN.append((PSEUDO.get(b) or edges[b][2], _ilen(_PULLED_ITEMS.get(b, [])), ids))
+        q.extend(back)                                    # the target first, then what it pulled
+    for nm_, old_, ids_ in KLEN:                          # a Kelvin piece laid again may be at most 1.3 x + 1 mm longer
+        new_ = sum(_ilen(ROUTES[i_]["items"]) for i_ in ids_ if i_ in ROUTES)
+        if new_ > 1.3 * old_ + 1.0:
+            return False, "Kelvin %s laid again %.1f mm long (was %.1f)" % (nm_, new_, old_)
+    return True, "pulls %d, %.0f s%s" % (pulls, time.time() - t0, "".join(", Kelvin %s %.1f -> %.1f mm" % (
+        k_[0], k_[1], sum(_ilen(ROUTES[i_]["items"]) for i_ in k_[2] if i_ in ROUTES)) for k_ in KLEN))
+
+
+KLEN, _PULLED_ITEMS = [], {}
+
+
+def _kelvin(b):
+    return bool(PSEUDO.get(b) and KELV.search(PSEUDO[b])) if b in PSEUDO else (b < len(edges) and edges[b][0] == 0)
+
+
+def _ilen(items):
+    return sum(math.hypot(b_[0] - a_[0], b_[1] - a_[1]) for o_, k_, l_, a_, b_, h_ in items if k_ == "T")
+
+
+def _aor_requeue(b):
+    """Edge ids that lay a pulled route again."""
+    if b in PSEUDO:
+        re_ = PEDGES[b] if b in PEDGES else ORIG.get(PSEUDO[b], [])
+        ids = list(range(len(edges), len(edges) + len(re_)))
+        edges.extend(re_)
+        return ids
+    return [b]
+
+
+def _aor_late():
+    return DEADLINE_A > 0 and time.time() - _T_START > DEADLINE_A
+
+
+DEADLINE_A = float(OPT.get("deadline", 0))
+AOR_LOG = []
+KCHECK = "nokcheck" not in OPT
+
+
+def _kopen():
+    board.BuildConnectivity()
+    return board.GetConnectivity().GetUnconnectedCount(False)
+
+
+# team B --pcheck=<cu.json>:<constraints.json>[:tol W per task[:budget W]]: after each task KiCad refills the GND / PACK_P
+# / 3V3 zones and tools/copper/dc_score.py (copied beside this file, shapely in the PYTHONPATH) solves PACK_P and 3V3 at
+# 0.1 mm and GND at 0.2 mm. The task stays only if the sum of their losses is no more than tol above the board as it
+# stands and budget above the start, no power terminal opens, and no PACK_P terminal resistance passes 3.0 mohm (when it
+# started below) or rises more than 0.1 mohm.
+PCHK = OPT.get("pcheck")
+if PCHK and "aor" in OPT:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import dc_score as _dcs
+    from roles import Design as _Design
+    _pcp = PCHK.split(":")
+    _PD = _Design(_pcp[0], _pcp[1])
+    PC_TOL = float(_pcp[2]) if len(_pcp) > 2 else 0.001
+    PC_BUD = float(_pcp[3]) if len(_pcp) > 3 else 0.005
+    _pl = _PD.D["layers"]; _pst = {s_["layer"]: s_ for s_ in _PD.D["stackup"]}
+    _prs = {L: _dcs.RHO / (_pst[L]["t_mm"] * 1e-3) for L in _pl}; _pz = {L: _pst[L]["z_mm"] for L in _pl}
+
+
+def _power():
+    zs = [z for z in board.Zones() if not z.GetIsRuleArea() and z.GetNetname() in ("PACK_P", "GND", "3V3")]
+    pcbnew.ZONE_FILLER(board).Fill(zs)
+    board.Save(OUT + ".pc.kicad_pcb")
+    Z_, S_, V_ = _dcs.load_copper(OUT + ".pc.kicad_pcb")
+    loss, R, op = 0.0, {}, []
+    for net_, res_ in (("PACK_P", 0.1), ("3V3", 0.1), ("GND", 0.2)):
+        r_ = _dcs.score_net(_PD, Z_, S_, V_, net_, res_, _pl, _prs, _pz, None)
+        if r_ is None:
+            continue
+        loss += r_.get("loss_W", 0.0); op += ["%s:%s" % (net_, o_) for o_ in r_.get("open", [])]
+        if net_ == "PACK_P":
+            R = {t_["ref"]: t_.get("R_mohm") for t_ in r_["terminals"] if t_.get("R_mohm") is not None}
+    return dict(loss=round(loss, 5), R=R, open=sorted(op))
+
+
+def _power_ok(P, P0, Pc):
+    if P["loss"] > Pc["loss"] + PC_TOL or P["loss"] > P0["loss"] + PC_BUD:
+        return "loss %.4f W (now %.4f, start %.4f)" % (P["loss"], Pc["loss"], P0["loss"])
+    if not set(P["open"]) <= set(P0["open"]):
+        return "power open %s" % P["open"]
+    for k_, v_ in P["R"].items():
+        r0_ = P0["R"].get(k_, v_)
+        if (r0_ <= 3.0 < v_) or v_ > r0_ + 0.1:
+            return "PACK_P to %s %.2f mohm (start %.2f)" % (k_, v_, r0_)
+    return None
+if "aor" in OPT and CONT:
+    snapshot_done = bool(FIX)
+    targets = sorted(range(len(edges)), key=lambda e: (edges[e][1], e))
+    LIFTS = []
+    if "lift" in OPT:                                     # pieces with copper in a hot-loop pour (tools/hot_tracks.py json)
+        _hl = json.load(open(OPT["lift"]))["items"]
+        for _it in _hl:
+            _n = board.FindNet(_it["net"]); _n = _n.GetNetCode() if _n else None
+            for _b, _R in ROUTES.items():
+                if _R["net"] != _n or _b in LIFTS:
+                    continue
+                if any((k == "V" and _it["kind"] == "via" and math.hypot(a[0] - _it["a"][0], a[1] - _it["a"][1]) < 0.01) or
+                       (k == "T" and _it["kind"] == "track" and {(round(a[0], 3), round(a[1], 3)), (round(b[0], 3), round(b[1], 3))} ==
+                        {(round(_it["a"][0], 3), round(_it["a"][1], 3)), (round(_it["b"][0], 3), round(_it["b"][1], 3))})
+                       for _o, k, li, a, b, h in _R["items"]):
+                    LIFTS.append(_b)
+        print("aor: %d hot-pour items in %d rip-able pieces to lift" % (len(_hl), len(LIFTS)), flush=True)
+
+        def _hot_left(net):                               # hot-pour items of that net still on the board (same geometry)
+            have = set()
+            for t in board.GetTracks():
+                if t.GetNetname() != net:
+                    continue
+                if t.GetClass() == "PCB_VIA":
+                    p_ = t.GetPosition(); have.add(("via", round(pcbnew.ToMM(p_.x), 2), round(pcbnew.ToMM(p_.y), 2)))
+                else:
+                    a_, b_ = t.GetStart(), t.GetEnd()
+                    have.add(("track",) + tuple(sorted([(round(pcbnew.ToMM(a_.x), 3), round(pcbnew.ToMM(a_.y), 3)),
+                                                         (round(pcbnew.ToMM(b_.x), 3), round(pcbnew.ToMM(b_.y), 3))])))
+            n = 0
+            for it in _hl:
+                if it["net"] != net:
+                    continue
+                if it["kind"] == "via":
+                    n += ("via", round(it["a"][0], 2), round(it["a"][1], 2)) in have
+                else:
+                    n += ("track",) + tuple(sorted([(round(it["a"][0], 3), round(it["a"][1], 3)), (round(it["b"][0], 3), round(it["b"][1], 3))])) in have
+            return n
+    order = OPT.get("aororder", "open,lift")
+    if PCHK:
+        _t = time.time(); P0 = _power(); PCUR = dict(P0)
+        print("aor power check: start %.4f W (PACK_P + 3V3 + GND@0.2), PACK_P %s, open %s (%.0f s)" % (P0["loss"], P0["R"], P0["open"], time.time() - _t), flush=True)
+    open_left = list(targets)
+    lift_left = list(LIFTS)
+    sweep = 0
+    while True:
+        sweep += 1; acc = 0
+        for kind in order.split(","):
+            todo = open_left if kind == "open" else lift_left
+            for tk in list(todo):
+                if _aor_late():
+                    break
+                if kind == "open" and tk in ROUTES:
+                    todo.remove(tk); continue
+                if kind == "lift" and tk not in ROUTES:   # went with another task: done
+                    todo.remove(tk); continue
+                S = _aor_save(); AOR_STATS["tasks"] += 1
+                u0 = _kopen() if KCHECK else 0
+                if kind == "lift":
+                    _ni = board.GetNetInfo().GetNetItem(ROUTES[tk]["net"])
+                    _lnet = _ni.GetNetname() if _ni else None; h0 = _hot_left(_lnet) if _lnet else 0
+                ok, why = _aor_task([tk] if kind == "open" else [], tk if kind == "lift" else None)
+                hstay = None
+                if ok and kind == "lift" and _lnet:       # a lift must take hot-pour copper out (or lower the loss below)
+                    h1 = _hot_left(_lnet)
+                    if h1 >= h0:
+                        hstay = "lift: hot-pour items of the net %d -> %d" % (h0, h1)
+                if ok and KCHECK:                         # KiCad's own count (fills as they stand) must agree
+                    u1 = _kopen()
+                    if u1 > u0 or (kind == "open" and u1 == u0):
+                        ok, why = False, "KiCad connectivity: unconnected %d -> %d" % (u0, u1)
+                    else:
+                        why += ", KiCad unconnected %d -> %d" % (u0, u1)
+                filled = False
+                if ok and PCHK:
+                    P = _power(); filled = True; bad = _power_ok(P, P0, PCUR)
+                    if bad:
+                        ok, why = False, "power: " + bad
+                    elif hstay and P["loss"] > PCUR["loss"] - 0.001:
+                        ok, why = False, hstay + ", loss not lower"
+                    else:
+                        why += ", power %.4f -> %.4f W" % (PCUR["loss"], P["loss"]); PCUR = P
+                if ok and hstay and not PCHK:
+                    ok, why = False, hstay
+                name = edges[tk][2] if kind == "open" else "lift " + str(PSEUDO.get(tk))
+                if ok:
+                    acc += 1; AOR_STATS["accepted"] += 1; todo.remove(tk)
+                    _now = {t.m_Uuid.AsString() for t in board.GetTracks()}
+                    newu = [u for u in _now if u not in S["board"]]
+                    goneu = [u for u in S["board"] if u not in _now]
+                    AOR_LOG.append(dict(sweep=sweep, kind=kind, name=name, ok=True, why=why, added=newu, removed=goneu))
+                else:
+                    _aor_restore(S); AOR_STATS["reverted"] += 1
+                    if filled:                            # the fills are the rejected task's: fill again
+                        pcbnew.ZONE_FILLER(board).Fill([z for z in board.Zones() if not z.GetIsRuleArea() and z.GetNetname() in ("PACK_P", "GND", "3V3")])
+                    if kind == "open":
+                        FAILINFO[tk] = FAILINFO.get(tk, edges[tk][2]); WHYFAIL[tk] = "aor: " + why
+                    AOR_LOG.append(dict(sweep=sweep, kind=kind, name=name, ok=False, why=why))
+                print("  aor %4.0f s sweep %d %s %-30s %s (%s)" % (time.time() - _T_START, sweep, kind, name[:30], "ACCEPTED" if ok else "reverted", why), flush=True)
+        if not acc or _aor_late() or sweep >= int(OPT.get("sweeps", 3)) or not (open_left or lift_left):
+            break
+    for tk in open_left:
+        if tk not in ROUTES and tk not in FAILINFO:
+            FAILINFO[tk] = edges[tk][2]
+    print("aor: %d tasks, %d accepted, %d reverted, %d pulls; open connections left %d, lifts left %d" % (
+        AOR_STATS["tasks"], AOR_STATS["accepted"], AOR_STATS["reverted"], AOR_STATS["pulls"], len(open_left), len(lift_left)), flush=True)
+    json.dump(dict(stats=AOR_STATS, log=AOR_LOG, open_left=[edges[e][2] + " " + edges[e][3][2] for e in open_left],
+                   lifts_left=[PSEUDO.get(b) for b in lift_left]), open(OUT + ".aor.json", "w"), indent=1)
+    queue = deque()
+    OPT["phases"] = "0"
 NPH = int(OPT.get("phases", 3))
 DEADLINE = float(OPT.get("deadline", 0))      # team B: seconds after start; past it no more rip-up and no new phase,
 # the queue is finished without pulls and the board is written
@@ -1564,8 +1994,9 @@ while True:
                 FAILINFO.pop(eid, None)
             for b in reversed(pulled):
                 if b in PSEUDO:                           # copper from the earlier pass: its net is routed afresh
-                    new_ = list(range(len(edges), len(edges) + len(ORIG.get(PSEUDO[b], []))))
-                    edges.extend(ORIG.get(PSEUDO[b], []))
+                    _re = PEDGES[b] if b in PEDGES else ORIG.get(PSEUDO[b], [])
+                    new_ = list(range(len(edges), len(edges) + len(_re)))
+                    edges.extend(_re)
                     queue.extendleft(reversed(new_))
                     continue
                 if b in queue:

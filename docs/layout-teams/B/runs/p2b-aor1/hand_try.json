@@ -1,0 +1,8 @@
+{"board": "runs/p2b-aor1/a5.kicad_pcb",
+ "tracks": [
+  {"net": "Net-(U101-VC1)", "layer": "F.Cu", "w": 0.15, "from": "U101.5", "to": "C103.2"},
+  {"net": "/USB Port 1/FSW", "layer": "F.Cu", "w": 0.15, "from": "R412.1", "to": "U403.36"},
+  {"net": "Net-(U403-ICHG)", "layer": "F.Cu", "w": 0.15, "from": "U403.9", "to": "R413.1"},
+  {"net": "/USB Port 1/ILIM", "layer": "F.Cu", "w": 0.15, "from": "U403.10", "to": "R414.1"},
+  {"net": "Net-(U403-ACUV)", "layer": "F.Cu", "w": 0.15, "from": "R409.2", "to": [108.5, 108.75]}
+ ]}

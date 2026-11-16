@@ -1,0 +1,10 @@
+{"board": "runs/p2b-m1fin/finished.kicad_pcb",
+ "note": "worker B, phase 2 round 2: the connections the accept-or-revert pass left that are not worker A's. Every entry below was searched with handroute.py --check (single-layer path, exact clearances, hot pours closed) on this board and found NO path; they are kept as the starting entries for pins.py table rows (lead), not laid. tracks/vias are empty so that --hand=<this> is a no-op.",
+ "tracks": [], "vias": [],
+ "tried": [
+  {"net": "Net-(U101-VC1)", "layer": "F.Cu", "w": 0.15, "from": "U101.5", "to": [97.75, 130.19], "result": "no path (Kelvin CELL copper and the U101 pin row; aork pulls fail on BTP_INT)"},
+  {"net": "/USB Port 1/FSW", "layer": "F.Cu", "w": 0.15, "from": "R412.1", "to": "U403.36", "result": "no path (R410 / R411 tracks of U403.34/35; aork fails on BTST1)"},
+  {"net": "Net-(U403-ICHG)", "layer": "F.Cu", "w": 0.15, "from": "U403.9", "to": "R413.1", "result": "no path (pin-12/13 tracks to R419/C419 fence R413/R414; B.Cu no-via area x 107-116, y 106-114.5 under U403)"},
+  {"net": "/USB Port 1/ILIM", "layer": "F.Cu", "w": 0.15, "from": "U403.10", "to": "R414.1", "result": "no path (same as ICHG)"},
+  {"net": "3V3", "piece": "In3 island 42.9 mm2 with R313.1, TP301.1", "result": "no legal 3V3 via anywhere in the island (1474 spots: no-via area / F.Cu keep-out 905, In2 BTP_INT / TS1 tracks, C207 / DSG_G pads); the island is cut off by the In3 tracks of 3V3_SLEEP and SCL (and IRQ_N) across the strap end at 90.05,118.17"}
+ ]}

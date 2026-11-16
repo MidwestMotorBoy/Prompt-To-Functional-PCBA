@@ -1,0 +1,309 @@
+{
+ "items": [
+  {
+   "kind": "track",
+   "net": "IRQ_N",
+   "layer": "F.Cu",
+   "a": [
+    96.625,
+    92.6745
+   ],
+   "b": [
+    96.625,
+    93.6745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "IRQ_N",
+   "layer": "F.Cu",
+   "a": [
+    96.625,
+    93.6745
+   ],
+   "b": [
+    97.175,
+    94.2245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.625,
+    68.7245
+   ],
+   "b": [
+    117.525,
+    68.7245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.375,
+    68.8745
+   ],
+   "b": [
+    117.375,
+    69.9245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.525,
+    68.7245
+   ],
+   "b": [
+    117.375,
+    68.8745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    84.225,
+    93.3245
+   ],
+   "b": [
+    84.075,
+    93.1745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    84.225,
+    94.4245
+   ],
+   "b": [
+    84.225,
+    93.3245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.175,
+    94.9745
+   ],
+   "b": [
+    83.275,
+    94.8745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.275,
+    94.8745
+   ],
+   "b": [
+    83.675,
+    94.8745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.825,
+    94.8245
+   ],
+   "b": [
+    84.225,
+    94.4245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.725,
+    94.8245
+   ],
+   "b": [
+    83.825,
+    94.8245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    84.075,
+    93.0245
+   ],
+   "b": [
+    84.325,
+    92.7745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.675,
+    94.8745
+   ],
+   "b": [
+    83.725,
+    94.8245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    84.075,
+    93.1745
+   ],
+   "b": [
+    84.075,
+    93.0245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    118.775,
+    94.9745
+   ],
+   "b": [
+    118.775,
+    94.9745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/Cells and Gauge/CELL1",
+   "layer": "F.Cu",
+   "a": [
+    82.225,
+    90.6745
+   ],
+   "b": [
+    82.225,
+    90.6745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(U404-FB)",
+   "layer": "F.Cu",
+   "a": [
+    118.775,
+    65.0745
+   ],
+   "b": [
+    118.775,
+    65.0745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/USB Port 2/I2CC_SDA",
+   "layer": "F.Cu",
+   "a": [
+    84.025,
+    91.0245
+   ],
+   "b": [
+    84.025,
+    91.0245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    84.325,
+    92.7745
+   ],
+   "b": [
+    84.325,
+    92.7745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.175,
+    94.9745
+   ],
+   "b": [
+    83.175,
+    94.9745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(D511-A)",
+   "layer": "F.Cu",
+   "a": [
+    83.925,
+    90.2745
+   ],
+   "b": [
+    83.925,
+    90.2745
+   ],
+   "pour": "GND"
+  }
+ ],
+ "tracks": 14,
+ "vias": 7,
+ "nets": [
+  "/Cells and Gauge/CELL1",
+  "/Cells and Gauge/CELL3",
+  "/USB Port 1/SS_5V",
+  "/USB Port 2/I2CC_SDA",
+  "IRQ_N",
+  "Net-(D511-A)",
+  "Net-(U404-FB)"
+ ]
+}

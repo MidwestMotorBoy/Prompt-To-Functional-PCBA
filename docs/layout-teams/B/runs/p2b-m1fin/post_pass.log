@@ -1,0 +1,109 @@
+[finish] 00:41:35 1. DRC of the routed board and of the plan
+[finish] 00:41:42 routed: unconnected 26 {'EN_5V2': 1, 'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/TS': 1, '3V3': 4, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/BTST2': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1, '/Cells and Gauge/WAKE': 1} ; DRC errors 5 {'clearance': 5}
+[finish] 00:41:42 stub ends in the clearance errors of r0 (fin_trim.py)
+      Net-(U101-SMBD) F.Cu end 103.400,127.900 -> 103.130,127.879 (pad U101.18)
+      /Cells and Gauge/CELL_1N F.Cu start 103.400,128.300 -> 103.217,128.370 (pad U101.17)
+      /Cells and Gauge/TS1 F.Cu end 100.500,128.800 -> 100.479,128.530 (pad U101.10)
+      /Cells and Gauge/BTP_INT F.Cu end 102.500,128.800 -> 102.479,128.530 (pad U101.15)
+    trimmed 4 stub ends (5 errors looked at)
+[finish] 00:42:01 trimmed: unconnected 26 {'EN_5V2': 1, 'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/TS': 1, '3V3': 4, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/BTST2': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1, '/Cells and Gauge/WAKE': 1} ; DRC errors 0 {}
+    PACK_P: 2 pieces
+      piece 1 pads: pads ['C107.1', 'R112.2']; fills ['In2.Cu 6.940 mm2 @[90.36, 120.55]']; tracks 5 ['F.Cu [91.675, 122.0745]-[91.625, 122.0745] w0.20', 'F.Cu [92.0, 120.33]-[92.075, 120.0745] w0.20', 'F.Cu [92.0, 122.27]-[91.675, 122.0745] w0.20', 'In2.Cu [91.525, 121.9745]-[91.525, 121.2745] w0.20', 'In2.Cu [91.625, 122.0745]-[91.525, 121.9745] w0.20']; vias ['91.62,122.07', '92.08,120.07']
+    3V3: 5 pieces
+      piece 1 pads: pads ['R313.1', 'TP301.1']; fills ['In3.Cu 43.765 mm2 @[93.3, 119.72]']; tracks 13 ['F.Cu [85.725, 121.6745]-[85.775, 121.6745] w0.20', 'F.Cu [88.3412, 125.8316]-[88.275, 125.4745] w0.20', 'F.Cu [85.5, 121.52]-[85.725, 121.6745] w0.20', 'F.Cu [85.775, 121.6745]-[86.225, 122.1245] w0.20', 'B.Cu [88.275, 125.4745]-[88.275, 124.1745] w0.20', 'B.Cu [87.825, 123.0245]-[87.825, 122.9245] w0.20']; vias ['86.22,122.12', '87.58,122.67', '88.28,125.47']
+      piece 2 pads: pads ['U204.10']; fills ['In3.Cu 6.206 mm2 @[88.4, 116.19]']; tracks 4 ['F.Cu [85.5, 117.6]-[85.225, 117.4745] w0.20', 'F.Cu [85.225, 116.6245]-[87.025, 114.8245] w0.20', 'F.Cu [85.225, 117.4745]-[85.225, 116.6245] w0.20', 'In3.Cu [87.025, 114.8245]-[87.525, 114.8245] w0.20']; vias ['87.03,114.82']
+      piece 3 pads: pads ['R314.1']; fills []; tracks 1 ['F.Cu [117.97, 127.1]-[117.97, 127.1] w0.20']; vias []
+      piece 4 pads: pads ['U401.38']; fills []; tracks 0 []; vias []
+    GND: 1 pieces
+    == PACK_P: 268 items, 2 groups (largest 258)
+    == 3V3: 136 items, 5 groups (largest 107)
+    fin_report: 21 unconnected items kept, 5 power items replaced by 5 piece edges
+[finish] 00:42:07 2. accept-or-revert pass 1 from t0 (deadline 20 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 21)
+    aor: 21 hot-pour items in 7 rip-able pieces to lift
+    aor power check: start 0.6722 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.11, 'R427': 2.225, 'R527': 1.57, 'D103': 0.178, 'U404': 7.66, 'U504': 9.649, 'U204': 4.018}, open [] (8 s)
+      aor   23 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 0 s, KiCad unconnected 26 -> 25, power 0.6722 -> 0.6723 W)
+      aor   67 s sweep 1 open 3V3                            reverted (power: loss 0.6849 W (now 0.6723, start 0.6722))
+      aor   77 s sweep 1 open 3V3                            ACCEPTED (pulls 3, 2 s, KiCad unconnected 25 -> 24, power 0.6723 -> 0.6723 W)
+      aor   85 s sweep 1 open 3V3                            ACCEPTED (pulls 0, 1 s, KiCad unconnected 24 -> 23, power 0.6723 -> 0.6723 W)
+      aor   92 s sweep 1 open PACK_P                         ACCEPTED (pulls 0, 0 s, KiCad unconnected 23 -> 22, power 0.6723 -> 0.6723 W)
+      aor   99 s sweep 1 open Net-(U403-ACUV)                ACCEPTED (pulls 0, 0 s, KiCad unconnected 22 -> 21, power 0.6723 -> 0.6740 W)
+      aor   99 s sweep 1 open Net-(U102-V4)                  reverted (Net-(U102-VDD): blocked by Kelvin copper)
+      aor  100 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  107 s sweep 1 open /USB Port 1/BTST2              ACCEPTED (pulls 1, 1 s, KiCad unconnected 21 -> 20, power 0.6740 -> 0.6729 W)
+      aor  114 s sweep 1 open /USB Port 1/FSW                reverted (/USB Port 1/CHG_INT: blocked by Kelvin copper)
+      aor  114 s sweep 1 open EN_5V2                         reverted (EN_5V2: no way even with every rip-able route gone)
+      aor  122 s sweep 1 open /Cells and Gauge/WAKE          ACCEPTED (pulls 4, 1 s, KiCad unconnected 20 -> 19, power 0.6729 -> 0.6729 W)
+      aor  134 s sweep 1 open /Cells and Gauge/CHG_G         reverted (/Cells and Gauge/CHG_G failed (pulls 12))
+      aor  145 s sweep 1 open Net-(C313-Pad2)                ACCEPTED (pulls 3, 5 s, KiCad unconnected 19 -> 18, power 0.6729 -> 0.6726 W)
+      aor  191 s sweep 1 open /USB Port 2/LDO_3V3            ACCEPTED (pulls 8, 38 s, KiCad unconnected 18 -> 17, power 0.6726 -> 0.6705 W)
+      aor  198 s sweep 1 open /USB Port 2/AC_SNS_N           ACCEPTED (pulls 0, 0 s, KiCad unconnected 17 -> 16, power 0.6705 -> 0.6705 W)
+      aor  198 s sweep 1 open Net-(U101-VC1)                 reverted (Net-(U101-VC1): blocked by Kelvin copper)
+      aor  204 s sweep 1 open /USB Port 1/CC2                reverted (/USB Port 1/CC2 failed (tries))
+      aor  207 s sweep 1 open Net-(U403-ICHG)                reverted (Net-(U403-FB): ghost path found no blocker)
+      aor  210 s sweep 1 open /USB Port 1/ILIM               reverted (Net-(U403-FB): blocked by Kelvin copper)
+      aor  252 s sweep 1 open /Cells and Gauge/CELL_P        reverted (/Cells and Gauge/GAUGE_FUSE failed (pulls 13))
+      aor  343 s sweep 1 open SCL                            reverted (SDA: no way even with every rip-able route gone)
+      aor  343 s sweep 1 open /USB Port 2/TS                 reverted (/USB Port 2/TS: no way even with every rip-able route gone)
+      aor  343 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  343 s sweep 1 lift lift /USB Port 1/SS_5V         reverted (/USB Port 1/SS_5V: no way even with every rip-able route gone)
+      aor  360 s sweep 1 lift lift Net-(D511-A)              ACCEPTED (pulls 1, 9 s, KiCad unconnected 16 -> 16, power 0.6705 -> 0.6689 W)
+      aor  371 s sweep 1 lift lift /Cells and Gauge/CELL3    reverted (power: loss 0.6778 W (now 0.6689, start 0.6722))
+      aor  400 s sweep 1 lift lift /Cells and Gauge/CELL1    reverted (Net-(U102-V2): blocked by Kelvin copper)
+      aor  401 s sweep 1 lift lift Net-(U404-FB)             reverted (Net-(U404-FB): no way even with every rip-able route gone)
+      aor  462 s sweep 2 open 3V3                            reverted (/Cells and Gauge/DSG: blocked by Kelvin copper)
+      aor  462 s sweep 2 open Net-(U102-V4)                  reverted (Net-(U102-V4): blocked by Kelvin copper)
+      aor  462 s sweep 2 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  467 s sweep 2 open /USB Port 1/FSW                reverted (/USB Port 1/TS: no way even with every rip-able route gone)
+      aor  467 s sweep 2 open EN_5V2                         reverted (EN_5V2: no way even with every rip-able route gone)
+      aor  479 s sweep 2 open /Cells and Gauge/CHG_G         reverted (/Cells and Gauge/CHG_G failed (tries))
+      aor  480 s sweep 2 open Net-(U101-VC1)                 reverted (Net-(U101-VC1): blocked by Kelvin copper)
+      aor  488 s sweep 2 open /USB Port 1/CC2                reverted (/USB Port 1/CC2 failed (tries))
+      aor  491 s sweep 2 open Net-(U403-ICHG)                reverted (Net-(U403-FB): blocked by Kelvin copper)
+      aor  494 s sweep 2 open /USB Port 1/ILIM               reverted (Net-(U403-FB): blocked by Kelvin copper)
+      aor  522 s sweep 2 open /Cells and Gauge/CELL_P        reverted (/Cells and Gauge/BTP_INT failed (pulls 15))
+      aor  612 s sweep 2 open SCL                            reverted (/USB Port 2/I2CC_SDA failed (pulls 18))
+      aor  612 s sweep 2 open /USB Port 2/TS                 reverted (/USB Port 2/TS: no way even with every rip-able route gone)
+      aor  613 s sweep 2 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  613 s sweep 2 lift lift /USB Port 1/SS_5V         reverted (/USB Port 1/SS_5V: no way even with every rip-able route gone)
+      aor  641 s sweep 2 lift lift /Cells and Gauge/CELL3    reverted (power: loss 0.6763 W (now 0.6689, start 0.6722))
+      aor  666 s sweep 2 lift lift /Cells and Gauge/CELL1    reverted (/Cells and Gauge/CELL_1N: blocked by Kelvin copper)
+      aor  666 s sweep 2 lift lift Net-(U404-FB)             reverted (Net-(U404-FB): no way even with every rip-able route gone)
+    aor: 47 tasks, 11 accepted, 36 reverted, 159 pulls; open connections left 14, lifts left 4
+    unconnected after fill: 16
+[finish] 00:53:32 pass 1: unconnected 16 {'EN_5V2': 1, '/USB Port 2/TS': 1, '3V3': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2} ; DRC errors 0 {} ; hot-pour items 6
+    == PACK_P: 271 items, 1 groups (largest 271)
+    == 3V3: 157 items, 2 groups (largest 138)
+    fin_report: 15 unconnected items kept, 1 power items replaced by 1 piece edges
+[finish] 00:53:36 2. accept-or-revert pass 2 from r1 (deadline 20 min; task 90 s / 12 pulls, sweeps 3; hot-pour items 6)
+    aor: 6 hot-pour items in 4 rip-able pieces to lift
+    aor power check: start 0.6689 W (PACK_P + 3V3 + GND@0.2), PACK_P {'J113': 2.111, 'R427': 2.224, 'R527': 1.554, 'D103': 0.178, 'U404': 7.454, 'U504': 8.573, 'U204': 3.962}, open [] (7 s)
+      aor  104 s sweep 1 open 3V3                            reverted (/Cells and Gauge/BTP_INT: no way even with every rip-able route gone)
+      aor  130 s sweep 1 open Net-(U102-V4)                  reverted (/Cells and Gauge/CELL3 failed (pulls 13))
+      aor  130 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  158 s sweep 1 open /USB Port 1/FSW                reverted (/USB Port 1/BTST1 failed (pulls 13))
+      aor  158 s sweep 1 open EN_5V2                         reverted (EN_5V2: no way even with every rip-able route gone)
+      aor  176 s sweep 1 open /Cells and Gauge/CHG_G         reverted (/Cells and Gauge/WAKE failed (pulls 14))
+      aor  229 s sweep 1 open Net-(U101-VC1)                 reverted (/Cells and Gauge/BTP_INT failed (pulls 12))
+      aor  235 s sweep 1 open /USB Port 1/CC2                reverted (/USB Port 1/CC2 failed (tries))
+      aor  238 s sweep 1 open Net-(U403-ICHG)                reverted (Net-(U403-FB): ghost path found no blocker)
+      aor  278 s sweep 1 open /USB Port 1/ILIM               reverted (/USB Port 1/ILIM failed (pulls 12))
+      aor  331 s sweep 1 open /Cells and Gauge/CELL_P        reverted (/Cells and Gauge/DSG failed (pulls 12))
+      aor  422 s sweep 1 open SCL                            reverted (SDA: no way even with every rip-able route gone)
+      aor  422 s sweep 1 open /USB Port 2/TS                 reverted (/USB Port 2/TS: no way even with every rip-able route gone)
+      aor  423 s sweep 1 open EN_5V1                         reverted (EN_5V1: no way even with every rip-able route gone)
+      aor  423 s sweep 1 lift lift /USB Port 1/SS_5V         reverted (/USB Port 1/SS_5V: no way even with every rip-able route gone)
+      aor  464 s sweep 1 lift lift /Cells and Gauge/CELL3    reverted (power: PACK_P to R527 2.02 mohm (start 1.55))
+      aor  501 s sweep 1 lift lift /Cells and Gauge/CELL1    reverted (/Cells and Gauge/CELL_1N failed (pulls 12))
+      aor  501 s sweep 1 lift lift Net-(U404-FB)             reverted (Net-(U404-FB): no way even with every rip-able route gone)
+    aor: 18 tasks, 0 accepted, 18 reverted, 115 pulls; open connections left 14, lifts left 4
+    unconnected after fill: 16
+[finish] 01:02:15 pass 2: unconnected 16 {'EN_5V2': 1, '/USB Port 2/TS': 1, '3V3': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2} ; DRC errors 0 {} ; hot-pour items 6
+[finish] 01:02:15 pass 2 not better (score 16 vs 16, hot 6 vs 6), dropped
+[finish] 01:02:15 4. dangling ends of r1
+    removed 4
+[finish] 01:02:32 cleaned: unconnected 16 {'EN_5V2': 1, '/USB Port 2/TS': 1, '3V3': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2} ; DRC errors 0 {}
+[finish] 01:02:32 5. power guard
+r0.cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[finish] 01:03:04 c: guard ok: 510 new tracks, 43 new vias; loss 1.1860 -> 1.1828 W; power open 0 -> 0; hot-pour violations 0
+finish: routed unconnected 26 {'EN_5V2': 1, 'PACK_P': 1, 'Net-(U403-ACUV)': 1, '/USB Port 2/LDO_3V3': 1, '/USB Port 2/TS': 1, '3V3': 4, '/USB Port 2/AC_SNS_N': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/BTST2': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2, 'Net-(C313-Pad2)': 1, '/Cells and Gauge/WAKE': 1} ; DRC errors 5 {'clearance': 5} ; loss 1.1860 W, power open 0
+finish: finished (c) unconnected 16 {'EN_5V2': 1, '/USB Port 2/TS': 1, '3V3': 1, '/USB Port 2/VBUS': 1, '/Cells and Gauge/CELL_P': 1, '/USB Port 1/CC2': 1, 'Net-(U101-VC1)': 1, 'SCL': 1, 'Net-(U102-V4)': 1, '/Cells and Gauge/CHG_G': 1, '/USB Port 1/FSW': 1, '/USB Port 1/VBUS': 1, 'Net-(U403-ICHG)': 1, '/USB Port 1/ILIM': 1, 'EN_5V1': 2} ; DRC errors 0 {} ; loss 1.1828 W, power open 0

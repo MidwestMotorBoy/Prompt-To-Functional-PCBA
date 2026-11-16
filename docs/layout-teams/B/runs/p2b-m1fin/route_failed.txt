@@ -1,0 +1,15 @@
+edges to route: 368 (0 on long nets)
+unconnected after fill: 26
+routed 356 edges, 12 failed, items added 5740
+FAILED Net-(U102-V4) 93.65,129.75 (Pad 2  of U102 ) -> 93.80,127.62 (Pad 1  of C112 ) starts 68 goals 147 seen 91 | no way even with every other route gone
+FAILED EN_5V1 116.51,68.65 (Pad 2  of U404 ) -> 114.37,68.20 (Pad 1  of R432 ) starts 56 goals 62 seen 97 | blocked by routes that have been pulled too often
+FAILED /USB Port 1/BTST2 115.00,104.36 (Pad 1  of C413 ) -> 113.15,105.60 (Pad 20  of U403 ) starts 146 goals 72 seen 29623 | no way even with every other route gone
+FAILED /USB Port 1/FSW 107.82,112.15 (Pad 1  of R412 ) -> 108.50,109.75 (Pad 36  of U403 ) starts 62 goals 82 seen 356 | blocked by routes that have been pulled too often
+FAILED EN_5V2 84.15,66.46 (Pad 2  of U504 ) -> 84.60,69.03 (Pad 1  of R532 ) starts 78 goals 155 seen 231 | blocked by routes that have been pulled too often
+FAILED /USB Port 1/CC2 106.70,77.28 (Pad 1  of C402 ) -> 103.75,73.75 (Pad 11  of U405 ) starts 185 goals 66 seen 313 | no way even with every other route gone
+FAILED Net-(U403-ICHG) 113.15,110.40 (Pad 9  of U403 ) -> 119.10,111.09 (Pad 1  of R413 ) starts 74 goals 126 seen 445 | no way even with every other route gone
+FAILED /USB Port 1/ILIM 113.65,110.40 (Pad 10  of U403 ) -> 120.15,111.09 (Pad 1  of R414 ) starts 74 goals 126 seen 574 | blocked by routes that have been pulled too often
+FAILED EN_5V1 111.57,122.08 (Pad 12  of U301 ) -> 116.51,68.65 (Pad 2  of U404 ) starts 258 goals 56 seen 97 | no way even with every other route gone
+FAILED 3V3 103.20,78.38 (Pad 38  of U401 ) -> 103.20,78.38 (Zone planeZone plan) starts 26 goals 0 seen 53 | no way even with every other route gone
+FAILED /Cells and Gauge/WAKE 108.46,114.81 (Pad 1  of TP113) -> 111.01,115.30 (Pad 2  of R118 ) starts 253 goals 126 seen 620 | blocked by routes that have been pulled too often
+FAILED /Cells and Gauge/CHG_G 107.75,116.83 (Pad 4  of Q101 ) -> 105.86,114.85 (Pad 1  of R110 ) starts 303 goals 165 seen 59079 | no way even with every other route gone

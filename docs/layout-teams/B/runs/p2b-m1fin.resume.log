@@ -1,0 +1,6 @@
+00:41:32
+[final] 00:41:32 resume: steps 1 to 3 skipped, using /home/claude/repo/docs/layout-teams/B/runs/p2b-m1fin/routed.kicad_pcb
+[final] 00:41:32 finishing pass: finish.sh --modes=aor,aork --min=20 --tol=0.01
+[final] 01:03:04 routed board: dump, DRC, DC
+cu.json: 289 parts, 1176 pads, 33 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+[final] 01:03:26 routed board: seven hot loops

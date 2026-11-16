@@ -1,0 +1,96 @@
+{
+ "items": [
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.625,
+    68.7245
+   ],
+   "b": [
+    117.525,
+    68.7245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.375,
+    68.8745
+   ],
+   "b": [
+    117.375,
+    69.9245
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "track",
+   "net": "/USB Port 1/SS_5V",
+   "layer": "F.Cu",
+   "a": [
+    117.525,
+    68.7245
+   ],
+   "b": [
+    117.375,
+    68.8745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    118.775,
+    94.9745
+   ],
+   "b": [
+    118.775,
+    94.9745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "/Cells and Gauge/CELL1",
+   "layer": "F.Cu",
+   "a": [
+    82.225,
+    90.6745
+   ],
+   "b": [
+    82.225,
+    90.6745
+   ],
+   "pour": "GND"
+  },
+  {
+   "kind": "via",
+   "net": "Net-(U404-FB)",
+   "layer": "F.Cu",
+   "a": [
+    118.775,
+    65.0745
+   ],
+   "b": [
+    118.775,
+    65.0745
+   ],
+   "pour": "GND"
+  }
+ ],
+ "tracks": 3,
+ "vias": 3,
+ "nets": [
+  "/Cells and Gauge/CELL1",
+  "/Cells and Gauge/CELL3",
+  "/USB Port 1/SS_5V",
+  "Net-(U404-FB)"
+ ]
+}

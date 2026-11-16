@@ -330,3 +330,91 @@ Traps met in the merge:
 - A 3V3 or PACK_P track of the table may not cross a `ruleareas.py --protect` area (KiCad: "items not allowed").
 - The continuation route of `finish.sh` can end worse than it started (810 pulls for 24 open connections on
   `runs/p2-m1`); the pass rule drops it, so nothing is lost, but nothing is closed either.
+
+## Phase 2 round 2: copper before routing for the connections no route makes (worker A)
+
+Placement r5 (`candidates/r5.json`, source `runs/p2a-r5src`, 7 of 7 hot loops at r4's values) and one filter string
+that gives every connection that failed in both round-1 routes its copper before routing. The strings are written out
+in `runs/p2a-look/strings.sh` (`ST`, `FU`, `LP1`, `LP2`, `FR5`; `FR5W4` = the same with a 4 mm trunk):
+```
+FR5="$FU;$LP1;pins.py --table=plan/p2-pins-r5.json;$LP2"
+bash tools/final_route.sh runs/p2a-r5src runs/<new> --straps="$ST" --filters="$FR5" --route=80 --post="finish.sh --no-route"
+```
+`FU` is round 1's `F1` without the final `pins.py`, plus `pins.py --rules=table --table=plan/p2-pins-u403.json`
+BEFORE `trunk.py` (U403.7 CE_N and U403.9 ICHG get their vias before the trunk takes the via sites under U403's
+south-east corner). `LP1` is the Port 1 VBUS join (three vias and a B.Cu link at y 69.25, stem 0.4 mm wide because
+of the GND via at 103.25,70.17). `plan/p2-pins-r5.json` is r4's table plus the entries for U405 (Port 1 CC/VBIAS
+vias in one row), EN_5V1 (U404.2 under the body to R432.1, with a hot-pour trim), SS_5V, the U504 knot (EN 84.15,67.2,
+FB 85.02,67.22), U102 (V4 via, C112), BTST2 (U403.20 to C413.1), Port 1 CC2 (U405.11 to C402.1 west of the CC1 way),
+WAKE (TP113.1 to R118.2), CELL_P (R110.2 to R118.1, R118.1 into the CELL_P pour, Q101.4 via) and CHG_G (two vias,
+the router joins them on an inner layer). r4's `plan/p2-pins.json` is unchanged.
+
+New `pins.py` table keys (see the docstring): `cut_hot` + `cut_box` (hot-loop pours of the named nets may be cut,
+clipped to the box, logged in mm2, refused when a held piece loses its last via; solve the loop again after it, limit
++0.01 nH), `drop` (remove planner vias of the pad's net at given offsets, with the tracks ending on them; undone when
+the entry fails), `"to": "zone"` (into the net's own pour on the pad layer) and `"path"` (an explicit polyline of
+offsets from the pad centre, every segment checked exactly). New copper is cut back from the spec's rule areas.
+`--table=` may be relative to the team folder.
+
+Helpers (team folder, python only, no scorecard):
+- `tools/spec_chain.sh <run> <out.json> --straps=".." --filters=".."`: steps 1 and 1b of `final_route.sh` (straps,
+  then filters) with a log per step beside the out spec, in seconds; for designing entries before a screen.
+- `tools/plan_whole.sh <out dir> <placement.json>`: whole-board plan of a placement without the scorecard (about
+  1 min); the out dir works as a source for `spec_chain.sh`, `pinlib.py look` and `win_items.py`.
+- `tools/win_items.py <spec.json> <cu.json> x0,y0,x1,y1 [--layers=..]`: every pad, plan track, via and pour piece in a
+  window, with nets: the coordinates behind a table entry.
+
+Traps:
+- `final_route.sh` runs the filters in `<out>/split`: a relative `--table=` was "not found" there, and the screen
+  showed 12 blocked edges. `pins.py` now resolves it against the team folder; other filters with file options do not.
+- The 5 mm trunk takes every via site under R109/R110/TP113/Q101 and under U403's south-east corner, and the FET_MID
+  pour closes the way south: those pins need explicit `at`/`path` entries, and a via spot chosen on one trunk breaks
+  when the trunk changes (108.0,111.5 did). Screen again after any trunk change.
+- The via search only looks at the 600 nearest candidates; in a crowded spot give `at`.
+- The planner's GND tie chains can close a pad turned the wrong way (R432 turned 180); look at the plan first.
+- Router via pitch is 0.75 mm between nets (0.752 was refused within EPS); KiCad DRC needs copper clearance only.
+- One table entry can close its neighbour (CC2's east way closed CC1, EN under U404 closed SS_5V): lay the neighbour's
+  escape as its own entry first, and screen after every change.
+
+## Phase 2 round 2: accept-or-revert finishing pass (worker B)
+
+The lead's call: `final_route.sh ... --route=80 --resume --post="finish.sh --modes=aor,aork --min=20 --tol=0.01"`
+(add `--hand=<json>` for hand tracks). `--modes=aor,aork` = two accept-or-revert passes of 20 min each (the second may
+pull Kelvin pieces); a pass is kept only when unconnected + DRC errors drop, or hold with fewer hot-pour items, and the
+power guard (`fin_guard.py`, `--tol` W) still picks the finished board, so the pass never returns a worse board.
+
+**What one pass does** (`router_b.py --cont --keepre --split --aor --pieces --lift --pcheck`, all in KiCad's container):
+- `--split`: each net's routed copper is cut into pieces (joined end to end or at a T, never through a pad); a piece is
+  laid again as Prim MST edges over its anchors (pads, fixed copper, the net's zone).
+- One task at a time, shortest open connection first, then every piece with copper in a hot-loop pour of the plan board
+  (`--lift=<hot_tracks.json>`, laid again with `--hotko`). A task may pull other pieces (`--taskrips=12`,
+  `--tasktime=90` s, a deadline inside A* too) but must lay every pulled piece again. Accepted only when KiCad's own
+  `GetUnconnectedCount` drops (open task) or holds (lift task, which must also leave fewer of the net's hot-pour
+  items on the board) and the power check passes; otherwise grids, routes and
+  board items are put back exactly (`_aor_save` / `_aor_restore`, board items by uuid). Sweeps repeat while one accepts.
+- `--pcheck=cu.json:constraints.json:tol:budget`: after each task the GND / PACK_P / 3V3 zones are refilled (2 s) and
+  `dc_score.score_net` scores PACK_P and 3V3 (0.1 mm) and GND (0.2 mm): loss may rise `--ptol` (2 mW) per task and
+  `--pbudget` (5 mW) in all; no PACK_P terminal may cross 3.0 mohm or rise > 0.1 mohm past it; no new power open.
+  Needs shapely in the container: finish.sh copies the host's (same cp313 ABI) into `fin/pylib`.
+- Power pieces: `isl.py --pieces` (shared, used read-only) names every cut-off In2 / In3 piece; `fin_report.py` puts
+  its edges in place of KiCad's `Zone | Zone` pairs; the router then starts anywhere on the piece and must end on the
+  main body (the goal window grows 12 / 30 / 80 mm until it holds main-body cells; never the piece itself).
+- Kelvin nets (ACP_F, ACN_F, SRP_F, SRN_F, SR[PN]) are frozen unless `--aorkelvin` (mode aork); a Kelvin piece laid
+  again may be at most 1.3 x + 1 mm its old length.
+- `fin_islands.py <board> <cu.json> --out=pieces.json` (host) lists the pieces of PACK_P / 3V3 / GND as KiCad sees them
+  (dead = no pad, pads = a real open); `fin_dead.py` (KiCad) removes the tracks / vias of dead pieces and refills.
+  finish.sh runs both before the pass. On p2-m1 every cut-off piece held pads (none dead).
+- `handroute.py`: `--keep=<plan board>` adds the plan's hot pours as obstacles; `"lift": [nets]` removes routed copper
+  of those nets that is not in the plan; track entries may give `"from"` / `"to"` ("REF.PAD" or [x,y]) and the path is
+  found (free area + `pinlib.path_in`) and printed.
+
+Traps met:
+- An escape stub that lands on the start's own copper counted as a goal hit (U403-FB "connected" to itself): a hit is
+  valid only on goal cells, and KiCad's count per task is the arbiter. A plane goal window with no main-body cells fell
+  back to the start's own island (R314 3V3): the window now grows.
+- Without the power check a pass closes connections by cutting the PACK_P sheet on In2 (324 to 388 mW, R527 1.57 to
+  3.38 mohm); closing all PACK_P fills to new channels instead (`--closefill=PACK_P`) is too strict.
+- A cut-off In3 3V3 island (R313.1 / TP301.1, 43 mm2) is fenced by the In3 tracks of 3V3_SLEEP and SCL across the
+  strap end at 90.05,118.17; tying it back by route costs 12.6 mW (refused by the check) and no legal 3V3 via exists in
+  the island (no-via area, In2 BTP_INT / TS1): it needs a plan fix (an In3 corridor there), not the finishing pass.
+- A background job started with the default timeout is stopped after 30 min: give the resume run `timeout` 2 h.
