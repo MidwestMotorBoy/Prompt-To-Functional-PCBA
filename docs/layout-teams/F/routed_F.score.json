@@ -1,0 +1,8 @@
+{
+ "loss_W": 1.245,
+ "power_open": {},
+ "drc_errors": 0,
+ "unrouted_signal_items": 0,
+ "hot_loops": "7 of 7 pass, 5.84 nH",
+ "blocked_edges": "0 of 0"
+}
