@@ -1,0 +1,17 @@
+{
+ "team": "F",
+ "board": "docs/layout-teams/F/route_queue/r1_all.kicad_pcb",
+ "sha": "6259056b245c092cd6472f312ce80831feed7d55",
+ "routed": 414,
+ "failed": 23,
+ "edges": 437,
+ "minutes": 19.7,
+ "status": "done",
+ "tail": [
+  "FAILKEY GND@Pad 31 [GND] of U401 on F.Cu",
+  "FAILKEY GND@Pad 27 [GND] of U401 on F.Cu",
+  "FAILKEY PACK_P@Pad 1 [PACK_P] of R529 on F.Cu",
+  "FAILKEY PACK_P@Pad 1 [PACK_P] of R429 on F.Cu",
+  "FAILKEY /USB Port 2/PPHV"
+ ]
+}

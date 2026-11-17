@@ -10,6 +10,7 @@ Goal set by Logan: a fully routed board. All numbers are from the scorecard and 
 | Placement: blocked connections | 56 of 452 | 28 of 427 | 17 of 437 |
 | Placement: hot loops | 7 of 7, 6.75 nH | 7 of 7, 6.16 nH | 7 of 7, 5.79 nH |
 | Placement: loss, generated copper | 1.359 W | 1.013 W | 1.009 W |
+| Placement: full plain trial route on the PC | 394 of 452 | 397 of 427 (71 min) | 414 of 437 (19.7 min) |
 | Placement rounds | - | 2 (8 workers + 2 fixers) | 1 (7 workers) |
 | **Fully routed: open connections / DRC errors** | - | 0 / 0 | **0 / 0** |
 | Fully routed: open power paths | - | none | none |
@@ -36,7 +37,8 @@ vias and thin inner tracks, see below), GND 0.308 to 0.338 W. Hot loops did not 
 - SCL runs 21 mm down In2 at x 100.1 through the PACK_P pour (part of the PACK_P loss rise).
 - 22 dead-end stubs (DRC warnings, not errors) are left from the rip-ups; a prune pass exists (`RML.prune`) but removed
   one live CELL_P link in test, so it was not applied.
-- The scorecard's trial route was not run on the final board; the board itself is the route.
+- The plain trial route of the placement (no lead copper, run on the PC) closed 414 of 437; the 23 it left are the Kelvin taps,
+  ground necks and PD chip pins that the lead copper and the workers closed on the final board.
 
 ## How it went
 1. **Placement, one round.** 7 Fable medium workers, one per room (the two stages shared one worker design), with team
