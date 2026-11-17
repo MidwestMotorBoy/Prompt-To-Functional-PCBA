@@ -1,0 +1,20 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 361 (0 on long nets)
+fan-out stubs: 147
+phase 1: 15 open connections tried again with every route free to move
+phase 2: 9 open connections tried again with every route free to move
+phase 3: 7 open connections tried again with every route free to move
+routes pulled and re-laid: 460
+fan-out stubs unused (removed) 59, trimmed 22
+unconnected after fill: 18
+routed 356 edges, 5 failed, items added 4962
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 72 goals 47 seen 109861 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 60 goals 47 seen 233 | blocked by routes that have been pulled too often
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 337 seen 619 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SCL 102.30,86.48 (Pad 2  of R403 ) -> 108.59,113.64 (Pad 1  of U403 ) starts 140 goals 81 seen 1168264 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 59 seen 128 | no way even with every other route gone
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY SCL
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY /USB Port 1/CHG_INT

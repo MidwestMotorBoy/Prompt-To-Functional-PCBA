@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6caps-cg.kicad_pcb",
+ "sha": "e9f501da94b35f3a2f817afd45ab6f53d278f39a",
+ "routed": 356,
+ "failed": 5,
+ "edges": 361,
+ "minutes": 77.5,
+ "status": "done",
+ "tail": [
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY SCL",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/CHG_INT"
+ ]
+}
