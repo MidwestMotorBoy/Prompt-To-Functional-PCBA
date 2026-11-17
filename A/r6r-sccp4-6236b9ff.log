@@ -1,0 +1,14 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 351 (0 on long nets)
+fan-out stubs: 142
+phase 1: 8 open connections tried again with every route free to move
+phase 2: 7 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 218
+fan-out stubs unused (removed) 59, trimmed 26
+unconnected after fill: 20
+routed 349 edges, 2 failed, items added 3864
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 128 goals 3 seen 713097 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone
+FAILKEY /Cells and Gauge/TS1
+FAILKEY /USB Port 1/PP5V

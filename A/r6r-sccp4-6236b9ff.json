@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-sccp4.kicad_pcb",
+ "sha": "6236b9ff5f8bbd2f50db747ade1f5967dc36a3f8",
+ "routed": 349,
+ "failed": 2,
+ "edges": 351,
+ "minutes": 57.8,
+ "status": "done",
+ "tail": [
+  "routed 349 edges, 2 failed, items added 3864",
+  "  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 128 goals 3 seen 713097 | no way even with every other route gone",
+  "  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone",
+  "FAILKEY /Cells and Gauge/TS1",
+  "FAILKEY /USB Port 1/PP5V"
+ ]
+}
