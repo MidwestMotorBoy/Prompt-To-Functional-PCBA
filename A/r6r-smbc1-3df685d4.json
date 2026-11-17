@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-smbc1.kicad_pcb",
+ "sha": "3df685d409be35bb9377d96cd220b81712de7f92",
+ "routed": 360,
+ "failed": 4,
+ "edges": 364,
+ "minutes": 53.2,
+ "status": "done",
+ "tail": [
+  "  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 71 goals 169 seen 160 | no way even with every other route gone",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/I2CC_SDA",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY /USB Port 1/CHG_INT"
+ ]
+}
