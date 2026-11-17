@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-cp4.kicad_pcb",
+ "sha": "3e4272cc5e09dc3cbb97731ae84754d6dac96611",
+ "routed": 347,
+ "failed": 4,
+ "edges": 351,
+ "minutes": 85.9,
+ "status": "done",
+ "tail": [
+  "  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone",
+  "FAILKEY /Cells and Gauge/CELL_1N",
+  "FAILKEY /Cells and Gauge/TS3",
+  "FAILKEY IRQ_N",
+  "FAILKEY /USB Port 1/PP5V"
+ ]
+}

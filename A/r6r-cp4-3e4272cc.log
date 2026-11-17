@@ -1,0 +1,18 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 351 (0 on long nets)
+fan-out stubs: 142
+phase 1: 7 open connections tried again with every route free to move
+phase 2: 5 open connections tried again with every route free to move
+phase 3: 6 open connections tried again with every route free to move
+routes pulled and re-laid: 858
+fan-out stubs unused (removed) 60, trimmed 23
+unconnected after fill: 24
+routed 347 edges, 4 failed, items added 6282
+  FAILED /Cells and Gauge/CELL_1N 96.90,121.00 (Pad 33  of U101 ) -> 98.30,122.90 (Pad 16  of U101 ) starts 1133 goals 68 seen 189 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/TS3 96.70,122.90 (Pad 12  of U101 ) -> 103.63,136.14 (PTH pad 1  of J119) starts 44 goals 2616 seen 41 | pulled 4
+  FAILED IRQ_N 89.80,119.59 (Pad 3  of Q103 ) -> 117.72,125.83 (Pad 21  of U301 ) starts 527 goals 365 seen 573919 | no way even with every other route gone
+  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY /Cells and Gauge/TS3
+FAILKEY IRQ_N
+FAILKEY /USB Port 1/PP5V
