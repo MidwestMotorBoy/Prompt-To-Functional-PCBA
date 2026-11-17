@@ -1,0 +1,12 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 353 (0 on long nets)
+fan-out stubs: 140
+phase 1: 8 open connections tried again with every route free to move
+phase 2: 2 open connections tried again with every route free to move
+phase 3: 1 open connections tried again with every route free to move
+routes pulled and re-laid: 192
+fan-out stubs unused (removed) 54, trimmed 26
+unconnected after fill: 14
+routed 352 edges, 1 failed, items added 3776
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 209 seen -12000001 | no way even with every other route gone
+FAILKEY /Cells and Gauge/CELL3

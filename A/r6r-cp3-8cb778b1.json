@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-cp3.kicad_pcb",
+ "sha": "8cb778b18a280d7c1b73476cbfec70b0c75a50f4",
+ "routed": 352,
+ "failed": 1,
+ "edges": 353,
+ "minutes": 77.1,
+ "status": "done",
+ "tail": [
+  "fan-out stubs unused (removed) 54, trimmed 26",
+  "unconnected after fill: 14",
+  "routed 352 edges, 1 failed, items added 3776",
+  "  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 209 seen -12000001 | no way even with every other route gone",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}
