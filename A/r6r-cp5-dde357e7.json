@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-cp5.kicad_pcb",
+ "sha": "dde357e709da6e727a5d2a028456797179517889",
+ "routed": 350,
+ "failed": 0,
+ "edges": 350,
+ "minutes": 75.4,
+ "status": "done",
+ "tail": [
+  "phase 3: 3 open connections tried again with every route free to move",
+  "routes pulled and re-laid: 601",
+  "fan-out stubs unused (removed) 57, trimmed 25",
+  "unconnected after fill: 17",
+  "routed 350 edges, 0 failed, items added 5327"
+ ]
+}

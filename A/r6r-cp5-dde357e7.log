@@ -1,0 +1,10 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 350 (0 on long nets)
+fan-out stubs: 142
+phase 1: 6 open connections tried again with every route free to move
+phase 2: 5 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 601
+fan-out stubs unused (removed) 57, trimmed 25
+unconnected after fill: 17
+routed 350 edges, 0 failed, items added 5327
