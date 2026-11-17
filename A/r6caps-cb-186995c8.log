@@ -1,0 +1,32 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 363 (0 on long nets)
+fan-out stubs: 149
+phase 1: 11 open connections tried again with every route free to move
+phase 2: 8 open connections tried again with every route free to move
+phase 3: 12 open connections tried again with every route free to move
+routes pulled and re-laid: 730
+fan-out stubs unused (removed) 67, trimmed 21
+unconnected after fill: 22
+routed 352 edges, 11 failed, items added 5352
+  FAILED /USB Port 1/I2CC_SDA 106.15,85.20 (Pad 5  of U402 ) -> 106.30,82.92 (Pad 16  of U401 ) starts 63 goals 41 seen 46 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CHG_INT 107.50,85.58 (Pad 2  of R404 ) -> 107.10,82.92 (Pad 18  of U401 ) starts 60 goals 47 seen 232 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-VC1) 95.00,124.62 (Pad 1  of C104 ) -> 95.00,121.20 (Pad 5  of U101 ) starts 106 goals 124 seen 651 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CE_N 116.68,112.85 (Pad 1  of R417 ) -> 111.59,113.64 (Pad 7  of U403 ) starts 62 goals 72 seen 119623 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/CE_N 111.59,113.64 (Pad 7  of U403 ) -> 109.70,120.08 (Pad 2  of R435 ) starts 72 goals 62 seen 235 | no way even with every other route gone
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 21 goals 62 seen 27 | blocked by routes that have been pulled too often
+  FAILED Net-(U503-ICHG) 86.57,121.84 (Pad 1  of R513 ) -> 89.56,113.64 (Pad 9  of U503 ) starts 135 goals 75 seen 260668 | pulled 7
+  FAILED SCL 109.22,131.14 (Pad 6  of J302 ) -> 112.72,119.33 (Pad 9  of U301 ) starts 191 goals 512 seen 621 | no way even with every other route gone
+  FAILED /USB Port 1/I2CC_SDA 103.20,86.48 (Pad 2  of R402 ) -> 109.09,113.64 (Pad 2  of U403 ) starts 173 goals 66 seen 1135970 | no way even with every other route gone
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 60 seen 1255118 | no way even with every other route gone
+  FAILED /P1_LDO_3V3 107.50,86.22 (Pad 1  of R404 ) -> 107.60,84.57 (Pad 1  of R441 ) starts 62 goals 130 seen 240 | no way even with every other route gone
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY Net-(U101-VC1)
+FAILKEY /USB Port 1/CE_N
+FAILKEY /USB Port 1/CE_N
+FAILKEY Net-(U101-SMBC)
+FAILKEY Net-(U503-ICHG)
+FAILKEY SCL
+FAILKEY /USB Port 1/I2CC_SDA
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /P1_LDO_3V3
