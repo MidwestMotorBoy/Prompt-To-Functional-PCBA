@@ -1,0 +1,12 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 351 (0 on long nets)
+fan-out stubs: 141
+phase 1: 6 open connections tried again with every route free to move
+phase 2: 1 open connections tried again with every route free to move
+phase 3: 1 open connections tried again with every route free to move
+routes pulled and re-laid: 233
+fan-out stubs unused (removed) 55, trimmed 20
+unconnected after fill: 16
+routed 350 edges, 1 failed, items added 4016
+  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone
+FAILKEY /USB Port 1/PP5V

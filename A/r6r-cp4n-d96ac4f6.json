@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-cp4n.kicad_pcb",
+ "sha": "d96ac4f605079f4a271a00f756b85decd7d54311",
+ "routed": 350,
+ "failed": 1,
+ "edges": 351,
+ "minutes": 47.4,
+ "status": "done",
+ "tail": [
+  "fan-out stubs unused (removed) 55, trimmed 20",
+  "unconnected after fill: 16",
+  "routed 350 edges, 1 failed, items added 4016",
+  "  FAILED /USB Port 1/PP5V 111.79,83.00 (Pad 1  of R433 ) -> 111.79,83.00 (Zone 'pc_USB Port 1_PP5V'  on F.Cu,) starts 35 goals 0 seen 72 | no way even with every other route gone",
+  "FAILKEY /USB Port 1/PP5V"
+ ]
+}
