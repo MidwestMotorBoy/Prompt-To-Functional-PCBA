@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-cp3-rep.kicad_pcb",
+ "sha": "8cb778b18a280d7c1b73476cbfec70b0c75a50f4",
+ "routed": 352,
+ "failed": 1,
+ "edges": 353,
+ "minutes": 134.6,
+ "status": "done",
+ "tail": [
+  "fan-out stubs unused (removed) 63, trimmed 19",
+  "unconnected after fill: 20",
+  "routed 352 edges, 1 failed, items added 6470",
+  "  FAILED Net-(U503-ACOV) 87.13,117.20 (Pad 2  of R510 ) -> 84.91,112.49 (Pad 35  of U503 ) starts 122 goals 72 seen 210397 | pulled 3",
+  "FAILKEY Net-(U503-ACOV)"
+ ]
+}
