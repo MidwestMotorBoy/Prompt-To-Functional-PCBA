@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/r6r-lane1.kicad_pcb",
+ "sha": "baa100cf67f63bd02cc9172571bcc49153210ca7",
+ "routed": 360,
+ "failed": 4,
+ "edges": 364,
+ "minutes": 83.9,
+ "status": "done",
+ "tail": [
+  "  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 245 seen -12000001 | no way even with every other route gone",
+  "FAILKEY /USB Port 1/I2CC_SCL",
+  "FAILKEY Net-(U101-SMBC)",
+  "FAILKEY /USB Port 1/CHG_INT",
+  "FAILKEY /Cells and Gauge/CELL3"
+ ]
+}

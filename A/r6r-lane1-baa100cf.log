@@ -1,0 +1,18 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 364 (0 on long nets)
+fan-out stubs: 149
+phase 1: 14 open connections tried again with every route free to move
+phase 2: 4 open connections tried again with every route free to move
+phase 3: 4 open connections tried again with every route free to move
+routes pulled and re-laid: 306
+fan-out stubs unused (removed) 62, trimmed 19
+unconnected after fill: 22
+routed 360 edges, 4 failed, items added 3984
+  FAILED /USB Port 1/I2CC_SCL 105.65,85.20 (Pad 6  of U402 ) -> 106.70,82.92 (Pad 17  of U401 ) starts 235 goals 47 seen 157731 | pulled 1
+  FAILED Net-(U101-SMBC) 98.80,121.60 (Pad 19  of U101 ) -> 106.75,119.57 (Pad 1  of R115 ) starts 24 goals 62 seen 34 | pulled 3
+  FAILED /USB Port 1/CHG_INT 109.59,113.64 (Pad 3  of U403 ) -> 107.50,85.58 (Pad 2  of R404 ) starts 72 goals 123 seen 93 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL3 113.90,69.48 (PTH pad 1  of J111) -> 92.64,117.30 (Pad 1  of R103 ) starts 2668 goals 245 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 1/I2CC_SCL
+FAILKEY Net-(U101-SMBC)
+FAILKEY /USB Port 1/CHG_INT
+FAILKEY /Cells and Gauge/CELL3
