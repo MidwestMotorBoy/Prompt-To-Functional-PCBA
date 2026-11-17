@@ -1,0 +1,3 @@
+bare.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+cu.json: 289 parts, 1176 pads, 20 keep-outs, layers ['F.Cu', 'In1.Cu', 'In2.Cu', 'In3.Cu', 'In4.Cu', 'B.Cu'], stack-up 6 copper layers
+SCORE {"loss_W": 0.807, "power_open": {"3V3": ["L201"], "GND": ["J302", "J301"]}, "drc_errors": 0, "unrouted_signal_items": 359, "blocked_edges": "4 of 363", "pad_unjoined": {"/USB Port 1/PPHV": ["C409.1"], "/USB Port 2/PPHV": ["C509.1"]}, "pad_unjoined_all": {"/USB Port 1/PPHV": ["C409.1"], "/USB Port 1/VBUS": ["U401.32"], "/USB Port 2/PPHV": ["C509.1"], "/USB Port 2/VBUS": ["U501.32"], "3V3": ["J301.1"], "GND": ["J301.5", "J302.5"]}}

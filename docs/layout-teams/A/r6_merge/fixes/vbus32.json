@@ -1,0 +1,87 @@
+{
+ "_why": "PD-chip VBUS pin 32 (U401.32 / U501.32): it sat on a tiny VBUS pour of its own; KiCad reports 'Zone | Zone' and router.py skips such items, so the pin was open on every routed board (allow-listed in round 4 as 'finished by the router'). Planned link: via in the wide pin-32 pad, 0.4 mm B.Cu track under the pin row to a via in the main VBUS pour (F.Cu above pins 31-28 must stay free: CC1/CC2 escape there).",
+ "tracks": [
+  {
+   "net": "/USB Port 1/VBUS",
+   "layer": "B.Cu",
+   "a": [
+    104.85,
+    79.0
+   ],
+   "b": [
+    105.13,
+    79.28
+   ],
+   "w": 0.4
+  },
+  {
+   "net": "/USB Port 1/VBUS",
+   "layer": "B.Cu",
+   "a": [
+    105.13,
+    79.28
+   ],
+   "b": [
+    108.62,
+    79.28
+   ],
+   "w": 0.4
+  },
+  {
+   "net": "/USB Port 1/VBUS",
+   "layer": "B.Cu",
+   "a": [
+    108.62,
+    79.28
+   ],
+   "b": [
+    108.9,
+    79.0
+   ],
+   "w": 0.4
+  },
+  {
+   "net": "/USB Port 2/VBUS",
+   "layer": "B.Cu",
+   "a": [
+    83.85,
+    79.0
+   ],
+   "b": [
+    87.0,
+    77.9
+   ],
+   "w": 0.4
+  }
+ ],
+ "vias": [
+  {
+   "net": "/USB Port 1/VBUS",
+   "x": 104.85,
+   "y": 79.0,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/USB Port 1/VBUS",
+   "x": 108.9,
+   "y": 79.0,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/USB Port 2/VBUS",
+   "x": 83.85,
+   "y": 79.0,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/USB Port 2/VBUS",
+   "x": 87.0,
+   "y": 77.9,
+   "size": 0.45,
+   "drill": 0.3
+  }
+ ]
+}

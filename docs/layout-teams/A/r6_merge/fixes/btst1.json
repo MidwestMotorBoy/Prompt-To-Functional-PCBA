@@ -1,0 +1,58 @@
+{
+ "_why": "BTST1 (bootstrap cap to charger pin 26, both ports): the full route never lays C412.1->U403.26 / C512.1->U503.26 yet counts them routed; laid first, straight from the cap to the pin (router's own route on the empty board)",
+ "tracks": [
+  {
+   "net": "/USB Port 1/BTST1",
+   "layer": "F.Cu",
+   "a": [
+    109.59,
+    107.0
+   ],
+   "b": [
+    109.59,
+    108.84
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/BTST1",
+   "layer": "F.Cu",
+   "a": [
+    109.63,
+    105.95
+   ],
+   "b": [
+    109.59,
+    107.0
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/BTST1",
+   "layer": "F.Cu",
+   "a": [
+    86.604,
+    105.95
+   ],
+   "b": [
+    86.564,
+    107.0
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/BTST1",
+   "layer": "F.Cu",
+   "a": [
+    86.564,
+    107.0
+   ],
+   "b": [
+    86.564,
+    108.84
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": []
+}

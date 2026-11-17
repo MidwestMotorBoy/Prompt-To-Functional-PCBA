@@ -1,0 +1,4 @@
+{"_why": "R433.1 (port-1 PP5V, 5 V feedback top) -> PP5V pour: with CELL3 laid first its In2 jog at y 83.37 leaves no room for the router's via, so R433's join from the S0 route is laid with it (F.Cu stub, via 112.075,82.97, In2 north, via 112.075,81.27 into the F.Cu PP5V pour)",
+ "tracks": [{"net": "/USB Port 1/PP5V", "layer": "F.Cu", "a": [111.79, 83.0], "b": [112.075, 82.9745], "w": 0.2},
+            {"net": "/USB Port 1/PP5V", "layer": "In2.Cu", "a": [112.075, 82.9745], "b": [112.075, 81.2745], "w": 0.2}],
+ "vias": [{"net": "/USB Port 1/PP5V", "x": 112.075, "y": 82.9745}, {"net": "/USB Port 1/PP5V", "x": 112.075, "y": 81.2745}]}

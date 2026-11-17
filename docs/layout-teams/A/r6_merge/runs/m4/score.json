@@ -1,0 +1,96 @@
+{
+ "loss_W": 0.858,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 337,
+ "hot_loops": "7 of 7 pass, 6.27 nH",
+ "blocked_edges": "3 of 343",
+ "route": "338 of 343 routed, 5 failed",
+ "routed_loss_W": 1.167,
+ "routed_power_open": {
+  "3V3": [
+   "L201"
+  ]
+ },
+ "routed_drc_errors": 0,
+ "routed_unconnected": 13,
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "pad_unjoined_all": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "3V3": [
+   "J301.1"
+  ],
+  "GND": [
+   "J301.5",
+   "J302.5"
+  ]
+ },
+ "routed_pad_unjoined": {
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "routed_allpad_off": {
+  "/USB Port 2/PPHV": [
+   "C509.1",
+   "R509.1",
+   "U503.33"
+  ],
+  "3V3": [
+   "R314.1"
+  ]
+ },
+ "routed_unconnected_power": {
+  "/USB Port 2/PPHV": 1,
+  "3V3": 2
+ },
+ "routed_unconnected_by_net": {
+  "/Cells and Gauge/DSG_G": 1,
+  "Net-(U403-ACUV)": 1,
+  "/USB Port 2/PPHV": 1,
+  "3V3": 2,
+  "/MCU/NRST": 1,
+  "/USB Port 2/SW_5V": 1,
+  "/Cells and Gauge/CELL_1N": 1,
+  "SDA": 1,
+  "/USB Port 2/CC2": 1,
+  "Net-(U403-ACOV)": 1,
+  "Net-(U403-ICHG)": 1,
+  "Net-(U101-VC4)": 1
+ },
+ "routed_unconnected_items": [
+  "Track [/Cells and Gauge/DSG_G] on B.Cu, length 0.2828 mm | Pad 1 [/Cells and Gauge/DSG_G] of D103 on F.Cu @ 98.92,116.72 -> 99.70,125.35",
+  "Pad 34 [Net-(U403-ACUV)] of U403 on F.Cu | Pad 2 [Net-(U403-ACUV)] of R409 on F.Cu @ 107.94,111.99 -> 107.96,117.20",
+  "Track [/USB Port 2/PPHV] on F.Cu, length 0.5831 mm | Track [/USB Port 2/PPHV] on F.Cu, length 0.2138 mm @ 84.20,111.12 -> 84.91,110.99",
+  "Zone 'pc_3V3' [3V3] on F.Cu, priority 20 | Track [3V3] on F.Cu, length 0.3000 mm @ 114.00,117.58 -> 116.33,116.22",
+  "Track [3V3] on F.Cu, length 0.0000 mm | Pad 6 [3V3] of U301 on F.Cu @ 120.67,127.45 -> 115.72,119.33",
+  "Track [/MCU/NRST] on F.Cu, length 0.8500 mm | Pad 3 [/MCU/NRST] of J302 on F.Cu @ 109.95,124.08 -> 107.95,132.41",
+  "Pad 2 [/USB Port 2/SW_5V] of C540 on F.Cu | Track [/USB Port 2/SW_5V] on F.Cu, length 1.3000 mm @ 91.70,86.68 -> 92.88,85.67",
+  "Pad 2 [/Cells and Gauge/CELL_1N] of C115 on F.Cu | Track [/Cells and Gauge/CELL_1N] on F.Cu, length 0.9823 mm @ 104.63,134.40 -> 100.15,131.75",
+  "Pad 2 [SDA] of R305 on F.Cu | Track [SDA] on F.Cu, length 0.0707 mm @ 109.95,119.17 -> 102.97,83.42",
+  "Track [/USB Port 2/CC2] on F.Cu, length 0.4950 mm | Pad 29 [/USB Port 2/CC2] of U501 on F.Cu @ 95.33,76.22 -> 85.30,79.08",
+  "Track [Net-(U403-ACOV)] on In2.Cu (signal V + 3V3), length 0.2000 mm | Pad 1 [Net-(U403-ACOV)] of R411 on F.Cu @ 109.33,116.27 -> 107.95,118.39",
+  "Pad 1 [Net-(U403-ICHG)] of R413 on F.Cu | Pad 9 [Net-(U403-ICHG)] of U403 on F.Cu @ 109.60,121.84 -> 112.59,113.64",
+  "Track [Net-(U101-VC4)] on F.Cu, length 0.9701 mm | Pad 2 [Net-(U101-VC4)] of U101 on F.Cu @ 93.26,118.40 -> 95.00,120.00"
+ ]
+}

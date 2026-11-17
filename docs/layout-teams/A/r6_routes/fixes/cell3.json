@@ -1,0 +1,699 @@
+{
+ "_why": "CELL3 (cell-3 tap, J111 -> R103 -> R120, 50 mm, HighCurrent class halo) laid first as fixed copper: the router's own S0 route of this net, copied unchanged. On the cp3 board the PC router hit its 12 M node cap on this edge after the port-1 fixes moved other routes.",
+ "tracks": [
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    92.64,
+    117.3
+   ],
+   "b": [
+    92.325,
+    117.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    97.525,
+    134.8245
+   ],
+   "b": [
+    97.775,
+    135.0745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    92.175,
+    117.4245
+   ],
+   "b": [
+    92.125,
+    117.4745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    92.325,
+    117.4245
+   ],
+   "b": [
+    92.175,
+    117.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "F.Cu",
+   "a": [
+    97.775,
+    135.0745
+   ],
+   "b": [
+    98.1,
+    135.26
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    92.025,
+    117.5745
+   ],
+   "b": [
+    92.025,
+    117.9245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    93.825,
+    125.1245
+   ],
+   "b": [
+    93.825,
+    125.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    94.325,
+    124.6245
+   ],
+   "b": [
+    93.825,
+    125.1245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    93.575,
+    119.4745
+   ],
+   "b": [
+    93.575,
+    121.0745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    94.325,
+    121.7245
+   ],
+   "b": [
+    94.325,
+    124.6245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    90.925,
+    117.4245
+   ],
+   "b": [
+    91.875,
+    117.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    90.175,
+    116.6745
+   ],
+   "b": [
+    90.925,
+    117.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    92.025,
+    117.9245
+   ],
+   "b": [
+    93.575,
+    119.4745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    91.875,
+    117.4245
+   ],
+   "b": [
+    92.025,
+    117.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    93.875,
+    121.3745
+   ],
+   "b": [
+    93.975,
+    121.3745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    92.125,
+    117.4745
+   ],
+   "b": [
+    92.025,
+    117.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    93.575,
+    121.0745
+   ],
+   "b": [
+    93.875,
+    121.3745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "B.Cu",
+   "a": [
+    93.975,
+    121.3745
+   ],
+   "b": [
+    94.325,
+    121.7245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.425,
+    114.5745
+   ],
+   "b": [
+    90.825,
+    114.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.325,
+    83.3745
+   ],
+   "b": [
+    112.475,
+    83.3745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.625,
+    70.1245
+   ],
+   "b": [
+    113.625,
+    72.2245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    97.675,
+    134.8245
+   ],
+   "b": [
+    97.525,
+    134.8245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.375,
+    72.4245
+   ],
+   "b": [
+    113.375,
+    72.5245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.175,
+    115.9745
+   ],
+   "b": [
+    90.175,
+    116.6745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.325,
+    72.5745
+   ],
+   "b": [
+    113.325,
+    83.3745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    112.475,
+    83.3745
+   ],
+   "b": [
+    112.475,
+    97.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.825,
+    114.5745
+   ],
+   "b": [
+    90.825,
+    115.9745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    112.475,
+    97.0245
+   ],
+   "b": [
+    112.575,
+    97.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    91.375,
+    104.1745
+   ],
+   "b": [
+    90.625,
+    104.1745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    91.225,
+    111.0245
+   ],
+   "b": [
+    90.425,
+    111.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    96.425,
+    132.9245
+   ],
+   "b": [
+    97.675,
+    132.9245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.625,
+    72.2245
+   ],
+   "b": [
+    113.475,
+    72.2245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    96.425,
+    126.2745
+   ],
+   "b": [
+    96.425,
+    132.9245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    97.675,
+    132.9245
+   ],
+   "b": [
+    97.675,
+    134.8245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    91.225,
+    106.8745
+   ],
+   "b": [
+    91.225,
+    111.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    93.825,
+    125.6245
+   ],
+   "b": [
+    94.475,
+    126.2745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.375,
+    72.5245
+   ],
+   "b": [
+    113.325,
+    72.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.425,
+    111.0245
+   ],
+   "b": [
+    90.425,
+    114.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.475,
+    72.3245
+   ],
+   "b": [
+    113.375,
+    72.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.625,
+    104.1745
+   ],
+   "b": [
+    90.625,
+    106.2745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.825,
+    115.9745
+   ],
+   "b": [
+    90.175,
+    115.9745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    94.475,
+    126.2745
+   ],
+   "b": [
+    96.425,
+    126.2745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    90.625,
+    106.2745
+   ],
+   "b": [
+    91.225,
+    106.8745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    93.825,
+    125.4245
+   ],
+   "b": [
+    93.825,
+    125.6245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    113.475,
+    72.2245
+   ],
+   "b": [
+    113.475,
+    72.3245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In2.Cu",
+   "a": [
+    91.375,
+    96.7745
+   ],
+   "b": [
+    91.375,
+    104.1745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In3.Cu",
+   "a": [
+    112.575,
+    97.0245
+   ],
+   "b": [
+    100.375,
+    97.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In3.Cu",
+   "a": [
+    91.375,
+    96.3245
+   ],
+   "b": [
+    91.375,
+    96.7745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In3.Cu",
+   "a": [
+    100.375,
+    97.0245
+   ],
+   "b": [
+    100.375,
+    96.3245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "layer": "In3.Cu",
+   "a": [
+    100.375,
+    96.3245
+   ],
+   "b": [
+    91.375,
+    96.3245
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": [
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 97.525,
+   "y": 134.8245,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 112.575,
+   "y": 97.0245,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 93.825,
+   "y": 125.4245,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 91.375,
+   "y": 96.7745,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 92.125,
+   "y": 117.4745,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/Cells and Gauge/CELL3",
+   "x": 90.175,
+   "y": 116.6745,
+   "size": 0.45,
+   "drill": 0.3
+  }
+ ]
+}

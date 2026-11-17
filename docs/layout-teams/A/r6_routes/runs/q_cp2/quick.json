@@ -1,0 +1,28 @@
+{
+ "loss_W": 0.818,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "drc_error_types": [],
+ "blocked_edges": "3 of 353",
+ "ghostfail": [
+  "CHG_INH Pad 1 [CHG_INH] of R535 on F.Cu -> Pad 2 [CHG_INH] of J302 on F.Cu",
+  "/Cells and Gauge/GAUGE_FUSE Pad 25 [/Cells and Gauge/GAUGE_FUSE] of U101 on F.Cu -> Pad 2 [/Cells and Gauge/GAUGE_FUSE] of R126 on F.Cu",
+  "/USB Port 2/DRV9_OFF Pad 37 [/USB Port 2/DRV9_OFF] of U501 on F.Cu -> Pad 1 [/USB Port 2/DRV9_OFF] of Q509 on F.Cu"
+ ],
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ }
+}

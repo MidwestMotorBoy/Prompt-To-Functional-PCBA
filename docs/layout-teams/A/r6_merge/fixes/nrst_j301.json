@@ -1,0 +1,3 @@
+{"_why": "NRST J301.3 (TC2030 pad boxed by pads 1, 4, 5): the full route never reaches it yet counts the edge as routed (KiCad DRC on the routed board shows it open). Fixed escape like scl.json: 0.97 mm F.Cu stub south to a via at 117.9576,117.10 in the corridor between J301 and the C313/R321 row; the router then joins the via on any layer.",
+ "tracks": [{"net": "/MCU/NRST", "layer": "F.Cu", "a": [117.9576, 116.1288], "b": [117.9576, 117.1], "w": 0.2}],
+ "vias": [{"net": "/MCU/NRST", "x": 117.9576, "y": 117.1, "size": 0.45, "drill": 0.3}]}

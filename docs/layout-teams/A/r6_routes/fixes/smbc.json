@@ -1,0 +1,4 @@
+{"_why": "SMBC U101.19: the F.Cu FET_MID pour sits 0.6 mm from the gauge's east pin row, too close for a via; the pour's west margin (no FET current there) is pulled back to x 100.45 beside pins 17-22 and SMBC gets a fixed escape: 0.2 mm track east to a via at 99.85,121.60",
+ "cuts": [{"layers": ["F.Cu"], "net": "FET_MID$", "rect": [99.3, 119.75, 100.45, 122.65]}],
+ "tracks": [{"net": "Net-(U101-SMBC)", "layer": "F.Cu", "a": [98.8, 121.6], "b": [99.85, 121.6], "w": 0.2}],
+ "vias": [{"net": "Net-(U101-SMBC)", "x": 99.85, "y": 121.6, "size": 0.45, "drill": 0.3}]}

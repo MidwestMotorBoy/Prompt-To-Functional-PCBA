@@ -1,0 +1,71 @@
+{
+ "_why": "charger VAC pins 32 and 33 (same net, adjacent pins on the west side): pin 32 is tied to the planned C409/C509 link (capfix link3d via just west of pin 33) by a fixed 0.2 mm F.Cu track that leaves the pin westwards, so the pad centre of pin 32 stays the ratsnest end for the router's north-south PPHV join (a straight pin-to-pin bridge made the end a 'Track' between fine-pitch pins, which the router cannot reach) and the join reaches pin 33 / C409 / C509 too (m4 local route joined pin 32 only on port 2).",
+ "tracks": [
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.94,
+    110.99
+   ],
+   "b": [
+    107.5,
+    110.99
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.5,
+    110.99
+   ],
+   "b": [
+    107.3,
+    111.19
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.3,
+    111.19
+   ],
+   "b": [
+    107.3,
+    111.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    84.914,
+    110.99
+   ],
+   "b": [
+    84.4,
+    110.99
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    84.4,
+    110.99
+   ],
+   "b": [
+    84.2,
+    111.1245
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": []
+}

@@ -1,0 +1,170 @@
+{
+ "unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 1/VBUS": [
+   "U401.32"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "/USB Port 2/VBUS": [
+   "U501.32"
+  ],
+  "3V3": [
+   "C207.1",
+   "C403.1",
+   "C503.1",
+   "L201.2"
+  ]
+ },
+ "unjoined_not_allowed": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "3V3": [
+   "C207.1",
+   "C403.1",
+   "C503.1"
+  ]
+ },
+ "whole_open": {
+  "/USB Port 1/PPHV": [
+   "C409"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509"
+  ],
+  "3V3": [
+   "C207",
+   "C403",
+   "C503",
+   "L201"
+  ]
+ },
+ "info": {
+  "/USB Port 1/PPHV": [
+   "U403.32",
+   "U403.33"
+  ],
+  "/USB Port 2/PPHV": [
+   "U503.32",
+   "U503.33"
+  ],
+  "3V3": [
+   "U301.6"
+  ]
+ },
+ "main": {
+  "/Cells and Gauge/CELL_P": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "Q101"
+  },
+  "/Cells and Gauge/CELL_P_RAW": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "F102"
+  },
+  "/Cells and Gauge/FET_MID": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "Q101"
+  },
+  "/USB Port 1/AC_SNS_N": {
+   "terminal_parts": 9,
+   "of": 9,
+   "source": "Q401"
+  },
+  "/USB Port 1/BAT_SNS_P": {
+   "terminal_parts": 5,
+   "of": 5,
+   "source": "Q402"
+  },
+  "/USB Port 1/PP5V": {
+   "terminal_parts": 6,
+   "of": 6,
+   "source": "L402"
+  },
+  "/USB Port 1/PPHV": {
+   "terminal_parts": 3,
+   "of": 4,
+   "source": "R424"
+  },
+  "/USB Port 1/SW1": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "L401"
+  },
+  "/USB Port 1/SW2": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "L401"
+  },
+  "/USB Port 1/VBUS": {
+   "terminal_parts": 5,
+   "of": 5,
+   "source": "J401"
+  },
+  "/USB Port 2/AC_SNS_N": {
+   "terminal_parts": 9,
+   "of": 9,
+   "source": "Q501"
+  },
+  "/USB Port 2/BAT_SNS_P": {
+   "terminal_parts": 5,
+   "of": 5,
+   "source": "Q502"
+  },
+  "/USB Port 2/PP5V": {
+   "terminal_parts": 6,
+   "of": 6,
+   "source": "L502"
+  },
+  "/USB Port 2/PPHV": {
+   "terminal_parts": 3,
+   "of": 4,
+   "source": "R524"
+  },
+  "/USB Port 2/SW1": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "L501"
+  },
+  "/USB Port 2/SW2": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "L501"
+  },
+  "/USB Port 2/VBUS": {
+   "terminal_parts": 5,
+   "of": 5,
+   "source": "J501"
+  },
+  "3V3": {
+   "terminal_parts": 4,
+   "of": 8,
+   "source": "J301"
+  },
+  "CELL_N": {
+   "terminal_parts": 2,
+   "of": 2,
+   "source": "J108"
+  },
+  "PACK_P": {
+   "terminal_parts": 21,
+   "of": 21,
+   "source": "Q102"
+  },
+  "GND": {
+   "terminal_parts": 84,
+   "of": 84,
+   "source": "RS101"
+  }
+ },
+ "summary": "8 unjoined terminal pads (5 not allowed): 1:PPHV C409.1; 2:PPHV C509.1; 3V3 C207.1,C403.1,C503.1; info (non-terminal) 5"
+}

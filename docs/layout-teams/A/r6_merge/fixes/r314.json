@@ -1,0 +1,27 @@
+{
+ "_why": "3V3 R314.1 (single pad south of the antenna keep-out): the router drops its plane via onto an In3 island. Fixed 0.8 mm F.Cu stub south to a planned 3V3 via at 120.67,128.25; specfix runs before capfix, so capfix --band grows the In4 3V3 band to this via.",
+ "tracks": [
+  {
+   "net": "3V3",
+   "layer": "F.Cu",
+   "a": [
+    120.67,
+    127.45
+   ],
+   "b": [
+    120.67,
+    128.25
+   ],
+   "w": 0.25
+  }
+ ],
+ "vias": [
+  {
+   "net": "3V3",
+   "x": 120.67,
+   "y": 128.25,
+   "size": 0.45,
+   "drill": 0.3
+  }
+ ]
+}

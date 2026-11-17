@@ -1,0 +1,39 @@
+{
+ "loss_W": 0.859,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 324,
+ "hot_loops": "7 of 7 pass, 6.28 nH",
+ "blocked_edges": "3 of 331",
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "pad_unjoined_all": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "3V3": [
+   "J301.1"
+  ],
+  "GND": [
+   "J301.5",
+   "J302.5"
+  ]
+ }
+}

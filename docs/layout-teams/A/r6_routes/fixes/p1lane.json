@@ -1,0 +1,2 @@
+{"_why": "port-1 AC_SNS_N F.Cu pour pulled back from the east side of R441/R404 so the PD cluster gets the via column that port 2 uses (port 2's AC_SNS_N pour lies further south)",
+ "cuts": [{"layers": ["F.Cu"], "net": "^/USB Port 1/AC_SNS_N$", "rect": [107.9, 83.2, 109.5, 87.6]}]}

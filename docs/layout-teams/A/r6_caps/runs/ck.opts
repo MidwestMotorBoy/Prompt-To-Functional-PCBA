@@ -1,0 +1,1 @@
+CAPFIX=--band=3V3 --stubs=1 --link_w=0.2 --links=R509.1>C509.1;R417.2>C301.1 --link3d=C409.1>U403.33;C509.1>U503.33 --l3_layers=F.Cu,B.Cu --l3_cost=3,1.0 --avoid=/home/claude/repo/docs/layout-teams/A/r6_caps/runs/base/routed.kicad_pcb

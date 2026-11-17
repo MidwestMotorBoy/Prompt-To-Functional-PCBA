@@ -1,0 +1,132 @@
+{
+ "loss_W": 0.809,
+ "power_open": {
+  "3V3": [
+   "L201"
+  ],
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "unrouted_signal_items": 357,
+ "hot_loops": "7 of 7 pass, 6.27 nH",
+ "blocked_edges": "4 of 361",
+ "route": "355 of 361 routed, 6 failed (local, 150 min cap, finished in about 40 min, not timed out)",
+ "routed_loss_W": 1.087,
+ "routed_power_open": {
+  "3V3": [
+   "L201"
+  ]
+ },
+ "routed_drc_errors": 0,
+ "routed_unconnected": 21,
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "pad_unjoined_all": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 1/VBUS": [
+   "U401.32"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ],
+  "/USB Port 2/VBUS": [
+   "U501.32"
+  ],
+  "3V3": [
+   "J301.1"
+  ],
+  "GND": [
+   "J301.5",
+   "J302.5"
+  ]
+ },
+ "routed_pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ },
+ "routed_allpad_off": {
+  "/USB Port 1/PPHV": [
+   "C409.1",
+   "R409.1",
+   "U403.32",
+   "U403.33"
+  ],
+  "/USB Port 2/PP5V": [
+   "R533.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1",
+   "R509.1",
+   "U503.32",
+   "U503.33"
+  ],
+  "3V3": [
+   "R314.1",
+   "R417.2"
+  ]
+ },
+ "routed_unconnected_power": {
+  "/USB Port 1/PPHV": 1,
+  "/USB Port 2/PPHV": 2,
+  "/USB Port 2/PP5V": 1,
+  "3V3": 3,
+  "/USB Port 2/VBUS": 1,
+  "/USB Port 1/VBUS": 1
+ },
+ "routed_unconnected_by_net": {
+  "/USB Port 1/PPHV": 1,
+  "Net-(U403-ACUV)": 1,
+  "/P1_LDO_3V3": 2,
+  "/USB Port 1/I2CC_SCL": 2,
+  "/Cells and Gauge/CELL3": 1,
+  "/USB Port 2/PPHV": 2,
+  "/USB Port 2/PP5V": 1,
+  "/USB Port 1/REGN": 1,
+  "3V3": 3,
+  "/USB Port 1/TS": 1,
+  "/USB Port 2/VBUS": 1,
+  "/MCU/NRST": 1,
+  "/USB Port 1/BTST1": 1,
+  "SCL": 1,
+  "/USB Port 2/BTST1": 1,
+  "/USB Port 1/VBUS": 1
+ },
+ "routed_unconnected_items": [
+  "Pad 1 [/USB Port 1/PPHV] of R425 on F.Cu | Track [/USB Port 1/PPHV] on F.Cu, length 0.6152 mm @ 112.00,83.99 -> 107.94,110.99",
+  "Pad 34 [Net-(U403-ACUV)] of U403 on F.Cu | Track [Net-(U403-ACUV)] on F.Cu, length 1.1800 mm @ 107.94,111.99 -> 107.96,117.20",
+  "Pad 8 [/P1_LDO_3V3] of U402 on F.Cu | Pad 1 [/P1_LDO_3V3] of R441 on F.Cu @ 104.65,85.20 -> 107.60,84.57",
+  "Pad 1 [/P1_LDO_3V3] of R404 on F.Cu | Pad 1 [/P1_LDO_3V3] of R441 on F.Cu @ 107.50,86.22 -> 107.60,84.57",
+  "Pad 2 [/USB Port 1/I2CC_SCL] of R403 on F.Cu | Pad 1 [/USB Port 1/I2CC_SCL] of U403 on F.Cu @ 102.30,86.48 -> 108.59,113.64",
+  "Track [/USB Port 1/I2CC_SCL] on F.Cu, length 0.1500 mm | Pad 17 [/USB Port 1/I2CC_SCL] of U401 on F.Cu @ 105.53,84.62 -> 106.70,82.92",
+  "PTH pad 1 [/Cells and Gauge/CELL3] of J111 | Track [/Cells and Gauge/CELL3] on In3.Cu (signal H + 5V), length 1.8000 mm @ 113.90,69.48 -> 92.88,117.02",
+  "Track [/USB Port 2/PPHV] on F.Cu, length 0.5831 mm | Pad 32 [/USB Port 2/PPHV] of U503 on F.Cu @ 84.20,111.12 -> 84.91,110.99",
+  "Pad 1 [/USB Port 2/PPHV] of R525 on F.Cu | Pad 32 [/USB Port 2/PPHV] of U503 on F.Cu @ 89.75,85.39 -> 84.91,110.99",
+  "Track [/USB Port 2/PP5V] on F.Cu, length 1.8087 mm | Track [/USB Port 2/PP5V] on F.Cu, length 0.3901 mm @ 92.00,79.35 -> 94.79,90.45",
+  "Track [/USB Port 1/REGN] on B.Cu, length 2.1500 mm | Pad 1 [/USB Port 1/REGN] of R415 on F.Cu @ 108.12,108.57 -> 107.59,120.60",
+  "Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10 | Zone 'pc_3V3' [3V3] on F.Cu, priority 20 @ 80.03,72.61 -> 114.00,117.58",
+  "Track [3V3] on F.Cu, length 0.2828 mm | Zone 'pc_3V3' [3V3] on F.Cu, priority 20 @ 116.33,116.27 -> 114.00,117.58",
+  "Track [3V3] on F.Cu, length 0.0000 mm | Track [3V3] on F.Cu, length 0.5742 mm @ 120.67,127.45 -> 115.72,119.33",
+  "Track [/USB Port 1/TS] on In2.Cu (signal V + 3V3), length 4.6500 mm | Via [/USB Port 1/TS] on F.Cu - B.Cu @ 105.67,105.67 -> 111.03,114.72",
+  "Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priority 20 | Zone 'pc_USB Port 2_VBUS' [/USB Port 2/VBUS] on F.Cu, priority 20 @ 84.18,78.28 -> 90.64,69.97",
+  "Pad 3 [/MCU/NRST] of J301 on F.Cu | Track [/MCU/NRST] on F.Cu, length 1.6196 mm @ 117.96,116.13 -> 111.57,124.08",
+  "Track [/USB Port 1/BTST1] on F.Cu, length 1.0508 mm | Pad 26 [/USB Port 1/BTST1] of U403 on F.Cu @ 109.63,105.95 -> 109.59,108.84",
+  "Pad 6 [SCL] of J302 on F.Cu | Track [SCL] on In3.Cu (signal H + 5V), length 0.5657 mm @ 109.22,131.14 -> 110.12,118.97",
+  "Pad 1 [/USB Port 2/BTST1] of C512 on F.Cu | Pad 26 [/USB Port 2/BTST1] of U503 on F.Cu @ 86.56,107.00 -> 86.56,108.84",
+  "Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priority 20 | Zone 'pc_USB Port 1_VBUS' [/USB Port 1/VBUS] on F.Cu, priority 20 @ 105.02,78.28 -> 112.14,73.88"
+ ]
+}

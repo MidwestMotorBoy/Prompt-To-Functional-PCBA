@@ -1,0 +1,145 @@
+{
+ "off_main": {
+  "/Cells and Gauge/CELL_P": [
+   "C110.1",
+   "R118.1"
+  ],
+  "/USB Port 1/PP5V": [
+   "R433.1"
+  ],
+  "/USB Port 1/PPHV": [
+   "U403.32"
+  ],
+  "/USB Port 1/SW1": [
+   "U403.28"
+  ],
+  "/USB Port 1/SW2": [
+   "U403.18"
+  ],
+  "/USB Port 1/VBUS": [
+   "U401.32"
+  ],
+  "/USB Port 2/PP5V": [
+   "R533.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "U503.32"
+  ],
+  "/USB Port 2/SW1": [
+   "U503.28"
+  ],
+  "/USB Port 2/SW2": [
+   "U503.18"
+  ],
+  "/USB Port 2/VBUS": [
+   "U501.32"
+  ],
+  "3V3": [
+   "J301.1",
+   "R302.1",
+   "R304.1",
+   "R305.1",
+   "R313.1",
+   "R314.1",
+   "R517.2",
+   "U204.10",
+   "U301.6",
+   "U301.7",
+   "U401.38",
+   "U501.38"
+  ],
+  "PACK_P": [
+   "TP106.1"
+  ],
+  "GND": [
+   "C315.2",
+   "C415.2",
+   "J301.5",
+   "J302.5",
+   "U301.1",
+   "U301.2",
+   "U301.24",
+   "U402.7",
+   "U502.7"
+  ]
+ },
+ "off_main_not_allowed": {
+  "/Cells and Gauge/CELL_P": [
+   "C110.1",
+   "R118.1"
+  ],
+  "/USB Port 1/PP5V": [
+   "R433.1"
+  ],
+  "/USB Port 1/PPHV": [
+   "U403.32"
+  ],
+  "/USB Port 1/SW1": [
+   "U403.28"
+  ],
+  "/USB Port 1/SW2": [
+   "U403.18"
+  ],
+  "/USB Port 2/PP5V": [
+   "R533.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "U503.32"
+  ],
+  "/USB Port 2/SW1": [
+   "U503.28"
+  ],
+  "/USB Port 2/SW2": [
+   "U503.18"
+  ],
+  "3V3": [
+   "R302.1",
+   "R304.1",
+   "R305.1",
+   "R313.1",
+   "R314.1",
+   "R517.2",
+   "U204.10",
+   "U301.6",
+   "U301.7",
+   "U401.38",
+   "U501.38"
+  ],
+  "PACK_P": [
+   "TP106.1"
+  ],
+  "GND": [
+   "C315.2",
+   "C415.2",
+   "U301.1",
+   "U301.2",
+   "U301.24",
+   "U402.7",
+   "U502.7"
+  ]
+ },
+ "pieces_with_pads": {
+  "/Cells and Gauge/CELL_P": 3,
+  "/Cells and Gauge/CELL_P_RAW": 1,
+  "/Cells and Gauge/FET_MID": 1,
+  "/USB Port 1/AC_SNS_N": 1,
+  "/USB Port 1/BAT_SNS_P": 1,
+  "/USB Port 1/PP5V": 2,
+  "/USB Port 1/PPHV": 2,
+  "/USB Port 1/SW1": 2,
+  "/USB Port 1/SW2": 2,
+  "/USB Port 1/VBUS": 2,
+  "/USB Port 2/AC_SNS_N": 1,
+  "/USB Port 2/BAT_SNS_P": 1,
+  "/USB Port 2/PP5V": 2,
+  "/USB Port 2/PPHV": 2,
+  "/USB Port 2/SW1": 2,
+  "/USB Port 2/SW2": 2,
+  "/USB Port 2/VBUS": 2,
+  "3V3": 13,
+  "CELL_N": 1,
+  "PACK_P": 2,
+  "GND": 10
+ },
+ "summary": "29 pads off main (not allowed): /Cells and Gauge/CELL_P: C110.1,R118.1; /USB Port 1/PP5V: R433.1; /USB Port 1/PPHV: U403.32; /USB Port 1/SW1: U403.28; /USB Port 1/SW2: U403.18; /USB Port 2/PP5V: R533.1; /USB Port 2/PPHV: U503.32; /USB Port 2/SW1: U503.28; /USB Port 2/SW2: U503.18; 3V3: R302.1,R304.1,R305.1,R313.1,R314.1,R517.2,U204.10,U301.6,U301.7,U401.38,U501.38; PACK_P: TP106.1; GND: C315.2,C415.2,U301.1,U301.2,U301.24,U402.7,U502.7"
+}

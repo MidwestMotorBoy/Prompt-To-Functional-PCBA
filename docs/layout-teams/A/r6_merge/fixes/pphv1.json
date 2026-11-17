@@ -1,0 +1,4 @@
+{"_doc": "port-1 PPHV ratsnest end: pull the PD-side F.Cu PPHV pour back so every pour point is > 27.5 mm from U403.32 and R425.1's pad centre (27.30 mm) is the nearest item of the north piece; KiCad then reports 'Pad | Pad' (not 'Zone | Pad', which router.py turns into a zero-length route) and the router lays the north-south VAC join. R425.1 is tied to R424.1 by a fixed track.",
+ "cuts": [{"layers": ["F.Cu"], "net": "Port 1/PPHV$", "circle": [107.94, 110.99, 27.5]}],
+ "tracks": [{"net": "/USB Port 1/PPHV", "layer": "F.Cu", "a": [112.0, 83.99], "b": [111.0, 83.7], "w": 0.25}],
+ "vias": []}

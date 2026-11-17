@@ -1,0 +1,3 @@
+{"_why": "SCL J302.6 (TC2030 pad, boxed by pad 4, pad 5, the TC2030 hole and the F.Cu CELL_P pour) gets a fixed escape: 0.2 mm track north to a via at 109.22,130.20 (0.82 mm from pad 6, 1.39 mm from the TC2030 hole); KiCad's fill clears CELL_P F/B.Cu and the GND planes around it",
+ "tracks": [{"net": "SCL", "layer": "F.Cu", "a": [109.22, 131.14], "b": [109.22, 130.2], "w": 0.2}],
+ "vias": [{"net": "SCL", "x": 109.22, "y": 130.2, "size": 0.45, "drill": 0.3}]}
