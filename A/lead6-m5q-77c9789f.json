@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m5q.kicad_pcb",
+ "sha": "77c9789f2d39ac99932df79053779a726f4e355a",
+ "routed": 330,
+ "failed": 2,
+ "edges": 332,
+ "minutes": 18.7,
+ "status": "done",
+ "tail": [
+  "routed 330 edges, 2 failed, items added 2912",
+  "  FAILED /USB Port 2/SBU_FLT 94.35,74.05 (Pad 9  of U505 ) -> 86.50,82.92 (Track  on F.Cu,) starts 54 goals 42 seen 706597 | no way even with every other route gone",
+  "  FAILED /USB Port 2/CHG_INT 86.50,85.58 (Track  on F.Cu,) -> 86.56,113.64 (Pad 3  of U503 ) starts 377 goals 82 seen 102 | no way even with every other route gone",
+  "FAILKEY /USB Port 2/SBU_FLT",
+  "FAILKEY /USB Port 2/CHG_INT"
+ ]
+}

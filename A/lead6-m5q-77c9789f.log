@@ -1,0 +1,14 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 332 (0 on long nets)
+fan-out stubs: 131
+phase 1: 5 open connections tried again with every route free to move
+phase 2: 2 open connections tried again with every route free to move
+phase 3: 2 open connections tried again with every route free to move
+routes pulled and re-laid: 104
+fan-out stubs unused (removed) 52, trimmed 20
+unconnected after fill: 7
+routed 330 edges, 2 failed, items added 2912
+  FAILED /USB Port 2/SBU_FLT 94.35,74.05 (Pad 9  of U505 ) -> 86.50,82.92 (Track  on F.Cu,) starts 54 goals 42 seen 706597 | no way even with every other route gone
+  FAILED /USB Port 2/CHG_INT 86.50,85.58 (Track  on F.Cu,) -> 86.56,113.64 (Pad 3  of U503 ) starts 377 goals 82 seen 102 | no way even with every other route gone
+FAILKEY /USB Port 2/SBU_FLT
+FAILKEY /USB Port 2/CHG_INT
