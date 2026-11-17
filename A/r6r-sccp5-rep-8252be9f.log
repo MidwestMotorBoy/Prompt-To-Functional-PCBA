@@ -1,0 +1,12 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 350 (0 on long nets)
+fan-out stubs: 142
+phase 1: 7 open connections tried again with every route free to move
+phase 2: 6 open connections tried again with every route free to move
+phase 3: 2 open connections tried again with every route free to move
+routes pulled and re-laid: 218
+fan-out stubs unused (removed) 59, trimmed 26
+unconnected after fill: 19
+routed 349 edges, 1 failed, items added 3864
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 128 goals 3 seen 713098 | no way even with every other route gone
+FAILKEY /Cells and Gauge/TS1
