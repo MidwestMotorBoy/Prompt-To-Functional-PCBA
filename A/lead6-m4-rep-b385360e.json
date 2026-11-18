@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m4-rep.kicad_pcb",
+ "sha": "b385360e21d2bf03b05c7f64cf62d62210893d69",
+ "routed": 340,
+ "failed": 3,
+ "edges": 343,
+ "minutes": 98.5,
+ "status": "done",
+ "tail": [
+  "  FAILED SDA 103.10,82.92 (Pad 8  of U401 ) -> 82.10,82.92 (Pad 8  of U501 ) starts 45 goals 45 seen 55 | blocked by routes that have been pulled too often",
+  "  FAILED SDA 103.10,82.92 (Pad 8  of U401 ) -> 109.95,119.17 (Pad 2  of R305 ) starts 45 goals 243 seen 55 | no way even with every other route gone",
+  "FAILKEY /USB Port 2/I2CC_SCL",
+  "FAILKEY SDA",
+  "FAILKEY SDA"
+ ]
+}
