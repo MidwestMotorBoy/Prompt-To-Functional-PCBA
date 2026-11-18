@@ -1,0 +1,11 @@
+{
+ "_why": "R418.1 (PACK_P, 116.51,108.75) sits at the west tip of the soft F.Cu PACK_P pour; EN_5V1's only way down the port-1 east column crosses F.Cu right there and cut the pad off (m7), and a hard stub track there (m9) left EN_5V1 with no way. A via in the pad into the In4 PACK_P copy joins the pad without taking the F.Cu crossing.",
+ "tracks": [],
+ "vias": [
+  {
+   "net": "PACK_P",
+   "x": 116.51,
+   "y": 108.75
+  }
+ ]
+}

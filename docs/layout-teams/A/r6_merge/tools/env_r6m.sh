@@ -22,3 +22,10 @@ SPECFIX_M7="$SPECFIX_M3,$MF/vac_pins.json,$MF/r314.json"
 #     capfix link3d only for port 2; hard stubs for R418.1 (PACK_P) and R304.1 (3V3)
 CAPFIX_M9="--band=3V3 --stubs=1 --stub_refs=R418.1,R304.1 --link_w=0.2 --links=R509.1>C509.1 --link3d=C509.1>U503.33 --l3_layers=F.Cu,B.Cu --l3_cost=3,1.0 $AVOID --anchor=U501.20>U503.32;C542.1>R533.1"
 SPECFIX_M9="$SPECFIX_M3,$MF/vac_p2.json,$MF/p1vac.json,$MF/r314.json"
+# m11 (m10 was dropped: an EN_5V1 pre-lay from the m7 route shorted against m9 copper): m9 with
+#   - R418.1 joined by a via in the pad (r418.json) instead of a hard stub (the stub closed EN_5V1's F.Cu crossing),
+#   - port-2 VBUS pin-32 link along the pin row (vbus32b.json; the diagonal took the CC2 via sites north of pins 28-31),
+#   - J301.1 3V3 via into the In4 band (j301_3v3.json, applied after capfix)
+CAPFIX_M11="--band=3V3 --stubs=1 --link_w=0.2 --links=R509.1>C509.1 --link3d=C509.1>U503.33 --l3_layers=F.Cu,B.Cu --l3_cost=3,1.0 $AVOID --anchor=U501.20>U503.32;C542.1>R533.1"
+SPECFIX_M11="$CP5,$MF/pphv1.json,$MF/btst1.json,$MF/nrst_j301.json,$MF/vbus32b.json,$MF/vac_p2.json,$MF/p1vac.json,$MF/r314.json,$MF/r418.json"
+SPECFIX_POST_M11="$MF/j301_3v3.json"

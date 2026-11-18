@@ -1,0 +1,38 @@
+{
+ "_why": "J301.1 (Tag-Connect 3V3): its end of the MCU F.Cu 3V3 pour is cut off by SWDIO on every routed board (2 KiCad unconnected items). Hard track from the J301.1 pad to a new 3V3 via into the In4 3V3 band.",
+ "tracks": [
+  {
+   "net": "3V3",
+   "layer": "F.Cu",
+   "a": [
+    116.6876,
+    116.1288
+   ],
+   "b": [
+    116.125,
+    116.4745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "3V3",
+   "layer": "F.Cu",
+   "a": [
+    116.125,
+    116.4745
+   ],
+   "b": [
+    115.9,
+    116.7
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": [
+  {
+   "net": "3V3",
+   "x": 115.9,
+   "y": 116.7
+  }
+ ]
+}

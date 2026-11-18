@@ -37,3 +37,11 @@ Findings
 - 02:55: m9 local routes finished (about 34 min each, not timed out, both run at once):
   runs/m9 (stock router): 339/340, 1 failed, routed DRC 0, KiCad unconnected 4, routed_power_open 3V3@L201 only, routed_pad_unjoined {},
   routed_allpad_off 3V3 R417.2, routed loss 1.136 W. runs/m9e (router_esc): 338/340, 2 failed, unconnected 4, otherwise the same.
+- m9 open list (KiCad, same 4 on both local routes): (1,2) 3V3 J301.1 end of the MCU F.Cu pour cut off by SWDIO, (3) P2 CC2 U505.11 ->
+  U501.29: the diagonal B.Cu VBUS pin-32 link (vbus32.json) takes the via sites north of pins 28-31, (4) EN_5V1 R432.1 -> U301.12:
+  "no way": its only crossing of the port-1 east column was F.Cu at R418.1, where m9 put a hard PACK_P stub.
+- m10 (EN_5V1 laid first from the m7 route: 121 tracks, 11 vias) shorted against m9 copper: dropped.
+- m11 = m9 with r418.json (via in R418.1 pad instead of the stub), vbus32b.json (P2 VBUS link along the pin row), j301_3v3.json
+  (J301.1 3V3 via into the In4 band). Copper DRC 0. Queued lead6-m11 and lead6-m11-rep at 03:09.
+- 03:07: m12q = m11 + p2scl.json (P2 I2CC_SCL laid first; PC fails that edge 'pulled 1' on m4/m7/m9, local routes it), quick path, DRC 0, queued lead6-m12q. PC lead6-m9-rep: 339/1 (P2 I2CC_SCL), unc 7, 39.0 min.
+- 03:13: m11 scorecard: 0.866 W, power_open GND J301/J302 only (3V3@L201 now joined), DRC 0, hot 7/7 6.28 nH, blocked 3/339. Local routes started: runs/m11 (stock), runs/m11e (router_esc).
