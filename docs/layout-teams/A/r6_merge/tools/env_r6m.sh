@@ -18,3 +18,7 @@ SPECFIX_M3="$CP5,$MF/pphv1.json,$MF/btst1.json,$MF/nrst_j301.json,$MF/vbus32.jso
 SPECFIX_M5="$SPECFIX_M3,$MF/vac_pins.json,$MF/r314.json,$MF/p2self.json"
 # m7: m5 without the port-2 cluster pre-lay (p2self boxed P2 SBU_FLT / CHG_INT on the PC route of m5q)
 SPECFIX_M7="$SPECFIX_M3,$MF/vac_pins.json,$MF/r314.json"
+# m9: port-1 VAC link by hand (p1vac.json: via moved north of pin 33 so ACUV pin 34 keeps its via site, + fixed ACUV escape via);
+#     capfix link3d only for port 2; hard stubs for R418.1 (PACK_P) and R304.1 (3V3)
+CAPFIX_M9="--band=3V3 --stubs=1 --stub_refs=R418.1,R304.1 --link_w=0.2 --links=R509.1>C509.1 --link3d=C509.1>U503.33 --l3_layers=F.Cu,B.Cu --l3_cost=3,1.0 $AVOID --anchor=U501.20>U503.32;C542.1>R533.1"
+SPECFIX_M9="$SPECFIX_M3,$MF/vac_p2.json,$MF/p1vac.json,$MF/r314.json"

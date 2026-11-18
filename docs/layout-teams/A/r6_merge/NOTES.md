@@ -26,3 +26,10 @@ Findings
 ## Resume log
 - 01:30 Nov 18: container restarted (3rd time). Resumed from commit c72209c. Next: finish pass with router_esc on runs/m7 routed board,
   then freeze the connected routes as fixed copper so the rebuild is deterministic; poll lead6-m8q / lead6-m8q-rep.
+- 02:08: PC lead6-m8q 336/3, lead6-m8q-rep 337/3 (P2 CHG_INT, P2 I2CC_SDA, EN_5V1): pre-laying P2 I2CC_SCL moved the failures; m8 rejected.
+- Finish pass with router_esc on the m7 routed board (runs/fin3): 3 power edges closed, 5 signal edges fail (VC4 U101.2, ACUV U403.34,
+  P1 TS U403.8, P2 CC2 U501.29, P1 REGN R415.1) = the true open list of the m7 local route. Regional rip-up + re-route of 38 nets
+  around them (tools/ripwin.py + tools/repair.sh, runs/rp1): 75 of 82, 7 failed, 2 DRC errors -> does not converge; rejected.
+- Cause of ACUV/TS/REGN (port 1, also open on r6caps-ce, not on r6r-sccp5): capfix link3d put the VAC via at (107.30,111.42),
+  0.59 mm from pin 34's only via site. m9 = m7 with fixes/p1vac.json (VAC via at 107.2,110.8, B.Cu link kept east of a fixed
+  ACUV escape via at 107.05,111.99), link3d only for port 2, hard stub R418.1. Copper DRC 0. Queued lead6-m9 and lead6-m9-rep at 02:18.

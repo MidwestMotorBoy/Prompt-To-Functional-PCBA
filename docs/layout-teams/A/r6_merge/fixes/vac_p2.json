@@ -1,0 +1,32 @@
+{
+ "_why": "port-2 half of vac_pins.json (pin 32 tied to the capfix link3d via)",
+ "tracks": [
+  {
+   "net": "/USB Port 2/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    84.914,
+    110.99
+   ],
+   "b": [
+    84.4,
+    110.99
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    84.4,
+    110.99
+   ],
+   "b": [
+    84.2,
+    111.1245
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": []
+}

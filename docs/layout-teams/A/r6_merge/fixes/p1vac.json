@@ -1,0 +1,113 @@
+{
+ "_why": "port-1 charger VAC (pins 32/33) to C409.1, laid by hand instead of capfix link3d: the link3d via sat at (107.30,111.42), 0.59 mm from the only legal via site for pin 34 (ACUV, 107.17,112.0 on the routes-only board), so ACUV, and with it TS/REGN in the same column, stayed open on every routed board with the caps fix. The VAC via moves north to pin 32's level; pin 34 gets a fixed escape stub and via.",
+ "tracks": [
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.94,
+    110.99
+   ],
+   "b": [
+    107.5,
+    110.99
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.5,
+    110.99
+   ],
+   "b": [
+    107.2,
+    110.8
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.94,
+    111.49
+   ],
+   "b": [
+    107.5,
+    111.49
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "F.Cu",
+   "a": [
+    107.5,
+    111.49
+   ],
+   "b": [
+    107.5,
+    110.99
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "Net-(U403-ACUV)",
+   "layer": "F.Cu",
+   "a": [
+    107.94,
+    111.99
+   ],
+   "b": [
+    107.05,
+    111.99
+   ],
+   "w": 0.15
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "B.Cu",
+   "a": [
+    107.2,
+    110.8
+   ],
+   "b": [
+    107.7,
+    111.3
+   ],
+   "w": 0.25
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "layer": "B.Cu",
+   "a": [
+    107.7,
+    111.3
+   ],
+   "b": [
+    107.8,
+    115.6245
+   ],
+   "w": 0.25
+  }
+ ],
+ "vias": [
+  {
+   "net": "/USB Port 1/PPHV",
+   "x": 107.2,
+   "y": 110.8
+  },
+  {
+   "net": "/USB Port 1/PPHV",
+   "x": 107.8,
+   "y": 115.6245
+  },
+  {
+   "net": "Net-(U403-ACUV)",
+   "x": 107.05,
+   "y": 111.99
+  }
+ ]
+}
