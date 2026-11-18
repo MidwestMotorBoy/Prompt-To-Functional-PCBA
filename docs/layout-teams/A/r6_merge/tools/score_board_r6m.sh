@@ -86,7 +86,7 @@ RUN="$D -v $S/pylib:/w/pylib kicad/kicad:10.0"
 $RUN sh -c "PYTHONPATH=/w/pylib timeout 20m python3 -u router.py cu.kicad_pcb drc.json ghost.kicad_pcb --softnets=GND,PACK_P,3V3 --ghostonly" > ghost.log 2>&1
 [ "$RMIN" != 0 ] && $RUN sh -c "PYTHONPATH=/w/pylib timeout ${RMIN}m python3 -u router.py cu.kicad_pcb drc.json routed.kicad_pcb --softnets=GND,PACK_P,3V3 $ROUTER_OPTS" > route.log 2>&1
 if [ "$RMIN" != 0 ] && [ -f routed.kicad_pcb ]; then
-  $K sh -c "python3 cu_dump.py routed.kicad_pcb routed.json 2>&1 | grep -v swig; kicad-cli pcb drc --severity-all --format json -o drc_routed.json routed.kicad_pcb >/dev/null 2>&1"
+  cp cu.kicad_dru routed.kicad_dru; $K sh -c "python3 cu_dump.py routed.kicad_pcb routed.json 2>&1 | grep -v swig; kicad-cli pcb drc --severity-all --format json -o drc_routed.json routed.kicad_pcb >/dev/null 2>&1"
   python3 $T/copper/dc_score.py routed.kicad_pcb routed.json $C dc_routed.json > dc_routed.log 2>&1
   python3 /home/claude/repo/docs/layout-teams/A/r4_vbus/tools/pad_join_check.py routed.kicad_pcb routed.json $C pad_join_routed.json --allow=/home/claude/repo/docs/layout-teams/A/r4_vbus/allow.json > pad_join_routed.log 2>&1
   python3 /home/claude/repo/docs/layout-teams/A/r6_caps/tools/allpad_check.py routed.kicad_pcb routed.json $C allpad_routed.json --allow=/home/claude/repo/docs/layout-teams/A/r4_vbus/allow.json > allpad_routed.log 2>&1

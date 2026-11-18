@@ -53,3 +53,10 @@ Findings
 - 04:15: m13 scorecard done (see runs/m13/score.json), PC lead6-m13 and -rep queued 04:07, local routes started (runs/m13 stock, runs/m13e router_esc).
 - 04:17: container restarted (4th time); m13 local routes (runs/m13, runs/m13e) were killed and must be re-run; PC lead6-m13/-rep still queued on the PC.
 - 04:20: m13 local routes restarted (runs/m13 stock, runs/m13e router_esc).
+- 04:45: m13 local routes done (about 25 min each, not timed out): runs/m13 (stock) 340/341, 1 failed (P2 CHG_INT R504.2 -> U501.18), routed DRC 0,
+  KiCad unc 5 (PACK_P F zone island, P1 I2CC_SCL R403.2, 3V3 J301.1 island x2, P2 CHG_INT); runs/m13e (router_esc) 340/341, 1 failed (same),
+  unc 4 (PACK_P F zone island, 3V3 J301.1 island x2, P2 CHG_INT), routed_pad_unjoined {}, routed_power_open 3V3@L201, routed loss 1.176 W.
+  PC lead6-m11 337/2 (P2 I2CC_SDA, P1 TS), 85 min; lead6-m11-rep 338/1 (P2 I2CC_SDA), unc 4; lead6-m12q 335/3. PC lead6-m13/-rep pending.
+- Plan: finish the m13e routed board (router_esc pass + regional rip-up at P2 CHG_INT), then FREEZE the finished route into a fix file
+  (tools/prelay.py --net=. -> fixes/frozen_*.json, SPECFIX_POST) so the rebuild is deterministic and the PC/local routes have nothing left to do.
+- 05:25: frozen_final.json (tools/freeze_fix.py) on the m13e route: quick build runs/fz3 = KiCad DRC 0 errors, 0 unconnected, power_open {}, pad_unjoined {}, no islands on 3V3/PACK_P/GND (tools/net_islands.py). TRAP found: routed-board DRC ran without routed.kicad_dru (custom rules missing): m13e routed had 4 clearance errors (CELL_1N 0.25 mm rule); route_local_r6m.sh / score_board_r6m.sh now copy cu.kicad_dru. m14 recipe in env; rebuild_best.sh runs/final --score started.

@@ -34,3 +34,9 @@ BEST_CAPFIX_R6="$CAPFIX_M11"; BEST_SPECFIX_R6="$SPECFIX_M11"; BEST_SPECFIX_POST_
 # m13 = m11 without the J301.1 3V3 via (j301_3v3.json): on m11 the via left J301.5 GND with no way to its plane and NRST / port-1
 #   charger edges failed again (local 335/4 and 336/3). Keeps r418.json (EN_5V1 routed on both m11 routes) and vbus32b.json.
 CAPFIX_M13="$CAPFIX_M11"; SPECFIX_M13="$SPECFIX_M11"; SPECFIX_POST_M13=""
+# m14 (FINAL) = m13 + the complete local route of m13 frozen as fixed copper and finished by hand:
+#   fixes/frozen_m13e.json = tools/prelay.py runs/m13e/cu.kicad_pcb runs/m13e/routed.kicad_pcb --net=.  (router_esc route, 340 of 341)
+#   fixes/frozen_final.json = tools/freeze_fix.py frozen_m13e.json (CELL_1N stub clearances, PACK_P TP106 via, 3V3 J301.1 and R417.2
+#   links, P2 CHG_INT track). The planned board then IS the routed board: KiCad DRC 0 errors, 0 unconnected items; a router run has 0 edges.
+CAPFIX_M14="$CAPFIX_M13"; SPECFIX_M14="$SPECFIX_M13"; SPECFIX_POST_M14="$MF/frozen_final.json"
+BEST_CAPFIX_R6="$CAPFIX_M14"; BEST_SPECFIX_R6="$SPECFIX_M14"; BEST_SPECFIX_POST_R6="$SPECFIX_POST_M14"
