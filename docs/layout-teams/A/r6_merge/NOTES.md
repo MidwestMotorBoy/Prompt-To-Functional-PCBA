@@ -65,3 +65,4 @@ Findings
 - 05:02: local route on runs/final/score (stock router, about 1 min): 0 of 0 edges, 0 failed, routed DRC 0 (custom rules on), KiCad unconnected 0,
   routed_power_open {}, routed_pad_unjoined {}, routed_allpad_off {}. PC routes queued: lead6-m14 (05:01), lead6-m14-rep (05:02).
 - FINAL = m14. Top-level score.json, renders, rebuild_best.sh, REPORT.md "Round 6", SKILL-NOTES.md section 11, PAUSED.md updated.
+- 05:20: PC lead6-m14 and lead6-m14-rep: 0 edges, 0 failed, unconnected after fill 0 (0.2 min). PC lead6-m13-rep: 339/1 of 340 (P2 I2CC_SCL), unc 4, 54.6 min; lead6-m13 not returned yet. Done.

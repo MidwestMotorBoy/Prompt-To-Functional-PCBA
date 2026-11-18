@@ -320,7 +320,7 @@ Placement did not change (stack S); only copper did.
 | KiCad unconnected items | 0 | 334 (signals) | 24 after routing |
 | pads off their pour | none | PPHV C409.1, C509.1 | 3V3 C207/C403/C503, PACK_P C213 |
 | local full route | 0 of 0 edges, 0 failed | 340 of 341, 1 failed (about 25 min, not timed out) | 357 / 7 |
-| PC full route | see score.json `full_route_pc` | lead6-m13 (see score.json) | 356 / 8 |
+| PC full route | lead6-m14 and -rep: 0 of 0 edges, 0 failed, unconnected after fill 0 (0.2 min) | lead6-m13-rep: 339 / 1 failed of 340, 54.6 min, 4 open items (lead6-m13 not returned) | 356 / 8 |
 
 How it was reached, said plainly: **the final board is a frozen route, not a fresh one.** The router never
 delivered a board with 0 open connections by itself. The best planned board (m13) routes locally to 340 of 341 with

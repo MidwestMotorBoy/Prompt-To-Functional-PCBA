@@ -9,7 +9,7 @@ One command: `docs/layout-teams/A/rebuild_best.sh <workdir> --score` (about 6 mi
 
 Numbers (`score.json`, REPORT.md "Round 6"): power_open none, DRC 0 (custom rules on), KiCad unconnected 0,
 hot loops 7 of 7 at 6.41 nH (6.27 nH on the planned copper), 1.241 W with all copper (0.865 W planned),
-no pad off its pour. Local route 0 of 0 edges; PC routes lead6-m14 / lead6-m14-rep: see score.json `full_route_pc`.
+no pad off its pour. Local route 0 of 0 edges; PC routes lead6-m14 and lead6-m14-rep: 0 of 0 edges, 0 failed, unconnected after fill 0.
 
 The final board is a FROZEN route: the router alone reaches 340 of 341 with 4 open items on the planned copper
 (m13). If a part or net changes: set BEST_* to the M13 recipe, route (`route_local_r6m.sh`, router_esc), then

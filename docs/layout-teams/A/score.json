@@ -54,14 +54,20 @@
  "full_route_pc": {
   "name": "lead6-m14",
   "result": "A/lead6-m14-455bcc81.json",
-  "status": "pending",
+  "status": "done",
   "repeat": {
    "name": "lead6-m14-rep",
-   "status": "pending"
+   "result": "A/lead6-m14-rep-455bcc81.json",
+   "routed": 0,
+   "failed": 0,
+   "edges": 0,
+   "minutes": 0.2,
+   "status": "done",
+   "unconnected_after_fill": 0
   },
   "unfrozen_m13": {
-   "name": "lead6-m13",
-   "status": "pending"
+   "lead6-m13-rep": "339 routed / 1 failed of 340, 54.6 min, done (P2 I2CC_SCL U502.6 -> U501.17), unconnected after fill 4",
+   "lead6-m13": "not returned 75 min after queueing (queued 04:07 UTC); local routes used instead: 340 of 341, 1 failed"
   },
   "unfrozen_m11": {
    "lead6-m11": "337 routed / 2 failed of 339, 85.0 min, done (P2 I2CC_SDA, P1 TS)",
@@ -70,7 +76,13 @@
   "unfrozen_m9": {
    "lead6-m9": "339 / 1 of 340, 88.2 min (P2 I2CC_SDA), unc 7",
    "lead6-m9-rep": "339 / 1 of 340, 39.0 min (P2 I2CC_SCL), unc 7"
-  }
+  },
+  "routed": 0,
+  "failed": 0,
+  "edges": 0,
+  "minutes": 0.2,
+  "unconnected_after_fill": 0,
+  "note": "frozen board: nothing left to route; this is a check, not a routing result"
  },
  "notes": {
   "placement": "best_placement.json = stack S, unchanged since round 5; round 6 changed copper only",
