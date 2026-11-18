@@ -1,0 +1,216 @@
+{
+ "_why": "port-2 I2CC_SCL U502.6 -> U501.17 (2.5 mm apart, but on the far side of the straight I2CC_SDA run U501.16 -> U502.5, so it needs two vias and a 1.6 mm In2 hop): failed on all four PC routes of m4 / m7 and routed on the local routes. This is the local m7 route of that one connection (r6_merge/runs/m7 routed board), laid as fixed copper.",
+ "tracks": [
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.7,
+    82.925
+   ],
+   "b": [
+    85.7228,
+    83.4725
+   ],
+   "w": 0.15
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.675,
+    83.4745
+   ],
+   "b": [
+    85.725,
+    83.4245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.675,
+    84.9245
+   ],
+   "b": [
+    85.675,
+    83.4745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.775,
+    85.0245
+   ],
+   "b": [
+    85.675,
+    84.9245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.725,
+    85.0745
+   ],
+   "b": [
+    85.775,
+    85.0245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    85.725,
+    85.2245
+   ],
+   "b": [
+    85.725,
+    85.0745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.375,
+    84.6245
+   ],
+   "b": [
+    84.225,
+    84.4745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.425,
+    84.6245
+   ],
+   "b": [
+    84.375,
+    84.6245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.625,
+    84.8245
+   ],
+   "b": [
+    84.425,
+    84.6245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.675,
+    84.8245
+   ],
+   "b": [
+    84.625,
+    84.8245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "F.Cu",
+   "a": [
+    84.65,
+    85.2
+   ],
+   "b": [
+    84.675,
+    84.6245
+   ],
+   "w": 0.15
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "In2.Cu",
+   "a": [
+    85.375,
+    85.5745
+   ],
+   "b": [
+    85.725,
+    85.2245
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "In2.Cu",
+   "a": [
+    84.175,
+    85.5745
+   ],
+   "b": [
+    85.375,
+    85.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "In2.Cu",
+   "a": [
+    84.175,
+    84.5245
+   ],
+   "b": [
+    84.175,
+    85.5745
+   ],
+   "w": 0.2
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "layer": "In2.Cu",
+   "a": [
+    84.225,
+    84.4745
+   ],
+   "b": [
+    84.175,
+    84.5245
+   ],
+   "w": 0.2
+  }
+ ],
+ "vias": [
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "x": 85.725,
+   "y": 85.2245,
+   "size": 0.45,
+   "drill": 0.3
+  },
+  {
+   "net": "/USB Port 2/I2CC_SCL",
+   "x": 84.225,
+   "y": 84.4745,
+   "size": 0.45,
+   "drill": 0.3
+  }
+ ]
+}
