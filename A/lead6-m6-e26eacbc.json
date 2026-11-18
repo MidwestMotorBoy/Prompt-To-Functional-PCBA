@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m6.kicad_pcb",
+ "sha": "e26eacbcbe1727c277729ea6491788923d6b31be",
+ "routed": 320,
+ "failed": 10,
+ "edges": 330,
+ "minutes": 95.9,
+ "status": "done",
+ "tail": [
+  "FAILKEY /Cells and Gauge/TS1",
+  "FAILKEY IRQ_N",
+  "FAILKEY 3V3@Pad 2 [3V3] of R517 on F.Cu",
+  "FAILKEY GND@Pad 5 [GND] of J301 on F.Cu",
+  "FAILKEY /USB Port 2/HG2"
+ ]
+}

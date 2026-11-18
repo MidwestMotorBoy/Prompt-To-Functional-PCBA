@@ -1,0 +1,16 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 340 (0 on long nets)
+fan-out stubs: 136
+phase 1: 6 open connections tried again with every route free to move
+phase 2: 5 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 731
+fan-out stubs unused (removed) 56, trimmed 22
+unconnected after fill: 9
+routed 337 edges, 3 failed, items added 5489
+  FAILED /USB Port 2/I2CC_SCL 84.65,85.20 (Pad 6  of U502 ) -> 85.70,82.92 (Pad 17  of U501 ) starts 72 goals 41 seen 121702 | pulled 1
+  FAILED GND 119.23,116.13 (Pad 5  of J301 ) -> 119.23,116.13 (Zone planeZone plan) starts 180 goals 0 seen 805 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_P 99.98,127.60 (Pad 1  of C110 ) -> 95.11,128.80 (Pad 1  of R118 ) starts 138 goals 125 seen 40731 | no way even with every other route gone
+FAILKEY /USB Port 2/I2CC_SCL
+FAILKEY GND@Pad 5 [GND] of J301 on F.Cu
+FAILKEY /Cells and Gauge/CELL_P

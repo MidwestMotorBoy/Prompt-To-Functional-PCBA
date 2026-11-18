@@ -1,0 +1,30 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 330 (0 on long nets)
+fan-out stubs: 127
+phase 1: 8 open connections tried again with every route free to move
+phase 2: 4 open connections tried again with every route free to move
+phase 3: 5 open connections tried again with every route free to move
+routes pulled and re-laid: 833
+fan-out stubs unused (removed) 53, trimmed 19
+unconnected after fill: 15
+routed 320 edges, 10 failed, items added 5691
+  FAILED Net-(U101-VC3) 93.25,120.33 (Pad 2  of C101 ) -> 95.00,120.40 (Pad 3  of U101 ) starts 223 goals 47 seen 134 | blocked by routes that have been pulled too often
+  FAILED Net-(U102-CD) 99.98,128.70 (Pad 2  of C117 ) -> 100.15,131.25 (Pad 7  of U102 ) starts 89 goals 16 seen 112 | blocked by routes that have been pulled too often
+  FAILED Net-(U403-FB) 113.74,112.49 (Pad 12  of U403 ) -> 115.49,108.75 (Pad 2  of R418 ) starts 72 goals 106 seen 469 | blocked by routes that have been pulled too often
+  FAILED Net-(U403-FB) 110.74,115.45 (Pad 1  of R419 ) -> 113.74,112.49 (Pad 12  of U403 ) starts 123 goals 72 seen 114104 | no way even with every other route gone
+  FAILED /USB Port 1/CE_N 111.59,113.64 (Pad 7  of U403 ) -> 109.70,120.08 (Pad 2  of R435 ) starts 72 goals 62 seen 136 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 100 goals 6 seen 600777 | no way even with every other route gone
+  FAILED IRQ_N 89.80,119.59 (Pad 3  of Q103 ) -> 117.72,125.83 (Pad 21  of U301 ) starts 525 goals 369 seen 576373 | blocked by routes that have been pulled too often
+  FAILED 3V3 94.29,112.85 (Pad 2  of R517 ) -> 94.29,112.85 (Zone planeZone plan) starts 38 goals 0 seen 71 | blocked by routes that have been pulled too often
+  FAILED GND 119.23,116.13 (Pad 5  of J301 ) -> 119.23,116.13 (Zone planeZone plan) starts 186 goals 0 seen 1029 | no way even with every other route gone
+  FAILED /USB Port 2/HG2 91.24,106.70 (Pad 2  of R546 ) -> 93.86,96.55 (Track  on F.Cu,) starts 120 goals 289 seen 383 | no way even with every other route gone
+FAILKEY Net-(U101-VC3)
+FAILKEY Net-(U102-CD)
+FAILKEY Net-(U403-FB)
+FAILKEY Net-(U403-FB)
+FAILKEY /USB Port 1/CE_N
+FAILKEY /Cells and Gauge/TS1
+FAILKEY IRQ_N
+FAILKEY 3V3@Pad 2 [3V3] of R517 on F.Cu
+FAILKEY GND@Pad 5 [GND] of J301 on F.Cu
+FAILKEY /USB Port 2/HG2
