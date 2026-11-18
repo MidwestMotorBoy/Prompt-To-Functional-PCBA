@@ -1,0 +1,19 @@
+{
+ "loss_W": 0.866,
+ "power_open": {
+  "GND": [
+   "J302",
+   "J301"
+  ]
+ },
+ "drc_errors": 0,
+ "drc_error_types": [],
+ "pad_unjoined": {
+  "/USB Port 1/PPHV": [
+   "C409.1"
+  ],
+  "/USB Port 2/PPHV": [
+   "C509.1"
+  ]
+ }
+}

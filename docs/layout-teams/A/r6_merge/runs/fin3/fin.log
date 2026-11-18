@@ -1,0 +1,28 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 8 (0 on long nets)
+fan-out stubs: 2
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+phase 1: 5 open connections tried again with every route free to move
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+phase 2: 5 open connections tried again with every route free to move
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+phase 3: 5 open connections tried again with every route free to move
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+routes pulled and re-laid: 0
+fan-out stubs unused (removed) 0, trimmed 0
+unconnected after fill: 8
+routed 3 edges, 5 failed, items added 6
+  FAILED Net-(U101-VC4) 93.26,118.40 (Track  on F.Cu,) -> 95.00,120.00 (Pad 2  of U101 ) starts 39 goals 21 seen 37 | no way even with every other route gone
+  FAILED Net-(U403-ACUV) 107.94,111.99 (Pad 34  of U403 ) -> 107.96,117.20 (Track  on F.Cu,) starts 111 goals 48 seen 145 | no way even with every other route gone
+  FAILED /USB Port 1/TS 105.42,107.12 (Track  on F.Cu,) -> 112.09,113.64 (Pad 8  of U403 ) starts 684 goals 465 seen 75098 | no way even with every other route gone
+  FAILED /USB Port 2/CC2 94.97,75.87 (Track  on F.Cu,) -> 85.30,79.08 (Pad 29  of U501 ) starts 89 goals 19 seen 98 | no way even with every other route gone
+  FAILED /USB Port 1/REGN 107.59,120.60 (Pad 1  of R415 ) -> 107.83,109.47 (Track  on B.Cu,) starts 126 goals 849 seen 101842 | no way even with every other route gone
+FAILKEY Net-(U101-VC4)
+FAILKEY Net-(U403-ACUV)
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 2/CC2
+FAILKEY /USB Port 1/REGN
+
+real	0m53.025s
+user	0m0.014s
+sys	0m0.025s

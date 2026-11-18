@@ -1,0 +1,84 @@
+01:46:39: Debug: Adding duplicate image handler for 'PNG file'
+01:46:39: Debug: Adding duplicate image handler for 'JPEG file'
+01:46:39: Debug: Adding duplicate image handler for 'TIFF file'
+01:46:39: Debug: Adding duplicate image handler for 'GIF file'
+01:46:39: Debug: Adding duplicate image handler for 'PNM file'
+01:46:39: Debug: Adding duplicate image handler for 'PCX file'
+01:46:39: Debug: Adding duplicate image handler for 'IFF file'
+01:46:39: Debug: Adding duplicate image handler for 'Windows icon file'
+01:46:39: Debug: Adding duplicate image handler for 'Windows cursor file'
+01:46:39: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+01:46:39: Debug: Adding duplicate image handler for 'TGA file'
+01:46:39: Debug: Adding duplicate image handler for 'XPM file'
+ripwin: 38 nets ripped, 1572 items removed: ['/Cells and Gauge/BTP_INT', '/Cells and Gauge/GAUGE_FUSE', '/Cells and Gauge/PACK_CMID', '/Cells and Gauge/TS1', '/Cells and Gauge/TS4', '/USB Port 1/ACN_F', '/USB Port 1/ACP_F', '/USB Port 1/CE_N', '/USB Port 1/CHG_INT', '/USB Port 1/DRV_SUP', '/USB Port 1/FSW', '/USB Port 1/HIDRV1', '/USB Port 1/I2CC_SCL', '/USB Port 1/I2CC_SDA', '/USB Port 1/ILIM', '/USB Port 1/LODRV1', '/USB Port 1/LODRV2', '/USB Port 1/PPHV', '/USB Port 1/REGN', '/USB Port 1/SW1', '/USB Port 1/TS', '/USB Port 2/CC1', '/USB Port 2/CC2', '/USB Port 2/DRV9_OFF', '/USB Port 2/LDO_3V3', '/USB Port 2/SBU_FLT', 'Net-(U101-BAT)', 'Net-(U101-PACK)', 'Net-(U101-PBI)', 'Net-(U101-VC2)', 'Net-(U101-VC3)', 'Net-(U101-VC4)', 'Net-(U403-ACOV)', 'Net-(U403-ACUV)', 'Net-(U403-FB)', 'Net-(U403-FBG)', 'SCL', 'SDA']
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 82 (0 on long nets)
+fan-out stubs: 35
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  progress: step 40, queue 50, routed 30, failing 1, pulled 8
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX /USB Port 2/CC2: escape stub landed on its own island, searching on
+  progress: step 80, queue 35, routed 43, failing 3, pulled 33
+  ESCFIX /USB Port 1/REGN: escape stub landed on its own island, searching on
+  progress: step 120, queue 25, routed 53, failing 3, pulled 63
+  progress: step 160, queue 2, routed 75, failing 4, pulled 80
+  ESCFIX /USB Port 1/TS: escape stub landed on its own island, searching on
+phase 1: 6 open connections tried again with every route free to move
+  progress: step 200, queue 6, routed 75, failing 5, pulled 118
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX /USB Port 1/REGN: escape stub landed on its own island, searching on
+  progress: step 240, queue 7, routed 72, failing 6, pulled 159
+  ESCFIX /USB Port 1/TS: escape stub landed on its own island, searching on
+  ESCFIX /USB Port 2/CC2: escape stub landed on its own island, searching on
+phase 2: 5 open connections tried again with every route free to move
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  progress: step 280, queue 4, routed 77, failing 4, pulled 191
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX Net-(U101-VC4): escape stub landed on its own island, searching on
+  ESCFIX /USB Port 1/TS: escape stub landed on its own island, searching on
+  progress: step 320, queue 8, routed 70, failing 6, pulled 235
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX /USB Port 2/CC2: escape stub landed on its own island, searching on
+phase 3: 7 open connections tried again with every route free to move
+  progress: step 360, queue 10, routed 70, failing 6, pulled 270
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  progress: step 400, queue 4, routed 75, failing 4, pulled 304
+  ESCFIX /USB Port 2/CC2: escape stub landed on its own island, searching on
+  progress: step 440, queue 3, routed 72, failing 6, pulled 343
+routes pulled and re-laid: 344
+fan-out stubs unused (removed) 15, trimmed 2
+unconnected after fill: 9
+routed 75 edges, 7 failed, items added 1897
+  FAILED Net-(U101-VC3) 93.25,120.33 (Pad 2  of C101 ) -> 95.00,120.40 (Pad 3  of U101 ) starts 234 goals 47 seen 55 | blocked by routes that have been pulled too often
+  FAILED Net-(U403-FB) 110.74,115.45 (Pad 1  of R419 ) -> 113.74,112.49 (Pad 12  of U403 ) starts 106 goals 196 seen 191 | no way even with every other route gone
+  FAILED Net-(U403-ACUV) 107.94,111.99 (Pad 34  of U403 ) -> 107.96,117.20 (Pad 2  of R409 ) starts 69 goals 168 seen 147 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/TS 108.61,120.60 (Pad 2  of R415 ) -> 112.09,113.64 (Pad 8  of U403 ) starts 126 goals 72 seen 83140 | no way even with every other route gone
+  FAILED /USB Port 1/TS 112.09,113.64 (Pad 8  of U403 ) -> 104.80,110.36 (Pad 1  of R416 ) starts 72 goals 354 seen 98 | no way even with every other route gone
+  FAILED /USB Port 2/CC2 94.95,75.05 (Pad 11  of U505 ) -> 85.30,79.08 (Pad 29  of U501 ) starts 97 goals 41 seen 581922 | no way even with every other route gone
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 100 goals 5 seen 584713 | no way even with every other route gone
+FAILKEY Net-(U101-VC3)
+FAILKEY Net-(U403-FB)
+FAILKEY Net-(U403-ACUV)
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 2/CC2
+FAILKEY /Cells and Gauge/TS1

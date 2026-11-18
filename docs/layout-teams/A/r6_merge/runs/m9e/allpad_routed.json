@@ -1,0 +1,37 @@
+{
+ "off_main": {
+  "3V3": [
+   "J301.1",
+   "R417.2"
+  ]
+ },
+ "off_main_not_allowed": {
+  "3V3": [
+   "R417.2"
+  ]
+ },
+ "pieces_with_pads": {
+  "/Cells and Gauge/CELL_P": 1,
+  "/Cells and Gauge/CELL_P_RAW": 1,
+  "/Cells and Gauge/FET_MID": 1,
+  "/USB Port 1/AC_SNS_N": 1,
+  "/USB Port 1/BAT_SNS_P": 1,
+  "/USB Port 1/PP5V": 1,
+  "/USB Port 1/PPHV": 1,
+  "/USB Port 1/SW1": 1,
+  "/USB Port 1/SW2": 1,
+  "/USB Port 1/VBUS": 1,
+  "/USB Port 2/AC_SNS_N": 1,
+  "/USB Port 2/BAT_SNS_P": 1,
+  "/USB Port 2/PP5V": 1,
+  "/USB Port 2/PPHV": 1,
+  "/USB Port 2/SW1": 1,
+  "/USB Port 2/SW2": 1,
+  "/USB Port 2/VBUS": 1,
+  "3V3": 3,
+  "CELL_N": 1,
+  "PACK_P": 1,
+  "GND": 1
+ },
+ "summary": "1 pads off main (not allowed): 3V3: R417.2"
+}

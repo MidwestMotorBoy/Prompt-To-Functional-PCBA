@@ -1,0 +1,49 @@
+portcu options {"joinfix": 0, "epstrip": 0, "directjoin": 0, "nogrow_dead": 0, "nogrow_detour": 0, "mirror_minw": 0.0, "gndesc": 0, "pinesc": 0, "pinesc_len": 0.9, "pinesc_via": 0.2, "pinesc_refs": "", "pinesc_near": 0, "connesc": 0, "connesc_len": 1.0, "connesc_w": 0.4, "gndpair": 0, "grow_viaroom": 0.0, "gndtie": 0, "gatevia": 0, "padjoin": 0.0, "connesc_big": 0.0, "connesc_big_len": 0.8, "connesc_big_via": 0.15}
+r4v options {"padpair": 0, "padpair_w": "", "padpair_vias": 1, "padpair_len": 8.0, "padpair_minpad": 0.45, "padpair_live": 0}
+r4_bcu options {"stub_nogrow": 0, "ret_band": 0.0, "ret_vias": 4, "tap_max": 0.0, "sw_nogrow": 0, "sw_w": 0.0, "sw_vias": 0, "pw_nogrow": 0, "mirror_minw2": 0.0, "mirror_maxa": 0.0, "mirror_skip_supply": 0}
+r5m options {"gatevia_chk": 0, "capjoin": 0, "capjoin_w": "", "capjoin_vias": 2, "capjoin_minpad": 0.45, "capjoin_refs": "", "capjoin_len": 16.0}
+/USB Port 1/SW1: 6.0 A, 2 terminals, span 7.2 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/SW2: 6.0 A, 2 terminals, span 3.9 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/SW1: 6.0 A, 2 terminals, span 7.2 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/SW2: 6.0 A, 2 terminals, span 3.9 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/CELL_P: 10.0 A, 2 terminals, span 11.7 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/CELL_P_RAW: 10.0 A, 2 terminals, span 2.7 mm, layer F.Cu, vias 0, left to router []
+/Cells and Gauge/FET_MID: 10.0 A, 2 terminals, span 7.3 mm, layer F.Cu, vias 0, left to router []
+CELL_N: 10.0 A, 2 terminals, span 2.7 mm, layer F.Cu, vias 0, left to router []
+PACK_P: 10.0 A, 21 terminals, span 57.9 mm, layer F.Cu + In2.Cu, vias 34, left to router ['U404 (no room for a via)', 'U504 (no room for a via)', 'U204 (no room for a via)']
+/USB Port 1/AC_SNS_N: 5.0 A, 9 terminals, span 23.9 mm, layer F.Cu, vias 2, left to router []
+/USB Port 1/BAT_SNS_P: 5.0 A, 5 terminals, span 9.5 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/PPHV: 5.0 A, 4 terminals, span 34.1 mm, layer F.Cu, vias 0, left to router ['C409 (no path on F.Cu)']
+/USB Port 1/VBUS: 5.0 A, 5 terminals, span 16.6 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/AC_SNS_N: 5.0 A, 9 terminals, span 23.2 mm, layer F.Cu, vias 2, left to router ['C521 (via array path winds)']
+/USB Port 2/BAT_SNS_P: 5.0 A, 5 terminals, span 9.5 mm, layer F.Cu, vias 0, left to router []
+/USB Port 2/PPHV: 5.0 A, 4 terminals, span 34.2 mm, layer F.Cu, vias 0, left to router ['C509 (path winds)']
+/USB Port 2/VBUS: 5.0 A, 5 terminals, span 16.4 mm, layer F.Cu, vias 0, left to router []
+/USB Port 1/PP5V: 1.5 A, 6 terminals, span 15.0 mm, layer F.Cu, vias 0, left to router ['U401 (no path on F.Cu)']
+/USB Port 2/PP5V: 1.5 A, 6 terminals, span 15.6 mm, layer F.Cu, vias 0, left to router ['U501 (no path on F.Cu)']
+3V3: 0.5 A, 8 terminals, span 64.9 mm, layer F.Cu + In3.Cu, vias 6, left to router ['J301 (no room for a via)']
+hot loops {"HL_3V3": {"shape": "hull, supply first, closes ['C206'], 1 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 5.8, "return_mm2": 4.1, "return_vias": 3}, "USB Port 1/HL_5V": {"shape": "thin pairs, return first, closes ['C446'], 2 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 6.3, "return_mm2": 6.5, "return_vias": 4}, "USB Port 1/HL_IN": {"shape": "hull, supply first, closes ['C430'], 1 supply and 2 return pieces", "layer": "F.Cu", "supply_mm2": 27.1, "return_mm2": 15.8, "return_vias": 7}, "USB Port 1/HL_OUT": {"shape": "hull, supply first, closes ['C438'], 1 supply and 2 return pieces", "layer": "F.Cu", "supply_mm2": 31.1, "return_mm2": 22.5, "return_vias": 5}, "USB Port 2/HL_5V": {"shape": "hull, supply first, closes ['C546', 'C544'], 1 supply and 1 return pieces", "layer": "F.Cu", "supply_mm2": 9.8, "return_mm2": 8.4, "return_vias": 4}, "USB Port 2/HL_IN": {"shape": "hull, supply first, closes ['C530'], 1 supply and 3 return pieces", "layer": "F.Cu", "supply_mm2": 28.3, "return_mm2": 15.9, "return_vias": 7}, "USB Port 2/HL_OUT": {"shape": "hull, supply first, closes ['C538'], 1 supply and 2 return pieces", "layer": "F.Cu", "supply_mm2": 31.1, "return_mm2": 22.4, "return_vias": 5}}
+return pads {"vias": 166, "pads": 226, "left_to_router": ["C302.2", "C315.2", "J301.5", "J302.5", "J401.A1", "J401.B12", "U301.1", "U301.2", "U301.24", "U401.27", "U401.3", "U401.31"], "anchored": 33, "joined_on_layer": ["C415.2", "U401.7", "U401.14", "U402.7", "U503.22"]}
+gate escapes [{"loop": "USB Port 1/HL_IN", "pad": "Q401.1", "net": "/USB Port 1/HG1", "dir": [0, -1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 1/HL_OUT", "pad": "Q402.1", "net": "/USB Port 1/HG2", "dir": [0, 1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 1/HL_OUT", "pad": "Q402.8", "net": "/USB Port 1/LG2", "dir": [0, -1], "len_mm": 0.9, "free_mm": 1.52}, {"loop": "USB Port 2/HL_IN", "pad": "Q501.1", "net": "/USB Port 2/HG1", "dir": [0, -1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 2/HL_OUT", "pad": "Q502.1", "net": "/USB Port 2/HG2", "dir": [0, 1], "len_mm": 0.9, "free_mm": 3.0}, {"loop": "USB Port 2/HL_OUT", "pad": "Q502.8", "net": "/USB Port 2/LG2", "dir": [0, -1], "len_mm": 0.9, "free_mm": 1.52}]
+taps null
+r4_bcu {"mirror_dropped": [], "mirror_skipped_nets": [], "not_grown": [], "areas": {"/USB Port 1/SW1 F.Cu": 44.3, "/USB Port 1/SW2 F.Cu": 32.8, "/USB Port 2/SW1 F.Cu": 41.5, "/USB Port 2/SW2 F.Cu": 34.4, "PACK_P B.Cu": 41.1, "/USB Port 1/AC_SNS_N B.Cu": 51.1, "/USB Port 2/AC_SNS_N B.Cu": 49.5, "/USB Port 1/PP5V B.Cu": 27.9, "/USB Port 2/PP5V B.Cu": 27.5, "/Cells and Gauge/CELL_P B.Cu": 13.0, "/Cells and Gauge/CELL_P_RAW B.Cu": 12.2, "/Cells and Gauge/FET_MID B.Cu": 51.6, "CELL_N B.Cu": 13.1, "/USB Port 1/BAT_SNS_P B.Cu": 29.7, "/USB Port 1/PPHV B.Cu": 4.5, "/USB Port 1/VBUS B.Cu": 9.1, "/USB Port 2/BAT_SNS_P B.Cu": 29.6, "/USB Port 2/PPHV B.Cu": 3.3, "/USB Port 2/VBUS B.Cu": 4.9}}
+40 zones, 349 vias, 300 tracks, 59.7 s; notes: []
+split_spec: 40 zones -> 78 single-outline zones
+bus4 {"net": "PACK_P", "layer": "In4.Cu", "mode": "strip+copy", "w": 3.0, "zones": 1, "area_mm2": 661.4}
+bus4 {"net": "GND", "layer": "B.Cu", "mode": "fill", "w": 4.0, "zones": 1, "area_mm2": 2357.0}
+specfix: 0 cuts (0 zone hits), 1 tracks, 1 vias
+specfix: 1 cuts (1 zone hits), 0 tracks, 0 vias
+specfix: 1 cuts (2 zone hits), 1 tracks, 1 vias
+specfix: 0 cuts (2 zone hits), 75 tracks, 13 vias
+specfix: 0 cuts (2 zone hits), 8 tracks, 2 vias
+specfix: 0 cuts (2 zone hits), 50 tracks, 6 vias
+specfix: 0 cuts (2 zone hits), 2 tracks, 2 vias
+specfix: WARNING cut {'layers': ['F.Cu'], 'net': 'Port 1/PPHV$', 'circle': [107.94, 110.99, 27.5]} overlaps via /USB Port 1/PPHV at 110.35,83.47
+specfix: 1 cuts (3 zone hits), 1 tracks, 0 vias
+specfix: 0 cuts (3 zone hits), 4 tracks, 0 vias
+specfix: 0 cuts (3 zone hits), 1 tracks, 1 vias
+specfix: 0 cuts (3 zone hits), 4 tracks, 4 vias
+specfix: 0 cuts (3 zone hits), 2 tracks, 0 vias
+specfix: 0 cuts (3 zone hits), 6 tracks, 3 vias
+specfix: 0 cuts (3 zone hits), 1 tracks, 1 vias
+[capfix] link /USB Port 2/PPHV R509.1->C509.1 on F.Cu: 1.1 mm, 1 segments

@@ -1,0 +1,37 @@
+phase 3: 7 open connections tried again with every route free to move
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX Net-(U403-ACUV): escape stub landed on its own island, searching on
+  ESCFIX /USB Port 2/CC2: escape stub landed on its own island, searching on
+routes pulled and re-laid: 344
+fan-out stubs unused (removed) 15, trimmed 2
+unconnected after fill: 9
+routed 75 edges, 7 failed, items added 1897
+  FAILED Net-(U101-VC3) 93.25,120.33 (Pad 2  of C101 ) -> 95.00,120.40 (Pad 3  of U101 ) starts 234 goals 47 seen 55 | blocked by routes that have been pulled too often
+  FAILED Net-(U403-FB) 110.74,115.45 (Pad 1  of R419 ) -> 113.74,112.49 (Pad 12  of U403 ) starts 106 goals 196 seen 191 | no way even with every other route gone
+  FAILED Net-(U403-ACUV) 107.94,111.99 (Pad 34  of U403 ) -> 107.96,117.20 (Pad 2  of R409 ) starts 69 goals 168 seen 147 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/TS 108.61,120.60 (Pad 2  of R415 ) -> 112.09,113.64 (Pad 8  of U403 ) starts 126 goals 72 seen 83140 | no way even with every other route gone
+  FAILED /USB Port 1/TS 112.09,113.64 (Pad 8  of U403 ) -> 104.80,110.36 (Pad 1  of R416 ) starts 72 goals 354 seen 98 | no way even with every other route gone
+  FAILED /USB Port 2/CC2 94.95,75.05 (Pad 11  of U505 ) -> 85.30,79.08 (Pad 29  of U501 ) starts 97 goals 41 seen 581922 | no way even with every other route gone
+  FAILED /Cells and Gauge/TS1 84.50,112.99 (Pad 1  of TH101) -> 95.90,122.90 (Pad 10  of U101 ) starts 100 goals 5 seen 584713 | no way even with every other route gone
+FAILKEY Net-(U101-VC3)
+FAILKEY Net-(U403-FB)
+FAILKEY Net-(U403-ACUV)
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 2/CC2
+FAILKEY /Cells and Gauge/TS1
+DRC errors 2 unconnected 9
+ ERR Clearance violation (rule 'HighCurrent copper to small signals' clearance 0.2500 mm; actual 0.1989 mm) [('Track [Net-(U101-SMBD)] on F.Cu, length 0.3259 mm', 98.8, 122.0), ('Track [/Cells and Gauge/CELL_1N] on F.Cu, length 0.2147 mm', 98.675, 122.5745)]
+ ERR Clearance violation (rule 'HighCurrent copper to small signals' clearance 0.2500 mm; actual 0.2000 mm) [('Track [/Cells and Gauge/CELL_1N] on F.Cu, length 0.3025 mm', 98.3, 122.9), ('Track [/Cells and Gauge/BTP_INT] on F.Cu, length 0.3265 mm', 97.875, 122.5745)]
+ UNC [('Pad 34 [Net-(U403-ACUV)] of U403 on F.Cu', 107.94, 111.99), ('Pad 2 [Net-(U403-ACUV)] of R409 on F.Cu', 107.96, 117.2)]
+ UNC [("Zone 'pc_3V3' [3V3] on F.Cu, priority 20", 85.6125, 125.8805), ('Track [3V3] on F.Cu, length 0.9192 mm', 83.725, 126.5245)]
+ UNC [("Zone 'pc_3V3' [3V3] on F.Cu, priority 20", 114.0014, 117.5776), ("Zone 'pc_3V3' [3V3] on In3.Cu (signal H + 5V), priority 10", 80.029, 72.6096)]
+ UNC [('Pad 2 [/USB Port 1/TS] of R415 on F.Cu', 108.61, 120.6), ('Pad 8 [/USB Port 1/TS] of U403 on F.Cu', 112.09, 113.64)]
+ UNC [('Pad 8 [/USB Port 1/TS] of U403 on F.Cu', 112.09, 113.64), ('Track [/USB Port 1/TS] on F.Cu, length 0.2934 mm', 104.625, 110.1245)]
+ UNC [('Track [/USB Port 2/CC2] on F.Cu, length 0.4950 mm', 95.325, 76.2245), ('Pad 29 [/USB Port 2/CC2] of U501 on F.Cu', 85.3, 79.075)]
+ UNC [('Pad 1 [Net-(U403-FB)] of R419 on F.Cu', 110.74, 115.45), ('Track [Net-(U403-FB)] on F.Cu, length 0.5852 mm', 113.74, 112.49)]
+ UNC [('Track [Net-(U101-VC3)] on F.Cu, length 1.1923 mm', 92.15, 119.87), ('Pad 3 [Net-(U101-VC3)] of U101 on F.Cu', 95.0, 120.4)]
+ UNC [('Pad 1 [/Cells and Gauge/TS1] of TH101 on B.Cu', 84.5, 112.9855), ('Pad 10 [/Cells and Gauge/TS1] of U101 on F.Cu', 95.9, 122.9)]
