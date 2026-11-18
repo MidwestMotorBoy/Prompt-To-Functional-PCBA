@@ -29,3 +29,8 @@ SPECFIX_M9="$SPECFIX_M3,$MF/vac_p2.json,$MF/p1vac.json,$MF/r314.json"
 CAPFIX_M11="--band=3V3 --stubs=1 --link_w=0.2 --links=R509.1>C509.1 --link3d=C509.1>U503.33 --l3_layers=F.Cu,B.Cu --l3_cost=3,1.0 $AVOID --anchor=U501.20>U503.32;C542.1>R533.1"
 SPECFIX_M11="$CP5,$MF/pphv1.json,$MF/btst1.json,$MF/nrst_j301.json,$MF/vbus32b.json,$MF/vac_p2.json,$MF/p1vac.json,$MF/r314.json,$MF/r418.json"
 SPECFIX_POST_M11="$MF/j301_3v3.json"
+# BEST (round 6 final) = m11
+BEST_CAPFIX_R6="$CAPFIX_M11"; BEST_SPECFIX_R6="$SPECFIX_M11"; BEST_SPECFIX_POST_R6="$SPECFIX_POST_M11"
+# m13 = m11 without the J301.1 3V3 via (j301_3v3.json): on m11 the via left J301.5 GND with no way to its plane and NRST / port-1
+#   charger edges failed again (local 335/4 and 336/3). Keeps r418.json (EN_5V1 routed on both m11 routes) and vbus32b.json.
+CAPFIX_M13="$CAPFIX_M11"; SPECFIX_M13="$SPECFIX_M11"; SPECFIX_POST_M13=""

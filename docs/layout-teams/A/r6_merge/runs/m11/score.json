@@ -10,6 +10,15 @@
  "unrouted_signal_items": 333,
  "hot_loops": "7 of 7 pass, 6.28 nH",
  "blocked_edges": "3 of 339",
+ "route": "335 of 339 routed, 4 failed",
+ "routed_loss_W": 1.128,
+ "routed_power_open": {
+  "GND": [
+   "J301"
+  ]
+ },
+ "routed_drc_errors": 0,
+ "routed_unconnected": 8,
  "pad_unjoined": {
   "/USB Port 1/PPHV": [
    "C409.1"
@@ -29,5 +38,30 @@
    "J301.5",
    "J302.5"
   ]
- }
+ },
+ "routed_pad_unjoined": {},
+ "routed_allpad_off": {},
+ "routed_unconnected_power": {
+  "GND": 1
+ },
+ "routed_unconnected_by_net": {
+  "GND": 1,
+  "Net-(U403-ACUV)": 1,
+  "/USB Port 1/TS": 1,
+  "/MCU/NRST": 1,
+  "Net-(U403-ACOV)": 1,
+  "/USB Port 1/LODRV2": 1,
+  "Net-(U101-VC4)": 1,
+  "Net-(U101-VC2)": 1
+ },
+ "routed_unconnected_items": [
+  "Via [GND] on F.Cu - B.Cu | Pad 5 [GND] of J301 on F.Cu @ 120.92,117.97 -> 119.23,116.13",
+  "Pad 34 [Net-(U403-ACUV)] of U403 on F.Cu | Pad 2 [Net-(U403-ACUV)] of R409 on F.Cu @ 107.94,111.99 -> 107.96,117.20",
+  "Pad 1 [/USB Port 1/TS] of R416 on F.Cu | Track [/USB Port 1/TS] on F.Cu, length 0.7347 mm @ 104.80,110.36 -> 112.09,113.64",
+  "Track [/MCU/NRST] on F.Cu, length 0.9712 mm | Track [/MCU/NRST] on F.Cu, length 1.6196 mm @ 117.96,116.13 -> 111.57,124.08",
+  "Track [Net-(U403-ACOV)] on F.Cu, length 0.3628 mm | Pad 35 [Net-(U403-ACOV)] of U403 on F.Cu @ 109.88,117.42 -> 107.94,112.49",
+  "Pad 21 [/USB Port 1/LODRV2] of U403 on F.Cu | Pad 1 [/USB Port 1/LODRV2] of R447 on F.Cu @ 112.09,108.84 -> 116.90,91.19",
+  "Track [Net-(U101-VC4)] on F.Cu, length 0.9701 mm | Pad 2 [Net-(U101-VC4)] of U101 on F.Cu @ 93.26,118.40 -> 95.00,120.00",
+  "Pad 4 [Net-(U101-VC2)] of U101 on F.Cu | Track [Net-(U101-VC2)] on F.Cu, length 0.2805 mm @ 95.00,120.80 -> 92.15,120.83"
+ ]
 }

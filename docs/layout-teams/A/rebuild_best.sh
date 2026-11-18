@@ -29,7 +29,7 @@ d = [k for k in set(a) | set(b) if a.get(k) != b.get(k)]
 print(f"[rebuild_best] {len(d)} of {len(b)} entries differ from best_placement.json", d[:10]); sys.exit(1 if d else 0)
 P
 if [ -n "$SCORE" ]; then
-  . "$A/r6_merge/tools/env_r6m.sh"; export SPECFIX="$BEST_SPECFIX_R6" CAPFIX="$BEST_CAPFIX_R6"
+  . "$A/r6_merge/tools/env_r6m.sh"; export SPECFIX="$BEST_SPECFIX_R6" CAPFIX="$BEST_CAPFIX_R6" SPECFIX_POST="$BEST_SPECFIX_POST_R6"
   "$A/r6_merge/tools/score_board_r6m.sh" "$W/score" "$W/placement.json" $SCORE --plan="$BEST_PLAN_R5"
   [ -f "$W/score/drc_routed.json" ] && python3 "$A/r6_merge/tools/routed_opens.py" "$W/score"
 fi

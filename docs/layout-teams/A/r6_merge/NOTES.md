@@ -45,3 +45,9 @@ Findings
   (J301.1 3V3 via into the In4 band). Copper DRC 0. Queued lead6-m11 and lead6-m11-rep at 03:09.
 - 03:07: m12q = m11 + p2scl.json (P2 I2CC_SCL laid first; PC fails that edge 'pulled 1' on m4/m7/m9, local routes it), quick path, DRC 0, queued lead6-m12q. PC lead6-m9-rep: 339/1 (P2 I2CC_SCL), unc 7, 39.0 min.
 - 03:13: m11 scorecard: 0.866 W, power_open GND J301/J302 only (3V3@L201 now joined), DRC 0, hot 7/7 6.28 nH, blocked 3/339. Local routes started: runs/m11 (stock), runs/m11e (router_esc).
+- 03:48: PC lead6-m9 339/1 (P2 I2CC_SDA U502.5 -> U501.16), unc 7, 88.2 min; lead6-m9-rep 339/1 (P2 I2CC_SCL), unc 7, 39.0 min.
+- 04:04: m11 local routes (about 55 min each, not timed out): runs/m11 (stock) 335/339, 4 failed (LODRV2, VC2, ACOV, GND J301.5), KiCad unc 8;
+  runs/m11e (router_esc) 336/339, 3 failed (U102-V4, U403-FB, GND J301.5), unc 4. Worse than m9: the J301.1 3V3 via leaves J301.5 GND
+  "goals 0" and the route needs about 600 rip-ups (m9: 127). EN_5V1 and CC2 routed on both, so r418.json and vbus32b.json work.
+- m13 = m11 without j301_3v3.json. Building.
+- 04:15: m13 scorecard done (see runs/m13/score.json), PC lead6-m13 and -rep queued 04:07, local routes started (runs/m13 stock, runs/m13e router_esc).
