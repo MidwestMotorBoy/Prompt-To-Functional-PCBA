@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m14-rep.kicad_pcb",
+ "sha": "455bcc81eb52220a534b159429c58bf65437b86c",
+ "routed": 0,
+ "failed": 0,
+ "edges": 0,
+ "minutes": 0.2,
+ "status": "done",
+ "tail": [
+  "fan-out stubs: 0",
+  "routes pulled and re-laid: 0",
+  "fan-out stubs unused (removed) 0, trimmed 0",
+  "unconnected after fill: 0",
+  "routed 0 edges, 0 failed, items added 0"
+ ]
+}
