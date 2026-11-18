@@ -1,0 +1,16 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 340 (0 on long nets)
+fan-out stubs: 135
+phase 1: 8 open connections tried again with every route free to move
+phase 2: 4 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 96
+fan-out stubs unused (removed) 53, trimmed 22
+unconnected after fill: 10
+routed 337 edges, 3 failed, items added 2875
+  FAILED /USB Port 2/CHG_INT 86.50,85.58 (Pad 2  of R504 ) -> 86.10,82.92 (Pad 18  of U501 ) starts 1069 goals 38 seen 89685 | no way even with every other route gone
+  FAILED /USB Port 2/I2CC_SDA 82.20,86.48 (Pad 2  of R502 ) -> 86.06,113.64 (Pad 2  of U503 ) starts 239 goals 82 seen 1045581 | no way even with every other route gone
+  FAILED EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 175 goals 261 seen -12000001 | no way even with every other route gone
+FAILKEY /USB Port 2/CHG_INT
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY EN_5V1

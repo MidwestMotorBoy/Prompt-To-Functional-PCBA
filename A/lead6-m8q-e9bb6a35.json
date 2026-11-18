@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m8q.kicad_pcb",
+ "sha": "e9bb6a358d2cb541f7971924958cbf3124d90c65",
+ "routed": 336,
+ "failed": 3,
+ "edges": 339,
+ "minutes": 44.3,
+ "status": "done",
+ "tail": [
+  "  FAILED /USB Port 2/I2CC_SDA 82.20,86.48 (Pad 2  of R502 ) -> 86.06,113.64 (Pad 2  of U503 ) starts 239 goals 82 seen 1045581 | no way even with every other route gone",
+  "  FAILED EN_5V1 112.90,84.82 (Pad 1  of R432 ) -> 111.57,122.08 (Pad 12  of U301 ) starts 175 goals 261 seen -12000001 | no way even with every other route gone",
+  "FAILKEY /USB Port 2/CHG_INT",
+  "FAILKEY /USB Port 2/I2CC_SDA",
+  "FAILKEY EN_5V1"
+ ]
+}
