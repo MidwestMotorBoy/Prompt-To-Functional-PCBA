@@ -1,0 +1,16 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 338 (0 on long nets)
+fan-out stubs: 134
+phase 1: 11 open connections tried again with every route free to move
+phase 2: 4 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 322
+fan-out stubs unused (removed) 55, trimmed 22
+unconnected after fill: 8
+routed 335 edges, 3 failed, items added 4428
+  FAILED /USB Port 2/CHG_INT 86.50,85.58 (Pad 2  of R504 ) -> 86.10,82.92 (Pad 18  of U501 ) starts 1069 goals 36 seen 38 | no way even with every other route gone
+  FAILED IRQ_N 89.80,119.59 (Pad 3  of Q103 ) -> 117.72,125.83 (Pad 21  of U301 ) starts 479 goals 462 seen 579389 | no way even with every other route gone
+  FAILED GND 119.23,116.13 (Pad 5  of J301 ) -> 119.23,116.13 (Zone planeZone plan) starts 191 goals 0 seen 1052 | no way even with every other route gone
+FAILKEY /USB Port 2/CHG_INT
+FAILKEY IRQ_N
+FAILKEY GND@Pad 5 [GND] of J301 on F.Cu

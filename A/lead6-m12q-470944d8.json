@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m12q.kicad_pcb",
+ "sha": "470944d8d494c158476eeadf1129a377c04f1f94",
+ "routed": 335,
+ "failed": 3,
+ "edges": 338,
+ "minutes": 66.5,
+ "status": "done",
+ "tail": [
+  "  FAILED IRQ_N 89.80,119.59 (Pad 3  of Q103 ) -> 117.72,125.83 (Pad 21  of U301 ) starts 479 goals 462 seen 579389 | no way even with every other route gone",
+  "  FAILED GND 119.23,116.13 (Pad 5  of J301 ) -> 119.23,116.13 (Zone planeZone plan) starts 191 goals 0 seen 1052 | no way even with every other route gone",
+  "FAILKEY /USB Port 2/CHG_INT",
+  "FAILKEY IRQ_N",
+  "FAILKEY GND@Pad 5 [GND] of J301 on F.Cu"
+ ]
+}
