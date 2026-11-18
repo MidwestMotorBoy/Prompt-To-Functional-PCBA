@@ -15,6 +15,10 @@
 #      --score="ARGS" : the same with your ARGS, e.g. --score="--route=150" for a local full route with routed checks;
 #                       after a route, r6_merge/tools/routed_opens.py adds KiCad's unconnected list of the routed board
 #                       to score.json (the router's "failed" count is not the number of open connections)
+#                       + BEST_SPECFIX_POST_R6 = r6_merge/fixes/frozen_final.json: the complete local route of the planned
+#                       board (m13, router_esc) laid as fixed copper and finished by hand (r6_merge/tools/freeze_fix.py).
+#                       The scored board therefore IS the routed board: 0 DRC errors, 0 unconnected items, and a router
+#                       run on it has 0 edges. To see the planned copper before signals, use CAPFIX/SPECFIX_M13 in env_r6m.sh.
 #   The placement is unchanged since round 5 (stack S); round 6 changed copper only.
 #   The round-3 version of this script is tools/rebuild_best_r3.sh (placement lead_final/best_placement_r3.json).
 #   Needs docker image kicad/kicad:10.0 and python3 with numpy scipy shapely numba pillow.

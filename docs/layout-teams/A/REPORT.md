@@ -304,3 +304,72 @@ board is `lead_final/best_placement_r3.json` (`tools/rebuild_best_r3.sh`).
 - Worker folders with NOTES.md: r4_vbus, r4_port1, r4_bcu, r4_general (round 4); r5_merge, r5_north, r5_gauge,
   r5_general (round 5); lead_r5 (the lead's build and scorecard of stack S).
 - 16 more cu/routed board copies over 5 MB were deleted from old outdirs in round 5.
+
+## Round 6 (last round): every connection closed on the routed board
+
+Goal: 0 failed connections on the full route, every cap joined on the routed board, all hard limits kept.
+Placement did not change (stack S); only copper did.
+
+### Result (board m14, `rebuild_best.sh <workdir> --score`)
+| check | final board m14 | planned copper before signals (m13) | stack S (round 5) |
+|---|---|---|---|
+| power_open | none | 3V3@L201, GND J301/J302 (allowed) | same allowed |
+| DRC errors (custom rules on) | 0 | 0 | 0 |
+| hot loops | 7 of 7, 6.41 nH | 7 of 7, 6.27 nH | 7 of 7, 6.27 nH |
+| loss | 1.241 W (all copper) | 0.865 W | 0.801 W (routed 1.070 W) |
+| KiCad unconnected items | 0 | 334 (signals) | 24 after routing |
+| pads off their pour | none | PPHV C409.1, C509.1 | 3V3 C207/C403/C503, PACK_P C213 |
+| local full route | 0 of 0 edges, 0 failed | 340 of 341, 1 failed (about 25 min, not timed out) | 357 / 7 |
+| PC full route | see score.json `full_route_pc` | lead6-m13 (see score.json) | 356 / 8 |
+
+How it was reached, said plainly: **the final board is a frozen route, not a fresh one.** The router never
+delivered a board with 0 open connections by itself. The best planned board (m13) routes locally to 340 of 341 with
+4 KiCad open items (5 with the stock router), and on the PC its predecessors m9 and m11 route to 339/1, 339/1,
+338/1, 337/2 (the same short port-2 PD hop fails each time: P2 I2CC_SDA or I2CC_SCL, "pulled too often").
+I then copied the complete local route of m13 (`runs/m13e`, 3319 tracks and 400 vias) into a fix file
+(`r6_merge/fixes/frozen_m13e.json`, tool `prelay.py --net=.`) and closed what was left by hand
+(`tools/freeze_fix.py` -> `fixes/frozen_final.json`), each edit checked by KiCad DRC:
+1. P2 CHG_INT R504.2 -> U501.18: a 0.15 mm F.Cu track through the 0.45 mm gap between the SCL via and R541.2
+   (0.15 mm each side, exactly at the rule), with the SBU_FLT pin-19 stub straightened to make room.
+2. PACK_P TP106.1 and its F.Cu pour piece: one via to the PACK_P planes.
+3. 3V3 J301.1 island: 0.6 mm track and a via into the In3 pour / In4 band.
+4. 3V3 R417.2 island: via beside the pad and a 3.9 mm In4 track into the In4 3V3 band.
+5. Four clearance errors at the gauge (CELL_1N stubs at U101 pins 9, 16, 17 against the 0.25 mm
+   high-current rule): stub ends shortened or narrowed to 0.15 mm.
+A router run on the final board (local and PC) therefore has nothing to route; it is a check, not a routing result.
+The proof that the board is closed is KiCad's DRC on it: 0 errors, 0 unconnected items, plus no islands on 3V3,
+PACK_P or GND (`tools/net_islands.py`) and no pad off its pour (`routed_pad_unjoined`, `routed_allpad_off` empty).
+
+### What the merge needed (m1 to m13, details in `r6_merge/NOTES.md`)
+- Both worker fixes merged: r6_routes escape fixes (CP5 list) + r6_caps capfix E (3V3 copy on In4, cap stubs,
+  PPHV VAC links). The plain merge (m1/m4) routed 342/1 on the PC but left 9 to 13 KiCad open items.
+- "0 failed" from the router is not "0 open": it counts an escape stub that touches its own island as routed,
+  skips Zone|Zone items and makes zero-length routes for Zone|Pad items of non-plane nets. r6r-sccp5 (350/0) had 15
+  open items. From m4 on, the judge was KiCad's unconnected list on the routed board.
+- Lead fixes on top (r6_merge/fixes): VBUS pin-32 links (vbus32b), port-1 VAC link moved off ACUV's via site
+  (p1vac), charger VAC pin bridge (vac_p2), R314 3V3 via, R418.1 via-in-pad, port-1 PPHV pull-back, BTST1 and NRST
+  pre-lays. Rejected: port-2 cluster pre-lay (p2self, p2scl: failures move), J301.1 3V3 via (j301_3v3: J301.5 GND
+  loses its way, 600 rip-ups), EN_5V1 pre-lay (shorts), finish passes with the router on a routed board (adds DRC
+  errors, does not converge).
+
+### Scorecard gap found
+The routed-board DRC of rounds 4-6 ran without the custom rules file (no `routed.kicad_dru` beside
+`routed.kicad_pro`), so earlier "routed DRC 0" claims did not check the 0.25 mm high-current rule, the hole rules or
+the edge margin. With the rules on, the m13 routed board had 4 errors (item 5 above). Fixed in
+`route_local_r6m.sh` and `score_board_r6m.sh`; the final board is clean with the rules on.
+
+### What remains open
+- Nothing on the hard limits or the connection list of the final board.
+- The router alone still leaves 1 failed edge and 4 to 5 open items on the planned copper (m13), so a changed
+  placement or netlist needs the freeze-and-finish step again (about 30 min by hand).
+- The CHG_INT track sits at exactly 0.15 mm on both sides; fine by the rule, no margin.
+- Loss rose from 0.801 W (stack S plan) to 0.865 W planned (escape cuts, capfix) and 1.241 W with signals routed
+  through the soft pours (stack S routed: 1.070 W). Ringing: 6.27 nH planned, 6.41 nH on the final board.
+- Hot loops and loss were not re-tuned this round; `r5_general/upstream.diff` is still not applied.
+
+### Renders (lead's own reading)
+- F.png (planned copper): unchanged compact layout; each PD chip under its USB-C connector, charger stages at the
+  inductors, gauge and FETs bottom centre. No sprawl.
+- routed_F.png: fully routed, signal tracks dense around the two PD chips and the MCU; power pours intact.
+- routed_B.png: GND fill with signal runs cut into it, densest around the gauge (the fill is chopped there but
+  joined, no GND island); one long run follows the west board edge. No power part moved.

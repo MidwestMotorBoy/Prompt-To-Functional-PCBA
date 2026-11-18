@@ -295,3 +295,29 @@ TVS/LDO placed by netlist alone sprawl; legalise anchors that land on fixed TPs)
   DRC screen after every merge.
 - Foreground sleep is blocked: wait with background until-loops. Stop containers with `docker stop <id>`, never
   dockerd. Delete routed/sub/ghost boards over 5 MB when done.
+
+## 11. Round 6: closing the board (freeze and finish)
+1. Judge a routed board by KiCad, not by the router: `routed_unconnected` (DRC unconnected items) must be 0.
+   The router's "0 failed" can hide open items (own-island escape stubs, Zone|Zone items, zero-length Zone|Pad routes).
+   `r6_merge/tools/routed_opens.py <outdir>` lists them; `tools/net_islands.py <board> <cu.json> <net>` finds the island
+   behind a "Zone | Zone" item (KiCad only prints zone anchors).
+2. Run the routed-board DRC WITH the custom rules: copy `cu.kicad_dru` to `routed.kicad_dru` first
+   (`route_local_r6m.sh` does). Without it the 0.25 mm high-current rule and the hole rules are not checked.
+3. Get the planned board to a handful of open items with copper fixes (specfix files, capfix), comparing local
+   routes (stock router and `router_esc.py`) and PC routes. Stop when the remaining items move around instead of shrinking.
+4. Freeze: `tools/prelay.py cu.kicad_pcb routed.kicad_pcb fixes/frozen_X.json --net=.` copies the whole route into a
+   fix file; apply it as SPECFIX_POST. `tools/qdrc.sh <base outdir> <new outdir> <fix.json>` (30 s) must give the
+   same open items as the routed board.
+5. Finish by hand in a script (`tools/freeze_fix.py`: drop / add tracks, vias), one item at a time, qdrc after each.
+   `tools/via_site.py <board> <cu.json> <net> <window> [zone layers|any] [all]` lists legal via sites.
+   Where no site has own-net copper under it, put the via beside the pad and run a track on In4 to the In4 band
+   (the router never uses In4, only vias obstruct it).
+6. Then `rebuild_best.sh <workdir> --score` and `route_local_r6m.sh <workdir>/score`: the router must report 0 edges.
+Traps:
+- Do not run the router on an already routed board to finish it: it adds clearance errors and does not converge
+  (fin, fin2, fin3, rp1, rp2).
+- The router packs tracks at exactly the clearance, so a hand track often needs a neighbour moved by 0.02-0.03 mm.
+- 0.4 mm pitch pins with a high-current net beside a signal: 0.2 mm stubs break the 0.25 mm rule; end the stub
+  just inside the pad or use 0.15 mm.
+- A frozen route is tied to the placement and netlist: any part move means route, freeze and finish again.
+- `repair.sh` passes options through `sh -c` unquoted: no parentheses, pipes or spaces in regex options.

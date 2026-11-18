@@ -13,6 +13,15 @@
  "unrouted_signal_items": 334,
  "hot_loops": "7 of 7 pass, 6.27 nH",
  "blocked_edges": "3 of 341",
+ "route": "340 of 341 routed, 1 failed",
+ "routed_loss_W": 1.156,
+ "routed_power_open": {
+  "3V3": [
+   "L201"
+  ]
+ },
+ "routed_drc_errors": 0,
+ "routed_unconnected": 5,
  "pad_unjoined": {
   "/USB Port 1/PPHV": [
    "C409.1"
@@ -35,5 +44,31 @@
    "J301.5",
    "J302.5"
   ]
- }
+ },
+ "routed_pad_unjoined": {},
+ "routed_allpad_off": {
+  "3V3": [
+   "R417.2"
+  ],
+  "PACK_P": [
+   "TP106.1"
+  ]
+ },
+ "routed_unconnected_power": {
+  "PACK_P": 1,
+  "3V3": 2
+ },
+ "routed_unconnected_by_net": {
+  "PACK_P": 1,
+  "/USB Port 1/I2CC_SCL": 1,
+  "3V3": 2,
+  "/USB Port 2/CHG_INT": 1
+ },
+ "routed_unconnected_items": [
+  "Zone 'pc_PACK_P' [PACK_P] on F.Cu, priority 30 | Zone 'pc_PACK_P' [PACK_P] on In2.Cu (signal V + 3V3), priority 10 @ 95.17,86.99 -> 115.05,82.75",
+  "Track [/USB Port 1/I2CC_SCL] on F.Cu, length 0.5846 mm | Pad 2 [/USB Port 1/I2CC_SCL] of R403 on F.Cu @ 108.59,113.64 -> 102.30,86.48",
+  "Zone 'pc_3V3' [3V3] on In4.Cu (GND), priority 10 | Zone 'pc_3V3' [3V3] on F.Cu, priority 20 @ 86.10,129.12 -> 114.00,117.58",
+  "Track [3V3] on F.Cu, length 0.2828 mm | Zone 'pc_3V3' [3V3] on F.Cu, priority 20 @ 116.33,116.27 -> 114.00,117.58",
+  "Via [/USB Port 2/CHG_INT] on F.Cu - B.Cu | Pad 18 [/USB Port 2/CHG_INT] of U501 on F.Cu @ 86.03,85.47 -> 86.10,82.92"
+ ]
 }

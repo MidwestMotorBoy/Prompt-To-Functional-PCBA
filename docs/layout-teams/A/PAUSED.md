@@ -1,23 +1,19 @@
-# Team A: resume pointer (updated 2026-11-16, after round 5)
+# Team A: resume pointer (updated 2026-11-18, after round 6, the last round)
 
-State: five worker rounds and the lead's round-5 merge are done. The best placement is `best_placement.json`
-(stack S = round-3 build + `best_overrides/` 50, 60, 70, 80), rebuilt with `rebuild_best.sh <workdir>` and scored
-with `rebuild_best.sh <workdir> --score` (scorer `r5_merge/tools/score_board_r5.sh`, copper recipe
-`r5_merge/tools/best_env_r5.sh` = planner M). Numbers: `score.json` and REPORT.md "Rounds 4-5"; method:
-SKILL-NOTES.md. The round-3 board is `lead_final/best_placement_r3.json` (`tools/rebuild_best_r3.sh`).
+State: finished. The best board is m14: placement `best_placement.json` (stack S, unchanged since round 5) with the
+round-6 copper recipe `r6_merge/tools/env_r6m.sh` (BEST_*_R6), which ends with `r6_merge/fixes/frozen_final.json`,
+the complete route laid as fixed copper and finished by hand.
 
-Stack S: hard limits met (power_open allowed only, DRC 0, 7 of 7 hot loops at 6.27 nH), 4 of 364 blocked,
-PC full route 356 / 8 failed of 364 (twice, 95 min), local 357 / 7, 0.801 W (routed 1.070 W).
+One command: `docs/layout-teams/A/rebuild_best.sh <workdir> --score` (about 6 min, hot loops on), then
+`r6_merge/tools/route_local_r6m.sh <workdir>/score 150` for the routed-board checks (router reports 0 edges).
 
-Where to resume:
-- **Before fab:** routing cuts the soft In3 3V3 pour: on the routed board C207.1, C403.1, C503.1 (3V3) and C213.1
-  (PACK_P) are off their net's main copper (`routed_pad_unjoined` in score.json). Add a 3V3 copy on a non-routed
-  layer (like the In4 PACK_P bus) or take 3V3 out of the router's soft nets, then re-check with route_local_r5.sh.
-- C409.1 / C509.1 (charger VAC 1 uF caps) are joined only by router tracks.
-- The remaining failed edges: port-1 PD cluster and the two long port-1 I2C runs to U403 (I2CC_SDA/SCL, P1_LDO_3V3
-  at R441/R404), SMBC U101.19 -> R115, SCL J302.6 -> U301.9 (needs CELL_P re-planned; the r5_gauge lane costs
-  +59-83 mW).
-- Upstream: `r5_general/upstream.diff` (write_copper one zone per outline, planner hooks) is written, not applied.
+Numbers (`score.json`, REPORT.md "Round 6"): power_open none, DRC 0 (custom rules on), KiCad unconnected 0,
+hot loops 7 of 7 at 6.41 nH (6.27 nH on the planned copper), 1.241 W with all copper (0.865 W planned),
+no pad off its pour. Local route 0 of 0 edges; PC routes lead6-m14 / lead6-m14-rep: see score.json `full_route_pc`.
 
-Scorecard caveat: all numbers from round 2 on use split-zone copper. The old 391/448 hand reference used the
-vanishing-pour copper; on split copper the hand board routes 363 of 422.
+The final board is a FROZEN route: the router alone reaches 340 of 341 with 4 open items on the planned copper
+(m13). If a part or net changes: set BEST_* to the M13 recipe, route (`route_local_r6m.sh`, router_esc), then
+freeze and finish again (SKILL-NOTES.md section 11).
+
+Left for later: lower loss (escape cuts and capfix cost 64 mW on the plan), `r5_general/upstream.diff` not applied,
+the CHG_INT track at exactly 0.15 mm clearance. Log: `r6_merge/NOTES.md`.
