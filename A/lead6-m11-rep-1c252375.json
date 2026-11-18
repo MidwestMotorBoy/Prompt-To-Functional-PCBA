@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m11-rep.kicad_pcb",
+ "sha": "1c25237582610f7e9407a3aa45e94007e229a5f4",
+ "routed": 338,
+ "failed": 1,
+ "edges": 339,
+ "minutes": 68.7,
+ "status": "done",
+ "tail": [
+  "fan-out stubs unused (removed) 55, trimmed 18",
+  "unconnected after fill: 4",
+  "routed 338 edges, 1 failed, items added 5232",
+  "  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 808 goals 41 seen 47 | blocked by routes that have been pulled too often",
+  "FAILKEY /USB Port 2/I2CC_SDA"
+ ]
+}
