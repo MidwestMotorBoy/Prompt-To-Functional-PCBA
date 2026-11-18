@@ -1,0 +1,12 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 340 (0 on long nets)
+fan-out stubs: 133
+phase 1: 7 open connections tried again with every route free to move
+phase 2: 9 open connections tried again with every route free to move
+phase 3: 3 open connections tried again with every route free to move
+routes pulled and re-laid: 583
+fan-out stubs unused (removed) 57, trimmed 21
+unconnected after fill: 7
+routed 339 edges, 1 failed, items added 5423
+  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 808 goals 41 seen 47 | blocked by routes that have been pulled too often
+FAILKEY /USB Port 2/I2CC_SDA
