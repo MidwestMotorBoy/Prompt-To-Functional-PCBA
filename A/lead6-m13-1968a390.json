@@ -1,0 +1,17 @@
+{
+ "team": "A",
+ "board": "docs/layout-teams/A/route_queue/lead6-m13.kicad_pcb",
+ "sha": "1968a39002b75b625586843317db429b4f8ae511",
+ "routed": 325,
+ "failed": 15,
+ "edges": 340,
+ "minutes": 93.8,
+ "status": "done",
+ "tail": [
+  "FAILKEY CHG_INH",
+  "FAILKEY 3V3@Pad 1 [3V3] of R302 on F.Cu",
+  "FAILKEY 3V3@Pad 1 [3V3] of R305 on F.Cu",
+  "FAILKEY SDA",
+  "FAILKEY /Cells and Gauge/CELL_P"
+ ]
+}

@@ -1,0 +1,40 @@
+net classes: 22 high-current nets, 146 small-signal nets
+edges to route: 340 (0 on long nets)
+fan-out stubs: 134
+phase 1: 11 open connections tried again with every route free to move
+phase 2: 4 open connections tried again with every route free to move
+phase 3: 4 open connections tried again with every route free to move
+routes pulled and re-laid: 925
+fan-out stubs unused (removed) 62, trimmed 20
+unconnected after fill: 18
+routed 325 edges, 15 failed, items added 5987
+  FAILED /USB Port 1/SW2 113.74,109.49 (Pad 18  of U403 ) -> 113.74,109.49 (Zone 'pc_USB Port 1_SW2'  on F.Cu,) starts 76 goals 0 seen 609 | no way even with every other route gone
+  FAILED /USB Port 2/I2CC_SDA 85.15,85.20 (Pad 5  of U502 ) -> 85.30,82.92 (Pad 16  of U501 ) starts 808 goals 41 seen 47 | blocked by routes that have been pulled too often
+  FAILED /Cells and Gauge/CELL_1N 96.90,121.00 (Pad 33  of U101 ) -> 98.30,122.90 (Pad 16  of U101 ) starts 1046 goals 68 seen 207 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-VC1) 92.15,121.87 (Pad 2  of C103 ) -> 95.00,121.20 (Pad 5  of U101 ) starts 181 goals 45 seen 124130 | blocked by routes that have been pulled too often
+  FAILED Net-(U101-VC1) 95.00,124.62 (Pad 1  of C104 ) -> 95.00,121.20 (Pad 5  of U101 ) starts 128 goals 45 seen 120422 | no way even with every other route gone
+  FAILED /USB Port 1/TS 108.61,120.60 (Pad 2  of R415 ) -> 112.09,113.64 (Pad 8  of U403 ) starts 126 goals 72 seen 160148 | blocked by routes that have been pulled too often
+  FAILED /USB Port 1/TS 112.09,113.64 (Pad 8  of U403 ) -> 104.80,110.36 (Pad 1  of R416 ) starts 72 goals 209 seen 94 | no way even with every other route gone
+  FAILED Net-(U101-SMBD) 98.80,122.00 (Pad 18  of U101 ) -> 106.78,122.85 (Pad 1  of R116 ) starts 16 goals 62 seen 172 | no way even with every other route gone
+  FAILED SDA 107.42,122.85 (Pad 2  of R116 ) -> 106.68,132.41 (Pad 1  of J302 ) starts 62 goals 192 seen 496 | no way even with every other route gone
+  FAILED /MCU/SWDIO 116.69,114.86 (Pad 2  of J301 ) -> 116.72,125.83 (Pad 20  of U301 ) starts 191 goals 263 seen 562 | pulled 5
+  FAILED CHG_INH 86.67,120.72 (Pad 1  of R535 ) -> 106.68,131.14 (Pad 2  of J302 ) starts 58 goals 290 seen 481001 | no way even with every other route gone
+  FAILED 3V3 109.10,124.72 (Pad 1  of R302 ) -> 109.10,124.72 (Zone planeZone plan) starts 57 goals 0 seen 136 | blocked by routes that have been pulled too often
+  FAILED 3V3 109.95,118.53 (Pad 1  of R305 ) -> 109.95,118.53 (Zone planeZone plan) starts 49 goals 0 seen 79 | no way even with every other route gone
+  FAILED SDA 109.95,119.17 (Pad 2  of R305 ) -> 107.42,122.85 (Pad 2  of R116 ) starts 186 goals 62 seen 497 | no way even with every other route gone
+  FAILED /Cells and Gauge/CELL_P 99.98,127.60 (Pad 1  of C110 ) -> 95.11,128.80 (Pad 1  of R118 ) starts 146 goals 126 seen 24204 | no way even with every other route gone
+FAILKEY /USB Port 1/SW2
+FAILKEY /USB Port 2/I2CC_SDA
+FAILKEY /Cells and Gauge/CELL_1N
+FAILKEY Net-(U101-VC1)
+FAILKEY Net-(U101-VC1)
+FAILKEY /USB Port 1/TS
+FAILKEY /USB Port 1/TS
+FAILKEY Net-(U101-SMBD)
+FAILKEY SDA
+FAILKEY /MCU/SWDIO
+FAILKEY CHG_INH
+FAILKEY 3V3@Pad 1 [3V3] of R302 on F.Cu
+FAILKEY 3V3@Pad 1 [3V3] of R305 on F.Cu
+FAILKEY SDA
+FAILKEY /Cells and Gauge/CELL_P
