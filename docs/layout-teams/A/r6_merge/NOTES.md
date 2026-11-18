@@ -33,3 +33,7 @@ Findings
 - Cause of ACUV/TS/REGN (port 1, also open on r6caps-ce, not on r6r-sccp5): capfix link3d put the VAC via at (107.30,111.42),
   0.59 mm from pin 34's only via site. m9 = m7 with fixes/p1vac.json (VAC via at 107.2,110.8, B.Cu link kept east of a fixed
   ACUV escape via at 107.05,111.99), link3d only for port 2, hard stub R418.1. Copper DRC 0. Queued lead6-m9 and lead6-m9-rep at 02:18.
+- 02:23: m9 scorecard: 0.860 W, opens allowed only, DRC 0, hot 7/7 6.28 nH, blocked 3/340. Local routes started: runs/m9 (stock router) and runs/m9e (router_esc), 150 min cap.
+- 02:55: m9 local routes finished (about 34 min each, not timed out, both run at once):
+  runs/m9 (stock router): 339/340, 1 failed, routed DRC 0, KiCad unconnected 4, routed_power_open 3V3@L201 only, routed_pad_unjoined {},
+  routed_allpad_off 3V3 R417.2, routed loss 1.136 W. runs/m9e (router_esc): 338/340, 2 failed, unconnected 4, otherwise the same.
