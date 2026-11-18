@@ -51,3 +51,5 @@ Findings
   "goals 0" and the route needs about 600 rip-ups (m9: 127). EN_5V1 and CC2 routed on both, so r418.json and vbus32b.json work.
 - m13 = m11 without j301_3v3.json. Building.
 - 04:15: m13 scorecard done (see runs/m13/score.json), PC lead6-m13 and -rep queued 04:07, local routes started (runs/m13 stock, runs/m13e router_esc).
+- 04:17: container restarted (4th time); m13 local routes (runs/m13, runs/m13e) were killed and must be re-run; PC lead6-m13/-rep still queued on the PC.
+- 04:20: m13 local routes restarted (runs/m13 stock, runs/m13e router_esc).
